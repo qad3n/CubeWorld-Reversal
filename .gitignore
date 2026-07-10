@@ -1,0 +1,77 @@
+# Compiled object / intermediate files
+*.o
+*.obj
+*.ko
+*.lo
+*.slo
+*.gch
+*.pch
+
+# Precompiled headers
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lai
+*.so
+*.so.*
+*.dylib
+*.dll
+
+# Executables
+*.exe
+*.out
+*.app
+*.elf
+
+# Debug / symbol files
+*.pdb
+*.idb
+*.dSYM/
+*.su
+*.dwo
+
+# Build directories
+build/
+build-*/
+out/
+cmake-build-*/
+Debug/
+Release/
+x64/
+x86/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+CMakeScripts/
+cmake_install.cmake
+install_manifest.cmake
+CTestTestfile.cmake
+Testing/
+_deps/
+
+# Make / autotools
+Makefile.in
+.deps/
+.dirstamp
+
+# Ninja
+.ninja_deps
+.ninja_log
+
+# Editor / IDE
+.vscode/
+.vs/
+.idea/
+*.swp
+*.swo
+*~
+*.user
+*.suo
+
+# OS
+.DS_Store
+Thumbs.db
