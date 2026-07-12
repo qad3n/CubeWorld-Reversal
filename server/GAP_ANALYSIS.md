@@ -1256,7 +1256,7 @@ comments with the same content are also written above each function in the .cpp 
 | 4dd2e0 | `NavGraph::expandNeighbors` | low | A* neighbor expansion: samples random offset, iterates object grid cells, adds reachable neighbor nodes |
 | 4dde90 | `NavGraph::findPath` | low | Main A*/pathfinding: pops best open node, expands neighbors, evaluates cost, builds path to goal |
 | 522840 | `World::computeSlopeShade` | low | Computes terrain slope/shading factor at (x,y) sampling neighbor heights via noise; uses point-seg distances |
-| 522cc0 | `stub_securityCookie` | low | Effectively empty stub; only runs stack-cookie check (cookie xors cancel) |
+| 522cc0 | `World_siteDistanceSq` | low | Effectively empty stub; only runs stack-cookie check (cookie xors cancel) |
 | 522e20 | `World::waterProximityInfluence` | low | Scans grid region for water/feature cells (type flag==1); accumulates smoothed proximity influence |
 | 52ef00 | `Creature::resolveSeparation` | low | Physics separation/collision resolution between two creatures; normalizes overlap and applies push along axis |
 

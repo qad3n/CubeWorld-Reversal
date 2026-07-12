@@ -3910,7 +3910,7 @@ void __thiscall World_findNearestEntityInRegion(void *this,int x,int y)
           row = row + 1) {
         if ((((-1 < min_col) && (-1 < row)) && (row_base < 0x20002f)) &&
            ((row < 0x400 && (cell_val = *(int *)((int)this + (row_base + row) * 4), cell_val != 0)))) {
-          weight = (float10)stub_securityCookie();
+          weight = (float10)World_siteDistanceSq();
           if ((best_cell == 0) || ((int)weight < best_dist)) {
             best_cell = cell_val;
             best_dist = (int)weight;
@@ -4155,13 +4155,13 @@ undefined * __thiscall VoxelGrid_cellAt3D(void *this,int x,int y,int z)
 
 
 
-/* [AUDIT] proposed: World::sampleNoiseAt  (confidence: med)
+/* [AUDIT] proposed: World::roadField  (confidence: med)
  * purpose: Samples terrain/noise value at world coords via chunk lookup; returns 0 if chunk type!=1
  * vars: y/3=fixed-point coords >>0xb=chunk idx; chunk[6]=type; World_falloffSquared=falloff
  */
-/* Global::World_sampleNoiseAt @ 004d19f0 */
+/* Global::World_roadField @ 004d19f0 */
 
-float10 __thiscall World_sampleNoiseAt(void *world,uint x,uint y)
+float10 __thiscall World_roadField(void *world,uint x,uint y)
 
 {
   uint *chunk;
@@ -7420,13 +7420,13 @@ void __thiscall World_findNearestFeatureCell(void *this,undefined8 *out_cell,int
 
 
 
-/* [AUDIT] proposed: World::computeSlopeShade  (confidence: low)
+/* [AUDIT] proposed: World::biomeBorderDistance  (confidence: low)
  * purpose: Computes terrain slope/shading factor at (x,y) sampling neighbor heights via noise; uses point-seg distances
  * vars: this+0x8001fc..+0x800218=noise offsets; pointSegmentDistanceSq=seg dist; World_findNearestFeatureCell=nearest cell
  */
-/* Global::World_computeSlopeShade @ 00522840 */
+/* Global::World_biomeBorderDistance @ 00522840 */
 
-void __thiscall World_computeSlopeShade(void *this,int x,int y)
+void __thiscall World_biomeBorderDistance(void *this,int x,int y)
 
 {
   int iVar1;
@@ -7541,13 +7541,13 @@ void __thiscall World_computeSlopeShade(void *this,int x,int y)
 
 
 
-/* [AUDIT] proposed: stub_securityCookie  (confidence: low)
+/* [AUDIT] proposed: World_siteDistanceSq  (confidence: low)
  * purpose: Effectively empty stub; only runs stack-cookie check (cookie xors cancel)
  * vars: no real work
  */
-/* Global::stub_securityCookie @ 00522cc0 */
+/* Global::World_siteDistanceSq @ 00522cc0 */
 
-void stub_securityCookie(void)
+void World_siteDistanceSq(void)
 
 {
   __security_check_cookie(DAT_00583cc8 ^ (uint)&stack0xfffffffc ^ (uint)&stack0xfffffffc);

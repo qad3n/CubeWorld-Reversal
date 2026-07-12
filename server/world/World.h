@@ -19,10 +19,10 @@ undefined4 __cdecl identity_return(undefined4 param_1);
 void __thiscall cube::World::ctor_1(World *this,undefined4 param_1,World param_2);
 void __fastcall cube::World::ctor_0(undefined4 *param_1);
 undefined4 * __thiscall cube::World::vfunc_0(World *this,byte param_1);
-void __thiscall World_generateBiomeSample(void *this,uint param_1,float param_2,int param_3);
+void __thiscall World_baseHeightField(void *this,uint param_1,float param_2,int param_3);
 float10 __thiscall World_objectFalloffWeight(uint *param_1,uint *param_2,uint *param_3);
-float10 __thiscall World_sampleTerrainHeight(void *param_1,uint param_2,float param_3,int param_4);
-void __thiscall World_computeClimateColor(void *this,uint param_1,uint param_2);
+float10 __thiscall World_riverClimateGate(void *param_1,uint param_2,float param_3,int param_4);
+void __thiscall World_waterDepthField(void *this,uint param_1,uint param_2);
 void __thiscall World_getField0(void *this,undefined4 *param_1);
 
 #endif

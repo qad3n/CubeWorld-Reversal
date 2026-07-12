@@ -45434,9 +45434,9 @@ void ** __thiscall lib_fn_4d6670(void *this,void **param_1)
 
 
 
-/* Global::lib_fn_4d7870 @ 004d7870 */
+/* Global::World_featureTier @ 004d7870 */
 
-int lib_fn_4d7870(int param_1,int param_2)
+int World_featureTier(int param_1,int param_2)
 
 {
   double dVar1;
@@ -48589,7 +48589,7 @@ void __thiscall lib_fn_4e0740(void *this,int param_1,uint *param_2)
   ExceptionList = &local_10;
   uVar11 = __alldiv(param_2[2],param_2[3],0x10000,0);
   uVar12 = __alldiv(*param_2,param_2[1],0x10000,0);
-  fVar10 = World_sampleTerrainHeight(this,(uint)uVar12,(float)uVar11,param_1);
+  fVar10 = World_riverClimateGate(this,(uint)uVar12,(float)uVar11,param_1);
   if (0.0 <= 1.0 - (float)fVar10 * 50.0) goto LAB_004e0f1e;
   lib_fn_4c84b0((int)local_354);
   local_8 = 0;
@@ -51862,7 +51862,7 @@ LAB_004f2aef:
                     iVar47 = get_field_0x10((int)local_5c70);
                     iVar9 = get_field_0x1c((int)local_5c70);
                     pvVar4 = local_5c6c;
-                    pvVar10 = (void *)lib_fn_4fae90(local_5c6c,local_360,(float)local_5cb8._4_4_,
+                    pvVar10 = (void *)World_rockGroundBaseColor(local_5c6c,local_360,(float)local_5cb8._4_4_,
                                                    (uint)local_5c58,iVar9 + iVar47 + -1,iVar6);
                     pvVar10 = (void *)vec3_scale_to(pvVar10,pfVar44,fVar46);
                     pfVar11 = (float *)vec3_add(pvVar10,pfVar8,pfVar11);
@@ -52126,9 +52126,9 @@ LAB_004f2aef:
         }
         pvVar4 = local_5c6c;
         local_5cb0 = (void **)((int)(local_5cc4 << 8) / local_5cd0);
-        lib_fn_4f8570(local_5c6c,(float)((int)local_5cf0 + local_5cf4 + *local_5cfc * 0x100),
+        World_temperatureBlend(local_5c6c,(float)((int)local_5cf0 + local_5cf4 + *local_5cfc * 0x100),
                      (int)(local_5cf0 + *local_5cf8 * 0x40) + (int)local_5cb0);
-        lib_fn_4f8b40(pvVar4,(int)local_5cf0 + local_5cf4 + *local_5cfc * 0x100,
+        World_humidityBlend(pvVar4,(int)local_5cf0 + local_5cf4 + *local_5cfc * 0x100,
                      (int)(local_5cf0 + *local_5cf8 * 0x40) + (int)local_5cb0);
         if (*(int *)(local_5c98 + 0xc + local_5c9c * 4) == 2) {
           local_5c50 = (double)CONCAT44((void *)((int)pvVar4 + 0x1c),(undefined4)local_5c50);
@@ -56437,9 +56437,9 @@ LAB_004ee385:
                                 dVar34 = local_1c;
                                 cVar1 = (char)uVar36;
                               }
-                              fVar33 = (float10)lib_fn_4f8570(pvVar4,(float)local_5c8c,uVar3);
+                              fVar33 = (float10)World_temperatureBlend(pvVar4,(float)local_5c8c,uVar3);
                               local_5ce4 = (double)CONCAT44((float)fVar33,(undefined4)local_5ce4);
-                              fVar33 = (float10)lib_fn_4f8b40(pvVar4,(int)local_5c8c,
+                              fVar33 = (float10)World_humidityBlend(pvVar4,(int)local_5c8c,
                                                              (int)local_1c._4_4_);
                               local_5c50 = (double)CONCAT44((float)fVar33,(undefined4)local_5c50);
                               local_5c7c = (void **)((int)local_5c84 + -1);
@@ -56769,7 +56769,7 @@ LAB_004f024f:
                                   (int)((int)*local_5c84 + ((int)*local_5c84 >> 0x1f & 0x3fU)) >> 6)
     ;
     if (pvVar4 != (void *)0x0) {
-      lib_fn_522290(pvVar4,&local_5d48,&local_5d40);
+      World_featureCountRange(pvVar4,&local_5d48,&local_5d40);
     }
     World_getField0((void *)(iVar30 + 0x88),&local_5c7c);
     piVar7 = (int *)lib_fn_4d3de0((void *)(iVar30 + 0x88),&local_5da4);
@@ -60341,9 +60341,9 @@ undefined1 * __thiscall lib_fn_4f84a0(void *this,int param_1,int param_2,int par
 
 
 
-/* Global::lib_fn_4f8570 @ 004f8570 */
+/* Global::World_temperatureBlend @ 004f8570 */
 
-void __thiscall lib_fn_4f8570(void *this,float param_1,uint param_2)
+void __thiscall World_temperatureBlend(void *this,float param_1,uint param_2)
 
 {
   uint uVar1;
@@ -60546,9 +60546,9 @@ LAB_004f8b21:
 
 
 
-/* Global::lib_fn_4f8b40 @ 004f8b40 */
+/* Global::World_humidityBlend @ 004f8b40 */
 
-void __thiscall lib_fn_4f8b40(void *this,int param_1,int param_2)
+void __thiscall World_humidityBlend(void *this,int param_1,int param_2)
 
 {
   uint uVar1;
@@ -60902,7 +60902,7 @@ lib_fn_4f9450(void *this,undefined4 *param_1,float param_2,float param_3,int par
   local_14[0] = local_40;
   local_14[1] = local_30;
   local_14[2] = local_28;
-  fVar5 = World_sampleTerrainHeight(this,(uint)param_2,param_3,param_7);
+  fVar5 = World_riverClimateGate(this,(uint)param_2,param_3,param_7);
   local_2c = ((float)fVar5 * 10.0 - 0.3) * 1.5;
   if (0.0 <= local_2c) {
     if (1.0 < local_2c) {
@@ -61078,10 +61078,10 @@ lib_fn_4f9450(void *this,undefined4 *param_1,float param_2,float param_3,int par
 
 
 
-/* Global::lib_fn_4fae90 @ 004fae90 */
+/* Global::World_rockGroundBaseColor @ 004fae90 */
 
 void __thiscall
-lib_fn_4fae90(void *this,float *param_1,float param_2,uint param_3,int param_4,int param_5)
+World_rockGroundBaseColor(void *this,float *param_1,float param_2,uint param_3,int param_4,int param_5)
 
 {
   float fVar1;
@@ -61164,7 +61164,7 @@ lib_fn_4fae90(void *this,float *param_1,float param_2,uint param_3,int param_4,i
   }
   iVar4 = Chunk_getColumnAt(this,(uint)param_2,param_3,param_5);
   if (iVar4 == 0) {
-    fVar7 = (float10)lib_fn_4f8b40(this,(int)param_2,param_3);
+    fVar7 = (float10)World_humidityBlend(this,(int)param_2,param_3);
     local_28 = (float)fVar7;
   }
   else {
@@ -61746,7 +61746,7 @@ float10 __thiscall lib_fn_4fc100(void *param_1,float param_2,uint param_3,int pa
   if (iVar1 != 0) {
     return (float10)*(float *)(iVar1 + 4);
   }
-  fVar2 = (float10)lib_fn_4f8570(param_1,param_2,param_3);
+  fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
   return fVar2;
 }
 
@@ -61765,7 +61765,7 @@ float10 __thiscall lib_fn_4fc140(void *param_1,uint param_2,uint param_3,int par
   if (iVar1 != 0) {
     return (float10)*(float *)(iVar1 + 8);
   }
-  fVar2 = (float10)lib_fn_4f8b40(param_1,param_2,param_3);
+  fVar2 = (float10)World_humidityBlend(param_1,param_2,param_3);
   return fVar2;
 }
 
@@ -64018,7 +64018,7 @@ lib_fn_4ff3f0(void *this,int param_1,int param_2,int param_3,int param_4,int par
                   if (iVar6 == local_6c) {
                     iVar8 = Chunk_getColumnAt(pvVar5,(uint)local_48,(uint)fVar11,local_58);
                     if (iVar8 == 0) {
-                      fVar15 = (float10)lib_fn_4f8b40(pvVar5,(int)local_48,(int)fVar11);
+                      fVar15 = (float10)World_humidityBlend(pvVar5,(int)local_48,(int)fVar11);
                       local_54 = (float)fVar15;
                       local_4c = local_54;
                     }
@@ -64027,7 +64027,7 @@ lib_fn_4ff3f0(void *this,int param_1,int param_2,int param_3,int param_4,int par
                     }
                     iVar8 = Chunk_getColumnAt(pvVar5,(uint)local_48,(uint)fVar11,local_58);
                     if (iVar8 == 0) {
-                      fVar15 = (float10)lib_fn_4f8570(pvVar5,local_48,(uint)fVar11);
+                      fVar15 = (float10)World_temperatureBlend(pvVar5,local_48,(uint)fVar11);
                       fVar12 = (float)fVar15;
                       local_4c = fVar12;
                     }
@@ -64058,7 +64058,7 @@ lib_fn_4ff3f0(void *this,int param_1,int param_2,int param_3,int param_4,int par
                     local_98 = (double)CONCAT44(local_24 * local_54,(undefined4)local_98);
                     local_2c = uVar1;
                     puVar10 = (undefined8 *)
-                              lib_fn_4fae90(pvVar5,local_44,local_48,(uint)fVar11,iVar6,local_58);
+                              World_rockGroundBaseColor(pvVar5,local_44,local_48,(uint)fVar11,iVar6,local_58);
                     local_c = 1.0 - local_54;
                     local_20[3] = (float)*puVar10;
                     local_20[3] = local_20[3] * local_c;
@@ -64330,7 +64330,7 @@ lib_fn_4ffbf0(void *this,int param_1,int param_2,int param_3,int param_4,int par
                   if (iVar3 == local_34) {
                     iVar6 = Chunk_getColumnAt(pvVar4,(uint)local_1c,(uint)fVar12,local_28);
                     if (iVar6 == 0) {
-                      fVar14 = (float10)lib_fn_4f8b40(pvVar4,(int)local_1c,(int)fVar12);
+                      fVar14 = (float10)World_humidityBlend(pvVar4,(int)local_1c,(int)fVar12);
                       local_38 = (float)fVar14;
                       local_20 = local_38;
                     }
@@ -64339,7 +64339,7 @@ lib_fn_4ffbf0(void *this,int param_1,int param_2,int param_3,int param_4,int par
                     }
                     iVar6 = Chunk_getColumnAt(pvVar4,(uint)local_1c,(uint)fVar12,local_28);
                     if (iVar6 == 0) {
-                      fVar14 = (float10)lib_fn_4f8570(pvVar4,local_1c,(uint)fVar12);
+                      fVar14 = (float10)World_temperatureBlend(pvVar4,local_1c,(uint)fVar12);
                       fVar9 = (float)fVar14;
                       local_20 = fVar9;
                     }
@@ -70561,9 +70561,9 @@ LAB_0050b851:
 
 
 
-/* Global::lib_fn_50b870 @ 0050b870 */
+/* Global::World_generateRegionSite @ 0050b870 */
 
-int * __thiscall lib_fn_50b870(void *this,int param_1,int param_2)
+int * __thiscall World_generateRegionSite(void *this,int param_1,int param_2)
 
 {
   int iVar1;
@@ -72354,12 +72354,12 @@ LAB_0050e05a:
 
 
 
-/* std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1 @ 0050e080 */
+/* World_generateRegionFeatures @ 0050e080 */
 
 /* WARNING: Removing unreachable block (ram,0x0050eac3) */
 
 void __thiscall
-std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
+World_generateRegionFeatures
           (basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_> *this,int param_1,
           int param_2)
 
@@ -72538,7 +72538,7 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
     do {
       iVar18 = -2;
       do {
-        lib_fn_50b870(this,local_2d4 + iVar24,local_2d8 + iVar18);
+        World_generateRegionSite(this,local_2d4 + iVar24,local_2d8 + iVar18);
         iVar15 = local_2d8;
         iVar18 = iVar18 + 1;
       } while (iVar18 < 3);
@@ -72555,7 +72555,7 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
     }
     puVar17 = local_2f0;
     local_c = 0xffffffff;
-    iVar24 = lib_fn_4d7870(local_2d4,iVar15);
+    iVar24 = World_featureTier(local_2d4,iVar15);
     pcVar21 = rand_exref;
     puVar17[3] = iVar24;
     puVar17[4] = 0;
@@ -72582,7 +72582,7 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
       puVar17[5] = uVar6 + 4;
     }
     local_310 = 1.4013e-45;
-    lib_fn_522290(puVar7,&local_310,&local_21c);
+    World_featureCountRange(puVar7,&local_310,&local_21c);
     local_2c4 = (float *)0x0;
     local_2c0 = (float *)0x0;
     local_2bc = 0;
@@ -72664,7 +72664,7 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
             pfVar8[-1] = (float)local_308;
             uVar31 = __alldiv((uint)local_2e8._0_4_,(uint)local_308,0x10000,0);
             uVar32 = __alldiv((uint)pfVar8[-4],(uint)pfVar8[-3],0x10000,0);
-            fVar28 = (float10)World_generateBiomeSample(local_2f8,(uint)uVar32,(float)uVar31,0);
+            fVar28 = (float10)World_baseHeightField(local_2f8,(uint)uVar32,(float)uVar31,0);
             pfVar8[1] = (float)fVar28;
             pfVar8[5] = local_310;
             uVar31 = __alldiv((uint)pfVar8[-2],(uint)pfVar8[-1],0x10000,0);
@@ -72756,7 +72756,7 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
           }
           uVar31 = __alldiv((uint)pfVar8[-2],(uint)pfVar8[-1],0x10000,0);
           uVar32 = __alldiv((uint)pfVar8[-4],(uint)pfVar8[-3],0x10000,0);
-          fVar28 = (float10)World_generateBiomeSample(local_2f8,(uint)uVar32,(float)uVar31,0);
+          fVar28 = (float10)World_baseHeightField(local_2f8,(uint)uVar32,(float)uVar31,0);
           local_318 = (float)fVar28;
           pfVar8[1] = local_318;
           if (local_318 < 0.0) {
@@ -72852,10 +72852,10 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
         *(char *)((int)local_2fc + 0x19 + (int)puVar17) = (char)uVar14;
         local_2cc = (undefined **)((local_2d4 * 0x40 + uVar6) * 0x100 + 0x80);
         uVar6 = (local_2d8 * 0x40 + uVar19) * 0x100 + 0x80;
-        fVar28 = (float10)lib_fn_4f8b40(local_2f8,(int)local_2cc,uVar6);
+        fVar28 = (float10)World_humidityBlend(local_2f8,(int)local_2cc,uVar6);
         local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar28);
         if (0.8 < (float)fVar28) {
-          fVar28 = (float10)lib_fn_4f8570(this_00,(float)local_2cc,uVar6);
+          fVar28 = (float10)World_temperatureBlend(this_00,(float)local_2cc,uVar6);
           local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar28);
           *(char *)((int)local_2fc + 0x19 + (int)puVar17) = ((float)fVar28 <= 0.8) + '\x04';
         }
@@ -73229,12 +73229,12 @@ LAB_0050f27c:
       do {
         fVar26 = local_318;
         local_2dc = (float *)fVar22;
-        World_generateBiomeSample(local_2f8,local_2c8,fVar22,0);
-        World_generateBiomeSample(local_2f8,(uint)local_310,fVar22,0);
-        World_generateBiomeSample(local_2f8,local_2c8,(float)((int)fVar22 + 0x100),0);
+        World_baseHeightField(local_2f8,local_2c8,fVar22,0);
+        World_baseHeightField(local_2f8,(uint)local_310,fVar22,0);
+        World_baseHeightField(local_2f8,local_2c8,(float)((int)fVar22 + 0x100),0);
         fVar35 = 0.0;
         uVar31 = CONCAT44(local_310,0x50f829);
-        World_generateBiomeSample(local_2f8,(uint)local_310,(float)((int)fVar22 + 0x100),0);
+        World_baseHeightField(local_2f8,(uint)local_310,(float)((int)fVar22 + 0x100),0);
         if (((int)local_2ec + (int)local_2a8) % 0xd == 0) {
           local_9c = local_2f4;
           fStack_98 = fVar26;
@@ -76031,7 +76031,7 @@ void lib_fn_513760(float param_1,uint param_2,float param_3,int param_4,int para
   local_668 = (double)CONCAT44(local_61c,local_5ec);
   iVar5 = Chunk_getColumnAt(local_5a8,(uint)local_5d8,local_5dc,param_7);
   if (iVar5 == 0) {
-    fVar21 = (float10)lib_fn_4f8b40(pvVar10,(int)local_5d8,uVar9);
+    fVar21 = (float10)World_humidityBlend(pvVar10,(int)local_5d8,uVar9);
     local_5fc = (float)fVar21;
     local_594 = local_5fc;
   }
@@ -76204,7 +76204,7 @@ LAB_00513b5c:
   else {
     iVar5 = Chunk_getColumnAt(pvVar10,(uint)local_5d8,local_5dc,param_7);
     if (iVar5 == 0) {
-      fVar21 = (float10)lib_fn_4f8570(pvVar10,local_5d8,local_5dc);
+      fVar21 = (float10)World_temperatureBlend(pvVar10,local_5d8,local_5dc);
       fVar27 = (float)fVar21;
       local_594 = fVar27;
     }
@@ -77694,11 +77694,11 @@ LAB_00516682:
 
 
 
-/* Global::lib_fn_518630 @ 00518630 */
+/* Global::World_buildVoxelColumn @ 00518630 */
 
 /* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
-void __thiscall lib_fn_518630(void *this,float param_1,uint param_2)
+void __thiscall World_buildVoxelColumn(void *this,float param_1,uint param_2)
 
 {
   double *pdVar1;
@@ -78328,7 +78328,7 @@ void __thiscall lib_fn_518630(void *this,float param_1,uint param_2)
     do {
       iVar34 = -1;
       do {
-        std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
+        World_generateRegionFeatures
                   (this,(int)local_1328 + local_13d4,(int)local_1388 + iVar34);
         iVar34 = iVar34 + 1;
       } while (iVar34 < 2);
@@ -78398,9 +78398,9 @@ void __thiscall lib_fn_518630(void *this,float param_1,uint param_2)
                 uVar28 = (uVar28 - 1 | 0xffffff00) + 1;
               }
               iVar34 = (int)(local_12d4 + uVar28 * 0x40) * 0x20 + puVar16[0x2a];
-              fVar37 = (float10)lib_fn_4f8570(local_12e4,(float)local_12dc,(uint)local_12f0);
+              fVar37 = (float10)World_temperatureBlend(local_12e4,(float)local_12dc,(uint)local_12f0);
               *(float *)(iVar34 + 4) = (float)fVar37;
-              fVar37 = (float10)lib_fn_4f8b40(local_12e4,(int)local_12dc,(int)local_12f0);
+              fVar37 = (float10)World_humidityBlend(local_12e4,(int)local_12dc,(int)local_12f0);
               *(float *)(iVar34 + 8) = (float)fVar37;
               fVar37 = (float10)World_waterProximityInfluence(local_12e4,(int)local_12dc,(int)local_12f0);
               *(float *)(iVar34 + 0xc) = (float)fVar37;
@@ -78422,7 +78422,7 @@ void __thiscall lib_fn_518630(void *this,float param_1,uint param_2)
           if ((int)local_1330 <= (int)pfVar9) {
             local_1314 = local_12fc + ((int)local_1328 - (int)local_135c);
             do {
-              fVar37 = (float10)World_generateBiomeSample(pvVar10,(uint)local_1328,(float)local_1300,(int)puVar16
+              fVar37 = (float10)World_baseHeightField(pvVar10,(uint)local_1328,(float)local_1300,(int)puVar16
                                             );
               *local_1314 = (float)fVar37;
               local_1314 = local_1314 + 0x101;
@@ -78471,7 +78471,7 @@ LAB_00518bc0:
                0.3 < ABS((float)local_1300 - local_12fc[iVar34 + 0x101]))) {
               local_130d = '\x01';
             }
-            fVar37 = (float10)lib_fn_523d80((uint)local_131c,(float)local_12cc,(float)puVar16);
+            fVar37 = (float10)World_landMask((uint)local_131c,(float)local_12cc,(float)puVar16);
             local_12dc = (float *)(float)fVar37;
             if (0.25 < (float)local_12dc) {
               local_1308 = (void *)((int)local_1308 + 1);
@@ -78594,7 +78594,7 @@ LAB_00518bc0:
             local_130d = local_1350._3_1_;
             if (bVar36) {
               puVar12 = (undefined8 *)
-                        lib_fn_4fae90(this,local_720,(float)local_131c,(uint)local_12cc,
+                        World_rockGroundBaseColor(this,local_720,(float)local_131c,(uint)local_12cc,
                                      (int)local_12d8,(int)puVar16);
               local_5c = 1.0 - (float)local_12f8;
               local_64._0_4_ = (float)*puVar12;
@@ -78835,7 +78835,7 @@ LAB_00518bc0:
               pfVar9 = lib_fn_52d030(this,local_738,(float)local_131c,(uint)local_12cc,
                                     (int)local_12dc,(int)puVar16);
               puVar12 = (undefined8 *)
-                        lib_fn_4fae90(local_12e4,local_7b0,(float)local_131c,(uint)local_12cc,
+                        World_rockGroundBaseColor(local_12e4,local_7b0,(float)local_131c,(uint)local_12cc,
                                      (int)local_12dc,(int)puVar16);
               this = local_12e4;
               local_88._0_4_ = (float)*puVar12;
@@ -79138,7 +79138,7 @@ LAB_0051a91e:
       local_8 = CONCAT31(local_8._1_3_,2);
       iVar34 = Chunk_getColumnAt(this,(uint)local_1390,(uint)local_138c,(int)puVar16);
       if (iVar34 == 0) {
-        fVar37 = (float10)lib_fn_4f8570(this,(float)local_1390,(uint)local_138c);
+        fVar37 = (float10)World_temperatureBlend(this,(float)local_1390,(uint)local_138c);
         local_1300 = (float *)(float)fVar37;
         local_12d4 = local_1300;
       }
@@ -79147,7 +79147,7 @@ LAB_0051a91e:
       }
       iVar34 = Chunk_getColumnAt(this,(uint)local_1390,(uint)local_138c,(int)puVar16);
       if (iVar34 == 0) {
-        fVar37 = (float10)lib_fn_4f8b40(this,(int)local_1390,(int)local_138c);
+        fVar37 = (float10)World_humidityBlend(this,(int)local_1390,(int)local_138c);
         local_1314 = (float *)(float)fVar37;
         local_12d4 = local_1314;
       }
@@ -79368,13 +79368,13 @@ LAB_0051b05a:
                       piVar18 = (int *)*piVar18;
                     } while (piVar18 != local_137c);
                   }
-                  fVar37 = World_sampleNoiseAt(local_12e4,(uint)local_12d8,(uint)local_12f8);
+                  fVar37 = World_roadField(local_12e4,(uint)local_12d8,(uint)local_12f8);
                   local_12d4 = (float *)(float)fVar37;
                   if ((float)local_12d4 <= 0.6) {
-                    fVar37 = World_sampleTerrainHeight(pvVar10,(uint)local_12d8,(float)local_12f8,(int)puVar16);
+                    fVar37 = World_riverClimateGate(pvVar10,(uint)local_12d8,(float)local_12f8,(int)puVar16);
                     local_12d4 = (float *)(float)fVar37;
                     if (1.0 - (float)local_12d4 * 50.0 < 0.0) {
-                      fVar37 = (float10)lib_fn_523d80((uint)local_12d8,(float)local_12f8,
+                      fVar37 = (float10)World_landMask((uint)local_12d8,(float)local_12f8,
                                                      (float)puVar16);
                       local_12d4 = (float *)(float)fVar37;
                       iVar34 = Chunk_getColumnAt(pvVar10,(uint)local_12d8,(uint)local_12f8,(int)puVar16);
@@ -79413,13 +79413,13 @@ LAB_0051b45b:
           local_12e8 = local_1330;
           if ((int)local_1330 < (int)pfVar9) {
             do {
-              fVar37 = (float10)World_computeClimateColor(pvVar10,(uint)local_12d0,(uint)local_12e8);
+              fVar37 = (float10)World_waterDepthField(pvVar10,(uint)local_12d0,(uint)local_12e8);
               local_12d4 = (float *)(float)fVar37;
               local_1308 = (void *)(1.0 - (float)local_12d4 * 50.0);
-              fVar37 = World_sampleNoiseAt(pvVar10,(uint)local_12d0,(uint)local_12e8);
+              fVar37 = World_roadField(pvVar10,(uint)local_12d0,(uint)local_12e8);
               local_12f0 = (float *)(float)fVar37;
               if (0.0 <= (float)local_1308) {
-                fVar37 = (float10)World_generateBiomeSample(pvVar10,(uint)local_12d0,(float)local_12e8,
+                fVar37 = (float10)World_baseHeightField(pvVar10,(uint)local_12d0,(float)local_12e8,
                                                (int)puVar16);
                 local_12d4 = (float *)(float)fVar37;
                 local_1324 = local_12d4;
@@ -79482,7 +79482,7 @@ LAB_0051b45b:
                   iVar34 = *(int *)(local_1380 + 0x14);
                   if (((iVar34 == 1) || (iVar34 == 4)) || (iVar34 == 5)) {
                     puVar12 = (undefined8 *)
-                              lib_fn_4fae90(pvVar10,local_768,(float)local_12d0,(uint)local_12e8,
+                              World_rockGroundBaseColor(pvVar10,local_768,(float)local_12d0,(uint)local_12e8,
                                            (int)local_12d8,(int)puVar16);
                     local_28 = *puVar12;
                     local_20 = *(float *)(puVar12 + 1);
@@ -79495,7 +79495,7 @@ LAB_0051b45b:
                   local_12f4 = (float *)((float)local_12f0 * local_20);
                   local_170 = local_12f4;
                   puVar12 = (undefined8 *)
-                            lib_fn_4fae90(pvVar10,local_7d4,(float)local_12d0,(uint)local_12e8,
+                            World_rockGroundBaseColor(pvVar10,local_7d4,(float)local_12d0,(uint)local_12e8,
                                          (int)local_12d8,(int)puVar16);
                   local_bc = 1.0 - (float)local_12f0;
                   local_c4._0_4_ = (float)*puVar12;
@@ -79567,14 +79567,14 @@ LAB_0051b45b:
           local_12d0 = local_1330;
           if ((int)local_1330 < (int)pfVar9) {
             do {
-              fVar37 = World_sampleTerrainHeight(pvVar10,(uint)local_12e8,(float)local_12d0,(int)puVar16);
+              fVar37 = World_riverClimateGate(pvVar10,(uint)local_12e8,(float)local_12d0,(int)puVar16);
               local_12d4 = (float *)(float)fVar37;
               local_12f4 = (float *)(1.0 - (float)local_12d4 * 50.0);
               if (0.0 <= (float)local_12f4) {
-                fVar37 = World_sampleNoiseAt(pvVar10,(uint)local_12e8,(uint)local_12d0);
+                fVar37 = World_roadField(pvVar10,(uint)local_12e8,(uint)local_12d0);
                 local_12d4 = (float *)(float)fVar37;
                 if ((float)local_12d4 <= 0.95) {
-                  fVar37 = (float10)World_generateBiomeSample(pvVar10,(uint)local_12e8,(float)local_12d0,
+                  fVar37 = (float10)World_baseHeightField(pvVar10,(uint)local_12e8,(float)local_12d0,
                                                  (int)puVar16);
                   local_1308 = (void *)(float)fVar37;
                   if ((float)local_1308 < 0.0) {
@@ -80057,7 +80057,7 @@ LAB_0051ccba:
                   piVar18 = (int *)*piVar18;
                 } while (piVar18 != local_137c);
               }
-              fVar37 = World_sampleNoiseAt(local_12e4,(uint)local_12f8,(uint)local_12fc);
+              fVar37 = World_roadField(local_12e4,(uint)local_12f8,(uint)local_12fc);
               pvVar17 = local_12e4;
               puVar16 = local_130c;
               local_1338 = (float *)(float)fVar37;
@@ -80395,7 +80395,7 @@ LAB_0051d544:
           }
           iVar34 = Chunk_getColumnAt(pvVar10,(uint)(local_12dc + 2),(uint)local_1318,(int)puVar16);
           if (iVar34 == 0) {
-            fVar37 = (float10)lib_fn_4f8570(pvVar10,(float)(local_12dc + 2),(uint)local_1318);
+            fVar37 = (float10)World_temperatureBlend(pvVar10,(float)(local_12dc + 2),(uint)local_1318);
             local_12fc = (float *)(float)fVar37;
             local_1344 = (double)CONCAT44(local_12fc,(undefined4)local_1344);
           }
@@ -80474,7 +80474,7 @@ LAB_0051d544:
             }
             iVar34 = Chunk_getColumnAt(pvVar10,(uint)local_12d0,(uint)local_12e8,(int)puVar16);
             if (iVar34 == 0) {
-              fVar37 = (float10)lib_fn_4f8b40(pvVar10,(int)local_12d0,(int)local_12e8);
+              fVar37 = (float10)World_humidityBlend(pvVar10,(int)local_12d0,(int)local_12e8);
               local_12d4 = (float *)(float)fVar37;
               local_1300 = local_12d4;
             }
@@ -80545,7 +80545,7 @@ LAB_0051e2c2:
             }
             iVar34 = Chunk_getColumnAt(pvVar10,(uint)local_12d0,(uint)local_12e8,(int)puVar16);
             if (iVar34 == 0) {
-              lib_fn_4f8570(pvVar10,(float)local_12d0,(uint)local_12e8);
+              World_temperatureBlend(pvVar10,(float)local_12d0,(uint)local_12e8);
             }
             if ((int)local_1374 < (int)local_12d0 + (int)local_12f8) {
               local_12d0 = (float *)((int)local_135c + (0x100 - (int)local_12f8));
@@ -80574,7 +80574,7 @@ LAB_0051e2c2:
                                        0xffffff1fffffffff);
                   iVar34 = Chunk_getColumnAt(pvVar10,(uint)local_12d0,(uint)local_12e8,(int)puVar16);
                   if (iVar34 == 0) {
-                    fVar37 = (float10)lib_fn_4f8b40(pvVar10,(int)local_12d0,(int)local_12e8);
+                    fVar37 = (float10)World_humidityBlend(pvVar10,(int)local_12d0,(int)local_12e8);
                     fVar38 = (float)fVar37;
                     local_1344 = (double)CONCAT44(fVar38,(undefined4)local_1344);
                   }
@@ -80585,7 +80585,7 @@ LAB_0051e2c2:
                   if (0.8 < fVar38) {
                     iVar34 = Chunk_getColumnAt(pvVar10,(uint)local_12d0,(uint)local_12e8,(int)puVar16);
                     if (iVar34 == 0) {
-                      fVar37 = (float10)lib_fn_4f8570(pvVar10,(float)local_12d0,(uint)local_12e8);
+                      fVar37 = (float10)World_temperatureBlend(pvVar10,(float)local_12d0,(uint)local_12e8);
                       fVar38 = (float)fVar37;
                       local_1344 = (double)CONCAT44(fVar38,(undefined4)local_1344);
                     }
@@ -80875,7 +80875,7 @@ LAB_0051ec4a:
             puVar16 = local_130c;
             iVar34 = Chunk_getColumnAt(local_12e4,(uint)pfVar32,(uint)local_12d8,(int)local_130c);
             if (iVar34 == 0) {
-              fVar37 = (float10)lib_fn_4f8b40(pvVar10,(int)local_12d0,(int)local_12d8);
+              fVar37 = (float10)World_humidityBlend(pvVar10,(int)local_12d0,(int)local_12d8);
               local_12d4 = (float *)(float)fVar37;
               local_1334 = local_12d4;
             }
@@ -80893,7 +80893,7 @@ LAB_0051ec4a:
             }
             iVar34 = Chunk_getColumnAt(pvVar10,(uint)local_12d0,(uint)local_12d8,(int)puVar16);
             if (iVar34 == 0) {
-              fVar37 = (float10)lib_fn_4f8570(pvVar10,(float)local_12d0,(uint)local_12d8);
+              fVar37 = (float10)World_temperatureBlend(pvVar10,(float)local_12d0,(uint)local_12d8);
               local_12e0 = (float *)(float)fVar37;
               local_1334 = local_12e0;
             }
@@ -80942,10 +80942,10 @@ LAB_0051ec4a:
             puVar13 = World_getBlockAt(pvVar10,(uint)local_12d0,(uint)local_12d8,(int)local_12dc + -1,
                                    (int)puVar16);
             local_12f4 = (float *)((byte)puVar13[3] & 0xffffff1f);
-            fVar37 = World_sampleNoiseAt(pvVar10,(uint)local_12d0,(uint)local_12d8);
+            fVar37 = World_roadField(pvVar10,(uint)local_12d0,(uint)local_12d8);
             local_1334 = (float *)(float)fVar37;
             if ((float)local_1334 <= 0.0) {
-              fVar37 = (float10)World_computeClimateColor(pvVar10,(uint)local_12d0,(uint)local_12d8);
+              fVar37 = (float10)World_waterDepthField(pvVar10,(uint)local_12d0,(uint)local_12d8);
               local_1334 = (float *)(float)fVar37;
               if (1.0 <= (float)local_1334) {
                 puVar16 = operator_new(0x10f0);
@@ -81025,7 +81025,7 @@ LAB_0051f2a0:
                           iVar34 = Chunk_getColumnAt(pvVar10,(uint)local_12d0,(uint)local_12d8,
                                                 (int)local_130c);
                           if (iVar34 == 0) {
-                            fVar37 = (float10)lib_fn_4f8570(pvVar10,(float)local_12d0,
+                            fVar37 = (float10)World_temperatureBlend(pvVar10,(float)local_12d0,
                                                            (uint)local_12d8);
                             pfVar9 = (float *)(float)fVar37;
                             local_1334 = pfVar9;
@@ -81256,7 +81256,7 @@ LAB_0051fac0:
                     local_12d8 = (float *)((int)local_12dc + iVar34 + 1);
                     if (CONCAT31(extraout_var_00,bVar5) == 0) {
                       if (local_1320 == (float *)0xb) {
-                        fVar37 = World_sampleNoiseAt(local_12e4,(uint)local_12cc,(uint)local_1304);
+                        fVar37 = World_roadField(local_12e4,(uint)local_12cc,(uint)local_1304);
                         local_12ec = (uint *)(float)fVar37;
                         if ((0.75 < (float)local_12ec) &&
                            (((int)local_1304 * 0x5a + (int)local_12cc) % (int)local_1420 == 0)) {
@@ -82422,9 +82422,9 @@ LAB_00522210:
 
 
 
-/* Global::lib_fn_522290 @ 00522290 */
+/* Global::World_featureCountRange @ 00522290 */
 
-void __thiscall lib_fn_522290(void *this,undefined4 *param_1,undefined4 *param_2)
+void __thiscall World_featureCountRange(void *this,undefined4 *param_1,undefined4 *param_2)
 
 {
   *param_1 = 1;
@@ -82991,7 +82991,7 @@ float10 __thiscall lib_fn_523b90(void *param_1,float param_2,uint param_3,int pa
   
   iVar1 = Chunk_getColumnAt(param_1,(uint)param_2,param_3,param_5);
   if (iVar1 == 0) {
-    fVar2 = (float10)lib_fn_4f8570(param_1,param_2,param_3);
+    fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
     fVar6 = (float)fVar2;
   }
   else {
@@ -83007,7 +83007,7 @@ float10 __thiscall lib_fn_523b90(void *param_1,float param_2,uint param_3,int pa
   if (fVar4 * fVar6 <= 1.0) {
     iVar1 = Chunk_getColumnAt(param_1,(uint)param_2,param_3,param_5);
     if (iVar1 == 0) {
-      fVar2 = (float10)lib_fn_4f8570(param_1,param_2,param_3);
+      fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
       fVar6 = (float)fVar2;
     }
     else {
@@ -83019,7 +83019,7 @@ float10 __thiscall lib_fn_523b90(void *param_1,float param_2,uint param_3,int pa
   }
   iVar1 = Chunk_getColumnAt(param_1,(uint)param_2,param_3,param_5);
   if (iVar1 == 0) {
-    fVar2 = (float10)lib_fn_4f8570(param_1,param_2,param_3);
+    fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
     fVar6 = (float)fVar2;
   }
   else {
@@ -83030,7 +83030,7 @@ float10 __thiscall lib_fn_523b90(void *param_1,float param_2,uint param_3,int pa
   }
   iVar1 = Chunk_getColumnAt(param_1,(uint)param_2,param_3,param_5);
   if (iVar1 == 0) {
-    fVar2 = (float10)lib_fn_4f8570(param_1,param_2,param_3);
+    fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
     fVar6 = (float)fVar2;
   }
   else {
@@ -83042,9 +83042,9 @@ float10 __thiscall lib_fn_523b90(void *param_1,float param_2,uint param_3,int pa
 
 
 
-/* Global::lib_fn_523d80 @ 00523d80 */
+/* Global::World_landMask @ 00523d80 */
 
-void lib_fn_523d80(uint param_1,float param_2,float param_3)
+void World_landMask(uint param_1,float param_2,float param_3)
 
 {
   uint *this;
@@ -83138,21 +83138,21 @@ void lib_fn_523d80(uint param_1,float param_2,float param_3)
     }
   }
   if (0.0 <= local_88) {
-    fVar3 = World_sampleTerrainHeight(local_78,param_1,local_84,(int)local_68);
+    fVar3 = World_riverClimateGate(local_78,param_1,local_84,(int)local_68);
     local_8c = (float)fVar3;
     fVar5 = local_8c * 2.0;
     if (1.0 < fVar5) {
       fVar5 = 1.0;
     }
     local_80 = (fVar5 * 3.0 * fVar5 - fVar5 * 2.0 * fVar5 * fVar5) * local_88;
-    fVar3 = (float10)World_computeClimateColor(local_78,param_1,(uint)local_84);
+    fVar3 = (float10)World_waterDepthField(local_78,param_1,(uint)local_84);
     local_8c = (float)fVar3;
     fVar5 = local_8c;
     if (1.0 < local_8c) {
       fVar5 = 1.0;
     }
     local_68 = (fVar5 * 3.0 * fVar5 - fVar5 * 2.0 * fVar5 * fVar5) * local_80;
-    fVar3 = World_sampleNoiseAt(local_78,param_1,(uint)local_84);
+    fVar3 = World_roadField(local_78,param_1,(uint)local_84);
     local_8c = (float)fVar3;
     fVar5 = local_8c * 2.0;
     if (1.0 < local_8c * 2.0) {
@@ -83633,7 +83633,7 @@ lib_fn_524540(void *this,void *param_1,uint *param_2,uint param_3,undefined4 par
       (int)uStack_a4 < (int)local_6e4 + 0x100)))) {
     iVar3 = Chunk_getColumnAt(this,local_a8,uStack_a4,param_6);
     if (iVar3 == 0) {
-      fVar21 = (float10)lib_fn_4f8b40(this,*local_6f0,local_6f0[1]);
+      fVar21 = (float10)World_humidityBlend(this,*local_6f0,local_6f0[1]);
       local_6e4 = (float)fVar21;
       local_6a8 = CONCAT44(local_6e4,(uint *)local_6a8);
     }
@@ -86248,12 +86248,12 @@ lib_fn_5290d0(void *this,float param_1,float param_2,int param_3,undefined4 para
   local_14[2] = &LAB_0055611b;
   local_14[1] = ExceptionList;
   ExceptionList = local_14 + 1;
-  fVar5 = (float10)lib_fn_4f8b40(this,(int)param_1,(int)param_2);
+  fVar5 = (float10)World_humidityBlend(this,(int)param_1,(int)param_2);
   local_80 = (float)fVar5;
-  fVar5 = (float10)lib_fn_4f8570(this,param_1,(uint)param_2);
+  fVar5 = (float10)World_temperatureBlend(this,param_1,(uint)param_2);
   local_84 = (float)fVar5;
   fVar5 = (float10)World_waterProximityInfluence(this,(int)param_1,(int)param_2);
-  fVar6 = (float10)lib_fn_523d80((uint)param_1,param_2,0.0);
+  fVar6 = (float10)World_landMask((uint)param_1,param_2,0.0);
   local_90 = (void **)0x0;
   local_8c = (void **)0x0;
   local_88 = (void **)0x0;
@@ -88638,7 +88638,7 @@ lib_fn_52d030(void *this,float *param_1,float param_2,uint param_3,int param_4,i
   fVar4 = valueNoise2D(uVar12,uVar13,(double)param_4 * 0.4);
   iVar2 = Chunk_getColumnAt(this,(uint)param_2,param_3,param_5);
   if (iVar2 == 0) {
-    fVar5 = (float10)lib_fn_4f8b40(this,(int)param_2,param_3);
+    fVar5 = (float10)World_humidityBlend(this,(int)param_2,param_3);
     fVar9 = (float)fVar5;
   }
   else {
@@ -88646,7 +88646,7 @@ lib_fn_52d030(void *this,float *param_1,float param_2,uint param_3,int param_4,i
   }
   iVar2 = Chunk_getColumnAt(this,(uint)param_2,param_3,param_5);
   if (iVar2 == 0) {
-    lib_fn_4f8570(this,param_2,param_3);
+    World_temperatureBlend(this,param_2,param_3);
   }
   local_28 = 120.0;
   local_18 = 120.0;
@@ -91451,7 +91451,7 @@ LAB_00549798:
             uVar7 = local_34._4_4_;
             local_34._0_4_ = (float)uVar4;
             fVar5 = (float)local_34;
-            lib_fn_518630((void *)*local_50,fVar5,uVar7);
+            World_buildVoxelColumn((void *)*local_50,fVar5,uVar7);
           }
         }
         DVar9 = timeGetTime();

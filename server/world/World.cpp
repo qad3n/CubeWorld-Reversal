@@ -2848,7 +2848,7 @@ void __thiscall cube::World::ctor_1(World *this,undefined4 owner_arg,World param
   fVar10 = (float)(int)*pfVar9;
   pfVar9 = (float *)getElemPtr4((basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>
                                   *)(pWVar1 + 0x8000f0),0);
-  fVar15 = (float10)World_generateBiomeSample(pWVar1,(int)*pfVar9,fVar10,iVar14);
+  fVar15 = (float10)World_baseHeightField(pWVar1,(int)*pfVar9,fVar10,iVar14);
   local_40 = (World *)(float)fVar15;
   pfVar9 = (float *)getElemPtr4((basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>
                                   *)(pWVar1 + 0x8000f0),2);
@@ -3203,13 +3203,13 @@ undefined4 * __thiscall cube::World::vfunc_0(World *this,byte delete_flag)
 
 
 
-/* [AUDIT] proposed: World::generateBiomeSample  (confidence: low)
+/* [AUDIT] proposed: World::baseHeightField  (confidence: low)
  * purpose: Multi-octave terrain/biome generator: sums value-noise layers, computes climate/height and blends region data
  * vars: this+0x80018c.. many noise seed offsets; valueNoise2D noise; World_objectFalloffWeight/0052cd50 helpers
  */
-/* Global::World_generateBiomeSample @ 004f9b70 */
+/* Global::World_baseHeightField @ 004f9b70 */
 
-void __thiscall World_generateBiomeSample(void *this,uint x,float y,int z)
+void __thiscall World_baseHeightField(void *this,uint x,float y,int z)
 
 {
   uint *puVar1;
@@ -3336,7 +3336,7 @@ void __thiscall World_generateBiomeSample(void *this,uint x,float y,int z)
   local_140._0_4_ = local_140._0_4_ * local_140._0_4_;
   local_160 = local_160 * local_160;
   min_row = min_row * min_row;
-  fVar10 = World_sampleTerrainHeight(this,x,y,z_arg);
+  fVar10 = World_riverClimateGate(this,x,y,z_arg);
   fVar12 = (float)fVar10 * 4.0;
   if (1.0 < fVar12) {
     fVar12 = 1.0;
@@ -3478,7 +3478,7 @@ void __thiscall World_generateBiomeSample(void *this,uint x,float y,int z)
   fVar12 = x_float;
   local_168 = (float)fVar10;
   max_col = (max_col + (local_168 + 1.0) * 100.0 * local_14c) * (float)local_15c + local_164;
-  fVar10 = World_sampleNoiseAt(this,(uint)x_float,(uint)local_124);
+  fVar10 = World_roadField(this,(uint)x_float,(uint)local_124);
   x_float = (float)fVar10;
   if (0.5 < x_float) {
     fVar16 = (x_float - 0.5) * 2.0;
@@ -3487,7 +3487,7 @@ void __thiscall World_generateBiomeSample(void *this,uint x,float y,int z)
     }
     local_150 = (1.0 - (fVar16 * 3.0 * fVar16 - fVar16 * 2.0 * fVar16 * fVar16)) * local_150;
   }
-  fVar10 = (float10)World_computeClimateColor(this,(uint)fVar12,(uint)fVar15);
+  fVar10 = (float10)World_waterDepthField(this,(uint)fVar12,(uint)fVar15);
   x_float = (float)fVar10;
   fVar16 = x_float;
   if (x_float < 0.02) {
@@ -3790,13 +3790,13 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
 
 
 
-/* [AUDIT] proposed: World::sampleTerrainHeight  (confidence: med)
+/* [AUDIT] proposed: World::riverClimateGate  (confidence: med)
  * purpose: Computes terrain height/elevation at (x,y): base noise + slope + object/vegetation contributions
- * vars: this+0x800168..=noise offsets; World_objectFalloffWeight obj weight; World_computeSlopeShade slope; Chunk_getColumnAt tile
+ * vars: this+0x800168..=noise offsets; World_objectFalloffWeight obj weight; World_biomeBorderDistance slope; Chunk_getColumnAt tile
  */
-/* Global::World_sampleTerrainHeight @ 0052cd50 */
+/* Global::World_riverClimateGate @ 0052cd50 */
 
-float10 __thiscall World_sampleTerrainHeight(void *world,uint x,float y,int param_4)
+float10 __thiscall World_riverClimateGate(void *world,uint x,float y,int param_4)
 
 {
   float fVar1;
@@ -3831,7 +3831,7 @@ float10 __thiscall World_sampleTerrainHeight(void *world,uint x,float y,int para
   fVar7 = valueNoise2D(SUB84(local_20,0),(int)((ulonglong)local_20 >> 0x20),local_18);
   noise = (float)fVar7;
   elevation = ABS(elevation) * ((noise + 1.0) * 0.1 + 0.8);
-  fVar7 = (float10)World_computeSlopeShade(world_ptr,x,(int)y);
+  fVar7 = (float10)World_biomeBorderDistance(world_ptr,x,(int)y);
   noise = (float)fVar7;
   fVar11 = 1.0 - noise * 0.75;
   y = elevation;
@@ -3888,13 +3888,13 @@ float10 __thiscall World_sampleTerrainHeight(void *world,uint x,float y,int para
 
 
 
-/* [AUDIT] proposed: World::computeClimateColor  (confidence: low)
+/* [AUDIT] proposed: World::waterDepthField  (confidence: low)
  * purpose: Computes climate/lighting factor at (x,y) from noise, gradient cosine terms, and water proximity
- * vars: World_sampleNoiseAt=noise; World_sampleTerrainGradient=gradient; local_28=climate; local_1c=result
+ * vars: World_roadField=noise; World_sampleTerrainGradient=gradient; local_28=climate; local_1c=result
  */
-/* Global::World_computeClimateColor @ 0052d990 */
+/* Global::World_waterDepthField @ 0052d990 */
 
-void __thiscall World_computeClimateColor(void *this,uint x,uint y)
+void __thiscall World_waterDepthField(void *this,uint x,uint y)
 
 {
   uint *chunk;
@@ -3912,10 +3912,10 @@ void __thiscall World_computeClimateColor(void *this,uint x,uint y)
   uint security_cookie;
   
   security_cookie = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  fVar2 = World_sampleNoiseAt(this,x,y);
+  fVar2 = World_roadField(this,x,y);
   moisture = (float)fVar2;
   World_sampleTerrainGradient(this,&noise_a,x,y);
-  fVar2 = (float10)World_computeSlopeShade(this,x,y);
+  fVar2 = (float10)World_biomeBorderDistance(this,x,y);
   temperature = (float)fVar2;
   if (0.0 < moisture) {
     fVar4 = moisture * 3.0;
