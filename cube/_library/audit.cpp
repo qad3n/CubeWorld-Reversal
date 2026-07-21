@@ -17354,7 +17354,7 @@ void sqlite3_log_impl(undefined4 param_1,undefined4 param_2)
   local_53 = 2;
   local_54 = 0;
   local_64 = local_68;
-  sqlite3_VXPrintf(&local_6c,0,param_1,param_2);
+  sqlite3VXPrintf(&local_6c,0,param_1,param_2);
   sqlite3_StrAccumFinish(&local_6c);
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
   return;
@@ -17390,7 +17390,7 @@ void sqlite3_str_appendf(int param_1,undefined4 param_2,undefined4 param_3)
     local_c = 0;
     local_7 = 0;
     local_8 = 0;
-    sqlite3_VXPrintf(&local_20,0,param_3,&stack0x00000010);
+    sqlite3VXPrintf(&local_20,0,param_3,&stack0x00000010);
     sqlite3_StrAccumFinish(&local_20);
   }
   return;
@@ -17478,7 +17478,7 @@ void sqlite3_randomness(int param_1,undefined1 *param_2)
 
 
 /* [AUDIT] proposed: sqlite3_open  (confidence: med)
- * purpose: Opens a database file: forwards to openDatabase sqlite3_open_database with flags 6
+ * purpose: Opens a database file: forwards to openDatabase openDatabase with flags 6
  * vars: param_1=filename; param_2=out db
  */
 /* Global::sqlite3_open @ 00525590 */
@@ -17486,7 +17486,7 @@ void sqlite3_randomness(int param_1,undefined1 *param_2)
 void sqlite3_open(undefined4 param_1,undefined4 param_2)
 
 {
-  sqlite3_open_database(param_1,param_2,6,0);
+  openDatabase(param_1,param_2,6,0);
   return;
 }
 
@@ -19323,13 +19323,13 @@ undefined4 btree_decode_page_flags(int param_1,uint param_2)
 
 
 
-/* [AUDIT] proposed: vdbe::display_p4  (confidence: high)
- * purpose: Renders a VDBE opcode P4 operand to text (%.16g, keyinfo, collseq, vtab:%p, intarray, program)
- * vars: param_1=op; switch on subtype at +1
+/* [AUDIT] proposed: sqlite3_step  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3_step: identified by compiler-independent string-anchor match (7 unique-owner string anchors, score 37.0). Anchors: %.16g|%s(%d)|(blob)|collseq(%.20s)
+ * vars: -
  */
-/* Global::vdbe_display_p4 @ 005343b0 */
+/* Global::sqlite3_step_5343b0 @ 005343b0 */
 
-char * vdbe_display_p4(int param_1,char *param_2,int param_3)
+char * sqlite3_step_5343b0(int param_1,char *param_2,int param_3)
 
 {
   char cVar1;
@@ -20535,13 +20535,13 @@ int pager_pagecount_from_size(int param_1)
 
 
 
-/* [AUDIT] proposed: sqlite3::open_database  (confidence: high)
- * purpose: Allocates and initializes a database connection: registers BINARY/NOCASE/RTRIM collations, opens main btree
- * vars: param_2=out db; param_3 flags; param_4 vfs
+/* [AUDIT] proposed: openDatabase  (confidence: high)
+ * purpose: SQLite 3.7.15.2 openDatabase: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 13.3). Anchors: BINARY|MATCH|NOCASE|RTRIM
+ * vars: -
  */
-/* Global::sqlite3_open_database @ 00540b70 */
+/* Global::openDatabase @ 00540b70 */
 
-uint sqlite3_open_database(undefined4 param_1,undefined4 *param_2,uint param_3,undefined4 param_4)
+uint openDatabase(undefined4 param_1,undefined4 *param_2,uint param_3,undefined4 param_4)
 
 {
   uint uVar1;
@@ -20642,7 +20642,7 @@ uint sqlite3_open_database(undefined4 param_1,undefined4 *param_2,uint param_3,u
       _Dst[2] = uVar3;
       sqlite3_create_collation(_Dst,"NOCASE",1,0,sqlite3PagerRefcount,0);
       _Dst[10] = uVar1;
-      iVar4 = sqlite3_ParseUri(param_4,param_1,&param_3,_Dst,&local_8,&local_c);
+      iVar4 = sqlite3ParseUri(param_4,param_1,&param_3,_Dst,&local_8,&local_c);
       uVar3 = local_8;
       iVar2 = local_c;
       if (iVar4 == 0) {
@@ -23173,7 +23173,7 @@ void sqlite3_log_message(undefined4 param_1,undefined4 param_2,undefined4 param_
   local_df = 0;
   local_e0 = 0;
   local_f0 = local_f4;
-  sqlite3_VXPrintf(&local_f8,0,param_2,param_3);
+  sqlite3VXPrintf(&local_f8,0,param_2,param_3);
   uVar1 = sqlite3_StrAccumFinish(&local_f8);
   (*DAT_007666c4)(DAT_007666c8,param_1,uVar1);
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -26185,7 +26185,7 @@ void sqlite3_LeaveSchemaAndClose(int param_1)
 
 
 /* [AUDIT] proposed: sqlite3_LockAndPrepare  (confidence: high)
- * purpose: SQLite: safety-checks db, enters mutex, prepares statement (sqlite3_Prepare_5631b0), retries once on SCHEMA(0x11) error
+ * purpose: SQLite: safety-checks db, enters mutex, prepares statement (sqlite3Prepare_5631b0), retries once on SCHEMA(0x11) error
  * vars: param_6=out stmt; 0x15 misuse
  */
 /* Global::sqlite3_LockAndPrepare @ 0055d830 */
@@ -26207,10 +26207,10 @@ int sqlite3_LockAndPrepare(int param_1,undefined4 param_2,undefined4 param_3,und
     (*DAT_00766630)(*(int *)(param_1 + 0xc));
   }
   btree_enter_all(param_1);
-  iVar1 = sqlite3_Prepare(param_1,param_2,param_3,param_4,param_5,param_6,param_7);
+  iVar1 = sqlite3Prepare(param_1,param_2,param_3,param_4,param_5,param_6,param_7);
   if (iVar1 == 0x11) {
     sqlite3_finalize(*param_6);
-    iVar1 = sqlite3_Prepare(param_1,param_2,param_3,param_4,param_5,param_6,param_7);
+    iVar1 = sqlite3Prepare(param_1,param_2,param_3,param_4,param_5,param_6,param_7);
   }
   btree_leave_all(param_1);
   if (*(int *)(param_1 + 0xc) != 0) {
@@ -27717,14 +27717,14 @@ LAB_0056051a:
 
 
 
-/* [AUDIT] proposed: sqlite3_ParseUri  (confidence: high)
- * purpose: SQLite: parses a file: URI into filename plus query params, decoding %-escapes; validates vfs/cache/mode keywords
- * vars: param_3=inout flags; DAT_007665ec uri flag
+/* [AUDIT] proposed: sqlite3ParseUri  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3ParseUri: identified by compiler-independent string-anchor match (6 unique-owner string anchors, score 30.0). Anchors: %s mode not allowed: %s|access|cache|invalid uri authority: %.*s
+ * vars: -
  */
-/* Global::sqlite3_ParseUri @ 00560540 */
+/* Global::sqlite3ParseUri @ 00560540 */
 
 undefined4
-sqlite3_ParseUri(int *param_1,int *param_2,uint *param_3,int *param_4,undefined4 *param_5,
+sqlite3ParseUri(int *param_1,int *param_2,uint *param_3,int *param_4,undefined4 *param_5,
             undefined4 *param_6)
 
 {
@@ -28560,13 +28560,13 @@ void sqlite3_PcacheTruncate(undefined4 *param_1,uint param_2)
 
 
 
-/* [AUDIT] proposed: sqlite3_Prepare  (confidence: high)
- * purpose: SQLite: compiles SQL text into a Vdbe (sqlite3Prepare); checks schema locks, tokenizes, runs parser, sets tail pointer
- * vars: param_2=sql; param_6=out stmt; 'statement too long'
+/* [AUDIT] proposed: sqlite3Prepare  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3Prepare: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: database schema is locked: %s|statement too long
+ * vars: -
  */
-/* Global::sqlite3_Prepare @ 005631b0 */
+/* Global::sqlite3Prepare @ 005631b0 */
 
-uint sqlite3_Prepare(int param_1,void *param_2,size_t param_3,byte param_4,int param_5,int *param_6,
+uint sqlite3Prepare(int param_1,void *param_2,size_t param_3,byte param_4,int param_5,int *param_6,
                  int *param_7)
 
 {
@@ -28610,7 +28610,7 @@ uint sqlite3_Prepare(int param_1,void *param_2,size_t param_3,byte param_4,int p
     _Dst[0x6f] = 0x3ff00000;
     if (((int)param_3 < 0) || ((param_3 != 0 && (*(char *)((int)param_2 + (param_3 - 1)) == '\0'))))
     {
-      sqlite3_fn_564800(_Dst,param_2,&local_8);
+      sqlite3RunParser(_Dst,param_2,&local_8);
     }
     else {
       if (*(int *)(param_1 + 0x54) < (int)param_3) {
@@ -28631,7 +28631,7 @@ uint sqlite3_Prepare(int param_1,void *param_2,size_t param_3,byte param_4,int p
       else {
         memcpy(pvVar3,param_2,param_3);
         *(undefined1 *)((int)pvVar3 + param_3) = 0;
-        sqlite3_fn_564800(_Dst,pvVar3,&local_8);
+        sqlite3RunParser(_Dst,pvVar3,&local_8);
         sqlite3DbFree(param_1,pvVar3);
         _Dst[0x7e] = (int)param_2 + (_Dst[0x7e] - (int)pvVar3);
       }
@@ -29310,7 +29310,7 @@ void sqlite3_MPrintf(undefined4 *param_1,int param_2,undefined4 param_3)
   local_54 = '\0';
   local_6c = param_2;
   local_64 = local_68;
-  sqlite3_VXPrintf(&local_6c,1,param_3,&stack0x00000010);
+  sqlite3VXPrintf(&local_6c,1,param_3,&stack0x00000010);
   uVar1 = sqlite3_StrAccumFinish(&local_6c);
   if (local_54 != '\0') {
     *(undefined1 *)(param_2 + 0x38) = 1;
@@ -29447,7 +29447,7 @@ uint sqlite3_Step(int *param_1)
       }
       if ((*(byte *)(param_1 + 0x18) & 3) == 0) {
         puVar1[0x23] = puVar1[0x23] + 1;
-        uVar5 = sqlite3_fn_56c9c0(param_1);
+        uVar5 = sqlite3VdbeExec(param_1);
         puVar1[0x23] = puVar1[0x23] + -1;
       }
       else {
@@ -29789,7 +29789,7 @@ void sqlite3_VMPrintfInto(int param_1,undefined4 param_2,undefined4 param_3)
   local_54 = '\0';
   local_6c = param_1;
   local_64 = local_68;
-  sqlite3_VXPrintf(&local_6c,1,param_2,param_3);
+  sqlite3VXPrintf(&local_6c,1,param_2,param_3);
   sqlite3_StrAccumFinish(&local_6c);
   if (local_54 != '\0') {
     *(undefined1 *)(param_1 + 0x38) = 1;
@@ -29801,15 +29801,15 @@ void sqlite3_VMPrintfInto(int param_1,undefined4 param_2,undefined4 param_3)
 
 
 
-/* [AUDIT] proposed: sqlite3_VXPrintf  (confidence: high)
- * purpose: SQLite: the core printf engine (sqlite3VXPrintf); parses %-directives incl. %q/%z, integers, floats, hex tables
- * vars: '0123456789ABCDEF..','thstndrd','NULL)'
+/* [AUDIT] proposed: sqlite3VXPrintf  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3VXPrintf: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: 0123456789ABCDEF0123456789abcdef|thstndrd
+ * vars: -
  */
-/* Global::sqlite3_VXPrintf @ 0056aa30 */
+/* Global::sqlite3VXPrintf @ 0056aa30 */
 
 /* WARNING: Removing unreachable block (ram,0x0056b033) */
 
-void sqlite3_VXPrintf(int param_1,int param_2,byte *param_3,double *param_4)
+void sqlite3VXPrintf(int param_1,int param_2,byte *param_3,double *param_4)
 
 {
   byte bVar1;
@@ -30998,7 +30998,7 @@ undefined4 sqlite3_VdbeListExec(int *param_1)
     iVar7 = sqlite3_VdbeMemGrow(iVar11 + 0x78,0x20,0);
     if (iVar7 == 0) {
       *(undefined2 *)(iVar11 + 0x94) = 0x602;
-      pcVar4 = (char *)vdbe_display_p4(pbVar1,*(undefined4 *)(iVar11 + 0x7c),0x20);
+      pcVar4 = (char *)sqlite3_step_5343b0(pbVar1,*(undefined4 *)(iVar11 + 0x7c),0x20);
       pcVar3 = *(char **)(iVar11 + 0x7c);
       if (pcVar4 == pcVar3) {
         uVar5 = 0;

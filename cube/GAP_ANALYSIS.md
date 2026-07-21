@@ -4,7 +4,7 @@ Best-effort analysis of functions automation could not name (still `FUN_`), from
 sub-agent audit: proposed name, purpose, confidence, key variables. Inline `[AUDIT]`
 comments with the same content are also written above each function in the .cpp files.
 
-**3399 functions analyzed** — confidence: high=1544, med=1176, low=679.
+**3428 functions analyzed** — confidence: high=1577, med=1172, low=679.
 
 ## audit (1121)
 
@@ -358,13 +358,13 @@ comments with the same content are also written above each function in the .cpp 
 | 52e9b0 | `btree::init_page` | high | Parses a MemPage header/cell-pointer array validating layout; 'database corruption' on error |
 | 52eda0 | `btree::parse_cell_ptr` | high | Parses a single cell: decodes payload size and rowid varints, computes local/overflow split |
 | 533960 | `sqlite3_create_collation` | high | Registers/removes a collation sequence with encoding validation; 'unable to delete/modify collation...' |
-| 5343b0 | `vdbe::display_p4` | high | Renders a VDBE opcode P4 operand to text (%.16g, keyinfo, collseq, vtab:%p, intarray, program) |
+| 5343b0 | `sqlite3_step` | high | SQLite 3.7.15.2 sqlite3_step: identified by compiler-independent string-anchor match (7 unique-owner string anchors, score 37.0). Anchors: %.16g\|%s(%d)\|(blob)\|collseq(%.20s) |
 | 537090 | `sqlite3::find_coll_seq` | high | Finds or creates a collation sequence by name in the hash table, allocating a new entry if requested |
 | 537190 | `sqlite3::hash_find` | high | Hash-table lookup: walks bucket chain comparing case-folded names for an equal key |
 | 53b980 | `btree::free_page` | high | Frees a page back to the freelist (or overflow trunk), updating headers; 'database corruption' |
 | 53d2a0 | `btree::lock_and_read_page1` | high | Locks the btree and reads/validates database page 1 header; 'SQLite format 3' magic |
 | 53dee0 | `btree::modify_page_pointer` | high | Updates the child/overflow page number stored in a cell referenced by the ptrmap; 'database corruption' |
-| 540b70 | `sqlite3::open_database` | high | Allocates and initializes a database connection: registers BINARY/NOCASE/RTRIM collations, opens main btree |
+| 540b70 | `openDatabase` | high | SQLite 3.7.15.2 openDatabase: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 13.3). Anchors: BINARY\|MATCH\|NOCASE\|RTRIM |
 | 541500 | `pager::playback_journal` | high | Rolls back/plays back the rollback journal, restoring pages and truncating the database |
 | 541bd0 | `pager::delete_master_journal` | high | Reads a master-journal file and deletes it once no child journals still reference it |
 | 541e00 | `pager::end_transaction` | high | Ends a pager transaction: finalizes/deletes journal, releases lock, resets state |
@@ -401,14 +401,14 @@ comments with the same content are also written above each function in the .cpp 
 | 55fc70 | `sqlite3_PagerSavepoint` | high | SQLite: releases or rolls back to a savepoint (param_2=op), freeing sub-savepoint bitvecs and playing back journal |
 | 55fd60 | `sqlite3_PagerSetBusyhandler` | high | SQLite: stores busy-handler callback/arg (+0x98/+0x9c) and forwards it to the underlying VFS file (+0x28) |
 | 55fe80 | `sqlite3_PagerSetPagesize` | high | SQLite: changes the pager page size; reallocates temp buffer and recomputes total page count via __alldiv |
-| 560540 | `sqlite3_ParseUri` | high | SQLite: parses a file: URI into filename plus query params, decoding %-escapes; validates vfs/cache/mode keywords |
+| 560540 | `sqlite3ParseUri` | high | SQLite 3.7.15.2 sqlite3ParseUri: identified by compiler-independent string-anchor match (6 unique-owner string anchors, score 30.0). Anchors: %s mode not allowed: %s\|access\|cache\|invalid uri authority: %.*s |
 | 560cd0 | `sqlite3_PcacheSortDirtyList` | high | SQLite: merge-sorts the dirty-page list by page number using a 32-bucket bottom-up mergesort |
 | 560e50 | `sqlite3_PcacheMakeClean` | high | SQLite: makes one dirty page clean, unlinking it from the dirty list and notifying pager via DAT_00766664 |
 | 560e90 | `sqlite3_PcacheFetch` | high | SQLite: fetches (and optionally creates) a page in the pcache, recycling clean pages under memory pressure |
 | 561050 | `sqlite3_PcacheMakeDirty` | high | SQLite: marks a page dirty, clearing the dont-write bit and linking it onto the dirty list |
 | 561130 | `sqlite3_PcacheRelease` | high | SQLite: decrements a page's ref count and, if zero, either recycles it or links it into the dirty/clean LRU |
 | 5611b0 | `sqlite3_PcacheTruncate` | high | SQLite: discards cached pages with pgno > param_2 (cleaning dirty ones) and truncates the underlying pcache |
-| 5631b0 | `sqlite3_Prepare` | high | SQLite: compiles SQL text into a Vdbe (sqlite3Prepare); checks schema locks, tokenizes, runs parser, sets tail pointer |
+| 5631b0 | `sqlite3Prepare` | high | SQLite 3.7.15.2 sqlite3Prepare: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: database schema is locked: %s\|statement too long |
 | 563650 | `sqlite3_Put4byte` | high | SQLite: stores a 32-bit value into a 4-byte buffer in big-endian order |
 | 563800 | `sqlite3_Realloc` | high | SQLite: core reallocator with status accounting and soft-heap-limit alarm; delegates to xRealloc |
 | 563bf0 | `sqlite3_RegisterDateTimeFuncs` | high | SQLite: inserts the built-in date/time SQL functions ('julianday' etc.) into the global function hash |
@@ -425,7 +425,7 @@ comments with the same content are also written above each function in the .cpp 
 | 567fb0 | `sqlite3_StrAccumFinish` | high | SQLite: null-terminates a StrAccum and returns the string, copying to db memory if still in the static buffer |
 | 568030 | `sqlite3_StrAccumReset` | high | SQLite: frees any dynamically-allocated StrAccum buffer and resets it |
 | 568070 | `sqlite3_Strlen30` | high | SQLite: returns strlen masked to 30 bits (sqlite3Strlen30) |
-| 56aa30 | `sqlite3_VXPrintf` | high | SQLite: the core printf engine (sqlite3VXPrintf); parses %-directives incl. %q/%z, integers, floats, hex tables |
+| 56aa30 | `sqlite3VXPrintf` | high | SQLite 3.7.15.2 sqlite3VXPrintf: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: 0123456789ABCDEF0123456789abcdef\|thstndrd |
 | 56c290 | `sqlite3_VdbeChangeEncoding` | high | SQLite: converts a Mem's string to the target text encoding if it holds a string in a different encoding |
 | 56c910 | `sqlite3_VdbeDeleteAuxData` | high | SQLite: frees per-cursor/function auxiliary data entries not protected by the retained-args mask |
 | 5734d0 | `sqlite3_VdbeDelete` | high | SQLite: destroys a prepared statement; runs VdbeFreeResources, unlinks from db statement list, frees the Vdbe |
@@ -1132,7 +1132,7 @@ comments with the same content are also written above each function in the .cpp 
 | 6cf9e0 | `vorbis_validate_packet_crc` | low | Vorbis: validate/consume a packet field, signal error via bit-skip on mismatch |
 | 6d0300 | `vorbis_init_pcm_struct` | low | Vorbis: zero a 2-word (undefined8[2]) pcm/output descriptor |
 
-## other (791)
+## other (798)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -1221,8 +1221,8 @@ comments with the same content are also written above each function in the .cpp 
 | 4c9550 | `_fseeki64_wrapper` | high | Guarded wrapper around CRT _fseeki64 (returns -1 on NULL file) |
 | 4cef80 | `Options_saveToCfg` | high | Save game settings to options.cfg via ofstream (fullscreen,resolution,volumes,cameraSpeed,language...) |
 | 4e0080 | `QuestText_allocNode_2str` | high | Allocates a QuestText node (FUN_00630a40) and initializes two embedded strings from param |
-| 51ca20 | `sqlite3_likeFunc` | high | SQL LIKE/GLOB scalar function: validate ESCAPE, run patternCompare; sets 'pattern too complex'/'ESCAPE' errors |
-| 51cbf0 | `winShmMap` | high | Win32 VFS xShmMap: map/grow shared-memory region via CreateFileMappingW/MapViewOfFile |
+| 51ca20 | `likeFunc` | high | SQLite 3.7.15.2 likeFunc: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: ESCAPE expression must be a single character\|LIKE or GLOB pattern too complex |
+| 51cbf0 | `winShmMap` | high | SQLite 3.7.15.2 winShmMap: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: winShmMap1\|winShmMap2\|winShmMap3 |
 | 51ce10 | `sqlite3_aggregate_context` | high | Return/allocate per-aggregate context memory of given size (zeroed on first call) |
 | 51ce90 | `sqlite3_user_data` | high | Return function's user-data pointer (pApp at *ctx+4) |
 | 51cea0 | `sqlite3_context_db_handle` | high | Return sqlite3* db handle for a function context (ctx+8) |
@@ -1235,11 +1235,11 @@ comments with the same content are also written above each function in the .cpp 
 | 51dc70 | `sqlite3_hexFunc` | high | SQL hex() function: encode blob argument as uppercase hex text; 'string or blob too big' on overflow |
 | 51f1f0 | `datetimeFunc` | high | SQL datetime(): format '%04d-%02d-%02d %02d:%02d:%02d' |
 | 51f3c0 | `timeFunc` | high | SQL time(): format '%02d:%02d:%02d' |
-| 51f4c0 | `detachFunc` | high | SQL DETACH DATABASE builtin: detach named db |
+| 51f4c0 | `detachFunc` | high | SQLite 3.7.15.2 detachFunc: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 20.0). Anchors: cannot DETACH database within transaction\|cannot detach database %s\|database %s is locked\|no such database: %s |
 | 51f790 | `dateFunc` | high | SQL date(): format '%04d-%02d-%02d' |
 | 51f970 | `strftimeFunc` | high | SQL strftime(): full format-spec date/time formatter |
 | 5201b0 | `winAccess` | high | os_win.c winAccess: GetFileAttributes existence/perm check |
-| 520ea0 | `winFullPathname` | high | os_win.c winFullPathname: GetFullPathName A/W to abs path |
+| 520ea0 | `winFullPathname` | high | SQLite 3.7.15.2 winFullPathname: identified by compiler-independent string-anchor match (5 unique-owner string anchors, score 25.0). Anchors: %s\%s\|GetFullPathNameA1\|GetFullPathNameA2\|GetFullPathNameW1 |
 | 5218b0 | `winDlOpen` | high | os_win.c winDlOpen: LoadLibrary A/W |
 | 522480 | `winDlSym` | high | os_win.c winDlSym: GetProcAddress |
 | 522680 | `winDlClose` | high | os_win.c winDlClose: FreeLibrary |
@@ -1250,7 +1250,8 @@ comments with the same content are also written above each function in the .cpp 
 | 522c50 | `winCurrentTimeInt64` | high | os_win.c winCurrentTimeInt64: FILETIME to JD ms |
 | 523070 | `winWrite` | high | os_win.c winWrite: WriteFile with lock-retry |
 | 5231c0 | `winCurrentTime` | high | os_win.c winCurrentTime: FILETIME to julian day double |
-| 5239d0 | `winTruncate` | high | os_win.c winTruncate: SetEndOfFile |
+| 5232d0 | `sqlite3_complete` | high | SQLite 3.7.15.2 sqlite3_complete: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 16.0). Anchors: create\|explain\|temporary\|trigger |
+| 5239d0 | `winTruncate` | high | SQLite 3.7.15.2 winTruncate: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: winTruncate1\|winTruncate2 |
 | 523a80 | `sqlite3_get_table` | high | sqlite3_get_table: exec+accumulate rows into string array |
 | 524120 | `winSync` | high | os_win.c winSync: FlushFileBuffers |
 | 524570 | `winFileSize` | high | os_win.c winFileSize: GetFileSize |
@@ -1272,15 +1273,24 @@ comments with the same content are also written above each function in the .cpp 
 | 536250 | `sqlite3_exprDup` | high | Deep-duplicates an Expr node/tree (sqlite3ExprDup core), copying token and children |
 | 53a6a0 | `sqlite3_btree_get_and_init_page` | high | Fetches a btree page and initializes its MemPage; releases on init failure; 'database corruption' |
 | 53b110 | `sqlite3_get_boolean` | high | Parses a boolean text token ('on/off/false/yes/true/no/full') returning 0/1 or default |
+| 53b1b0 | `getTempname` | high | SQLite 3.7.15.2 getTempname: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: %s\etilqs_\|abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 |
 | 53b4b0 | `sqlite3_vdbe_grow_op_array` | high | Doubles/reallocs the Vdbe opcode array (nOpAlloc), returns SQLITE_NOMEM(7) on failure |
 | 53ce20 | `localtimeOffset` | high | date.c: compute local timezone offset (emits 'local time unavailable') |
 | 53dde0 | `winMbcsToUnicode` | high | os_win.c: convert MBCS filename to UTF-16 (AreFileApisANSI/MultiByteToWideChar) |
 | 53ec80 | `multiSelectCollSeq` | high | select.c: recurse compound select to find collating seq for a column |
-| 543120 | `parseModifier` | high | date.c: apply date modifier (localtime/unixepoch/weekday/start of/...) |
+| 543120 | `isDate` | high | SQLite 3.7.15.2 isDate: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: minute\|month\|second |
+| 546ad0 | `resolveSelectStep` | high | SQLite 3.7.15.2 resolveSelectStep: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 17.0). Anchors: GROUP\|ORDER\|a GROUP BY clause is required before HAVING\|aggregate functions are not allowed in the GROUP BY clause |
 | 5476b0 | `seekWinFile` | high | os_win.c: SetFilePointer to seek a Windows file handle |
 | 54a9a0 | `sqlite3Atoi64` | high | util.c: string to 64-bit int with overflow check (LARGEST_INT64) |
 | 54c100 | `bitvec::set` | high | Sets a bit (page number) in a Bitvec, descending sub-bitmaps and rehashing on overflow |
 | 54c2e0 | `bitvec::test` | high | Tests whether a bit (page number) is set in a Bitvec, descending sub-bitmaps/hash |
+| 5505a0 | `sqlite3CodeSubselect` | high | SQLite 3.7.15.2 sqlite3CodeSubselect: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: EXECUTE %s%s SUBQUERY %d\|SCALAR |
+| 558890 | `sqlite3GenerateConstraintChecks` | high | SQLite 3.7.15.2 sqlite3GenerateConstraintChecks: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 12.0). Anchors: %s.%s may not be NULL\|PRIMARY KEY must be unique\|constraint %s failed |
+| 55bc20 | `sqlite3Insert` | high | SQLite 3.7.15.2 sqlite3Insert: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 20.0). Anchors: %d values for %d columns\|rows inserted\|table %S has %d columns but %d values were supplied\|table %S has no column named %s |
+| 55cf00 | `sqlite3IsReadOnly` | high | SQLite 3.7.15.2 sqlite3IsReadOnly: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: cannot modify %s because it is a view\|table %s may not be modified |
+| 55d490 | `sqlite3LoadExtension` | high | SQLite 3.7.15.2 sqlite3LoadExtension: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 22.0). Anchors: error during initialization: %s\|no entry point [%s] in shared library [%s]\|not authorized\|sqlite3_extension_init |
+| 5788a0 | `sqlite3WhereBegin` | high | SQLite 3.7.15.2 sqlite3WhereBegin: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: at most %d tables in a join\|cannot use index: %s |
+| 57d530 | `vtabCallConstructor` | high | SQLite 3.7.15.2 vtabCallConstructor: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: hidden\|vtable constructor did not declare schema: %s\|vtable constructor failed: %s |
 | 5c0210 | `heap_sift_down_int` | high | Sift-down for a binary heap of 12-byte int-keyed elements, then push via FUN_005c20f0 (std sort_heap helper) |
 | 5c0350 | `heap_sift_down_float` | high | Sift-down for binary heap of 12-byte float-keyed elements, then FUN_005c21f0 push (std heap helper) |
 | 5c0ef0 | `insertion_sort_int` | high | Insertion sort over 12-byte elements keyed by int at offset+8 (std _Insertion_sort) |
@@ -1467,7 +1477,6 @@ comments with the same content are also written above each function in the .cpp 
 | 521950 | `sqlite3ValueText16` | med | Produce UTF-16 text from value, growing Mem buffer |
 | 522240 | `sqlite3_clear_bindings` | med | Clear all bindings of prepared stmt (misuse-guarded) |
 | 522720 | `winSectorSize_stub` | med | os_win.c winSectorSize stub (const return) |
-| 5232d0 | `sqlite3_complete` | med | sqlite3_complete: scan SQL for complete stmt (trigger/create/temporary/explain) |
 | 523720 | `sqlite3_complete16` | med | UTF-16 wrapper of sqlite3_complete |
 | 523900 | `renameQuoteFunc_a` | med | Build quoted identifier via '%.*s"%w"%s' (ALTER rename) |
 | 523c30 | `sqlite3_free_table` | med | Free result array from sqlite3_get_table |
@@ -1550,7 +1559,6 @@ comments with the same content are also written above each function in the .cpp 
 | 53aab0 | `sqlite3_where_get_mask` | med | Returns a 64-bit Bitmask with the bit set at the index of a cursor in the WhereMaskSet array |
 | 53ac70 | `sqlite3_pager_write_journal_nonce` | med | Fills journal header buffer with random bytes / nonce and writes it via the OS write callback |
 | 53ad90 | `sqlite3_code_row_trigger` | med | Builds a sub-Parse (0x230) and codes a row trigger program; '-- TRIGGER %s' |
-| 53b1b0 | `sqlite3_win_get_tempname` | med | Generates a random temp filename in the temp dir ('etilqs_' prefix, base62 suffix) |
 | 53b730 | `sqlite3_expr_list_height` | med | Scans an ExprList updating a running maximum of child expression heights |
 | 53b770 | `sqlite3_expr_height` | med | Walks an Expr tree computing its maximum height across all sub-expressions and lists |
 | 53c010 | `sqlite3_expr_is_constant` | med | Walks an Expr to determine if it is constant (rejecting column/agg/select TK node types) |
@@ -1567,7 +1575,6 @@ comments with the same content are also written above each function in the .cpp 
 | 544e80 | `wal::read_frame_or_journal` | med | Reads a WAL/journal frame at a computed offset, validating the frame magic |
 | 5452d0 | `hash::rehash` | med | Rebuilds a hash table's bucket array to a new size, re-linking all entries |
 | 546890 | `resolveCompoundOrderBy` | med | resolve.c: resolve ORDER BY on compound select (term out of range) |
-| 546ad0 | `resolveSelectStep` | med | resolve.c: resolve names in one SELECT (HAVING/GROUP BY checks) |
 | 548b20 | `setDateTimeToCurrent` | med | date.c: fill DateTime from current time (no-arg case) |
 | 549610 | `sqlite3AffinityType` | med | build.c: map declared type name to affinity char |
 | 54a160 | `strAccum::append_spaces` | med | Appends param_2 space characters to a StrAccum, growing the buffer in 29-char runs |
@@ -3063,46 +3070,69 @@ comments with the same content are also written above each function in the .cpp 
 | 6816c0 | `SceneLoader::ctor` | low | Constructs loader/deserialization context: default-inits eight string fields (0x20..0x58), stores params, builds a pair-vector |
 | 681c70 | `PlasmaGraphics::loadDisplay` | low | Main scene/display deserializer: validates "PlasmaGraphics" magic, throws plasma::Exception on mismatch, dispatches Shape/Widget types |
 
-## sqlite (160)
+## sqlite (182)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
 | 51d070 | `sqlite3_versionFunc` | high | SQL sqlite_version() implementation: result_text of library version "3.7.15.2" |
-| 51e390 | `attachFunc` | high | SQL ATTACH DATABASE builtin: open+attach db to connection |
-| 521a60 | `sqlite3_table_column_metadata` | high | Return column metadata; errs no such table/column/view |
+| 51e390 | `attachFunc` | high | SQLite 3.7.15.2 attachFunc: identified by compiler-independent string-anchor match (5 unique-owner string anchors, score 28.0). Anchors: attached databases must use the same text encoding as main database\|cannot ATTACH database within transaction\|database %s is already in use\|database is already attached |
+| 521a60 | `sqlite3_blob_open` | high | SQLite 3.7.15.2 sqlite3_blob_open: identified by compiler-independent string-anchor match (6 unique-owner string anchors, score 30.0). Anchors: cannot open %s column for writing\|cannot open view: %s\|cannot open virtual table: %s\|foreign key |
 | 525e30 | `sqlite3_errmsg` | high | sqlite3_errmsg: return UTF-8 error message string |
 | 528c60 | `sqlite3FkActionName` | high | fkey actionName: map FK action code (6-9) to string RESTRICT/SET NULL/SET DEFAULT/CASCADE else NO ACTION |
-| 52e230 | `sqlite3_blob_seek_to_row` | high | blobSeekToRow: seeks incremental-blob cursor to a rowid, errors "cannot open value of type"/"no such rowid" |
+| 52e230 | `blobSeekToRow` | high | SQLite 3.7.15.2 blobSeekToRow: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: cannot open value of type %s\|integer\|no such rowid: %lld |
 | 52f200 | `sqlite3_pragma_temp_store` | high | changeTempStorage: handles PRAGMA temp_store, rejects change inside a transaction ("temporary storage cannot...") |
 | 52f2b0 | `sqlite3_integck_append_msg` | high | checkAppendMsg: formats and appends a message to the integrity_check StrAccum report |
-| 52f410 | `sqlite3_integck_list` | high | checkList: verifies an overflow/freelist page chain length, errors "pages missing"/"freelist leaf count too big" |
-| 52f610 | `sqlite3_integck_ptrmap` | high | checkPtrmap: reads a pointer-map entry and verifies it matches expected (type,parent), else reports mismatch |
-| 52f6a0 | `sqlite3_integck_ref` | high | checkRef: marks a page as referenced in the integrity-check bitmap, errors on invalid/2nd reference |
-| 52f720 | `sqlite3_integck_tree_page` | high | checkTreePage: recursively walks a btree page verifying cells/rowid order/depth for integrity_check |
-| 5338d0 | `sqlite3_corruptSchema` | high | Reports malformed database schema; sets SQLITE_CORRUPT and formats error into pParse |
+| 52f410 | `checkList` | high | SQLite 3.7.15.2 checkList: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: %d of %d pages missing from overflow list starting at %d\|failed to get page %d\|freelist leaf count too big on page %d |
+| 52f610 | `checkPtrmap` | high | SQLite 3.7.15.2 checkPtrmap: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: Bad ptr map entry key=%d expected=(%d,%d) got=(%d,%d)\|Failed to read ptrmap key=%d |
+| 52f6a0 | `checkRef` | high | SQLite 3.7.15.2 checkRef: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: 2nd reference to page %d\|invalid page number %d |
+| 52f720 | `checkTreePage` | high | SQLite 3.7.15.2 checkTreePage: identified by compiler-independent string-anchor match (11 unique-owner string anchors, score 55.0). Anchors: Child page depth differs\|Corruption detected in cell %d on page %d\|Fragmentation of %d bytes reported as %d on page %d\|Multiple uses for byte %d of page %d |
+| 5338d0 | `corruptSchema` | high | SQLite 3.7.15.2 corruptSchema: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.6). Anchors: %s - %s\|c0e09560d26f0a6456be9dd3447f5311eb4f238f\|database corruption at line %d of [%.10s]\|malformed database schema (%s) |
 | 533c50 | `sqlite3_createTableStmt` | high | Synthesizes a 'CREATE TABLE ...' text from a Table's column list |
 | 533f40 | `sqlite3_defragmentPage` | high | Compacts a btree page's free space, relocating cells; corrupt-checks offsets |
 | 534c40 | `sqlite3_explainComposite` | high | EXPLAIN QUERY PLAN row for compound select (UNION/EXCEPT/INTERSECT), emits OP_Explain |
-| 534f70 | `sqlite3_explainOneScan` | high | Emits EXPLAIN QUERY PLAN SEARCH/SCAN row for one table/index in the WHERE plan |
+| 534f70 | `explainOneScan` | high | SQLite 3.7.15.2 explainOneScan: identified by compiler-independent string-anchor match (12 unique-owner string anchors, score 60.0). Anchors: %s (rowid<?)\|%s (rowid=?)\|%s (rowid>? AND rowid<?)\|%s (rowid>?) |
 | 5352d0 | `sqlite3_explainTempTable` | high | Emits EXPLAIN 'USE TEMP B-TREE FOR %s' plan row |
 | 539780 | `sqlite3_btree_free_space` | high | Frees a cell region on a btree page and coalesces adjacent freeblocks; 'database corruption' |
-| 53d620 | `lookupName` | high | resolve.c: resolve column reference (no such column/ambiguous/aliased agg) |
-| 53e4b0 | `multiSelect` | high | select.c: compile compound SELECT (UNION/INTERSECT/EXCEPT/UNION ALL) |
+| 53d620 | `lookupName` | high | SQLite 3.7.15.2 lookupName: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 24.0). Anchors: %s: %s\|%s: %s.%s\|%s: %s.%s.%s\|ambiguous column name |
+| 53e4b0 | `multiSelect` | high | SQLite 3.7.15.2 multiSelect: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 22.0). Anchors: LIMIT clause should come after %s not before\|ORDER BY clause should come after %s not before\|SELECTs to the left and right of %s do not have the same number of result columns\|UNION |
 | 53ecd0 | `multiSelectOrderBy` | high | select.c: compile compound SELECT that has ORDER BY |
 | 540a20 | `newDatabase` | high | btree.c: format a fresh page1 ('SQLite format 3' magic header) |
-| 540ff0 | `openStatTable` | high | analyze.c: create/clear sqlite_stat1 table for ANALYZE |
+| 540ff0 | `openStatTable` | high | SQLite 3.7.15.2 openStatTable: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 14.0). Anchors: CREATE TABLE %Q.%s(%s)\|DELETE FROM %Q.%s WHERE %s=%Q\|sqlite_stat1\|tbl,idx,stat |
+| 547b70 | `selectExpander` | high | SQLite 3.7.15.2 selectExpander: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 22.0). Anchors: %s.%s\|no such table: %s\|no tables specified\|sqlite_subquery_%p_ |
 | 548980 | `selectOpName` | high | select.c: return operator name string for compound op |
-| 5490f0 | `sqlite3AddColumn` | high | build.c: add column to table def (too many/duplicate column name) |
+| 5490f0 | `sqlite3AddColumn` | high | SQLite 3.7.15.2 sqlite3AddColumn: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: duplicate column name: %s\|too many columns on %s |
 | 549280 | `sqlite3AddDefaultValue` | high | build.c: set column default ('not constant' error) |
-| 549420 | `sqlite3AddPrimaryKey` | high | build.c: mark PRIMARY KEY / AUTOINCREMENT constraints |
-| 5496d0 | `sqlite3AlterBeginAddColumn` | high | alter.c: begin ALTER TABLE ADD COLUMN (virtual/view checks) |
-| 5498e0 | `sqlite3AlterFinishAddColumn` | high | alter.c: finish ADD COLUMN, rewrite schema (constraint checks) |
-| 549b90 | `sqlite3AlterRenameTable` | high | alter.c: rename a table and rewrite dependent schema |
+| 549420 | `sqlite3AddPrimaryKey` | high | SQLite 3.7.15.2 sqlite3AddPrimaryKey: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: AUTOINCREMENT is only allowed on an INTEGER PRIMARY KEY\|table "%s" has more than one primary key |
+| 5496d0 | `sqlite3AlterBeginAddColumn` | high | SQLite 3.7.15.2 sqlite3AlterBeginAddColumn: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: Cannot add a column to a view\|sqlite_altertab_%s\|virtual tables may not be altered |
+| 5498e0 | `sqlite3AlterFinishAddColumn` | high | SQLite 3.7.15.2 sqlite3AlterFinishAddColumn: identified by compiler-independent string-anchor match (5 unique-owner string anchors, score 25.6). Anchors: Cannot add a NOT NULL column with default value NULL\|Cannot add a PRIMARY KEY column\|Cannot add a REFERENCES column with non-NULL default value\|Cannot add a UNIQUE column |
+| 549b90 | `sqlite3AlterRenameTable` | high | SQLite 3.7.15.2 sqlite3AlterRenameTable: identified by compiler-independent string-anchor match (5 unique-owner string anchors, score 27.6). Anchors: UPDATE "%w".%s SET sql = sqlite_rename_parent(sql, %Q, %Q) WHERE %s;\|UPDATE "%w".sqlite_sequence set name = %Q WHERE name = %Q\|UPDATE sqlite_temp_master SET sql = sqlite_rename_trigger(sql, %Q), tbl_name = %Q WHERE %s;\|sqlite_master |
 | 549ed0 | `sqlite3AnalysisLoad` | high | analyze.c: load index stats from sqlite_stat1 into schema |
 | 54abe0 | `sqlite3AuthRead` | high | auth.c: authorize column read ('ROWID' pseudo-column) |
-| 54acc0 | `sqlite3AuthCheck` | high | auth.c: invoke authorizer callback (access prohibited/malfunction) |
+| 54acc0 | `sqlite3AuthReadCol` | high | SQLite 3.7.15.2 sqlite3AuthReadCol: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 12.0). Anchors: access to %s.%s is prohibited\|access to %s.%s.%s is prohibited\|authorizer malfunction |
 | 54b750 | `sqlite3BeginTransaction` | high | build.c: emit BEGIN transaction opcodes |
-| 54b890 | `sqlite3BeginTrigger` | high | trigger.c: begin CREATE TRIGGER, validate target/timing |
+| 54b890 | `sqlite3Parser` | high | SQLite 3.7.15.2 sqlite3Parser: identified by compiler-independent string-anchor match (8 unique-owner string anchors, score 41.9). Anchors: AFTER\|BEFORE\|cannot create %s trigger on view: %S\|cannot create INSTEAD OF trigger on table: %S |
+| 54d880 | `sqlite3BtreeIntegrityCheck` | high | SQLite 3.7.15.2 sqlite3BtreeIntegrityCheck: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: Outstanding page count goes from %d to %d during this analysis\|Page %d is never used\|Pointer map page %d is referenced |
+| 551270 | `sqlite3CreateForeignKey` | high | SQLite 3.7.15.2 sqlite3CreateForeignKey: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: foreign key on %s should reference only one column of table %T\|number of columns in foreign key does not match the number of columns in the referenced table\|unknown column "%s" in foreign key definition |
+| 551790 | `sqlite3CreateIndex` | high | SQLite 3.7.15.2 sqlite3CreateIndex: identified by compiler-independent string-anchor match (11 unique-owner string anchors, score 58.9). Anchors: BINARY\|CREATE%s INDEX %.*s\|INSERT INTO %Q.%s VALUES('index',%Q,%Q,#%d,%Q);\|conflicting ON CONFLICT clauses specified |
+| 552ca0 | `sqlite3DropIndex` | high | SQLite 3.7.15.2 sqlite3DropIndex: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.6). Anchors: DELETE FROM %Q.%s WHERE name=%Q AND type='index'\|index associated with UNIQUE or PRIMARY KEY constraint cannot be dropped\|no such index: %S\|sqlite_master |
+| 552e90 | `sqlite3DropTable` | high | SQLite 3.7.15.2 sqlite3DropTable: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 20.9). Anchors: sqlite_\|sqlite_master\|sqlite_stat\|sqlite_temp_master |
+| 553490 | `sqlite3EndTable` | high | SQLite 3.7.15.2 sqlite3EndTable: identified by compiler-independent string-anchor match (5 unique-owner string anchors, score 27.6). Anchors: CREATE %s %.*s\|CREATE TABLE %Q.sqlite_sequence(name,seq)\|TABLE\|UPDATE %Q.%s SET type='%s', name=%Q, tbl_name=%Q, rootpage=#%d, sql=%Q WHERE rowid=#%d |
+| 553e40 | `sqlite3ExprAssignVarNumber` | high | SQLite 3.7.15.2 sqlite3ExprAssignVarNumber: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: too many SQL variables\|variable number must be between ?1 and ?%d |
+| 554e20 | `sqlite3ExprCodeTarget` | high | SQLite 3.7.15.2 sqlite3ExprCodeTarget: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: RAISE() may only be used within a trigger-program\|misuse of aggregate: %s()\|unknown function: %.*s() |
+| 55b750 | `sqlite3InitOne` | high | SQLite 3.7.15.2 sqlite3InitOne: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 12.6). Anchors: SELECT name, rootpage, sql FROM '%q'.%s ORDER BY rowid\|attached databases must use the same text encoding as main database\|sqlite_master\|sqlite_temp_master |
+| 55d020 | `sqlite3JoinType` | high | SQLite 3.7.15.2 sqlite3JoinType: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: RIGHT and FULL OUTER JOINs are not currently supported\|naturaleftouterightfullinnercross\|unknown or unsupported join type: %T %T%s%T |
+| 55d730 | `sqlite3LocateTable` | high | SQLite 3.7.15.2 sqlite3LocateTable: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 14.0). Anchors: %s: %s\|%s: %s.%s\|no such table\|no such view |
+| 561270 | `sqlite3Pragma` | high | SQLite 3.7.15.2 sqlite3Pragma: identified by compiler-independent string-anchor match (49 unique-owner string anchors, score 247.0). Anchors: Safety level may not be changed inside a transaction\|auto_vacuum\|busy_timeout\|cache_size |
+| 564800 | `sqlite3RunParser` | high | SQLite 3.7.15.2 sqlite3RunParser: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: interrupt\|unrecognized token: "%T" |
+| 5654f0 | `sqlite3Select` | high | SQLite 3.7.15.2 sqlite3Select: identified by compiler-independent string-anchor match (5 unique-owner string anchors, score 25.0). Anchors: DISTINCT\|GROUP BY\|ORDER BY\|only a single result allowed for a SELECT that is part of an expression |
+| 567240 | `sqlite3SrcListAppendFromTerm` | high | SQLite 3.7.15.2 sqlite3SrcListAppendFromTerm: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: USING\|a JOIN clause is required before %s |
+| 567880 | `sqlite3StartTable` | high | SQLite 3.7.15.2 sqlite3StartTable: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 17.6). Anchors: sqlite_master\|sqlite_sequence\|sqlite_temp_master\|table %T already exists |
+| 568810 | `sqlite3TwoPartName` | high | SQLite 3.7.15.2 sqlite3TwoPartName: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: corrupt database\|unknown database %T |
+| 568b40 | `sqlite3Update` | high | SQLite 3.7.15.2 sqlite3Update: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: no such column: %s\|rows updated |
+| 56c9c0 | `sqlite3VdbeExec` | high | SQLite 3.7.15.2 sqlite3VdbeExec: identified by compiler-independent string-anchor match (15 unique-owner string anchors, score 78.6). Anchors: SELECT name, rootpage, sql FROM '%q'.%s WHERE %s ORDER BY rowid\|abort at %d in [%s]: %s\|cannot change %s wal mode from within a transaction\|cannot commit - no transaction is active |
+| 573170 | `sqlite3VdbeExpandSql` | high | SQLite 3.7.15.2 sqlite3VdbeExpandSql: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 11.0). Anchors: %!.15g\|'%.*q'\|zeroblob(%d) |
+| 5771f0 | `sqlite3VtabFinishParse` | high | SQLite 3.7.15.2 sqlite3VtabFinishParse: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.6). Anchors: CREATE VIRTUAL TABLE %T\|UPDATE %Q.%s SET type='table', name=%Q, tbl_name=%Q, rootpage=0, sql=%Q WHERE rowid=#%d\|name='%q' AND type='table'\|sqlite_master |
+| 57c2a0 | `sqlite3VdbeHalt` | high | SQLite 3.7.15.2 sqlite3VdbeHalt: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 20.0). Anchors: %s-mjXXXXXX9XXz\|-mj%06X9%02X\|MJ collide: %s\|MJ delete: %s |
 | 524a00 | `sqlite3_backup_step` | med | sqlite3_backup_step: copy pages src->dest btree |
 | 525400 | `sqlite3_backup_finish` | med | sqlite3_backup_finish: teardown backup, unlock |
 | 528cb0 | `sqlite3VdbeDupErrMsg` | med | Duplicate a stored error/description string into db memory and append it to the auto-cleanup pointer array |
@@ -3173,7 +3203,6 @@ comments with the same content are also written above each function in the .cpp 
 | 545ce0 | `analyzeAggregate` | med | select.c: register aggregate (DISTINCT aggregates must have exactly one arg) |
 | 5461b0 | `resolveOrderByTermToExprList` | med | resolve.c: bind ORDER/GROUP BY term to a result column |
 | 5478e0 | `sqlite3CreateColumnExpr` | med | select.c: build TK_COLUMN Expr for a result column ('rowid') |
-| 547b70 | `selectExpander` | med | select.c: expand '*'/subquery columns, resolve tables (no such table) |
 | 548280 | `generateOutputSubroutine` | med | select.c: emit output subroutine for compound select rows |
 | 549fd0 | `sqlite3EndTable` | med | build.c: finalize CREATE TABLE, write schema record |
 | 54c3f0 | `sqlite3BtreeBeginTrans` | med | btree.c: begin b-tree transaction (lock+page1) |

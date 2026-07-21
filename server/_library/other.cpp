@@ -2325,13 +2325,13 @@ undefined1 __cdecl sqlite3_value_numeric_type(int param_1)
 
 
 
-/* [AUDIT] proposed: sqlite3_likeFunc  (confidence: high)
- * purpose: SQL LIKE/GLOB implementation; validates ESCAPE and pattern complexity
- * vars: param_1=context
+/* [AUDIT] proposed: likeFunc  (confidence: high)
+ * purpose: SQLite 3.7.15.2 likeFunc: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: ESCAPE expression must be a single character|LIKE or GLOB pattern too complex
+ * vars: -
  */
-/* Global::sqlite3_likeFunc @ 0045f3e0 */
+/* Global::likeFunc @ 0045f3e0 */
 
-void __cdecl sqlite3_likeFunc(int *param_1,int param_2,byte *param_3)
+void __cdecl likeFunc(int *param_1,int param_2,byte *param_3)
 
 {
   byte bVar1;
@@ -2459,7 +2459,7 @@ LAB_0045f572:
 
 
 /* [AUDIT] proposed: winShmMap  (confidence: high)
- * purpose: os_win shared-memory mapping (winShmMap1/2/3 log tags)
+ * purpose: SQLite 3.7.15.2 winShmMap: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: winShmMap1|winShmMap2|winShmMap3
  * vars: -
  */
 /* Global::winShmMap @ 0045f5b0 */
@@ -4815,13 +4815,13 @@ void __cdecl sqlite3_timeFunc(int param_1,int param_2,undefined4 *param_3)
 
 
 
-/* [AUDIT] proposed: sqlite3DetachFunc  (confidence: high)
- * purpose: DETACH DATABASE implementation (attach.c)
- * vars: param_1=context
+/* [AUDIT] proposed: detachFunc  (confidence: high)
+ * purpose: SQLite 3.7.15.2 detachFunc: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 20.0). Anchors: cannot DETACH database within transaction|cannot detach database %s|database %s is locked|no such database: %s
+ * vars: -
  */
-/* Global::sqlite3DetachFunc @ 00461e80 */
+/* Global::detachFunc @ 00461e80 */
 
-void __cdecl sqlite3DetachFunc(int param_1,undefined4 param_2,undefined4 *param_3)
+void __cdecl detachFunc(int param_1,undefined4 param_2,undefined4 *param_3)
 
 {
   byte *pbVar1;
@@ -5955,8 +5955,8 @@ void __cdecl avgFinalize(int param_1)
 
 
 /* [AUDIT] proposed: winFullPathname  (confidence: high)
- * purpose: Win32 VFS xFullPathname: GetFullPathName A/W build absolute path
- * vars: param_2=zRelative
+ * purpose: SQLite 3.7.15.2 winFullPathname: identified by compiler-independent string-anchor match (5 unique-owner string anchors, score 25.0). Anchors: %s\%s|GetFullPathNameA1|GetFullPathNameA2|GetFullPathNameW1
+ * vars: -
  */
 /* Global::winFullPathname @ 00463860 */
 
@@ -6454,7 +6454,7 @@ uint __cdecl sqlite3Reprepare(int param_1,int param_2)
       *_Dst = param_1;
       _Dst[0x6e] = 0;
       _Dst[0x6f] = 0x3ff00000;
-      iVar3 = sqlite3_fn_4a7140(_Dst,param_2,(int *)&local_8);
+      iVar3 = sqlite3RunParser(_Dst,param_2,(int *)&local_8);
       puVar2 = local_8;
       if ((((iVar3 == 0) && (iVar3 = _Dst[0x7f], iVar3 != 0)) && (*(char *)(param_1 + 0x38) == '\0')
           ) && ((*(int *)(iVar3 + 0xc) == 0 && ((*(byte *)(iVar3 + 0x2a) & 0x10) == 0)))) {
@@ -6669,7 +6669,7 @@ uint __cdecl sqlite3_step(undefined4 *param_1,undefined4 param_2,undefined4 para
     uVar5 = 4;
   }
   else {
-    uVar5 = sqlite3_fn_470ba0((int)puVar3,param_2,param_3,&param_1);
+    uVar5 = blobSeekToRow((int)puVar3,param_2,param_3,&param_1);
     puVar3 = param_1;
     if (uVar5 != 0) {
       pbVar4 = &DAT_0056de50;
@@ -6827,9 +6827,9 @@ void __cdecl groupConcatFinalize(int param_1)
  * purpose: SQL like(): dispatch to patternCompare (lib_fn_470aa0 like comparator)
  * vars: param_5=cmp
  */
-/* Global::likeFunc @ 00464e40 */
+/* Global::likeFunc_464e40 @ 00464e40 */
 
-void __cdecl likeFunc(int param_1,undefined4 param_2,int param_3,int param_4)
+void __cdecl likeFunc_464e40(int param_1,undefined4 param_2,int param_3,int param_4)
 
 {
   lib_fn_470aa0(param_1,param_2,param_3,param_4,lib_fn_491620);
@@ -7774,13 +7774,13 @@ void __cdecl sqlite3_interrupt(int param_1)
 
 
 
-/* [AUDIT] proposed: sqlite3Complete  (confidence: high)
- * purpose: tokenize SQL, true if statement complete (';' terminated)
- * vars: param_1=zSql
+/* [AUDIT] proposed: sqlite3_complete  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3_complete: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 16.0). Anchors: create|explain|temporary|trigger
+ * vars: -
  */
-/* Global::sqlite3Complete @ 00465c90 */
+/* Global::sqlite3_complete @ 00465c90 */
 
-bool __cdecl sqlite3Complete(byte *param_1)
+bool __cdecl sqlite3_complete(byte *param_1)
 
 {
   byte bVar1;
@@ -8024,9 +8024,9 @@ switchD_00465cbd_caseD_9:
  * purpose: public API: wrap sqlite3Complete on Mem-copied string
  * vars: param_1=zSql
  */
-/* Global::sqlite3_complete @ 004660e0 */
+/* Global::sqlite3_complete_4660e0 @ 004660e0 */
 
-uint __cdecl sqlite3_complete(void *param_1)
+uint __cdecl sqlite3_complete_4660e0(void *param_1)
 
 {
   byte bVar1;
@@ -8058,7 +8058,7 @@ uint __cdecl sqlite3_complete(void *param_1)
       bVar1 = 7;
     }
     else {
-      bVar1 = sqlite3Complete(pbVar4);
+      bVar1 = sqlite3_complete(pbVar4);
     }
     if (piVar3 != (int *)0x0) {
       if ((*(ushort *)(piVar3 + 7) & 0x2460) != 0) {
@@ -8148,8 +8148,8 @@ void __cdecl sqlite_rename_table(int param_1,undefined4 param_2,undefined4 *para
 
 
 /* [AUDIT] proposed: winTruncate  (confidence: high)
- * purpose: Win32 VFS xTruncate: seek + SetEndOfFile (chunk-rounded)
- * vars: param_2/3=size
+ * purpose: SQLite 3.7.15.2 winTruncate: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: winTruncate1|winTruncate2
+ * vars: -
  */
 /* Global::winTruncate @ 00466390 */
 
@@ -9184,7 +9184,7 @@ uint __cdecl sqlite3_declare_vtab(void *param_1,int *param_2)
       uVar2 = 7;
     }
     else {
-      uVar2 = sqlite3_openDatabase(piVar4,param_2,6,(byte *)0x0);
+      uVar2 = openDatabase(piVar4,param_2,6,(byte *)0x0);
       if ((uVar2 == 0) &&
          (iVar1 = *(int *)(*(int *)(*param_2 + 0x10) + 0xc), (*(byte *)(iVar1 + 0x4e) & 1) == 0)) {
         *(undefined1 *)(iVar1 + 0x4d) = 2;
@@ -9410,7 +9410,7 @@ int __cdecl sqlite3StrNICmp(byte *param_1,byte *param_2,int param_3)
 
 
 /* [AUDIT] proposed: sqlite3PrepareTrampoline  (confidence: low)
- * purpose: thin wrapper -> sqlite3_openDatabase parse/prepare
+ * purpose: thin wrapper -> openDatabase parse/prepare
  * vars: param_1=db
  */
 /* Global::sqlite3PrepareTrampoline @ 004683e0 */
@@ -9418,7 +9418,7 @@ int __cdecl sqlite3StrNICmp(byte *param_1,byte *param_2,int param_3)
 void sqlite3PrepareTrampoline(int *param_1,undefined4 *param_2,uint param_3,byte *param_4)
 
 {
-  sqlite3_openDatabase(param_1,param_2,param_3,param_4);
+  openDatabase(param_1,param_2,param_3,param_4);
   return;
 }
 
@@ -10164,7 +10164,7 @@ int __cdecl winFileControl(int param_1,undefined4 param_2,uint *param_3)
     iVar1 = *(int *)(*(int *)(param_1 + 4) + 8);
     iVar3 = sqlite3_initialize();
     if ((iVar3 == 0) && (pcVar4 = (char *)sqlite3Malloc(iVar1), pcVar4 != (char *)0x0)) {
-      lib_fn_47db10(*(int *)(*(int *)(param_1 + 4) + 8),pcVar4);
+      getTempname(*(int *)(*(int *)(param_1 + 4) + 8),pcVar4);
       *param_3 = (uint)pcVar4;
     }
     return 0;
@@ -11047,7 +11047,7 @@ winOpen(undefined4 param_1,char *param_2,undefined8 *param_3,uint param_4,int *p
   *(undefined4 *)(param_3 + 1) = 0xffffffff;
   pcVar8 = param_2;
   if (param_2 == (char *)0x0) {
-    iVar3 = lib_fn_47db10(0x106,local_110);
+    iVar3 = getTempname(0x106,local_110);
     if (iVar3 != 0) goto LAB_0046a4ac;
     pcVar8 = local_110;
   }
@@ -14074,7 +14074,7 @@ int __cdecl lib_fn_473660(int *param_1,int *param_2,int param_3,int param_4)
   pcVar1 = (char *)*param_2;
   piVar2 = (int *)param_1[2];
   if (*pcVar1 == 'L') {
-    param_4 = sqlite3_fn_497780(param_1,*(byte **)(pcVar1 + 0xc),param_4);
+    param_4 = sqlite3ExprCodeTarget(param_1,*(byte **)(pcVar1 + 0xc),param_4);
   }
   else if (*pcVar1 == 'I') {
     lib_fn_4ae830(piVar2,10,0,param_4);
@@ -14344,10 +14344,10 @@ lib_fn_4738d0(undefined4 *param_1,int param_2,ushort param_3,uint param_4,uint p
                       *(byte **)(pbVar22 + 8) = pbVar12;
                       pbVar12 = pbVar22;
                     }
-                    local_54 = lib_fn_4bb240(piVar20,(short *)local_24,pbVar12,(undefined2 *)0x0,
+                    local_54 = sqlite3WhereBegin(piVar20,(short *)local_24,pbVar12,(undefined2 *)0x0,
                                             (int *)0x0,0xf0,local_18);
                     if (local_54 != (uint *)0x0) {
-                      sqlite3_fn_4778d0(piVar20,(int)local_24,local_54 + 0xe,param_2,
+                      explainOneScan(piVar20,(int)local_24,local_54 + 0xe,param_2,
                                    (uint)(byte)puVar23[0xd],0);
                       if (param_3 == 0) {
                         piVar11 = local_3c;
@@ -14684,7 +14684,7 @@ LAB_004741e9:
                                              *(int *)((int)local_44 + 8 + iVar21 * 0xc) * 0x28) +
                                     0xc);
                 if ((pbVar22 == (byte *)0x0) || (*pbVar22 != 0x84)) {
-                  local_50 = (int *)sqlite3_fn_497780(piVar20,pbVar22,(int)local_38);
+                  local_50 = (int *)sqlite3ExprCodeTarget(piVar20,pbVar22,(int)local_38);
                   pbVar22 = local_1c;
                   if (((local_50 == local_38) ||
                       (local_58 = (byte *)piVar20[2], local_58 == (byte *)0x0)) ||
@@ -14998,7 +14998,7 @@ void __cdecl lib_fn_474d00(int *param_1,char *param_2,int param_3)
       piVar9 = lib_fn_4a9680(iVar3,*(undefined4 **)(param_2 + 8),0);
       piVar10 = lib_fn_499140(iVar3,*(int **)(param_2 + 0x18),0);
       psVar8 = lib_fn_4bda20(param_1,(int)param_2);
-      lib_fn_49e570(param_1,psVar8,piVar10,piVar9,piVar12,piVar6);
+      sqlite3Insert(param_1,psVar8,piVar10,piVar9,piVar12,piVar6);
     }
     else if (cVar1 == 'j') {
       pbVar7 = (byte *)lib_fn_478bb0(iVar3,*(undefined4 **)(param_2 + 0x14),0,(int *)0x0);
@@ -15010,7 +15010,7 @@ void __cdecl lib_fn_474d00(int *param_1,char *param_2,int param_3)
       piVar12 = (int *)(uint)*(byte *)((int)param_1 + 0x1c9);
       piVar6 = lib_fn_499140(iVar3,*(int **)(param_2 + 0x18),0);
       psVar8 = lib_fn_4bda20(param_1,(int)param_2);
-      sqlite3_fn_4ab480(param_1,psVar8,piVar6,pbVar7,piVar12);
+      sqlite3Update(param_1,psVar8,piVar6,pbVar7,piVar12);
     }
     else {
       piVar6 = lib_fn_4a9680(iVar3,*(undefined4 **)(param_2 + 8),0);
@@ -15018,7 +15018,7 @@ void __cdecl lib_fn_474d00(int *param_1,char *param_2,int param_3)
       local_14 = 0;
       local_10 = 0;
       local_c = 0;
-      sqlite3_fn_4a7e30(param_1,piVar6,(byte *)local_18);
+      sqlite3Select(param_1,piVar6,(byte *)local_18);
       if (piVar6 != (int *)0x0) {
         sqlite3_exprDelete(iVar3,piVar6);
         sqlite3PageFree(iVar3,piVar6);
@@ -15954,7 +15954,7 @@ undefined4 __cdecl lib_fn_4772e0(int param_1,byte *param_2)
     iVar4 = lib_fn_47e970((char *)param_2);
     if (iVar4 != 0) {
       piVar2[0x13] = piVar2[0x13] + 1;
-      iVar4 = sqlite3_fn_497780(piVar2,param_2,piVar2[0x13]);
+      iVar4 = sqlite3ExprCodeTarget(piVar2,param_2,piVar2[0x13]);
       param_2[0x23] = *param_2;
       *param_2 = 0x84;
       *(int *)(param_2 + 0x18) = iVar4;
@@ -16697,7 +16697,7 @@ void __cdecl lib_fn_4789f0(int param_1,int param_2,int param_3,int param_4,uint 
     *(byte *)(param_1 + 0x13) = bVar2;
     iVar5 = *(int *)(param_1 + 0x1c + (uint)bVar2 * 4);
   }
-  iVar3 = sqlite3_fn_497780((int *)param_1,(byte *)&local_30,iVar5);
+  iVar3 = sqlite3ExprCodeTarget((int *)param_1,(byte *)&local_30,iVar5);
   if (iVar3 != iVar5) {
     lib_fn_4a68f0(param_1,iVar5);
     iVar5 = 0;
@@ -17531,7 +17531,7 @@ lib_fn_47afc0(int *param_1,short *param_2,int param_3,int param_4,int *param_5,i
   local_30 = 0;
   _local_48 = CONCAT44(param_2,param_1);
   lib_fn_4a69e0((int *)&local_48,(int)pbVar8);
-  piVar3 = lib_fn_4bb240(param_1,param_2,pbVar8,(undefined2 *)0x0,(int *)0x0,0,0);
+  piVar3 = sqlite3WhereBegin(param_1,param_2,pbVar8,(undefined2 *)0x0,(int *)0x0,0,0);
   if ((0 < param_8) && ((char)param_5[6] == '\0')) {
     if ((int *)param_1[0x6c] != (int *)0x0) {
       param_1 = (int *)param_1[0x6c];
@@ -18224,9 +18224,13 @@ uint __cdecl lib_fn_47da70(byte *param_1,int param_2,byte param_3)
 
 
 
-/* Global::lib_fn_47db10 @ 0047db10 */
+/* [AUDIT] proposed: getTempname  (confidence: high)
+ * purpose: SQLite 3.7.15.2 getTempname: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: %s\etilqs_|abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789
+ * vars: -
+ */
+/* Global::getTempname @ 0047db10 */
 
-void __cdecl lib_fn_47db10(int param_1,char *param_2)
+void __cdecl getTempname(int param_1,char *param_2)
 
 {
   uint uVar1;
@@ -18588,7 +18592,7 @@ undefined4 __cdecl lib_fn_47eaa0(int param_1,int param_2,undefined4 *param_3,ulo
   if (1 < param_2) {
     do {
       pbVar4 = (byte *)sqlite3ValueApplyAffinity((int *)param_3[iVar5],1);
-      if ((pbVar4 == (byte *)0x0) || (iVar6 = lib_fn_485a80(param_1,pbVar4,param_4), iVar6 != 0)) {
+      if ((pbVar4 == (byte *)0x0) || (iVar6 = isDate(param_1,pbVar4,param_4), iVar6 != 0)) {
         return 1;
       }
       iVar5 = iVar5 + 1;
@@ -18838,7 +18842,7 @@ bool __cdecl lib_fn_47ee40(int *param_1,char *param_2,int *param_3,int *param_4,
           lib_fn_4b8cd0(iVar10,(int)*(short *)(pbVar5 + 0x1c));
           if ((*param_4 != 0) && (*(char *)(*(int *)(pbVar5 + 4) + 1) != '\0')) {
             iVar8 = lib_fn_49cb40((int)param_1);
-            sqlite3_fn_497780(extraout_EDX,pbVar5,iVar8);
+            sqlite3ExprCodeTarget(extraout_EDX,pbVar5,iVar8);
             uVar1 = *(uint *)(iVar10 + 0x1c) - 1;
             if (uVar1 < *(uint *)(iVar10 + 0x1c)) {
               *(undefined4 *)(*(int *)(iVar10 + 4) + 0xc + uVar1 * 0x14) = 0;
@@ -19867,11 +19871,15 @@ undefined4 __cdecl lib_fn_485950(byte *param_1,int param_2)
 
 
 
-/* Global::lib_fn_485a80 @ 00485a80 */
+/* [AUDIT] proposed: isDate  (confidence: high)
+ * purpose: SQLite 3.7.15.2 isDate: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: minute|month|second
+ * vars: -
+ */
+/* Global::isDate @ 00485a80 */
 
 /* WARNING: Removing unreachable block (ram,0x00485d42) */
 
-void __cdecl lib_fn_485a80(int param_1,byte *param_2,ulonglong *param_3)
+void __cdecl isDate(int param_1,byte *param_2,ulonglong *param_3)
 
 {
   byte bVar1;
@@ -21399,9 +21407,13 @@ LAB_0048938a:
 
 
 
-/* Global::lib_fn_489430 @ 00489430 */
+/* [AUDIT] proposed: resolveSelectStep  (confidence: high)
+ * purpose: SQLite 3.7.15.2 resolveSelectStep: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 17.0). Anchors: GROUP|ORDER|a GROUP BY clause is required before HAVING|aggregate functions are not allowed in the GROUP BY clause
+ * vars: -
+ */
+/* Global::resolveSelectStep @ 00489430 */
 
-undefined4 __cdecl lib_fn_489430(int param_1,undefined4 *param_2)
+undefined4 __cdecl resolveSelectStep(int param_1,undefined4 *param_2)
 
 {
   uint *puVar1;
@@ -21502,8 +21514,8 @@ undefined4 __cdecl lib_fn_489430(int param_1,undefined4 *param_2)
             if (iVar7 != 0) {
               piVar2[0x81] = iVar7;
             }
-            local_34 = sqlite3_fn_488dd0;
-            local_30 = lib_fn_489430;
+            local_34 = resolveExprStep;
+            local_30 = resolveSelectStep;
             local_24 = local_c;
             local_2c = piVar2;
             lib_fn_4bb100((int)&local_34,*(undefined4 **)((int)local_14 + iVar8 + 0x1c));
@@ -23878,7 +23890,7 @@ int __cdecl lib_fn_4927e0(int *param_1,int *param_2,byte *param_3)
   else {
     uVar7 = 1;
   }
-  iVar6 = sqlite3_fn_4a7e30(param_1,param_2,param_3);
+  iVar6 = sqlite3Select(param_1,param_2,param_3);
   if (*(char *)(*param_1 + 0x38) == '\0') {
     if (iVar6 == 0) {
       iVar6 = piVar4[7];
@@ -24056,9 +24068,13 @@ lib_fn_492dd0(int *param_1,int *param_2,int param_3,undefined4 param_4,int param
 
 
 
-/* Global::lib_fn_492f00 @ 00492f00 */
+/* [AUDIT] proposed: sqlite3CodeSubselect  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3CodeSubselect: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: EXECUTE %s%s SUBQUERY %d|SCALAR
+ * vars: -
+ */
+/* Global::sqlite3CodeSubselect @ 00492f00 */
 
-void __cdecl lib_fn_492f00(int *param_1,char *param_2,int param_3,int param_4)
+void __cdecl sqlite3CodeSubselect(int *param_1,char *param_2,int param_3,int param_4)
 
 {
   int *piVar1;
@@ -24149,7 +24165,7 @@ void __cdecl lib_fn_492f00(int *param_1,char *param_2,int param_3,int param_4)
           if ((param_4 == 0) ||
              (iVar3 = lib_fn_498e90((char *)local_3c,&local_54), pbVar6 = extraout_EDX, iVar3 == 0))
           {
-            local_3c = (byte *)sqlite3_fn_497780(param_1,pbVar6,(int)local_48);
+            local_3c = (byte *)sqlite3ExprCodeTarget(param_1,pbVar6,(int)local_48);
             if (param_4 == 0) {
               lib_fn_4ae8f0(piVar1,0x1f,local_3c,1,local_34,(int *)&local_2d,1);
               lib_fn_496d90((int)param_1,(int)local_3c,1);
@@ -24175,7 +24191,7 @@ void __cdecl lib_fn_492f00(int *param_1,char *param_2,int param_3,int param_4)
       local_20 = 0;
       local_1c = 0;
       *(undefined4 *)(*(int *)(param_2 + 0x10) + 8) = 0;
-      iVar3 = sqlite3_fn_4a7e30(param_1,*(int **)(param_2 + 0x10),(byte *)&local_28);
+      iVar3 = sqlite3Select(param_1,*(int **)(param_2 + 0x10),(byte *)&local_28);
       if (iVar3 != 0) goto LAB_00492ffe;
       piVar2 = (int *)**(int **)(param_2 + 0x10);
       if ((piVar2 != (int *)0x0) && (0 < *piVar2)) {
@@ -24212,7 +24228,7 @@ void __cdecl lib_fn_492f00(int *param_1,char *param_2,int param_3,int param_4)
     }
     piVar2[0x12] = (int)local_34;
     piVar2[2] = 0;
-    iVar3 = sqlite3_fn_4a7e30(param_1,piVar2,(byte *)&local_18);
+    iVar3 = sqlite3Select(param_1,piVar2,(byte *)&local_18);
     if (iVar3 != 0) {
 LAB_00492ffe:
       __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -24613,7 +24629,7 @@ void __cdecl lib_fn_494ec0(int *param_1,short *param_2,byte *param_3)
     local_1c = (uint)(piVar2[3] != 0);
     iVar3 = lib_fn_4b9570(param_1,(int)piVar2);
     if ((iVar3 == 0) &&
-       (iVar3 = lib_fn_49f850(param_1,(int)piVar2,(uint)(local_24 != (int *)0x0)), iVar3 == 0)) {
+       (iVar3 = sqlite3IsReadOnly(param_1,(int)piVar2,(uint)(local_24 != (int *)0x0)), iVar3 == 0)) {
       local_18 = lib_fn_4a7ba0(iVar5,piVar2[0x10]);
       local_2c = (int *)lib_fn_48d4b0(param_1,9,*piVar2,0,
                                      *(undefined4 *)(*(int *)(iVar5 + 0x10) + local_18 * 0x10));
@@ -24675,7 +24691,7 @@ void __cdecl lib_fn_494ec0(int *param_1,short *param_2,byte *param_3)
               local_18 = param_1[0x13] + 1;
               param_1[0x13] = param_1[0x13] + 2;
               lib_fn_4ae830(piVar4,10,0,local_18);
-              local_2c = lib_fn_4bb240(param_1,param_2,param_3,(undefined2 *)0x0,(int *)0x0,8,0);
+              local_2c = sqlite3WhereBegin(param_1,param_2,param_3,(undefined2 *)0x0,(int *)0x0,8,0);
               piVar6 = local_c;
               iVar3 = local_10;
               iVar5 = local_8;
@@ -25380,7 +25396,7 @@ int __cdecl lib_fn_496f30(int *param_1,byte *param_2,int param_3)
     lib_fn_4ae830((int *)param_1[2],0xe,*(undefined4 *)(param_2 + 0x18),param_3);
     return param_3;
   }
-  iVar1 = sqlite3_fn_497780(param_1,param_2,param_3);
+  iVar1 = sqlite3ExprCodeTarget(param_1,param_2,param_3);
   if ((iVar1 != param_3) && ((int *)param_1[2] != (int *)0x0)) {
     lib_fn_4ae830((int *)param_1[2],0xf,iVar1,param_3);
   }
@@ -25402,7 +25418,7 @@ int __cdecl lib_fn_496f90(int *param_1,byte *param_2,int param_3)
   
   piVar1 = (int *)param_1[2];
   if ((param_2 == (byte *)0x0) || (*param_2 != 0x84)) {
-    iVar2 = sqlite3_fn_497780(param_1,param_2,param_3);
+    iVar2 = sqlite3ExprCodeTarget(param_1,param_2,param_3);
     if ((iVar2 == param_3) || (piVar3 = (int *)param_1[2], piVar3 == (int *)0x0)) goto LAB_00496fde;
     uVar4 = 0xf;
   }
@@ -25541,7 +25557,7 @@ void __cdecl lib_fn_497220(int *param_1,char *param_2,int param_3,int param_4)
   }
   pbVar1 = *(byte **)(param_2 + 8);
   if ((pbVar1 == (byte *)0x0) || (*pbVar1 != 0x84)) {
-    iVar5 = sqlite3_fn_497780(param_1,pbVar1,iVar12);
+    iVar5 = sqlite3ExprCodeTarget(param_1,pbVar1,iVar12);
     if ((iVar5 == iVar12) || (piVar13 = (int *)param_1[2], piVar13 == (int *)0x0))
     goto LAB_004972b1;
     uVar14 = 0xf;
@@ -25704,7 +25720,7 @@ int __cdecl lib_fn_498470(int param_1,byte *param_2,int *param_3)
     *(byte *)(param_1 + 0x13) = bVar1;
     iVar3 = *(int *)(param_1 + 0x1c + (uint)bVar1 * 4);
   }
-  iVar2 = sqlite3_fn_497780((int *)param_1,param_2,iVar3);
+  iVar2 = sqlite3ExprCodeTarget((int *)param_1,param_2,iVar3);
   if (iVar2 == iVar3) {
     *param_3 = iVar3;
     return iVar2;
@@ -26545,7 +26561,7 @@ LAB_00499a13:
       *(undefined4 *)(iVar6 + 0x10 + iVar2 * 0x14) = 0;
     }
   }
-  lib_fn_492f00(param_1,param_2,iVar13,(uint)(iVar5 == 1));
+  sqlite3CodeSubselect(param_1,param_2,iVar13,(uint)(iVar5 == 1));
   *(undefined8 *)(param_1 + 0x6e) = uVar1;
   return iVar5;
 }
@@ -26965,7 +26981,7 @@ void __cdecl lib_fn_49a610(int *param_1,undefined4 *param_2,int param_3,int para
       local_1c = (uint *)0x0;
       local_18 = 0;
       if (*(char *)((int)piVar12 + 0x1ca) == '\0') {
-        piVar6 = (int *)sqlite3_fn_4a0080(piVar12,0,(byte *)piVar5[2],pbVar3);
+        piVar6 = (int *)sqlite3LocateTable(piVar12,0,(byte *)piVar5[2],pbVar3);
       }
       else {
         piVar6 = (int *)lib_fn_499c30(local_8,(byte *)piVar5[2],pbVar3);
@@ -27050,7 +27066,7 @@ void __cdecl lib_fn_49a610(int *param_1,undefined4 *param_2,int param_3,int para
               else {
                 iVar15 = *(int *)(iVar15 + *(int *)(local_14 + 4));
               }
-              iVar15 = sqlite3_fn_48d620(piVar12,*piVar6,*(undefined4 *)(piVar6[1] + iVar15 * 0x18),
+              iVar15 = sqlite3AuthReadCol(piVar12,*piVar6,*(undefined4 *)(piVar6[1] + iVar15 * 0x18),
                                     local_c);
               local_18 = (uint)(iVar15 == 2);
               puVar10 = local_10;
@@ -27294,10 +27310,14 @@ undefined4 __cdecl lib_fn_49ae70(undefined4 *param_1)
 
 
 
-/* Global::lib_fn_49b1e0 @ 0049b1e0 */
+/* [AUDIT] proposed: sqlite3GenerateConstraintChecks  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3GenerateConstraintChecks: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 12.0). Anchors: %s.%s may not be NULL|PRIMARY KEY must be unique|constraint %s failed
+ * vars: -
+ */
+/* Global::sqlite3GenerateConstraintChecks @ 0049b1e0 */
 
 void __cdecl
-lib_fn_49b1e0(int *param_1,undefined4 *param_2,int param_3,int param_4,int param_5,int param_6,
+sqlite3GenerateConstraintChecks(int *param_1,undefined4 *param_2,int param_3,int param_4,int param_5,int param_6,
             int param_7,int *param_8,undefined4 param_9,int *param_10)
 
 {
@@ -27434,7 +27454,7 @@ lib_fn_49b1e0(int *param_1,undefined4 *param_2,int param_3,int param_4,int param
             }
             pbVar3 = *(byte **)((int)local_10 + 4 + param_2[1]);
             if ((pbVar3 == (byte *)0x0) || (*pbVar3 != 0x84)) {
-              iVar7 = sqlite3_fn_497780(param_1,pbVar3,iVar14);
+              iVar7 = sqlite3ExprCodeTarget(param_1,pbVar3,iVar14);
               if ((iVar7 != iVar14) && (piVar15 = (int *)param_1[2], piVar15 != (int *)0x0)) {
                 uVar17 = 0xf;
                 goto LAB_0049b418;
@@ -29266,10 +29286,14 @@ undefined4 __cdecl lib_fn_49dd10(int *param_1,int param_2)
 
 
 
-/* Global::lib_fn_49e570 @ 0049e570 */
+/* [AUDIT] proposed: sqlite3Insert  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3Insert: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 20.0). Anchors: %d values for %d columns|rows inserted|table %S has %d columns but %d values were supplied|table %S has no column named %s
+ * vars: -
+ */
+/* Global::sqlite3Insert @ 0049e570 */
 
 void __cdecl
-lib_fn_49e570(int *param_1,short *param_2,int *param_3,int *param_4,int *param_5,int *param_6)
+sqlite3Insert(int *param_1,short *param_2,int *param_3,int *param_4,int *param_5,int *param_6)
 
 {
   undefined2 *puVar1;
@@ -29362,7 +29386,7 @@ lib_fn_49e570(int *param_1,short *param_2,int *param_3,int *param_4,int *param_5
   iVar7 = lib_fn_4b9570(param_1,(int)local_1c);
   param_5 = local_28;
   if (((iVar7 != 0) ||
-      (iVar7 = lib_fn_49f850(param_1,(int)local_1c,local_20), param_5 = local_28, iVar7 != 0)) ||
+      (iVar7 = sqlite3IsReadOnly(param_1,(int)local_1c,local_20), param_5 = local_28, iVar7 != 0)) ||
      (piVar8 = lib_fn_49d4d0(param_1), param_5 = local_28, local_2c = piVar8, piVar8 == (int *)0x0))
   goto LAB_0049f5f2;
   if (*(char *)((int)local_24 + 0x12) == '\0') {
@@ -29603,7 +29627,7 @@ lib_fn_49e570(int *param_1,short *param_2,int *param_3,int *param_4,int *param_5
             pbVar2 = *(byte **)(piVar17[1] + 4 + local_38);
             iVar6 = local_20 + 1 + (int)local_30;
             if ((pbVar2 == (byte *)0x0) || (*pbVar2 != 0x84)) {
-              iVar7 = sqlite3_fn_497780(local_24,pbVar2,iVar6);
+              iVar7 = sqlite3ExprCodeTarget(local_24,pbVar2,iVar6);
               piVar17 = local_1c;
               if ((iVar7 == iVar6) || (piVar19 = (int *)local_24[2], piVar19 == (int *)0x0))
               goto LAB_0049ec57;
@@ -29788,7 +29812,7 @@ LAB_0049f037:
             }
             pbVar2 = *(byte **)(local_1c[1] + 4 + local_50);
             if ((pbVar2 == (byte *)0x0) || (*pbVar2 != 0x84)) {
-              local_3c = (int *)sqlite3_fn_497780(local_24,pbVar2,(int)piVar18);
+              local_3c = (int *)sqlite3ExprCodeTarget(local_24,pbVar2,(int)piVar18);
               if (((local_3c != piVar18) && (piVar17 = (int *)piVar17[2], piVar17 != (int *)0x0)) &&
                  ((iVar6 = piVar17[7], iVar6 < piVar17[8] ||
                   (iVar7 = lib_fn_47de10(piVar17), iVar7 == 0)))) {
@@ -29823,7 +29847,7 @@ LAB_0049f13d:
       piVar17 = local_1c;
       piVar19 = local_24;
       if ((*(byte *)((int)local_1c + 0x2a) & 0x10) == 0) {
-        lib_fn_49b1e0(local_24,local_1c,local_5c,(int)local_2c,(int)local_80,(uint)(-1 < local_64),0,
+        sqlite3GenerateConstraintChecks(local_24,local_1c,local_5c,(int)local_2c,(int)local_80,(uint)(-1 < local_64),0,
                      param_6,local_34,(int *)&local_30);
         lib_fn_49a610(piVar19,piVar17,0,(int)local_2c);
         lib_fn_493790(piVar19,piVar17,local_5c,(int)local_2c,(int)local_80,0,local_44,
@@ -30140,9 +30164,13 @@ undefined4 lib_fn_49f810(void)
 
 
 
-/* Global::lib_fn_49f850 @ 0049f850 */
+/* [AUDIT] proposed: sqlite3IsReadOnly  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3IsReadOnly: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: cannot modify %s because it is a view|table %s may not be modified
+ * vars: -
+ */
+/* Global::sqlite3IsReadOnly @ 0049f850 */
 
-undefined4 __cdecl lib_fn_49f850(int *param_1,int param_2,int param_3)
+undefined4 __cdecl sqlite3IsReadOnly(int *param_1,int param_2,int param_3)
 
 {
   int *piVar1;
@@ -30204,9 +30232,13 @@ bool __cdecl lib_fn_49f8e0(byte *param_1)
 
 
 
-/* Global::sqlite3_fn_49fde0 @ 0049fde0 */
+/* [AUDIT] proposed: sqlite3LoadExtension  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3LoadExtension: identified by compiler-independent string-anchor match (4 unique-owner string anchors, score 22.0). Anchors: error during initialization: %s|no entry point [%s] in shared library [%s]|not authorized|sqlite3_extension_init
+ * vars: -
+ */
+/* Global::sqlite3LoadExtension @ 0049fde0 */
 
-undefined4 __cdecl sqlite3_fn_49fde0(int *param_1,char *param_2,char *param_3,int *param_4)
+undefined4 __cdecl sqlite3LoadExtension(int *param_1,char *param_2,char *param_3,int *param_4)
 
 {
   char cVar1;
@@ -30342,7 +30374,7 @@ void __cdecl lib_fn_4a0120(int *param_1,undefined4 param_2,int *param_3)
     }
     pbVar3 = *(byte **)(*(int *)(iVar1 + 0x10) + iVar4 * 0x10);
   }
-  sqlite3_fn_4a0080(param_1,param_2,(byte *)param_3[2],pbVar3);
+  sqlite3LocateTable(param_1,param_2,(byte *)param_3[2],pbVar3);
   return;
 }
 
@@ -30459,7 +30491,7 @@ LAB_004a06c4:
   local_18[1] = 0;
   local_10 = 0;
   local_c = 0;
-  sqlite3_fn_4a7e30(param_1,piVar3,local_18);
+  sqlite3Select(param_1,piVar3,local_18);
   if (piVar3 != (int *)0x0) {
     sqlite3_exprDelete(iVar2,piVar3);
     sqlite3PageFree(iVar2,piVar3);
@@ -31207,8 +31239,8 @@ ushort __cdecl lib_fn_4a69e0(int *param_1,int param_2)
   bVar1 = *(byte *)(param_1 + 7);
   *(byte *)(param_1 + 7) = bVar1 & 0xfd;
   local_10 = *param_1;
-  local_18 = sqlite3_fn_488dd0;
-  local_14 = lib_fn_489430;
+  local_18 = resolveExprStep;
+  local_14 = resolveSelectStep;
   local_8 = param_1;
   lib_fn_4bb020(&local_18,param_2);
   *(int *)(*param_1 + 0x1e0) = *(int *)(*param_1 + 0x1e0) - *(int *)(param_2 + 0x14);
@@ -31240,8 +31272,8 @@ void __cdecl lib_fn_4a6b70(undefined4 param_1,undefined4 *param_2,undefined4 par
   
   local_10 = param_1;
   local_8 = param_3;
-  local_18 = sqlite3_fn_488dd0;
-  local_14 = lib_fn_489430;
+  local_18 = resolveExprStep;
+  local_14 = resolveSelectStep;
   lib_fn_4bb100((int)&local_18,param_2);
   return;
 }
@@ -31474,7 +31506,7 @@ void __cdecl lib_fn_4a99a0(int *param_1,undefined4 *param_2,undefined4 param_3)
   
   if ((param_2 != (undefined4 *)0x0) &&
      (iVar1 = *param_1, (*(byte *)((int)param_2 + 6) & 0x20) == 0)) {
-    local_14 = sqlite3_fn_48a4d0;
+    local_14 = selectExpander;
     local_18 = &LAB_0046a020;
     local_10 = param_1;
     lib_fn_4bb100((int)&local_18,param_2);
@@ -33406,7 +33438,7 @@ int __cdecl lib_fn_4b9870(int *param_1,int param_2)
         puVar6 = hash_find(iVar2 + 0x124,pbVar4,uVar9,uVar5);
         if ((puVar6 != (undefined4 *)0x0) && (piVar3 = (int *)puVar6[2], piVar3 != (int *)0x0)) {
           local_8 = (undefined4 *)0x0;
-          iVar7 = lib_fn_4bfed0(iVar2,param_2,piVar3,*(undefined **)(*piVar3 + 8),&local_8);
+          iVar7 = vtabCallConstructor(iVar2,param_2,piVar3,*(undefined **)(*piVar3 + 8),&local_8);
           puVar6 = local_8;
           if (iVar7 != 0) {
             lib_fn_4962b0(param_1,&DAT_0056de50);
@@ -33625,10 +33657,14 @@ byte __cdecl lib_fn_4bb1b0(undefined4 *param_1,undefined4 *param_2)
 
 
 
-/* Global::lib_fn_4bb240 @ 004bb240 */
+/* [AUDIT] proposed: sqlite3WhereBegin  (confidence: high)
+ * purpose: SQLite 3.7.15.2 sqlite3WhereBegin: identified by compiler-independent string-anchor match (2 unique-owner string anchors, score 10.0). Anchors: at most %d tables in a join|cannot use index: %s
+ * vars: -
+ */
+/* Global::sqlite3WhereBegin @ 004bb240 */
 
 undefined4 * __cdecl
-lib_fn_4bb240(int *param_1,short *param_2,byte *param_3,undefined2 *param_4,int *param_5,uint param_6
+sqlite3WhereBegin(int *param_1,short *param_2,byte *param_3,undefined2 *param_4,int *param_5,uint param_6
             ,uint param_7)
 
 {
@@ -34197,7 +34233,7 @@ LAB_004bbd81:
       puVar16 = local_8 + 0x19;
       do {
         local_18 = (int *)((ulonglong)uVar20 >> 0x20);
-        sqlite3_fn_4778d0(param_1,(int)param_2,puVar16 + -0xb,iVar5,(uint)*(byte *)(puVar16 + 2),uVar3);
+        explainOneScan(param_1,(int)param_2,puVar16 + -0xb,iVar5,(uint)*(byte *)(puVar16 + 2),uVar3);
         uVar20 = lib_fn_4738d0(local_8,iVar5,uVar3,(uint)uVar20,(uint)local_18);
         iVar5 = iVar5 + 1;
         local_8[5] = *puVar16;
@@ -34593,7 +34629,7 @@ uint __cdecl lib_fn_4bcb50(int *param_1,char *param_2,char *param_3,int *param_4
   if (param_1[3] != 0) {
     (*DAT_00582b18)(param_1[3]);
   }
-  uVar2 = sqlite3_fn_49fde0(param_1,param_2,param_3,param_4);
+  uVar2 = sqlite3LoadExtension(param_1,param_2,param_3,param_4);
   if (((char)param_1[0xe] != '\0') || (uVar2 == 0xc0a)) {
     sqlite3ErrorWithMsg((int)param_1,7,(byte *)0x0);
     *(undefined1 *)(param_1 + 0xe) = 0;
@@ -35305,10 +35341,14 @@ int __cdecl sqlite3_fn_4bfde0(int *param_1,int param_2,int *param_3)
 
 
 
-/* Global::lib_fn_4bfed0 @ 004bfed0 */
+/* [AUDIT] proposed: vtabCallConstructor  (confidence: high)
+ * purpose: SQLite 3.7.15.2 vtabCallConstructor: identified by compiler-independent string-anchor match (3 unique-owner string anchors, score 15.0). Anchors: hidden|vtable constructor did not declare schema: %s|vtable constructor failed: %s
+ * vars: -
+ */
+/* Global::vtabCallConstructor @ 004bfed0 */
 
 int __cdecl
-lib_fn_4bfed0(int param_1,int param_2,undefined4 *param_3,undefined *param_4,undefined4 *param_5)
+vtabCallConstructor(int param_1,int param_2,undefined4 *param_3,undefined *param_4,undefined4 *param_5)
 
 {
   ushort *puVar1;
