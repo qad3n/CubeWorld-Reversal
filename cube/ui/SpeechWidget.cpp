@@ -38,6 +38,7 @@ void cube::SpeechWidget::ctor_0(undefined4 param_1,undefined4 param_2,undefined4
   local_8 = 0;
   plasma::NamedObject::ctor_4(param_1,param_2,local_8c);
   if (7 < local_78) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_8c[0]);
   }
   *self = vftable;
@@ -92,6 +93,7 @@ void SpeechWidget_dtor(void)
   undefined1 dummy;
   
   if (7 < *(uint *)(self + 0x1bc)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(self + 0x1a8));
   }
   *(undefined4 *)(self + 0x1bc) = 7;
@@ -99,6 +101,7 @@ void SpeechWidget_dtor(void)
   *(undefined2 *)(self + 0x1a8) = 0;
   if (*(int *)(self + 0x178) != 0) {
     dtor_stringRange_0x18(*(int *)(self + 0x178),*(undefined4 *)(self + 0x17c),&dummy);
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(self + 0x178));
   }
   vector_destroy_stringElems();
@@ -118,6 +121,7 @@ void cube::SpeechWidget::vfunc_0(byte param_1)
   
   SpeechWidget_dtor();
   if ((param_1 & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -290,6 +294,7 @@ void cube::SpeechWidget::vfunc_1(void)
             local_8 = 0xffffffff;
             cursorX = cursorX + 0x14 + (int)(local_ac[0] - local_a4[0]);
             if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
               operator_delete(local_2c[0]);
             }
             local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
@@ -436,6 +441,7 @@ LAB_004e6722:
   *(int *)(in_ECX + 0x1c8) = *(int *)(in_ECX + 0x1c8) + (int)(advance[0] - startX[0]);
   *(int *)(in_ECX + 0x1d0) = *(int *)(in_ECX + 0x1d0) + iVar9 + 1;
   if (7 < local_40) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_54);
   }
 LAB_004e69f8:

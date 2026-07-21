@@ -1,62 +1,6 @@
 // XAudio2Engine (audio) — cube. 24 functions. Bodies = Ghidra pseudo-C.
 #include "XAudio2Engine.h"
 
-/* [AUDIT] proposed: blob::deobfuscate  (confidence: high)
- * purpose: Deobfuscates a byte buffer: table-driven (006ffa68) shuffle/unswap then bitwise-complement each byte
- * vars: table 006ffa68 mod 0x2c
- */
-/* Global::blob_deobfuscate @ 004496a0 */
-/* NOTE(re) 2026-07-15: CONFIRMED shared asset-blob deobfuscator; decode is byte-exact
- * (round-trip proven). `self` is a std::vector<char> {begin,end,cap}; the buffer is
- * transformed in place, equivalent to:
- *     len = end - begin
- *     for i = len-1 downto 0:  swap(buf[i], buf[(T[i % 44] + i) % len])   // de-shuffle
- *     for i = 0 .. len-1:      buf[i] = ~buf[i]                            // XOR 0xFF
- * T = 44 int32 @ 0x006FFA68 (.rdata, file off 0x2FEA68):
- *   4242,9551,840,84800,9242,9846,127,9,9483,394,123,4834,32444,24355,2433,17,34234,42342,
- *   4243,14,184934,1987,3094,1901,89409,4813,37,143,3490,19483,1343,432,84732,9184,9612,1233,
- *   3434,1839,2984,1993,2984,4895,816583,13
- * Keyless + deterministic (independent of db.dat, which ships as "PLACEHOLDER..."). Callers:
- * 0x623a60 (XAudio2Engine, data2 *.wav), 0x4e1970 (cube::Speech, data4 dict_*.xml), 0x486a20,
- * 0x4e7290. Verified by decoding data4.db dict_en/de.xml to valid UTF-8 XML and re-encoding to
- * the exact stored bytes. Tool + decoded output: scratchpad/decode_loc.py, scratchpad/loc/.
- * This is a Global helper; its placement under XAudio2Engine.cpp is a caller-dominance misfiling.
- */
-
-void blob_deobfuscate(void)
-
-{
-  char *bytePtr;
-  undefined1 tmpByte;
-  int bufStart;
-  int *self;
-  uint swapPos;
-  int i;
-  
-  i = (self[1] - *self) + -1;
-  while (-1 < i) {
-    bufStart = *self;
-    swapPos = (uint)(*(int *)(&DAT_006ffa68 + (i % 0x2c) * 4) + i) % (uint)(self[1] - bufStart)
-    ;
-    i = i + -1;
-    tmpByte = *(undefined1 *)(bufStart + 1 + i);
-    *(undefined1 *)(bufStart + 1 + i) = *(undefined1 *)(swapPos + bufStart);
-    *(undefined1 *)(swapPos + bufStart) = tmpByte;
-  }
-  i = 0;
-  if (self[1] != *self && -1 < self[1] - *self) {
-    do {
-      bytePtr = (char *)(*self + i);
-      i = i + 1;
-      *bytePtr = -1 - *bytePtr;
-    } while (i < self[1] - *self);
-  }
-  return;
-}
-
-
-
-
 /* cube::XAudio2Engine::ctor_0 @ 00622da0 */
 
 void cube::XAudio2Engine::ctor_0(void)
@@ -119,6 +63,7 @@ void cube::XAudio2Engine::ctor_0(void)
   local_8 = CONCAT31(local_8._1_3_,4);
   db_openBlobStore(dbname_buf);
   if (0xf < dbname_cap) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(dbname_buf[0]);
   }
   ExceptionList = local_10;
@@ -202,6 +147,7 @@ void cube::XAudio2Engine::ctor_1(void)
   }
   local_8 = CONCAT31(local_8._1_3_,1);
   map_eraseRange(local_18,*(undefined4 *)self[7],(undefined4 *)self[7]);
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[7]);
 }
 
@@ -217,6 +163,7 @@ void cube::XAudio2Engine::Sound::vfunc_0(byte delete_flag)
   
   *self = vftable;
   if ((delete_flag & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;
@@ -234,6 +181,7 @@ void cube::XAudio2Engine::vfunc_8(byte delete_flag)
   
   ctor_1();
   if ((delete_flag & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;
@@ -490,6 +438,7 @@ void cube::XAudio2Engine::vfunc_0(void)
         (**(code **)(*(int *)node[2] + 0x48))((int *)node[2]);
         inserted = IntMap_SetScalar(voice_list,voice_list[1],&local_14);
         if (count == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         voice_list[1] = inserted;
@@ -505,6 +454,7 @@ void cube::XAudio2Engine::vfunc_0(void)
     if (node != *(int **)(in_ECX + 0xc)) {
       *(int *)node[1] = *node;
       *(int *)(*node + 4) = node[1];
+                    /* WARNING: Subroutine does not return */
       operator_delete(node);
     }
   }
@@ -512,9 +462,62 @@ void cube::XAudio2Engine::vfunc_0(void)
   *voice_list = voice_list;
   voice_list[1] = voice_list;
   if (puVar1 != voice_list) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(puVar1);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(voice_list);
+}
+
+
+
+
+/* cube::XAudio2Engine::initialize @ 00623530 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::XAudio2Engine::initialize.
+ * CoCreateInstance(CLSID_XAudio2); IXAudio2::Initialize at vtbl+0x14 (arg XAUDIO2_DEFAULT_PROCESSOR), CreateMasteringVoice vtbl+0x28; builds 2 cube::Music::ctor_0 streams (0x1e02f0). In XAudio2Engine block; caller=WinMain 4c8ae0.
+ * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
+
+undefined4 cube::XAudio2Engine::initialize(void)
+
+{
+  HRESULT HVar1;
+  int iVar2;
+  void *pvVar3;
+  int *in_ECX;
+  int *local_8;
+  
+  local_8 = in_ECX;
+  CoInitializeEx((LPVOID)0x0,0);
+  HVar1 = CoCreateInstance((IID *)&DAT_00702d68,(LPUNKNOWN)0x0,1,(IID *)&DAT_00702d78,&local_8);
+  if (-1 < HVar1) {
+    iVar2 = (**(code **)(*local_8 + 0x14))(local_8,0,0xffffffff);
+    if (iVar2 < 0) {
+      (**(code **)(*local_8 + 8))(local_8);
+    }
+    else {
+      in_ECX[1] = (int)local_8;
+      iVar2 = (**(code **)(*(int *)in_ECX[1] + 0x28))((int *)in_ECX[1],in_ECX + 2,0,0,0,0,0);
+      if (-1 < iVar2) {
+        pvVar3 = operator_new(0x1e02f0);
+        if (pvVar3 == (void *)0x0) {
+          iVar2 = 0;
+        }
+        else {
+          iVar2 = cube::Music::ctor_0(in_ECX[1]);
+        }
+        in_ECX[9] = iVar2;
+        pvVar3 = operator_new(0x1e02f0);
+        if (pvVar3 == (void *)0x0) {
+          in_ECX[10] = 0;
+          return 1;
+        }
+        iVar2 = cube::Music::ctor_0(in_ECX[1]);
+        in_ECX[10] = iVar2;
+        return 1;
+      }
+    }
+  }
+  return 0;
 }
 
 
@@ -559,6 +562,7 @@ void cube::XAudio2Engine::vfunc_6(int *param_1,float volume,undefined4 param_3,u
       sound_data = *(int *)(in_ECX + 0xc);
       inserted = IntMap_SetScalar(sound_data,*(undefined4 *)(sound_data + 4),&param_1);
       if (*(int *)(in_ECX + 0x10) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(in_ECX + 0x10) = *(int *)(in_ECX + 0x10) + 1;
@@ -892,6 +896,7 @@ LAB_00623ac9:
       ppppWVar8 = (LPCWSTR ***)local_24;
       if ((LPCWSTR ***)local_24 != (LPCWSTR ***)0x0) {
 LAB_00623e29:
+                    /* WARNING: Subroutine does not return */
         operator_delete(ppppWVar8);
       }
     }

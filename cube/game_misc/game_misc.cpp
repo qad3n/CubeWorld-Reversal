@@ -1,4 +1,4 @@
-// game_misc (game_misc) — cube. 537 functions. Bodies = Ghidra pseudo-C.
+// game_misc (game_misc) — cube. 660 functions. Bodies = Ghidra pseudo-C.
 #include "game_misc.h"
 
 /* [AUDIT] proposed: copyBytes  (confidence: high)
@@ -38,6 +38,7 @@ void vectorString_popBack(undefined4 param_1,undefined4 param_2)
   if (*(int *)(self + 0x2c) != *(int *)(self + 0x30)) {
     lastElemPtr = *(void **)(*(int *)(self + 0x30) + -0xc);
     if (lastElemPtr != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(lastElemPtr);
     }
     *(int *)(self + 0x30) = *(int *)(self + 0x30) + -0xc;
@@ -82,6 +83,7 @@ void signal_dispatchArg(undefined4 param_1,undefined4 param_2)
     vectorPOD_insertAt(&elemBuf);
     trylevel = 0xffffffff;
     if (elemBuf != (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(elemBuf);
     }
     dispatch_callbackChain(lockVal);
@@ -408,6 +410,7 @@ void string_moveAssign(undefined4 *other)
   
   if (self != other) {
     if (0xf < (uint)self[5]) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*self);
     }
     self[5] = 0xf;
@@ -416,6 +419,61 @@ void string_moveAssign(undefined4 *other)
     string_move(other);
   }
   return;
+}
+
+
+
+
+/* [AUDIT] proposed: std_container_assign_range  (confidence: med)
+ * purpose: MSVC STL: vector/string assign from [other,other[1]) via memmove/grow
+ * vars: self=dst
+ */
+/* Global::std_container_assign_range @ 004040d0 */
+
+int * std_container_assign_range(int *param_1)
+
+{
+  void *_Dst;
+  int iVar1;
+  char cVar2;
+  void *pvVar3;
+  int *in_ECX;
+  void *pvVar4;
+  size_t _Size;
+  
+  if (in_ECX != param_1) {
+    pvVar3 = (void *)*param_1;
+    pvVar4 = (void *)param_1[1];
+    if (pvVar3 == pvVar4) {
+      in_ECX[1] = *in_ECX;
+      return in_ECX;
+    }
+    _Dst = (void *)*in_ECX;
+    if ((uint)((int)pvVar4 - (int)pvVar3) <= (uint)(in_ECX[1] - (int)_Dst)) {
+      memmove(_Dst,pvVar3,(int)pvVar4 - (int)pvVar3);
+      in_ECX[1] = (param_1[1] - *param_1) + *in_ECX;
+      return in_ECX;
+    }
+    if ((uint)((int)pvVar4 - (int)pvVar3) <= (uint)(in_ECX[2] - (int)_Dst)) {
+      pvVar4 = (void *)((in_ECX[1] - (int)_Dst) + (int)pvVar3);
+      memmove(_Dst,pvVar3,(int)pvVar4 - (int)pvVar3);
+      iVar1 = param_1[1];
+      pvVar3 = memmove((void *)in_ECX[1],pvVar4,iVar1 - (int)pvVar4);
+      in_ECX[1] = (int)pvVar3 + (iVar1 - (int)pvVar4);
+      return in_ECX;
+    }
+    if (_Dst != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+      operator_delete(_Dst);
+    }
+    cVar2 = std_vector_allocate(param_1[1] - *param_1);
+    if (cVar2 != '\0') {
+      _Size = param_1[1] - *param_1;
+      pvVar3 = memmove((void *)*in_ECX,(void *)*param_1,_Size);
+      in_ECX[1] = (int)pvVar3 + _Size;
+    }
+  }
+  return in_ECX;
 }
 
 
@@ -525,6 +583,7 @@ LAB_00405def:
   return;
 LAB_00405dd8:
   if (0xf < bufCap) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((char *)buf);
   }
   goto LAB_00405def;
@@ -548,11 +607,13 @@ void string_appendFill(uint count,undefined4 ch)
   
   oldLen = self[4];
   if (-oldLen - 1U <= count) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (count != 0) {
     newLen = oldLen + count;
     if (newLen == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if ((uint)self[5] < newLen) {
@@ -619,6 +680,7 @@ void string_assignPtrLen(int *ptr,uint len)
     }
   }
   if (len == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if ((uint)self[5] < len) {
@@ -874,6 +936,7 @@ LAB_0040cd65:
         }
         map_insertNode(local_23c,puVar7);
         if (0xf < local_228) {
+                    /* WARNING: Subroutine does not return */
           operator_delete(local_23c[0]);
         }
       }
@@ -980,6 +1043,56 @@ void vectorPOD_insertAt(uint pos)
 
 
 
+/* [AUDIT] proposed: vectorInt_resize  (confidence: high)
+ * purpose: std::vector<int>::resize: shrinks (memmove) or grows zero-filling to pos elements
+ * vars: self[0]=begin,[1]=end; stride 4
+ */
+/* Global::vectorInt_resize @ 0040d9d0 */
+
+void vectorInt_resize(uint newSize)
+
+{
+  void *_Dst;
+  void *_Src;
+  void *beginPtr;
+  int *self;
+  uint curSize;
+  int fillCount;
+  undefined4 *fillPtr;
+  
+  _Src = (void *)self[1];
+  beginPtr = (void *)*self;
+  curSize = (int)_Src - (int)beginPtr >> 2;
+  if (newSize < curSize) {
+    _Dst = (void *)((int)beginPtr + newSize * 4);
+    if (_Dst == beginPtr) {
+      self[1] = (int)beginPtr;
+      return;
+    }
+    if (_Dst != _Src) {
+      memmove(_Dst,_Src,0);
+      self[1] = (int)_Dst;
+      return;
+    }
+  }
+  else if (curSize < newSize) {
+    std_vector_reserve_stride4(newSize - curSize);
+    fillPtr = (undefined4 *)self[1];
+    fillCount = newSize - ((int)fillPtr - *self >> 2);
+    if (fillCount != 0) {
+      for (; fillCount != 0; fillCount = fillCount + -1) {
+        *fillPtr = 0;
+        fillPtr = fillPtr + 1;
+      }
+    }
+    self[1] = self[1] + (newSize - (self[1] - *self >> 2)) * 4;
+  }
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: dispatch_callbackChain  (confidence: med)
  * purpose: Walks a jump/offset table invoking registered code* handlers, accumulating return offsets
  * vars: self+0xc=table,+0x40=handlers,+0x50=cur
@@ -1007,87 +1120,6 @@ void dispatch_callbackChain(int index)
     } while (slot != 0xc);
   }
   return;
-}
-
-
-
-
-/* [AUDIT] proposed: ostrstream_str  (confidence: med)
- * purpose: std::ostrstream::str(): builds std::string from strstreambuf get/put area honoring frozen flags
- * vars: self+0x3c=flags; builds into local
- */
-/* Global::ostrstream_str @ 0040e030 */
-
-void ostrstream_str(void)
-
-{
-  uint len;
-  int self;
-  uint end;
-  undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
-  undefined4 uVar3;
-  undefined4 uVar4;
-  void *strBuf [4];
-  undefined4 strSize;
-  uint strCap;
-  uint stackCookie;
-  
-  stackCookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  uVar4 = 0;
-  if (((*(uint *)(self + 0x3c) & 2) == 0) && (len = **(uint **)(self + 0x20), len != 0)) {
-    end = *(uint *)(self + 0x38);
-    if (*(uint *)(self + 0x38) < len) {
-      end = len;
-    }
-    strCap = 0xf;
-    strSize = 0;
-    strBuf[0] = (void *)((uint)strBuf[0]._1_3_ << 8);
-    string_assignPtrLen(**(int **)(self + 0x10),end - **(int **)(self + 0x10));
-    string_moveConstruct2(strBuf);
-    uVar3 = extraout_EDX;
-    if (0xf < strCap) {
-      operator_delete(strBuf[0]);
-    }
-  }
-  else {
-    if (((*(uint *)(self + 0x3c) & 4) == 0) && (**(int **)(self + 0x1c) != 0)) {
-      strCap = 0xf;
-      strSize = 0;
-      strBuf[0] = (void *)((uint)strBuf[0]._1_3_ << 8);
-      string_assignPtrLen(**(int **)(self + 0xc),
-                   (**(int **)(self + 0x2c) + **(int **)(self + 0x1c)) -
-                   **(int **)(self + 0xc));
-    }
-    else {
-      strCap = 0xf;
-      strSize = 0;
-      strBuf[0] = (void *)((uint)strBuf[0]._1_3_ << 8);
-    }
-    string_moveConstruct2(strBuf);
-    uVar3 = extraout_EDX_00;
-    if (0xf < strCap) {
-      operator_delete(strBuf[0]);
-    }
-  }
-  __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc,uVar3,uVar4);
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: ostrstream_str_wrap  (confidence: med)
- * purpose: Wrapper returning result object after ostrstream_str (ostrstream::str)
- * vars: param_1=return string
- */
-/* Global::ostrstream_str_wrap @ 0040e140 */
-
-undefined4 ostrstream_str_wrap(undefined4 param_1)
-
-{
-  ostrstream_str(param_1);
-  return param_1;
 }
 
 
@@ -1238,136 +1270,6 @@ LAB_0040e651:
 
 
 
-/* [AUDIT] proposed: wostream_insertWide  (confidence: high)
- * purpose: operator<<(wostream, const wchar_t*): writes wide string with field-width padding via sputn/sputc
- * vars: cstr=wide string
- */
-/* Global::wostream_insertWide @ 0040e6f0 */
-
-basic_ostream<wchar_t,std::char_traits<wchar_t>_> *
-wostream_insertWide(basic_ostream<wchar_t,std::char_traits<wchar_t>_> *ostream,wchar_t *wstr)
-
-{
-  wchar_t wVar1;
-  int iVar2;
-  uint uVar3;
-  bool bVar4;
-  ushort uVar5;
-  uint stackCookie;
-  basic_ostream<wchar_t,std::char_traits<wchar_t>_> *pbVar7;
-  uint len;
-  wchar_t *strEnd;
-  bool bVar10;
-  __int64 _Var11;
-  int fillCount;
-  int width;
-  void *savedExceptionList;
-  undefined1 *sehHandler;
-  undefined4 trylevel;
-  
-  trylevel = 0xffffffff;
-  sehHandler = &LAB_006e19e0;
-  savedExceptionList = ExceptionList;
-  stackCookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  ExceptionList = &savedExceptionList;
-  bVar4 = false;
-  if (*wstr == L'\0') {
-    len = 0;
-  }
-  else {
-    strEnd = wstr;
-    do {
-      wVar1 = *strEnd;
-      strEnd = strEnd + 1;
-    } while (wVar1 != L'\0');
-    len = (int)strEnd - (int)(wstr + 1) >> 1;
-  }
-  iVar2 = *(int *)(*(int *)ostream + 4);
-  width = *(int *)(ostream + iVar2 + 0x24);
-  uVar3 = *(uint *)(ostream + iVar2 + 0x20);
-  if ((width < 0) ||
-     ((width < 1 && (((uVar3 == 0 || (width < 0)) || ((width < 1 && (uVar3 <= len)))))
-      ))) {
-    width = 0;
-    fillCount = 0;
-  }
-  else {
-    fillCount = uVar3 - len;
-    width = width - (uint)(uVar3 < len);
-  }
-  if (*(int **)(ostream + iVar2 + 0x38) != (int *)0x0) {
-    (**(code **)(**(int **)(ostream + iVar2 + 0x38) + 4))();
-  }
-  trylevel = 0;
-  if ((*(int *)(ostream + *(int *)(*(int *)ostream + 4) + 0xc) == 0) &&
-     (*(basic_ostream<wchar_t,std::char_traits<wchar_t>_> **)
-       (ostream + *(int *)(*(int *)ostream + 4) + 0x3c) !=
-      (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)0x0)) {
-    std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::flush
-              (*(basic_ostream<wchar_t,std::char_traits<wchar_t>_> **)
-                (ostream + *(int *)(*(int *)ostream + 4) + 0x3c));
-  }
-  trylevel = 1;
-  if (*(int *)(ostream + *(int *)(*(int *)ostream + 4) + 0xc) != 0) {
-    std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::setstate
-              ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)
-               (ostream + *(int *)(*(int *)ostream + 4)),4,false);
-    trylevel = 0xffffffff;
-    bVar4 = std::uncaught_exception();
-    if (!bVar4) {
-      std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::_Osfx(ostream);
-    }
-    if (*(int **)(ostream + *(int *)(*(int *)ostream + 4) + 0x38) != (int *)0x0) {
-      (**(code **)(**(int **)(ostream + *(int *)(*(int *)ostream + 4) + 0x38) + 8))();
-    }
-    ExceptionList = savedExceptionList;
-    return ostream;
-  }
-  trylevel = 2;
-  if ((*(uint *)(ostream + *(int *)(*(int *)ostream + 4) + 0x14) & 0x1c0) != 0x40) {
-    while( true ) {
-      if ((width < 0) || ((width < 1 && (fillCount == 0)))) goto LAB_0040e825;
-      uVar5 = std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::sputc
-                        (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)
-                          (ostream + *(int *)(*(int *)ostream + 4) + 0x38),
-                         *(wchar_t *)(ostream + *(int *)(*(int *)ostream + 4) + 0x40));
-      if (uVar5 == 0xffff) break;
-      bVar10 = fillCount != 0;
-      fillCount = fillCount + -1;
-      width = width + -1 + (uint)bVar10;
-    }
-    bVar4 = true;
-LAB_0040e825:
-    if (bVar4) goto LAB_0040e89f;
-  }
-  _Var11 = std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::sputn
-                     (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)
-                       (ostream + *(int *)(*(int *)ostream + 4) + 0x38),wstr,
-                      (ulonglong)stackCookie << 0x20);
-  if (((uint)_Var11 == len) && ((int)((ulonglong)_Var11 >> 0x20) == 0)) {
-    while ((-1 < width &&
-           (((0 < width || (fillCount != 0)) &&
-            (uVar5 = std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::sputc
-                               (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)
-                                 (ostream + *(int *)(*(int *)ostream + 4) + 0x38),
-                                *(wchar_t *)(ostream + *(int *)(*(int *)ostream + 4) + 0x40)),
-            uVar5 != 0xffff))))) {
-      bVar4 = fillCount != 0;
-      fillCount = fillCount + -1;
-      width = width + -1 + (uint)bVar4;
-    }
-  }
-LAB_0040e89f:
-  iVar2 = *(int *)(*(int *)ostream + 4);
-  *(undefined4 *)(ostream + iVar2 + 0x20) = 0;
-  *(undefined4 *)(ostream + iVar2 + 0x24) = 0;
-  pbVar7 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)wostream_insertWide_unwind();
-  return pbVar7;
-}
-
-
-
-
 /* [AUDIT] proposed: useFacet_ctypeW  (confidence: high)
  * purpose: std::use_facet<ctype<wchar_t>>: locates/registers ctype facet in locale, throws bad_cast on failure
  * vars: ostream=locale; DAT_0076af74=cached facet
@@ -1421,6 +1323,7 @@ LAB_0040e9bf:
     facet = facetPtr;
     if (facetId == 0xffffffff) {
       std::bad_cast::bad_cast(badCastEx,"bad cast");
+                    /* WARNING: Subroutine does not return */
       _CxxThrowException(badCastEx,(ThrowInfo *)&DAT_0074aee8);
     }
     DAT_0076af74 = (int *)facetPtr;
@@ -1552,6 +1455,22 @@ char * getTargetEntity(void)
 
 
 
+/* [AUDIT] proposed: std::wstring::operator_delete_wrapper  (confidence: high)
+ * purpose: deallocate wstring buffer via operator delete
+ * vars: param_1=ptr
+ */
+/* Global::std_wstring_operator_delete_wrapper @ 0040f8c0 */
+
+void std_wstring_operator_delete_wrapper(void *param_1)
+
+{
+                    /* WARNING: Subroutine does not return */
+  operator_delete(param_1);
+}
+
+
+
+
 /* [AUDIT] proposed: proximityCheck  (confidence: low)
  * purpose: Game logic: gets target entity then compares its height/distance thresholds via security_cookie_guard_a/d50
  * vars: Widget_computeBoundsFloat=fetch pos; no return value used
@@ -1592,42 +1511,20 @@ void proximityCheck(void)
 
 
 
-/* [AUDIT] proposed: array_lerp  (confidence: high)
- * purpose: Interpolates array: param_1[i] += (param_2[i]-param_1[i])*param_4 for param_3 elements (unrolled)
- * vars: param_4=t
+/* [AUDIT] proposed: powf_f  (confidence: high)
+ * purpose: Returns powf(param_1,..) via libm_sse2_pow_precise
+ * vars: trivial
  */
-/* Global::array_lerp @ 00411d40 */
+/* Global::powf_f @ 00411d10 */
 
-void array_lerp(float *values,float *targets,int count,float t)
+float10 powf_f(float param_1)
 
 {
-  int blockCount;
-  int done;
-  float cur;
+  double dVar1;
   
-  done = 0;
-  if (3 < count) {
-    blockCount = (count - 4U >> 2) + 1;
-    done = blockCount * 4;
-    do {
-      cur = (*targets - *values) * t + *values;
-      *values = cur;
-      cur = (*targets - cur) * t + cur;
-      *values = cur;
-      cur = (*targets - cur) * t + cur;
-      *values = cur;
-      *values = (*targets - cur) * t + cur;
-      blockCount = blockCount + -1;
-    } while (blockCount != 0);
-  }
-  if (done < count) {
-    count = count - done;
-    do {
-      *values = (*targets - *values) * t + *values;
-      count = count + -1;
-    } while (count != 0);
-  }
-  return;
+  dVar1 = (double)param_1;
+  libm_sse2_pow_precise();
+  return (float10)(float)dVar1;
 }
 
 
@@ -1652,29 +1549,8 @@ void copy16bytes(undefined8 a,undefined8 b)
 
 
 
-/* [AUDIT] proposed: vec4_scale  (confidence: high)
- * purpose: Scales this vec4 by scalar b into a
- * vars: b=scalar
- */
-/* Global::vec4_scale @ 00412170 */
-
-void vec4_scale(float *out,float scale)
-
-{
-  float *self;
-  
-  *out = *self * scale;
-  out[1] = self[1] * scale;
-  out[2] = self[2] * scale;
-  out[3] = self[3] * scale;
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: vec2_dot  (confidence: high)
- * purpose: Returns 2D dot product of this and out
+ * purpose: Returns 2D dot product of this and a
  * vars: self=this
  */
 /* Global::vec2_dot @ 00412320 */
@@ -1718,6 +1594,26 @@ void mat4_identity(void)
   self[0xe] = 0;
   self[0xf] = 0x3f800000;
   return;
+}
+
+
+
+
+/* [AUDIT] proposed: vec2_length  (confidence: high)
+ * purpose: Returns sqrt(x^2+y^2) (2D vector length)
+ * vars: libm sqrt
+ */
+/* Global::vec2_length @ 00423ee0 */
+
+float10 vec2_length(void)
+
+{
+  float *self;
+  double lenSq;
+  
+  lenSq = (double)(*self * *self + self[1] * self[1]);
+  libm_sse2_sqrt_precise();
+  return (float10)(float)lenSq;
 }
 
 
@@ -1879,8 +1775,129 @@ undefined4 * copyVec4Array(undefined4 *srcBegin,undefined4 *srcEnd,undefined4 *d
 
 
 
+/* [AUDIT] proposed: copyVec2Array  (confidence: high)
+ * purpose: Copies array of 8-byte (vec2/2-dword) elements [srcBegin,srcEnd) to dst
+ * vars: stride 8
+ */
+/* Global::copyVec2Array @ 00427ab0 */
+
+undefined4 * copyVec2Array(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  if (param_1 == param_2) {
+    return param_3;
+  }
+  do {
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = *param_1;
+      param_3[1] = param_1[1];
+    }
+    param_1 = param_1 + 2;
+    param_3 = param_3 + 2;
+  } while (param_1 != param_2);
+  return param_3;
+}
+
+
+
+
+/* [AUDIT] proposed: copyVec4Array2  (confidence: high)
+ * purpose: Copies array of 16-byte elements [param_1,param_2) to param_3 (null-dst tolerant)
+ * vars: stride 16
+ */
+/* Global::copyVec4Array2 @ 00427af0 */
+
+undefined4 * copyVec4Array2(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  
+  if (param_1 != param_2) {
+    puVar2 = param_1 + 2;
+    do {
+      if (param_3 != (undefined4 *)0x0) {
+        *param_3 = puVar2[-2];
+        param_3[1] = puVar2[-1];
+        param_3[2] = *puVar2;
+        param_3[3] = puVar2[1];
+      }
+      param_3 = param_3 + 4;
+      puVar1 = puVar2 + 2;
+      puVar2 = puVar2 + 4;
+    } while (puVar1 != param_2);
+    return param_3;
+  }
+  return param_3;
+}
+
+
+
+
+/* [AUDIT] proposed: vectorReserveCheck8  (confidence: high)
+ * purpose: std::vector reserve growth guard for 8-byte elements, throws _Xlength_error if too long
+ * vars: stride 8
+ */
+/* Global::vectorReserveCheck8 @ 00428c80 */
+
+void vectorReserveCheck8(uint param_1)
+
+{
+  int *in_ECX;
+  uint uVar1;
+  
+  if (param_1 <= (uint)(in_ECX[2] - in_ECX[1] >> 3)) {
+    return;
+  }
+  if (0x1fffffffU - (in_ECX[1] - *in_ECX >> 3) < param_1) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("vector<T> too long");
+  }
+  uVar1 = in_ECX[2] - *in_ECX >> 3;
+  if (0x1fffffff - (uVar1 >> 1) < uVar1) {
+    vectorReserve8();
+    return;
+  }
+  vectorReserve8();
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: vectorReserveCheck16  (confidence: high)
+ * purpose: std::vector reserve growth guard for 16-byte elements, throws _Xlength_error if too long
+ * vars: stride 16
+ */
+/* Global::vectorReserveCheck16 @ 00428d00 */
+
+void vectorReserveCheck16(uint param_1)
+
+{
+  int *in_ECX;
+  uint uVar1;
+  
+  if (param_1 <= (uint)(in_ECX[2] - in_ECX[1] >> 4)) {
+    return;
+  }
+  if (0xfffffffU - (in_ECX[1] - *in_ECX >> 4) < param_1) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("vector<T> too long");
+  }
+  uVar1 = in_ECX[2] - *in_ECX >> 4;
+  if (0xfffffff - (uVar1 >> 1) < uVar1) {
+    vectorReserve16();
+    return;
+  }
+  vectorReserve16();
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: vectorErase8  (confidence: high)
- * purpose: std::vector erase of 8-byte elements: shifts tail down [srcEnd,dst) and adjusts end
+ * purpose: std::vector erase of 8-byte elements: shifts tail down [param_2,param_3) and adjusts end
  * vars: stride 8
  */
 /* Global::vectorErase8 @ 0042b7a0 */
@@ -1914,9 +1931,46 @@ void vectorErase8(undefined4 *outIt,undefined4 *first,undefined4 *last)
 
 
 
+/* [AUDIT] proposed: std::vector::push_back_16  (confidence: high)
+ * purpose: push_back one 16-byte element, reserve if full
+ * vars: self=vec;outIt=elem
+ */
+/* Global::std_vector_push_back_16 @ 0042bd20 */
+
+void std_vector_push_back_16(undefined4 *param_1)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar2;
+  uint *in_ECX;
+  
+  puVar1 = (undefined4 *)in_ECX[1];
+  if ((param_1 < puVar1) && (puVar2 = (undefined4 *)*in_ECX, puVar2 <= param_1)) {
+    if (puVar1 == (undefined4 *)in_ECX[2]) {
+      vectorReserveCheck16(1);
+    }
+    param_1 = (undefined4 *)(((int)param_1 - (int)puVar2 & 0xfffffff0U) + *in_ECX);
+  }
+  else if (puVar1 == (undefined4 *)in_ECX[2]) {
+    vectorReserveCheck16(1);
+  }
+  puVar1 = (undefined4 *)in_ECX[1];
+  if (puVar1 != (undefined4 *)0x0) {
+    *puVar1 = *param_1;
+    puVar1[1] = param_1[1];
+    puVar1[2] = param_1[2];
+    puVar1[3] = param_1[3];
+  }
+  in_ECX[1] = in_ECX[1] + 0x10;
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: resizeChildBuffers_type8  (confidence: low)
  * purpose: Loops (m[0x50]-m[0x4c])/4 times calling vector-resize helper 0042bea0(count) over child buffers; SEH-free wrapper
- * vars: self+0x4c/0x50 = begin/end ptr pair; count>>2
+ * vars: in_ECX+0x4c/0x50 = begin/end ptr pair; count>>2
  */
 /* Global::resizeChildBuffers_type8 @ 0042be00 */
 
@@ -2190,6 +2244,7 @@ void GameController_clearContainers(void)
   *(int *)(*(int *)(self + 0x1460) + 4) = *(int *)(self + 0x1460);
   *(undefined4 *)(self + 0x1464) = 0;
   if (oldPtr != *(void **)(self + 0x1460)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(oldPtr);
   }
   *(int *)(self + 0x1408) = *list1;
@@ -2267,41 +2322,6 @@ void int64_subGen(int *out)
   *out = lo - (uint)rhs;
   out[1] = (hi - (int)((ulonglong)rhs >> 0x20)) - (uint)(lo < (uint)rhs);
   return;
-}
-
-
-
-
-/* [AUDIT] proposed: array::atChecked4  (confidence: med)
- * purpose: Bounds-checked 4-byte element access; returns global fallback (0076afc8/d0) on OOB
- * vars: size at ECX+0x1c; data at +0x18
- */
-/* Global::array_atChecked4 @ 0042f730 */
-
-
-undefined * array_atChecked4(int index)
-
-{
-  int self;
-  
-  if (index < 0) {
-    if ((DAT_0076afcc & 1) == 0) {
-      DAT_0076afcc = DAT_0076afcc | 1;
-    }
-    _DAT_0076afc8 = 0;
-    _DAT_0076afca = 0x100;
-    return &DAT_0076afc8;
-  }
-  if (*(int *)(self + 0x1c) <= index) {
-    if ((DAT_0076afcc & 2) == 0) {
-      DAT_0076afcc = DAT_0076afcc | 2;
-    }
-    _DAT_0076afd0 = 0xffff;
-    DAT_0076afd2 = 0xff;
-    DAT_0076afd3 = 0;
-    return &DAT_0076afd0;
-  }
-  return (undefined *)(*(int *)(self + 0x18) + index * 4);
 }
 
 
@@ -2435,6 +2455,31 @@ undefined4 world_getRegionCell64(uint blockX,uint blockY)
 
 
 
+/* [AUDIT] proposed: math::round_to_tenth  (confidence: med)
+ * purpose: round float to one decimal, recursive for negatives (game util)
+ * vars: blockX=value
+ */
+/* Global::math_round_to_tenth @ 00439110 */
+
+float10 math_round_to_tenth(float param_1)
+
+{
+  float10 fVar1;
+  
+  if (param_1 < 0.0) {
+    fVar1 = (float10)math_round_to_tenth(-param_1);
+    param_1 = -(float)fVar1;
+    if (param_1 == 0.0) {
+      param_1 = 0.0;
+    }
+    return (float10)param_1;
+  }
+  return (float10)((float)(int)(param_1 * 10.0 + 0.5) * 0.1);
+}
+
+
+
+
 /* [AUDIT] proposed: textBuffer::eraseSelection  (confidence: low)
  * purpose: Clamps scroll (0043a4a0) then erases text range via 00411270 and adjusts scroll offsets
  * vars: +0x188 pos; +0x18c len
@@ -2465,6 +2510,38 @@ void textBuffer_eraseSelection(void)
     }
     *(undefined4 *)(self + 0x18c) = 0;
   }
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std::wstring::erase_iter  (confidence: med)
+ * purpose: erase from iterator: compute offset then erase 1
+ * vars: self=this;param_2=iter
+ */
+/* Global::std_wstring_erase_iter @ 00439fc0 */
+
+void std_wstring_erase_iter(int *param_1,int param_2)
+
+{
+  undefined4 *puVar1;
+  undefined4 *in_ECX;
+  int iVar2;
+  
+  puVar1 = in_ECX;
+  if (7 < (uint)in_ECX[5]) {
+    puVar1 = (undefined4 *)*in_ECX;
+  }
+  iVar2 = 0;
+  if (param_2 != 0) {
+    iVar2 = param_2 - (int)puVar1 >> 1;
+  }
+  u16string_erase(iVar2,1);
+  if (7 < (uint)in_ECX[5]) {
+    in_ECX = (undefined4 *)*in_ECX;
+  }
+  *param_1 = (int)in_ECX + iVar2 * 2;
   return;
 }
 
@@ -2518,6 +2595,127 @@ void listHead_initWithNode(void)
 
 
 
+/* [AUDIT] proposed: Spawn::initNameArrays  (confidence: med)
+ * purpose: Zero-inits Spawn struct with ~14 repeated 0x100 memset blocks + string-slot headers (NPC name/attr arrays)
+ * vars: repeated 0x100 memset, cap short=1
+ */
+/* Global::Spawn_initNameArrays @ 0043bc00 */
+
+void Spawn_initNameArrays(void)
+
+{
+  undefined2 *self;
+  
+  *self = 0;
+  *(undefined4 *)(self + 2) = 0;
+  *(undefined4 *)(self + 4) = 0;
+  self[6] = 0;
+  *(undefined1 *)(self + 7) = 0;
+  self[8] = 1;
+  *(undefined4 *)(self + 0x8a) = 0;
+  memset(self + 10,0,0x100);
+  self[0x8c] = 0;
+  *(undefined4 *)(self + 0x8e) = 0;
+  *(undefined4 *)(self + 0x90) = 0;
+  self[0x92] = 0;
+  *(undefined1 *)(self + 0x93) = 0;
+  self[0x94] = 1;
+  *(undefined4 *)(self + 0x116) = 0;
+  memset(self + 0x96,0,0x100);
+  self[0x118] = 0;
+  *(undefined4 *)(self + 0x11a) = 0;
+  *(undefined4 *)(self + 0x11c) = 0;
+  self[0x11e] = 0;
+  *(undefined1 *)(self + 0x11f) = 0;
+  self[0x120] = 1;
+  *(undefined4 *)(self + 0x1a2) = 0;
+  memset(self + 0x122,0,0x100);
+  self[0x1a4] = 0;
+  *(undefined4 *)(self + 0x1a6) = 0;
+  *(undefined4 *)(self + 0x1a8) = 0;
+  self[0x1aa] = 0;
+  *(undefined1 *)(self + 0x1ab) = 0;
+  self[0x1ac] = 1;
+  *(undefined4 *)(self + 0x22e) = 0;
+  memset(self + 0x1ae,0,0x100);
+  self[0x230] = 0;
+  *(undefined4 *)(self + 0x232) = 0;
+  *(undefined4 *)(self + 0x234) = 0;
+  self[0x236] = 0;
+  *(undefined1 *)(self + 0x237) = 0;
+  self[0x238] = 1;
+  *(undefined4 *)(self + 0x2ba) = 0;
+  memset(self + 0x23a,0,0x100);
+  self[700] = 0;
+  *(undefined4 *)(self + 0x2be) = 0;
+  *(undefined4 *)(self + 0x2c0) = 0;
+  self[0x2c2] = 0;
+  *(undefined1 *)(self + 0x2c3) = 0;
+  self[0x2c4] = 1;
+  *(undefined4 *)(self + 0x346) = 0;
+  memset(self + 0x2c6,0,0x100);
+  self[0x348] = 0;
+  *(undefined4 *)(self + 0x34a) = 0;
+  *(undefined4 *)(self + 0x34c) = 0;
+  self[0x34e] = 0;
+  *(undefined1 *)(self + 0x34f) = 0;
+  self[0x350] = 1;
+  *(undefined4 *)(self + 0x3d2) = 0;
+  memset(self + 0x352,0,0x100);
+  self[0x3d4] = 0;
+  *(undefined4 *)(self + 0x3d6) = 0;
+  *(undefined4 *)(self + 0x3d8) = 0;
+  self[0x3da] = 0;
+  *(undefined1 *)(self + 0x3db) = 0;
+  self[0x3dc] = 1;
+  *(undefined4 *)(self + 0x45e) = 0;
+  memset(self + 0x3de,0,0x100);
+  self[0x460] = 0;
+  *(undefined4 *)(self + 0x462) = 0;
+  *(undefined4 *)(self + 0x464) = 0;
+  self[0x466] = 0;
+  *(undefined1 *)(self + 0x467) = 0;
+  self[0x468] = 1;
+  *(undefined4 *)(self + 0x4ea) = 0;
+  memset(self + 0x46a,0,0x100);
+  self[0x4ec] = 0;
+  *(undefined4 *)(self + 0x4ee) = 0;
+  *(undefined4 *)(self + 0x4f0) = 0;
+  self[0x4f2] = 0;
+  *(undefined1 *)(self + 0x4f3) = 0;
+  self[0x4f4] = 1;
+  *(undefined4 *)(self + 0x576) = 0;
+  memset(self + 0x4f6,0,0x100);
+  self[0x578] = 0;
+  *(undefined4 *)(self + 0x57a) = 0;
+  *(undefined4 *)(self + 0x57c) = 0;
+  self[0x57e] = 0;
+  *(undefined1 *)(self + 0x57f) = 0;
+  self[0x580] = 1;
+  *(undefined4 *)(self + 0x602) = 0;
+  memset(self + 0x582,0,0x100);
+  self[0x604] = 0;
+  *(undefined4 *)(self + 0x606) = 0;
+  *(undefined4 *)(self + 0x608) = 0;
+  self[0x60a] = 0;
+  *(undefined1 *)(self + 0x60b) = 0;
+  self[0x60c] = 1;
+  *(undefined4 *)(self + 0x68e) = 0;
+  memset(self + 0x60e,0,0x100);
+  self[0x690] = 0;
+  *(undefined4 *)(self + 0x692) = 0;
+  *(undefined4 *)(self + 0x694) = 0;
+  self[0x696] = 0;
+  *(undefined1 *)(self + 0x697) = 0;
+  self[0x698] = 1;
+  *(undefined4 *)(self + 0x71a) = 0;
+  memset(self + 0x69a,0,0x100);
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: struct::initWithBuf  (confidence: med)
  * purpose: Zero-inits struct: fields + memset 0x100 buffer at +9 (SSO string member init)
  * vars: memset 0x100 at ECX+9
@@ -2543,6 +2741,105 @@ void struct_initWithBuf(void)
   memset(self + 9,0,0x100);
   self[0x4a] = 0;
   self[0x4b] = 0;
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: Creature::init  (confidence: med)
+ * purpose: Zero-inits large Creature struct with float defaults (0x43fa0000,0x42c80000,1.0 scales); calls 0043bc00 sub-init
+ * vars: floats at +0x57,0x5a-0x5e; memset blocks
+ */
+/* Global::Creature_init_43c100 @ 0043c100 */
+
+void Creature_init_43c100(void)
+
+{
+  undefined4 *self;
+  
+  *self = 0;
+  self[1] = 0;
+  self[2] = 0;
+  self[3] = 0;
+  self[4] = 0;
+  self[5] = 0;
+  self[6] = 0;
+  self[7] = 0;
+  self[8] = 0;
+  self[9] = 0;
+  self[10] = 0;
+  self[0xb] = 0;
+  self[0xc] = 0;
+  self[0xd] = 0;
+  self[0xe] = 0;
+  self[0xf] = 0;
+  self[0x10] = 0;
+  self[0x11] = 0;
+  self[0x12] = 0;
+  self[0x13] = 0;
+  *(undefined1 *)(self + 0x14) = 3;
+  self[0x15] = 0;
+  *(undefined1 *)(self + 0x16) = 0;
+  self[0x17] = 0;
+  self[0x18] = 0;
+  self[0x19] = 0;
+  Spawn_initDefaults();
+  *(undefined2 *)(self + 0x45) = 0;
+  self[0x46] = 0;
+  self[0x48] = 0;
+  self[0x49] = 0;
+  self[0x4a] = 0;
+  self[0x4b] = 0;
+  *(undefined2 *)(self + 0x4c) = 0;
+  self[0x4d] = 0;
+  self[0x47] = 0xfffff448;
+  self[0x4e] = 0;
+  self[0x4f] = 0;
+  self[0x50] = 0;
+  self[0x51] = 0;
+  self[0x52] = 0;
+  self[0x53] = 0;
+  self[0x54] = 0;
+  self[0x55] = 0;
+  self[0x56] = 0;
+  self[0x58] = 0;
+  self[0x59] = 0;
+  self[0x57] = 0x43fa0000;
+  self[0x5a] = 0x42c80000;
+  self[0x5b] = 0x3f800000;
+  self[0x5c] = 0x3f800000;
+  self[0x5d] = 0x3f800000;
+  self[0x5e] = 0x3f800000;
+  *(undefined2 *)(self + 0x5f) = 0;
+  self[0x61] = 0;
+  self[0x62] = 0;
+  self[99] = 0;
+  self[100] = 0;
+  self[0x65] = 0;
+  *(undefined1 *)(self + 0x66) = 0;
+  self[0x60] = 1;
+  self[0x67] = 0xffffffff;
+  self[0x6a] = 0;
+  self[0x68] = 0xffffffff;
+  self[0x69] = 0xffffffff;
+  *(undefined1 *)(self + 0x72) = 0;
+  self[0x75] = 0;
+  self[0x73] = 0xffffffff;
+  self[0x74] = 0xffffffff;
+  *(undefined2 *)(self + 0x76) = 0;
+  self[0x77] = 0;
+  self[0x78] = 0;
+  *(undefined2 *)(self + 0x79) = 0;
+  *(undefined1 *)((int)self + 0x1e6) = 0;
+  *(undefined2 *)(self + 0x7a) = 1;
+  self[0xbb] = 0;
+  memset(self + 0x7b,0,0x100);
+  Spawn_initNameArrays();
+  self[0x455] = 0;
+  *(undefined8 *)(self + 0x456) = 0;
+  *(undefined8 *)(self + 0x458) = 0;
+  memset(self + 0x44a,0,0x2c);
   return;
 }
 
@@ -2589,6 +2886,7 @@ void list_allocNode20(undefined4 *prev,undefined4 *next)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -2701,60 +2999,6 @@ void combat_updateBombFuse(void)
 
 
 
-/* [AUDIT] proposed: stat::calcArmor  (confidence: med)
- * purpose: Computes armor/defense: base ×2^rand terms plus per-slot element bonuses (0x530/0x648/0x760/0x878)
- * vars: base +0x184; slot type bytes
- */
-/* Global::stat_calcArmor @ 0043cff0 */
-
-float10 stat_calcArmor(void)
-
-{
-  int self;
-  float10 fVar1;
-  double dVar2;
-  double dVar3;
-  float weaponBase;
-  undefined4 totalDamage;
-  undefined4 damage;
-  
-  dVar2 = 2.0;
-  libm_sse2_pow_precise();
-  dVar3 = 2.0;
-  libm_sse2_pow_precise();
-  weaponBase = (float)dVar3 * (float)dVar2;
-  damage = *(float *)(self + 0x184) * weaponBase;
-  if (*(char *)(self + 0x60) == '\0') {
-    dVar3 = 2.0;
-    libm_sse2_pow_precise();
-    damage = (float)dVar3 * (float)dVar2 * *(float *)(self + 0x184);
-  }
-  if ((*(byte *)(self + 0x7e) & 0x20) != 0) {
-    damage = damage + weaponBase;
-  }
-  if (*(char *)(self + 0x530) == '\x04') {
-    fVar1 = (float10)item_computeBlockValue();
-    damage = (float)fVar1 + damage;
-  }
-  if (*(char *)(self + 0x648) == '\x06') {
-    fVar1 = (float10)item_computeBlockValue();
-    damage = (float)fVar1 + damage;
-  }
-  if (*(char *)(self + 0x760) == '\x05') {
-    fVar1 = (float10)item_computeBlockValue();
-    damage = (float)fVar1 + damage;
-  }
-  totalDamage = damage;
-  if (*(char *)(self + 0x878) == '\a') {
-    fVar1 = (float10)item_computeBlockValue();
-    totalDamage = (float)fVar1 + damage;
-  }
-  return (float10)totalDamage;
-}
-
-
-
-
 /* [AUDIT] proposed: stat::calcWeaponDamage  (confidence: med)
  * purpose: Computes weapon damage: base 2^ terms, iterate element list or flag bonuses, ×multiplier by weapon type
  * vars: base +0x180; flags +0x7e
@@ -2842,8 +3086,10 @@ void stat_calcWeaponDamage(void)
   *upgrades = (int)upgrades;
   upgrades[1] = (int)upgrades;
   if (piVar1 == upgrades) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(upgrades);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(piVar1);
 }
 
@@ -2945,76 +3191,9 @@ float10 curve_diminishingN1(int level)
 
 
 
-/* [AUDIT] proposed: stat::calcManaRegen  (confidence: med)
- * purpose: Computes mana/spirit regen: base 2^ terms /0.1 plus per-slot rune bonuses (0x530..0xcd8)
- * vars: slot type bytes; 004c6ba0
- */
-/* Global::stat_calcManaRegen @ 0043ea40 */
-
-float10 stat_calcManaRegen(void)
-
-{
-  int self;
-  float10 fVar1;
-  double dVar2;
-  double dVar3;
-  double dVar4;
-  undefined4 result;
-  undefined4 value;
-  
-  dVar2 = 2.0;
-  libm_sse2_pow_precise();
-  dVar3 = 2.0;
-  libm_sse2_pow_precise();
-  dVar4 = 2.0;
-  libm_sse2_pow_precise();
-  value = (((float)dVar2 * (float)dVar3) / (float)dVar4) * 0.1;
-  if (*(char *)(self + 0x990) == '\x03') {
-    fVar1 = (float10)item_computeStat_regen();
-    value = (float)fVar1 + value;
-  }
-  if (*(char *)(self + 0xaa8) == '\x03') {
-    fVar1 = (float10)item_computeStat_regen();
-    value = (float)fVar1 + value;
-  }
-  if (*(char *)(self + 0x530) == '\x04') {
-    fVar1 = (float10)item_computeStat_regen();
-    value = (float)fVar1 + value;
-  }
-  if (*(char *)(self + 0x648) == '\x06') {
-    fVar1 = (float10)item_computeStat_regen();
-    value = (float)fVar1 + value;
-  }
-  if (*(char *)(self + 0x760) == '\x05') {
-    fVar1 = (float10)item_computeStat_regen();
-    value = (float)fVar1 + value;
-  }
-  if (*(char *)(self + 0x878) == '\a') {
-    fVar1 = (float10)item_computeStat_regen();
-    value = (float)fVar1 + value;
-  }
-  if (*(char *)(self + 0x418) == '\b') {
-    fVar1 = (float10)item_computeStat_regen();
-    value = (float)fVar1 + value;
-  }
-  if (*(char *)(self + 0xbc0) == '\t') {
-    fVar1 = (float10)item_computeStat_regen();
-    value = (float)fVar1 + value;
-  }
-  result = value;
-  if (*(char *)(self + 0xcd8) == '\t') {
-    fVar1 = (float10)item_computeStat_regen();
-    result = (float)fVar1 + value;
-  }
-  return (float10)result;
-}
-
-
-
-
 /* [AUDIT] proposed: curve::diminishingx3p15  (confidence: high)
  * purpose: Returns (1-1/(n*0.1+1))*3+1.5, 0 if n<1
- * vars: param_1
+ * vars: level
  */
 /* Global::curve_diminishingx3p15 @ 0043f770 */
 
@@ -3030,9 +3209,2493 @@ float10 curve_diminishingx3p15(int level)
 
 
 
+/* [AUDIT] proposed: creature::generateAppearance  (confidence: med)
+ * purpose: Generates NPC/creature appearance (color, model, size) from seed/type param_3 via rand and big per-race switch
+ * vars: param_3=seed struct; rand()
+ */
+/* Global::creature_generateAppearance @ 0043f7c0 */
+
+/* WARNING: Removing unreachable block (ram,0x0043f8b5) */
+/* WARNING: Removing unreachable block (ram,0x0043f8dc) */
+/* WARNING: Removing unreachable block (ram,0x0043f906) */
+/* WARNING: Removing unreachable block (ram,0x0043f91b) */
+/* WARNING: Removing unreachable block (ram,0x0043f8f1) */
+/* WARNING: Removing unreachable block (ram,0x0043f8c7) */
+/* WARNING: Removing unreachable block (ram,0x0043f899) */
+/* WARNING: Removing unreachable block (ram,0x0043f930) */
+
+void creature_generateAppearance(uint *kindOut,int item,undefined4 *seed)
+
+{
+  undefined2 uVar1;
+  ushort uVar2;
+  short sVar3;
+  int r0;
+  int r1;
+  int r2;
+  uint uVar7;
+  short sVar8;
+  bool bVar9;
+  float fVar10;
+  ushort local_2c;
+  undefined1 local_2a;
+  undefined4 local_28;
+  undefined1 local_24;
+  int rarity;
+  int quality;
+  ushort local_18;
+  undefined1 local_16;
+  float local_14;
+  float local_10;
+  float local_c;
+  uint cookie;
+  
+  cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  local_28 = 0;
+  local_24 = 0;
+  rarity = 0;
+  quality = 0;
+  local_18 = 0xffff;
+  local_16 = 0xff;
+  if (seed == (undefined4 *)0x0) {
+    r0 = rand();
+    r1 = rand();
+    r2 = rand();
+    local_2c = CONCAT11((char)r1,(char)r2);
+    local_18 = local_2c;
+    local_16 = (char)r0;
+    rarity = rand();
+    rarity = rarity % 100;
+    r0 = rand();
+    seed = &local_28;
+    quality = r0 % 100;
+  }
+  else {
+    switch(*seed) {
+    case 0:
+      uVar7 = (*(byte *)(seed + 1) & 0x80000001) + 2;
+      break;
+    case 1:
+      uVar7 = *(byte *)(seed + 1) & 0x80000001;
+      break;
+    case 2:
+      uVar7 = (*(byte *)(seed + 1) & 0x80000001) + 9;
+      break;
+    case 3:
+      uVar7 = (*(byte *)(seed + 1) & 0x80000001) + 0xb;
+      break;
+    case 4:
+      uVar7 = (*(byte *)(seed + 1) & 0x80000001) + 4;
+      break;
+    case 5:
+      uVar7 = (*(byte *)(seed + 1) & 0x80000001) + 7;
+      break;
+    case 6:
+      uVar7 = (*(byte *)(seed + 1) & 0x80000001) + 0xf;
+      break;
+    case 7:
+      uVar7 = (*(byte *)(seed + 1) & 0x80000001) + 0xd;
+      break;
+    default:
+      goto switchD_0043f887_default;
+    }
+    *kindOut = uVar7;
+  }
+switchD_0043f887_default:
+  *(undefined4 *)(item + 8) = 0x3f75c290;
+  *(undefined4 *)(item + 0xc) = 0x3f75c290;
+  *(undefined4 *)(item + 0x10) = 0x400a3d71;
+  switch(*kindOut) {
+  case 0:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    uVar7 = seed[2] & 0x80000003;
+    if ((int)uVar7 < 0) {
+      uVar7 = (uVar7 - 1 | 0xfffffffc) + 1;
+    }
+    *(short *)(item + 0x14) = (short)uVar7 + 0x4d4;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 10) + 0x500;
+    *(undefined4 *)(item + 0x1a) = 0x101b0;
+    *(undefined2 *)(item + 0x18) = 0x1ae;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 1:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 6) + 0x4d8;
+    sVar3 = 0x1ae;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 10) + 0x50a;
+    *(undefined4 *)(item + 0x1a) = 0x1b0;
+    goto LAB_0043fa27;
+  case 2:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 6) + 0x4de;
+    sVar3 = 0x4e0;
+    sVar8 = (short)((int)seed[3] % 0xf) + 0x4e4;
+    goto LAB_0043fa0e;
+  case 3:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 6) + 0x4f3;
+    sVar3 = 0x4f5;
+    sVar8 = (short)((int)seed[3] % 7) + 0x4f9;
+LAB_0043fa0e:
+    *(short *)(item + 0x16) = sVar8;
+    *(undefined4 *)(item + 0x1a) = 0x101b0;
+    sVar3 = (sVar3 < *(short *)(item + 0x14)) + 0x1ae;
+    goto LAB_0043fa27;
+  case 4:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 5) + 0x4b;
+    sVar3 = (short)((int)seed[3] % 6) + 0x50;
+    goto LAB_0043fc25;
+  case 5:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 5) + 0x56;
+    sVar3 = (short)((int)seed[3] % 6) + 0x5b;
+LAB_0043fc25:
+    *(short *)(item + 0x16) = sVar3;
+    *(undefined4 *)(item + 0x1a) = 0x1b0;
+    *(undefined2 *)(item + 0x18) = 0x61;
+    *(undefined4 *)(item + 0x38) = 0x3f99999a;
+    goto LAB_0043fc40;
+  case 6:
+    r0 = rand();
+    r1 = rand();
+    r2 = rand();
+    local_2c = CONCAT11((char)r1,(char)r2);
+    *(ushort *)(item + 2) = local_2c;
+    *(char *)(item + 4) = (char)r0;
+    r0 = rand();
+    *(short *)(item + 0x14) = (short)(r0 % 3) + 0x94b;
+    *(undefined4 *)(item + 0x1a) = 0x1b0;
+    *(undefined2 *)(item + 0x18) = 0x1af;
+    *(undefined4 *)(item + 0x70) = 0;
+    *(undefined4 *)(item + 0x74) = 0x40400000;
+    *(undefined4 *)(item + 0x78) = 0x40a00000;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    *(undefined4 *)(item + 0x38) = 0x3f99999a;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 7:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    uVar7 = seed[2] & 0x80000001;
+    if ((int)uVar7 < 0) {
+      uVar7 = (uVar7 - 1 | 0xfffffffe) + 1;
+    }
+    *(short *)(item + 0x14) = (short)uVar7 + 0x62;
+    goto LAB_0043fd91;
+  case 8:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 5) + 0x6a;
+LAB_0043fd91:
+    sVar3 = 0x6f;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 6) + 100;
+    *(int *)(item + 0x1a) = (int)L"downbutton" + 1;
+    goto LAB_0043fa27;
+  case 9:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 5) + 0x11a;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 3) + 0x11f;
+    *(undefined4 *)(item + 0x1a) = 0x12c01b0;
+    goto LAB_0044007b;
+  case 10:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 5) + 0x122;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 5) + 0x127;
+    *(undefined4 *)(item + 0x1a) = 0x12d01b0;
+LAB_0044007b:
+    *(undefined2 *)(item + 0x18) = 0x1ae;
+    *(undefined4 *)(item + 0x38) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    goto LAB_0043fc40;
+  case 0xb:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 5) + 0x514;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 10) + 0x51e;
+    *(undefined4 *)(item + 0x1a) = 0x1b0;
+    *(undefined2 *)(item + 0x18) = 0x12e;
+    *(undefined4 *)(item + 0x40) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    goto LAB_00440137;
+  case 0xc:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 5) + 0x519;
+    uVar7 = seed[3] & 0x80000003;
+    if ((int)uVar7 < 0) {
+      uVar7 = (uVar7 - 1 | 0xfffffffc) + 1;
+    }
+    *(short *)(item + 0x16) = (short)uVar7 + 0x528;
+    *(undefined4 *)(item + 0x1a) = 0x1b0;
+    *(undefined2 *)(item + 0x18) = 0x12e;
+    *(undefined4 *)(item + 0x40) = 0x3f8ccccd;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x28) = 0x3f733333;
+    *(undefined4 *)(item + 0x70) = 0;
+    *(undefined4 *)(item + 0x74) = 0x3fc00000;
+    *(undefined4 *)(item + 0x78) = 0x40800000;
+LAB_00440137:
+    *(undefined4 *)(item + 8) = 0x3f851eb8;
+    *(undefined4 *)(item + 0xc) = 0x3f851eb8;
+    *(undefined4 *)(item + 0x10) = 0x4015c28f;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0xd:
+    local_2c = 0xffff;
+    *(undefined2 *)(item + 2) = 0xffff;
+    *(undefined1 *)(item + 4) = 0xff;
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 5) + 0x52c;
+    sVar3 = 0x53e;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 5) + 0x531;
+    *(undefined4 *)(item + 0x1a) = 0x101b0;
+    goto LAB_0043fa27;
+  case 0xe:
+    local_2c = 0xffff;
+    *(undefined2 *)(item + 2) = 0xffff;
+    *(undefined1 *)(item + 4) = 0xff;
+    uVar7 = seed[2] & 0x80000003;
+    if ((int)uVar7 < 0) {
+      uVar7 = (uVar7 - 1 | 0xfffffffc) + 1;
+    }
+    *(short *)(item + 0x14) = (short)uVar7 + 0x536;
+    uVar7 = seed[3] & 0x80000003;
+    if ((int)uVar7 < 0) {
+      uVar7 = (uVar7 - 1 | 0xfffffffc) + 1;
+    }
+    *(short *)(item + 0x16) = (short)uVar7 + 0x53a;
+    *(undefined4 *)(item + 0x1a) = 0x101b0;
+    sVar3 = 0x53e;
+    goto LAB_0043fa27;
+  case 0xf:
+    copy3bytes(seed + 4);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 6) + 0x12f;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 6) + 0x135;
+    *(undefined4 *)(item + 0x1a) = 0x1b0;
+    *(undefined2 *)(item + 0x18) = 0x147;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x10:
+    copy3bytes(seed + 4);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 6) + 0x13b;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 6) + 0x141;
+    *(undefined4 *)(item + 0x1a) = 0x1b0;
+    *(undefined2 *)(item + 0x18) = 0x147;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x11:
+    *(undefined4 *)(item + 0x14) = 0x1490148;
+    *(undefined4 *)(item + 0x1a) = 0x14b014c;
+    *(undefined2 *)(item + 0x18) = 0x14a;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    local_14 = 0.0;
+    local_10 = -90.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -2.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 4.0;
+    local_c = 7.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 3.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x428;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x12:
+    *(undefined2 *)(item + 0x14) = 0xb;
+    *(undefined4 *)(item + 0x1a) = 0x1b0;
+    sVar3 = 0x1ae;
+    goto LAB_0043fa27;
+  case 0x13:
+    *(undefined2 *)(item + 0x14) = 0x163;
+    *(undefined4 *)(item + 0x1a) = 0x1620165;
+    *(undefined2 *)(item + 0x18) = 0x164;
+    uVar1 = 0x166;
+    goto LAB_0044244f;
+  case 0x14:
+    *(undefined2 *)(item + 0x14) = 0x168;
+    *(undefined4 *)(item + 0x1a) = 0x167016a;
+    *(undefined2 *)(item + 0x18) = 0x169;
+    uVar1 = 0x16b;
+LAB_0044244f:
+    *(undefined2 *)(item + 0x1e) = uVar1;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 9.0;
+    local_c = 6.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 4.0;
+    local_c = -2.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -1.0;
+    vec3_copy(&local_14);
+LAB_00442502:
+    *(undefined4 *)(item + 0x30) = 0x3f800000;
+    *(undefined4 *)(item + 0x2c) = 0x3f800000;
+    local_c = -1.0;
+LAB_00442517:
+    local_10 = -8.0;
+LAB_0044251e:
+    local_14 = 0.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x3c) = 0x3f800000;
+    *(undefined4 *)(item + 0x60) = 0xc1f00000;
+    goto LAB_00443c6a;
+  case 0x15:
+    *(undefined2 *)(item + 0x14) = 0x16d;
+    *(undefined4 *)(item + 0x1a) = 0x16c016f;
+    *(undefined2 *)(item + 0x18) = 0x16e;
+    *(undefined2 *)(item + 0x1e) = 0x170;
+    *(undefined4 *)(item + 0x24) = 0x3f333333;
+    local_14 = 0.0;
+    local_10 = 12.5;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 2.5;
+    local_c = -4.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -4.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x28) = 0x3f99999a;
+    local_14 = 0.0;
+    local_10 = -8.0;
+    local_c = -2.5;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x3c) = 0x3f800000;
+    *(undefined4 *)(item + 0x60) = 0xc1f00000;
+    local_14 = 2.8;
+    local_10 = 2.8;
+    local_c = 4.0;
+    goto LAB_00443c61;
+  case 0x16:
+    *(undefined2 *)(item + 0x14) = 0x172;
+    *(undefined4 *)(item + 0x1a) = 0x1710174;
+    uVar1 = 0x173;
+    goto LAB_00442693;
+  case 0x17:
+    *(undefined2 *)(item + 0x14) = 0x176;
+    *(undefined4 *)(item + 0x1a) = 0x1750178;
+    uVar1 = 0x177;
+LAB_00442693:
+    *(undefined2 *)(item + 0x18) = uVar1;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    local_14 = 0.0;
+    local_10 = 9.0;
+    local_c = 5.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -4.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 4.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -9.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f800000;
+    *(undefined4 *)(item + 0x2c) = 0x3f800000;
+    goto LAB_00443c6a;
+  case 0x18:
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 1.2;
+    vec3_copy(&local_14);
+    *(undefined2 *)(item + 0x1c) = 0x874;
+    local_10 = 0.0;
+    local_c = -1.5;
+    goto LAB_00440a12;
+  case 0x19:
+    *(undefined2 *)(item + 0x14) = 0x872;
+    *(undefined4 *)(item + 0x1a) = 0x8710873;
+    *(undefined2 *)(item + 0x18) = 0x873;
+    *(undefined4 *)(item + 0x24) = 0x3f266666;
+    local_14 = 0.0;
+    local_10 = 13.0;
+    local_c = 0.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 3.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 4.0;
+    local_c = -3.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -3.5;
+    vec3_copy(&local_14);
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
+    local_c = 4.5;
+    goto LAB_00442517;
+  case 0x1a:
+    *(undefined2 *)(item + 0x14) = 0x17a;
+    *(undefined4 *)(item + 0x1a) = 0x179017c;
+    *(undefined2 *)(item + 0x18) = 0x17b;
+    *(undefined2 *)(item + 0x1e) = 0x17d;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    local_14 = 0.0;
+    local_10 = 9.0;
+    local_c = -1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -5.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 4.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.1;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f800000;
+    *(undefined4 *)(item + 0x2c) = 0x3f800000;
+    *(undefined4 *)(item + 0x28) = 0x3f866666;
+    local_14 = 0.0;
+    local_10 = -10.0;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x3c) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x60) = 0xc2f00000;
+    local_14 = 1.04;
+    local_10 = 1.04;
+    local_c = 2.34;
+    goto LAB_00443c61;
+  case 0x1b:
+    *(undefined2 *)(item + 0x14) = 0x17f;
+    *(undefined4 *)(item + 0x1a) = 0x17e0181;
+    *(undefined2 *)(item + 0x18) = 0x180;
+    *(undefined2 *)(item + 0x1e) = 0x182;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    local_14 = 0.0;
+    local_10 = 9.0;
+    local_c = 5.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 4.0;
+    local_c = -2.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.1;
+    local_c = -2.5;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f800000;
+    *(undefined4 *)(item + 0x2c) = 0x3f800000;
+    *(undefined4 *)(item + 0x28) = 0x3f866666;
+    local_14 = 0.0;
+    local_10 = -7.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x3c) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x60) = 0xc2f00000;
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 0.7;
+    goto LAB_00443c61;
+  case 0x1c:
+    *(undefined2 *)(item + 0x14) = 0x184;
+    *(undefined4 *)(item + 0x1a) = 0x1830186;
+    *(undefined2 *)(item + 0x18) = 0x185;
+    *(undefined2 *)(item + 0x1e) = 0x187;
+    local_14 = 0.0;
+    local_10 = 11.0;
+    local_c = -1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -3.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 3.0;
+    local_c = -7.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.1;
+    local_c = -7.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = -5.5;
+    local_c = -1.0;
+    vec3_copy(&local_14);
+    local_14 = 1.52;
+    local_10 = 1.52;
+    local_c = 3.23;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x30) = 0x3f666666;
+    *(undefined4 *)(item + 0x2c) = 0x3f666666;
+    goto LAB_00443c6a;
+  case 0x1d:
+    *(undefined2 *)(item + 0x14) = 0x189;
+    *(undefined4 *)(item + 0x1a) = 0x188018b;
+    *(undefined2 *)(item + 0x18) = 0x18a;
+    *(undefined2 *)(item + 0x1e) = 0x18c;
+    *(undefined4 *)(item + 0x24) = 0x3f19999a;
+    local_14 = 0.0;
+    local_10 = 14.0;
+    local_c = -1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 5.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -6.0;
+    local_c = -9.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f800000;
+    *(undefined4 *)(item + 0x2c) = 0x3f8ccccd;
+    local_10 = -11.0;
+    local_c = -4.0;
+    goto LAB_0044251e;
+  case 0x1e:
+    *(undefined2 *)(item + 0x14) = 0x18e;
+    *(undefined4 *)(item + 0x1a) = 0x18d0190;
+    *(undefined2 *)(item + 0x18) = 399;
+    uVar1 = 0x191;
+    goto LAB_00442c5a;
+  case 0x1f:
+    *(undefined2 *)(item + 0x14) = 0x193;
+    *(undefined4 *)(item + 0x1a) = 0x1920195;
+    *(undefined2 *)(item + 0x18) = 0x194;
+    uVar1 = 0x196;
+    goto LAB_00442c5a;
+  case 0x20:
+    *(undefined2 *)(item + 0x14) = 0x198;
+    *(undefined4 *)(item + 0x1a) = 0x197019a;
+    *(undefined2 *)(item + 0x18) = 0x199;
+    uVar1 = 0x19b;
+LAB_00442c5a:
+    *(undefined2 *)(item + 0x1e) = uVar1;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    local_14 = 0.0;
+    local_10 = 9.0;
+    local_c = -1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -4.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 4.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.1;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f800000;
+    *(undefined4 *)(item + 0x2c) = 0x3f800000;
+    local_14 = 0.0;
+    local_10 = -8.0;
+    local_c = -1.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x3c) = 0x3f8ccccd;
+    *(undefined4 *)(item + 0x60) = 0xc1f00000;
+    goto LAB_00443c6a;
+  case 0x21:
+    *(undefined2 *)(item + 0x14) = 0x19d;
+    *(undefined4 *)(item + 0x1a) = 0x19c019e;
+    *(undefined2 *)(item + 0x18) = 0x19e;
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 0.8;
+    vec3_copy(&local_14);
+    local_10 = 9.0;
+    goto LAB_00442db8;
+  case 0x22:
+    *(undefined2 *)(item + 0x14) = 0x1a0;
+    *(undefined4 *)(item + 0x1a) = 0x19f01a1;
+    *(undefined2 *)(item + 0x18) = 0x1a1;
+    local_14 = 1.2;
+    local_10 = 1.2;
+    local_c = 1.2;
+    vec3_copy(&local_14);
+    local_10 = 4.0;
+LAB_00442db8:
+    local_14 = 0.0;
+    local_c = 1.9;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 4.0;
+    local_c = -4.2;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -4.2;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f59999a;
+    goto LAB_00442502;
+  case 0x23:
+    *(undefined4 *)(item + 0x1a) = 0x9a009b;
+    goto LAB_0044168d;
+  case 0x24:
+    *(undefined4 *)(item + 0x1a) = 0x9c009d;
+LAB_0044168d:
+    local_14 = 9.0;
+    local_10 = 0.0;
+    local_c = 8.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 1.0;
+    local_c = -2.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 8.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x2c) = 0x3f666666;
+    local_14 = 1.0;
+    local_10 = 1.0;
+    local_c = 1.1;
+LAB_00440ef2:
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x30;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x25:
+    uVar1 = 0x95f;
+    goto LAB_004419f1;
+  case 0x26:
+    uVar1 = 0x960;
+    goto LAB_004419f1;
+  case 0x27:
+    uVar1 = 0x961;
+    goto LAB_004419f1;
+  case 0x28:
+    uVar1 = 0x962;
+LAB_004419f1:
+    *(undefined2 *)(item + 0x1c) = uVar1;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3fc00000;
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 0.8;
+LAB_00441a32:
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x29;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x29:
+    *(undefined4 *)(item + 0x14) = 0x9640963;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    local_14 = 1.4;
+    local_10 = 1.4;
+    local_c = 2.5;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x429;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x2a:
+    *(undefined2 *)(item + 0x14) = 0x965;
+    *(undefined2 *)(item + 0x18) = 0x966;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 6.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x2c) = 0x3f000000;
+    local_14 = 1.4;
+    local_10 = 1.4;
+    local_c = 2.5;
+    goto LAB_00440900;
+  case 0x2b:
+    *(undefined2 *)(item + 0x14) = 3;
+    *(undefined4 *)(item + 0x1a) = 0x401b0;
+    *(undefined2 *)(item + 0x18) = 0x1ae;
+    break;
+  case 0x2c:
+    *(undefined2 *)(item + 0x14) = 10;
+    *(undefined2 *)(item + 0x16) = 0xffff;
+    *(undefined4 *)(item + 0x1a) = 0x1b0;
+    sVar3 = 0x1ae;
+    goto LAB_0043fa27;
+  case 0x2d:
+    *(undefined2 *)(item + 0x14) = 5;
+    *(undefined4 *)(item + 0x1a) = 0x601b0;
+    *(undefined2 *)(item + 0x18) = 0x1ae;
+    local_14 = 0.0;
+    local_10 = 3.0;
+    local_c = 4.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    break;
+  case 0x2e:
+    r0 = rand();
+    r1 = rand();
+    r2 = rand();
+    local_2c = CONCAT11((char)r1,(char)r2);
+    local_2a = (char)r0;
+    copy3bytes(&local_2c);
+    *(undefined2 *)(item + 0x14) = 0x3c;
+    *(undefined4 *)(item + 0x1a) = 0x3d003f;
+    *(undefined2 *)(item + 0x18) = 0x3e;
+    *(undefined4 *)(item + 0x24) = 0x3f1c28f6;
+    local_14 = 0.0;
+    local_10 = 4.0;
+    local_c = 6.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -2.0;
+    vec3_copy(&local_14);
+    local_14 = 7.5;
+    local_10 = 0.0;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    local_14 = 2.4;
+    local_10 = 2.4;
+    local_c = 5.3999996;
+    vec3_copy(&local_14);
+    break;
+  case 0x2f:
+    *(undefined2 *)(item + 0x14) = 0x40;
+    *(undefined4 *)(item + 0x18) = 0x420041;
+    *(undefined4 *)(item + 0x38) = 0x3f266666;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x30) = 0x3f59999a;
+    *(undefined4 *)(item + 0x2c) = 0x3f59999a;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 7.5;
+    local_10 = 0.0;
+    local_c = 5.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -1.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 1.0;
+    local_c = -6.5;
+    vec3_copy(&local_14);
+    local_14 = 2.4;
+    local_10 = 2.4;
+    local_c = 3.6000001;
+    vec3_copy(&local_14);
+    break;
+  case 0x30:
+    *(undefined2 *)(item + 0x14) = 0xc;
+    *(undefined4 *)(item + 0x1a) = 0xd000f;
+    *(undefined2 *)(item + 0x18) = 0xe;
+    goto LAB_0043fe82;
+  case 0x31:
+    *(undefined2 *)(item + 0x14) = 0x10;
+    *(undefined4 *)(item + 0x1a) = 0x110013;
+    *(undefined2 *)(item + 0x18) = 0x12;
+    *(undefined4 *)(item + 0x70) = 0;
+    *(undefined4 *)(item + 0x74) = 0x3fc00000;
+    *(undefined4 *)(item + 0x78) = 0x40800000;
+    *(undefined4 *)(item + 0x24) = 0x3f99999a;
+LAB_0043fe82:
+    *(float *)(item + 8) = *(float *)(item + 8) / 1.2;
+    *(float *)(item + 0xc) = *(float *)(item + 0xc) / 1.2;
+    fVar10 = *(float *)(item + 0x10) / 1.2;
+LAB_0043feaf:
+    *(float *)(item + 0x10) = fVar10;
+    break;
+  case 0x32:
+    *(undefined2 *)(item + 0x14) = 0x14;
+    *(undefined4 *)(item + 0x1a) = 0x150017;
+    *(undefined2 *)(item + 0x18) = 0x16;
+    *(undefined4 *)(item + 0x70) = 0;
+    *(undefined4 *)(item + 0x74) = 0x40600000;
+    *(undefined4 *)(item + 0x78) = 0x40000000;
+    *(undefined4 *)(item + 0x88) = 0x40600000;
+    *(undefined4 *)(item + 0x8c) = 0x3f800000;
+    *(undefined4 *)(item + 0x90) = 0xc1080000;
+    *(undefined4 *)(item + 100) = 0;
+    *(undefined4 *)(item + 0x68) = 0;
+    *(undefined4 *)(item + 0x6c) = 0xc0800000;
+    *(undefined4 *)(item + 0x24) = 0x3f866666;
+    *(undefined4 *)(item + 0x28) = 0x3f4ccccd;
+    *(undefined4 *)(item + 8) = 0x3f23d70b;
+    *(undefined4 *)(item + 0xc) = 0x3f23d70b;
+    *(undefined4 *)(item + 0x10) = 0x3fae147b;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x28;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x33:
+    *(undefined2 *)(item + 0x14) = 0x94f;
+    *(undefined4 *)(item + 0x1a) = 0xe2094e;
+    *(undefined2 *)(item + 0x18) = 0x950;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x20;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x34:
+    *(undefined2 *)(item + 0x14) = 0x952;
+    *(undefined4 *)(item + 0x1a) = 0x9540951;
+    *(undefined2 *)(item + 0x18) = 0x953;
+    *(undefined4 *)(item + 0x7c) = 0x40c00000;
+    *(undefined4 *)(item + 0x80) = 0;
+    *(undefined4 *)(item + 0x84) = 0x3f800000;
+    *(undefined4 *)(item + 100) = 0;
+    *(undefined4 *)(item + 0x68) = 0;
+    *(undefined4 *)(item + 0x6c) = 0xc0800000;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x20;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x35:
+    *(undefined2 *)(item + 0x14) = 0xe7;
+    *(undefined4 *)(item + 0x1a) = 0xe600e8;
+    *(undefined2 *)(item + 0x22) = 0xe9;
+    goto LAB_00442fa2;
+  case 0x36:
+    *(undefined2 *)(item + 0x14) = 0xeb;
+    *(undefined4 *)(item + 0x1a) = 0xea00ec;
+    *(undefined2 *)(item + 0x22) = 0xee;
+    *(undefined2 *)(item + 0x18) = 0xed;
+LAB_00442fa2:
+    local_14 = 3.0;
+    local_10 = -1.0;
+    local_c = -7.0;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
+    *(undefined4 *)(item + 0x48) = 0xc2340000;
+    *(undefined4 *)(item + 0x58) = 0x41f00000;
+    local_14 = 1.0;
+    local_10 = -6.0;
+    local_c = 1.0;
+    *(undefined4 *)(item + 0x5c) = 0x42340000;
+    goto LAB_00440ef2;
+  case 0x37:
+    *(undefined2 *)(item + 0x14) = 0xff;
+    *(undefined4 *)(item + 0x1a) = 0xfe0100;
+    uVar1 = 0x101;
+    goto LAB_00443207;
+  case 0x38:
+    *(undefined2 *)(item + 0x14) = 0x103;
+    *(undefined4 *)(item + 0x1a) = 0x1020104;
+    *(undefined2 *)(item + 0x22) = 0x105;
+    local_14 = 3.0;
+    local_10 = 0.0;
+    local_c = -10.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 3.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3fa66666;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
+    *(undefined4 *)(item + 0x48) = 0;
+    *(undefined4 *)(item + 0x5c) = 0x42340000;
+    local_14 = 3.0;
+    local_10 = -2.0;
+    local_c = -5.0;
+    vec3_copy(&local_14);
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 1.65;
+    goto LAB_00440ef2;
+  case 0x39:
+    *(undefined2 *)(item + 0x14) = 0x107;
+    *(undefined4 *)(item + 0x1a) = 0x1060108;
+    *(undefined2 *)(item + 0x22) = 0x109;
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -10.0;
+    vec3_copy(&local_14);
+    local_10 = 5.0;
+    local_c = 8.0;
+    goto LAB_0044323d;
+  case 0x3a:
+    uVar7 = rand();
+    uVar7 = uVar7 & 0x80000001;
+    bVar9 = uVar7 == 0;
+    if ((int)uVar7 < 0) {
+      bVar9 = (uVar7 - 1 | 0xfffffffe) == 0xffffffff;
+    }
+    if (bVar9) {
+      *(undefined2 *)(item + 0x14) = 0x10f;
+      *(undefined4 *)(item + 0x1a) = 0x10e0110;
+      uVar1 = 0x111;
+    }
+    else {
+      *(undefined2 *)(item + 0x14) = 0x10b;
+      *(undefined4 *)(item + 0x1a) = 0x10a010c;
+      uVar1 = 0x10d;
+    }
+LAB_00443207:
+    *(undefined2 *)(item + 0x22) = uVar1;
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -10.0;
+    vec3_copy(&local_14);
+    local_10 = 3.0;
+    local_c = 6.0;
+LAB_0044323d:
+    local_14 = 0.0;
+LAB_00443247:
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
+    *(undefined4 *)(item + 0x48) = 0xc2340000;
+    local_14 = 3.0;
+    local_10 = -5.0;
+    local_c = 0.0;
+    *(undefined4 *)(item + 0x5c) = 0x42340000;
+    goto LAB_00440ef2;
+  case 0x3b:
+    *(undefined2 *)(item + 0x14) = 0x113;
+    *(undefined4 *)(item + 0x1a) = 0x1120114;
+    *(undefined2 *)(item + 0x22) = 0x115;
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -10.0;
+    goto LAB_00443247;
+  case 0x3c:
+    *(undefined2 *)(item + 0x14) = 0xf0;
+    *(undefined4 *)(item + 0x1a) = 0xef00f1;
+    uVar1 = 0xf2;
+    goto LAB_0044303c;
+  case 0x3d:
+    *(undefined2 *)(item + 0x14) = 0xf7;
+    *(undefined4 *)(item + 0x1a) = 0xf600f8;
+    *(undefined2 *)(item + 0x22) = 0xf9;
+    local_14 = 3.0;
+    local_10 = -1.0;
+    local_c = -5.0;
+    vec3_copy(&local_14);
+    local_10 = -5.0;
+    local_c = -1.0;
+    goto LAB_00443072;
+  case 0x3e:
+    *(undefined2 *)(item + 0x14) = 0xfb;
+    *(undefined4 *)(item + 0x1a) = 0xfa00fc;
+    uVar1 = 0xfd;
+LAB_0044303c:
+    *(undefined2 *)(item + 0x22) = uVar1;
+    local_14 = 3.0;
+    local_10 = -1.0;
+    local_c = -7.0;
+    vec3_copy(&local_14);
+    local_10 = -6.0;
+    local_c = 1.0;
+LAB_00443072:
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
+    *(undefined4 *)(item + 0x48) = 0xc2340000;
+    *(undefined4 *)(item + 0x58) = 0x41f00000;
+    local_14 = 1.0;
+    *(undefined4 *)(item + 0x5c) = 0x42340000;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 3.0;
+    local_c = 4.0;
+    goto LAB_00440ef2;
+  case 0x3f:
+    *(undefined4 *)(item + 0x1a) = 0x14d014e;
+    goto LAB_0044340d;
+  case 0x40:
+    *(undefined4 *)(item + 0x1a) = 0x14f0150;
+    goto LAB_0044340d;
+  case 0x41:
+    *(undefined4 *)(item + 0x1a) = 0x1510152;
+    goto LAB_0044340d;
+  case 0x42:
+    *(undefined4 *)(item + 0x1a) = 0x1530154;
+LAB_0044340d:
+    *(undefined2 *)(item + 0x18) = 0xffff;
+    local_14 = 0.0;
+    local_10 = 3.0;
+    local_c = 6.0;
+    vec3_copy(&local_14);
+    local_14 = 4.0;
+    local_10 = 0.0;
+    local_c = -1.5;
+    vec3_copy(&local_14);
+    local_14 = 1.2;
+    local_10 = 1.2;
+    local_c = 2.6999998;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3fc00000;
+    goto LAB_00440909;
+  case 0x43:
+    *(undefined4 *)(item + 0x1a) = 0x1550156;
+    *(undefined2 *)(item + 0x14) = 0x157;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 4.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 4.0;
+    local_c = 8.0;
+    vec3_copy(&local_14);
+    local_14 = 4.0;
+    local_10 = 0.0;
+    local_c = -6.0;
+    vec3_copy(&local_14);
+    local_14 = 1.2;
+    local_10 = 1.2;
+    local_c = 3.75;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3f333333;
+    *(undefined4 *)(item + 0x24) = 0x3f000000;
+    *(undefined4 *)(item + 0x30) = 0x3fc00000;
+    goto LAB_00440909;
+  case 0x44:
+    *(undefined2 *)(item + 0x14) = 0x73;
+    *(char **)(item + 0x1a) = "p";
+    *(undefined2 *)(item + 0x18) = 0x75;
+    local_14 = 8.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 1.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -6.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x2c) = 0x3f99999a;
+    break;
+  case 0x45:
+    *(undefined2 *)(item + 0x14) = 0x77;
+    *(undefined4 *)(item + 0x1a) = 0x760078;
+    *(undefined2 *)(item + 0x18) = 0x79;
+    local_14 = 6.0;
+    local_10 = 3.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 2.0;
+    local_c = -10.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 7.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -4.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x30) = 0x3f333333;
+    goto LAB_00440d96;
+  case 0x46:
+    *(undefined **)(item + 0x1a) = &DAT_007a007b;
+    *(undefined2 *)(item + 0x18) = 0x7c;
+    local_14 = 6.0;
+    local_10 = 3.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 2.0;
+    local_c = -8.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 7.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 5.0;
+    vec3_copy(&local_14);
+LAB_00440d96:
+    local_14 = 1.2;
+    local_10 = 1.2;
+    local_c = 2.6999998;
+    vec3_copy(&local_14);
+    local_14 = -45.0;
+    local_10 = 45.0;
+    local_c = -45.0;
+    goto LAB_00440900;
+  case 0x47:
+    *(undefined4 *)(item + 0x1a) = 0x7d007e;
+    goto LAB_00440e74;
+  case 0x48:
+    *(undefined4 *)(item + 0x1a) = 0x7f0080;
+LAB_00440e74:
+    local_14 = 3.0;
+    local_10 = 0.0;
+    local_c = -12.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_c = 1.0;
+LAB_00440ec3:
+    local_10 = 0.0;
+    local_14 = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 1.2;
+    local_10 = 1.2;
+    local_c = 2.6999998;
+    goto LAB_00440ef2;
+  case 0x49:
+    *(undefined4 *)(item + 0x1a) = 0x810082;
+    local_14 = 3.0;
+    local_10 = 0.0;
+    local_c = -11.0;
+    vec3_copy(&local_14);
+    local_c = -12.0;
+    goto LAB_00440ec3;
+  case 0x4a:
+    *(undefined2 *)(item + 0x14) = 0x1a3;
+    *(undefined4 *)(item + 0x1a) = 0x1a201a4;
+    *(undefined2 *)(item + 0x18) = 0x1a4;
+    *(undefined2 *)(item + 0x1e) = 0x1a5;
+    local_14 = 1.0;
+    local_10 = 1.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 8.5;
+    local_c = 1.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.6;
+    vec3_copy(&local_14);
+    local_14 = 4.0;
+    local_10 = 1.0;
+    local_c = -3.7;
+    vec3_copy(&local_14);
+    local_14 = 4.0;
+    local_10 = -3.0;
+    local_c = -3.7;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3f666666;
+    *(undefined4 *)(item + 0x24) = 0x3f3ae148;
+    *(undefined4 *)(item + 0x30) = 0x3f800000;
+    *(undefined4 *)(item + 0x2c) = 0x3f800000;
+    local_14 = 0.0;
+    local_10 = -8.5;
+    local_c = -2.9;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x3c) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x60) = 0xc2a00000;
+    goto LAB_00443c6a;
+  case 0x4b:
+    *(undefined2 *)(item + 0x14) = 0x1a7;
+    *(undefined4 *)(item + 0x1a) = 0x1a601a8;
+    *(undefined2 *)(item + 0x18) = 0x1a8;
+    local_14 = 1.0;
+    local_10 = 1.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 17.5;
+    local_c = 2.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = -9.0;
+    local_c = 2.6;
+    vec3_copy(&local_14);
+    local_14 = 6.0;
+    local_10 = 9.0;
+    local_c = -1.7;
+    vec3_copy(&local_14);
+    local_14 = 6.0;
+    local_10 = -9.0;
+    local_c = -1.7;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x40000000;
+    *(undefined4 *)(item + 0x24) = 0x3f8ccccd;
+    *(undefined4 *)(item + 0x30) = 0x3fcccccd;
+    *(undefined4 *)(item + 0x2c) = 0x3fcccccd;
+    goto LAB_00443c6a;
+  case 0x4c:
+    *(undefined2 *)(item + 0x14) = 0xa0;
+    *(undefined4 *)(item + 0x1a) = 0xa200a1;
+    uVar1 = 0xa3;
+    goto LAB_00440934;
+  case 0x4d:
+    *(undefined2 *)(item + 0x14) = 0xa4;
+    *(undefined4 *)(item + 0x1a) = 0xa600a5;
+    uVar1 = 0xa7;
+    goto LAB_00440934;
+  case 0x4e:
+    *(undefined2 *)(item + 0x14) = 0xa8;
+    *(undefined4 *)(item + 0x1a) = 0xaa00a9;
+    uVar1 = 0xab;
+    goto LAB_00440934;
+  case 0x4f:
+    *(undefined2 *)(item + 0x14) = 0xac;
+    *(undefined4 *)(item + 0x1a) = 0xae00ad;
+    uVar1 = 0xaf;
+LAB_00440934:
+    *(undefined2 *)(item + 0x18) = uVar1;
+    local_14 = 6.0;
+    local_10 = 0.0;
+    local_c = -2.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3f666666;
+    break;
+  case 0x50:
+    *(undefined2 *)(item + 0x14) = 0xb0;
+    *(undefined4 *)(item + 0x1a) = 0xb200b1;
+    *(undefined2 *)(item + 0x18) = 0xb3;
+    break;
+  case 0x51:
+    *(undefined2 *)(item + 0x14) = 0xbe;
+    *(undefined4 *)(item + 0x1a) = 0xc000bf;
+    *(undefined2 *)(item + 0x18) = 0xc1;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    local_14 = 0.0;
+    local_10 = 1.8;
+    local_c = 6.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
+    local_14 = 3.5;
+    local_10 = 1.0;
+    local_c = -10.8;
+    vec3_copy(&local_14);
+    *(float *)(item + 8) = *(float *)(item + 8) * 1.5;
+    *(float *)(item + 0xc) = *(float *)(item + 0xc) * 1.5;
+    fVar10 = *(float *)(item + 0x10) * 1.5;
+    goto LAB_0043feaf;
+  case 0x52:
+    *(undefined2 *)(item + 0x14) = 0xc2;
+    *(undefined4 *)(item + 0x1a) = 0xc400c3;
+    *(undefined2 *)(item + 0x18) = 0xc5;
+    *(undefined2 *)(item + 0x20) = 0xc6;
+    *(undefined4 *)(item + 0x34) = 0x3f266666;
+    *(undefined4 *)(item + 0x24) = 0x3f000000;
+    *(undefined4 *)(item + 0x30) = 0x3f666666;
+    *(undefined4 *)(item + 0x2c) = 0x3f333333;
+    *(undefined4 *)(item + 0x28) = 0x3f666666;
+    *(undefined4 *)(item + 0x38) = 0x3f666666;
+    local_14 = 7.0;
+    local_10 = 0.0;
+    local_c = 1.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 3.0;
+    local_c = 4.5;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 1.0;
+    local_c = -7.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -2.0;
+    vec3_copy(&local_14);
+    local_14 = 3.2;
+    local_10 = 3.2;
+    local_c = 5.8;
+    vec3_copy(&local_14);
+    break;
+  case 0x53:
+    r0 = rand();
+    sVar3 = 0xb4;
+    sVar8 = (short)(r0 % 3) + 0xb4;
+    goto LAB_004409dd;
+  case 0x54:
+    r0 = rand();
+    sVar3 = 0xb7;
+    sVar8 = (short)(r0 % 3) + 0xb7;
+LAB_004409dd:
+    *(short *)(item + 0x14) = sVar8;
+    *(undefined4 *)(item + 0x1a) = 0xbb00ba;
+    local_10 = 0.8;
+    local_c = 6.0;
+    *(ushort *)(item + 0x18) = (*(short *)(item + 0x14) != sVar3) + 0xbc;
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+LAB_00440a12:
+    local_14 = 0.0;
+    vec3_copy(&local_14);
+    break;
+  case 0x55:
+    *(undefined4 *)(item + 0x14) = 0xc700c8;
+    *(undefined4 *)(item + 0x1a) = 0xca00c9;
+    *(undefined2 *)(item + 0x18) = 0xcb;
+    local_14 = 8.0;
+    local_10 = 5.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3f666666;
+    *(undefined4 *)(item + 0x4c) = 0xc2b40000;
+    *(undefined4 *)(item + 0x50) = 0x41f00000;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x428;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x56:
+    *(undefined4 *)(item + 0x1a) = 0x9e009f;
+    local_14 = 5.0;
+    local_10 = 1.0;
+    local_c = -5.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x10;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x57:
+    *(undefined2 *)(item + 0x14) = 0x84;
+    *(undefined4 *)(item + 0x1a) = 0x830085;
+    *(undefined2 *)(item + 0x18) = 0x86;
+    local_14 = 9.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 1.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -6.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x50) = 0xc1f00000;
+    *(undefined4 *)(item + 0x2c) = 0x3f666666;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x28;
+    goto LAB_0043fc40;
+  case 0x58:
+    *(undefined2 *)(item + 0x14) = 0x88;
+    *(undefined4 *)(item + 0x1a) = 0x870089;
+    *(undefined2 *)(item + 0x18) = 0x8a;
+    local_14 = 9.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 1.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -5.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x50) = 0xc1f00000;
+    *(undefined4 *)(item + 0x2c) = 0x3f666666;
+    goto LAB_004412bc;
+  case 0x59:
+    *(undefined2 *)(item + 0x14) = 0x8c;
+    *(undefined4 *)(item + 0x1a) = 0x8b008d;
+    *(undefined2 *)(item + 0x18) = 0x8e;
+    local_14 = 9.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 1.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -5.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x50) = 0xc1f00000;
+    *(undefined4 *)(item + 0x2c) = 0x3f666666;
+    *(undefined4 *)(item + 0x24) = 0x3f99999a;
+LAB_004412bc:
+    fVar10 = 1.1;
+    goto LAB_004412c4;
+  case 0x5a:
+    *(undefined2 *)(item + 0x14) = 0x90;
+    *(undefined4 *)(item + 0x1a) = 0x8f0091;
+    *(undefined2 *)(item + 0x18) = 0x92;
+    local_14 = 7.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 1.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 4.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = -5.0;
+    local_c = -5.0;
+    vec3_copy(&local_14);
+    fVar10 = 0.7;
+    *(undefined4 *)(item + 0x50) = 0xc1f00000;
+    *(undefined4 *)(item + 0x2c) = 0x3f400000;
+    *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x24) = 0x3f99999a;
+    goto LAB_004412c4;
+  case 0x5b:
+    *(undefined2 *)(item + 0x14) = 0x94;
+    *(undefined4 *)(item + 0x1a) = 0x930095;
+    *(undefined2 *)(item + 0x18) = 0x96;
+    local_14 = 7.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 1.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 4.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = -5.0;
+    local_c = -5.0;
+    vec3_copy(&local_14);
+    fVar10 = 0.9;
+    *(undefined4 *)(item + 0x50) = 0xc1f00000;
+    *(undefined4 *)(item + 0x2c) = 0x3f400000;
+    *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x24) = 0x3f99999a;
+LAB_004412c4:
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x28;
+    *(float *)(item + 8) = *(float *)(item + 8) * fVar10;
+    *(float *)(item + 0xc) = *(float *)(item + 0xc) * fVar10;
+    fVar10 = *(float *)(item + 0x10) * fVar10;
+    goto LAB_0043fc6d;
+  case 0x5c:
+    *(undefined2 *)(item + 0x14) = 0x97;
+    *(undefined2 *)(item + 0x22) = 0x99;
+    *(undefined2 *)(item + 0x1a) = 0x98;
+    local_14 = 9.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 0.0;
+    local_c = -11.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -2.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x2c) = 0x3f666666;
+    *(undefined4 *)(item + 0x48) = 0xc1200000;
+    *(undefined4 *)(item + 0x5c) = 0x42a00000;
+    local_14 = 3.0;
+    local_10 = -5.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x2a;
+    goto LAB_0043fc40;
+  case 0x5d:
+    *(undefined2 *)(item + 0x14) = 0xcd;
+    *(undefined4 *)(item + 0x1a) = 0xcc00ce;
+    *(undefined2 *)(item + 0x18) = 0xcf;
+    local_14 = 8.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 5.0;
+    local_10 = 1.0;
+    local_c = -8.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -6.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x2c) = 0x3f666666;
+    local_14 = -60.0;
+    local_10 = -45.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x28;
+LAB_0043fc40:
+    *(float *)(item + 8) = *(float *)(item + 8) / 1.2;
+    *(float *)(item + 0xc) = *(float *)(item + 0xc) / 1.2;
+    fVar10 = *(float *)(item + 0x10) / 1.2;
+LAB_0043fc6d:
+    *(float *)(item + 0x10) = fVar10;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x5e:
+    *(undefined2 *)(item + 0x14) = 0x877;
+    *(undefined4 *)(item + 0x1a) = 0x879087a;
+    *(undefined2 *)(item + 0x18) = 0x878;
+    *(undefined4 *)(item + 0x40) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x70) = 0;
+    *(undefined4 *)(item + 0x74) = 0x40400000;
+    *(undefined4 *)(item + 0x78) = 0x40400000;
+    *(undefined4 *)(item + 0x7c) = 0x40a00000;
+    *(undefined4 *)(item + 0x80) = 0x40800000;
+    *(undefined4 *)(item + 0x84) = 0;
+    *(undefined4 *)(item + 0x4c) = 0;
+    *(undefined4 *)(item + 0x50) = 0xc2340000;
+    *(undefined4 *)(item + 0x54) = 0;
+    *(undefined4 *)(item + 0x2c) = 0x3f19999a;
+    *(undefined4 *)(item + 8) = 0x4019999a;
+    *(undefined4 *)(item + 0xc) = 0x4019999a;
+    *(undefined4 *)(item + 0x10) = 0x40accccc;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x28;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x5f:
+    *(undefined2 *)(item + 0x14) = 0xe1;
+    *(undefined4 *)(item + 0x1a) = 0xe001b0;
+    *(undefined2 *)(item + 0x18) = 0x1ae;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    break;
+  case 0x60:
+    *(undefined2 *)(item + 0x14) = 0xe3;
+    *(undefined2 *)(item + 0x16) = 0xffff;
+    *(undefined4 *)(item + 0x1a) = 0xe200e4;
+    *(undefined2 *)(item + 0x18) = 0xe5;
+    local_14 = 6.0;
+    local_10 = 3.0;
+    local_c = -2.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = -90.0;
+    local_c = 0.0;
+    goto LAB_00440900;
+  case 0x61:
+    *(undefined4 *)(item + 0x14) = 0x87c087b;
+    *(undefined4 *)(item + 0x1a) = 0x5b701b0;
+    *(undefined2 *)(item + 0x18) = 0x87d;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x402;
+    *(undefined2 *)(item + 0x22) = 0x115;
+    *(undefined4 *)(item + 0x44) = 0x40000000;
+    *(undefined4 *)(item + 0x5c) = 0x42700000;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x62:
+    *(undefined2 *)(item + 0x14) = 0x159;
+    *(undefined4 *)(item + 0x1a) = 0x158015a;
+    *(undefined2 *)(item + 0x18) = 0x15a;
+    *(undefined2 *)(item + 0x1e) = 0x15b;
+    *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
+    local_14 = 1.4399999;
+    local_10 = 1.4399999;
+    local_c = 1.6;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 8.0;
+    local_c = 6.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 3.0;
+    local_c = -3.25;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -5.0;
+    local_c = -3.25;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
+    local_14 = 0.0;
+    local_10 = -7.0;
+    local_c = -4.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x3c) = 0x3f800000;
+    *(undefined4 *)(item + 0x28) = 0x3f666666;
+    goto LAB_00443c6a;
+  case 99:
+    *(undefined2 *)(item + 0x14) = 0x15d;
+    *(undefined4 *)(item + 0x1a) = 0x15c015e;
+    *(undefined2 *)(item + 0x18) = 0x15e;
+    *(undefined4 *)(item + 0x24) = 0x3f266666;
+    local_14 = 1.8;
+    local_10 = 1.8;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 12.0;
+    local_c = 4.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 3.0;
+    local_c = -5.75;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -5.75;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f400000;
+    *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x28) = 0x3f733333;
+    goto LAB_00443c6a;
+  case 100:
+    *(undefined2 *)(item + 0x14) = 0x160;
+    *(undefined4 *)(item + 0x1a) = 0x15f0161;
+    *(undefined2 *)(item + 0x18) = 0x161;
+    *(undefined4 *)(item + 0x24) = 0x3f266666;
+    local_14 = 1.8;
+    local_10 = 1.8;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 10.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -2.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 3.0;
+    local_c = -6.75;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = -6.75;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f400000;
+    *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x28) = 0x3f99999a;
+    goto LAB_00443c6a;
+  case 0x65:
+    *(undefined2 *)(item + 0x14) = 0x1aa;
+    *(undefined4 *)(item + 0x1a) = 0x1a901ab;
+    *(undefined2 *)(item + 0x18) = 0x1ab;
+    *(undefined2 *)(item + 0x1e) = 0x1ad;
+    *(undefined4 *)(item + 0x24) = 0x3f028f5c;
+    local_14 = 0.0;
+    local_10 = 12.5;
+    local_c = 0.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = -2.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = 4.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 3.0;
+    local_10 = -4.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f800000;
+    *(undefined4 *)(item + 0x2c) = 0x3fc00000;
+    local_14 = 0.0;
+    local_10 = -16.0;
+    local_c = 4.0;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x33;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x66:
+    *(undefined2 *)(item + 0x14) = 0xd8;
+    *(undefined2 *)(item + 0x1a) = 0xd9;
+    local_14 = 3.5;
+    local_10 = 1.0;
+    local_c = -2.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x24) = 0x3f400000;
+    goto LAB_00441f6c;
+  case 0x67:
+    *(undefined2 *)(item + 0x14) = 0xda;
+    uVar1 = 0xdb;
+    goto LAB_00441f97;
+  case 0x68:
+    *(undefined2 *)(item + 0x14) = 0xdc;
+    *(undefined2 *)(item + 0x1a) = 0xdd;
+    local_14 = 3.5;
+    local_10 = 1.0;
+    local_c = -2.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+    local_14 = 1.6;
+    local_10 = 1.6;
+    local_c = 1.6;
+    goto LAB_00441a32;
+  case 0x69:
+    *(undefined2 *)(item + 0x14) = 0xde;
+    uVar1 = 0xdf;
+LAB_00441f97:
+    *(undefined2 *)(item + 0x1a) = uVar1;
+    local_14 = 3.5;
+    local_10 = 1.0;
+    local_c = -2.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x24) = 0x3f666666;
+LAB_00441f6c:
+    local_14 = 1.6;
+    local_10 = 1.6;
+    local_c = 1.6;
+    goto LAB_00443c61;
+  case 0x6a:
+    *(undefined2 *)(item + 0x14) = 0xd1;
+    *(undefined4 *)(item + 0x1a) = 0xd000d2;
+    *(undefined2 *)(item + 0x18) = 0xd3;
+    local_14 = 10.0;
+    local_10 = 0.0;
+    local_c = 8.0;
+    vec3_copy(&local_14);
+    local_14 = 6.0;
+    local_10 = 1.0;
+    local_c = -5.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 5.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 90.0;
+    local_10 = 30.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x24) = 0x3f400000;
+    *(undefined4 *)(item + 0x2c) = 0x3f99999a;
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 1.2;
+    goto LAB_00440900;
+  case 0x6b:
+    *(undefined2 *)(item + 0x14) = 0xd5;
+    *(undefined4 *)(item + 0x1a) = 0xd400d6;
+    *(undefined2 *)(item + 0x18) = 0xd7;
+    local_14 = 10.0;
+    local_10 = 0.0;
+    local_c = 8.0;
+    vec3_copy(&local_14);
+    local_14 = 6.0;
+    local_10 = 1.0;
+    local_c = -5.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 5.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 90.0;
+    local_10 = 30.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x24) = 0x3f400000;
+    *(undefined4 *)(item + 0x2c) = 0x3f99999a;
+    local_14 = 4.8;
+    local_10 = 4.8;
+    local_c = 7.2000003;
+LAB_00440900:
+    vec3_copy(&local_14);
+LAB_00440909:
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x28;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x6c:
+    *(undefined2 *)(item + 0x14) = 0x18;
+    *(undefined4 *)(item + 0x1a) = 0x19001c;
+    *(undefined2 *)(item + 0x18) = 0x1b;
+    uVar1 = 0x1a;
+    goto LAB_004401fc;
+  case 0x6d:
+    *(undefined4 *)(item + 0x14) = 0x1d001e;
+    *(undefined4 *)(item + 0x1a) = 0x1f0022;
+    *(undefined2 *)(item + 0x18) = 0x21;
+    *(undefined2 *)(item + 0x20) = 0x20;
+    *(undefined4 *)(item + 0x40) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f19999a;
+    *(undefined4 *)(item + 0x30) = 0x3f400000;
+    *(undefined4 *)(item + 0x34) = 0x3f666666;
+    *(undefined4 *)(item + 0x7c) = 0x41000000;
+    *(undefined4 *)(item + 0x80) = 0x40400000;
+    *(undefined4 *)(item + 0x84) = 0;
+    *(undefined4 *)(item + 0x70) = 0;
+    *(undefined4 *)(item + 0x74) = 0x40400000;
+    *(undefined4 *)(item + 0x78) = 0x40400000;
+    *(undefined4 *)(item + 8) = 0x40b33333;
+    *(undefined4 *)(item + 0xc) = 0x40b33333;
+    *(undefined4 *)(item + 0x10) = 0x41499999;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x420;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x6e:
+    *(undefined2 *)(item + 0x14) = 0x23;
+    *(undefined4 *)(item + 0x1a) = 0x240027;
+    *(undefined2 *)(item + 0x18) = 0x26;
+    *(undefined2 *)(item + 0x20) = 0x25;
+    *(undefined4 *)(item + 0x40) = 0x3f8ccccd;
+    *(undefined4 *)(item + 0x24) = 0x3f19999a;
+    *(undefined4 *)(item + 0x30) = 0x3f400000;
+    *(undefined4 *)(item + 0x34) = 0x3f59999a;
+    *(undefined4 *)(item + 0x7c) = 0x41000000;
+    *(undefined4 *)(item + 0x80) = 0x40400000;
+    *(undefined4 *)(item + 0x84) = 0;
+    *(undefined4 *)(item + 0x70) = 0;
+    *(undefined4 *)(item + 0x74) = 0x40400000;
+    *(undefined4 *)(item + 0x78) = 0x3f800000;
+    *(undefined4 *)(item + 8) = 0x404ccccd;
+    *(undefined4 *)(item + 0xc) = 0x404ccccd;
+    *(undefined4 *)(item + 0x10) = 0x40e66666;
+    break;
+  case 0x6f:
+    *(undefined2 *)(item + 0x14) = 0x28;
+    *(undefined4 *)(item + 0x1a) = 0x29002c;
+    *(undefined2 *)(item + 0x18) = 0x2b;
+    *(undefined2 *)(item + 0x20) = 0x2a;
+    *(undefined4 *)(item + 0x40) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f19999a;
+    goto LAB_0044031e;
+  case 0x70:
+    *(undefined2 *)(item + 0x14) = 0x2d;
+    *(undefined4 *)(item + 0x1a) = 0x2e0031;
+    *(undefined2 *)(item + 0x18) = 0x30;
+    uVar1 = 0x2f;
+    goto LAB_00440378;
+  case 0x71:
+    *(undefined2 *)(item + 0x14) = 0x32;
+    *(undefined4 *)(item + 0x1a) = 0x330036;
+    *(undefined2 *)(item + 0x18) = 0x35;
+    uVar1 = 0x34;
+LAB_00440378:
+    *(undefined2 *)(item + 0x20) = uVar1;
+    *(undefined4 *)(item + 0x40) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f1c28f6;
+LAB_0044031e:
+    *(undefined4 *)(item + 0x30) = 0x3f4147ae;
+    *(undefined4 *)(item + 0x34) = 0x3f666666;
+    *(undefined4 *)(item + 0x7c) = 0x41000000;
+    *(undefined4 *)(item + 0x80) = 0x40400000;
+    *(undefined4 *)(item + 0x84) = 0;
+    *(undefined4 *)(item + 0x70) = 0;
+    *(undefined4 *)(item + 0x74) = 0x40800000;
+    goto LAB_00440245;
+  case 0x72:
+    *(undefined2 *)(item + 0x14) = 0x37;
+    *(undefined4 *)(item + 0x1a) = 0x38003b;
+    *(undefined2 *)(item + 0x18) = 0x3a;
+    uVar1 = 0x39;
+LAB_004401fc:
+    *(undefined2 *)(item + 0x20) = uVar1;
+    *(undefined4 *)(item + 0x40) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f19999a;
+    *(undefined4 *)(item + 0x30) = 0x3f400000;
+    *(undefined4 *)(item + 0x34) = 0x3f666666;
+    *(undefined4 *)(item + 0x7c) = 0x41000000;
+    *(undefined4 *)(item + 0x80) = 0x40400000;
+    *(undefined4 *)(item + 0x84) = 0;
+    *(undefined4 *)(item + 0x70) = 0;
+    *(undefined4 *)(item + 0x74) = 0x40400000;
+LAB_00440245:
+    *(undefined4 *)(item + 0x78) = 0x40400000;
+    *(undefined4 *)(item + 8) = 0x40b33333;
+    *(undefined4 *)(item + 0xc) = 0x40b33333;
+    *(undefined4 *)(item + 0x10) = 0x41499999;
+    break;
+  case 0x73:
+    *(undefined2 *)(item + 0x14) = 0x43;
+    *(undefined4 *)(item + 0x1a) = 0x440047;
+    *(undefined2 *)(item + 0x18) = 0x46;
+    *(undefined2 *)(item + 0x20) = 0x45;
+    *(undefined4 *)(item + 0x40) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f19999a;
+    *(undefined4 *)(item + 0x30) = 0x3f400000;
+    *(undefined4 *)(item + 0x34) = 0x3f666666;
+    *(undefined4 *)(item + 0x7c) = 0x41000000;
+    *(undefined4 *)(item + 0x80) = 0x40400000;
+    *(undefined4 *)(item + 0x84) = 0;
+    local_14 = 0.0;
+    local_10 = 3.0;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    local_14 = 4.8;
+    local_10 = 4.8;
+    local_c = 10.799999;
+    vec3_copy(&local_14);
+    break;
+  case 0x74:
+    r0 = rand();
+    local_14 = ((float)r0 * 3.0) / 32767.0 + 7.0;
+    local_c = local_14 * 1.12;
+    local_10 = local_14;
+    vec3_copy(&local_14);
+    *(undefined2 *)(item + 0x14) = 0x48;
+    *(undefined4 *)(item + 0x1a) = 0x49004a;
+    *(undefined2 *)(item + 0x18) = 0x4a;
+    *(undefined4 *)(item + 0x28) = 0x3f333333;
+    *(undefined4 *)(item + 0x24) = 0x3ecccccd;
+    local_14 = 0.0;
+    local_10 = 8.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = -4.0;
+    local_c = -3.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f000000;
+    *(undefined4 *)(item + 0x2c) = 0x3f000000;
+    local_14 = 3.0;
+    local_10 = 3.0;
+    local_c = -4.1;
+    vec3_copy(&local_14);
+    local_14 = 2.9;
+    goto LAB_00443c4d;
+  case 0x75:
+    *(undefined2 *)(item + 0x14) = 0x117;
+    *(undefined2 *)(item + 0x1c) = 0x116;
+    *(undefined2 *)(item + 0x18) = 0x118;
+    *(undefined2 *)(item + 0x1a) = 0xffff;
+    *(undefined2 *)(item + 0x20) = 0x119;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 3.0;
+    vec3_copy(&local_14);
+    local_14 = 6.0;
+    local_10 = 5.0;
+    local_c = 6.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 1.0;
+    local_c = 11.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x24) = 0x3ecccccd;
+    *(undefined4 *)(item + 0x2c) = 0x3f400000;
+    local_14 = 0.0;
+    local_10 = -90.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 6.4;
+    local_10 = 6.4;
+    local_c = 14.4;
+    vec3_copy(&local_14);
+    break;
+  case 0x76:
+    *(undefined2 *)(item + 0x14) = 0x86a;
+    uVar7 = rand();
+    uVar7 = uVar7 & 0x80000001;
+    if ((int)uVar7 < 0) {
+      uVar7 = (uVar7 - 1 | 0xfffffffe) + 1;
+    }
+    *(short *)(item + 0x1c) = (short)uVar7 + 0x86b;
+    *(undefined4 *)(item + 0x18) = 0x86e086d;
+    *(undefined4 *)(item + 0x40) = 0x3f99999a;
+    *(undefined4 *)(item + 0x24) = 0x3f333333;
+    *(undefined4 *)(item + 0x34) = 0x3f666666;
+    local_14 = 8.0;
+    local_10 = 0.0;
+    local_c = 5.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 4.0;
+    local_c = 8.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
+    *(undefined4 *)(item + 0x2c) = 0x3fc00000;
+    local_14 = 3.0;
+    local_10 = 1.0;
+    local_c = -9.5;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_14 = 4.0;
+    local_10 = 4.0;
+    local_c = 10.0;
+    vec3_copy(&local_14);
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x2c;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x77:
+    local_14 = 9.0;
+    local_10 = 9.0;
+    local_c = 10.08;
+    vec3_copy(&local_14);
+    r0 = rand();
+    *(short *)(item + 0x14) = (short)(r0 % 5) + 0x861;
+    r0 = rand();
+    *(short *)(item + 0x1c) = (short)(r0 % 9) + 0x855;
+    r0 = rand();
+    sVar3 = (short)(r0 % 3) + 0x85e;
+    *(short *)(item + 0x18) = sVar3;
+    *(short *)(item + 0x1a) = sVar3;
+    uVar7 = rand();
+    uVar7 = uVar7 & 0x80000001;
+    if ((int)uVar7 < 0) {
+      uVar7 = (uVar7 - 1 | 0xfffffffe) + 1;
+    }
+    *(short *)(item + 0x1e) = (short)uVar7 + 0x866;
+    *(undefined4 *)(item + 0x3c) = 0x3f333333;
+    *(undefined4 *)(item + 0x28) = 0x3f333333;
+    r0 = rand();
+    local_14 = 0.0;
+    local_10 = 8.0;
+    *(float *)(item + 0x24) = ((float)r0 * 0.1) / 32767.0 + 0.4;
+    r0 = rand();
+    local_c = ((float)r0 * 0.5) / 32767.0 - 1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = -4.0;
+    local_c = -3.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x30) = 0x3f000000;
+    *(undefined4 *)(item + 0x2c) = 0x3f000000;
+    r0 = rand();
+    local_14 = (float)r0 / 32767.0 + 3.0;
+    local_10 = 3.0;
+    local_c = -4.1;
+    vec3_copy(&local_14);
+    r0 = rand();
+    local_14 = (float)r0 / 32767.0 + 3.0;
+LAB_00443c4d:
+    local_c = -4.1;
+    local_10 = -3.0;
+LAB_00443c61:
+    vec3_copy(&local_14);
+LAB_00443c6a:
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x31;
+switchD_0043f962_default:
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x78:
+    local_14 = 2.0;
+    local_10 = 2.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    sVar3 = 0x827;
+    goto LAB_00443581;
+  case 0x79:
+    local_14 = 2.0;
+    local_10 = 2.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    sVar3 = 0x828;
+    goto LAB_00443581;
+  case 0x7a:
+    local_14 = 2.0;
+    local_10 = 2.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    sVar3 = 0x82a;
+    goto LAB_00443581;
+  case 0x7b:
+    local_14 = 0.5;
+    local_10 = 0.5;
+    local_c = 1.5;
+    vec3_copy(&local_14);
+    sVar3 = 0x86f;
+    goto LAB_00443581;
+  case 0x7c:
+    local_14 = 2.0;
+    local_10 = 2.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    uVar7 = rand();
+    uVar7 = uVar7 & 0x80000001;
+    if ((int)uVar7 < 0) {
+      uVar7 = (uVar7 - 1 | 0xfffffffe) + 1;
+    }
+    sVar3 = 0x82e - (ushort)(uVar7 != 0);
+    local_c = 2.0;
+    goto LAB_00443588;
+  case 0x7d:
+    local_14 = 0.5;
+    local_10 = 0.5;
+    local_c = 1.7;
+    vec3_copy(&local_14);
+    *(undefined2 *)(item + 0x1c) = 0x829;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3fc00000;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x7e:
+    local_14 = 2.0;
+    local_10 = 2.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    sVar3 = 0x82f;
+    local_c = 2.0;
+    goto LAB_00443588;
+  case 0x7f:
+    local_14 = 1.0;
+    local_10 = 1.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    sVar3 = 0x830;
+    goto LAB_00443581;
+  case 0x80:
+    local_14 = 1.5;
+    local_10 = 1.5;
+    local_c = 4.0;
+    vec3_copy(&local_14);
+    sVar3 = 0x906;
+    goto LAB_00443581;
+  case 0x81:
+    *(undefined2 *)(item + 0x1c) = 0x832;
+    local_c = -4.0;
+    goto LAB_0044358c;
+  case 0x82:
+    *(undefined2 *)(item + 0x1c) = 0x833;
+    local_14 = 3.0;
+    local_10 = 3.0;
+    local_c = 12.0;
+    vec3_copy(&local_14);
+    local_c = -4.0;
+    goto LAB_0044358c;
+  case 0x83:
+    uVar1 = 0x834;
+    goto LAB_00443898;
+  case 0x84:
+    uVar1 = 0x835;
+    goto LAB_00443898;
+  case 0x85:
+    uVar1 = 0x836;
+    goto LAB_00443898;
+  case 0x86:
+    uVar1 = 0x837;
+    goto LAB_00443898;
+  case 0x87:
+    uVar1 = 0x838;
+    goto LAB_00443898;
+  case 0x88:
+    uVar1 = 0x839;
+    goto LAB_00443898;
+  case 0x89:
+    uVar1 = 0x83a;
+    goto LAB_00443898;
+  case 0x8a:
+    uVar1 = 0x83b;
+    goto LAB_00443898;
+  case 0x8b:
+    uVar1 = 0x83c;
+LAB_00443898:
+    *(undefined2 *)(item + 0x1c) = uVar1;
+    local_14 = 2.0;
+    local_10 = 2.0;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    local_c = -4.0;
+LAB_0044358c:
+    local_14 = 0.0;
+    local_10 = 0.0;
+    vec3_copy(&local_14);
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x8c:
+    *(undefined2 *)(item + 0x1c) = 0x83d;
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 4.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x40000000;
+    break;
+  case 0x8d:
+    uVar1 = 0x83e;
+    local_c = 2.0;
+    goto LAB_00443964;
+  case 0x8e:
+    uVar1 = 0x83f;
+    local_c = 2.5;
+LAB_00443964:
+    *(undefined2 *)(item + 0x1c) = uVar1;
+    local_10 = 1.5;
+    local_14 = 1.5;
+    vec3_copy(&local_14);
+    local_10 = 0.0;
+    local_c = 0.0;
+    goto LAB_00440a12;
+  case 0x8f:
+    local_14 = 1.5;
+    local_10 = 1.5;
+    local_c = 1.25;
+    vec3_copy(&local_14);
+    uVar7 = rand();
+    uVar7 = uVar7 & 0x80000003;
+    if ((int)uVar7 < 0) {
+      uVar7 = (uVar7 - 1 | 0xfffffffc) + 1;
+    }
+    sVar3 = (short)uVar7 + 0x841;
+LAB_00443581:
+    local_c = 0.0;
+LAB_00443588:
+    *(short *)(item + 0x1c) = sVar3;
+    goto LAB_0044358c;
+  case 0x90:
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 0.8;
+    vec3_copy(&local_14);
+    *(undefined2 *)(item + 0x1c) = 0x9f2;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 1.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3f4ccccd;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x91:
+    uVar1 = 0x96a;
+    goto LAB_00441b61;
+  case 0x92:
+    uVar1 = 0x96b;
+LAB_00441b61:
+    *(undefined2 *)(item + 0x1c) = uVar1;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    r0 = rand();
+    local_14 = (((float)r0 * 0.5) / 32767.0 + 1.2) * 0.8;
+    local_10 = local_14;
+    local_c = local_14;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x28) = 0x3f666666;
+    goto LAB_00441bd5;
+  case 0x93:
+    *(undefined2 *)(item + 0x1c) = 0x972;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 0.8;
+    local_10 = 0.8;
+    local_c = 2.0;
+    vec3_copy(&local_14);
+    goto LAB_00441bd5;
+  case 0x94:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 3) + 0x53f;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 3) + 0x542;
+    *(undefined2 *)(item + 0x1c) = 0x545;
+    sVar3 = 0x546;
+    goto LAB_0043fa27;
+  case 0x95:
+    *(undefined1 *)(item + 2) = *(undefined1 *)(seed + 4);
+    *(undefined1 *)(item + 3) = *(undefined1 *)((int)seed + 0x11);
+    *(undefined1 *)(item + 4) = *(undefined1 *)((int)seed + 0x12);
+    *(short *)(item + 0x14) = (short)((int)seed[2] % 3) + 0x547;
+    *(short *)(item + 0x16) = (short)((int)seed[3] % 3) + 0x54a;
+    *(undefined2 *)(item + 0x1c) = 0x54d;
+    sVar3 = 0x546;
+LAB_0043fa27:
+    *(short *)(item + 0x18) = sVar3;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  case 0x96:
+    uVar1 = 0x96c;
+    goto LAB_00441bfe;
+  case 0x97:
+    *(undefined2 *)(item + 0x14) = 0xf3;
+    *(undefined2 *)(item + 0x22) = 0xf4;
+    *(undefined2 *)(item + 0x1a) = 0xf5;
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
+    local_14 = 3.0;
+    local_10 = 4.0;
+    local_c = -8.0;
+    vec3_copy(&local_14);
+    *(undefined4 *)(item + 0x48) = 0xc2340000;
+    *(undefined4 *)(item + 0x5c) = 0x42340000;
+    *(undefined4 *)(item + 0x24) = 0x3f99999a;
+    *(undefined4 *)(item + 0x44) = 0x3f19999a;
+    *(undefined4 *)(item + 0x30) = 0x3f800000;
+    local_14 = 1.0;
+    local_10 = 1.0;
+    local_c = 1.875;
+    vec3_copy(&local_14);
+    local_14 = 6.5;
+    local_10 = 3.0;
+    local_c = -1.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 3.0;
+    local_c = 0.0;
+    goto LAB_00440ef2;
+  case 0x98:
+    *(undefined4 *)(item + 0x14) = 0x96e096d;
+    *(undefined4 *)(item + 0x24) = 0x3f99999a;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 2.4;
+    local_10 = 2.4;
+    local_c = 6.0;
+    vec3_copy(&local_14);
+    uVar2 = 0x531;
+    goto LAB_00441bda;
+  case 0x99:
+    uVar1 = 0x96f;
+    goto LAB_00441bfe;
+  case 0x9a:
+    uVar1 = 0x970;
+    goto LAB_00441bfe;
+  case 0x9b:
+    uVar1 = 0x971;
+LAB_00441bfe:
+    *(undefined2 *)(item + 0x1c) = uVar1;
+    *(undefined4 *)(item + 0x28) = 0x3f99999a;
+    local_14 = 0.0;
+    local_10 = 0.0;
+    local_c = 0.0;
+    vec3_copy(&local_14);
+    local_14 = 2.4;
+    local_10 = 2.4;
+    local_c = 6.0;
+    vec3_copy(&local_14);
+LAB_00441bd5:
+    uVar2 = 0x131;
+LAB_00441bda:
+    *(ushort *)(item + 6) = *(ushort *)(item + 6) | uVar2;
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  default:
+    goto switchD_0043f962_default;
+  }
+  *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x20;
+  __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: drop::getCountRange1  (confidence: med)
  * purpose: Outputs (min,max) count for ability/drop id via switch (defaults 1,1)
- * vars: param_2=min,param_3=max
+ * vars: item=min,seed=max
  */
 /* Global::drop_getCountRange1 @ 00443f40 */
 
@@ -3230,6 +5893,31 @@ switchD_004441bf_caseD_3:
   }
   roll = rand();
   return (float)roll / 32767.0 < chance;
+}
+
+
+
+
+/* [AUDIT] proposed: weapon::isSpecialRune  (confidence: high)
+ * purpose: Returns 1 if weapon rune byte +0xaa9==3-class and subtype in set
+ * vars: +0xaa8/+0xaa9
+ */
+/* Global::weapon_isSpecialRune @ 00444230 */
+
+undefined1 weapon_isSpecialRune(void)
+
+{
+  char weaponMat;
+  int self;
+  
+  if ((*(char *)(self + 0xaa8) == '\x03') &&
+     ((((((weaponMat = *(char *)(self + 0xaa9), weaponMat == '\x0f' || (weaponMat == '\x10')) ||
+         (weaponMat == '\x11')) || ((weaponMat == '\x05' || (weaponMat == '\n')))) ||
+       ((weaponMat == '\v' || ((weaponMat == '\x12' || (weaponMat == '\b')))))) ||
+      ((weaponMat == '\x06' || (weaponMat == '\a')))))) {
+    return 1;
+  }
+  return 0;
 }
 
 
@@ -3829,6 +6517,23 @@ LAB_004455ca:
 
 
 
+/* [AUDIT] proposed: stat::diminishing_returns_pct  (confidence: low)
+ * purpose: compute diminishing-returns percentage from field 400 (game)
+ * vars: self=this
+ */
+/* Global::stat_diminishing_returns_pct @ 00445f10 */
+
+int stat_diminishing_returns_pct(void)
+
+{
+  int in_ECX;
+  
+  return (int)((1.0 - 1.0 / (((float)*(int *)(in_ECX + 400) - 1.0) * 0.05 + 1.0)) * 100.0 + 1.0);
+}
+
+
+
+
 /* [AUDIT] proposed: math::pow2Mul  (confidence: high)
  * purpose: Returns 2^a * 2^b (two libm pow calls, product)
  * vars: libm_sse2_pow_precise
@@ -3871,240 +6576,6 @@ float10 math_pow2Div(void)
   powC = 2.0;
   libm_sse2_pow_precise();
   return (float10)(((float)powA * (float)powB) / (float)powC);
-}
-
-
-
-
-/* [AUDIT] proposed: curve::inverse20p1  (confidence: high)
- * purpose: Returns (1/(1-x)-1)*20+1
- * vars: param_1 in [0,1)
- */
-/* Global::curve_inverse20p1 @ 004462f0 */
-
-float10 curve_inverse20p1(float frac)
-
-{
-  return (float10)((1.0 / (1.0 - frac) - 1.0) * 20.0 + 1.0);
-}
-
-
-
-
-/* [AUDIT] proposed: Player::resetFull  (confidence: med)
- * purpose: Full player/controller reset: destroys/reinits all containers, timers, transforms, buffers
- * vars: many +0x11xx/+0x13xx members
- */
-/* Global::Player_resetFull @ 00446330 */
-
-void Player_resetFull(void)
-
-{
-  undefined4 *listHead;
-  void *node;
-  int self;
-  undefined4 local_9;
-  undefined1 local_5;
-  
-  Player_resetState();
-  if (*(void **)(self + 0x13e4) != (void *)0x0) {
-    operator_delete(*(void **)(self + 0x13e4));
-  }
-  *(undefined4 *)(self + 0x1d40) = 0;
-  *(undefined4 *)(self + 0x1d3c) = 1;
-  *(undefined4 *)(self + 0x11c0) = 0;
-  *(undefined4 *)(self + 0x11c4) = 0;
-  *(undefined4 *)(self + 0x11d0) = 0;
-  *(undefined4 *)(self + 0x11d4) = 0;
-  *(undefined4 *)(self + 0x11c8) = 0;
-  *(undefined4 *)(self + 0x11cc) = 0;
-  *(undefined4 *)(self + 0x1314) = 0;
-  *(undefined4 *)(self + 0x1318) = 0;
-  listHead = *(undefined4 **)(self + 0x130c);
-  node = (void *)*listHead;
-  *listHead = listHead;
-  *(int *)(*(int *)(self + 0x130c) + 4) = *(int *)(self + 0x130c);
-  *(undefined4 *)(self + 0x1310) = 0;
-  if (node != *(void **)(self + 0x130c)) {
-    operator_delete(node);
-  }
-  std_list_clear_67e480();
-  std_list_clear_67e480();
-  std_list_clear_67e480();
-  *(undefined4 *)(self + 0x13cc) = 0;
-  *(undefined4 *)(self + 0x13c8) = 0;
-  *(undefined4 *)(self + 0x13d0) = 0;
-  *(undefined4 *)(self + 0x13e0) = 0;
-  *(undefined4 *)(self + 0x1184) = 0;
-  *(undefined4 *)(self + 0x1190) = 0;
-  *(undefined4 *)(self + 0x1194) = 0x3f800000;
-  *(undefined4 *)(self + 0x1398) = 0;
-  *(undefined4 *)(self + 0x118c) = 0;
-  *(undefined4 *)(self + 0x1188) = 0;
-  *(undefined4 *)(self + 0x13bc) = 0;
-  *(undefined4 *)(self + 0x11d8) = 0;
-  *(undefined4 *)(self + 0x13b4) = 0;
-  *(undefined1 *)(self + 0x13c0) = 0;
-  *(undefined4 *)(self + 0x1404) = 0;
-  std_vector_destroy_ptr_elems_stride3(*(undefined4 *)(self + 0x11dc),*(undefined4 *)(self + 0x11e0),&local_5,local_9);
-  *(undefined4 *)(self + 0x11e0) = *(undefined4 *)(self + 0x11dc);
-  GameController_clearContainers();
-  *(undefined4 *)(self + 0x1478) = 0xffffffff;
-  *(undefined4 *)(self + 0x147c) = 0xffffffff;
-  *(undefined4 *)(self + 0x1480) = 0;
-  listHead = *(undefined4 **)(self + 0x1470);
-  node = (void *)*listHead;
-  *listHead = listHead;
-  *(int *)(*(int *)(self + 0x1470) + 4) = *(int *)(self + 0x1470);
-  *(undefined4 *)(self + 0x1474) = 0;
-  if (node != *(void **)(self + 0x1470)) {
-    operator_delete(node);
-  }
-  *(undefined4 *)(self + 0x1484) = 0;
-  *(undefined4 *)(self + 0x1488) = 0;
-  *(undefined4 *)(self + 0x141c) = 0xffffffff;
-  *(undefined4 *)(self + 0x1420) = 0xffffffff;
-  *(undefined4 *)(self + 0x1424) = 0xffffffff;
-  *(undefined4 *)(self + 0x1458) = 0;
-  *(undefined4 *)(self + 0x1490) = *(undefined4 *)(self + 0x148c);
-  listHead = *(undefined4 **)(self + 0x1178);
-  node = (void *)*listHead;
-  *listHead = listHead;
-  *(int *)(*(int *)(self + 0x1178) + 4) = *(int *)(self + 0x1178);
-  *(undefined4 *)(self + 0x117c) = 0;
-  if (node != *(void **)(self + 0x1178)) {
-    operator_delete(node);
-  }
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: Player::resetState  (confidence: med)
- * purpose: Resets player physics/stat members and memsets large regions (+0x2f0 0xe38, +0x1128)
- * vars: memset 0xe38; +0x180 base
- */
-/* Global::Player_resetState @ 004465c0 */
-
-void Player_resetState(void)
-
-{
-  uint cookie;
-  undefined4 hpTable;
-  int self;
-  
-  cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  *(undefined4 *)(self + 0x180) = 1;
-  *(undefined4 *)(self + 0x184) = 0;
-  *(undefined4 *)(self + 0x24) = 0;
-  *(undefined4 *)(self + 0x28) = 0;
-  *(undefined4 *)(self + 0x2c) = 0;
-  *(undefined4 *)(self + 0x30) = 0;
-  *(undefined4 *)(self + 0x34) = 0;
-  *(undefined4 *)(self + 0x38) = 0;
-  *(undefined4 *)(self + 0x3c) = 0;
-  *(undefined4 *)(self + 0x40) = 0;
-  *(undefined4 *)(self + 0x44) = 0;
-  *(undefined4 *)(self + 0x168) = 0x42c80000;
-  *(undefined4 *)(self + 0x170) = 0x3f800000;
-  *(undefined4 *)(self + 0x16c) = 0x3f800000;
-  *(undefined1 *)(self + 0x58) = 0;
-  *(undefined4 *)(self + 0x5c) = 0;
-  *(undefined4 *)(self + 0x11c) = 0xfffff448;
-  *(undefined4 *)(self + 0x120) = 0;
-  *(undefined4 *)(self + 0x124) = 0;
-  *(undefined4 *)(self + 0x128) = 0;
-  *(undefined4 *)(self + 300) = 0;
-  memset((void *)(self + 0x2f0),0,0xe38);
-  *(undefined2 *)(self + 0x114) = 0;
-  *(undefined2 *)(self + 0x17c) = 0;
-  *(undefined4 *)(self + 0x60) = 0;
-  *(undefined4 *)(self + 100) = 0;
-  *(undefined4 *)(self + 0x134) = 0;
-  *(undefined4 *)(self + 0x160) = 0;
-  *(undefined4 *)(self + 0x164) = 0;
-  *(undefined4 *)(self + 0x188) = 0;
-  *(undefined4 *)(self + 0x18c) = 0;
-  *(undefined4 *)(self + 400) = 0;
-  *(undefined4 *)(self + 0x194) = 0;
-  *(undefined1 *)(self + 0x198) = 0;
-  *(undefined4 *)(self + 0x138) = 0;
-  *(undefined4 *)(self + 0x13c) = 0;
-  *(undefined4 *)(self + 0x140) = 0;
-  *(undefined4 *)(self + 0x144) = 0;
-  *(undefined4 *)(self + 0x148) = 0;
-  *(undefined4 *)(self + 0x14c) = 0;
-  *(undefined4 *)(self + 0x1a0) = 0xffffffff;
-  *(undefined4 *)(self + 0x1a4) = 0xffffffff;
-  *(undefined4 *)(self + 0x1a8) = 0;
-  *(undefined4 *)(self + 0x1cc) = 0xffffffff;
-  *(undefined4 *)(self + 0x1d0) = 0xffffffff;
-  *(undefined4 *)(self + 0x1d4) = 0;
-  *(undefined1 *)(self + 0x1c8) = 0;
-  *(undefined2 *)(self + 0x130) = 0;
-  hpTable = Spawn_initDefaults();
-  Struct_copy_acBytes(hpTable);
-  *(undefined8 *)(self + 0x1158) = 0;
-  *(undefined8 *)(self + 0x1160) = 0;
-  memset((void *)(self + 0x1128),0,0x2c);
-  *(undefined4 *)(self + 0x1154) = 0;
-  __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: stat::calcSpirit  (confidence: med)
- * purpose: Computes spirit/magic stat: base 2^ terms + per-slot rune bonuses (004c7af0)
- * vars: base +0x188; slots
- */
-/* Global::stat_calcSpirit @ 004467a0 */
-
-float10 stat_calcSpirit(void)
-
-{
-  int self;
-  float10 fVar1;
-  double dVar2;
-  double dVar3;
-  float base;
-  undefined4 totalValue;
-  undefined4 value;
-  
-  dVar2 = 2.0;
-  libm_sse2_pow_precise();
-  dVar3 = 2.0;
-  libm_sse2_pow_precise();
-  base = (float)dVar3 * (float)dVar2;
-  value = *(float *)(self + 0x188) * base;
-  if (*(char *)(self + 0x60) == '\0') {
-    dVar3 = 2.0;
-    libm_sse2_pow_precise();
-    value = (float)dVar3 * (float)dVar2 * *(float *)(self + 0x188);
-  }
-  if ((*(byte *)(self + 0x7e) & 0x20) != 0) {
-    value = value + base;
-  }
-  if (*(char *)(self + 0x530) == '\x04') {
-    fVar1 = (float10)item_computeStat_variant2();
-    value = (float)fVar1 + value;
-  }
-  if (*(char *)(self + 0x648) == '\x06') {
-    fVar1 = (float10)item_computeStat_variant2();
-    value = (float)fVar1 + value;
-  }
-  if (*(char *)(self + 0x760) == '\x05') {
-    fVar1 = (float10)item_computeStat_variant2();
-    value = (float)fVar1 + value;
-  }
-  totalValue = value;
-  if (*(char *)(self + 0x878) == '\a') {
-    fVar1 = (float10)item_computeStat_variant2();
-    totalValue = (float)fVar1 + value;
-  }
-  return (float10)totalValue;
 }
 
 
@@ -4451,49 +6922,83 @@ void render_bindNodeTransformA(void)
 
 
 
-/* [AUDIT] proposed: render::setVec3Uniform5c  (confidence: med)
- * purpose: Uploads vec4(param,0,0,0) to shader constant (device vtable 0x1b4) at register +0x5c
- * vars: device +0x1c; reg +0x5c
+/* [AUDIT] proposed: Input::init_keybindings  (confidence: low)
+ * purpose: create D3D input params and register default key actions (game)
+ * vars: self=this
  */
-/* Global::render_setVec3Uniform5c @ 00447fb0 */
+/* Global::Input_init_keybindings @ 00447e10 */
 
-void render_setVec3Uniform5c(undefined4 value)
+void Input_init_keybindings(void)
 
 {
-  int self;
-  undefined4 vec;
-  undefined4 local_14;
-  undefined4 local_10;
-  undefined4 local_c;
-  uint cookie;
+  int iVar1;
+  int in_ECX;
+  undefined4 local_20;
+  undefined2 local_1c;
+  undefined4 local_1a;
+  undefined4 local_16;
+  undefined4 local_12;
+  undefined4 local_e;
+  undefined2 local_a;
+  uint local_8;
   
-  cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  vec = value;
-  local_14 = 0;
-  local_10 = 0;
-  local_c = 0;
-  (**(code **)(**(int **)(self + 0x1c) + 0x1b4))
-            (*(int **)(self + 0x1c),*(undefined4 *)(self + 0x5c),&vec,1);
-  __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: render::setUniform30  (confidence: med)
- * purpose: Uploads param to shader constant (vtable 0x178) at register +0x30
- * vars: reg +0x30
- */
-/* Global::render_setUniform30 @ 00448280 */
-
-void render_setUniform30(undefined4 value)
-
-{
-  int self;
-  
-  (**(code **)(**(int **)(self + 0x1c) + 0x178))
-            (*(int **)(self + 0x1c),*(undefined4 *)(self + 0x30),value,1);
+  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  local_20 = 0;
+  local_1a = 0;
+  local_a = 0;
+  local_1c = 5;
+  local_16 = 0x40004;
+  local_12 = 0xff000a;
+  local_e = 0x110000;
+  iVar1 = (**(code **)(**(int **)(in_ECX + 0x1c) + 0x158))
+                    (*(int **)(in_ECX + 0x1c),&local_20,in_ECX + 0x20);
+  if (iVar1 == 0) {
+    iVar1 = (**(code **)(**(int **)(in_ECX + 0x1c) + 0x16c))
+                      (*(int **)(in_ECX + 0x1c),&DAT_006fd928,in_ECX + 4);
+    if (iVar1 == 0) {
+      *(undefined4 *)(in_ECX + 0x68) = 0;
+      *(undefined4 *)(in_ECX + 0x4c) = 0;
+      *(undefined4 *)(in_ECX + 0x2c) = 0x14;
+      *(undefined4 *)(in_ECX + 0x28) = 0x18;
+      *(undefined4 *)(in_ECX + 0x24) = 0x1b;
+      *(undefined4 *)(in_ECX + 0x30) = 0x20;
+      *(undefined4 *)(in_ECX + 0x34) = 0x25;
+      *(undefined4 *)(in_ECX + 0x38) = 0x21;
+      *(undefined4 *)(in_ECX + 0x3c) = 0x22;
+      *(undefined4 *)(in_ECX + 0x40) = 0x23;
+      *(undefined4 *)(in_ECX + 0x44) = 0x26;
+      *(undefined4 *)(in_ECX + 0x48) = 0x27;
+      *(undefined4 *)(in_ECX + 0x60) = 0x1e;
+      *(undefined4 *)(in_ECX + 100) = 0x1f;
+      *(undefined4 *)(in_ECX + 0x6c) = 10;
+      *(undefined4 *)(in_ECX + 0x70) = 0x24;
+      *(undefined4 *)(in_ECX + 0x50) = 1;
+      *(undefined4 *)(in_ECX + 0x54) = 2;
+      *(undefined4 *)(in_ECX + 0x58) = 4;
+      *(undefined4 *)(in_ECX + 0x5c) = 3;
+      iVar1 = (**(code **)(**(int **)(in_ECX + 0x1c) + 0x1a8))
+                        (*(int **)(in_ECX + 0x1c),&DAT_006feb50,in_ECX + 8);
+      if (iVar1 == 0) {
+        iVar1 = (**(code **)(**(int **)(in_ECX + 0x1c) + 0x1a8))
+                          (*(int **)(in_ECX + 0x1c),&DAT_006fefa0,in_ECX + 0xc);
+        if (iVar1 == 0) {
+          iVar1 = (**(code **)(**(int **)(in_ECX + 0x1c) + 0x1a8))
+                            (*(int **)(in_ECX + 0x1c),&DAT_006ff7c8,in_ECX + 0x10);
+          if (iVar1 == 0) {
+            iVar1 = (**(code **)(**(int **)(in_ECX + 0x1c) + 0x1a8))
+                              (*(int **)(in_ECX + 0x1c),&DAT_006ff1d0,in_ECX + 0x14);
+            if (iVar1 == 0) {
+              (**(code **)(**(int **)(in_ECX + 0x1c) + 0x1a8))
+                        (*(int **)(in_ECX + 0x1c),&DAT_006ff5c0,in_ECX + 0x18);
+              __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+              return;
+            }
+          }
+        }
+      }
+    }
+  }
+  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
   return;
 }
 
@@ -4540,200 +7045,6 @@ void render_uploadBoneMatrices(undefined4 matrices,int boneData)
 
 
 
-/* [AUDIT] proposed: render::setVec3Uniform58  (confidence: med)
- * purpose: Uploads vec4(param,0,0,0) to shader constant (vtable 0x1b4) at register +0x58
- * vars: reg +0x58
- */
-/* Global::render_setVec3Uniform58 @ 00448fe0 */
-
-void render_setVec3Uniform58(undefined4 value)
-
-{
-  int self;
-  undefined4 vec;
-  undefined4 local_14;
-  undefined4 local_10;
-  undefined4 local_c;
-  uint cookie;
-  
-  cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  vec = value;
-  local_14 = 0;
-  local_10 = 0;
-  local_c = 0;
-  (**(code **)(**(int **)(self + 0x1c) + 0x1b4))
-            (*(int **)(self + 0x1c),*(undefined4 *)(self + 0x58),&vec,1);
-  __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: ostream::writePadded  (confidence: med)
- * purpose: std::operator<<(ostream,char*): writes C-string with width/fill/adjustfield handling; SEH-guarded
- * vars: width +0x24; fill +0x40
- */
-/* Global::ostream_writePadded @ 00449150 */
-
-basic_ostream<char,std::char_traits<char>_> *
-ostream_writePadded(basic_ostream<char,std::char_traits<char>_> *os,char *str)
-
-{
-  char cVar1;
-  uint uVar2;
-  bool bVar3;
-  uint cookie;
-  int iosOff;
-  basic_ostream<char,std::char_traits<char>_> *pbVar6;
-  uint len;
-  char *p;
-  bool bVar9;
-  __int64 _Var10;
-  int padLo;
-  int padHi;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_006e2c10;
-  local_10 = ExceptionList;
-  cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  ExceptionList = &local_10;
-  bVar3 = false;
-  if (*str == '\0') {
-    len = 0;
-  }
-  else {
-    p = str;
-    do {
-      cVar1 = *p;
-      p = p + 1;
-    } while (cVar1 != '\0');
-    len = (int)p - (int)(str + 1);
-  }
-  iosOff = *(int *)(*(int *)os + 4);
-  padHi = *(int *)(os + iosOff + 0x24);
-  uVar2 = *(uint *)(os + iosOff + 0x20);
-  if ((padHi < 0) ||
-     ((padHi < 1 && (((uVar2 == 0 || (padHi < 0)) || ((padHi < 1 && (uVar2 <= len)))))
-      ))) {
-    padHi = 0;
-    padLo = 0;
-  }
-  else {
-    padLo = uVar2 - len;
-    padHi = padHi - (uint)(uVar2 < len);
-  }
-  if (*(int **)(os + iosOff + 0x38) != (int *)0x0) {
-    (**(code **)(**(int **)(os + iosOff + 0x38) + 4))();
-  }
-  local_8 = 0;
-  if ((*(int *)(os + *(int *)(*(int *)os + 4) + 0xc) == 0) &&
-     (*(basic_ostream<char,std::char_traits<char>_> **)
-       (os + *(int *)(*(int *)os + 4) + 0x3c) !=
-      (basic_ostream<char,std::char_traits<char>_> *)0x0)) {
-    std::basic_ostream<char,std::char_traits<char>_>::flush
-              (*(basic_ostream<char,std::char_traits<char>_> **)
-                (os + *(int *)(*(int *)os + 4) + 0x3c));
-  }
-  local_8 = 1;
-  if (*(int *)(os + *(int *)(*(int *)os + 4) + 0xc) != 0) {
-    std::basic_ios<char,std::char_traits<char>_>::setstate
-              ((basic_ios<char,std::char_traits<char>_> *)(os + *(int *)(*(int *)os + 4)),
-               4,false);
-    local_8 = 0xffffffff;
-    bVar3 = std::uncaught_exception();
-    if (!bVar3) {
-      std::basic_ostream<char,std::char_traits<char>_>::_Osfx(os);
-    }
-    if (*(int **)(os + *(int *)(*(int *)os + 4) + 0x38) != (int *)0x0) {
-      (**(code **)(**(int **)(os + *(int *)(*(int *)os + 4) + 0x38) + 8))();
-    }
-    ExceptionList = local_10;
-    return os;
-  }
-  local_8 = 2;
-  if ((*(uint *)(os + *(int *)(*(int *)os + 4) + 0x14) & 0x1c0) != 0x40) {
-    while( true ) {
-      if ((padHi < 0) || ((padHi < 1 && (padLo == 0)))) goto LAB_00449274;
-      iosOff = std::basic_streambuf<char,std::char_traits<char>_>::sputc
-                        (*(basic_streambuf<char,std::char_traits<char>_> **)
-                          (os + *(int *)(*(int *)os + 4) + 0x38),
-                         (char)os[*(int *)(*(int *)os + 4) + 0x40]);
-      if (iosOff == -1) break;
-      bVar9 = padLo != 0;
-      padLo = padLo + -1;
-      padHi = padHi + -1 + (uint)bVar9;
-    }
-    bVar3 = true;
-LAB_00449274:
-    if (bVar3) goto LAB_004492e3;
-  }
-  _Var10 = std::basic_streambuf<char,std::char_traits<char>_>::sputn
-                     (*(basic_streambuf<char,std::char_traits<char>_> **)
-                       (os + *(int *)(*(int *)os + 4) + 0x38),str,
-                      (ulonglong)cookie << 0x20);
-  if (((uint)_Var10 == len) && ((int)((ulonglong)_Var10 >> 0x20) == 0)) {
-    while ((-1 < padHi &&
-           (((0 < padHi || (padLo != 0)) &&
-            (iosOff = std::basic_streambuf<char,std::char_traits<char>_>::sputc
-                               (*(basic_streambuf<char,std::char_traits<char>_> **)
-                                 (os + *(int *)(*(int *)os + 4) + 0x38),
-                                (char)os[*(int *)(*(int *)os + 4) + 0x40]), iosOff != -1)))
-           )) {
-      bVar3 = padLo != 0;
-      padLo = padLo + -1;
-      padHi = padHi + -1 + (uint)bVar3;
-    }
-  }
-LAB_004492e3:
-  iosOff = *(int *)(*(int *)os + 4);
-  *(undefined4 *)(os + iosOff + 0x20) = 0;
-  *(undefined4 *)(os + iosOff + 0x24) = 0;
-  pbVar6 = (basic_ostream<char,std::char_traits<char>_> *)ostream_writeEpilogue();
-  return pbVar6;
-}
-
-
-
-
-/* [AUDIT] proposed: ostream::writeEpilogue  (confidence: low)
- * purpose: Exception-path epilogue for 00449150: setstate, _Osfx, release streambuf sentry
- * vars: EDX=ios; EBP frame
- */
-/* Global::ostream_writeEpilogue @ 0044931a */
-
-undefined4 ostream_writeEpilogue(void)
-
-{
-  basic_ostream<char,std::char_traits<char>_> *this;
-  bool bVar1;
-  int *in_EDX;
-  int unaff_EBP;
-  int unaff_EDI;
-  
-  *(undefined4 *)(unaff_EBP + -4) = 1;
-  std::basic_ios<char,std::char_traits<char>_>::setstate
-            ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(*in_EDX + 4) + (int)in_EDX),
-             unaff_EDI,false);
-  *(undefined4 *)(unaff_EBP + -4) = 0xffffffff;
-  bVar1 = std::uncaught_exception();
-  this = *(basic_ostream<char,std::char_traits<char>_> **)(unaff_EBP + -0x24);
-  if (!bVar1) {
-    std::basic_ostream<char,std::char_traits<char>_>::_Osfx(this);
-  }
-  if (*(int **)(this + *(int *)(*(int *)this + 4) + 0x38) != (int *)0x0) {
-    (**(code **)(**(int **)(this + *(int *)(*(int *)this + 4) + 0x38) + 8))();
-  }
-  ExceptionList = *(void **)(unaff_EBP + -0xc);
-  return *(undefined4 *)(unaff_EBP + 8);
-}
-
-
-
-
 /* [AUDIT] proposed: handle::freeMember4  (confidence: med)
  * purpose: Frees resource at +4 via 00520620 (sqlite/handle finalize) and nulls it
  * vars: +4 handle
@@ -4755,18 +7066,95 @@ void handle_freeMember4(void)
 
 
 
-/* [AUDIT] proposed: handle::isOpen  (confidence: high)
- * purpose: Returns *(ECX+4) != 0 (resource/db handle open test)
- * vars: +4 handle
+/* [AUDIT] proposed: obj::init_and_load_a  (confidence: low)
+ * purpose: init object then load stream (game wrapper over decode)
+ * vars: self=this
  */
-/* Global::handle_isOpen @ 004497a0 */
+/* Global::obj_init_and_load_a @ 00449420 */
 
-bool handle_isOpen(void)
+void obj_init_and_load_a(void)
 
 {
-  int self;
+  int in_ECX;
+  void *local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
   
-  return *(int *)(self + 4) != 0;
+  puStack_c = &LAB_006e1488;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  *(undefined4 *)(in_ECX + 0xc) = 0;
+  local_1c = (void *)0x0;
+  local_18 = 0;
+  local_14 = 0;
+  local_8 = 0;
+  FUN_005fc0d0();
+  std_container_assign_range(&local_1c);
+  if (local_1c != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_1c);
+  }
+  ExceptionList = local_10;
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: blob::deobfuscate  (confidence: high)
+ * purpose: Deobfuscates a byte buffer: table-driven (006ffa68) shuffle/unswap then bitwise-complement each byte
+ * vars: table 006ffa68 mod 0x2c
+ */
+/* Global::blob_deobfuscate @ 004496a0 */
+/* NOTE(re) 2026-07-15: CONFIRMED shared asset-blob deobfuscator; decode is byte-exact
+ * (round-trip proven). `self` is a std::vector<char> {begin,end,cap}; the buffer is
+ * transformed in place, equivalent to:
+ *     len = end - begin
+ *     for i = len-1 downto 0:  swap(buf[i], buf[(T[i % 44] + i) % len])   // de-shuffle
+ *     for i = 0 .. len-1:      buf[i] = ~buf[i]                            // XOR 0xFF
+ * T = 44 int32 @ 0x006FFA68 (.rdata, file off 0x2FEA68):
+ *   4242,9551,840,84800,9242,9846,127,9,9483,394,123,4834,32444,24355,2433,17,34234,42342,
+ *   4243,14,184934,1987,3094,1901,89409,4813,37,143,3490,19483,1343,432,84732,9184,9612,1233,
+ *   3434,1839,2984,1993,2984,4895,816583,13
+ * Keyless + deterministic (independent of db.dat, which ships as "PLACEHOLDER..."). Callers:
+ * 0x623a60 (XAudio2Engine, data2 *.wav), 0x4e1970 (cube::Speech, data4 dict_*.xml), 0x486a20,
+ * 0x4e7290. Verified by decoding data4.db dict_en/de.xml to valid UTF-8 XML and re-encoding to
+ * the exact stored bytes. Tool + decoded output: scratchpad/decode_loc.py, scratchpad/loc/.
+ * This is a Global helper; its placement under XAudio2Engine.cpp is a caller-dominance misfiling.
+ */
+
+void blob_deobfuscate(void)
+
+{
+  char *bytePtr;
+  undefined1 tmpByte;
+  int bufStart;
+  int *self;
+  uint swapPos;
+  int i;
+  
+  i = (self[1] - *self) + -1;
+  while (-1 < i) {
+    bufStart = *self;
+    swapPos = (uint)(*(int *)(&DAT_006ffa68 + (i % 0x2c) * 4) + i) % (uint)(self[1] - bufStart)
+    ;
+    i = i + -1;
+    tmpByte = *(undefined1 *)(bufStart + 1 + i);
+    *(undefined1 *)(bufStart + 1 + i) = *(undefined1 *)(swapPos + bufStart);
+    *(undefined1 *)(swapPos + bufStart) = tmpByte;
+  }
+  i = 0;
+  if (self[1] != *self && -1 < self[1] - *self) {
+    do {
+      bytePtr = (char *)(*self + i);
+      i = i + 1;
+      *bytePtr = -1 - *bytePtr;
+    } while (i < self[1] - *self);
+  }
+  return;
 }
 
 
@@ -4807,109 +7195,8 @@ undefined4 db_openBlobStore(undefined4 *path)
 
 
 
-/* [AUDIT] proposed: db::loadBlobByKey  (confidence: high)
- * purpose: SQLite 'SELECT value FROM blobs WHERE key=?': binds key, steps, allocates+copies blob to out
- * vars: stmt; out ptr/size
- */
-/* Global::db_loadBlobByKey @ 00449810 */
-
-undefined4 db_loadBlobByKey(undefined4 key,undefined4 *stmtOrOut,size_t *outLen)
-
-{
-  undefined4 *outData;
-  size_t *lenPtr;
-  int rc;
-  undefined4 keyText;
-  size_t blobSize;
-  void *_Src;
-  int self;
-  
-  outData = stmtOrOut;
-  *stmtOrOut = 0;
-  *outLen = 0;
-  while( true ) {
-    rc = sqlite3_prepare_v2_526480(*(undefined4 *)(self + 4),"SELECT value FROM blobs WHERE key = ?",
-                         0xffffffff,&stmtOrOut,0);
-    if (rc != 0) {
-      return 0;
-    }
-    keyText = string_data(0xffffffff,0);
-    sqlite3_bind_blob_526b60(stmtOrOut,1,keyText);
-    rc = sqlite3_step(stmtOrOut);
-    if (rc == 100) break;
-    rc = sqlite3_finalize(stmtOrOut);
-    if (rc != 0x11) {
-      return 0;
-    }
-  }
-  blobSize = sqlite3_column_int_offset(stmtOrOut,0);
-  lenPtr = outLen;
-  *outLen = blobSize;
-  keyText = operator_new_wrapper(blobSize);
-  *outData = keyText;
-  blobSize = *lenPtr;
-  _Src = (void *)sqlite3_column_int(stmtOrOut,0);
-  memcpy((void *)*outData,_Src,blobSize);
-  sqlite3_finalize(stmtOrOut);
-  return 1;
-}
-
-
-
-
-/* [AUDIT] proposed: db::getBlobInto  (confidence: med)
- * purpose: Loads blob via 00449810 then grows out vector 005870c0 and memcpy into stmtOrOut buffer
- * vars: stmtOrOut[3]=size
- */
-/* Global::db_getBlobInto @ 004498d0 */
-/* NOTE(re) 2026-07-15: cube::Database member (misfiled as game_misc). Shared blob fetch:
- * db_loadBlobByKey (0x449810) -> value ptr+len, resize the out std::vector<char>, memcpy in.
- * This is the fetch feeding blob_deobfuscate (0x4496a0) for the encoded assets (data2 wav,
- * data3 png, data4 dict_*.xml). Raw here; caller deobfuscates. */
-
-undefined1 db_getBlobInto(undefined4 key,undefined4 *dest)
-
-{
-  char found;
-  void *data;
-  size_t len;
-  
-  found = db_loadBlobByKey(key,&data,&len);
-  if (found == '\0') {
-    return 0;
-  }
-  dest[3] = 0;
-  Vector_Resize(len);
-  memcpy((void *)*dest,data,len);
-  return 1;
-}
-
-
-
-
-/* [AUDIT] proposed: list::makeNodeWrapper  (confidence: low)
- * purpose: Creates list node via 0044b770 then inits payload 0040ee70 unless error (-8)
- * vars: -
- */
-/* Global::list_makeNodeWrapper @ 00449b70 */
-
-int list_makeNodeWrapper(undefined4 list,undefined4 head,undefined4 extra)
-
-{
-  int result;
-  
-  result = allocNode_0x120(list,head);
-  if (result != -8) {
-    entityState_copy(extra);
-  }
-  return result;
-}
-
-
-
-
 /* [AUDIT] proposed: WorldInfo_allocMapNodeCopyKey  (confidence: med)
- * purpose: Allocs RB-tree node via 0044b7b0, zeroes color, copies 6 dwords of key from list+0x20 to node+0x30
+ * purpose: Allocs RB-tree node via 0044b7b0, zeroes color, copies 6 dwords of key from path+0x20 to node+0x30
  * vars: node size 0x48; -0x10 = sentinel sentinel head
  */
 /* Global::WorldInfo_allocMapNodeCopyKey @ 00449ba0 */
@@ -4949,26 +7236,6 @@ void clearTwoFields(void)
   
   *(undefined4 *)(self + 0xc) = 0;
   *(undefined4 *)(self + 0x10) = 0;
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: refcount_initTo1  (confidence: high)
- * purpose: Init small handle: *ecx=param, [1]=1, [2]=0 (refcount/control-block style)
- * vars: [1]=refcount=1
- */
-/* Global::refcount_initTo1 @ 0044a8a0 */
-
-void refcount_initTo1(undefined4 value)
-
-{
-  undefined4 *self;
-  
-  *self = value;
-  self[1] = 1;
-  self[2] = 0;
   return;
 }
 
@@ -5033,6 +7300,80 @@ void dtor_13Strings_0x118(int base)
 
 
 
+/* [AUDIT] proposed: WorldInfo_mapInsertUnique  (confidence: med)
+ * purpose: WorldInfo: find (0044b880) then insert region/world entry keyed by int+string into map (00449fe0)
+ * vars: SEH; key compare 0040c520
+ */
+/* Global::WorldInfo_mapInsertUnique @ 0044b460 */
+
+void WorldInfo_mapInsertUnique(int *entry)
+
+{
+  int node;
+  int *keyPtr;
+  int cmp;
+  int *self;
+  undefined1 local_68 [4];
+  undefined1 local_64 [4];
+  void *local_60;
+  uint local_4c;
+  undefined4 local_44;
+  undefined4 local_40;
+  undefined4 local_3c;
+  undefined4 local_38;
+  undefined4 local_34;
+  undefined4 local_30;
+  undefined4 local_2c;
+  undefined4 local_28;
+  undefined4 local_24;
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  uint cookie;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e2d58;
+  local_10 = ExceptionList;
+  cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  node = WorldInfo_mapLowerBound(entry);
+  if (node != *self) {
+    if (*(int *)(node + 0x10) <= *entry) {
+      if (*(int *)(node + 0x10) < *entry) goto LAB_0044b534;
+      keyPtr = (int *)(node + 0x14);
+      if (0xf < *(uint *)(node + 0x28)) {
+        keyPtr = (int *)*keyPtr;
+      }
+      cmp = string_compare(0,entry[5],keyPtr,*(undefined4 *)(node + 0x24));
+      if (-1 < cmp) goto LAB_0044b534;
+    }
+  }
+  WorldInfo_move_string(entry,0);
+  local_44 = local_2c;
+  local_40 = local_28;
+  local_3c = local_24;
+  local_38 = local_20;
+  local_34 = local_1c;
+  local_30 = local_18;
+  local_8 = 0;
+  cmp = WorldInfo_allocMapNodeCopyKey(local_64);
+  map_insertUnique_findPos(local_68,node,cmp + 0x10,cmp);
+  if (0xf < local_4c) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_60);
+  }
+LAB_0044b534:
+  ExceptionList = local_10;
+  __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: allocNode_0x48_copyHead  (confidence: high)
  * purpose: Allocates 0x48 node, copies *ecx into 3 link slots
  * vars: node 0x48
@@ -5047,6 +7388,7 @@ undefined4 * allocNode_0x48_copyHead(void)
   
   node = operator_new(0x48);
   if (node == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *node = *self;
@@ -5309,6 +7651,7 @@ void deserializeRegionChunk(int baseAddr,int world)
              avail = local_174, (*(byte *)(off + 3) & 0x1f) == 0)) {
             avail = IntMap_SetScalar(puVar4,puVar4[1],&count2);
             if (count == (int *)0x15555554) {
+                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             puVar4[1] = avail;
@@ -5325,6 +7668,7 @@ void deserializeRegionChunk(int baseAddr,int world)
         if (stream != *(int **)(avail + 4)) {
           *(int *)stream[1] = *stream;
           *(int *)(*stream + 4) = stream[1];
+                    /* WARNING: Subroutine does not return */
           operator_delete(stream);
         }
       }
@@ -5332,8 +7676,10 @@ void deserializeRegionChunk(int baseAddr,int world)
       *puVar4 = puVar4;
       puVar4[1] = puVar4;
       if (puVar1 != puVar4) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(puVar1);
       }
+                    /* WARNING: Subroutine does not return */
       operator_delete(puVar4);
     }
   }
@@ -5399,6 +7745,7 @@ void deserializeRegionChunk(int baseAddr,int world)
     } while (local_178 != 0);
   }
   if (array != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(array);
   }
   ExceptionList = local_10;
@@ -5454,8 +7801,86 @@ void sparseArray_setAt(int index,undefined1 *voxel)
 
 
 
+/* [AUDIT] proposed: GameController_getHoveredTilePtr  (confidence: med)
+ * purpose: Returns pointer to hovered/targeted map tile if type byte==0x0e, else null; indexes region grid
+ * vars: region +0x11dc/+0x11e0; coords +0x160/+0x164
+ */
+/* Global::GameController_getHoveredTilePtr @ 00450960 */
+
+char * GameController_getHoveredTilePtr(void)
+
+{
+  int *column;
+  int ctrl;
+  int col;
+  int row;
+  char *item;
+  int self;
+  
+  ctrl = *(int *)(*(int *)(self + 0x16c) + 0x8006d0);
+  if ((((*(int *)(ctrl + 0x11dc) != *(int *)(ctrl + 0x11e0)) &&
+       (col = *(int *)(self + 0x160), -1 < col)) &&
+      (col < (*(int *)(ctrl + 0x11e0) - *(int *)(ctrl + 0x11dc)) / 0xc)) &&
+     (row = *(int *)(self + 0x164), -1 < row)) {
+    column = (int *)(*(int *)(ctrl + 0x11dc) + col * 0xc);
+    if (row < (column[1] - *column) / 0x11c) {
+      if (*(int *)(row * 0x11c + *column) != 0) {
+        item = (char *)(*column + 4 + row * 0x11c);
+        if (*item != '\x0e') {
+          item = (char *)0x0;
+        }
+        return item;
+      }
+    }
+  }
+  return (char *)0x0;
+}
+
+
+
+
+/* [AUDIT] proposed: GameController_isNearTargetTile  (confidence: low)
+ * purpose: If tile 00450960 valid, checks its distance within camera near-thresholds
+ * vars: -
+ */
+/* Global::GameController_isNearTargetTile @ 00450ab0 */
+
+void GameController_isNearTargetTile(void)
+
+{
+  int item;
+  float10 bound;
+  float cursorX;
+  float cursorY;
+  uint cookie;
+  
+  cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  item = GameController_getHoveredTilePtr();
+  if (item == 0) {
+    __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+    return;
+  }
+  Widget_computeBoundsFloat(&cursorX);
+  bound = (float10)security_cookie_guard_a();
+  if ((float)bound - 30.0 < cursorY) {
+    bound = (float10)security_cookie_guard_a();
+    if (cursorY < (float)bound) {
+      bound = (float10)security_cookie_guard_b();
+      if ((cursorX < (float)bound * 0.5) && (0.0 < cursorX)) {
+        __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+        return;
+      }
+    }
+  }
+  __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: sparseArray_resize  (confidence: med)
- * purpose: Reallocate/resize the 4-byte-element sparse index array to index, copying/offsetting entries
+ * purpose: Reallocate/resize the 4-byte-element sparse index array to param_1, copying/offsetting entries
  * vars: array +0x18, cap +0x1c, base +0x10
  */
 /* Global::sparseArray_resize @ 00450c50 */
@@ -5479,6 +7904,7 @@ void sparseArray_resize(uint newCount,int delta)
         *(undefined4 *)(self + 0x18) = 0;
         return;
       }
+                    /* WARNING: Subroutine does not return */
       operator_delete(*(void **)(self + 0x18));
     }
     newBuf = operator_new(-(uint)((int)((ulonglong)newCount * 4 >> 0x20) != 0) |
@@ -5528,6 +7954,7 @@ void sparseArray_resize(uint newCount,int delta)
       }
     }
     if (*(void **)(self + 0x18) != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(*(void **)(self + 0x18));
     }
     *(void **)(self + 0x18) = newBuf;
@@ -5554,6 +7981,144 @@ void bytesToVec3Float(byte *rgb)
   *self = (float)*rgb;
   self[1] = (float)rgb[1];
   self[2] = (float)rgb[2];
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std::operator>>(wistream,wstring)  (confidence: high)
+ * purpose: extract wstring from wistream skipping via ctype (_Ipfx,getloc)
+ * vars: rgb=istream;param_2=wstring
+ */
+/* Global::std_operator_wistream_wstring @ 00451210 */
+
+basic_istream<wchar_t,std::char_traits<wchar_t>_> *
+std_operator_wistream_wstring(basic_istream<wchar_t,std::char_traits<wchar_t>_> *param_1,undefined4 *param_2)
+
+{
+  int iVar1;
+  bool bVar2;
+  bool bVar3;
+  wchar_t wVar4;
+  undefined4 uVar5;
+  ctype<wchar_t> *this;
+  undefined4 *puVar6;
+  basic_istream<wchar_t,std::char_traits<wchar_t>_> *pbVar7;
+  int iVar8;
+  int *local_20;
+  uint local_1c;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e3188;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  iVar8 = 0;
+  bVar2 = false;
+  if (*(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) != (int *)0x0) {
+    (**(code **)(**(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) + 4))();
+  }
+  local_8 = 0;
+  bVar3 = std::basic_istream<wchar_t,std::char_traits<wchar_t>_>::_Ipfx(param_1,false);
+  local_8 = 1;
+  if (bVar3) {
+    uVar5 = std::ios_base::getloc((ios_base *)(param_1 + *(int *)(*(int *)param_1 + 4)));
+    local_8._0_1_ = 2;
+    this = (ctype<wchar_t> *)useFacet_ctypeW(uVar5);
+    local_8._0_1_ = 1;
+    if ((local_20 != (int *)0x0) &&
+       (puVar6 = (undefined4 *)(**(code **)(*local_20 + 8))(), puVar6 != (undefined4 *)0x0)) {
+      (**(code **)*puVar6)(1);
+    }
+    param_2[4] = 0;
+    if (7 < (uint)param_2[5]) {
+      param_2 = (undefined4 *)*param_2;
+    }
+    *(undefined2 *)param_2 = 0;
+    local_8 = CONCAT31(local_8._1_3_,3);
+    iVar1 = *(int *)(*(int *)param_1 + 4);
+    local_1c = *(uint *)(param_1 + iVar1 + 0x20);
+    if ((*(int *)(param_1 + iVar1 + 0x24) < 0) ||
+       (((*(int *)(param_1 + iVar1 + 0x24) < 1 && (local_1c == 0)) || (0x7ffffffd < local_1c)))) {
+      local_1c = 0x7ffffffe;
+    }
+    wVar4 = std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::sgetc
+                      (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)
+                        (param_1 + iVar1 + 0x38));
+    while (local_1c != 0) {
+      if (wVar4 == L'\xffff') {
+        pbVar7 = (basic_istream<wchar_t,std::char_traits<wchar_t>_> *)std_operator_wstring_unwind();
+        return pbVar7;
+      }
+      bVar3 = std::ctype<wchar_t>::is(this,0x48,wVar4);
+      if (bVar3) break;
+      u16string_append(1,wVar4);
+      local_1c = local_1c - 1;
+      bVar2 = true;
+      wVar4 = std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::snextc
+                        (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)
+                          (param_1 + *(int *)(*(int *)param_1 + 4) + 0x38));
+    }
+  }
+  local_8 = 1;
+  iVar1 = *(int *)(*(int *)param_1 + 4);
+  *(undefined4 *)(param_1 + iVar1 + 0x20) = 0;
+  *(undefined4 *)(param_1 + iVar1 + 0x24) = 0;
+  if (!bVar2) {
+    iVar8 = 2;
+  }
+  std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::setstate
+            ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)
+             (param_1 + *(int *)(*(int *)param_1 + 4)),iVar8,false);
+  local_8 = 0xffffffff;
+  if (*(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) != (int *)0x0) {
+    (**(code **)(**(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) + 8))();
+  }
+  ExceptionList = local_10;
+  return param_1;
+}
+
+
+
+
+/* [AUDIT] proposed: std::operator>>_wstring_unwind  (confidence: high)
+ * purpose: exception cleanup epilog for wstring extraction
+ * vars: unaff_ESI=istream
+ */
+/* Global::std_operator_wstring_unwind @ 00451380 */
+
+void std_operator_wstring_unwind(void)
+
+{
+  char cVar1;
+  int *piVar2;
+  int iVar3;
+  uint unaff_EBX;
+  int unaff_EBP;
+  int *unaff_ESI;
+  
+  piVar2 = *(int **)(unaff_EBP + -0x2c);
+  *(undefined4 *)(unaff_EBP + -4) = 1;
+  cVar1 = *(char *)(unaff_EBP + -0x11);
+  iVar3 = *(int *)(*unaff_ESI + 4);
+  *(undefined4 *)(iVar3 + 0x20 + (int)unaff_ESI) = 0;
+  *(undefined4 *)(iVar3 + 0x24 + (int)unaff_ESI) = 0;
+  if (cVar1 == '\0') {
+    unaff_EBX = unaff_EBX | 2;
+  }
+  std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::setstate
+            ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)
+             (*(int *)(*unaff_ESI + 4) + (int)unaff_ESI),unaff_EBX,false);
+  iVar3 = *piVar2;
+  *(undefined4 *)(unaff_EBP + -4) = 0xffffffff;
+  piVar2 = *(int **)(*(int *)(iVar3 + 4) + 0x38 + (int)piVar2);
+  if (piVar2 != (int *)0x0) {
+    (**(code **)(*piVar2 + 8))();
+  }
+  ExceptionList = *(void **)(unaff_EBP + -0xc);
   return;
 }
 
@@ -5610,6 +8175,106 @@ undefined4 string_assign(undefined4 param_1,undefined4 param_2,undefined4 str)
 
 
 
+/* [AUDIT] proposed: heap::sift_down_16  (confidence: med)
+ * purpose: binary-heap sift-down over 0x10-byte elements (game)
+ * vars: param_1=heap;param_2=hole
+ */
+/* Global::heap_sift_down_16 @ 00451a60 */
+
+void heap_sift_down_16(int param_1,int param_2,int param_3,undefined4 param_4,undefined4 param_5)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  
+  iVar3 = param_2;
+  while( true ) {
+    iVar1 = iVar3 * 2 + 2;
+    if (param_3 <= iVar1) break;
+    if (*(int *)(param_1 + 4 + iVar1 * 0x10) < *(int *)(param_1 + -0xc + iVar1 * 0x10)) {
+      iVar1 = iVar3 * 2 + 1;
+    }
+    puVar2 = (undefined4 *)(iVar1 * 0x10 + param_1);
+    *(undefined4 *)(param_1 + iVar3 * 0x10) = *puVar2;
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0x10) = puVar2[1];
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0x10) = puVar2[2];
+    *(undefined4 *)(param_1 + 0xc + iVar3 * 0x10) = puVar2[3];
+    iVar3 = iVar1;
+  }
+  if (iVar1 == param_3) {
+    iVar1 = param_3 * 0x10 + param_1;
+    *(undefined4 *)(param_1 + iVar3 * 0x10) = *(undefined4 *)(iVar1 + -0x10);
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0x10) = *(undefined4 *)(iVar1 + -0xc);
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0x10) = *(undefined4 *)(iVar1 + -8);
+    *(undefined4 *)(param_1 + 0xc + iVar3 * 0x10) = *(undefined4 *)(iVar1 + -4);
+    iVar3 = param_3 + -1;
+  }
+  std_Push_heap(param_1,iVar3,param_2,param_4,param_5);
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std::map::insert_val_wstr  (confidence: high)
+ * purpose: insert map entry, copy pair + wstring value (_Assign u16string_replaceRange)
+ * vars: param_3=value
+ */
+/* Global::std_map_insert_val_wstr @ 00451dd0 */
+
+int std_map_insert_val_wstr(undefined4 param_1,undefined4 param_2,undefined4 *param_3)
+
+{
+  int iVar1;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e3221;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  iVar1 = list_buyNode_28(param_1,param_2);
+  local_8 = 1;
+  if ((undefined4 *)(iVar1 + 8) != (undefined4 *)0x0) {
+    *(undefined4 *)(iVar1 + 8) = *param_3;
+    *(undefined4 *)(iVar1 + 0xc) = param_3[1];
+    *(undefined4 *)(iVar1 + 0x24) = 7;
+    *(undefined4 *)(iVar1 + 0x20) = 0;
+    *(undefined2 *)(iVar1 + 0x10) = 0;
+    u16string_replaceRange(param_3 + 2,0,0xffffffff);
+  }
+  ExceptionList = local_10;
+  return iVar1;
+}
+
+
+
+
+/* [AUDIT] proposed: node_ctor_2strings  (confidence: med)
+ * purpose: Construct node via 00630a40, then copy two strings (0040eaf0) at param+0 and +0x18
+ * vars: -
+ */
+/* Global::node_ctor_2strings @ 00452260 */
+
+int node_ctor_2strings(int param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = tree_nodeAlloc();
+  *(undefined2 *)(iVar1 + 0xc) = 0;
+  if (iVar1 != -0x10) {
+    u16string_moveConstruct(param_1);
+    u16string_moveConstruct(param_1 + 0x18);
+  }
+  return iVar1;
+}
+
+
+
+
 /* [AUDIT] proposed: dtor_stringRange_0x18  (confidence: high)
  * purpose: Destroy std::string range stride 0x18: free SSO-overflow buffers
  * vars: SSO cap [5]=7
@@ -5629,7 +8294,328 @@ void dtor_stringRange_0x18(undefined4 *first,undefined4 *last)
     *(undefined2 *)first = 0;
     first = first + 6;
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*first);
+}
+
+
+
+
+/* [AUDIT] proposed: std::list<T>::_Insert_range  (confidence: high)
+ * purpose: Copy-append node range into list; length_error guard
+ * vars: sentinel 0xe38e37
+ */
+/* Global::std_list_Insert_range @ 00454190 */
+
+void std_list_Insert_range(int param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  int iVar1;
+  int in_ECX;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  puStack_c = &LAB_006e34d0;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  local_8 = 0;
+  while( true ) {
+    if (param_2 == param_3) {
+      ExceptionList = local_10;
+      return;
+    }
+    iVar1 = list_makeNodeWrapper(param_1,*(undefined4 *)(param_1 + 4),param_2 + 2);
+    if (*(int *)(in_ECX + 4) == 0xe38e37) break;
+    *(int *)(in_ECX + 4) = *(int *)(in_ECX + 4) + 1;
+    *(int *)(param_1 + 4) = iVar1;
+    **(int **)(iVar1 + 4) = iVar1;
+    param_2 = (undefined4 *)*param_2;
+  }
+                    /* WARNING: Subroutine does not return */
+  std::_Xlength_error("list<T> too long");
+}
+
+
+
+
+/* [AUDIT] proposed: std::_Insertion_sort<0x10>  (confidence: high)
+ * purpose: Insertion sort, 16-byte elements, int key at +4
+ * vars: -
+ */
+/* Global::std_Insertion_sort @ 00454d60 */
+
+void std_Insertion_sort(undefined4 *param_1,undefined4 *param_2)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  int iVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  undefined4 *puVar6;
+  undefined4 *puVar7;
+  uint uVar8;
+  
+  uVar8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  puVar7 = param_1;
+  if (param_1 != param_2) {
+    while (puVar7 = puVar7 + 4, puVar7 != param_2) {
+      uVar2 = *puVar7;
+      iVar3 = puVar7[1];
+      uVar5 = *(undefined8 *)(puVar7 + 2);
+      uVar4 = *(undefined8 *)(puVar7 + 2);
+      if (iVar3 < (int)param_1[1]) {
+        std_Move_backward(param_1,puVar7,puVar7 + 4,uVar2);
+        *param_1 = uVar2;
+        param_1[1] = iVar3;
+        *(undefined8 *)(param_1 + 2) = uVar4;
+      }
+      else {
+        iVar1 = puVar7[-3];
+        puVar6 = puVar7;
+        while (iVar3 < iVar1) {
+          *puVar6 = puVar6[-4];
+          puVar6[1] = puVar6[-3];
+          puVar6[2] = puVar6[-2];
+          puVar6[3] = puVar6[-1];
+          iVar1 = puVar6[-7];
+          puVar6 = puVar6 + -4;
+        }
+        *puVar6 = uVar2;
+        puVar6[1] = iVar3;
+        *(undefined8 *)(puVar6 + 2) = uVar5;
+      }
+    }
+  }
+  __security_check_cookie(uVar8 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std::_Make_heap<0x10>  (confidence: high)
+ * purpose: Build max-heap over 16-byte elements (int key), _Adjust_heap heap_sift_down_16
+ * vars: -
+ */
+/* Global::std_Make_heap @ 00454fe0 */
+
+void std_Make_heap(int param_1,int param_2,undefined4 param_3)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+  uint local_8;
+  
+  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  iVar1 = param_2 - param_1 >> 4;
+  iVar3 = iVar1 - (param_2 - param_1 >> 0x1f) >> 1;
+  if (0 < iVar3) {
+    puVar2 = (undefined4 *)(param_1 + 8 + iVar3 * 0x10);
+    do {
+      local_18 = puVar2[-6];
+      local_14 = puVar2[-5];
+      local_10 = puVar2[-4];
+      local_c = puVar2[-3];
+      iVar3 = iVar3 + -1;
+      heap_sift_down_16(param_1,iVar3,iVar1,&local_18,param_3);
+      puVar2 = puVar2 + -4;
+    } while (0 < iVar3);
+  }
+  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std::_Med3<0x10>  (confidence: high)
+ * purpose: Median-of-3 for 16-byte elements, int key
+ * vars: -
+ */
+/* Global::std_Med3 @ 00455270 */
+
+void std_Med3(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  int iVar1;
+  undefined4 uVar2;
+  undefined4 uVar3;
+  undefined4 uVar4;
+  
+  iVar1 = param_2[1];
+  if (iVar1 < (int)param_1[1]) {
+    uVar2 = param_2[2];
+    uVar3 = param_2[3];
+    uVar4 = *param_2;
+    *param_2 = *param_1;
+    param_2[1] = param_1[1];
+    param_2[2] = param_1[2];
+    param_2[3] = param_1[3];
+    param_1[1] = iVar1;
+    *param_1 = uVar4;
+    param_1[2] = uVar2;
+    param_1[3] = uVar3;
+  }
+  iVar1 = param_3[1];
+  if (iVar1 < (int)param_2[1]) {
+    uVar2 = param_3[2];
+    uVar3 = param_3[3];
+    uVar4 = *param_3;
+    *param_3 = *param_2;
+    param_3[1] = param_2[1];
+    param_3[2] = param_2[2];
+    param_3[3] = param_2[3];
+    param_2[1] = iVar1;
+    *param_2 = uVar4;
+    param_2[2] = uVar2;
+    param_2[3] = uVar3;
+    iVar1 = param_2[1];
+    if (iVar1 < (int)param_1[1]) {
+      uVar2 = param_2[2];
+      *param_2 = *param_1;
+      param_2[1] = param_1[1];
+      param_2[2] = param_1[2];
+      param_2[3] = param_1[3];
+      *param_1 = uVar4;
+      param_1[1] = iVar1;
+      param_1[2] = uVar2;
+      param_1[3] = uVar3;
+    }
+  }
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std::_Guess_median<0x10>  (confidence: high)
+ * purpose: Median-of-medians pivot selection, 16-byte elements
+ * vars: -
+ */
+/* Global::std_Guess_median @ 00455470 */
+
+void std_Guess_median(int param_1,int param_2,int param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar1 = param_3 - param_1 >> 4;
+  if (0x28 < iVar1) {
+    iVar1 = iVar1 + 1;
+    iVar1 = (int)((iVar1 >> 0x1f & 7U) + iVar1) >> 3;
+    iVar2 = iVar1 * 0x10;
+    std_Med3(param_1,iVar2 + param_1,iVar1 * 0x20 + param_1,param_4);
+    std_Med3(param_2 + iVar1 * -0x10,param_2,iVar2 + param_2,param_4);
+    iVar3 = param_3 + iVar1 * -0x10;
+    std_Med3(param_3 + iVar1 * -0x20,iVar3,param_3,param_4);
+    std_Med3(param_1 + iVar2,param_2,iVar3,param_4);
+    return;
+  }
+  std_Med3(param_1,param_2,param_3,param_4);
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std::_Move_backward<0x10>  (confidence: high)
+ * purpose: Move-backward range of 16-byte elements
+ * vars: -
+ */
+/* Global::std_Move_backward @ 00455710 */
+
+void std_Move_backward(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  undefined4 *puVar1;
+  undefined4 *puVar3;
+  undefined4 *puVar4;
+  undefined4 *puVar2;
+  
+  if (param_1 != param_2) {
+    puVar1 = param_3;
+    puVar4 = param_2 + 2;
+    do {
+      puVar2 = puVar1 + -4;
+      puVar3 = (undefined4 *)(((int)param_2 - (int)param_3) + (int)puVar2);
+      *puVar2 = *puVar3;
+      puVar1[-3] = puVar4[-5];
+      puVar1[-2] = puVar4[-4];
+      puVar1[-1] = puVar4[-3];
+      puVar1 = puVar2;
+      puVar4 = puVar4 + -4;
+    } while (puVar3 != param_1);
+  }
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std::_Push_heap<0x10>  (confidence: high)
+ * purpose: Sift-up 16-byte element into heap, int key
+ * vars: param_4=value
+ */
+/* Global::std_Push_heap @ 00455940 */
+
+void std_Push_heap(int param_1,int param_2,int param_3,undefined4 *param_4)
+
+{
+  int iVar1;
+  
+  while ((param_3 < param_2 &&
+         (iVar1 = (param_2 + -1) / 2, *(int *)(param_1 + 4 + iVar1 * 0x10) < (int)param_4[1]))) {
+    *(undefined4 *)(param_1 + param_2 * 0x10) = *(undefined4 *)(param_1 + iVar1 * 0x10);
+    *(undefined4 *)(param_1 + 4 + param_2 * 0x10) = *(undefined4 *)(param_1 + 4 + iVar1 * 0x10);
+    *(undefined4 *)(param_1 + 8 + param_2 * 0x10) = *(undefined4 *)(param_1 + 8 + iVar1 * 0x10);
+    *(undefined4 *)(param_1 + 0xc + param_2 * 0x10) = *(undefined4 *)(param_1 + 0xc + iVar1 * 0x10);
+    param_2 = iVar1;
+  }
+  *(undefined4 *)(param_1 + param_2 * 0x10) = *param_4;
+  *(undefined4 *)(param_1 + 4 + param_2 * 0x10) = param_4[1];
+  *(undefined4 *)(param_1 + 8 + param_2 * 0x10) = param_4[2];
+  *(undefined4 *)(param_1 + 0xc + param_2 * 0x10) = param_4[3];
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std::_Copy<0x10>  (confidence: high)
+ * purpose: Copy-assign 16-byte elements from list-node payloads into array
+ * vars: param_3=dest
+ */
+/* Global::std_Copy @ 00456e90 */
+
+void std_Copy(int param_1,int param_2,undefined4 *param_3)
+
+{
+  undefined4 *puVar1;
+  
+  if (param_1 != param_2) {
+    puVar1 = (undefined4 *)(param_1 + 8);
+    param_1 = param_1 - (int)param_3;
+    do {
+      if (param_3 != (undefined4 *)0x0) {
+        *param_3 = *(undefined4 *)(param_1 + (int)param_3);
+        param_3[1] = puVar1[-1];
+        param_3[2] = *puVar1;
+        param_3[3] = puVar1[1];
+      }
+      param_3 = param_3 + 4;
+      puVar1 = puVar1 + 4;
+    } while (param_1 + (int)param_3 != param_2);
+  }
+  return;
 }
 
 
@@ -5707,6 +8693,7 @@ void string_assignSwapTmp(undefined4 param_1,undefined4 *pSrcStr,undefined4 pTex
   string_assignSubstr(pText,0,0xffffffff);
   WorldInfo_move_string(&srcHead,0);
   if (0xf < tmpCap) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(tmpBuf);
   }
   __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc,extraout_EDX,zero);
@@ -5736,9 +8723,107 @@ void pair_assign_2dword(undefined4 *pDst,undefined4 *pSrcA,undefined4 *pSrcB)
 
 
 
+/* [AUDIT] proposed: Struct_reset_with256buf  (confidence: high)
+ * purpose: Zero-init struct incl memset 0x100 buffer at +10, set flags and 0xffffffff sentinels
+ * vars: memset(in_ECX+10,0,0x100); +0x8c/0x8e/0x90=-1
+ */
+/* Global::Struct_reset_with256buf @ 00459530 */
+
+void Struct_reset_with256buf(void)
+
+{
+  undefined2 *pThis;
+  
+  *pThis = 0;
+  *(undefined4 *)(pThis + 2) = 0;
+  *(undefined4 *)(pThis + 4) = 0;
+  pThis[6] = 0;
+  *(undefined1 *)(pThis + 7) = 0;
+  pThis[8] = 1;
+  *(undefined4 *)(pThis + 0x8a) = 0;
+  memset(pThis + 10,0,0x100);
+  *(undefined4 *)(pThis + 0x8c) = 0xffffffff;
+  *(undefined4 *)(pThis + 0x8e) = 0xffffffff;
+  *(undefined4 *)(pThis + 0x90) = 0xffffffff;
+  pThis[0x95] = 1;
+  *(undefined4 *)(pThis + 0x92) = 0;
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: Struct_copy_acBytes  (confidence: high)
+ * purpose: Copy large struct up to offset 0xa8 (mixed dword/word fields)
+ * vars: ~0xac byte struct
+ */
+/* Global::Struct_copy_acBytes @ 00459800 */
+
+void Struct_copy_acBytes(undefined1 *pSrc)
+
+{
+  undefined1 *pDst;
+  
+  *pDst = *pSrc;
+  pDst[1] = pSrc[1];
+  pDst[2] = pSrc[2];
+  pDst[3] = pSrc[3];
+  pDst[4] = pSrc[4];
+  *(undefined2 *)(pDst + 6) = *(undefined2 *)(pSrc + 6);
+  *(undefined4 *)(pDst + 8) = *(undefined4 *)(pSrc + 8);
+  *(undefined4 *)(pDst + 0xc) = *(undefined4 *)(pSrc + 0xc);
+  *(undefined4 *)(pDst + 0x10) = *(undefined4 *)(pSrc + 0x10);
+  *(undefined2 *)(pDst + 0x14) = *(undefined2 *)(pSrc + 0x14);
+  *(undefined2 *)(pDst + 0x16) = *(undefined2 *)(pSrc + 0x16);
+  *(undefined2 *)(pDst + 0x18) = *(undefined2 *)(pSrc + 0x18);
+  *(undefined2 *)(pDst + 0x1a) = *(undefined2 *)(pSrc + 0x1a);
+  *(undefined2 *)(pDst + 0x1c) = *(undefined2 *)(pSrc + 0x1c);
+  *(undefined2 *)(pDst + 0x1e) = *(undefined2 *)(pSrc + 0x1e);
+  *(undefined2 *)(pDst + 0x20) = *(undefined2 *)(pSrc + 0x20);
+  *(undefined2 *)(pDst + 0x22) = *(undefined2 *)(pSrc + 0x22);
+  *(undefined4 *)(pDst + 0x24) = *(undefined4 *)(pSrc + 0x24);
+  *(undefined4 *)(pDst + 0x28) = *(undefined4 *)(pSrc + 0x28);
+  *(undefined4 *)(pDst + 0x2c) = *(undefined4 *)(pSrc + 0x2c);
+  *(undefined4 *)(pDst + 0x30) = *(undefined4 *)(pSrc + 0x30);
+  *(undefined4 *)(pDst + 0x34) = *(undefined4 *)(pSrc + 0x34);
+  *(undefined4 *)(pDst + 0x38) = *(undefined4 *)(pSrc + 0x38);
+  *(undefined4 *)(pDst + 0x3c) = *(undefined4 *)(pSrc + 0x3c);
+  *(undefined4 *)(pDst + 0x40) = *(undefined4 *)(pSrc + 0x40);
+  *(undefined4 *)(pDst + 0x44) = *(undefined4 *)(pSrc + 0x44);
+  *(undefined4 *)(pDst + 0x48) = *(undefined4 *)(pSrc + 0x48);
+  *(undefined4 *)(pDst + 0x4c) = *(undefined4 *)(pSrc + 0x4c);
+  *(undefined4 *)(pDst + 0x50) = *(undefined4 *)(pSrc + 0x50);
+  *(undefined4 *)(pDst + 0x54) = *(undefined4 *)(pSrc + 0x54);
+  *(undefined4 *)(pDst + 0x58) = *(undefined4 *)(pSrc + 0x58);
+  *(undefined4 *)(pDst + 0x5c) = *(undefined4 *)(pSrc + 0x5c);
+  *(undefined4 *)(pDst + 0x60) = *(undefined4 *)(pSrc + 0x60);
+  *(undefined4 *)(pDst + 100) = *(undefined4 *)(pSrc + 100);
+  *(undefined4 *)(pDst + 0x68) = *(undefined4 *)(pSrc + 0x68);
+  *(undefined4 *)(pDst + 0x6c) = *(undefined4 *)(pSrc + 0x6c);
+  *(undefined4 *)(pDst + 0x70) = *(undefined4 *)(pSrc + 0x70);
+  *(undefined4 *)(pDst + 0x74) = *(undefined4 *)(pSrc + 0x74);
+  *(undefined4 *)(pDst + 0x78) = *(undefined4 *)(pSrc + 0x78);
+  *(undefined4 *)(pDst + 0x7c) = *(undefined4 *)(pSrc + 0x7c);
+  *(undefined4 *)(pDst + 0x80) = *(undefined4 *)(pSrc + 0x80);
+  *(undefined4 *)(pDst + 0x84) = *(undefined4 *)(pSrc + 0x84);
+  *(undefined4 *)(pDst + 0x88) = *(undefined4 *)(pSrc + 0x88);
+  *(undefined4 *)(pDst + 0x8c) = *(undefined4 *)(pSrc + 0x8c);
+  *(undefined4 *)(pDst + 0x90) = *(undefined4 *)(pSrc + 0x90);
+  *(undefined4 *)(pDst + 0x94) = *(undefined4 *)(pSrc + 0x94);
+  *(undefined4 *)(pDst + 0x98) = *(undefined4 *)(pSrc + 0x98);
+  *(undefined4 *)(pDst + 0x9c) = *(undefined4 *)(pSrc + 0x9c);
+  *(undefined4 *)(pDst + 0xa0) = *(undefined4 *)(pSrc + 0xa0);
+  *(undefined4 *)(pDst + 0xa4) = *(undefined4 *)(pSrc + 0xa4);
+  *(undefined4 *)(pDst + 0xa8) = *(undefined4 *)(pSrc + 0xa8);
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: Struct_reset_off14to46  (confidence: high)
  * purpose: Zero fields from offset 0x14 through 0x46
- * vars: in_ECX base
+ * vars: pDst base
  */
 /* Global::Struct_reset_off14to46 @ 00459a30 */
 
@@ -5798,9 +8883,37 @@ void Struct_copy_skipIdx1(undefined4 *pSrc)
 
 
 
+/* [AUDIT] proposed: T::T(const T&)  (confidence: low)
+ * purpose: Copy-ctor invoking 13 std::string copies (array of 13 strings, stride 0x118)
+ * vars: pSrc=src
+ */
+/* Global::T_T_const_T @ 00459b10 */
+
+void T_T_const_T(int param_1)
+
+{
+  entityState_copy(param_1);
+  entityState_copy(param_1 + 0x118);
+  entityState_copy(param_1 + 0x230);
+  entityState_copy(param_1 + 0x348);
+  entityState_copy(param_1 + 0x460);
+  entityState_copy(param_1 + 0x578);
+  entityState_copy(param_1 + 0x690);
+  entityState_copy(param_1 + 0x7a8);
+  entityState_copy(param_1 + 0x8c0);
+  entityState_copy(param_1 + 0x9d8);
+  entityState_copy(param_1 + 0xaf0);
+  entityState_copy(param_1 + 0xc08);
+  entityState_copy(param_1 + 0xd20);
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: Struct_reset_0dDwords  (confidence: high)
  * purpose: Zero ~0xd dwords plus word at +9
- * vars: pDst base
+ * vars: in_ECX base
  */
 /* Global::Struct_reset_0dDwords @ 00465c70 */
 
@@ -5861,6 +8974,109 @@ void Struct_init_off10_scale1(void)
   
   *(undefined4 *)(pThis + 0x10) = 0x3f800000;
   *(undefined4 *)(pThis + 0x14) = 0x3f800000;
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: T::T(const T&)  (confidence: low)
+ * purpose: Copy-ctor of large game struct (~0x458 dwords) with embedded strings/arrays (Entity-like)
+ * vars: param_1=src
+ */
+/* Global::T_T_const_T_466050 @ 00466050 */
+
+void T_T_const_T_466050(undefined4 *param_1)
+
+{
+  undefined4 *in_ECX;
+  
+  *in_ECX = *param_1;
+  in_ECX[1] = param_1[1];
+  in_ECX[2] = param_1[2];
+  in_ECX[3] = param_1[3];
+  in_ECX[4] = param_1[4];
+  in_ECX[5] = param_1[5];
+  in_ECX[6] = param_1[6];
+  in_ECX[7] = param_1[7];
+  in_ECX[8] = param_1[8];
+  in_ECX[9] = param_1[9];
+  in_ECX[10] = param_1[10];
+  in_ECX[0xb] = param_1[0xb];
+  in_ECX[0xc] = param_1[0xc];
+  in_ECX[0xd] = param_1[0xd];
+  in_ECX[0xe] = param_1[0xe];
+  in_ECX[0xf] = param_1[0xf];
+  in_ECX[0x10] = param_1[0x10];
+  in_ECX[0x11] = param_1[0x11];
+  in_ECX[0x12] = param_1[0x12];
+  in_ECX[0x13] = param_1[0x13];
+  *(undefined1 *)(in_ECX + 0x14) = *(undefined1 *)(param_1 + 0x14);
+  in_ECX[0x15] = param_1[0x15];
+  *(undefined1 *)(in_ECX + 0x16) = *(undefined1 *)(param_1 + 0x16);
+  in_ECX[0x17] = param_1[0x17];
+  in_ECX[0x18] = param_1[0x18];
+  in_ECX[0x19] = param_1[0x19];
+  Struct_copy_acBytes(param_1 + 0x1a);
+  *(undefined2 *)(in_ECX + 0x45) = *(undefined2 *)(param_1 + 0x45);
+  in_ECX[0x46] = param_1[0x46];
+  in_ECX[0x47] = param_1[0x47];
+  in_ECX[0x48] = param_1[0x48];
+  in_ECX[0x49] = param_1[0x49];
+  in_ECX[0x4a] = param_1[0x4a];
+  in_ECX[0x4b] = param_1[0x4b];
+  *(undefined1 *)(in_ECX + 0x4c) = *(undefined1 *)(param_1 + 0x4c);
+  *(undefined1 *)((int)in_ECX + 0x131) = *(undefined1 *)((int)param_1 + 0x131);
+  in_ECX[0x4d] = param_1[0x4d];
+  in_ECX[0x4e] = param_1[0x4e];
+  in_ECX[0x4f] = param_1[0x4f];
+  in_ECX[0x50] = param_1[0x50];
+  in_ECX[0x51] = param_1[0x51];
+  in_ECX[0x52] = param_1[0x52];
+  in_ECX[0x53] = param_1[0x53];
+  in_ECX[0x54] = param_1[0x54];
+  in_ECX[0x55] = param_1[0x55];
+  in_ECX[0x56] = param_1[0x56];
+  in_ECX[0x57] = param_1[0x57];
+  in_ECX[0x58] = param_1[0x58];
+  in_ECX[0x59] = param_1[0x59];
+  *(undefined8 *)(in_ECX + 0x5a) = *(undefined8 *)(param_1 + 0x5a);
+  *(undefined8 *)(in_ECX + 0x5c) = *(undefined8 *)(param_1 + 0x5c);
+  in_ECX[0x5e] = param_1[0x5e];
+  *(undefined1 *)(in_ECX + 0x5f) = *(undefined1 *)(param_1 + 0x5f);
+  *(undefined1 *)((int)in_ECX + 0x17d) = *(undefined1 *)((int)param_1 + 0x17d);
+  in_ECX[0x60] = param_1[0x60];
+  in_ECX[0x61] = param_1[0x61];
+  in_ECX[0x62] = param_1[0x62];
+  in_ECX[99] = param_1[99];
+  in_ECX[100] = param_1[100];
+  in_ECX[0x65] = param_1[0x65];
+  *(undefined1 *)(in_ECX + 0x66) = *(undefined1 *)(param_1 + 0x66);
+  in_ECX[0x67] = param_1[0x67];
+  in_ECX[0x68] = param_1[0x68];
+  in_ECX[0x69] = param_1[0x69];
+  in_ECX[0x6a] = param_1[0x6a];
+  in_ECX[0x6c] = param_1[0x6c];
+  in_ECX[0x6d] = param_1[0x6d];
+  in_ECX[0x6e] = param_1[0x6e];
+  in_ECX[0x6f] = param_1[0x6f];
+  in_ECX[0x70] = param_1[0x70];
+  in_ECX[0x71] = param_1[0x71];
+  *(undefined1 *)(in_ECX + 0x72) = *(undefined1 *)(param_1 + 0x72);
+  in_ECX[0x73] = param_1[0x73];
+  in_ECX[0x74] = param_1[0x74];
+  in_ECX[0x75] = param_1[0x75];
+  entityState_copy(param_1 + 0x76);
+  T_T_const_T(param_1 + 0xbc);
+  *(undefined8 *)(in_ECX + 0x44a) = *(undefined8 *)(param_1 + 0x44a);
+  *(undefined8 *)(in_ECX + 0x44c) = *(undefined8 *)(param_1 + 0x44c);
+  *(undefined8 *)(in_ECX + 0x44e) = *(undefined8 *)(param_1 + 0x44e);
+  *(undefined8 *)(in_ECX + 0x450) = *(undefined8 *)(param_1 + 0x450);
+  *(undefined8 *)(in_ECX + 0x452) = *(undefined8 *)(param_1 + 0x452);
+  in_ECX[0x454] = param_1[0x454];
+  in_ECX[0x455] = param_1[0x455];
+  *(undefined8 *)(in_ECX + 0x456) = *(undefined8 *)(param_1 + 0x456);
+  *(undefined8 *)(in_ECX + 0x458) = *(undefined8 *)(param_1 + 0x458);
   return;
 }
 
@@ -5942,103 +9158,9 @@ void Struct_reset_1cDwords_flag(void)
 
 
 
-/* [AUDIT] proposed: setQuadFaceFromNormal  (confidence: med)
- * purpose: Pack float[4] color to RGBA at +4, map int[3] normal param_2 to face index 0-5 at +3
- * vars: param_3=color; param_2=normal; pThis[3]=face dir
- */
-/* Global::setQuadFaceFromNormal @ 00466650 */
-
-void setQuadFaceFromNormal(undefined1 *pSrc,int pDirVec,float *pColor)
-
-{
-  undefined1 srcB8;
-  undefined1 srcB4;
-  char matched;
-  undefined1 *pThis;
-  int axisIdx;
-  int dirTest [4];
-  
-  dirTest[3] = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  srcB8 = pSrc[8];
-  srcB4 = pSrc[4];
-  *pThis = *pSrc;
-  pThis[2] = srcB8;
-  pThis[1] = srcB4;
-  pThis[3] = 1;
-  dirTest[0] = 1;
-  dirTest[1] = 0;
-  dirTest[2] = 0;
-  *(uint *)(pThis + 4) =
-       (((int)(pColor[3] * 255.0) << 8 | (int)(*pColor * 255.0) & 0xffU) << 8 |
-       (int)(pColor[1] * 255.0) & 0xffU) << 8 | (int)(pColor[2] * 255.0) & 0xffU;
-  axisIdx = 0;
-  while (*(int *)(pDirVec + axisIdx * 4) == dirTest[axisIdx]) {
-    axisIdx = axisIdx + 1;
-    if (2 < axisIdx) {
-      pThis[3] = 0;
-      __security_check_cookie(dirTest[3] ^ (uint)&stack0xfffffffc);
-      return;
-    }
-  }
-  axisIdx = 0;
-  dirTest[0] = -1;
-  dirTest[1] = 0;
-  dirTest[2] = 0;
-  while (*(int *)(pDirVec + axisIdx * 4) == dirTest[axisIdx]) {
-    axisIdx = axisIdx + 1;
-    if (2 < axisIdx) {
-      pThis[3] = 1;
-      __security_check_cookie(dirTest[3] ^ (uint)&stack0xfffffffc);
-      return;
-    }
-  }
-  axisIdx = 0;
-  dirTest[0] = 0;
-  dirTest[1] = 1;
-  dirTest[2] = 0;
-  while (*(int *)(pDirVec + axisIdx * 4) == dirTest[axisIdx]) {
-    axisIdx = axisIdx + 1;
-    if (2 < axisIdx) {
-      pThis[3] = 2;
-      __security_check_cookie(dirTest[3] ^ (uint)&stack0xfffffffc);
-      return;
-    }
-  }
-  dirTest[0] = 0;
-  dirTest[1] = 0xffffffff;
-  dirTest[2] = 0;
-  matched = operator_eq_3ints(dirTest);
-  if (matched != '\0') {
-    pThis[3] = 3;
-    __security_check_cookie(dirTest[3] ^ (uint)&stack0xfffffffc);
-    return;
-  }
-  dirTest[0] = 0;
-  dirTest[1] = 0;
-  dirTest[2] = 1;
-  matched = operator_eq_3ints(dirTest);
-  if (matched != '\0') {
-    pThis[3] = 4;
-    __security_check_cookie(dirTest[3] ^ (uint)&stack0xfffffffc);
-    return;
-  }
-  dirTest[0] = 0;
-  dirTest[1] = 0;
-  dirTest[2] = 0xffffffff;
-  matched = operator_eq_3ints(dirTest);
-  if (matched != '\0') {
-    pThis[3] = 5;
-  }
-  __security_check_cookie(dirTest[3] ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: Struct_copy_1cDwords_b  (confidence: high)
  * purpose: Copy ~0x1d dwords (skips index 3 and 0x15) plus byte
- * vars: src pSrc
+ * vars: src param_1
  */
 /* Global::Struct_copy_1cDwords_b @ 00468790 */
 
@@ -6143,8 +9265,27 @@ float * vec3_negateSwapYZ(float *pResult)
 
 
 
+/* [AUDIT] proposed: vec2_add  (confidence: high)
+ * purpose: pResult = param_2 + *this over 2 floats
+ * vars: -
+ */
+/* Global::vec2_add @ 00468f20 */
+
+void vec2_add(float *pResult,float *pRhs)
+
+{
+  float *pThis;
+  
+  *pResult = *pRhs + *pThis;
+  pResult[1] = pRhs[1] + pThis[1];
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: vec3_divScalar  (confidence: high)
- * purpose: pResult = *this / param_2 over 3 floats
+ * purpose: pResult = *this / pRhs over 3 floats
  * vars: -
  */
 /* Global::vec3_divScalar @ 00469020 */
@@ -6199,7 +9340,72 @@ void Container_dtor_at78(void)
   undefined1 tmp [4];
   
   std_Tree_eraseRange(tmp,**(undefined4 **)(pThis + 0x78),*(undefined4 **)(pThis + 0x78));
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(pThis + 0x78));
+}
+
+
+
+
+/* [AUDIT] proposed: identity/getter thunk  (confidence: med)
+ * purpose: Trivial function returning its argument unchanged (identity/accessor thunk)
+ * vars: param_1
+ */
+/* Global::identity_getter_thunk @ 0046dcb0 */
+
+undefined4 identity_getter_thunk(undefined4 param_1)
+
+{
+  return param_1;
+}
+
+
+
+
+/* [AUDIT] proposed: std::vector<T16>::_Reallocate  (confidence: med)
+ * purpose: Reallocate 16-byte-element vector to new capacity, move+free
+ * vars: param_1=new capacity
+ */
+/* Global::std_vector_Reallocate @ 0046e250 */
+
+void std_vector_Reallocate(uint param_1)
+
+{
+  void *pvVar1;
+  uint uVar2;
+  undefined4 *in_ECX;
+  void *pvVar3;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  uVar2 = param_1;
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e5690;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  pvVar3 = (void *)0x0;
+  if (param_1 != 0) {
+    if (param_1 < 0x10000000) {
+      pvVar3 = operator_new(param_1 << 4);
+      if (pvVar3 != (void *)0x0) goto LAB_0046e2b1;
+    }
+                    /* WARNING: Subroutine does not return */
+    std::_Xbad_alloc();
+  }
+LAB_0046e2b1:
+  local_8 = 0;
+  std_Copy(*in_ECX,in_ECX[1],pvVar3,(int)&param_1 + 3,0,param_1);
+  pvVar1 = (void *)*in_ECX;
+  if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(pvVar1);
+  }
+  in_ECX[2] = (void *)(uVar2 * 0x10 + (int)pvVar3);
+  in_ECX[1] = (in_ECX[1] - (int)pvVar1 & 0xfffffff0U) + (int)pvVar3;
+  *in_ECX = pvVar3;
+  ExceptionList = local_10;
+  return;
 }
 
 
@@ -6222,7 +9428,28 @@ void * array_alloc_stride18(uint count)
   if ((count < 0xaaaaaab) && (pMem = operator_new(count * 0x18), pMem != (void *)0x0)) {
     return pMem;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
+}
+
+
+
+
+/* [AUDIT] proposed: GameController::acquire_render_locks  (confidence: med)
+ * purpose: EnterCriticalSection on three engine critical sections
+ * vars: in_ECX=engine base
+ */
+/* Global::GameController_acquire_render_locks @ 0046f450 */
+
+void GameController_acquire_render_locks(void)
+
+{
+  int in_ECX;
+  
+  EnterCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x800600));
+  EnterCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x8005e8));
+  EnterCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x800618));
+  return;
 }
 
 
@@ -6250,11 +9477,13 @@ void listNode_free_ownsString(void)
     return;
   }
   if (7 < *(uint *)((int)pFirst + 0x1c)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)pFirst + 8));
   }
   *(undefined4 *)((int)pFirst + 0x1c) = 7;
   *(undefined4 *)((int)pFirst + 0x18) = 0;
   *(undefined2 *)((int)pFirst + 8) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(pFirst);
 }
 
@@ -6880,6 +10109,246 @@ void drawModelAtProjectedPos(float param_1,float param_2,float *param_3,float pa
 
 
 
+/* [AUDIT] proposed: GameController::release_render_locks  (confidence: med)
+ * purpose: LeaveCriticalSection on three engine critical sections
+ * vars: pThis=engine base
+ */
+/* Global::GameController_release_render_locks @ 00477280 */
+
+void GameController_release_render_locks(void)
+
+{
+  int in_ECX;
+  
+  LeaveCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x800618));
+  LeaveCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x8005e8));
+  LeaveCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x800600));
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: Zone_rbtree_eraseRange  (confidence: med)
+ * purpose: Erase RB-tree node range [param_2,param_3); clear whole tree if full range; class Zone
+ * vars: rbtree_destroyRecursive clear; Zone_rbtree_eraseNode erase
+ */
+/* Global::Zone_rbtree_eraseRange @ 004777f0 */
+
+undefined4 * Zone_rbtree_eraseRange(undefined4 *pResult,int *pFirst,int *pLast)
+
+{
+  char isBlack;
+  int *pRoot;
+  int *pIt;
+  int *piVar4;
+  int *pThis;
+  undefined1 local_8 [4];
+  
+  pRoot = (int *)*pThis;
+  pIt = pFirst;
+  if ((pFirst == (int *)*pRoot) && (pLast == pRoot)) {
+    rbtree_destroyRecursive(pRoot[1]);
+    *(int *)(*pThis + 4) = *pThis;
+    *(int *)*pThis = *pThis;
+    *(int *)(*pThis + 8) = *pThis;
+    pThis[1] = 0;
+    *pResult = *(undefined4 *)*pThis;
+    return pResult;
+  }
+  while (pIt != pLast) {
+    pFirst = pIt;
+    if (*(char *)((int)pIt + 0xd) == '\0') {
+      pFirst = (int *)pIt[2];
+      if (*(char *)((int)pFirst + 0xd) == '\0') {
+        isBlack = *(char *)(*pFirst + 0xd);
+        pRoot = (int *)*pFirst;
+        while (isBlack == '\0') {
+          isBlack = *(char *)(*pRoot + 0xd);
+          pFirst = pRoot;
+          pRoot = (int *)*pRoot;
+        }
+      }
+      else {
+        isBlack = *(char *)(pIt[1] + 0xd);
+        piVar4 = (int *)pIt[1];
+        pRoot = pIt;
+        while ((pFirst = piVar4, isBlack == '\0' && (pRoot == (int *)pFirst[2]))) {
+          isBlack = *(char *)(pFirst[1] + 0xd);
+          piVar4 = (int *)pFirst[1];
+          pRoot = pFirst;
+        }
+      }
+    }
+    Zone_rbtree_eraseNode(local_8,pIt);
+    pIt = pFirst;
+  }
+  *pResult = pIt;
+  return pResult;
+}
+
+
+
+
+/* [AUDIT] proposed: Zone_rbtree_eraseNode  (confidence: low)
+ * purpose: Red-black tree single-node erase with rebalance/recolor then free 2 strings and delete
+ * vars: 'invalid map/set<T> iterator'
+ */
+/* Global::Zone_rbtree_eraseNode @ 004778b0 */
+
+/* WARNING: Removing unreachable block (ram,0x0047797d) */
+/* WARNING: Removing unreachable block (ram,0x0047798d) */
+/* WARNING: Removing unreachable block (ram,0x00477996) */
+/* WARNING: Removing unreachable block (ram,0x00477999) */
+/* WARNING: Removing unreachable block (ram,0x00477989) */
+/* WARNING: Removing unreachable block (ram,0x004779a7) */
+/* WARNING: Removing unreachable block (ram,0x004779b6) */
+/* WARNING: Removing unreachable block (ram,0x004779c1) */
+/* WARNING: Removing unreachable block (ram,0x004779bd) */
+/* WARNING: Removing unreachable block (ram,0x004779b1) */
+/* WARNING: Removing unreachable block (ram,0x004779c4) */
+
+void Zone_rbtree_eraseNode(undefined4 pResult,int *pNode)
+
+{
+  undefined4 *puVar1;
+  int pRoot;
+  int *pFixup;
+  undefined4 uVar4;
+  int *pThis;
+  int *pParent;
+  int *pSucc;
+  
+  if (*(char *)((int)pNode + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
+    std::_Xout_of_range("invalid map/set<T> iterator");
+  }
+  rbtree_iterator_increment();
+  pSucc = (int *)*pNode;
+  if (*(char *)((int)pSucc + 0xd) == '\0') {
+    if (*(char *)(pNode[2] + 0xd) == '\0') {
+      pSucc = (int *)pNode[2];
+    }
+  }
+  else {
+    pSucc = (int *)pNode[2];
+  }
+  pParent = (int *)pNode[1];
+  if (*(char *)((int)pSucc + 0xd) == '\0') {
+    pSucc[1] = (int)pParent;
+  }
+  if (*(int **)(*pThis + 4) == pNode) {
+    *(int **)(*pThis + 4) = pSucc;
+  }
+  else if ((int *)*pParent == pNode) {
+    *pParent = (int)pSucc;
+  }
+  else {
+    pParent[2] = (int)pSucc;
+  }
+  puVar1 = (undefined4 *)*pThis;
+  if ((int *)*puVar1 == pNode) {
+    pFixup = pParent;
+    if (*(char *)((int)pSucc + 0xd) == '\0') {
+      pFixup = (int *)rbtree_min_node(pSucc);
+    }
+    *puVar1 = pFixup;
+  }
+  pRoot = *pThis;
+  if (*(int **)(pRoot + 8) == pNode) {
+    if (*(char *)((int)pSucc + 0xd) == '\0') {
+      uVar4 = RBTree_next(pSucc);
+      *(undefined4 *)(pRoot + 8) = uVar4;
+    }
+    else {
+      *(int **)(pRoot + 8) = pParent;
+    }
+  }
+  if ((char)pNode[3] == '\x01') {
+    if (pSucc != *(int **)(*pThis + 4)) {
+      do {
+        pFixup = pParent;
+        if ((char)pSucc[3] != '\x01') break;
+        pParent = (int *)*pFixup;
+        if (pSucc == pParent) {
+          pParent = (int *)pFixup[2];
+          if ((char)pParent[3] == '\0') {
+            *(undefined1 *)(pParent + 3) = 1;
+            *(undefined1 *)(pFixup + 3) = 0;
+            rbtree_rotate_left(pFixup);
+            pParent = (int *)pFixup[2];
+          }
+          if (*(char *)((int)pParent + 0xd) == '\0') {
+            if ((*(char *)(*pParent + 0xc) != '\x01') || (*(char *)(pParent[2] + 0xc) != '\x01')) {
+              if (*(char *)(pParent[2] + 0xc) == '\x01') {
+                *(undefined1 *)(*pParent + 0xc) = 1;
+                *(undefined1 *)(pParent + 3) = 0;
+                rbtree_rotate(pParent);
+                pParent = (int *)pFixup[2];
+              }
+              *(char *)(pParent + 3) = (char)pFixup[3];
+              *(undefined1 *)(pFixup + 3) = 1;
+              *(undefined1 *)(pParent[2] + 0xc) = 1;
+              rbtree_rotate_left(pFixup);
+              *(undefined1 *)(pSucc + 3) = 1;
+              goto LAB_00477b0e;
+            }
+LAB_00477ab0:
+            *(undefined1 *)(pParent + 3) = 0;
+          }
+        }
+        else {
+          if ((char)pParent[3] == '\0') {
+            *(undefined1 *)(pParent + 3) = 1;
+            *(undefined1 *)(pFixup + 3) = 0;
+            rbtree_rotate(pFixup);
+            pParent = (int *)*pFixup;
+          }
+          if (*(char *)((int)pParent + 0xd) == '\0') {
+            if ((*(char *)(pParent[2] + 0xc) == '\x01') && (*(char *)(*pParent + 0xc) == '\x01'))
+            goto LAB_00477ab0;
+            if (*(char *)(*pParent + 0xc) == '\x01') {
+              *(undefined1 *)(pParent[2] + 0xc) = 1;
+              *(undefined1 *)(pParent + 3) = 0;
+              rbtree_rotate_left(pParent);
+              pParent = (int *)*pFixup;
+            }
+            *(char *)(pParent + 3) = (char)pFixup[3];
+            *(undefined1 *)(pFixup + 3) = 1;
+            *(undefined1 *)(*pParent + 0xc) = 1;
+            rbtree_rotate(pFixup);
+            *(undefined1 *)(pSucc + 3) = 1;
+            goto LAB_00477b0e;
+          }
+        }
+        pParent = (int *)pFixup[1];
+        pSucc = pFixup;
+      } while (pFixup != *(int **)(*pThis + 4));
+    }
+    *(undefined1 *)(pSucc + 3) = 1;
+  }
+LAB_00477b0e:
+  if (7 < (uint)pNode[0xf]) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete((void *)pNode[10]);
+  }
+  pNode[0xf] = 7;
+  pNode[0xe] = 0;
+  *(undefined2 *)(pNode + 10) = 0;
+  if (7 < (uint)pNode[9]) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete((void *)pNode[4]);
+  }
+  pNode[9] = 7;
+  pNode[8] = 0;
+  *(undefined2 *)(pNode + 4) = 0;
+                    /* WARNING: Subroutine does not return */
+  operator_delete(pNode);
+}
+
+
+
+
 /* [AUDIT] proposed: hasNearbyAllyEntity  (confidence: med)
  * purpose: Iterate players tree; true if same-faction entity within range^2=16, else scan all
  * vars: faction byte +0x140; 1.526e-5 scale
@@ -6961,21 +10430,132 @@ void hasNearbyAllyEntity(void)
 
 
 
-/* [AUDIT] proposed: getChunkCellAt  (confidence: high)
- * purpose: Return chunk cell dword at (param_1,param_2) if within 0x400 grid, else 0
- * vars: grid at +0x4000bc
+/* [AUDIT] proposed: ChunkBuffer_vector_insert_8  (confidence: high)
+ * purpose: Inserts one 8-byte element into a ChunkBuffer vector, copying 8 bytes field-by-field; grows via vector_reserve_stride8_b
+ * vars: 8-byte elem copied as 4+4
  */
-/* Global::getChunkCellAt @ 0047faa0 */
+/* Global::ChunkBuffer_vector_insert_8 @ 00486830 */
 
-undefined4 getChunkCellAt(int col,int row)
+void ChunkBuffer_vector_insert_8(undefined1 *pEntry)
 
 {
-  int pThis;
+  undefined1 *pEnd;
+  undefined1 *pBegin;
+  undefined1 *pSlot;
+  int *pThis;
   
-  if ((((-1 < col) && (-1 < row)) && (col < 0x400)) && (row < 0x400)) {
-    return *(undefined4 *)(pThis + 0x4000bc + (col * 0x400 + row) * 4);
+  pEnd = (undefined1 *)pThis[1];
+  if ((pEntry < pEnd) && (pBegin = (undefined1 *)*pThis, pBegin <= pEntry)) {
+    if (pEnd == (undefined1 *)pThis[2]) {
+      vector_reserve_stride8_b(1);
+    }
+    pSlot = (undefined1 *)pThis[1];
+    pEnd = (undefined1 *)(*pThis + ((int)pEntry - (int)pBegin >> 3) * 8);
+    if (pSlot != (undefined1 *)0x0) {
+      *pSlot = *pEnd;
+      pSlot[1] = pEnd[1];
+      pSlot[2] = pEnd[2];
+      pSlot[3] = pEnd[3];
+      *(undefined4 *)(pSlot + 4) = *(undefined4 *)(pEnd + 4);
+      pThis[1] = pThis[1] + 8;
+      return;
+    }
   }
-  return 0;
+  else {
+    if (pEnd == (undefined1 *)pThis[2]) {
+      vector_reserve_stride8_b(1);
+    }
+    pEnd = (undefined1 *)pThis[1];
+    if (pEnd != (undefined1 *)0x0) {
+      *pEnd = *pEntry;
+      pEnd[1] = pEntry[1];
+      pEnd[2] = pEntry[2];
+      pEnd[3] = pEntry[3];
+      *(undefined4 *)(pEnd + 4) = *(undefined4 *)(pEntry + 4);
+    }
+  }
+  pThis[1] = pThis[1] + 8;
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: WorldInfo_clearUnderLock  (confidence: high)
+ * purpose: Enters critical section at +0x250, destroys several intrusive lists (call vfunc(1)) and buffers, then leaves lock
+ * vars: pThis=WorldInfo; cs at +0x250
+ */
+/* Global::WorldInfo_clearUnderLock @ 00486ba0 */
+
+void WorldInfo_clearUnderLock(void)
+
+{
+  undefined4 *pList;
+  void *pFirst;
+  int pThis;
+  int *pNode;
+  
+  EnterCriticalSection((LPCRITICAL_SECTION)(pThis + 0x250));
+  *(undefined4 *)(pThis + 0x18) = 0xffffffff;
+  *(undefined4 *)(pThis + 0x1c) = 0xffffffff;
+  pNode = (int *)**(int **)(pThis + 8);
+  if (pNode != *(int **)(pThis + 8)) {
+    do {
+      if ((undefined4 *)pNode[2] != (undefined4 *)0x0) {
+        (*(code *)**(undefined4 **)pNode[2])(1);
+      }
+      pNode = (int *)*pNode;
+    } while (pNode != (int *)*(int *)(pThis + 8));
+  }
+  pList = *(undefined4 **)(pThis + 8);
+  pFirst = (void *)*pList;
+  *pList = pList;
+  *(int *)(*(int *)(pThis + 8) + 4) = *(int *)(pThis + 8);
+  *(undefined4 *)(pThis + 0xc) = 0;
+  if (pFirst != *(void **)(pThis + 8)) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(pFirst);
+  }
+  pNode = (int *)**(int **)(pThis + 0x10);
+  if (pNode != *(int **)(pThis + 0x10)) {
+    do {
+      if ((undefined4 *)pNode[2] != (undefined4 *)0x0) {
+        (*(code *)**(undefined4 **)pNode[2])(1);
+      }
+      pNode = (int *)*pNode;
+    } while (pNode != (int *)*(int *)(pThis + 0x10));
+  }
+  pList = *(undefined4 **)(pThis + 0x10);
+  pFirst = (void *)*pList;
+  *pList = pList;
+  *(int *)(*(int *)(pThis + 0x10) + 4) = *(int *)(pThis + 0x10);
+  *(undefined4 *)(pThis + 0x14) = 0;
+  if (pFirst == *(void **)(pThis + 0x10)) {
+    pList = *(undefined4 **)(pThis + 0x240);
+    pFirst = (void *)*pList;
+    *pList = pList;
+    *(int *)(*(int *)(pThis + 0x240) + 4) = *(int *)(pThis + 0x240);
+    *(undefined4 *)(pThis + 0x244) = 0;
+    if (pFirst != *(void **)(pThis + 0x240)) {
+                    /* WARNING: Subroutine does not return */
+      operator_delete(pFirst);
+    }
+    pList = *(undefined4 **)(pThis + 0x248);
+    pFirst = (void *)*pList;
+    *pList = pList;
+    *(int *)(*(int *)(pThis + 0x248) + 4) = *(int *)(pThis + 0x248);
+    *(undefined4 *)(pThis + 0x24c) = 0;
+    if (pFirst == *(void **)(pThis + 0x248)) {
+      *(undefined4 *)(pThis + 0x23c) = 0;
+      *(undefined4 *)(pThis + 0x238) = 0;
+      LeaveCriticalSection((LPCRITICAL_SECTION)(pThis + 0x250));
+      return;
+    }
+                    /* WARNING: Subroutine does not return */
+    operator_delete(pFirst);
+  }
+                    /* WARNING: Subroutine does not return */
+  operator_delete(pFirst);
 }
 
 
@@ -7012,181 +10592,8 @@ uint * fixed16_vec_lengthSquared(uint *pOut)
 
 
 
-/* [AUDIT] proposed: GameController_buildWorldList  (confidence: high)
- * purpose: 'online_': builds WorldPreviewWidget grid from save/online world list, filtering by 'online_' prefix
- * vars: 0x8009dc worlds vec; local_3c y-layout
- */
-/* Global::GameController_buildWorldList @ 004a23d0 */
-
-void GameController_buildWorldList(void)
-
-{
-  int *piVar1;
-  uint stackCookie;
-  undefined4 *puVar3;
-  uint uVar4;
-  int pList;
-  undefined4 uVar6;
-  void *pvVar7;
-  int *piVar8;
-  int pThis;
-  int count;
-  char isOnline;
-  bool bVar11;
-  int pWorld;
-  int local_3c;
-  int index;
-  uint flags;
-  int pWidget;
-  void *strBuf [4];
-  undefined4 local_1c;
-  uint local_18;
-  uint local_14;
-  void *savedExcList;
-  undefined1 *ehHandler;
-  undefined4 ehState;
-  
-  ehState = 0xffffffff;
-  ehHandler = &LAB_006e79fc;
-  savedExcList = ExceptionList;
-  stackCookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  ExceptionList = &savedExcList;
-  flags = 0;
-  local_14 = stackCookie;
-  Node_detach_from_parent(0);
-  Node_detach_from_parent(0);
-  Node_detach_from_parent(0);
-  Node_dtor_release_children(stackCookie);
-  *(undefined4 *)(pThis + 0x8009c4) = *(undefined4 *)(pThis + 0x8009c0);
-  std_list_clear_67e480();
-  std_list_clear_67e480();
-  pList = *(int *)(pThis + 0x8009dc);
-  count = *(int *)(pThis + 0x8009e0) - pList >> 2;
-  index = 0;
-  if (count != -1 && -1 < count + 1) {
-    local_3c = 0x32;
-    do {
-      pWorld = 0;
-      if (index < count) {
-        pWorld = *(int *)(pList + index * 4);
-        if (*(uint *)(pWorld + 0x18) < 7) {
-LAB_004a2508:
-          isOnline = '\0';
-        }
-        else {
-          puVar3 = (undefined4 *)std_string_ctor_wrap(strBuf,0,7);
-          flags = flags | 1;
-          stackCookie = puVar3[4];
-          if (0xf < (uint)puVar3[5]) {
-            puVar3 = (undefined4 *)*puVar3;
-          }
-          uVar4 = 7;
-          if (stackCookie < 7) {
-            uVar4 = stackCookie;
-          }
-          pList = memcmp_traits(puVar3,"online_",uVar4);
-          bVar11 = false;
-          if (pList == 0) {
-            if (stackCookie < 7) {
-              stackCookie = 0xffffffff;
-            }
-            else {
-              stackCookie = (uint)(stackCookie != 7);
-            }
-            bVar11 = stackCookie == 0;
-          }
-          if (!bVar11) goto LAB_004a2508;
-          isOnline = '\x01';
-        }
-        ehState = 0xffffffff;
-        if (((flags & 1) != 0) && (flags = flags & 0xfffffffe, 0xf < local_18)) {
-          operator_delete(strBuf[0]);
-        }
-        if (*(char *)(pThis + 0x8009b0) == isOnline) goto LAB_004a253b;
-      }
-      else {
-LAB_004a253b:
-        pList = Node_clone_subtree_v2(*(undefined4 *)(pThis + 0x80088c));
-        pWidget = pList;
-        uVar6 = (**(code **)(**(int **)(pList + 0x38) + 8))();
-        Node_set_style_slot(uVar6);
-        uVar6 = (**(code **)(**(int **)(pList + 0x3c) + 8))();
-        Node_set_font_slot(uVar6);
-        Widget_measureContentEntry(0x44160000,0x435c0000,1);
-        local_18 = 7;
-        local_1c = 0;
-        strBuf[0] = (void *)((uint)strBuf[0] & 0xffff0000);
-        u16string_assignPtrLen(&PTR_006fccac,0);
-        ehState = 1;
-        uVar6 = NamedObject_create_with_defaults(0,0,0,0,strBuf);
-        ehState = 0xffffffff;
-        if (7 < local_18) {
-          operator_delete(strBuf[0]);
-        }
-        local_18 = 7;
-        local_1c = 0;
-        strBuf[0] = (void *)((uint)strBuf[0] & 0xffff0000);
-        pvVar7 = operator_new(0x16c);
-        ehState = 2;
-        if (pvVar7 == (void *)0x0) {
-          count = 0;
-        }
-        else {
-          count = cube::WorldPreviewWidget::ctor_0(*(undefined4 *)(pThis + 0x800710),uVar6,pThis);
-        }
-        *(int *)(count + 0x160) = pWorld;
-        ehState = 0xffffffff;
-        AdaptionWidget_rebuildLayoutRecursive(*(int *)(pThis + 0x8008c8) + 0xc,count,1);
-        Widget_setScroll(0x43960000,(float)local_3c,1);
-        piVar8 = *(int **)(pThis + 0x8009c4);
-        if (&pWidget < piVar8) {
-          piVar1 = *(int **)(pThis + 0x8009c0);
-          if (&pWidget < piVar1) goto LAB_004a26ad;
-          if (piVar8 == *(int **)(pThis + 0x8009c8)) {
-            std_vector_reserve_stride4(1);
-          }
-          pList = pWidget;
-          if (*(undefined4 **)(pThis + 0x8009c4) != (undefined4 *)0x0) {
-            **(undefined4 **)(pThis + 0x8009c4) =
-                 *(undefined4 *)
-                  (*(uint *)(pThis + 0x8009c0) + ((int)&pWidget - (int)piVar1 >> 2) * 4);
-          }
-        }
-        else {
-LAB_004a26ad:
-          if (piVar8 == *(int **)(pThis + 0x8009c8)) {
-            std_vector_reserve_stride4(1);
-          }
-          if (*(int **)(pThis + 0x8009c4) != (int *)0x0) {
-            **(int **)(pThis + 0x8009c4) = pList;
-          }
-        }
-        *(int *)(pThis + 0x8009c4) = *(int *)(pThis + 0x8009c4) + 4;
-        piVar8 = (int *)std_map_subscript(&pWidget);
-        *piVar8 = index;
-        piVar8 = (int *)rbtree_findOrInsert_intKey(&index);
-        local_3c = local_3c + 0xe6;
-        *piVar8 = pList;
-      }
-      pList = *(int *)(pThis + 0x8009dc);
-      count = *(int *)(pThis + 0x8009e0) - pList >> 2;
-      index = index + 1;
-    } while (index < count + 1);
-  }
-  Node_propagate_resolved_value();
-  Node_detach_from_parent(*(undefined4 *)(pThis + 0x80088c));
-  Node_detach_from_parent(*(undefined4 *)(pThis + 0x80088c));
-  Node_detach_from_parent(*(undefined4 *)(pThis + 0x80088c));
-  ExceptionList = savedExcList;
-  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: acosf_wrap  (confidence: high)
- * purpose: Wrapper returning acos(param_1) as float
+ * purpose: Wrapper returning acos(pOut) as float
  * vars: libm acos
  */
 /* Global::acosf_wrap @ 004c14f0 */
@@ -7357,80 +10764,40 @@ float10 item_computeStat_regen(void)
 
 
 
-/* [AUDIT] proposed: item_computeValue  (confidence: med)
- * purpose: Item base value: type-1 items scaled 200x or 100x by subtype via math_pow2Mul
- * vars: +1 subtype switch
+/* [AUDIT] proposed: Item::compute_value  (confidence: low)
+ * purpose: Compute item gold value from type/rarity/level (game)
+ * vars: pItem=item
  */
-/* Global::item_computeValue @ 004c6e10 */
+/* Global::Item_compute_value @ 004c78c0 */
 
-float10 item_computeValue(void)
+float10 Item_compute_value(void)
 
 {
-  char *pItem;
-  float10 base;
-  
-  if (*pItem == '\x01') {
-    switch(pItem[1]) {
-    case '\x01':
-    case '\x02':
-      base = (float10)math_pow2Mul((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
-      return (float10)((float)base * 200.0);
-    case '\x04':
-    case '\x05':
-    case '\x06':
-      base = (float10)math_pow2Mul((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
-      return (float10)((float)base * 200.0);
-    case '\b':
-    case '\t':
-      base = (float10)math_pow2Mul((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
-      return (float10)((float)base * 100.0);
-    }
-  }
-  return (float10)0;
-}
-
-
-
-
-/* [AUDIT] proposed: item_computeStat_armor  (confidence: med)
- * purpose: Computes armor/defense-like stat (x5 * mults) for block/tool item types
- * vars: 0.5/1.0 base; +0xd modifiers
- */
-/* Global::item_computeStat_armor @ 004c70b0 */
-
-float10 item_computeStat_armor(void)
-
-{
-  char typeByte;
+  char cVar1;
   char *in_ECX;
-  float10 baseValue;
-  float rarityFactor;
-  float materialMult;
+  float10 fVar2;
+  float local_c;
+  float local_8;
   
-  typeByte = *in_ECX;
-  if ((((typeByte != '\x03') && (typeByte != '\x04')) && (typeByte != '\a')) &&
-     ((typeByte != '\x05' && (typeByte != '\x06')))) {
+  cVar1 = *in_ECX;
+  if ((((cVar1 != '\x03') && (cVar1 != '\x04')) && (cVar1 != '\a')) &&
+     ((cVar1 != '\x05' && (cVar1 != '\x06')))) {
     return (float10)0;
   }
-  rarityFactor = 0.5;
-  if (typeByte == '\x04') {
-    rarityFactor = 1.0;
+  local_c = 0.1;
+  if (cVar1 == '\x04') {
+    local_c = 0.2;
   }
-  typeByte = in_ECX[0xd];
-  materialMult = (1.0 - ((float)(int)((ulonglong)(uint)(*(int *)(in_ECX + 4) << 3) % 0x15) + 0.0) / 20.0)
-            + 1.0;
-  if (typeByte == '\x01') {
-    materialMult = materialMult + 1.0;
+  local_8 = ((float)(int)((ulonglong)(uint)(*(int *)(in_ECX + 4) << 3) % 0x15) + 0.0) / 20.0;
+  if (in_ECX[0xd] == '\x1a') {
+    local_8 = local_8 + 0.5;
   }
-  else if (typeByte == '\x1a') {
-    materialMult = materialMult + 0.5;
+  else if (in_ECX[0xd] == '\x1b') {
+    local_8 = local_8 + 1.0;
   }
-  else if (typeByte == '\x1b') {
-    materialMult = materialMult + 0.75;
-  }
-  baseValue = (float10)math_pow2Mul((float)*(int *)(in_ECX + 0x114) * 0.1 +
+  fVar2 = (float10)math_pow2Mul((float)*(int *)(in_ECX + 0x114) * 0.1 +
                                 (float)(int)*(short *)(in_ECX + 0x10),in_ECX[0xc]);
-  return (float10)((float)baseValue * 5.0 * rarityFactor * materialMult);
+  return (float10)((float)fVar2 * local_c * local_8);
 }
 
 
@@ -7702,6 +11069,692 @@ int AdaptionWidget_vector_resize_3(uint newSize)
 
 
 
+/* [AUDIT] proposed: net::Connection::write_delta_i8  (confidence: med)
+ * purpose: If byte field changed, push to change-list and set dirty bitflag (game net)
+ * vars: param_4/5=old/new,param_6=force
+ */
+/* Global::net_Connection_write_delta_i8 @ 004cb5d0 */
+
+undefined1
+net_Connection_write_delta_i8(int *param_1,uint *param_2,uint *param_3,char *param_4,char *param_5,char param_6)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined1 uVar4;
+  uint uVar5;
+  uint uVar6;
+  char *local_c;
+  undefined4 local_8;
+  
+  uVar4 = 0;
+  if ((param_6 != '\0') || (*param_4 != *param_5)) {
+    iVar1 = *param_1;
+    local_c = param_5;
+    local_8 = 1;
+    iVar3 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),&local_c);
+    if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+      std::_Xlength_error("list<T> too long");
+    }
+    param_1[1] = param_1[1] + 1;
+    *(int *)(iVar1 + 4) = iVar3;
+    **(int **)(iVar3 + 4) = iVar3;
+    uVar2 = *param_3;
+    uVar5 = 1 << (uVar2 & 0x1f);
+    uVar6 = 0;
+    if (0x1f < uVar2) {
+      uVar6 = uVar5;
+    }
+    uVar5 = uVar5 ^ uVar6;
+    if (0x3f < uVar2) {
+      uVar6 = uVar5;
+    }
+    *param_2 = *param_2 | uVar5;
+    param_2[1] = param_2[1] | uVar6;
+    uVar4 = 1;
+  }
+  *param_3 = *param_3 + 1;
+  return uVar4;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_i16  (confidence: med)
+ * purpose: If short field changed, queue delta and set dirty bit (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_i16 @ 004cb670 */
+
+undefined1
+net_Connection_write_delta_i16(int *param_1,uint *param_2,uint *param_3,short *param_4,short *param_5,char param_6)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined1 uVar4;
+  uint uVar5;
+  uint uVar6;
+  short *local_c;
+  undefined4 local_8;
+  
+  uVar4 = 0;
+  if ((param_6 != '\0') || (*param_4 != *param_5)) {
+    iVar1 = *param_1;
+    local_c = param_5;
+    local_8 = 2;
+    iVar3 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),&local_c);
+    if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+      std::_Xlength_error("list<T> too long");
+    }
+    param_1[1] = param_1[1] + 1;
+    *(int *)(iVar1 + 4) = iVar3;
+    **(int **)(iVar3 + 4) = iVar3;
+    uVar2 = *param_3;
+    uVar5 = 1 << (uVar2 & 0x1f);
+    uVar6 = 0;
+    if (0x1f < uVar2) {
+      uVar6 = uVar5;
+    }
+    uVar5 = uVar5 ^ uVar6;
+    if (0x3f < uVar2) {
+      uVar6 = uVar5;
+    }
+    *param_2 = *param_2 | uVar5;
+    param_2[1] = param_2[1] | uVar6;
+    uVar4 = 1;
+  }
+  *param_3 = *param_3 + 1;
+  return uVar4;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_i32  (confidence: med)
+ * purpose: If int field changed, queue delta and set dirty bit (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_i32 @ 004cb710 */
+
+undefined1
+net_Connection_write_delta_i32(int *param_1,uint *param_2,uint *param_3,int *param_4,int *param_5,char param_6)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined1 uVar4;
+  uint uVar5;
+  uint uVar6;
+  int *local_c;
+  undefined4 local_8;
+  
+  uVar4 = 0;
+  if ((param_6 != '\0') || (*param_4 != *param_5)) {
+    iVar1 = *param_1;
+    local_c = param_5;
+    local_8 = 4;
+    iVar3 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),&local_c);
+    if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+      std::_Xlength_error("list<T> too long");
+    }
+    param_1[1] = param_1[1] + 1;
+    *(int *)(iVar1 + 4) = iVar3;
+    **(int **)(iVar3 + 4) = iVar3;
+    uVar2 = *param_3;
+    uVar5 = 1 << (uVar2 & 0x1f);
+    uVar6 = 0;
+    if (0x1f < uVar2) {
+      uVar6 = uVar5;
+    }
+    uVar5 = uVar5 ^ uVar6;
+    if (0x3f < uVar2) {
+      uVar6 = uVar5;
+    }
+    *param_2 = *param_2 | uVar5;
+    param_2[1] = param_2[1] | uVar6;
+    uVar4 = 1;
+  }
+  *param_3 = *param_3 + 1;
+  return uVar4;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_f32  (confidence: med)
+ * purpose: If float field changed, queue delta and set dirty bit (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_f32 @ 004cb7b0 */
+
+undefined1
+net_Connection_write_delta_f32(int *param_1,uint *param_2,uint *param_3,float *param_4,float *param_5,char param_6)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined1 uVar4;
+  uint uVar5;
+  uint uVar6;
+  float *local_c;
+  undefined4 local_8;
+  
+  uVar4 = 0;
+  if (param_6 == '\0') {
+    if (*param_4 == *param_5) goto LAB_004cb841;
+  }
+  iVar1 = *param_1;
+  local_c = param_5;
+  local_8 = 4;
+  iVar3 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),&local_c);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar1 + 4) = iVar3;
+  **(int **)(iVar3 + 4) = iVar3;
+  uVar2 = *param_3;
+  uVar5 = 1 << (uVar2 & 0x1f);
+  uVar6 = 0;
+  if (0x1f < uVar2) {
+    uVar6 = uVar5;
+  }
+  uVar5 = uVar5 ^ uVar6;
+  if (0x3f < uVar2) {
+    uVar6 = uVar5;
+  }
+  *param_2 = *param_2 | uVar5;
+  param_2[1] = param_2[1] | uVar6;
+  uVar4 = 1;
+LAB_004cb841:
+  *param_3 = *param_3 + 1;
+  return uVar4;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_vec5f  (confidence: med)
+ * purpose: If 5-float(0x14) field changed, queue delta+dirty bit (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_vec5f @ 004cb850 */
+
+undefined4
+net_Connection_write_delta_vec5f(int *param_1,uint *param_2,uint *param_3,float *param_4,float *param_5,char param_6)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  undefined4 uVar4;
+  uint uVar5;
+  uint uVar6;
+  float *local_c;
+  undefined4 local_8;
+  
+  if ((((param_6 == '\0') && (*param_4 == *param_5)) && (param_4[1] == param_5[1])) &&
+     ((param_4[2] == param_5[2] && (param_4[3] == param_5[3])))) {
+    uVar4 = 0;
+    if (param_4[4] == param_5[4]) goto LAB_004cb91d;
+  }
+  iVar1 = *param_1;
+  local_c = param_5;
+  local_8 = 0x14;
+  iVar3 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),&local_c);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar1 + 4) = iVar3;
+  **(int **)(iVar3 + 4) = iVar3;
+  uVar2 = *param_3;
+  uVar5 = 1 << (uVar2 & 0x1f);
+  uVar6 = 0;
+  if (0x1f < uVar2) {
+    uVar6 = uVar5;
+  }
+  uVar5 = uVar5 ^ uVar6;
+  if (0x3f < uVar2) {
+    uVar6 = uVar5;
+  }
+  *param_2 = *param_2 | uVar5;
+  param_2[1] = param_2[1] | uVar6;
+  uVar4 = 1;
+LAB_004cb91d:
+  *param_3 = *param_3 + 1;
+  return uVar4;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_struct_ac  (confidence: med)
+ * purpose: If 0xac struct changed (cmp EntityAppearance_compareEqual), queue delta (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_struct_ac @ 004cb930 */
+
+undefined1
+net_Connection_write_delta_struct_ac(int *param_1,uint *param_2,uint *param_3,undefined4 param_4,undefined4 param_5,
+            char param_6)
+
+{
+  int iVar1;
+  uint uVar2;
+  char cVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  undefined1 uVar7;
+  undefined4 local_c;
+  undefined4 local_8;
+  
+  uVar7 = 0;
+  if (param_6 == '\0') {
+    cVar3 = EntityAppearance_compareEqual(param_5);
+    if (cVar3 == '\0') goto LAB_004cb9bc;
+  }
+  local_c = param_5;
+  iVar1 = *param_1;
+  local_8 = 0xac;
+  iVar4 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),&local_c);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar1 + 4) = iVar4;
+  **(int **)(iVar4 + 4) = iVar4;
+  uVar2 = *param_3;
+  uVar5 = 1 << (uVar2 & 0x1f);
+  uVar7 = 1;
+  uVar6 = 0;
+  if (0x1f < uVar2) {
+    uVar6 = uVar5;
+  }
+  uVar5 = uVar5 ^ uVar6;
+  if (0x3f < uVar2) {
+    uVar6 = uVar5;
+  }
+  *param_2 = *param_2 | uVar5;
+  param_2[1] = param_2[1] | uVar6;
+LAB_004cb9bc:
+  *param_3 = *param_3 + 1;
+  return uVar7;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_struct_e38  (confidence: med)
+ * purpose: If 0xe38 struct changed (cmp compareEqual_array13), queue delta (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_struct_e38 @ 004cb9d0 */
+
+undefined1
+net_Connection_write_delta_struct_e38(int *param_1,uint *param_2,uint *param_3,undefined4 param_4,undefined4 param_5,
+            char param_6)
+
+{
+  int iVar1;
+  uint uVar2;
+  char cVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  undefined1 uVar7;
+  undefined4 local_c;
+  undefined4 local_8;
+  
+  uVar7 = 0;
+  if (param_6 == '\0') {
+    cVar3 = compareEqual_array13(param_5);
+    if (cVar3 == '\0') goto LAB_004cba5c;
+  }
+  local_c = param_5;
+  iVar1 = *param_1;
+  local_8 = 0xe38;
+  iVar4 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),&local_c);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar1 + 4) = iVar4;
+  **(int **)(iVar4 + 4) = iVar4;
+  uVar2 = *param_3;
+  uVar5 = 1 << (uVar2 & 0x1f);
+  uVar7 = 1;
+  uVar6 = 0;
+  if (0x1f < uVar2) {
+    uVar6 = uVar5;
+  }
+  uVar5 = uVar5 ^ uVar6;
+  if (0x3f < uVar2) {
+    uVar6 = uVar5;
+  }
+  *param_2 = *param_2 | uVar5;
+  param_2[1] = param_2[1] | uVar6;
+LAB_004cba5c:
+  *param_3 = *param_3 + 1;
+  return uVar7;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_creature  (confidence: med)
+ * purpose: If 0x118 Creature struct changed, queue delta (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_creature @ 004cba70 */
+
+undefined1
+net_Connection_write_delta_creature(int *param_1,uint *param_2,uint *param_3,undefined4 param_4,undefined4 param_5,
+            char param_6)
+
+{
+  int iVar1;
+  uint uVar2;
+  char cVar3;
+  int iVar4;
+  uint uVar5;
+  uint uVar6;
+  undefined1 uVar7;
+  undefined4 local_c;
+  undefined4 local_8;
+  
+  uVar7 = 0;
+  if (param_6 == '\0') {
+    cVar3 = Item_equals(param_5);
+    if (cVar3 != '\0') goto LAB_004cbafc;
+  }
+  local_c = param_5;
+  iVar1 = *param_1;
+  local_8 = 0x118;
+  iVar4 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),&local_c);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar1 + 4) = iVar4;
+  **(int **)(iVar4 + 4) = iVar4;
+  uVar2 = *param_3;
+  uVar5 = 1 << (uVar2 & 0x1f);
+  uVar7 = 1;
+  uVar6 = 0;
+  if (0x1f < uVar2) {
+    uVar6 = uVar5;
+  }
+  uVar5 = uVar5 ^ uVar6;
+  if (0x3f < uVar2) {
+    uVar6 = uVar5;
+  }
+  *param_2 = *param_2 | uVar5;
+  param_2[1] = param_2[1] | uVar6;
+LAB_004cbafc:
+  *param_3 = *param_3 + 1;
+  return uVar7;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_vec3i  (confidence: med)
+ * purpose: If 12-byte(3-int) field changed, queue delta+dirty bit (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_vec3i @ 004cbb10 */
+
+undefined4
+net_Connection_write_delta_vec3i(int *param_1,uint *param_2,uint *param_3,int param_4,int *param_5,char param_6)
+
+{
+  uint uVar1;
+  int *piVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  int *local_10;
+  undefined4 local_c;
+  undefined1 local_5;
+  
+  local_5 = 0;
+  if (param_6 == '\0') {
+    iVar5 = 0;
+    piVar2 = param_5;
+    while (*(int *)((param_4 - (int)param_5) + (int)piVar2) == *piVar2) {
+      iVar5 = iVar5 + 1;
+      piVar2 = piVar2 + 1;
+      if (2 < iVar5) {
+        *param_3 = *param_3 + 1;
+        return 0;
+      }
+    }
+  }
+  local_10 = param_5;
+  iVar5 = *param_1;
+  local_c = 0xc;
+  iVar3 = rbtree_insertPairNode(iVar5,*(undefined4 *)(iVar5 + 4),&local_10);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar5 + 4) = iVar3;
+  **(int **)(iVar3 + 4) = iVar3;
+  uVar1 = *param_3;
+  uVar4 = 1 << (uVar1 & 0x1f);
+  uVar6 = 0;
+  if (0x1f < uVar1) {
+    uVar6 = uVar4;
+  }
+  uVar4 = uVar4 ^ uVar6;
+  if (0x3f < uVar1) {
+    uVar6 = uVar4;
+  }
+  *param_2 = *param_2 | uVar4;
+  param_2[1] = param_2[1] | uVar6;
+  *param_3 = *param_3 + 1;
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_vec3f  (confidence: med)
+ * purpose: If 12-byte(3-float) field changed, queue delta+dirty (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_vec3f @ 004cbbc0 */
+
+undefined4
+net_Connection_write_delta_vec3f(int *param_1,uint *param_2,uint *param_3,int param_4,float *param_5,char param_6)
+
+{
+  uint uVar1;
+  int iVar2;
+  float *pfVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  float *local_c;
+  undefined4 local_8;
+  
+  if (param_6 == '\0') {
+    iVar5 = 0;
+    pfVar3 = param_5;
+    while( true ) {
+      if (*(float *)((param_4 - (int)param_5) + (int)pfVar3) != *pfVar3) break;
+      iVar5 = iVar5 + 1;
+      pfVar3 = pfVar3 + 1;
+      if (2 < iVar5) {
+        *param_3 = *param_3 + 1;
+        return 0;
+      }
+    }
+  }
+  local_c = param_5;
+  iVar5 = *param_1;
+  local_8 = 0xc;
+  iVar2 = rbtree_insertPairNode(iVar5,*(undefined4 *)(iVar5 + 4),&local_c);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar5 + 4) = iVar2;
+  **(int **)(iVar2 + 4) = iVar2;
+  uVar1 = *param_3;
+  uVar4 = 1 << (uVar1 & 0x1f);
+  uVar6 = 0;
+  if (0x1f < uVar1) {
+    uVar6 = uVar4;
+  }
+  uVar4 = uVar4 ^ uVar6;
+  if (0x3f < uVar1) {
+    uVar6 = uVar4;
+  }
+  *param_2 = *param_2 | uVar4;
+  param_2[1] = param_2[1] | uVar6;
+  *param_3 = *param_3 + 1;
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_vec6i  (confidence: med)
+ * purpose: If 24-byte(6-int) field changed, queue delta+dirty (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_vec6i @ 004cbc80 */
+
+undefined4
+net_Connection_write_delta_vec6i(int *param_1,uint *param_2,uint *param_3,int param_4,int *param_5,char param_6)
+
+{
+  uint uVar1;
+  int *piVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  int *local_10;
+  undefined4 local_c;
+  undefined1 local_5;
+  
+  local_5 = 0;
+  if (param_6 == '\0') {
+    iVar5 = 0;
+    piVar2 = param_5;
+    while ((*(int *)((param_4 - (int)param_5) + (int)piVar2) == *piVar2 &&
+           (*(int *)((param_4 - (int)param_5) + 4 + (int)piVar2) == piVar2[1]))) {
+      iVar5 = iVar5 + 1;
+      piVar2 = piVar2 + 2;
+      if (2 < iVar5) {
+        *param_3 = *param_3 + 1;
+        return 0;
+      }
+    }
+  }
+  local_10 = param_5;
+  iVar5 = *param_1;
+  local_c = 0x18;
+  iVar3 = rbtree_insertPairNode(iVar5,*(undefined4 *)(iVar5 + 4),&local_10);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar5 + 4) = iVar3;
+  **(int **)(iVar3 + 4) = iVar3;
+  uVar1 = *param_3;
+  uVar4 = 1 << (uVar1 & 0x1f);
+  uVar6 = 0;
+  if (0x1f < uVar1) {
+    uVar6 = uVar4;
+  }
+  uVar4 = uVar4 ^ uVar6;
+  if (0x3f < uVar1) {
+    uVar6 = uVar4;
+  }
+  *param_2 = *param_2 | uVar4;
+  param_2[1] = param_2[1] | uVar6;
+  *param_3 = *param_3 + 1;
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: net::Connection::write_delta_i64  (confidence: med)
+ * purpose: If 8-byte(2-int) field changed, queue delta+dirty bit (game net)
+ * vars: param_4/5=old/new
+ */
+/* Global::net_Connection_write_delta_i64 @ 004cbd40 */
+
+undefined1
+net_Connection_write_delta_i64(int *param_1,uint *param_2,uint *param_3,int *param_4,int *param_5,char param_6)
+
+{
+  int iVar1;
+  uint uVar2;
+  int iVar3;
+  uint uVar4;
+  uint uVar5;
+  undefined1 uVar6;
+  int *local_c;
+  undefined4 local_8;
+  
+  uVar6 = 0;
+  if (((param_6 != '\0') || (*param_4 != *param_5)) || (param_4[1] != param_5[1])) {
+    iVar1 = *param_1;
+    local_c = param_5;
+    local_8 = 8;
+    iVar3 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),&local_c);
+    if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+      std::_Xlength_error("list<T> too long");
+    }
+    param_1[1] = param_1[1] + 1;
+    *(int *)(iVar1 + 4) = iVar3;
+    **(int **)(iVar3 + 4) = iVar3;
+    uVar2 = *param_3;
+    uVar4 = 1 << (uVar2 & 0x1f);
+    uVar6 = 1;
+    uVar5 = 0;
+    if (0x1f < uVar2) {
+      uVar5 = uVar4;
+    }
+    uVar4 = uVar4 ^ uVar5;
+    if (0x3f < uVar2) {
+      uVar5 = uVar4;
+    }
+    *param_2 = *param_2 | uVar4;
+    param_2[1] = param_2[1] | uVar5;
+  }
+  *param_3 = *param_3 + 1;
+  return uVar6;
+}
+
+
+
+
 /* [AUDIT] proposed: int3_notEqual  (confidence: high)
  * purpose: Compares two 3-int (12-byte) records for inequality (memcmp-like)
  * vars: loop 3 ints
@@ -7726,6 +11779,2536 @@ int int3_notEqual(int other)
     in_ECX = in_ECX + 1;
   } while (i < 3);
   return (uint)highBytes << 8;
+}
+
+
+
+
+/* [AUDIT] proposed: std_compare_float3_ne  (confidence: med)
+ * purpose: Return 1 if any of 3 consecutive floats differ between two arrays (vec3 inequality helper)
+ * vars: in_ECX=other;other=self
+ */
+/* Global::std_compare_float3_ne @ 004cc800 */
+
+undefined1 std_compare_float3_ne(float *param_1)
+
+{
+  int in_ECX;
+  int iVar1;
+  int iVar2;
+  
+  iVar2 = 0;
+  iVar1 = in_ECX - (int)param_1;
+  do {
+    if (*(float *)(iVar1 + (int)param_1) != *param_1) {
+      return 1;
+    }
+    iVar2 = iVar2 + 1;
+    param_1 = param_1 + 1;
+  } while (iVar2 < 3);
+  return 0;
+}
+
+
+
+
+/* [AUDIT] proposed: EntityAppearance_compareEqual  (confidence: med)
+ * purpose: Field-by-field equality compare of two ~0xA4-byte entity appearance/equipment structs
+ * vars: param_1,in_ECX=structs
+ */
+/* Global::EntityAppearance_compareEqual @ 004cc840 */
+
+undefined1 EntityAppearance_compareEqual(int param_1)
+
+{
+  char cVar1;
+  char *in_ECX;
+  char *pcVar2;
+  int iVar3;
+  
+  iVar3 = 0;
+  pcVar2 = in_ECX;
+  do {
+    if (*pcVar2 != pcVar2[param_1 - (int)in_ECX]) {
+      return 1;
+    }
+    iVar3 = iVar3 + 1;
+    pcVar2 = pcVar2 + 1;
+  } while (iVar3 < 2);
+  pcVar2 = in_ECX + 2;
+  do {
+    if (*pcVar2 != pcVar2[param_1 - (int)in_ECX]) {
+      return 1;
+    }
+    pcVar2 = pcVar2 + 1;
+  } while ((int)(pcVar2 + (-2 - (int)in_ECX)) < 3);
+  if ((((((((*(short *)(in_ECX + 6) == *(short *)(param_1 + 6)) &&
+           (cVar1 = std_compare_float3_ne(param_1 + 8), cVar1 == '\0')) &&
+          (*(short *)(in_ECX + 0x14) == *(short *)(param_1 + 0x14))) &&
+         (((*(short *)(in_ECX + 0x16) == *(short *)(param_1 + 0x16) &&
+           (*(short *)(in_ECX + 0x18) == *(short *)(param_1 + 0x18))) &&
+          ((*(short *)(in_ECX + 0x1a) == *(short *)(param_1 + 0x1a) &&
+           ((*(short *)(in_ECX + 0x1c) == *(short *)(param_1 + 0x1c) &&
+            (*(short *)(in_ECX + 0x1e) == *(short *)(param_1 + 0x1e))))))))) &&
+        (*(short *)(in_ECX + 0x20) == *(short *)(param_1 + 0x20))) &&
+       (((*(short *)(in_ECX + 0x22) == *(short *)(param_1 + 0x22) &&
+         (*(float *)(in_ECX + 0x24) == *(float *)(param_1 + 0x24))) &&
+        (*(float *)(in_ECX + 0x28) == *(float *)(param_1 + 0x28))))) &&
+      (((*(float *)(in_ECX + 0x2c) == *(float *)(param_1 + 0x2c) &&
+        (*(float *)(in_ECX + 0x30) == *(float *)(param_1 + 0x30))) &&
+       ((*(float *)(in_ECX + 0x34) == *(float *)(param_1 + 0x34) &&
+        ((*(float *)(in_ECX + 0x38) == *(float *)(param_1 + 0x38) &&
+         (*(float *)(in_ECX + 0x3c) == *(float *)(param_1 + 0x3c))))))))) &&
+     (((*(float *)(in_ECX + 0x40) == *(float *)(param_1 + 0x40) &&
+       (((((*(float *)(in_ECX + 0x44) == *(float *)(param_1 + 0x44) &&
+           (*(float *)(in_ECX + 0x48) == *(float *)(param_1 + 0x48))) &&
+          (cVar1 = std_compare_float3_ne(param_1 + 0x4c), cVar1 == '\0')) &&
+         ((*(float *)(in_ECX + 0x58) == *(float *)(param_1 + 0x58) &&
+          (*(float *)(in_ECX + 0x5c) == *(float *)(param_1 + 0x5c))))) &&
+        ((*(float *)(in_ECX + 0x60) == *(float *)(param_1 + 0x60) &&
+         ((cVar1 = std_compare_float3_ne(param_1 + 100), cVar1 == '\0' &&
+          (cVar1 = std_compare_float3_ne(param_1 + 0x70), cVar1 == '\0')))))))) &&
+      ((cVar1 = std_compare_float3_ne(param_1 + 0x7c), cVar1 == '\0' &&
+       (((cVar1 = std_compare_float3_ne(param_1 + 0x88), cVar1 == '\0' &&
+         (cVar1 = std_compare_float3_ne(param_1 + 0xa0), cVar1 == '\0')) &&
+        (cVar1 = std_compare_float3_ne(param_1 + 0x94), cVar1 == '\0')))))))) {
+    return 0;
+  }
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: compareEqual_array13  (confidence: med)
+ * purpose: Equality compare of array of 13 elements (0x118 stride) via element comparator Item_equals
+ * vars: param_1=base
+ */
+/* Global::compareEqual_array13 @ 004ccaa0 */
+
+undefined4 compareEqual_array13(int param_1)
+
+{
+  char cVar1;
+  
+  cVar1 = Item_equals(param_1 + 0xd20);
+  if (cVar1 != '\0') {
+    cVar1 = Item_equals(param_1 + 0xaf0);
+    if (cVar1 != '\0') {
+      cVar1 = Item_equals(param_1 + 0xc08);
+      if (cVar1 != '\0') {
+        cVar1 = Item_equals(param_1);
+        if (cVar1 != '\0') {
+          cVar1 = Item_equals(param_1 + 0x118);
+          if (cVar1 != '\0') {
+            cVar1 = Item_equals(param_1 + 0x230);
+            if (cVar1 != '\0') {
+              cVar1 = Item_equals(param_1 + 0x348);
+              if (cVar1 != '\0') {
+                cVar1 = Item_equals(param_1 + 0x460);
+                if (cVar1 != '\0') {
+                  cVar1 = Item_equals(param_1 + 0x578);
+                  if (cVar1 != '\0') {
+                    cVar1 = Item_equals(param_1 + 0x690);
+                    if (cVar1 != '\0') {
+                      cVar1 = Item_equals(param_1 + 0x7a8);
+                      if (cVar1 != '\0') {
+                        cVar1 = Item_equals(param_1 + 0x8c0);
+                        if (cVar1 != '\0') {
+                          cVar1 = Item_equals(param_1 + 0x9d8);
+                          if (cVar1 != '\0') {
+                            return 0;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: std_list_push_serializeField_string  (confidence: med)
+ * purpose: Append serialized std::string field node (0x10) to output chunk list if changed
+ * vars: param_4,param_5=strings
+ */
+/* Global::std_list_push_serializeField_string @ 004ccc30 */
+
+undefined1
+std_list_push_serializeField_string(int *param_1,uint *param_2,uint *param_3,byte *param_4,byte *param_5,char param_6)
+
+{
+  byte bVar1;
+  int iVar2;
+  uint uVar3;
+  int iVar4;
+  byte *pbVar5;
+  uint uVar6;
+  uint uVar7;
+  undefined1 uVar8;
+  bool bVar9;
+  byte *local_c;
+  undefined4 local_8;
+  
+  uVar8 = 0;
+  pbVar5 = param_5;
+  if (param_6 == '\0') {
+    do {
+      bVar1 = *param_4;
+      bVar9 = bVar1 < *pbVar5;
+      if (bVar1 != *pbVar5) {
+LAB_004ccc70:
+        uVar3 = -(uint)bVar9 | 1;
+        goto LAB_004ccc75;
+      }
+      if (bVar1 == 0) break;
+      bVar1 = param_4[1];
+      bVar9 = bVar1 < pbVar5[1];
+      if (bVar1 != pbVar5[1]) goto LAB_004ccc70;
+      param_4 = param_4 + 2;
+      pbVar5 = pbVar5 + 2;
+    } while (bVar1 != 0);
+    uVar3 = 0;
+LAB_004ccc75:
+    if (uVar3 == 0) goto LAB_004ccce2;
+  }
+  local_c = param_5;
+  iVar2 = *param_1;
+  local_8 = 0x10;
+  iVar4 = rbtree_insertPairNode(iVar2,*(undefined4 *)(iVar2 + 4),&local_c);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar2 + 4) = iVar4;
+  **(int **)(iVar4 + 4) = iVar4;
+  uVar3 = *param_3;
+  uVar6 = 1 << (uVar3 & 0x1f);
+  uVar8 = 1;
+  uVar7 = 0;
+  if (0x1f < uVar3) {
+    uVar7 = uVar6;
+  }
+  uVar6 = uVar6 ^ uVar7;
+  if (0x3f < uVar3) {
+    uVar7 = uVar6;
+  }
+  *param_2 = *param_2 | uVar6;
+  param_2[1] = param_2[1] | uVar7;
+LAB_004ccce2:
+  *param_3 = *param_3 + 1;
+  return uVar8;
+}
+
+
+
+
+/* [AUDIT] proposed: std_list_push_serializeField_0x2C  (confidence: med)
+ * purpose: Append serialized 0x2C-byte field node to output chunk list if changed vs baseline
+ * vars: param_4,param_5
+ */
+/* Global::std_list_push_serializeField_0x2C @ 004cccf0 */
+
+undefined4
+std_list_push_serializeField_0x2C(int *param_1,uint *param_2,uint *param_3,int param_4,int *param_5,char param_6)
+
+{
+  uint uVar1;
+  int *piVar2;
+  int iVar3;
+  uint uVar4;
+  int iVar5;
+  uint uVar6;
+  int *local_10;
+  undefined4 local_c;
+  undefined1 local_5;
+  
+  local_5 = 0;
+  if (param_6 == '\0') {
+    iVar5 = 0;
+    piVar2 = param_5;
+    while (*(int *)((param_4 - (int)param_5) + (int)piVar2) == *piVar2) {
+      iVar5 = iVar5 + 1;
+      piVar2 = piVar2 + 1;
+      if (10 < iVar5) {
+        *param_3 = *param_3 + 1;
+        return 0;
+      }
+    }
+  }
+  local_10 = param_5;
+  iVar5 = *param_1;
+  local_c = 0x2c;
+  iVar3 = rbtree_insertPairNode(iVar5,*(undefined4 *)(iVar5 + 4),&local_10);
+  if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("list<T> too long");
+  }
+  param_1[1] = param_1[1] + 1;
+  *(int *)(iVar5 + 4) = iVar3;
+  **(int **)(iVar3 + 4) = iVar3;
+  uVar1 = *param_3;
+  uVar4 = 1 << (uVar1 & 0x1f);
+  uVar6 = 0;
+  if (0x1f < uVar1) {
+    uVar6 = uVar4;
+  }
+  uVar4 = uVar4 ^ uVar6;
+  if (0x3f < uVar1) {
+    uVar6 = uVar4;
+  }
+  *param_2 = *param_2 | uVar4;
+  param_2[1] = param_2[1] | uVar6;
+  *param_3 = *param_3 + 1;
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: std__operator>>_istream_string  (confidence: med)
+ * purpose: std::operator>>(basic_istream&, basic_string&): extract whitespace-delimited token
+ * vars: param_1=istream;param_2=string
+ */
+/* Global::std_operator_istream_string @ 004ce2a0 */
+
+basic_istream<char,std::char_traits<char>_> *
+std_operator_istream_string(basic_istream<char,std::char_traits<char>_> *param_1,undefined4 *param_2)
+
+{
+  int iVar1;
+  bool bVar2;
+  bool bVar3;
+  undefined4 uVar4;
+  int iVar5;
+  undefined4 *puVar6;
+  uint uVar7;
+  basic_istream<char,std::char_traits<char>_> *pbVar8;
+  uint uVar9;
+  int iVar10;
+  int *local_1c;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e85a8;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  iVar10 = 0;
+  bVar2 = false;
+  if (*(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) != (int *)0x0) {
+    (**(code **)(**(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) + 4))();
+  }
+  local_8 = 0;
+  bVar3 = std::basic_istream<char,std::char_traits<char>_>::_Ipfx(param_1,false);
+  local_8 = 1;
+  if (bVar3) {
+    uVar4 = std::ios_base::getloc((ios_base *)(param_1 + *(int *)(*(int *)param_1 + 4)));
+    local_8._0_1_ = 2;
+    iVar5 = std_use_facet_ctype_char(uVar4);
+    local_8._0_1_ = 1;
+    if ((local_1c != (int *)0x0) &&
+       (puVar6 = (undefined4 *)(**(code **)(*local_1c + 8))(), puVar6 != (undefined4 *)0x0)) {
+      (**(code **)*puVar6)(1);
+    }
+    param_2[4] = 0;
+    if (0xf < (uint)param_2[5]) {
+      param_2 = (undefined4 *)*param_2;
+    }
+    *(undefined1 *)param_2 = 0;
+    local_8 = CONCAT31(local_8._1_3_,3);
+    iVar1 = *(int *)(*(int *)param_1 + 4);
+    uVar9 = *(uint *)(param_1 + iVar1 + 0x20);
+    if ((*(int *)(param_1 + iVar1 + 0x24) < 0) ||
+       (((*(int *)(param_1 + iVar1 + 0x24) < 1 && (uVar9 == 0)) || (0xfffffffd < uVar9)))) {
+      uVar9 = 0xfffffffe;
+    }
+    uVar7 = std::basic_streambuf<char,std::char_traits<char>_>::sgetc
+                      (*(basic_streambuf<char,std::char_traits<char>_> **)(param_1 + iVar1 + 0x38));
+    bVar2 = false;
+    for (; uVar9 != 0; uVar9 = uVar9 - 1) {
+      if (uVar7 == 0xffffffff) {
+        pbVar8 = (basic_istream<char,std::char_traits<char>_> *)std_operator_istream_string_unwind();
+        return pbVar8;
+      }
+      if ((*(byte *)(*(int *)(iVar5 + 0xc) + (uVar7 & 0xff) * 2) & 0x48) != 0) break;
+      string_appendFill(1,uVar7);
+      bVar2 = true;
+      uVar7 = std::basic_streambuf<char,std::char_traits<char>_>::snextc
+                        (*(basic_streambuf<char,std::char_traits<char>_> **)
+                          (param_1 + *(int *)(*(int *)param_1 + 4) + 0x38));
+    }
+  }
+  local_8 = 1;
+  iVar5 = *(int *)(*(int *)param_1 + 4);
+  *(undefined4 *)(param_1 + iVar5 + 0x20) = 0;
+  *(undefined4 *)(param_1 + iVar5 + 0x24) = 0;
+  if (!bVar2) {
+    iVar10 = 2;
+  }
+  std::basic_ios<char,std::char_traits<char>_>::setstate
+            ((basic_ios<char,std::char_traits<char>_> *)(param_1 + *(int *)(*(int *)param_1 + 4)),
+             iVar10,false);
+  local_8 = 0xffffffff;
+  if (*(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) != (int *)0x0) {
+    (**(code **)(**(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) + 8))();
+  }
+  ExceptionList = local_10;
+  return param_1;
+}
+
+
+
+
+/* [AUDIT] proposed: std__operator>>_istream_string_unwind  (confidence: low)
+ * purpose: Exception-unwind continuation of istream>>string (resets gcount, setstate, releases sentry)
+ * vars: unaff_ESI=istream
+ */
+/* Global::std_operator_istream_string_unwind @ 004ce3f9 */
+
+void std_operator_istream_string_unwind(void)
+
+{
+  char cVar1;
+  int iVar2;
+  int *piVar3;
+  int unaff_EBP;
+  int *unaff_ESI;
+  uint unaff_EDI;
+  
+  cVar1 = *(char *)(unaff_EBP + -0x11);
+  *(undefined4 *)(unaff_EBP + -4) = 1;
+  iVar2 = *(int *)(*unaff_ESI + 4);
+  *(undefined4 *)(iVar2 + 0x20 + (int)unaff_ESI) = 0;
+  *(undefined4 *)(iVar2 + 0x24 + (int)unaff_ESI) = 0;
+  if (cVar1 == '\0') {
+    unaff_EDI = unaff_EDI | 2;
+  }
+  std::basic_ios<char,std::char_traits<char>_>::setstate
+            ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(*unaff_ESI + 4) + (int)unaff_ESI),
+             unaff_EDI,false);
+  *(undefined4 *)(unaff_EBP + -4) = 0xffffffff;
+  piVar3 = *(int **)(*(int *)(**(int **)(unaff_EBP + -0x28) + 4) + 0x38 +
+                    (int)*(int **)(unaff_EBP + -0x28));
+  if (piVar3 != (int *)0x0) {
+    (**(code **)(*piVar3 + 8))();
+  }
+  ExceptionList = *(void **)(unaff_EBP + -0xc);
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std_use_facet_ctype_char  (confidence: high)
+ * purpose: std::use_facet<ctype<char>>: fetch ctype facet from locale, throws bad_cast if absent
+ * vars: param_1=locale;pfVar4=facet
+ */
+/* Global::std_use_facet_ctype_char @ 004ce460 */
+
+facet * std_use_facet_ctype_char(locale *param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  _Locimp *p_Var3;
+  facet *pfVar4;
+  bad_cast local_24 [12];
+  _Lockit local_18 [4];
+  facet *local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006e1a09;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  std::_Lockit::_Lockit(local_18,0);
+  local_8 = 0;
+  local_14 = (facet *)DAT_0076b26c;
+  uVar2 = std::locale::id::operator_unsigned_int((id *)id_exref);
+  iVar1 = *(int *)param_1;
+  if (uVar2 < *(uint *)(iVar1 + 0xc)) {
+    pfVar4 = *(facet **)(*(int *)(iVar1 + 8) + uVar2 * 4);
+    if (pfVar4 != (facet *)0x0) goto LAB_004ce532;
+  }
+  else {
+    pfVar4 = (facet *)0x0;
+  }
+  if (*(char *)(iVar1 + 0x14) == '\0') {
+LAB_004ce4df:
+    if (pfVar4 != (facet *)0x0) goto LAB_004ce532;
+  }
+  else {
+    p_Var3 = std::locale::_Getgloballocale();
+    if (uVar2 < *(uint *)(p_Var3 + 0xc)) {
+      pfVar4 = *(facet **)(*(int *)(p_Var3 + 8) + uVar2 * 4);
+      goto LAB_004ce4df;
+    }
+  }
+  pfVar4 = local_14;
+  if (local_14 == (facet *)0x0) {
+    uVar2 = std::ctype<char>::_Getcat(&local_14,param_1);
+    pfVar4 = local_14;
+    if (uVar2 == 0xffffffff) {
+      std::bad_cast::bad_cast(local_24,"bad cast");
+                    /* WARNING: Subroutine does not return */
+      _CxxThrowException(local_24,(ThrowInfo *)&DAT_0074aee8);
+    }
+    DAT_0076b26c = (int *)local_14;
+    (**(code **)(*(int *)local_14 + 4))();
+    Facet_Register(pfVar4);
+  }
+LAB_004ce532:
+  std::_Lockit::~_Lockit(local_18);
+  ExceptionList = local_10;
+  return pfVar4;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_malloc_thunk  (confidence: med)
+ * purpose: Allocation thunk: tail-jump to CRT malloc for parser buffers
+ * vars: param_1=size
+ */
+/* Global::xml_malloc_thunk @ 004d6c20 */
+
+void xml_malloc_thunk(size_t param_1)
+
+{
+                    /* WARNING: Could not recover jumptable at 0x004d6c24. Too many branches */
+                    /* WARNING: Treating indirect jump as call */
+  malloc(param_1);
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: utf32le_to_utf16_alloc  (confidence: med)
+ * purpose: Count UTF-16 units for a UTF-32LE buffer, allocate output, convert (surrogate expansion)
+ * vars: param_3=src;param_4=bytes
+ */
+/* Global::utf32le_to_utf16_alloc @ 004d6c40 */
+
+undefined4 utf32le_to_utf16_alloc(int *param_1,int *param_2,uint *param_3,uint param_4)
+
+{
+  uint *puVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = 0;
+  for (puVar1 = param_3; puVar1 < param_3 + (param_4 >> 2); puVar1 = puVar1 + 1) {
+    if (*puVar1 < 0x10000) {
+      iVar3 = iVar3 + 1;
+    }
+    else {
+      iVar3 = iVar3 + 2;
+    }
+  }
+  *param_2 = iVar3;
+  iVar2 = 1;
+  if (iVar3 != 0) {
+    iVar2 = iVar3;
+  }
+  iVar3 = (*(code *)PTR_FUN_007663ac)(iVar2 * 2);
+  *param_1 = iVar3;
+  if (iVar3 == 0) {
+    return 0;
+  }
+  utf32le_to_utf16_write(param_3,param_4 >> 2,iVar3);
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: utf32be_to_utf16_alloc  (confidence: med)
+ * purpose: Count/alloc/convert a byte-swapped UTF-32BE buffer to UTF-16
+ * vars: param_3=src
+ */
+/* Global::utf32be_to_utf16_alloc @ 004d6cb0 */
+
+undefined4 utf32be_to_utf16_alloc(int *param_1,int *param_2,undefined4 param_3,uint param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = utf16_countUnits_fromUtf32be(param_3,param_4 >> 2,0);
+  iVar2 = 1;
+  if (iVar1 != 0) {
+    iVar2 = iVar1;
+  }
+  *param_2 = iVar1;
+  iVar2 = (*(code *)PTR_FUN_007663ac)(iVar2 * 2);
+  *param_1 = iVar2;
+  if (iVar2 == 0) {
+    return 0;
+  }
+  utf32be_to_utf16_write(param_3,param_4 >> 2,iVar2);
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_memoryPool_allocateBlock  (confidence: med)
+ * purpose: Allocate block from pool arena (>0x2000 gets own arena), link into free/used list
+ * vars: param_1=size;in_ECX=pool
+ */
+/* Global::xml_memoryPool_allocateBlock @ 004d6d90 */
+
+int xml_memoryPool_allocateBlock(uint param_1,int *param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  int *in_ECX;
+  
+  uVar1 = param_1;
+  if (param_1 < 0x2001) {
+    uVar1 = 0x8000;
+  }
+  iVar2 = xml_memoryPool_allocateArena(uVar1);
+  if (iVar2 == 0) {
+    return 0;
+  }
+  if (param_1 < 0x2001) {
+    *(int *)(*in_ECX + 0x10) = in_ECX[1];
+    *(int *)(iVar2 + 8) = *in_ECX;
+    *(int *)(*in_ECX + 0xc) = iVar2;
+    in_ECX[1] = param_1;
+    *in_ECX = iVar2;
+    *(uint *)(iVar2 + 0x10) = param_1;
+    *param_2 = iVar2;
+    return iVar2 + 0x18;
+  }
+  *(undefined4 *)(iVar2 + 8) = *(undefined4 *)(*in_ECX + 8);
+  *(int *)(iVar2 + 0xc) = *in_ECX;
+  *(int *)(*(int *)(*in_ECX + 8) + 0xc) = iVar2;
+  *(int *)(*in_ECX + 8) = iVar2;
+  *(uint *)(iVar2 + 0x10) = param_1;
+  *param_2 = iVar2;
+  return iVar2 + 0x18;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_node_allocate  (confidence: med)
+ * purpose: Allocate and zero a 0x20-byte XML node from pool, tag pointer with type bits
+ * vars: param_2=typeflags
+ */
+/* Global::xml_node_allocate @ 004d6e20 */
+
+uint * xml_node_allocate(int *param_1,uint param_2)
+
+{
+  uint uVar1;
+  uint *puVar2;
+  int *piVar3;
+  
+  uVar1 = param_1[1] + 0x20;
+  if (uVar1 < 0x8001) {
+    piVar3 = (int *)*param_1;
+    puVar2 = (uint *)(param_1[1] + 0x18 + (int)piVar3);
+    param_1[1] = uVar1;
+  }
+  else {
+    puVar2 = (uint *)xml_memoryPool_allocateBlock(0x20,&param_1);
+    piVar3 = param_1;
+  }
+  if (puVar2 != (uint *)0x0) {
+    puVar2[1] = 0;
+    *puVar2 = (uint)piVar3 | param_2;
+    puVar2[2] = 0;
+    puVar2[3] = 0;
+    puVar2[4] = 0;
+    puVar2[5] = 0;
+    puVar2[6] = 0;
+    puVar2[7] = 0;
+    return puVar2;
+  }
+  return (uint *)0x0;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_memoryPool_allocateArena  (confidence: med)
+ * purpose: Allocate a new pool arena (size+0x38), 0x20-align, link into arena chain
+ * vars: param_1=size;in_ECX=pool
+ */
+/* Global::xml_memoryPool_allocateArena @ 004d6ea0 */
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+
+void xml_memoryPool_allocateArena(int param_1)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 *in_ECX;
+  
+  iVar1 = (*(code *)PTR_FUN_007663ac)(param_1 + 0x38);
+  if (iVar1 == 0) {
+    return;
+  }
+  puVar2 = (undefined4 *)(iVar1 + 0x1fU & 0xffffffe0);
+  if (puVar2 == (undefined4 *)0x0) {
+    iRam00000004 = iVar1;
+    _DAT_00000000 = *(undefined4 *)*in_ECX;
+    return;
+  }
+  *puVar2 = 0;
+  puVar2[1] = 0;
+  puVar2[2] = 0;
+  puVar2[3] = 0;
+  puVar2[4] = 0;
+  puVar2[5] = 0;
+  puVar2[1] = iVar1;
+  *puVar2 = *(undefined4 *)*in_ECX;
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: utf16_appendCodepoint  (confidence: high)
+ * purpose: Write one Unicode codepoint as UTF-16 (surrogate pair if >=0x10000), return advanced ptr
+ * vars: param_1=dst;param_2=cp
+ */
+/* Global::utf16_appendCodepoint @ 004d6f10 */
+
+ushort * utf16_appendCodepoint(ushort *param_1,uint param_2)
+
+{
+  if (param_2 < 0x10000) {
+    *param_1 = (ushort)param_2;
+    return param_1 + 1;
+  }
+  *param_1 = (short)(param_2 - 0x10000 >> 10) + 0xd800;
+  param_1[1] = ((ushort)param_2 & 0x3ff) + 0xdc00;
+  return param_1 + 2;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_attribute_allocate  (confidence: med)
+ * purpose: Allocate a 0x14-byte XML attribute node from pool and link into element's attribute list
+ * vars: param_1=element
+ */
+/* Global::xml_attribute_allocate @ 004d6f60 */
+
+int * xml_attribute_allocate(int param_1,int *param_2)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  int *piVar4;
+  int *piVar5;
+  
+  uVar1 = param_2[1] + 0x14;
+  if (uVar1 < 0x8001) {
+    piVar5 = (int *)*param_2;
+    piVar4 = (int *)(param_2[1] + 0x18 + (int)piVar5);
+    param_2[1] = uVar1;
+  }
+  else {
+    piVar4 = (int *)xml_memoryPool_allocateBlock(0x14,&param_2);
+    piVar5 = param_2;
+  }
+  if (piVar4 != (int *)0x0) {
+    *piVar4 = (int)piVar5;
+    piVar4[1] = 0;
+    piVar4[2] = 0;
+    piVar4[3] = 0;
+    piVar4[4] = 0;
+    iVar2 = *(int *)(param_1 + 0x1c);
+    if (iVar2 != 0) {
+      iVar3 = *(int *)(iVar2 + 0xc);
+      *(int **)(iVar3 + 0x10) = piVar4;
+      piVar4[3] = iVar3;
+      *(int **)(iVar2 + 0xc) = piVar4;
+      return piVar4;
+    }
+    *(int **)(param_1 + 0x1c) = piVar4;
+    piVar4[3] = (int)piVar4;
+    return piVar4;
+  }
+  return (int *)0x0;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_node_appendChild  (confidence: med)
+ * purpose: Allocate child node and append to parent element's child list
+ * vars: param_1=parent
+ */
+/* Global::xml_node_appendChild @ 004d6fe0 */
+
+int xml_node_appendChild(int param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  
+  iVar3 = xml_node_allocate(param_2,param_3);
+  if (iVar3 == 0) {
+    return 0;
+  }
+  *(int *)(iVar3 + 4) = param_1;
+  iVar1 = *(int *)(param_1 + 0x10);
+  if (iVar1 != 0) {
+    iVar2 = *(int *)(iVar1 + 0x14);
+    *(int *)(iVar2 + 0x18) = iVar3;
+    *(int *)(iVar3 + 0x14) = iVar2;
+    *(int *)(iVar1 + 0x14) = iVar3;
+    return iVar3;
+  }
+  *(int *)(param_1 + 0x10) = iVar3;
+  *(int *)(iVar3 + 0x14) = iVar3;
+  return iVar3;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_transcode_dispatch  (confidence: med)
+ * purpose: Dispatch input decode by encoding id (1=UTF8,2/3=UTF16,5/6=UTF32) to proper converter
+ * vars: param_3=encId
+ */
+/* Global::xml_transcode_dispatch @ 004d7190 */
+
+uint xml_transcode_dispatch(undefined4 param_1,undefined4 param_2,uint param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6)
+
+{
+  uint uVar1;
+  
+  if (param_3 == 2) {
+    uVar1 = utf16_copy_passthrough(param_1,param_2,param_4,param_5,param_6);
+    return uVar1;
+  }
+  if (param_3 == 3) {
+    uVar1 = utf16_byteswapCopy(param_1,param_2,param_4,param_5,param_6);
+    return uVar1;
+  }
+  if (param_3 != 5) {
+    if (param_3 == 1) {
+      uVar1 = utf8_to_utf16_alloc(param_1,param_2,param_4,param_5);
+      return uVar1;
+    }
+    if (param_3 == 6) {
+      uVar1 = utf32be_to_utf16_alloc(param_1,param_2,param_4,param_5,0);
+      return uVar1;
+    }
+    if (param_3 != 5) {
+      return param_3 & 0xffffff00;
+    }
+  }
+  param_3 = param_3 & 0xffffff00;
+  uVar1 = utf32le_to_utf16_alloc(param_1,param_2,param_4,param_5,param_3);
+  return uVar1;
+}
+
+
+
+
+/* [AUDIT] proposed: utf16_byteswapCopy  (confidence: med)
+ * purpose: Copy UTF-16 buffer swapping byte order of each unit (endianness normalize)
+ * vars: param_3=src;param_4=bytes
+ */
+/* Global::utf16_byteswapCopy @ 004d7240 */
+
+undefined4 utf16_byteswapCopy(int *param_1,uint *param_2,int param_3,uint param_4,char param_5)
+
+{
+  ushort uVar1;
+  uint uVar2;
+  int iVar3;
+  ushort *puVar4;
+  
+  if (param_5 == '\0') {
+    uVar2 = 1;
+    if (param_4 != 0) {
+      uVar2 = param_4;
+    }
+    iVar3 = (*(code *)PTR_FUN_007663ac)(uVar2);
+    *param_1 = iVar3;
+    if (iVar3 == 0) {
+      return 0;
+    }
+  }
+  else {
+    *param_1 = param_3;
+  }
+  param_4 = param_4 >> 1;
+  *param_2 = param_4;
+  puVar4 = (ushort *)*param_1;
+  if (param_4 != 0) {
+    param_3 = param_3 - (int)puVar4;
+    do {
+      uVar1 = *(ushort *)(param_3 + (int)puVar4);
+      *puVar4 = uVar1 << 8 | uVar1 >> 8;
+      puVar4 = puVar4 + 1;
+      param_4 = param_4 - 1;
+    } while (param_4 != 0);
+  }
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: utf8_to_utf16_alloc  (confidence: high)
+ * purpose: Count UTF-16 units for UTF-8 input, allocate, decode UTF-8 to UTF-16
+ * vars: param_3=src;param_4=len
+ */
+/* Global::utf8_to_utf16_alloc @ 004d72a0 */
+
+undefined4 utf8_to_utf16_alloc(int *param_1,int *param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  
+  iVar1 = utf8_countCodepoints(param_3,param_4,0);
+  iVar2 = 1;
+  if (iVar1 != 0) {
+    iVar2 = iVar1;
+  }
+  *param_2 = iVar1;
+  iVar2 = (*(code *)PTR_FUN_007663ac)(iVar2 * 2);
+  *param_1 = iVar2;
+  if (iVar2 == 0) {
+    return 0;
+  }
+  utf8_to_utf16_write(param_3,param_4,iVar2);
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: utf16_countUnits_fromUtf32be  (confidence: med)
+ * purpose: Count UTF-16 code units needed to represent a UTF-32BE buffer
+ * vars: param_1=src;param_2=count
+ */
+/* Global::utf16_countUnits_fromUtf32be @ 004d73a0 */
+
+int utf16_countUnits_fromUtf32be(uint *param_1,int param_2,int param_3)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  
+  puVar1 = param_1 + param_2;
+  if (puVar1 <= param_1) {
+    return param_3;
+  }
+  do {
+    uVar2 = *param_1;
+    if (((uVar2 & 0xff0000 | uVar2 >> 0x10) >> 8 | (uVar2 & 0xff00 | uVar2 << 0x10) << 8) < 0x10000)
+    {
+      param_3 = param_3 + 1;
+    }
+    else {
+      param_3 = param_3 + 2;
+    }
+    param_1 = param_1 + 1;
+  } while (param_1 < puVar1);
+  return param_3;
+}
+
+
+
+
+/* [AUDIT] proposed: utf32le_to_utf16_write  (confidence: high)
+ * purpose: Convert UTF-32LE codepoints to UTF-16 into caller buffer (surrogate expansion)
+ * vars: param_1=src;param_3=dst
+ */
+/* Global::utf32le_to_utf16_write @ 004d7400 */
+
+ushort * utf32le_to_utf16_write(uint *param_1,int param_2,ushort *param_3)
+
+{
+  uint *puVar1;
+  uint uVar2;
+  
+  puVar1 = param_1 + param_2;
+  if (puVar1 <= param_1) {
+    return param_3;
+  }
+  do {
+    uVar2 = *param_1;
+    if (uVar2 < 0x10000) {
+      *param_3 = (ushort)uVar2;
+      param_3 = param_3 + 1;
+    }
+    else {
+      *param_3 = (short)(uVar2 - 0x10000 >> 10) + 0xd800;
+      param_3[1] = ((ushort)uVar2 & 0x3ff) + 0xdc00;
+      param_3 = param_3 + 2;
+    }
+    param_1 = param_1 + 1;
+  } while (param_1 < puVar1);
+  return param_3;
+}
+
+
+
+
+/* [AUDIT] proposed: utf32be_to_utf16_write  (confidence: high)
+ * purpose: Convert byte-swapped UTF-32BE codepoints to UTF-16 into caller buffer
+ * vars: param_1=src;param_3=dst
+ */
+/* Global::utf32be_to_utf16_write @ 004d7460 */
+
+ushort * utf32be_to_utf16_write(uint *param_1,int param_2,ushort *param_3)
+
+{
+  uint *puVar1;
+  ushort uVar2;
+  uint uVar3;
+  uint uVar4;
+  
+  puVar1 = param_1 + param_2;
+  if (puVar1 <= param_1) {
+    return param_3;
+  }
+  do {
+    uVar4 = *param_1;
+    uVar3 = uVar4 & 0xff0000 | uVar4 >> 0x10;
+    uVar4 = uVar3 >> 8 | (uVar4 & 0xff00 | uVar4 << 0x10) << 8;
+    uVar2 = (ushort)(uVar3 >> 8);
+    if (uVar4 < 0x10000) {
+      *param_3 = uVar2;
+      param_3 = param_3 + 1;
+    }
+    else {
+      *param_3 = (short)(uVar4 - 0x10000 >> 10) + 0xd800;
+      param_3[1] = (uVar2 & 0x3ff) + 0xdc00;
+      param_3 = param_3 + 2;
+    }
+    param_1 = param_1 + 1;
+  } while (param_1 < puVar1);
+  return param_3;
+}
+
+
+
+
+/* [AUDIT] proposed: utf8_countCodepoints  (confidence: high)
+ * purpose: Count Unicode codepoints in a UTF-8 buffer (1..4 byte sequences, word-at-a-time ASCII fast path)
+ * vars: param_1=src;param_2=len
+ */
+/* Global::utf8_countCodepoints @ 004d74f0 */
+
+int utf8_countCodepoints(uint *param_1,uint param_2,int param_3)
+
+{
+  uint uVar1;
+  
+  if (param_2 == 0) {
+    return param_3;
+  }
+  do {
+    if ((byte)*param_1 < 0x80) {
+      param_1 = (uint *)((int)param_1 + 1);
+      param_3 = param_3 + 1;
+      param_2 = param_2 - 1;
+      if (((uint)param_1 & 3) == 0) {
+        for (; (3 < param_2 && ((*param_1 & 0x80808080) == 0)); param_1 = param_1 + 1) {
+          param_2 = param_2 - 4;
+          param_3 = param_3 + 4;
+        }
+      }
+    }
+    else {
+      uVar1 = (uint)(byte)*param_1;
+      if (((uVar1 - 0xc0 < 0x20) && (1 < param_2)) && ((*param_1 & 0xc000) == 0x8000)) {
+        param_3 = param_3 + 1;
+        param_1 = (uint *)((int)param_1 + 2);
+        param_2 = param_2 - 2;
+      }
+      else if (((uVar1 - 0xe0 < 0x10) && (2 < param_2)) &&
+              (((*param_1 & 0xc000) == 0x8000 && ((*param_1 & 0xc00000) == 0x800000)))) {
+        param_3 = param_3 + 1;
+        param_1 = (uint *)((int)param_1 + 3);
+        param_2 = param_2 - 3;
+      }
+      else if (((uVar1 - 0xf0 < 8) && (3 < param_2)) &&
+              (((*param_1 & 0xc000) == 0x8000 &&
+               (((*param_1 & 0xc00000) == 0x800000 && ((*param_1 & 0xc0000000) == 0x80000000)))))) {
+        param_3 = param_3 + 2;
+        param_1 = param_1 + 1;
+        param_2 = param_2 - 4;
+      }
+      else {
+        param_1 = (uint *)((int)param_1 + 1);
+        param_2 = param_2 - 1;
+      }
+    }
+  } while (param_2 != 0);
+  return param_3;
+}
+
+
+
+
+/* [AUDIT] proposed: utf8_to_utf16_write  (confidence: high)
+ * purpose: Decode UTF-8 buffer to UTF-16 into caller buffer (handles 1-4 byte seqs, surrogates)
+ * vars: param_1=src;param_3=dst
+ */
+/* Global::utf8_to_utf16_write @ 004d75f0 */
+
+void utf8_to_utf16_write(uint *param_1,uint param_2,ushort *param_3)
+
+{
+  byte bVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  do {
+    while( true ) {
+      while( true ) {
+        while( true ) {
+          while( true ) {
+            if (param_2 == 0) {
+              return;
+            }
+            bVar1 = (byte)*param_1;
+            if (0x7f < bVar1) break;
+            *param_3 = (ushort)bVar1;
+            param_1 = (uint *)((int)param_1 + 1);
+            param_3 = param_3 + 1;
+            param_2 = param_2 - 1;
+            if (((uint)param_1 & 3) == 0) {
+              for (; (3 < param_2 && ((*param_1 & 0x80808080) == 0)); param_1 = param_1 + 1) {
+                *param_3 = (ushort)(byte)*param_1;
+                param_3[1] = (ushort)*(byte *)((int)param_1 + 1);
+                param_3[2] = (ushort)*(byte *)((int)param_1 + 2);
+                param_3[3] = (ushort)*(byte *)((int)param_1 + 3);
+                param_2 = param_2 - 4;
+                param_3 = param_3 + 4;
+              }
+            }
+          }
+          uVar3 = (uint)bVar1;
+          if (((0x1f < uVar3 - 0xc0) || (param_2 < 2)) ||
+             (uVar2 = CONCAT11(*(byte *)((int)param_1 + 1),*(byte *)((int)param_1 + 1)) & 0xffffffc0
+             , (char)uVar2 != -0x80)) break;
+          *param_3 = (bVar1 & 0x3f) << 6 | (ushort)((byte)(uVar2 >> 8) & 0x3f);
+          param_1 = (uint *)((int)param_1 + 2);
+          param_2 = param_2 - 2;
+          param_3 = param_3 + 1;
+        }
+        if (((0xf < uVar3 - 0xe0) || (param_2 < 3)) ||
+           ((uVar2 = CONCAT11(*(byte *)((int)param_1 + 1),*(byte *)((int)param_1 + 1)) & 0xffffffc0,
+            (char)uVar2 != -0x80 ||
+            (uVar2 = CONCAT31((int3)(uVar2 >> 8),*(byte *)((int)param_1 + 2)) & 0xffffffc0,
+            (char)uVar2 != -0x80)))) break;
+        *param_3 = ((CONCAT11((char)(uVar2 >> 8),bVar1) & 0x3fff) >> 8 | (ushort)bVar1 << 6) << 6 |
+                   (ushort)(*(byte *)((int)param_1 + 2) & 0x3f);
+        param_1 = (uint *)((int)param_1 + 3);
+        param_2 = param_2 - 3;
+        param_3 = param_3 + 1;
+      }
+      if (((uVar3 - 0xf0 < 8) && (3 < param_2)) && ((*(byte *)((int)param_1 + 1) & 0xc0) == 0x80))
+      break;
+LAB_004d77b8:
+      param_1 = (uint *)((int)param_1 + 1);
+      param_2 = param_2 - 1;
+    }
+    if (((*(byte *)((int)param_1 + 2) & 0xc0) != 0x80) ||
+       ((*(byte *)((int)param_1 + 3) & 0xc0) != 0x80)) goto LAB_004d77b8;
+    uVar2 = *(byte *)((int)param_1 + 3) & 0x3f;
+    uVar3 = (((uVar3 & 0xffffff0f) << 6 | *(byte *)((int)param_1 + 1) & 0x3f) << 6 |
+            *(byte *)((int)param_1 + 2) & 0x3f) << 6;
+    *param_3 = (short)((uVar3 | uVar2) - 0x10000 >> 10) + 0xd800;
+    param_3[1] = ((ushort)uVar3 & 0x3ff | (ushort)uVar2) + 0xdc00;
+    param_1 = param_1 + 1;
+    param_2 = param_2 - 4;
+    param_3 = param_3 + 2;
+  } while( true );
+}
+
+
+
+
+/* [AUDIT] proposed: xml_detectEncoding  (confidence: high)
+ * purpose: Detect text encoding from BOM/'<?xml' heuristic, return encoding id (1..6)
+ * vars: param_2=bytes;param_3=len
+ */
+/* Global::xml_detectEncoding @ 004d78a0 */
+
+int xml_detectEncoding(int param_1,char *param_2,uint param_3)
+
+{
+  char cVar1;
+  
+  if ((param_1 == 8) || (param_1 == 4)) {
+    return 2;
+  }
+  if (param_1 == 7) {
+    return 5;
+  }
+  if (param_1 != 0) {
+    return param_1;
+  }
+  if (4 < param_3) {
+    if ((((*param_2 == '\0') && (param_2[1] == '\0')) && (param_2[2] == -2)) && (param_2[3] == -1))
+    {
+      return 6;
+    }
+    if (((*param_2 == -1) && (param_2[1] == -2)) && ((param_2[2] == '\0' && (param_2[3] == '\0'))))
+    {
+      return 5;
+    }
+  }
+  if (2 < param_3) {
+    if ((*param_2 == -2) && (param_2[1] == -1)) {
+      return 3;
+    }
+    if ((*param_2 == -1) && (param_2[1] == -2)) {
+      return 2;
+    }
+  }
+  if ((((param_3 < 4) || (*param_2 != -0x11)) || (param_2[1] != -0x45)) || (param_2[2] != -0x41)) {
+    if (4 < param_3) {
+      cVar1 = *param_2;
+      if (((cVar1 == '\0') && (param_2[1] == '\0')) && ((param_2[2] == '\0' && (param_2[3] == '<')))
+         ) {
+        return 6;
+      }
+      if (((cVar1 == '<') && (param_2[1] == '\0')) && ((param_2[2] == '\0' && (param_2[3] == '\0')))
+         ) {
+        return 5;
+      }
+      if ((((cVar1 == '\0') && (param_2[1] == '<')) && (param_2[2] == '\0')) && (param_2[3] == '?'))
+      {
+        return 3;
+      }
+      if (cVar1 == '<') {
+        if (((param_2[1] == '\0') && (param_2[2] == '?')) && (param_2[3] == '\0')) {
+          return 2;
+        }
+        if (((param_2[1] == '?') && (param_2[2] == 'x')) && (param_2[3] == 'm')) {
+          return 1;
+        }
+      }
+    }
+    if (2 < param_3) {
+      if ((*param_2 == '\0') && (param_2[1] == '<')) {
+        return 3;
+      }
+      if ((*param_2 == '<') && (param_2[1] == '\0')) {
+        return 2;
+      }
+    }
+  }
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: utf16_copy_passthrough  (confidence: med)
+ * purpose: UTF-16 input passthrough: reference in-place or memcpy to owned buffer, set length
+ * vars: param_3=src;param_4=bytes
+ */
+/* Global::utf16_copy_passthrough @ 004d79f0 */
+
+undefined4 utf16_copy_passthrough(undefined4 *param_1,uint *param_2,void *param_3,uint param_4,char param_5)
+
+{
+  uint uVar1;
+  void *_Dst;
+  
+  if (param_5 != '\0') {
+    *param_1 = param_3;
+    *param_2 = param_4 >> 1;
+    return 1;
+  }
+  uVar1 = 1;
+  if (param_4 != 0) {
+    uVar1 = param_4;
+  }
+  _Dst = (void *)(*(code *)PTR_FUN_007663ac)(uVar1);
+  if (_Dst == (void *)0x0) {
+    return 0;
+  }
+  memcpy(_Dst,param_3,param_4);
+  *param_1 = _Dst;
+  *param_2 = param_4 >> 1;
+  return 1;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_selectAttrValueScanner  (confidence: med)
+ * purpose: Select attribute-value scanner function by encoding/flags bits (jump table of 8)
+ * vars: param_1=flags
+ */
+/* Global::xml_selectAttrValueScanner @ 004d7a60 */
+
+code * xml_selectAttrValueScanner(uint param_1)
+
+{
+  switch(param_1 >> 4 & 0xf) {
+  case 0:
+    return xml_scanAttrValue_variant0;
+  case 1:
+    return xml_scanAttrValue_variant1;
+  case 2:
+    return xml_parseAttrValue_plain;
+  case 3:
+    return xml_parseAttrValue_entityDecode;
+  case 4:
+  case 6:
+    return xml_scanAttrValue_variant2;
+  case 5:
+  case 7:
+    return xml_scanAttrValue_variant3;
+  case 8:
+  case 10:
+  case 0xc:
+  case 0xe:
+    return xml_scanAttrValue_variant4;
+  case 9:
+  case 0xb:
+  case 0xd:
+  case 0xf:
+    return xml_scanAttrValue_variant5;
+  default:
+    return (code *)0x0;
+  }
+}
+
+
+
+
+/* [AUDIT] proposed: xml_parseText_entityAndNewlineNorm  (confidence: med)
+ * purpose: Scan text run decoding entities and normalizing CRLF/CR to LF
+ * vars: param_1=cursor
+ */
+/* Global::xml_parseText_entityAndNewlineNorm @ 004d7ce0 */
+
+ushort * xml_parseText_entityAndNewlineNorm(ushort *param_1)
+
+{
+  ushort uVar1;
+  byte bVar2;
+  ushort *puVar3;
+  ushort *_Src;
+  ushort *puVar4;
+  int iVar5;
+  ushort *local_c;
+  int local_8;
+  
+  _Src = (ushort *)0x0;
+  iVar5 = 0;
+  local_c = _Src;
+  local_8 = iVar5;
+  while( true ) {
+    while( true ) {
+      puVar4 = param_1;
+      if (*puVar4 < 0x80) {
+        bVar2 = (&DAT_00703680)[*puVar4];
+      }
+      else {
+        bVar2 = 0;
+      }
+      if ((bVar2 & 1) != 0) break;
+      param_1 = puVar4 + 1;
+    }
+    uVar1 = *puVar4;
+    if (uVar1 == 0x3c) break;
+    if (uVar1 == 0xd) {
+      *puVar4 = 10;
+      param_1 = puVar4 + 1;
+      if (*param_1 == 10) {
+        if (_Src != (ushort *)0x0) {
+          memmove(_Src + -iVar5,_Src,(int)param_1 - (int)_Src);
+        }
+        _Src = puVar4 + 2;
+        iVar5 = iVar5 + 1;
+        param_1 = _Src;
+        local_c = _Src;
+        local_8 = iVar5;
+      }
+    }
+    else if (uVar1 == 0x26) {
+      param_1 = (ushort *)xml_decodeEntityRef(puVar4,&local_c);
+      _Src = local_c;
+      iVar5 = local_8;
+    }
+    else {
+      if (uVar1 == 0) {
+        return puVar4;
+      }
+      param_1 = puVar4 + 1;
+    }
+  }
+  puVar3 = puVar4;
+  if (_Src != (ushort *)0x0) {
+    memmove(_Src + -iVar5,_Src,(int)puVar4 - (int)_Src);
+    puVar3 = puVar4 + -iVar5;
+  }
+  *puVar3 = 0;
+  return puVar4 + 1;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_parseNodeTree  (confidence: med)
+ * purpose: Core recursive XML parser: elements, attributes, PIs, comments, CDATA into node tree
+ * vars: in_ECX=document;param_1=cursor
+ */
+/* Global::xml_parseNodeTree @ 004d7e70 */
+
+void xml_parseNodeTree(ushort *param_1,undefined4 *param_2,uint param_3,undefined4 param_4)
+
+{
+  ushort uVar1;
+  byte bVar2;
+  char cVar3;
+  ushort uVar4;
+  code *pcVar5;
+  int iVar6;
+  ushort *puVar7;
+  int in_ECX;
+  uint uVar8;
+  ushort *puVar9;
+  ushort *puVar10;
+  undefined4 *puVar11;
+  undefined4 *puVar12;
+  code *local_c;
+  undefined4 *local_8;
+  
+  uVar8 = param_3;
+  pcVar5 = (code *)xml_selectAttrValueScanner(param_3);
+  switch(uVar8 >> 4 & 3) {
+  case 0:
+    local_c = xml_skipToTag_plain;
+    break;
+  case 1:
+    local_c = xml_parseText_entityDecode;
+    break;
+  case 2:
+    local_c = xml_parseText_newlineNorm;
+    break;
+  case 3:
+    local_c = xml_parseText_entityAndNewlineNorm;
+    break;
+  default:
+    local_c = (code *)0x0;
+  }
+  uVar4 = *param_1;
+  local_8 = param_2;
+  puVar10 = param_1;
+  puVar12 = param_2;
+  if (uVar4 != 0) {
+    do {
+      puVar7 = puVar10;
+      if (uVar4 == 0x3c) {
+LAB_004d7fb6:
+        puVar10 = puVar10 + 1;
+LAB_004d7fbc:
+        uVar8 = (uint)*puVar10;
+        if (*puVar10 < 0x80) {
+          cVar3 = (&DAT_00703680)[uVar8];
+        }
+        else {
+          cVar3 = -0x40;
+        }
+        param_1 = puVar10;
+        if (cVar3 < '\0') {
+          local_8 = (undefined4 *)xml_node_appendChild(puVar12,in_ECX,2);
+          if (local_8 == (undefined4 *)0x0) {
+LAB_004d83b7:
+                    /* WARNING: Subroutine does not return */
+            longjmp((int *)(in_ECX + 8),3);
+          }
+          local_8[2] = puVar10;
+          while( true ) {
+            if (*puVar10 < 0x80) {
+              bVar2 = (&DAT_00703680)[*puVar10];
+            }
+            else {
+              bVar2 = 0xc0;
+            }
+            if ((bVar2 & 0x40) == 0) break;
+            puVar10 = puVar10 + 1;
+          }
+          uVar4 = *puVar10;
+          uVar8 = (uint)uVar4;
+          *puVar10 = 0;
+          puVar7 = puVar10 + 1;
+          puVar12 = local_8;
+          if (uVar8 != 0x3e) {
+            if (uVar4 < 0x80) {
+              bVar2 = (&DAT_00703680)[uVar8];
+            }
+            else {
+              bVar2 = 0;
+            }
+            puVar11 = local_8;
+            if ((bVar2 & 8) == 0) {
+              if (uVar8 == 0x2f) {
+                uVar4 = *puVar7;
+                if ((uVar4 != 0x3e) && ((puVar9 = puVar7, uVar4 != 0 || ((ushort)param_4 != 0x3e))))
+                goto LAB_004d808c;
+                puVar7 = puVar7 + (uVar4 == 0x3e);
+                puVar12 = (undefined4 *)local_8[1];
+                local_8 = (undefined4 *)local_8[1];
+              }
+              else {
+joined_r0x004d830b:
+                puVar9 = puVar7;
+                if ((uVar4 != 0) ||
+                   (puVar7 = puVar10, puVar9 = puVar10, puVar12 = puVar11, (ushort)param_4 != 0x3e))
+                {
+LAB_004d808c:
+                  *(ushort **)(in_ECX + 0x48) = puVar9;
+                    /* WARNING: Subroutine does not return */
+                  longjmp((int *)(in_ECX + 8),0xb);
+                }
+              }
+            }
+            else {
+LAB_004d8180:
+              while( true ) {
+                while( true ) {
+                  if (*puVar7 < 0x80) {
+                    bVar2 = (&DAT_00703680)[*puVar7];
+                  }
+                  else {
+                    bVar2 = 0;
+                  }
+                  if ((bVar2 & 8) == 0) break;
+                  puVar7 = puVar7 + 1;
+                }
+                if (*puVar7 < 0x80) {
+                  cVar3 = (&DAT_00703680)[*puVar7];
+                }
+                else {
+                  cVar3 = -0x40;
+                }
+                if (-1 < cVar3) break;
+                iVar6 = xml_attribute_allocate(puVar11,in_ECX);
+                if (iVar6 == 0) {
+                  *(undefined4 *)(in_ECX + 0x48) = 0;
+                  goto LAB_004d83b7;
+                }
+                *(ushort **)(iVar6 + 4) = puVar7;
+                while( true ) {
+                  if (*puVar7 < 0x80) {
+                    bVar2 = (&DAT_00703680)[*puVar7];
+                  }
+                  else {
+                    bVar2 = 0xc0;
+                  }
+                  if ((bVar2 & 0x40) == 0) break;
+                  puVar7 = puVar7 + 1;
+                }
+                uVar4 = *puVar7;
+                if (uVar4 == 0) goto LAB_004d838f;
+                *puVar7 = 0;
+                puVar7 = puVar7 + 1;
+                if (*puVar7 == 0) goto LAB_004d838f;
+                if (uVar4 < 0x80) {
+                  bVar2 = (&DAT_00703680)[uVar4];
+                }
+                else {
+                  bVar2 = 0;
+                }
+                if ((bVar2 & 8) != 0) {
+                  while( true ) {
+                    if (*puVar7 < 0x80) {
+                      bVar2 = (&DAT_00703680)[*puVar7];
+                    }
+                    else {
+                      bVar2 = 0;
+                    }
+                    if ((bVar2 & 8) == 0) break;
+                    puVar7 = puVar7 + 1;
+                  }
+                  uVar4 = *puVar7;
+                  if (uVar4 == 0) goto LAB_004d838f;
+                  puVar7 = puVar7 + 1;
+                }
+                if (uVar4 != 0x3d) goto LAB_004d838f;
+                while( true ) {
+                  if (*puVar7 < 0x80) {
+                    bVar2 = (&DAT_00703680)[*puVar7];
+                  }
+                  else {
+                    bVar2 = 0;
+                  }
+                  if ((bVar2 & 8) == 0) break;
+                  puVar7 = puVar7 + 1;
+                }
+                uVar4 = *puVar7;
+                if ((uVar4 != 0x22) && (uVar4 != 0x27)) goto LAB_004d838f;
+                *(ushort **)(iVar6 + 8) = puVar7 + 1;
+                puVar7 = (ushort *)(*pcVar5)(puVar7 + 1,uVar4);
+                if (puVar7 == (ushort *)0x0) {
+                  *(undefined4 *)(in_ECX + 0x48) = *(undefined4 *)(iVar6 + 8);
+                    /* WARNING: Subroutine does not return */
+                  longjmp((int *)(in_ECX + 8),0xc);
+                }
+                if (*puVar7 < 0x80) {
+                  cVar3 = (&DAT_00703680)[*puVar7];
+                }
+                else {
+                  cVar3 = -0x40;
+                }
+                puVar11 = local_8;
+                if (cVar3 < '\0') {
+LAB_004d838f:
+                  *(ushort **)(in_ECX + 0x48) = puVar7;
+                    /* WARNING: Subroutine does not return */
+                  longjmp((int *)(in_ECX + 8),0xc);
+                }
+              }
+              uVar4 = *puVar7;
+              if (uVar4 == 0x2f) {
+                puVar9 = puVar7 + 1;
+                if (puVar7[1] == 0x3e) {
+                  puVar7 = puVar7 + 2;
+                  puVar12 = (undefined4 *)puVar11[1];
+                  local_8 = (undefined4 *)puVar11[1];
+                }
+                else {
+                  if ((puVar7[1] != 0) || ((ushort)param_4 != 0x3e)) goto LAB_004d808c;
+                  puVar7 = puVar9;
+                  puVar12 = (undefined4 *)puVar11[1];
+                  local_8 = (undefined4 *)puVar11[1];
+                }
+              }
+              else {
+                puVar10 = puVar7;
+                if (uVar4 != 0x3e) goto joined_r0x004d830b;
+                puVar7 = puVar7 + 1;
+                puVar12 = puVar11;
+              }
+            }
+          }
+        }
+        else if (uVar8 == 0x2f) {
+          puVar9 = (ushort *)puVar12[2];
+          puVar7 = puVar10 + 1;
+          if (puVar9 == (ushort *)0x0) {
+LAB_004d80db:
+            *(ushort **)(in_ECX + 0x48) = puVar7;
+                    /* WARNING: Subroutine does not return */
+            longjmp((int *)(in_ECX + 8),0xe);
+          }
+          while( true ) {
+            uVar4 = *puVar7;
+            if (uVar4 < 0x80) {
+              bVar2 = (&DAT_00703680)[uVar4];
+            }
+            else {
+              bVar2 = 0xc0;
+            }
+            if ((bVar2 & 0x40) == 0) break;
+            uVar1 = *puVar9;
+            puVar9 = puVar9 + 1;
+            puVar7 = puVar7 + 1;
+            if (uVar4 != uVar1) goto LAB_004d80db;
+          }
+          if (*puVar9 != 0) {
+            if (((*puVar7 == 0) && (*puVar9 == (ushort)param_4)) && (puVar9[1] == 0))
+            goto LAB_004d8380;
+            goto LAB_004d80db;
+          }
+          puVar12 = (undefined4 *)puVar12[1];
+          while( true ) {
+            if (*puVar7 < 0x80) {
+              bVar2 = (&DAT_00703680)[*puVar7];
+            }
+            else {
+              bVar2 = 0;
+            }
+            if ((bVar2 & 8) == 0) break;
+            puVar7 = puVar7 + 1;
+          }
+          local_8 = puVar12;
+          if (*puVar7 == 0) {
+            if ((ushort)param_4 != 0x3e) {
+LAB_004d8380:
+              *(ushort **)(in_ECX + 0x48) = puVar7;
+                    /* WARNING: Subroutine does not return */
+              longjmp((int *)(in_ECX + 8),0xd);
+            }
+          }
+          else {
+            if (*puVar7 != 0x3e) goto LAB_004d8380;
+            puVar7 = puVar7 + 1;
+          }
+        }
+        else if (uVar8 == 0x3f) {
+          xml_parsePI_or_xmlDecl(&param_1,&local_8,param_3,param_4);
+          puVar7 = param_1;
+          puVar12 = local_8;
+          if ((local_8 != (undefined4 *)0x0) && (puVar11 = local_8, ((byte)*local_8 & 7) == 7))
+          goto LAB_004d8180;
+        }
+        else {
+          if (uVar8 != 0x21) {
+            if ((*puVar10 == 0) && ((ushort)param_4 == 0x3f)) {
+              *(ushort **)(in_ECX + 0x48) = puVar10;
+                    /* WARNING: Subroutine does not return */
+              longjmp((int *)(in_ECX + 8),6);
+            }
+            *(ushort **)(in_ECX + 0x48) = puVar10;
+                    /* WARNING: Subroutine does not return */
+            longjmp((int *)(in_ECX + 8),5);
+          }
+          xml_parseBang_commentCData_doctype(&param_1,puVar12,param_3,param_4);
+          puVar7 = param_1;
+        }
+      }
+      else {
+        while( true ) {
+          if (*puVar7 < 0x80) {
+            bVar2 = (&DAT_00703680)[*puVar7];
+          }
+          else {
+            bVar2 = 0;
+          }
+          if ((bVar2 & 8) == 0) break;
+          puVar7 = puVar7 + 1;
+        }
+        if (((param_3 & 8) != 0) && (puVar10 != puVar7)) {
+LAB_004d7f2e:
+          if (puVar12[1] == 0) {
+            uVar4 = *puVar10;
+            puVar7 = puVar10;
+            if (uVar4 != 0) {
+              while (puVar7 = puVar10, uVar4 != 0x3c) {
+                uVar4 = puVar10[1];
+                puVar7 = puVar10 + 1;
+                puVar10 = puVar7;
+                if (uVar4 == 0) goto LAB_004d7f92;
+              }
+            }
+            puVar10 = puVar7;
+            if (*puVar7 != 0) goto LAB_004d7fb6;
+          }
+          else {
+            iVar6 = xml_node_appendChild(puVar12,in_ECX,3);
+            if (iVar6 == 0) {
+                    /* WARNING: Subroutine does not return */
+              longjmp((int *)(in_ECX + 8),3);
+            }
+            *(ushort **)(iVar6 + 0xc) = puVar10;
+            puVar7 = (ushort *)(*local_c)(puVar10);
+            puVar12 = *(undefined4 **)(iVar6 + 4);
+            puVar10 = puVar7;
+            param_1 = puVar7;
+            local_8 = puVar12;
+            if (*puVar7 != 0) goto LAB_004d7fbc;
+          }
+          break;
+        }
+        if (*puVar7 != 0x3c) {
+          if (*puVar7 != 0) goto LAB_004d7f2e;
+          break;
+        }
+      }
+      uVar4 = *puVar7;
+      puVar10 = puVar7;
+    } while (uVar4 != 0);
+LAB_004d7f92:
+    if (puVar12 != param_2) {
+      *(ushort **)(in_ECX + 0x48) = puVar7;
+                    /* WARNING: Subroutine does not return */
+      longjmp((int *)(in_ECX + 8),0xe);
+    }
+  }
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_skipElement  (confidence: med)
+ * purpose: Recursively skip an element and its nested markup to matching '>'
+ * vars: param_1=cursor
+ */
+/* Global::xml_skipElement @ 004d8510 */
+
+void xml_skipElement(int *param_1,undefined4 param_2,char param_3)
+
+{
+  short sVar1;
+  short *psVar2;
+  int in_ECX;
+  
+  *param_1 = *param_1 + 2;
+  sVar1 = *(short *)*param_1;
+  do {
+    if (sVar1 == 0) {
+      if ((param_3 != '\0') && ((short)param_2 == 0x3e)) {
+        return;
+      }
+      *(int *)(in_ECX + 0x48) = *param_1;
+                    /* WARNING: Subroutine does not return */
+      longjmp((int *)(in_ECX + 8),9);
+    }
+    psVar2 = (short *)*param_1;
+    sVar1 = *psVar2;
+    if (sVar1 == 0x3c) {
+      if ((psVar2[1] == 0x21) && (psVar2[2] != 0x2d)) {
+        if (psVar2[2] == 0x5b) {
+          xml_skipCDATA(param_1);
+        }
+        else {
+          xml_skipElement(param_1,param_2,0);
+        }
+      }
+      else {
+LAB_004d857f:
+        xml_skipQuotedOrPIComment(param_1);
+      }
+    }
+    else {
+      if ((sVar1 == 0x22) || (sVar1 == 0x27)) goto LAB_004d857f;
+      if (sVar1 == 0x3e) {
+        *param_1 = *param_1 + 2;
+        return;
+      }
+      *param_1 = (int)(psVar2 + 1);
+    }
+    sVar1 = *(short *)*param_1;
+  } while( true );
+}
+
+
+
+
+/* [AUDIT] proposed: xml_skipCDATA  (confidence: med)
+ * purpose: Skip a CDATA/marked section '<![...]]>' (recursive nesting)
+ * vars: param_1=cursor
+ */
+/* Global::xml_skipCDATA @ 004d85c0 */
+
+void xml_skipCDATA(int *param_1)
+
+{
+  short sVar1;
+  short *psVar2;
+  int in_ECX;
+  
+  *param_1 = *param_1 + 2;
+  sVar1 = *(short *)*param_1;
+  do {
+    if (sVar1 == 0) {
+      *(int *)(in_ECX + 0x48) = *param_1;
+                    /* WARNING: Subroutine does not return */
+      longjmp((int *)(in_ECX + 8),9);
+    }
+    psVar2 = (short *)*param_1;
+    if (((*psVar2 == 0x3c) && (psVar2[1] == 0x21)) && (psVar2[2] == 0x5b)) {
+      xml_skipCDATA(param_1);
+    }
+    else {
+      if (((*psVar2 == 0x5d) && (psVar2[1] == 0x5d)) && (psVar2[2] == 0x3e)) {
+        *param_1 = *param_1 + 6;
+        return;
+      }
+      *param_1 = (int)(psVar2 + 1);
+    }
+    sVar1 = *(short *)*param_1;
+  } while( true );
+}
+
+
+
+
+/* [AUDIT] proposed: xml_skipQuotedOrPIComment  (confidence: med)
+ * purpose: Skip a quoted string, processing instruction '<?..?>' or comment '<!--..-->'
+ * vars: param_1=cursor
+ */
+/* Global::xml_skipQuotedOrPIComment @ 004d8630 */
+
+void xml_skipQuotedOrPIComment(undefined4 *param_1)
+
+{
+  short sVar1;
+  short sVar2;
+  short *psVar3;
+  int in_ECX;
+  
+  psVar3 = (short *)*param_1;
+  sVar1 = *psVar3;
+  if ((sVar1 == 0x22) || (sVar1 == 0x27)) {
+    psVar3 = psVar3 + 1;
+    *param_1 = psVar3;
+    sVar2 = *psVar3;
+    while ((sVar2 != 0 && (*psVar3 != sVar1))) {
+      psVar3 = psVar3 + 1;
+      *param_1 = psVar3;
+      sVar2 = *psVar3;
+    }
+    psVar3 = (short *)*param_1;
+    if (*psVar3 != 0) {
+      *param_1 = psVar3 + 1;
+      return;
+    }
+    *(short **)(in_ECX + 0x48) = psVar3;
+                    /* WARNING: Subroutine does not return */
+    longjmp((int *)(in_ECX + 8),9);
+  }
+  if (sVar1 == 0x3c) {
+    if (psVar3[1] == 0x3f) {
+      *param_1 = psVar3 + 2;
+      sVar1 = psVar3[2];
+      while ((sVar1 != 0 && ((psVar3 = (short *)*param_1, *psVar3 != 0x3f || (psVar3[1] != 0x3e)))))
+      {
+        *param_1 = psVar3 + 1;
+        sVar1 = psVar3[1];
+      }
+      psVar3 = (short *)*param_1;
+      if (*psVar3 != 0) {
+        *param_1 = psVar3 + 2;
+        return;
+      }
+    }
+    else if (((psVar3[1] == 0x21) && (psVar3[2] == 0x2d)) && (psVar3[3] == 0x2d)) {
+      *param_1 = psVar3 + 4;
+      sVar1 = psVar3[4];
+      while ((sVar1 != 0 &&
+             (((psVar3 = (short *)*param_1, *psVar3 != 0x2d || (psVar3[1] != 0x2d)) ||
+              (psVar3[2] != 0x3e))))) {
+        *param_1 = psVar3 + 1;
+        sVar1 = psVar3[1];
+      }
+      psVar3 = (short *)*param_1;
+      if (*psVar3 != 0) {
+        *param_1 = psVar3 + 4;
+        return;
+      }
+      *(short **)(in_ECX + 0x48) = psVar3;
+                    /* WARNING: Subroutine does not return */
+      longjmp((int *)(in_ECX + 8),9);
+    }
+  }
+  *(short **)(in_ECX + 0x48) = psVar3;
+                    /* WARNING: Subroutine does not return */
+  longjmp((int *)(in_ECX + 8),9);
+}
+
+
+
+
+/* [AUDIT] proposed: xml_parseBang_commentCData_doctype  (confidence: med)
+ * purpose: Parse '<!' construct: comment, CDATA[..], or DOCTYPE (optionally into node)
+ * vars: param_1=cursor;param_3=flags
+ */
+/* Global::xml_parseBang_commentCData_doctype @ 004d8900 */
+
+void xml_parseBang_commentCData_doctype(int *param_1,int param_2,uint param_3,undefined4 param_4)
+
+{
+  short sVar1;
+  uint uVar2;
+  int iVar3;
+  short *psVar4;
+  short sVar5;
+  int in_ECX;
+  short *local_8;
+  
+  iVar3 = *param_1;
+  local_8 = (short *)(iVar3 + 2);
+  sVar1 = *local_8;
+  sVar5 = (short)param_4;
+  if (sVar1 != 0x2d) {
+    if (sVar1 == 0x5b) {
+      local_8 = (short *)(iVar3 + 4);
+      if (((((*(short *)(iVar3 + 4) == 0x43) &&
+            (local_8 = (short *)(iVar3 + 6), *(short *)(iVar3 + 6) == 0x44)) &&
+           (local_8 = (short *)(iVar3 + 8), *(short *)(iVar3 + 8) == 0x41)) &&
+          ((local_8 = (short *)(iVar3 + 10), *(short *)(iVar3 + 10) == 0x54 &&
+           (local_8 = (short *)(iVar3 + 0xc), *(short *)(iVar3 + 0xc) == 0x41)))) &&
+         (local_8 = (short *)(iVar3 + 0xe), *(short *)(iVar3 + 0xe) == 0x5b)) {
+        local_8 = (short *)(iVar3 + 0x10);
+        if ((param_3 & 4) != 0) {
+          iVar3 = xml_node_appendChild(param_2);
+          if (iVar3 == 0) {
+                    /* WARNING: Subroutine does not return */
+            longjmp((int *)(in_ECX + 8),3);
+          }
+          *(short **)(iVar3 + 0xc) = local_8;
+          if ((param_3 & 0x20) == 0) {
+            sVar1 = *local_8;
+            psVar4 = local_8;
+            while (local_8 = psVar4, sVar1 != 0) {
+              if (((sVar1 == 0x5d) && (psVar4[1] == 0x5d)) &&
+                 ((psVar4[2] == 0x3e || ((psVar4[2] == 0 && (sVar5 == 0x3e)))))) {
+                if (*psVar4 != 0) {
+                  *psVar4 = 0;
+                  goto LAB_004d8b8d;
+                }
+                break;
+              }
+              psVar4 = psVar4 + 1;
+              sVar1 = *psVar4;
+            }
+          }
+          else {
+            psVar4 = (short *)xml_scanCDATA_withEntities(local_8,param_4);
+            if (psVar4 != (short *)0x0) goto LAB_004d8b93;
+            psVar4 = *(short **)(iVar3 + 0xc);
+            local_8 = (short *)0x0;
+          }
+          *(short **)(in_ECX + 0x48) = psVar4;
+                    /* WARNING: Subroutine does not return */
+          longjmp((int *)(in_ECX + 8),8);
+        }
+        sVar1 = *local_8;
+        psVar4 = local_8;
+        while (local_8 = psVar4, sVar1 != 0) {
+          if (((sVar1 == 0x5d) && (psVar4[1] == 0x5d)) &&
+             ((psVar4[2] == 0x3e || ((psVar4[2] == 0 && (sVar5 == 0x3e)))))) {
+            if (*psVar4 != 0) goto LAB_004d8b8d;
+            break;
+          }
+          psVar4 = psVar4 + 1;
+          sVar1 = *psVar4;
+        }
+      }
+LAB_004d8c47:
+      *(short **)(in_ECX + 0x48) = local_8;
+                    /* WARNING: Subroutine does not return */
+      longjmp((int *)(in_ECX + 8),8);
+    }
+    if (((((sVar1 == 0x44) && (*(short *)(iVar3 + 4) == 0x4f)) && (*(short *)(iVar3 + 6) == 0x43))
+        && ((*(short *)(iVar3 + 8) == 0x54 && (*(short *)(iVar3 + 10) == 0x59)))) &&
+       (*(short *)(iVar3 + 0xc) == 0x50)) {
+      if (*(short *)(iVar3 + 0xe) == 0x45) {
+        local_8 = (short *)(iVar3 + -2);
+        xml_skipElement(&local_8,param_4,1);
+        goto LAB_004d8c19;
+      }
+      if ((*(short *)(iVar3 + 0xe) == 0) && (sVar5 == 0x45)) {
+        *(short **)(in_ECX + 0x48) = local_8;
+                    /* WARNING: Subroutine does not return */
+        longjmp((int *)(in_ECX + 8),9);
+      }
+    }
+    if (sVar1 == 0) {
+      if (sVar5 == 0x2d) goto LAB_004d8c32;
+      if (sVar5 == 0x5b) goto LAB_004d8c47;
+    }
+    *(short **)(in_ECX + 0x48) = local_8;
+                    /* WARNING: Subroutine does not return */
+    longjmp((int *)(in_ECX + 8),5);
+  }
+  local_8 = (short *)(iVar3 + 4);
+  if (*local_8 == 0x2d) {
+    local_8 = (short *)(iVar3 + 6);
+    uVar2 = param_3 & 2;
+    if (uVar2 != 0) {
+      param_2 = xml_node_appendChild(param_2);
+      if (param_2 == 0) {
+                    /* WARNING: Subroutine does not return */
+        longjmp((int *)(in_ECX + 8),3);
+      }
+      *(short **)(param_2 + 0xc) = local_8;
+    }
+    if (((param_3 & 0x20) != 0) && (uVar2 != 0)) {
+      local_8 = (short *)xml_scanComment_withEntities(local_8,param_4);
+      if (local_8 == (short *)0x0) {
+        *(undefined4 *)(in_ECX + 0x48) = *(undefined4 *)(param_2 + 0xc);
+                    /* WARNING: Subroutine does not return */
+        longjmp((int *)(in_ECX + 8),7);
+      }
+LAB_004d8c19:
+      *param_1 = (int)local_8;
+      return;
+    }
+    sVar1 = *local_8;
+    while (sVar1 != 0) {
+      if (((sVar1 == 0x2d) && (local_8[1] == 0x2d)) &&
+         ((local_8[2] == 0x3e || ((local_8[2] == 0 && (sVar5 == 0x3e)))))) {
+        if (*local_8 != 0) {
+          if (uVar2 != 0) {
+            *local_8 = 0;
+          }
+          *param_1 = (int)(local_8 + (local_8[2] == 0x3e) + 2);
+          return;
+        }
+        break;
+      }
+      local_8 = local_8 + 1;
+      sVar1 = *local_8;
+    }
+  }
+LAB_004d8c32:
+  *(short **)(in_ECX + 0x48) = local_8;
+                    /* WARNING: Subroutine does not return */
+  longjmp((int *)(in_ECX + 8),7);
+LAB_004d8b8d:
+  psVar4 = psVar4 + 1;
+LAB_004d8b93:
+  *param_1 = (int)(psVar4 + (psVar4[1] == 0x3e) + 1);
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_parsePI_or_xmlDecl  (confidence: med)
+ * purpose: Parse '<?' processing instruction / xml declaration, optionally build PI node
+ * vars: param_1=cursor;param_4=quotectx
+ */
+/* Global::xml_parsePI_or_xmlDecl @ 004d8c70 */
+
+void xml_parsePI_or_xmlDecl(int *param_1,int *param_2,uint param_3,short param_4)
+
+{
+  bool bVar1;
+  char cVar2;
+  byte bVar3;
+  ushort uVar4;
+  int iVar5;
+  uint uVar6;
+  int in_ECX;
+  undefined4 *puVar7;
+  ushort *puVar8;
+  ushort *puVar9;
+  
+  puVar7 = (undefined4 *)*param_2;
+  iVar5 = *param_1;
+  puVar8 = (ushort *)(iVar5 + 2);
+  if (*puVar8 < 0x80) {
+    cVar2 = (&DAT_00703680)[*puVar8];
+  }
+  else {
+    cVar2 = -0x40;
+  }
+  puVar9 = puVar8;
+  if (cVar2 < '\0') {
+    while( true ) {
+      if (*puVar9 < 0x80) {
+        bVar3 = (&DAT_00703680)[*puVar9];
+      }
+      else {
+        bVar3 = 0xc0;
+      }
+      if ((bVar3 & 0x40) == 0) break;
+      puVar9 = puVar9 + 1;
+    }
+    if (*puVar9 == 0) {
+      *(ushort **)(in_ECX + 0x48) = puVar9;
+                    /* WARNING: Subroutine does not return */
+      longjmp((int *)(in_ECX + 8),6);
+    }
+    if (((((*puVar8 | 0x20) == 0x78) && ((*(ushort *)(iVar5 + 4) | 0x20) == 0x6d)) &&
+        ((*(ushort *)(iVar5 + 6) | 0x20) == 0x6c)) && ((ushort *)(iVar5 + 8) == puVar9)) {
+      bVar1 = true;
+      param_3 = param_3 & 0x100;
+    }
+    else {
+      bVar1 = false;
+      param_3 = param_3 & 1;
+    }
+    if (param_3 == 0) {
+      uVar4 = *puVar9;
+      do {
+        if ((uVar4 == 0x3f) && ((puVar9[1] == 0x3e || ((puVar9[1] == 0 && (param_4 == 0x3e)))))) {
+          if (*puVar9 != 0) {
+            uVar6 = (puVar9[1] == 0x3e) + 1;
+            goto LAB_004d8ed1;
+          }
+          break;
+        }
+        uVar4 = puVar9[1];
+        puVar9 = puVar9 + 1;
+      } while (uVar4 != 0);
+    }
+    else {
+      if (bVar1) {
+        if (((byte)*puVar7 & 7) != 1) {
+          *(ushort **)(in_ECX + 0x48) = puVar9;
+                    /* WARNING: Subroutine does not return */
+          longjmp((int *)(in_ECX + 8),6);
+        }
+        iVar5 = xml_node_appendChild(puVar7);
+        if (iVar5 == 0) {
+                    /* WARNING: Subroutine does not return */
+          longjmp((int *)(in_ECX + 8),3);
+        }
+      }
+      else {
+        iVar5 = xml_node_appendChild(puVar7);
+        if (iVar5 == 0) {
+                    /* WARNING: Subroutine does not return */
+          longjmp((int *)(in_ECX + 8),3);
+        }
+      }
+      *(ushort **)(iVar5 + 8) = puVar8;
+      uVar4 = *puVar9;
+      *puVar9 = 0;
+      puVar9 = puVar9 + 1;
+      if (uVar4 == 0x3f) {
+        uVar4 = *puVar9;
+        if ((uVar4 != 0x3e) && ((uVar4 != 0 || (param_4 != 0x3e)))) {
+          *(ushort **)(in_ECX + 0x48) = puVar9;
+                    /* WARNING: Subroutine does not return */
+          longjmp((int *)(in_ECX + 8),6);
+        }
+        puVar7 = *(undefined4 **)(iVar5 + 4);
+        uVar6 = (uint)(uVar4 == 0x3e);
+LAB_004d8ed1:
+        *param_1 = (int)(puVar9 + uVar6);
+        *param_2 = (int)puVar7;
+        return;
+      }
+      if (uVar4 < 0x80) {
+        bVar3 = (&DAT_00703680)[uVar4];
+      }
+      else {
+        bVar3 = 0;
+      }
+      if ((bVar3 & 8) != 0) {
+        while( true ) {
+          if (*puVar9 < 0x80) {
+            bVar3 = (&DAT_00703680)[*puVar9];
+          }
+          else {
+            bVar3 = 0;
+          }
+          if ((bVar3 & 8) == 0) break;
+          puVar9 = puVar9 + 1;
+        }
+        puVar8 = puVar9;
+        if (*puVar9 != 0) {
+          do {
+            if ((*puVar8 == 0x3f) &&
+               ((puVar8[1] == 0x3e || ((puVar8[1] == 0 && (param_4 == 0x3e)))))) break;
+            puVar8 = puVar8 + 1;
+          } while (*puVar8 != 0);
+          if (*puVar8 != 0) {
+            if (bVar1) {
+              *puVar8 = 0x2f;
+              *param_1 = (int)puVar9;
+              *param_2 = iVar5;
+              return;
+            }
+            *(ushort **)(iVar5 + 0xc) = puVar9;
+            puVar7 = *(undefined4 **)(iVar5 + 4);
+            *puVar8 = 0;
+            puVar9 = puVar8 + 1;
+            uVar6 = (uint)(*puVar9 == 0x3e);
+            goto LAB_004d8ed1;
+          }
+        }
+        *(ushort **)(in_ECX + 0x48) = puVar8;
+                    /* WARNING: Subroutine does not return */
+        longjmp((int *)(in_ECX + 8),6);
+      }
+    }
+  }
+  *(ushort **)(in_ECX + 0x48) = puVar9;
+                    /* WARNING: Subroutine does not return */
+  longjmp((int *)(in_ECX + 8),6);
+}
+
+
+
+
+/* [AUDIT] proposed: xml_appendDecodedChar  (confidence: low)
+ * purpose: Append one decoded character to entity-decode output buffer
+ * vars: param_1=dst
+ */
+/* Global::xml_appendDecodedChar @ 004d94e0 */
+
+void xml_appendDecodedChar(int *param_1,int param_2)
+
+{
+  void *_Src;
+  int iVar1;
+  int *in_ECX;
+  
+  _Src = (void *)*in_ECX;
+  if (_Src != (void *)0x0) {
+    memmove((void *)((int)_Src + in_ECX[1] * -2),_Src,*param_1 - (int)_Src);
+  }
+  *param_1 = *param_1 + param_2 * 2;
+  iVar1 = *param_1;
+  in_ECX[1] = in_ECX[1] + param_2;
+  *in_ECX = iVar1;
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_scanCDATA_withEntities  (confidence: low)
+ * purpose: Scan CDATA-style value applying entity decode (helper for '<!' parser)
+ * vars: param_1=cursor
+ */
+/* Global::xml_scanCDATA_withEntities @ 004d9520 */
+
+ushort * xml_scanCDATA_withEntities(ushort *param_1,short param_2)
+
+{
+  ushort uVar1;
+  byte bVar2;
+  ushort *puVar3;
+  ushort *_Src;
+  ushort *puVar4;
+  int iVar5;
+  
+  if (*param_1 == 0) {
+    return (ushort *)0x0;
+  }
+  _Src = (ushort *)0x0;
+  iVar5 = 0;
+  while( true ) {
+    while( true ) {
+      while( true ) {
+        puVar4 = param_1;
+        if (*puVar4 < 0x80) {
+          bVar2 = (&DAT_00703680)[*puVar4];
+        }
+        else {
+          bVar2 = 0;
+        }
+        if ((bVar2 & 0x10) != 0) break;
+        param_1 = puVar4 + 1;
+      }
+      uVar1 = *puVar4;
+      if (uVar1 != 0xd) break;
+      *puVar4 = 10;
+      param_1 = puVar4 + 1;
+      if (*param_1 == 10) {
+        if (_Src != (ushort *)0x0) {
+          memmove(_Src + -iVar5,_Src,(int)param_1 - (int)_Src);
+        }
+        _Src = puVar4 + 2;
+        iVar5 = iVar5 + 1;
+        param_1 = _Src;
+      }
+    }
+    if (((uVar1 == 0x5d) && (puVar4[1] == 0x5d)) &&
+       ((puVar4[2] == 0x3e || ((puVar4[2] == 0 && (param_2 == 0x3e)))))) break;
+    if (uVar1 == 0) {
+      return (ushort *)0x0;
+    }
+    param_1 = puVar4 + 1;
+  }
+  puVar3 = puVar4;
+  if (_Src != (ushort *)0x0) {
+    memmove(_Src + -iVar5,_Src,(int)puVar4 - (int)_Src);
+    puVar3 = puVar4 + -iVar5;
+  }
+  *puVar3 = 0;
+  return puVar4 + 1;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_scanComment_withEntities  (confidence: low)
+ * purpose: Scan comment-style value applying entity decode (helper)
+ * vars: param_1=cursor
+ */
+/* Global::xml_scanComment_withEntities @ 004d9600 */
+
+ushort * xml_scanComment_withEntities(ushort *param_1,short param_2)
+
+{
+  ushort uVar1;
+  byte bVar2;
+  ushort *puVar3;
+  ushort *_Src;
+  ushort *puVar4;
+  int iVar5;
+  
+  if (*param_1 == 0) {
+    return (ushort *)0x0;
+  }
+  _Src = (ushort *)0x0;
+  iVar5 = 0;
+  while( true ) {
+    while( true ) {
+      while( true ) {
+        puVar4 = param_1;
+        if (*puVar4 < 0x80) {
+          bVar2 = (&DAT_00703680)[*puVar4];
+        }
+        else {
+          bVar2 = 0;
+        }
+        if ((bVar2 & 0x20) != 0) break;
+        param_1 = puVar4 + 1;
+      }
+      uVar1 = *puVar4;
+      if (uVar1 != 0xd) break;
+      *puVar4 = 10;
+      param_1 = puVar4 + 1;
+      if (*param_1 == 10) {
+        if (_Src != (ushort *)0x0) {
+          memmove(_Src + -iVar5,_Src,(int)param_1 - (int)_Src);
+        }
+        _Src = puVar4 + 2;
+        iVar5 = iVar5 + 1;
+        param_1 = _Src;
+      }
+    }
+    if (((uVar1 == 0x2d) && (puVar4[1] == 0x2d)) &&
+       ((puVar4[2] == 0x3e || ((puVar4[2] == 0 && (param_2 == 0x3e)))))) break;
+    if (uVar1 == 0) {
+      return (ushort *)0x0;
+    }
+    param_1 = puVar4 + 1;
+  }
+  puVar3 = puVar4;
+  if (_Src != (ushort *)0x0) {
+    memmove(_Src + -iVar5,_Src,(int)puVar4 - (int)_Src);
+    puVar3 = puVar4 + -iVar5;
+  }
+  *puVar3 = 0;
+  return puVar4 + (puVar4[2] == 0x3e) + 2;
+}
+
+
+
+
+/* [AUDIT] proposed: xml_decodeEntityRef  (confidence: high)
+ * purpose: Decode an '&...;' XML entity reference (named/numeric) to UTF-16 into output
+ * vars: param_1=cursor;local_c=out
+ */
+/* Global::xml_decodeEntityRef @ 004d96f0 */
+
+short * xml_decodeEntityRef(short *param_1)
+
+{
+  short *psVar1;
+  ushort *puVar2;
+  undefined2 uVar3;
+  int iVar4;
+  uint uVar5;
+  short *psVar6;
+  ushort uVar7;
+  uint uVar8;
+  
+  psVar1 = param_1 + 1;
+  psVar6 = psVar1;
+  switch(*psVar1) {
+  case 0x23:
+    iVar4 = 0;
+    if (param_1[2] == 0x78) {
+      uVar8 = (uint)(ushort)param_1[3];
+      psVar6 = param_1 + 3;
+      if (uVar8 == 0x3b) {
+        return psVar6;
+      }
+      while( true ) {
+        while (uVar8 - 0x30 < 10) {
+          puVar2 = (ushort *)(psVar6 + 1);
+          iVar4 = iVar4 * 0x10 + -0x30 + uVar8;
+          psVar6 = psVar6 + 1;
+          uVar8 = (uint)*puVar2;
+        }
+        uVar5 = uVar8 | 0x20;
+        if (5 < uVar5 - 0x61) break;
+        uVar8 = (uint)(ushort)psVar6[1];
+        iVar4 = iVar4 * 0x10 + -0x57 + uVar5;
+        psVar6 = psVar6 + 1;
+      }
+      uVar7 = (ushort)uVar8;
+    }
+    else {
+      uVar7 = param_1[2];
+      uVar8 = (uint)uVar7;
+      psVar6 = param_1 + 2;
+      if (uVar8 == 0x3b) {
+        return psVar6;
+      }
+      while (uVar8 - 0x30 < 10) {
+        uVar7 = psVar6[1];
+        psVar6 = psVar6 + 1;
+        iVar4 = uVar8 + iVar4 * 10 + -0x30;
+        uVar8 = (uint)uVar7;
+      }
+    }
+    if (uVar7 == 0x3b) {
+      param_1 = (short *)utf16_appendCodepoint(param_1,iVar4);
+      xml_appendDecodedChar(&param_1,(int)(psVar6 + 1) - (int)param_1 >> 1);
+      return psVar6 + 1;
+    }
+    break;
+  case 0x61:
+    psVar6 = param_1 + 2;
+    if (param_1[2] == 0x6d) {
+      psVar6 = param_1 + 3;
+      if ((*psVar6 == 0x70) && (psVar6 = param_1 + 4, *psVar6 == 0x3b)) {
+        uVar3 = 0x26;
+        goto LAB_004d9801;
+      }
+    }
+    else if ((((param_1[2] == 0x70) && (psVar6 = param_1 + 3, *psVar6 == 0x6f)) &&
+             (psVar6 = param_1 + 4, *psVar6 == 0x73)) && (psVar6 = param_1 + 5, *psVar6 == 0x3b)) {
+      uVar3 = 0x27;
+      goto LAB_004d9801;
+    }
+    break;
+  case 0x67:
+    psVar6 = param_1 + 2;
+    if ((*psVar6 == 0x74) && (psVar6 = param_1 + 3, *psVar6 == 0x3b)) {
+      uVar3 = 0x3e;
+LAB_004d9801:
+      *param_1 = uVar3;
+      param_1 = psVar1;
+      xml_appendDecodedChar(&param_1,(int)psVar6 + (2 - (int)psVar1) >> 1);
+      return psVar6 + 1;
+    }
+    break;
+  case 0x6c:
+    psVar6 = param_1 + 2;
+    if ((*psVar6 == 0x74) && (psVar6 = param_1 + 3, *psVar6 == 0x3b)) {
+      uVar3 = 0x3c;
+      goto LAB_004d9801;
+    }
+    break;
+  case 0x71:
+    psVar6 = param_1 + 2;
+    if ((((*psVar6 == 0x75) && (psVar6 = param_1 + 3, *psVar6 == 0x6f)) &&
+        (psVar6 = param_1 + 4, *psVar6 == 0x74)) && (psVar6 = param_1 + 5, *psVar6 == 0x3b)) {
+      uVar3 = 0x22;
+      goto LAB_004d9801;
+    }
+  }
+  return psVar6;
 }
 
 
@@ -7760,6 +14343,502 @@ int QuestText_cloneNode(undefined4 key)
   }
   ExceptionList = local_10;
   return node;
+}
+
+
+
+
+/* [AUDIT] proposed: std_Tree_buynode  (confidence: med)
+ * purpose: Allocate+init a red-black tree node (via rbtree_allocNode_28), set color, construct value
+ * vars: key=value
+ */
+/* Global::std_Tree_buynode @ 004d9ae0 */
+
+int std_Tree_buynode(undefined4 param_1)
+
+{
+  int iVar1;
+  
+  iVar1 = rbtree_allocNode_28();
+  *(undefined2 *)(iVar1 + 0xc) = 0;
+  if (iVar1 != -0x10) {
+    u16string_moveConstruct(param_1);
+  }
+  return iVar1;
+}
+
+
+
+
+/* [AUDIT] proposed: std_Tree_insert_rebalance  (confidence: high)
+ * purpose: std::map/set red-black tree insert fixup (rotations/recoloring); _Xlength_error on overflow
+ * vars: in_ECX=tree;piVar3=node
+ */
+/* Global::std_Tree_insert_rebalance @ 004d9c50 */
+
+void std_Tree_insert_rebalance(undefined4 *param_1,char param_2,undefined4 *param_3,undefined4 param_4)
+
+{
+  char cVar1;
+  int *piVar2;
+  int *piVar3;
+  int iVar4;
+  int *piVar5;
+  int *in_ECX;
+  int *piVar6;
+  int *piVar7;
+  
+  if (0x6666664 < (uint)in_ECX[1]) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("map/set<T> too long");
+  }
+  piVar3 = (int *)QuestText_cloneNode(param_4);
+  in_ECX[1] = in_ECX[1] + 1;
+  piVar3[1] = (int)param_3;
+  if (param_3 == (undefined4 *)*in_ECX) {
+    ((undefined4 *)*in_ECX)[1] = piVar3;
+    *(int **)*in_ECX = piVar3;
+    iVar4 = *in_ECX;
+  }
+  else {
+    if (param_2 != '\0') {
+      *param_3 = piVar3;
+      if (param_3 == *(undefined4 **)*in_ECX) {
+        *(int **)*in_ECX = piVar3;
+      }
+      goto LAB_004d9cae;
+    }
+    param_3[2] = piVar3;
+    iVar4 = *in_ECX;
+    if (param_3 != *(undefined4 **)(iVar4 + 8)) goto LAB_004d9cae;
+  }
+  *(int **)(iVar4 + 8) = piVar3;
+LAB_004d9cae:
+  cVar1 = *(char *)(piVar3[1] + 0xc);
+  piVar5 = piVar3;
+  do {
+    if (cVar1 != '\0') {
+      *(undefined1 *)(*(int *)(*in_ECX + 4) + 0xc) = 1;
+      *param_1 = piVar3;
+      return;
+    }
+    piVar7 = (int *)piVar5[1];
+    piVar6 = *(int **)piVar7[1];
+    if (piVar7 == piVar6) {
+      piVar6 = (int *)((undefined4 *)piVar7[1])[2];
+      if ((char)piVar6[3] != '\0') {
+        if (piVar5 == (int *)piVar7[2]) {
+          piVar5 = (int *)piVar7[2];
+          piVar7[2] = *piVar5;
+          if (*(char *)(*piVar5 + 0xd) == '\0') {
+            *(int **)(*piVar5 + 4) = piVar7;
+          }
+          piVar5[1] = piVar7[1];
+          if (piVar7 == *(int **)(*in_ECX + 4)) {
+            *(int **)(*in_ECX + 4) = piVar5;
+          }
+          else {
+            piVar6 = (int *)piVar7[1];
+            if (piVar7 == (int *)*piVar6) {
+              *piVar6 = (int)piVar5;
+            }
+            else {
+              piVar6[2] = (int)piVar5;
+            }
+          }
+          *piVar5 = (int)piVar7;
+          piVar7[1] = (int)piVar5;
+          piVar5 = piVar7;
+        }
+        *(undefined1 *)(piVar5[1] + 0xc) = 1;
+        *(undefined1 *)(*(int *)(piVar5[1] + 4) + 0xc) = 0;
+        piVar7 = *(int **)(piVar5[1] + 4);
+        piVar6 = (int *)*piVar7;
+        *piVar7 = piVar6[2];
+        if (*(char *)(piVar6[2] + 0xd) == '\0') {
+          *(int **)(piVar6[2] + 4) = piVar7;
+        }
+        piVar6[1] = piVar7[1];
+        if (piVar7 == *(int **)(*in_ECX + 4)) {
+          *(int **)(*in_ECX + 4) = piVar6;
+          piVar6[2] = (int)piVar7;
+        }
+        else {
+          piVar2 = (int *)piVar7[1];
+          if (piVar7 == (int *)piVar2[2]) {
+            piVar2[2] = (int)piVar6;
+            piVar6[2] = (int)piVar7;
+          }
+          else {
+            *piVar2 = (int)piVar6;
+            piVar6[2] = (int)piVar7;
+          }
+        }
+        goto LAB_004d9e2a;
+      }
+LAB_004d9d81:
+      *(undefined1 *)(piVar7 + 3) = 1;
+      *(undefined1 *)(piVar6 + 3) = 1;
+      *(undefined1 *)(*(int *)(piVar5[1] + 4) + 0xc) = 0;
+      piVar5 = *(int **)(piVar5[1] + 4);
+    }
+    else {
+      if ((char)piVar6[3] == '\0') goto LAB_004d9d81;
+      if (piVar5 == (int *)*piVar7) {
+        iVar4 = *piVar7;
+        *piVar7 = *(int *)(iVar4 + 8);
+        if (*(char *)(*(int *)(iVar4 + 8) + 0xd) == '\0') {
+          *(int **)(*(int *)(iVar4 + 8) + 4) = piVar7;
+        }
+        *(int *)(iVar4 + 4) = piVar7[1];
+        if (piVar7 == *(int **)(*in_ECX + 4)) {
+          *(int *)(*in_ECX + 4) = iVar4;
+        }
+        else {
+          piVar5 = (int *)piVar7[1];
+          if (piVar7 == (int *)piVar5[2]) {
+            piVar5[2] = iVar4;
+          }
+          else {
+            *piVar5 = iVar4;
+          }
+        }
+        *(int **)(iVar4 + 8) = piVar7;
+        piVar7[1] = iVar4;
+        piVar5 = piVar7;
+      }
+      *(undefined1 *)(piVar5[1] + 0xc) = 1;
+      *(undefined1 *)(*(int *)(piVar5[1] + 4) + 0xc) = 0;
+      piVar7 = *(int **)(piVar5[1] + 4);
+      piVar6 = (int *)piVar7[2];
+      piVar7[2] = *piVar6;
+      if (*(char *)(*piVar6 + 0xd) == '\0') {
+        *(int **)(*piVar6 + 4) = piVar7;
+      }
+      piVar6[1] = piVar7[1];
+      if (piVar7 == *(int **)(*in_ECX + 4)) {
+        *(int **)(*in_ECX + 4) = piVar6;
+      }
+      else {
+        piVar2 = (int *)piVar7[1];
+        if (piVar7 == (int *)*piVar2) {
+          *piVar2 = (int)piVar6;
+        }
+        else {
+          piVar2[2] = (int)piVar6;
+        }
+      }
+      *piVar6 = (int)piVar7;
+LAB_004d9e2a:
+      piVar7[1] = (int)piVar6;
+    }
+    cVar1 = *(char *)(piVar5[1] + 0xc);
+  } while( true );
+}
+
+
+
+
+/* [AUDIT] proposed: std_Tree_insert_rebalance_v2  (confidence: high)
+ * purpose: std::map/set RB-tree insert fixup for a second value type; _Xlength_error guard
+ * vars: in_ECX=tree;piVar3=node
+ */
+/* Global::std_Tree_insert_rebalance_v2 @ 004d9e50 */
+
+void std_Tree_insert_rebalance_v2(undefined4 *param_1,char param_2,undefined4 *param_3,undefined4 param_4)
+
+{
+  char cVar1;
+  int *piVar2;
+  int *piVar3;
+  int iVar4;
+  int *piVar5;
+  int *in_ECX;
+  int *piVar6;
+  int *piVar7;
+  
+  if (0x6666664 < (uint)in_ECX[1]) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("map/set<T> too long");
+  }
+  piVar3 = (int *)std_Tree_buynode(param_4);
+  in_ECX[1] = in_ECX[1] + 1;
+  piVar3[1] = (int)param_3;
+  if (param_3 == (undefined4 *)*in_ECX) {
+    ((undefined4 *)*in_ECX)[1] = piVar3;
+    *(int **)*in_ECX = piVar3;
+    iVar4 = *in_ECX;
+  }
+  else {
+    if (param_2 != '\0') {
+      *param_3 = piVar3;
+      if (param_3 == *(undefined4 **)*in_ECX) {
+        *(int **)*in_ECX = piVar3;
+      }
+      goto LAB_004d9eae;
+    }
+    param_3[2] = piVar3;
+    iVar4 = *in_ECX;
+    if (param_3 != *(undefined4 **)(iVar4 + 8)) goto LAB_004d9eae;
+  }
+  *(int **)(iVar4 + 8) = piVar3;
+LAB_004d9eae:
+  cVar1 = *(char *)(piVar3[1] + 0xc);
+  piVar5 = piVar3;
+  do {
+    if (cVar1 != '\0') {
+      *(undefined1 *)(*(int *)(*in_ECX + 4) + 0xc) = 1;
+      *param_1 = piVar3;
+      return;
+    }
+    piVar7 = (int *)piVar5[1];
+    piVar6 = *(int **)piVar7[1];
+    if (piVar7 == piVar6) {
+      piVar6 = (int *)((undefined4 *)piVar7[1])[2];
+      if ((char)piVar6[3] != '\0') {
+        if (piVar5 == (int *)piVar7[2]) {
+          piVar5 = (int *)piVar7[2];
+          piVar7[2] = *piVar5;
+          if (*(char *)(*piVar5 + 0xd) == '\0') {
+            *(int **)(*piVar5 + 4) = piVar7;
+          }
+          piVar5[1] = piVar7[1];
+          if (piVar7 == *(int **)(*in_ECX + 4)) {
+            *(int **)(*in_ECX + 4) = piVar5;
+          }
+          else {
+            piVar6 = (int *)piVar7[1];
+            if (piVar7 == (int *)*piVar6) {
+              *piVar6 = (int)piVar5;
+            }
+            else {
+              piVar6[2] = (int)piVar5;
+            }
+          }
+          *piVar5 = (int)piVar7;
+          piVar7[1] = (int)piVar5;
+          piVar5 = piVar7;
+        }
+        *(undefined1 *)(piVar5[1] + 0xc) = 1;
+        *(undefined1 *)(*(int *)(piVar5[1] + 4) + 0xc) = 0;
+        piVar7 = *(int **)(piVar5[1] + 4);
+        piVar6 = (int *)*piVar7;
+        *piVar7 = piVar6[2];
+        if (*(char *)(piVar6[2] + 0xd) == '\0') {
+          *(int **)(piVar6[2] + 4) = piVar7;
+        }
+        piVar6[1] = piVar7[1];
+        if (piVar7 == *(int **)(*in_ECX + 4)) {
+          *(int **)(*in_ECX + 4) = piVar6;
+          piVar6[2] = (int)piVar7;
+        }
+        else {
+          piVar2 = (int *)piVar7[1];
+          if (piVar7 == (int *)piVar2[2]) {
+            piVar2[2] = (int)piVar6;
+            piVar6[2] = (int)piVar7;
+          }
+          else {
+            *piVar2 = (int)piVar6;
+            piVar6[2] = (int)piVar7;
+          }
+        }
+        goto LAB_004da02a;
+      }
+LAB_004d9f81:
+      *(undefined1 *)(piVar7 + 3) = 1;
+      *(undefined1 *)(piVar6 + 3) = 1;
+      *(undefined1 *)(*(int *)(piVar5[1] + 4) + 0xc) = 0;
+      piVar5 = *(int **)(piVar5[1] + 4);
+    }
+    else {
+      if ((char)piVar6[3] == '\0') goto LAB_004d9f81;
+      if (piVar5 == (int *)*piVar7) {
+        iVar4 = *piVar7;
+        *piVar7 = *(int *)(iVar4 + 8);
+        if (*(char *)(*(int *)(iVar4 + 8) + 0xd) == '\0') {
+          *(int **)(*(int *)(iVar4 + 8) + 4) = piVar7;
+        }
+        *(int *)(iVar4 + 4) = piVar7[1];
+        if (piVar7 == *(int **)(*in_ECX + 4)) {
+          *(int *)(*in_ECX + 4) = iVar4;
+        }
+        else {
+          piVar5 = (int *)piVar7[1];
+          if (piVar7 == (int *)piVar5[2]) {
+            piVar5[2] = iVar4;
+          }
+          else {
+            *piVar5 = iVar4;
+          }
+        }
+        *(int **)(iVar4 + 8) = piVar7;
+        piVar7[1] = iVar4;
+        piVar5 = piVar7;
+      }
+      *(undefined1 *)(piVar5[1] + 0xc) = 1;
+      *(undefined1 *)(*(int *)(piVar5[1] + 4) + 0xc) = 0;
+      piVar7 = *(int **)(piVar5[1] + 4);
+      piVar6 = (int *)piVar7[2];
+      piVar7[2] = *piVar6;
+      if (*(char *)(*piVar6 + 0xd) == '\0') {
+        *(int **)(*piVar6 + 4) = piVar7;
+      }
+      piVar6[1] = piVar7[1];
+      if (piVar7 == *(int **)(*in_ECX + 4)) {
+        *(int **)(*in_ECX + 4) = piVar6;
+      }
+      else {
+        piVar2 = (int *)piVar7[1];
+        if (piVar7 == (int *)*piVar2) {
+          *piVar2 = (int)piVar6;
+        }
+        else {
+          piVar2[2] = (int)piVar6;
+        }
+      }
+      *piVar6 = (int)piVar7;
+LAB_004da02a:
+      piVar7[1] = (int)piVar6;
+    }
+    cVar1 = *(char *)(piVar5[1] + 0xc);
+  } while( true );
+}
+
+
+
+
+/* [AUDIT] proposed: std_map_insert_unique_v2  (confidence: med)
+ * purpose: std::map insert-unique (second value type) using wide-string comparator
+ * vars: param_3=key;in_ECX=tree
+ */
+/* Global::std_map_insert_unique_v2 @ 004da1a0 */
+
+void std_map_insert_unique_v2(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3,undefined4 param_4)
+
+{
+  undefined4 *puVar1;
+  int iVar2;
+  int *piVar3;
+  undefined4 *puVar4;
+  undefined4 *puVar5;
+  undefined4 *puVar6;
+  int *in_ECX;
+  bool bVar7;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  puVar5 = param_3;
+  puStack_c = &LAB_006e8e70;
+  local_10 = ExceptionList;
+  ExceptionList = &local_10;
+  bVar7 = true;
+  local_8 = 0;
+  puVar1 = (undefined4 *)*in_ECX;
+  puVar4 = (undefined4 *)((undefined4 *)*in_ECX)[1];
+  while (*(char *)((int)puVar4 + 0xd) == '\0') {
+    if ((char)param_2 == '\0') {
+      piVar3 = puVar4 + 4;
+      if (7 < (uint)puVar4[9]) {
+        piVar3 = (int *)*piVar3;
+      }
+      iVar2 = u16string_compare(0,puVar5[4],piVar3,puVar4[8]);
+      bVar7 = iVar2 < 0;
+    }
+    else {
+      puVar1 = puVar5;
+      if (7 < (uint)puVar5[5]) {
+        puVar1 = (undefined4 *)*puVar5;
+      }
+      iVar2 = u16string_compare(0,puVar4[8],puVar1,puVar5[4]);
+      bVar7 = -1 < iVar2;
+    }
+    puVar1 = puVar4;
+    if (bVar7 == false) {
+      puVar4 = (undefined4 *)puVar4[2];
+    }
+    else {
+      puVar4 = (undefined4 *)*puVar4;
+    }
+  }
+  param_2 = puVar1;
+  if (bVar7 != false) {
+    if (puVar1 == *(undefined4 **)*in_ECX) {
+      puVar4 = &param_2;
+      bVar7 = true;
+      goto LAB_004da261;
+    }
+    rbtree_iteratorIncrement();
+  }
+  puVar4 = param_2;
+  puVar6 = puVar5;
+  if (7 < (uint)puVar5[5]) {
+    puVar6 = (undefined4 *)*puVar5;
+  }
+  iVar2 = u16string_compare(0,param_2[8],puVar6,puVar5[4]);
+  if (-1 < iVar2) {
+    *param_1 = puVar4;
+    *(undefined1 *)(param_1 + 1) = 0;
+    ExceptionList = local_10;
+    return;
+  }
+  puVar4 = &param_3;
+LAB_004da261:
+  puVar5 = (undefined4 *)std_Tree_insert_rebalance_v2(puVar4,bVar7,puVar1,puVar5,param_4);
+  *param_1 = *puVar5;
+  *(undefined1 *)(param_1 + 1) = 1;
+  ExceptionList = local_10;
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: std_Tree_destroy_subtree  (confidence: med)
+ * purpose: Post-order traverse+destroy a red-black tree subtree, releasing each node
+ * vars: param_1,param_2=range
+ */
+/* Global::std_Tree_destroy_subtree @ 004da2f0 */
+
+void std_Tree_destroy_subtree(int *param_1,int *param_2)
+
+{
+  char cVar1;
+  int *piVar2;
+  int *piVar3;
+  undefined1 local_c [8];
+  
+  do {
+    do {
+      while( true ) {
+        do {
+          piVar3 = param_1;
+          if (piVar3 == param_2) {
+            return;
+          }
+          std_map_insert_unique(local_c,0,piVar3 + 4,DAT_0076b2a6);
+          param_1 = piVar3;
+        } while (*(char *)((int)piVar3 + 0xd) != '\0');
+        param_1 = (int *)piVar3[2];
+        if (*(char *)((int)param_1 + 0xd) != '\0') break;
+        cVar1 = *(char *)(*param_1 + 0xd);
+        piVar3 = (int *)*param_1;
+        while (cVar1 == '\0') {
+          cVar1 = *(char *)(*piVar3 + 0xd);
+          param_1 = piVar3;
+          piVar3 = (int *)*piVar3;
+        }
+      }
+      param_1 = (int *)piVar3[1];
+    } while (*(char *)((int)param_1 + 0xd) != '\0');
+    do {
+      if (piVar3 != (int *)param_1[2]) break;
+      piVar2 = (int *)param_1[1];
+      piVar3 = param_1;
+      param_1 = piVar2;
+    } while (*(char *)((int)piVar2 + 0xd) == '\0');
+  } while( true );
 }
 
 
@@ -7824,58 +14903,6 @@ void struct_copy3_andCall(undefined4 *src,undefined4 param_2)
 
 
 
-/* [AUDIT] proposed: QuestText_copyTree_b  (confidence: high)
- * purpose: Copies a QuestText red-black tree (nodes via rbtree_copyTreeNode_b), fixing leftmost/rightmost
- * vars: map header
- */
-/* Global::QuestText_copyTree_b @ 004e03c0 */
-
-void QuestText_copyTree_b(int *srcRoot,undefined4 param_2)
-
-{
-  char cVar1;
-  int dstNode;
-  int *root;
-  int *child;
-  int parent;
-  int *leaf;
-  undefined4 uVar7;
-  int *in_ECX;
-  
-  dstNode = *in_ECX;
-  uVar7 = rbtree_copyTreeNode_b(*(undefined4 *)(*srcRoot + 4),dstNode,param_2);
-  *(undefined4 *)(dstNode + 4) = uVar7;
-  root = (int *)*in_ECX;
-  in_ECX[1] = srcRoot[1];
-  child = (int *)root[1];
-  if (*(char *)((int)child + 0xd) != '\0') {
-    *root = (int)root;
-    *(int *)(*in_ECX + 8) = *in_ECX;
-    return;
-  }
-  cVar1 = *(char *)(*child + 0xd);
-  leaf = (int *)*child;
-  while (cVar1 == '\0') {
-    cVar1 = *(char *)(*leaf + 0xd);
-    child = leaf;
-    leaf = (int *)*leaf;
-  }
-  *root = (int)child;
-  dstNode = *(int *)(*in_ECX + 4);
-  parent = *(int *)(dstNode + 8);
-  cVar1 = *(char *)(parent + 0xd);
-  while (cVar1 == '\0') {
-    cVar1 = *(char *)(*(int *)(parent + 8) + 0xd);
-    dstNode = parent;
-    parent = *(int *)(parent + 8);
-  }
-  *(int *)(*in_ECX + 8) = dstNode;
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: QuestText_insertRebalance  (confidence: high)
  * purpose: QuestText red-black tree insert rebalance (rotations/recolor); cap 0x4924922
  * vars: map at *in_ECX
@@ -7908,8 +14935,10 @@ void QuestText_insertRebalance(undefined4 *param_1,char insertLeft,undefined4 *p
       node[9] = 7;
       node[8] = 0;
       *(undefined2 *)(node + 4) = 0;
+                    /* WARNING: Subroutine does not return */
       operator_delete(node);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)node[4]);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -8056,34 +15085,78 @@ LAB_004e0ad7:
 
 
 
-/* [AUDIT] proposed: Container::ctor_default  (confidence: med)
- * purpose: Default-constructs container: null head/tail, allocates sentinel via object_alloc, then initializes rest
- * vars: in_ECX=this; alloc sentinel stored at *in_ECX
+/* [AUDIT] proposed: World::map_find_or_insert_int  (confidence: med)
+ * purpose: RB-tree lower_bound by int key *param_1; if absent builds 7-cap string value and inserts new node
+ * vars: in_ECX=map; key +4; value string cap at +0x18/0x24
  */
-/* Global::Container_ctor_default @ 004e1790 */
+/* Global::World_map_find_or_insert_int @ 004e2df0 */
 
-void Container_ctor_default(undefined4 arg)
+void World_map_find_or_insert_int(int *key)
 
 {
-  undefined4 list;
-  undefined4 *self;
-  uint flag;
+  undefined4 *root;
+  int node;
+  int *in_ECX;
+  undefined4 *cur;
+  undefined4 *child;
+  undefined4 *insertPos;
+  undefined1 local_4c [4];
+  void *local_48 [4];
+  undefined4 local_38;
+  uint local_34;
+  int local_30;
+  void *local_2c;
+  undefined4 local_1c;
+  uint local_18;
+  uint local_14;
   void *local_10;
   undefined1 *puStack_c;
   undefined4 local_8;
   
   local_8 = 0xffffffff;
-  puStack_c = &LAB_006e9638;
+  puStack_c = &LAB_006e9940;
   local_10 = ExceptionList;
+  local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
-  *self = 0;
-  self[1] = 0;
-  list = object_alloc();
-  *self = list;
-  flag = flag & 0xffffff00;
-  local_8 = 1;
-  QuestText_copyTree_b(arg,flag);
+  root = (undefined4 *)*in_ECX;
+  insertPos = root;
+  if (*(char *)((int)root[1] + 0xd) == '\0') {
+    cur = (undefined4 *)root[1];
+    do {
+      if ((int)cur[4] < *key) {
+        child = (undefined4 *)cur[2];
+      }
+      else {
+        child = (undefined4 *)*cur;
+        insertPos = cur;
+      }
+      cur = child;
+    } while (*(char *)((int)child + 0xd) == '\0');
+  }
+  if ((insertPos == root) || (*key < (int)insertPos[4])) {
+    local_30 = *key;
+    local_34 = 7;
+    local_38 = 0;
+    local_48[0] = (void *)((uint)local_48[0] & 0xffff0000);
+    local_8 = 0;
+    u16string_moveConstruct(local_48);
+    local_8 = CONCAT31(local_8._1_3_,1);
+    node = rbtree_allocNode_copyStr(&local_30);
+    rbtree_insertHint_int(local_4c,insertPos,node + 0x10,node);
+    if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
+      operator_delete(local_2c);
+    }
+    local_18 = 7;
+    local_1c = 0;
+    local_2c = (void *)((uint)local_2c & 0xffff0000);
+    if (7 < local_34) {
+                    /* WARNING: Subroutine does not return */
+      operator_delete(local_48[0]);
+    }
+  }
   ExceptionList = local_10;
+  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
   return;
 }
 
@@ -8092,7 +15165,7 @@ void Container_ctor_default(undefined4 arg)
 
 /* [AUDIT] proposed: map::insert_string_key  (confidence: med)
  * purpose: Finds string key via map_lower_bound_string; if not present constructs QuestText node and inserts into map
- * vars: arg=key record; iVar2 found node; string at +0x10/+0x20/+0x24
+ * vars: key=key record; node found node; string at +0x10/+0x20/+0x24
  */
 /* Global::map_insert_string_key @ 004e2f00 */
 
@@ -8156,126 +15229,89 @@ void map_insert_string_key(int key)
   unwind_delete_member();
   local_8 = 0xffffffff;
   listNode_free_ownsString();
+                    /* WARNING: Subroutine does not return */
   operator_delete(valueList);
 }
 
 
 
 
-/* [AUDIT] proposed: map::insert_string_key2  (confidence: med)
- * purpose: Variant of insert_string_key using u16string_replaceRange to build key; inserts node if absent
- * vars: key=key record; node built on stack
+/* [AUDIT] proposed: map_string_operation  (confidence: low)
+ * purpose: Map/string operation with stack buffer and __security_check_cookie
+ * vars: -
  */
-/* Global::map_insert_string_key2 @ 004e3060 */
+/* Global::map_string_operation @ 004e31e0 */
 
-void map_insert_string_key2(int key)
+void map_string_operation(int param_1)
 
 {
-  uint uVar1;
-  int existing;
-  int *keyPtr;
-  int cmp;
+  int iVar1;
+  int *piVar2;
+  int iVar3;
   int *in_ECX;
-  undefined4 keyCopy;
-  undefined4 local_50;
-  void *valueList;
-  undefined4 local_48;
-  undefined1 local_41;
-  undefined1 *local_40;
-  undefined2 local_3c [8];
-  undefined4 local_2c;
-  undefined4 local_28;
-  undefined1 local_24 [16];
+  undefined1 local_60 [4];
+  void *local_5c [4];
+  undefined4 local_4c;
+  uint local_48;
+  void *local_44 [4];
+  undefined4 local_34;
+  uint local_30;
+  void *local_2c;
+  undefined4 local_1c;
+  uint local_18;
   uint local_14;
   void *local_10;
   undefined1 *puStack_c;
   undefined4 local_8;
   
   local_8 = 0xffffffff;
-  puStack_c = &LAB_006e9998;
+  puStack_c = &LAB_006e99d0;
   local_10 = ExceptionList;
-  uVar1 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
-  local_14 = uVar1;
-  existing = map_lower_bound_string(key);
-  if (existing != *in_ECX) {
-    keyPtr = (int *)(existing + 0x10);
-    if (7 < *(uint *)(existing + 0x24)) {
-      keyPtr = (int *)*keyPtr;
+  iVar1 = map_lower_bound_string(param_1);
+  if (iVar1 != *in_ECX) {
+    piVar2 = (int *)(iVar1 + 0x10);
+    if (7 < *(uint *)(iVar1 + 0x24)) {
+      piVar2 = (int *)*piVar2;
     }
-    cmp = u16string_compare(0,*(undefined4 *)(key + 0x10),keyPtr,*(undefined4 *)(existing + 0x20));
-    if (-1 < cmp) {
-      ExceptionList = local_10;
-      __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
-      return;
-    }
+    iVar3 = u16string_compare(0,*(undefined4 *)(param_1 + 0x10),piVar2,*(undefined4 *)(iVar1 + 0x20));
+    if (-1 < iVar3) goto LAB_004e32fb;
   }
-  keyCopy = 0;
-  local_50 = 0;
-  keyCopy = object_alloc(uVar1);
+  local_48 = 7;
+  local_4c = 0;
+  local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
   local_8 = 0;
-  valueList = (void *)0x0;
-  local_48 = 0;
-  valueList = (void *)list_allocNode32(0,0);
-  local_8 = 1;
-  local_28 = 7;
-  local_2c = 0;
-  local_3c[0] = 0;
-  u16string_replaceRange(key,0,0xffffffff);
-  local_40 = local_24;
-  local_8._0_1_ = 2;
-  Container_ctor_default(&keyCopy,&local_41);
-  local_8._0_1_ = 3;
-  std_list_copy_ctor(&valueList);
-  local_8 = CONCAT31(local_8._1_3_,4);
-  cmp = rbtree_allocNode_strKey(local_3c);
-  rbtree_insertHint_str(&local_40,existing,cmp + 0x10,cmp);
-  unwind_delete_member();
-  local_8 = 0xffffffff;
-  listNode_free_ownsString();
-  operator_delete(valueList);
-}
-
-
-
-
-/* [AUDIT] proposed: map::lower_bound_string  (confidence: high)
- * purpose: RB-tree search by string key comparing via u16string_compare; returns nearest node (lower_bound)
- * vars: in_ECX=map; key key; cmp key at +8, cap +0x14
- */
-/* Global::map_lower_bound_string @ 004e3790 */
-
-undefined4 * map_lower_bound_string(undefined4 *key)
-
-{
-  char cVar1;
-  undefined4 *result;
-  undefined4 *keyPtr;
-  int cmp;
-  int *in_ECX;
-  undefined4 *node;
-  
-  node = (undefined4 *)((undefined4 *)*in_ECX)[1];
-  cVar1 = *(char *)((int)node + 0xd);
-  result = (undefined4 *)*in_ECX;
-  while (cVar1 == '\0') {
-    keyPtr = key;
-    if (7 < (uint)key[5]) {
-      keyPtr = (undefined4 *)*key;
-    }
-    cmp = u16string_compare(0,node[8],keyPtr,key[4]);
-    if (cmp < 0) {
-      keyPtr = (undefined4 *)node[2];
-      node = result;
-    }
-    else {
-      keyPtr = (undefined4 *)*node;
-    }
-    result = node;
-    node = keyPtr;
-    cVar1 = *(char *)((int)keyPtr + 0xd);
+  local_30 = 7;
+  local_34 = 0;
+  local_44[0] = (void *)((uint)local_44[0] & 0xffff0000);
+  u16string_replaceRange(param_1,0,0xffffffff);
+  u16string_moveConstruct(local_5c);
+  local_8 = CONCAT31(local_8._1_3_,1);
+  iVar3 = node_ctor_2strings(local_44);
+  map_insertHint_strKey(local_60,iVar1,iVar3 + 0x10,iVar3);
+  if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_2c);
   }
-  return result;
+  local_18 = 7;
+  local_1c = 0;
+  local_2c = (void *)((uint)local_2c & 0xffff0000);
+  if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_44[0]);
+  }
+  local_30 = 7;
+  local_34 = 0;
+  local_44[0] = (void *)((uint)local_44[0] & 0xffff0000);
+  if (7 < local_48) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_5c[0]);
+  }
+LAB_004e32fb:
+  ExceptionList = local_10;
+  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
+  return;
 }
 
 
@@ -8491,6 +15527,7 @@ LAB_004e4519:
       std_vector_insert_one_8_seh(&local_a0);
       local_8 = 0xffffffff;
       listNode_free_ownsString();
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_a0);
     }
     iVar7 = *(int *)(local_a4 + 0x34);
@@ -8653,25 +15690,18 @@ LAB_004e49f7:
 
 
 
-/* [AUDIT] proposed: format_object_singular_name  (confidence: med)
- * purpose: Formats singular localized name for creature/object from record ('singular'); handles name-vs-generic
- * vars: tokenTree=record; +4 name ptr; NameGen_generateRegionName fallback
+/* [AUDIT] proposed: GameController::format_region_singular  (confidence: med)
+ * purpose: Builds localized region name string ('singular') from region record fields (+0x18..+0x20)
+ * vars: tokenTree=region; map_insert_string_key map insert
  */
-/* Global::format_object_singular_name @ 004e5a20 */
+/* Global::GameController_format_region_singular @ 004e5590 */
 
-void format_object_singular_name(undefined4 param_1,undefined4 param_2,char *item,undefined4 idA,
-                 undefined4 idB)
+void GameController_format_region_singular(undefined4 param_1,undefined4 param_2,int zone)
 
 {
   undefined4 text;
   int fileHandle;
-  undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
-  undefined4 extraout_EDX_01;
   void **nameBuf;
-  undefined4 uVar4;
-  undefined4 local_84;
-  undefined4 local_80;
   undefined4 local_7c;
   undefined4 local_78;
   void *local_74 [5];
@@ -8680,7 +15710,7 @@ void format_object_singular_name(undefined4 param_1,undefined4 param_2,char *ite
   undefined4 local_4c;
   uint local_48;
   void *local_44 [4];
-  int local_34;
+  undefined4 local_34;
   uint local_30;
   undefined4 local_2c;
   int local_1c;
@@ -8691,112 +15721,72 @@ void format_object_singular_name(undefined4 param_1,undefined4 param_2,char *ite
   undefined4 local_8;
   
   local_8 = 0xffffffff;
-  puStack_c = &LAB_006e9dc8;
+  puStack_c = &LAB_006e9ce0;
   local_10 = ExceptionList;
   local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
-  local_7c = idA;
-  local_80 = idB;
   local_78 = param_2;
-  uVar4 = 0;
-  Terrain_sampleBlockAt_fwd(local_44,item);
-  local_8._0_1_ = 0;
-  local_8._1_3_ = 0;
-  if (local_34 == 0) {
-    u16string_assignCStr(&PTR_006fccac);
-    text = extraout_EDX;
+  local_30 = 7;
+  local_34 = 0;
+  local_44[0] = (void *)((uint)local_44[0] & 0xffff0000);
+  u16string_assignPtrLen(L"singular",8);
+  local_8 = 0;
+  text = WorldMap_lookupTileValue(local_5c,*(undefined4 *)(zone + 0x18),*(undefined4 *)(zone + 0x1c));
+  nameBuf = local_44;
+  local_8._0_1_ = 1;
+  map_insert_string_key(text);
+  text = rbtree_eraseByStringKey(nameBuf);
+  local_2c = (void *)((uint)local_2c._2_2_ << 0x10);
+  local_18 = 7;
+  local_1c = 0;
+  u16string_replaceRange(text,0,0xffffffff);
+  if (7 < local_48) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_5c[0]);
   }
-  else {
-    u16string_assignCStr(L"singular");
-    nameBuf = local_5c;
-    local_8._0_1_ = 1;
-    map_insert_string_key2(local_44);
-    text = rbtree_eraseByStringKey(nameBuf);
-    local_2c = (void *)((uint)local_2c._2_2_ << 0x10);
-    local_18 = 7;
-    local_1c = 0;
-    u16string_replaceRange(text,0,0xffffffff);
-    local_8._0_1_ = 3;
-    if (7 < local_48) {
-      operator_delete(local_5c[0]);
-    }
-    local_48 = 7;
-    local_4c = 0;
-    local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
-    if (local_1c == 0) {
-      u16string_assignCStr(&PTR_006fccac);
-      text = extraout_EDX_00;
-    }
-    else {
-      local_84 = 0x40;
-      fileHandle = std_wstring_findSubstr(&local_84,0,1);
-      if (fileHandle != -1) {
-        if ((*(int *)(item + 4) == 0) || (*item == '\0')) {
-          text = NameGen_generateRegionName(local_74,local_7c,local_80);
-          local_8._0_1_ = 5;
-          std_wstring_replace(fileHandle,1,text,0,0xffffffff);
-          if (7 < local_60) {
-            operator_delete(local_74[0]);
-          }
-        }
-        else {
-          text = NameGen_initFirstNameTables(local_74,*(int *)(item + 4),0xffffffff);
-          local_8._0_1_ = 4;
-          std_wstring_replace(fileHandle,1,text,0,0xffffffff);
-          std_string_FreeMember();
-        }
-      }
-      u16string_moveConstruct(&local_2c);
-      text = extraout_EDX_01;
-    }
-    if (7 < local_18) {
-      operator_delete(local_2c);
-    }
-    local_2c = (void *)((uint)local_2c & 0xffff0000);
-    local_1c = 0;
-    local_18 = 7;
-  }
+  local_48 = 7;
+  local_4c = 0;
+  local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
+  local_8._0_1_ = 4;
   if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
+  local_30 = 7;
+  local_34 = 0;
+  local_44[0] = (void *)((uint)local_44[0] & 0xffff0000);
+  if (local_1c == 0) {
+    u16string_assignCStr(&PTR_006fccac);
+  }
+  else {
+    local_7c = 0x40;
+    fileHandle = std_wstring_findSubstr(&local_7c,0,1);
+    if (fileHandle != -1) {
+      text = NameGen_initFirstNameTables(local_74,*(undefined4 *)(zone + 0x20),0xffffffff);
+      local_8._0_1_ = 5;
+      std_wstring_replace(fileHandle,1,text,0,0xffffffff);
+      if (7 < local_60) {
+                    /* WARNING: Subroutine does not return */
+        operator_delete(local_74[0]);
+      }
+    }
+    u16string_moveConstruct(&local_2c);
+  }
+  if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_2c);
+  }
   ExceptionList = local_10;
-  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc,text,uVar4);
+  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
   return;
 }
 
 
 
 
-/* [AUDIT] proposed: color_equals3  (confidence: med)
- * purpose: Compares 3 consecutive bytes (RGB triple) at in_ECX against in_ECX[param_1]; returns 1 if equal
- * vars: in_ECX=pixel; loops 3 channels
- */
-/* Global::color_equals3 @ 004e6bd0 */
-
-undefined1 color_equals3(int other)
-
-{
-  char *color;
-  int i;
-  
-  i = 0;
-  other = other - (int)color;
-  do {
-    if (*color != color[other]) {
-      return 0;
-    }
-    i = i + 1;
-    color = color + 1;
-  } while (i < 3);
-  return 1;
-}
-
-
-
-
 /* [AUDIT] proposed: vec3_divide_scalar  (confidence: med)
- * purpose: Divides an int[3] vector (color) by scalar param_2 into other
- * vars: other=out; color=vec; param_2=divisor
+ * purpose: Divides an int[3] vector (in_ECX) by scalar param_2 into param_1
+ * vars: param_1=out; in_ECX=vec; param_2=divisor
  */
 /* Global::vec3_divide_scalar @ 004e6c00 */
 
@@ -8877,6 +15867,7 @@ void VoxelModel_load_from_file_or_buffer(int param_1,size_t size,int flip)
                  (ulonglong)uVar3 << 0x20);
       VoxelModel_set_data(depth,size,param_1,pcVar1,flip);
       if (pcVar1 != (char *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(pcVar1);
       }
     }
@@ -8929,10 +15920,12 @@ void VoxelModel_load_from_file_or_buffer(int param_1,size_t size,int flip)
       local_14 = avail;
       VoxelModel_set_data(param_1,iVar7,cursor,pcVar1,flip);
       if (pcVar1 != (char *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(pcVar1);
       }
     }
     if (fileData != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(fileData);
     }
   }
@@ -8943,1953 +15936,9 @@ void VoxelModel_load_from_file_or_buffer(int param_1,size_t size,int flip)
 
 
 
-/* [AUDIT] proposed: VoxelModel::allocate  (confidence: med)
- * purpose: Sets voxel dimensions (+0x44/0x48/0x4c) and allocates zeroed w*h*d*3 color buffer at +0x30
- * vars: in_ECX=model; data +0x30
- */
-/* Global::VoxelModel_allocate @ 004e75c0 */
-
-void VoxelModel_allocate(undefined4 width,undefined4 height,int depth)
-
-{
-  longlong byteCount;
-  void *_Dst;
-  int self;
-  
-  *(undefined4 *)(self + 0x44) = width;
-  *(undefined4 *)(self + 0x48) = height;
-  *(int *)(self + 0x4c) = depth;
-  if (*(void **)(self + 0x30) != (void *)0x0) {
-    operator_delete__(*(void **)(self + 0x30));
-    *(undefined4 *)(self + 0x30) = 0;
-  }
-  if (((0 < *(int *)(self + 0x44)) && (0 < *(int *)(self + 0x48))) &&
-     (0 < *(int *)(self + 0x4c))) {
-    byteCount = (ulonglong)(uint)(*(int *)(self + 0x48) * *(int *)(self + 0x44) * depth) * 3;
-    _Dst = (void *)operator_new_wrapper(-(uint)((int)((ulonglong)byteCount >> 0x20) != 0) | (uint)byteCount);
-    *(void **)(self + 0x30) = _Dst;
-    memset(_Dst,0,*(int *)(self + 0x48) * *(int *)(self + 0x4c) * *(int *)(self + 0x44) * 3);
-  }
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: VoxelModel::set_data  (confidence: high)
- * purpose: Copies voxel color data into model, scans for axis-marker voxels (RGB axes) as anchors, then builds mesh
- * vars: self=model; markers -1/0/0 etc; std_vector_push_back_0xc anchor
- */
-/* Global::VoxelModel_set_data @ 004e7650 */
-
-void VoxelModel_set_data(undefined4 width,undefined4 height,int depth,void *srcPixels,char noRemap)
-
-{
-  longlong lVar1;
-  void *_Dst;
-  int in_ECX;
-  undefined2 *puVar2;
-  int iVar3;
-  int x;
-  int z;
-  int y;
-  undefined4 *puVar7;
-  int iVar8;
-  char colorRed [4];
-  char colorGreen [4];
-  char colorBlue [4];
-  undefined2 local_30;
-  undefined1 local_2e;
-  int local_2c;
-  int local_28;
-  int local_24;
-  int local_20;
-  int local_1c;
-  int local_18;
-  int local_14;
-  int local_10;
-  int local_c;
-  uint local_8;
-  
-  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  *(undefined4 *)(in_ECX + 0x44) = width;
-  *(undefined4 *)(in_ECX + 0x48) = height;
-  *(int *)(in_ECX + 0x4c) = depth;
-  if (*(void **)(in_ECX + 0x30) != (void *)0x0) {
-    operator_delete__(*(void **)(in_ECX + 0x30));
-    *(undefined4 *)(in_ECX + 0x30) = 0;
-  }
-  if (((0 < *(int *)(in_ECX + 0x44)) && (0 < *(int *)(in_ECX + 0x48))) &&
-     (0 < *(int *)(in_ECX + 0x4c))) {
-    lVar1 = (ulonglong)(uint)(*(int *)(in_ECX + 0x48) * *(int *)(in_ECX + 0x44) * depth) * 3;
-    _Dst = (void *)operator_new_wrapper(-(uint)((int)((ulonglong)lVar1 >> 0x20) != 0) | (uint)lVar1);
-    *(void **)(in_ECX + 0x30) = _Dst;
-    memcpy(_Dst,srcPixels,
-           *(int *)(in_ECX + 0x48) * *(int *)(in_ECX + 0x4c) * *(int *)(in_ECX + 0x44) * 3);
-  }
-  puVar7 = (undefined4 *)(in_ECX + 0x10);
-  *(undefined4 *)(in_ECX + 8) = *(undefined4 *)(in_ECX + 4);
-  *(undefined4 *)(in_ECX + 0x14) = *puVar7;
-  iVar8 = in_ECX + 0x1c;
-  *(undefined4 *)(in_ECX + 0x20) = *(undefined4 *)(in_ECX + 0x1c);
-  if ((noRemap == '\0') && (x = 0, 0 < *(int *)(in_ECX + 0x44))) {
-    do {
-      y = 0;
-      if (0 < *(int *)(in_ECX + 0x48)) {
-        do {
-          z = 0;
-          if (0 < *(int *)(in_ECX + 0x4c)) {
-            colorGreen[0] = -1;
-            colorGreen[1] = '\0';
-            colorGreen[2] = 0;
-            colorRed[0] = '\0';
-            colorRed[1] = -1;
-            colorRed[2] = 0;
-            colorBlue[0] = '\0';
-            colorBlue[1] = '\0';
-            colorBlue[2] = 0xff;
-            do {
-              if (((x < 0) || (y < 0)) ||
-                 ((z < 0 ||
-                  (((*(int *)(in_ECX + 0x44) <= x || (*(int *)(in_ECX + 0x48) <= y)) ||
-                   (*(int *)(in_ECX + 0x4c) <= z)))))) {
-                puVar2 = (undefined2 *)&DAT_0076b340;
-              }
-              else {
-                puVar2 = (undefined2 *)
-                         (((*(int *)(in_ECX + 0x48) * z + y) * *(int *)(in_ECX + 0x44) +
-                          x) * 3 + *(int *)(in_ECX + 0x30));
-              }
-              local_30 = *puVar2;
-              local_2e = *(undefined1 *)(puVar2 + 1);
-              iVar3 = 0;
-              do {
-                if (*(char *)((int)&local_30 + iVar3) != colorGreen[iVar3]) goto LAB_004e77c5;
-                iVar3 = iVar3 + 1;
-              } while (iVar3 < 3);
-              local_20 = x;
-              local_1c = y;
-              local_18 = z;
-              std_vector_push_back_0xc(&local_20);
-LAB_004e77c5:
-              iVar3 = 0;
-              do {
-                if (*(char *)((int)&local_30 + iVar3) != colorRed[iVar3]) goto LAB_004e77f5;
-                iVar3 = iVar3 + 1;
-              } while (iVar3 < 3);
-              local_2c = x;
-              local_28 = y;
-              local_24 = z;
-              std_vector_push_back_0xc(&local_2c);
-LAB_004e77f5:
-              iVar3 = 0;
-              do {
-                if (*(char *)((int)&local_30 + iVar3) != colorBlue[iVar3]) goto LAB_004e7825;
-                iVar3 = iVar3 + 1;
-              } while (iVar3 < 3);
-              local_14 = x;
-              local_10 = y;
-              local_c = z;
-              std_vector_push_back_0xc(&local_14);
-LAB_004e7825:
-              z = z + 1;
-            } while (z < *(int *)(in_ECX + 0x4c));
-          }
-          y = y + 1;
-        } while (y < *(int *)(in_ECX + 0x48));
-      }
-      x = x + 1;
-    } while (x < *(int *)(in_ECX + 0x44));
-  }
-  if (*(char *)(in_ECX + 0x56) == '\0') {
-    VoxelModel_build_mesh(puVar7,iVar8);
-  }
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: VoxelModel::build_mesh  (confidence: high)
- * purpose: Builds render mesh from voxel grid: generates per-face quads with ambient occlusion, colors and normals into vertex buffers
- * vars: in_ECX=model; huge stack of vertex temps; AO via VoxelModel_compute_ao
- */
-/* Global::VoxelModel_build_mesh @ 004e7870 */
-
-void VoxelModel_build_mesh(void)
-
-{
-  void *pvVar1;
-  int *piVar2;
-  char cVar3;
-  uint uVar4;
-  undefined4 uVar5;
-  undefined1 *puVar6;
-  int self;
-  int iVar7;
-  short sVar8;
-  int *piVar9;
-  int iVar10;
-  void *pvVar11;
-  float10 fVar12;
-  float fVar13;
-  void *local_c04;
-  void *local_c00;
-  undefined4 local_bfc;
-  void *local_bf8;
-  void *local_bf4;
-  undefined4 local_bf0;
-  int *local_bec;
-  void *local_be8;
-  float local_be4;
-  float local_be0;
-  int local_bdc;
-  byte *local_bd8;
-  undefined1 *local_bd4;
-  undefined1 *local_bd0;
-  undefined4 local_b0c;
-  undefined4 local_b08;
-  undefined4 local_b04;
-  int local_b00;
-  int *local_afc;
-  void *local_af8;
-  undefined4 local_af4;
-  undefined4 local_af0;
-  undefined4 local_aec;
-  undefined4 local_ae8;
-  undefined4 local_ae4;
-  undefined4 local_ae0;
-  int local_adc;
-  int local_ad8;
-  int local_ad4;
-  undefined4 local_ad0;
-  undefined4 local_acc;
-  undefined4 local_ac8;
-  undefined4 local_ac4;
-  undefined4 local_ac0;
-  undefined4 local_abc;
-  undefined4 local_ab8;
-  undefined4 local_ab4;
-  undefined4 local_ab0;
-  undefined4 local_aac;
-  undefined4 local_aa8;
-  undefined4 local_aa4;
-  undefined4 local_aa0;
-  undefined4 local_a9c;
-  undefined4 local_a98;
-  int local_a94;
-  int *local_a90;
-  int local_a8c;
-  int local_a88;
-  int *local_a84;
-  int local_a80;
-  undefined4 local_a7c;
-  undefined4 local_a78;
-  undefined4 local_a74;
-  int local_a70;
-  int *local_a6c;
-  void *local_a68;
-  undefined4 local_a64;
-  undefined4 local_a60;
-  undefined4 local_a5c;
-  undefined4 local_a58;
-  undefined4 local_a54;
-  undefined4 local_a50;
-  int local_a4c;
-  int *local_a48;
-  int local_a44;
-  undefined4 local_a40;
-  undefined4 local_a3c;
-  undefined4 local_a38;
-  undefined4 local_a34;
-  undefined4 local_a30;
-  undefined4 local_a2c;
-  int local_a28;
-  int *local_a24;
-  void *local_a20;
-  undefined4 local_a1c;
-  undefined4 local_a18;
-  undefined4 local_a14;
-  undefined4 local_a10;
-  undefined4 local_a0c;
-  undefined4 local_a08;
-  int local_a04;
-  int *local_a00;
-  void *local_9fc;
-  int local_9f8;
-  int local_9f4;
-  int local_9f0;
-  undefined4 local_9ec;
-  undefined4 local_9e8;
-  undefined4 local_9e4;
-  undefined4 local_9e0;
-  undefined4 local_9dc;
-  undefined4 local_9d8;
-  undefined4 local_9d4;
-  undefined4 local_9d0;
-  undefined4 local_9cc;
-  undefined4 local_9c8;
-  undefined4 local_9c4;
-  undefined4 local_9c0;
-  int local_9bc;
-  int local_9b8;
-  void *local_9b4;
-  int local_9b0;
-  int local_9ac;
-  int local_9a8;
-  undefined4 local_9a4;
-  undefined4 local_9a0;
-  undefined4 local_99c;
-  undefined4 local_998;
-  undefined4 local_994;
-  undefined4 local_990;
-  undefined4 local_98c;
-  undefined4 local_988;
-  undefined4 local_984;
-  undefined4 local_980;
-  undefined4 local_97c;
-  undefined4 local_978;
-  int local_974;
-  int local_970;
-  void *local_96c;
-  int local_968;
-  int *local_964;
-  int local_960;
-  undefined4 local_95c;
-  undefined4 local_958;
-  undefined4 local_954;
-  undefined4 local_950;
-  undefined4 local_94c;
-  undefined4 local_948;
-  undefined4 local_944;
-  undefined4 local_940;
-  undefined4 local_93c;
-  undefined4 local_938;
-  undefined4 local_934;
-  undefined4 local_930;
-  int local_92c;
-  int *local_928;
-  void *local_924;
-  int local_920;
-  int *local_91c;
-  void *local_918;
-  undefined4 local_914;
-  undefined4 local_910;
-  undefined4 local_90c;
-  undefined4 local_908;
-  undefined4 local_904;
-  undefined4 local_900;
-  undefined4 local_8fc;
-  undefined4 local_8f8;
-  undefined4 local_8f4;
-  undefined4 local_8f0;
-  undefined4 local_8ec;
-  undefined4 local_8e8;
-  int local_8e4;
-  void *local_8e0;
-  void *local_8dc;
-  undefined4 local_8d8;
-  undefined4 local_8d4;
-  undefined4 local_8d0;
-  undefined4 local_8cc;
-  undefined4 local_8c8;
-  undefined4 local_8c4;
-  int local_8c0;
-  int local_8bc;
-  void *local_8b8;
-  undefined4 local_8b4;
-  undefined4 local_8b0;
-  undefined4 local_8ac;
-  undefined4 local_8a8;
-  undefined4 local_8a4;
-  undefined4 local_8a0;
-  undefined4 local_89c;
-  undefined4 local_898;
-  undefined4 local_894;
-  undefined4 local_890;
-  undefined4 local_88c;
-  undefined4 local_888;
-  int local_884;
-  void *local_880;
-  int local_87c;
-  int local_878;
-  int local_874;
-  void *local_870;
-  undefined4 local_86c;
-  undefined4 local_868;
-  undefined4 local_864;
-  undefined4 local_860;
-  undefined4 local_85c;
-  undefined4 local_858;
-  undefined4 local_854;
-  undefined4 local_850;
-  undefined4 local_84c;
-  undefined4 local_848;
-  undefined4 local_844;
-  undefined4 local_840;
-  int local_83c;
-  void *local_838;
-  void *local_834;
-  int local_830;
-  int *local_82c;
-  int local_828;
-  undefined4 local_824;
-  undefined4 local_820;
-  undefined4 local_81c;
-  undefined4 local_818;
-  undefined4 local_814;
-  undefined4 local_810;
-  undefined4 local_80c;
-  undefined4 local_808;
-  undefined4 local_804;
-  undefined4 local_800;
-  undefined4 local_7fc;
-  undefined4 local_7f8;
-  int local_7f4;
-  int *local_7f0;
-  int local_7ec;
-  int local_7e8;
-  int local_7e4;
-  int local_7e0;
-  undefined4 local_7dc;
-  undefined4 local_7d8;
-  undefined4 local_7d4;
-  undefined4 local_7d0;
-  undefined4 local_7cc;
-  undefined4 local_7c8;
-  int local_7c4;
-  void *local_7c0;
-  int local_7bc;
-  undefined4 local_7b8;
-  undefined4 local_7b4;
-  undefined4 local_7b0;
-  float local_7ac;
-  float fStack_7a8;
-  float local_7a4;
-  undefined4 uStack_7a0;
-  undefined8 local_79c;
-  undefined8 local_794;
-  float local_78c;
-  float fStack_788;
-  byte *local_784;
-  undefined4 uStack_780;
-  float local_77c;
-  float fStack_778;
-  byte *local_774;
-  undefined4 uStack_770;
-  undefined8 local_76c;
-  undefined8 local_764;
-  undefined8 local_75c;
-  undefined8 local_754;
-  float local_74c;
-  float fStack_748;
-  float local_744;
-  undefined4 uStack_740;
-  float local_73c;
-  float fStack_738;
-  float local_734;
-  undefined4 uStack_730;
-  float local_72c;
-  float fStack_728;
-  byte *local_724;
-  undefined4 uStack_720;
-  float local_71c;
-  float fStack_718;
-  byte *local_714;
-  undefined4 uStack_710;
-  undefined8 local_70c;
-  undefined8 local_704;
-  float local_6fc;
-  float fStack_6f8;
-  float local_6f4;
-  undefined4 uStack_6f0;
-  float local_6ec;
-  float fStack_6e8;
-  float local_6e4;
-  undefined4 uStack_6e0;
-  undefined8 local_6dc;
-  undefined8 local_6d4;
-  float local_6cc;
-  float fStack_6c8;
-  byte *local_6c4;
-  undefined4 uStack_6c0;
-  float local_6bc;
-  float fStack_6b8;
-  byte *local_6b4;
-  undefined4 uStack_6b0;
-  undefined8 local_6ac;
-  undefined8 local_6a4;
-  float local_69c;
-  float fStack_698;
-  float local_694;
-  undefined4 uStack_690;
-  float local_68c;
-  float fStack_688;
-  float local_684;
-  undefined4 uStack_680;
-  float local_67c;
-  float fStack_678;
-  float local_674;
-  undefined4 uStack_670;
-  float local_66c;
-  float fStack_668;
-  byte *local_664;
-  undefined4 uStack_660;
-  float local_65c;
-  float fStack_658;
-  byte *local_654;
-  undefined4 uStack_650;
-  undefined8 local_64c;
-  undefined8 local_644;
-  undefined8 local_63c;
-  undefined8 local_634;
-  float local_62c;
-  float fStack_628;
-  float local_624;
-  undefined4 uStack_620;
-  float local_61c;
-  float fStack_618;
-  float local_614;
-  undefined4 uStack_610;
-  float local_60c;
-  float fStack_608;
-  byte *local_604;
-  undefined4 uStack_600;
-  float local_5fc;
-  float fStack_5f8;
-  byte *local_5f4;
-  undefined4 uStack_5f0;
-  undefined8 local_5ec;
-  undefined8 local_5e4;
-  undefined8 local_5dc;
-  undefined8 local_5d4;
-  float local_5cc;
-  float fStack_5c8;
-  float local_5c4;
-  undefined4 uStack_5c0;
-  float local_5bc;
-  float fStack_5b8;
-  float local_5b4;
-  undefined4 uStack_5b0;
-  float local_5ac;
-  float fStack_5a8;
-  byte *local_5a4;
-  undefined4 uStack_5a0;
-  float local_59c;
-  float fStack_598;
-  byte *local_594;
-  undefined4 uStack_590;
-  undefined8 local_58c;
-  undefined8 local_584;
-  float local_57c;
-  float fStack_578;
-  float local_574;
-  undefined4 uStack_570;
-  float local_56c;
-  float fStack_568;
-  float local_564;
-  undefined4 uStack_560;
-  undefined8 local_55c;
-  undefined8 local_554;
-  float local_54c;
-  float fStack_548;
-  byte *local_544;
-  undefined4 uStack_540;
-  float local_53c;
-  float fStack_538;
-  byte *local_534;
-  undefined4 uStack_530;
-  undefined8 local_52c;
-  undefined8 local_524;
-  float local_51c;
-  float fStack_518;
-  float local_514;
-  undefined4 uStack_510;
-  float local_50c;
-  float fStack_508;
-  float local_504;
-  undefined4 uStack_500;
-  undefined8 local_4fc;
-  undefined8 local_4f4;
-  float local_4ec;
-  float fStack_4e8;
-  byte *local_4e4;
-  undefined4 uStack_4e0;
-  float local_4dc;
-  float fStack_4d8;
-  byte *local_4d4;
-  undefined4 uStack_4d0;
-  undefined8 local_4cc;
-  undefined8 local_4c4;
-  float local_4bc;
-  float fStack_4b8;
-  float local_4b4;
-  undefined4 uStack_4b0;
-  float local_4ac;
-  float fStack_4a8;
-  float local_4a4;
-  undefined4 uStack_4a0;
-  undefined8 local_49c;
-  undefined8 local_494;
-  float local_48c;
-  float fStack_488;
-  byte *local_484;
-  undefined4 uStack_480;
-  float local_47c;
-  float fStack_478;
-  byte *local_474;
-  undefined4 uStack_470;
-  undefined8 local_46c;
-  undefined8 local_464;
-  float local_45c;
-  float fStack_458;
-  float local_454;
-  undefined4 uStack_450;
-  float local_44c;
-  float fStack_448;
-  float local_444;
-  undefined4 uStack_440;
-  undefined8 local_43c;
-  undefined8 local_434;
-  float local_42c;
-  float fStack_428;
-  byte *local_424;
-  undefined4 uStack_420;
-  float local_41c;
-  float fStack_418;
-  byte *local_414;
-  undefined4 uStack_410;
-  undefined8 local_40c;
-  undefined8 local_404;
-  float local_3fc;
-  float fStack_3f8;
-  float local_3f4;
-  undefined4 uStack_3f0;
-  float local_3ec;
-  float fStack_3e8;
-  float local_3e4;
-  undefined4 uStack_3e0;
-  undefined8 local_3dc;
-  undefined8 local_3d4;
-  float local_3cc;
-  float fStack_3c8;
-  byte *local_3c4;
-  undefined4 uStack_3c0;
-  float local_3bc;
-  float fStack_3b8;
-  byte *local_3b4;
-  undefined4 uStack_3b0;
-  undefined8 local_3ac;
-  undefined8 local_3a4;
-  float local_39c;
-  float fStack_398;
-  float local_394;
-  undefined4 uStack_390;
-  float local_38c;
-  float fStack_388;
-  float local_384;
-  undefined4 uStack_380;
-  undefined8 local_37c;
-  undefined8 local_374;
-  float local_36c;
-  float fStack_368;
-  byte *local_364;
-  undefined4 uStack_360;
-  undefined8 local_35c;
-  undefined8 local_354;
-  undefined8 local_34c;
-  undefined8 local_344;
-  float local_33c;
-  float fStack_338;
-  byte *local_334;
-  undefined4 uStack_330;
-  float local_32c;
-  float fStack_328;
-  float local_324;
-  undefined8 local_320;
-  float local_318;
-  float local_314;
-  float fStack_310;
-  float local_30c;
-  float fStack_308;
-  float local_304;
-  float fStack_300;
-  float local_2fc;
-  float fStack_2f8;
-  float local_2f4;
-  float fStack_2f0;
-  float local_2ec;
-  float fStack_2e8;
-  float local_2e4;
-  float fStack_2e0;
-  float local_2dc;
-  float fStack_2d8;
-  float local_2d4;
-  float fStack_2d0;
-  float local_2cc;
-  float fStack_2c8;
-  float local_2c4;
-  float fStack_2c0;
-  float local_2bc;
-  float fStack_2b8;
-  float local_2b4;
-  float fStack_2b0;
-  float local_2ac;
-  float fStack_2a8;
-  float local_2a4;
-  float fStack_2a0;
-  float local_29c;
-  float fStack_298;
-  float local_294;
-  float fStack_290;
-  float local_28c;
-  float fStack_288;
-  float local_284;
-  float fStack_280;
-  float local_27c;
-  float fStack_278;
-  float local_274;
-  float fStack_270;
-  float local_26c;
-  float fStack_268;
-  float local_264;
-  float fStack_260;
-  float local_25c;
-  float fStack_258;
-  float local_254;
-  float fStack_250;
-  float local_24c;
-  float fStack_248;
-  float local_244;
-  float fStack_240;
-  float local_23c;
-  float fStack_238;
-  float local_234;
-  float fStack_230;
-  float local_22c;
-  float fStack_228;
-  float local_224;
-  float fStack_220;
-  float local_21c;
-  float fStack_218;
-  float local_214;
-  float fStack_210;
-  float local_20c;
-  float fStack_208;
-  float local_204;
-  float fStack_200;
-  float local_1fc;
-  float fStack_1f8;
-  float local_1f4;
-  float fStack_1f0;
-  float local_1ec;
-  float fStack_1e8;
-  float local_1e4;
-  float fStack_1e0;
-  float local_1dc;
-  float fStack_1d8;
-  float local_1d4;
-  float fStack_1d0;
-  float local_1cc;
-  float fStack_1c8;
-  float local_1c4;
-  float fStack_1c0;
-  float local_1bc;
-  float fStack_1b8;
-  float local_1b4;
-  float fStack_1b0;
-  float local_1ac;
-  float fStack_1a8;
-  float local_1a4;
-  float fStack_1a0;
-  float local_19c;
-  float fStack_198;
-  float local_194;
-  float fStack_190;
-  float local_18c;
-  float fStack_188;
-  float local_184;
-  float fStack_180;
-  float local_17c;
-  float fStack_178;
-  float local_174;
-  float fStack_170;
-  float local_16c;
-  float fStack_168;
-  float local_164;
-  float fStack_160;
-  float local_15c;
-  float fStack_158;
-  float local_154;
-  float fStack_150;
-  float local_14c;
-  float fStack_148;
-  float local_144;
-  float fStack_140;
-  float local_13c;
-  float fStack_138;
-  float local_134;
-  float fStack_130;
-  float local_12c;
-  float fStack_128;
-  float local_124;
-  float fStack_120;
-  float local_11c;
-  float fStack_118;
-  float local_114;
-  float fStack_110;
-  float local_10c;
-  float fStack_108;
-  float local_104;
-  float fStack_100;
-  float local_fc;
-  float fStack_f8;
-  float local_f4;
-  float fStack_f0;
-  float local_ec;
-  float fStack_e8;
-  float local_e4;
-  float fStack_e0;
-  float local_dc;
-  float fStack_d8;
-  float local_d4;
-  float fStack_d0;
-  float local_cc;
-  float fStack_c8;
-  float local_c4;
-  float fStack_c0;
-  float local_bc;
-  float fStack_b8;
-  float local_b4;
-  float fStack_b0;
-  float local_ac;
-  float fStack_a8;
-  float local_a4;
-  float fStack_a0;
-  float local_9c;
-  float fStack_98;
-  float local_94;
-  float fStack_90;
-  float local_8c;
-  float fStack_88;
-  float local_84;
-  float fStack_80;
-  float local_7c;
-  float fStack_78;
-  float local_74;
-  float fStack_70;
-  float local_6c;
-  float fStack_68;
-  float local_64;
-  float fStack_60;
-  float local_5c;
-  float fStack_58;
-  float local_54;
-  float fStack_50;
-  float local_4c;
-  float fStack_48;
-  float local_44;
-  float fStack_40;
-  float local_3c;
-  float fStack_38;
-  float local_34;
-  float fStack_30;
-  float local_2c;
-  float fStack_28;
-  float local_24;
-  float fStack_20;
-  float local_1c;
-  float fStack_18;
-  uint local_14;
-  void *local_10;
-  undefined1 *puStack_c;
-  uint local_8;
-  
-  puStack_c = &LAB_006e9fb6;
-  local_10 = ExceptionList;
-  uVar4 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  ExceptionList = &local_10;
-  local_bf8 = (void *)0x0;
-  local_bf4 = (void *)0x0;
-  local_bf0 = 0;
-  local_c04 = (void *)0x0;
-  local_c00 = (void *)0x0;
-  local_bfc = 0;
-  local_8 = 1;
-  local_bdc = 0;
-  local_14 = uVar4;
-  if (0 < *(int *)(self + 0x44)) {
-    do {
-      local_bec = (int *)0x0;
-      iVar7 = local_bdc;
-      if (0 < *(int *)(self + 0x48)) {
-        do {
-          local_be8 = (void *)0x0;
-          piVar9 = local_bec;
-          if (0 < *(int *)(self + 0x4c)) {
-            do {
-              pvVar11 = local_be8;
-              if (((((iVar7 < 0) || ((int)piVar9 < 0)) || ((int)local_be8 < 0)) ||
-                  ((*(int *)(self + 0x44) <= iVar7 || (*(int *)(self + 0x48) <= (int)piVar9))))
-                 || (*(int *)(self + 0x4c) <= (int)local_be8)) {
-                local_bd8 = &DAT_0076b340;
-              }
-              else {
-                local_bd8 = (byte *)(((int)(*(int *)(self + 0x48) * (int)local_be8 + (int)piVar9)
-                                      * *(int *)(self + 0x44) + iVar7) * 3 +
-                                    *(int *)(self + 0x30));
-              }
-              cVar3 = GameController_match_transparent_color(local_bd8,*(undefined1 *)(self + 0x55));
-              if (cVar3 == '\0') {
-                local_32c = (float)*local_bd8;
-                fStack_328 = (float)local_bd8[1];
-                iVar7 = local_bdc + -1;
-                local_324 = (float)local_bd8[2];
-                local_320 = CONCAT44(fStack_328,local_32c);
-                local_be4 = local_32c / 255.0;
-                local_be0 = fStack_328 / 255.0;
-                local_bd8 = (byte *)(local_324 / 255.0);
-                if (((iVar7 < 0) || ((int)piVar9 < 0)) ||
-                   (((int)pvVar11 < 0 ||
-                    (((*(int *)(self + 0x44) <= iVar7 || (*(int *)(self + 0x48) <= (int)piVar9))
-                     || (*(int *)(self + 0x4c) <= (int)pvVar11)))))) {
-                  local_bd4 = &DAT_0076b340;
-                }
-                else {
-                  local_bd4 = (undefined1 *)
-                              (((int)(*(int *)(self + 0x48) * (int)pvVar11 + (int)piVar9) *
-                                *(int *)(self + 0x44) + iVar7) * 3 + *(int *)(self + 0x30));
-                }
-                iVar7 = 0;
-                local_bd4 = local_bd4 + -0x76b340;
-                do {
-                  local_318 = local_324;
-                  if ((&DAT_0076b340)[(int)(local_bd4 + iVar7)] != (&DAT_0076b340)[iVar7])
-                  goto LAB_004e8400;
-                  iVar7 = iVar7 + 1;
-                } while (iVar7 < 3);
-                local_980 = 0xffffffff;
-                local_97c = 0;
-                local_978 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,pvVar11,&local_980);
-                local_bd4 = (undefined1 *)(float)fVar12;
-                local_694 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_69c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_698 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_37c = CONCAT44(fStack_698,local_69c);
-                uStack_690 = 0x3f800000;
-                local_374 = CONCAT44(0x3f800000,local_694);
-                local_59c = local_be4;
-                fStack_598 = local_be0;
-                local_594 = local_bd8;
-                uStack_590 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd4;
-                _local_84 = CONCAT44(local_be0 * (float)local_bd4,local_be4 * (float)local_bd4);
-                _local_7c = CONCAT44((float)local_bd4 * 1.0,(float)local_bd8 * (float)local_bd4);
-                _local_1e4 = CONCAT44(local_be0 * (float)local_bd4 + fVar13 * fStack_698,
-                                      local_be4 * (float)local_bd4 + fVar13 * local_69c);
-                _local_1dc = CONCAT44((float)local_bd4 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd8 * (float)local_bd4 + fVar13 * local_694);
-                local_b00 = local_bdc;
-                local_800 = 0xffffffff;
-                local_7fc = 0;
-                local_7f8 = 0;
-                local_afc = piVar9;
-                local_af8 = pvVar11;
-                uVar5 = setQuadFaceFromNormal(&local_b00,&local_800,&local_1e4);
-                ChunkBuffer_vector_insert_8(uVar5);
-                iVar10 = (int)pvVar11 + 1;
-                local_818 = 0xffffffff;
-                local_814 = 0;
-                local_810 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,iVar10,&local_818);
-                local_bd4 = (undefined1 *)(float)fVar12;
-                local_394 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_39c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_398 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_79c = CONCAT44(fStack_398,local_39c);
-                uStack_390 = 0x3f800000;
-                local_794 = CONCAT44(0x3f800000,local_394);
-                local_3bc = local_be4;
-                fStack_3b8 = local_be0;
-                local_3b4 = local_bd8;
-                uStack_3b0 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd4;
-                _local_184 = CONCAT44(local_be0 * (float)local_bd4,local_be4 * (float)local_bd4);
-                local_830 = local_bdc;
-                _local_17c = CONCAT44((float)local_bd4 * 1.0,(float)local_bd8 * (float)local_bd4);
-                local_998 = 0xffffffff;
-                _local_284 = CONCAT44(local_be0 * (float)local_bd4 + fVar13 * fStack_398,
-                                      local_be4 * (float)local_bd4 + fVar13 * local_39c);
-                local_994 = 0;
-                local_990 = 0;
-                _local_27c = CONCAT44((float)local_bd4 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd8 * (float)local_bd4 + fVar13 * local_394);
-                local_82c = piVar9;
-                local_828 = iVar10;
-                uVar5 = setQuadFaceFromNormal(&local_830,&local_998,&local_284);
-                ChunkBuffer_vector_insert_8(uVar5);
-                iVar7 = (int)piVar9 + 1;
-                local_a58 = 0xffffffff;
-                local_a54 = 0;
-                local_a50 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,iVar7,iVar10,&local_a58);
-                local_bd4 = (undefined1 *)(float)fVar12;
-                local_5b4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_5bc = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_5b8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_3dc = CONCAT44(fStack_5b8,local_5bc);
-                uStack_5b0 = 0x3f800000;
-                local_3d4 = CONCAT44(0x3f800000,local_5b4);
-                fVar13 = 1.0 - (float)local_bd4;
-                local_6bc = local_be4;
-                fStack_6b8 = local_be0;
-                local_6b4 = local_bd8;
-                uStack_6b0 = 0x3f800000;
-                local_9b0 = local_bdc;
-                _local_a4 = CONCAT44(local_be0 * (float)local_bd4,local_be4 * (float)local_bd4);
-                _local_9c = CONCAT44((float)local_bd4 * 1.0,(float)local_bd8 * (float)local_bd4);
-                local_7b8 = 0xffffffff;
-                local_7b4 = 0;
-                local_7b0 = 0;
-                _local_204 = CONCAT44(local_be0 * (float)local_bd4 + fStack_5b8 * fVar13,
-                                      local_be4 * (float)local_bd4 + local_5bc * fVar13);
-                _local_1fc = CONCAT44((float)local_bd4 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd8 * (float)local_bd4 + local_5b4 * fVar13);
-                local_9ac = iVar7;
-                local_9a8 = iVar10;
-                uVar5 = setQuadFaceFromNormal(&local_9b0,&local_7b8,&local_204);
-                ChunkBuffer_vector_insert_8(uVar5);
-                pvVar11 = local_be8;
-                local_860 = 0xffffffff;
-                local_85c = 0;
-                local_858 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,iVar7,local_be8,&local_860);
-                local_bd4 = (undefined1 *)(float)fVar12;
-                local_3fc = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_3f8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_3f4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_5dc = CONCAT44(fStack_3f8,local_3fc);
-                uStack_3f0 = 0x3f800000;
-                local_5d4 = CONCAT44(0x3f800000,local_3f4);
-                fVar13 = 1.0 - (float)local_bd4;
-                uStack_410 = 0x3f800000;
-                local_878 = local_bdc;
-                local_41c = local_be4;
-                fStack_418 = local_be0;
-                local_414 = local_bd8;
-                _local_124 = CONCAT44(local_be0 * (float)local_bd4,local_be4 * (float)local_bd4);
-                local_ab8 = 0xffffffff;
-                local_ab4 = 0;
-                _local_11c = CONCAT44((float)local_bd4 * 1.0,(float)local_bd8 * (float)local_bd4);
-                local_ab0 = 0;
-                local_870 = pvVar11;
-                _local_304 = CONCAT44(local_be0 * (float)local_bd4 + fStack_3f8 * fVar13,
-                                      local_be4 * (float)local_bd4 + local_3fc * fVar13);
-                _local_2fc = CONCAT44((float)local_bd4 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd8 * (float)local_bd4 + local_3f4 * fVar13);
-                local_874 = iVar7;
-                uVar5 = setQuadFaceFromNormal(&local_878,&local_ab8,&local_304);
-                ChunkBuffer_vector_insert_8(uVar5);
-                piVar9 = local_bec;
-LAB_004e8400:
-                local_bd4 = (undefined1 *)(local_bdc + 1);
-                if (((((int)local_bd4 < 0) || ((int)piVar9 < 0)) ||
-                    (((int)pvVar11 < 0 ||
-                     ((*(int *)(self + 0x44) <= (int)local_bd4 ||
-                      (*(int *)(self + 0x48) <= (int)piVar9)))))) ||
-                   (*(int *)(self + 0x4c) <= (int)pvVar11)) {
-                  local_bd0 = &DAT_0076b340;
-                }
-                else {
-                  local_bd0 = (undefined1 *)
-                              (((int)(*(int *)(self + 0x48) * (int)pvVar11 + (int)piVar9) *
-                                *(int *)(self + 0x44) + (int)local_bd4) * 3 +
-                              *(int *)(self + 0x30));
-                }
-                iVar7 = 0;
-                local_bd0 = local_bd0 + -0x76b340;
-                do {
-                  if ((&DAT_0076b340)[(int)(local_bd0 + iVar7)] != (&DAT_0076b340)[iVar7])
-                  goto LAB_004e8dc5;
-                  iVar7 = iVar7 + 1;
-                } while (iVar7 < 3);
-                local_9c8 = 1;
-                local_9c4 = 0;
-                local_9c0 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,piVar9,pvVar11,&local_9c8);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_734 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_73c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_738 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_43c = CONCAT44(fStack_738,local_73c);
-                uStack_730 = 0x3f800000;
-                local_434 = CONCAT44(0x3f800000,local_734);
-                local_5fc = local_be4;
-                fStack_5f8 = local_be0;
-                local_5f4 = local_bd8;
-                uStack_5f0 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
-                _local_c4 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                _local_bc = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                local_890 = 1;
-                _local_224 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_738,
-                                      local_73c * fVar13 + local_be4 * (float)local_bd0);
-                _local_21c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd8 * (float)local_bd0 + fVar13 * local_734);
-                local_a70 = (int)local_bd4;
-                local_88c = 0;
-                local_888 = 0;
-                local_a6c = piVar9;
-                local_a68 = pvVar11;
-                uVar5 = setQuadFaceFromNormal(&local_a70,&local_890,&local_224);
-                ChunkBuffer_vector_insert_8(uVar5);
-                iVar7 = (int)piVar9 + 1;
-                local_8a8 = 1;
-                local_8a4 = 0;
-                local_8a0 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,iVar7,pvVar11,&local_8a8);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_45c = (float)*(byte *)(self + 0x5c) / 255.0;
-                local_454 = (float)*(byte *)(self + 0x5e) / 255.0;
-                fStack_458 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_6dc = CONCAT44(fStack_458,local_45c);
-                uStack_450 = 0x3f800000;
-                local_6d4 = CONCAT44(0x3f800000,local_454);
-                local_47c = local_be4;
-                fStack_478 = local_be0;
-                local_474 = local_bd8;
-                uStack_470 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
-                _local_24 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_1c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                local_8c0 = (int)local_bd4;
-                _local_2a4 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_458,
-                                      (float)local_bd0 * local_be4 + fVar13 * local_45c);
-                local_9e0 = 1;
-                local_9dc = 0;
-                local_9d8 = 0;
-                _local_29c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + fVar13 * local_454);
-                local_8bc = iVar7;
-                local_8b8 = pvVar11;
-                uVar5 = setQuadFaceFromNormal(&local_8c0,&local_9e0,&local_2a4);
-                ChunkBuffer_vector_insert_8(uVar5);
-                iVar10 = (int)pvVar11 + 1;
-                local_ae8 = 1;
-                local_ae4 = 0;
-                local_ae0 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,iVar7,iVar10,&local_ae8);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                fStack_618 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_614 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_61c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fVar13 = 1.0 - (float)local_bd0;
-                local_49c = CONCAT44(fStack_618,local_61c);
-                uStack_610 = 0x3f800000;
-                local_494 = CONCAT44(0x3f800000,local_614);
-                local_77c = local_be4;
-                fStack_778 = local_be0;
-                local_774 = local_bd8;
-                uStack_770 = 0x3f800000;
-                local_9f8 = (int)local_bd4;
-                _local_34 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_2c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                local_8d8 = 1;
-                local_8d4 = 0;
-                local_8d0 = 0;
-                _local_244 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_618,
-                                      (float)local_bd0 * local_be4 + fVar13 * local_61c);
-                _local_23c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + fVar13 * local_614);
-                local_9f4 = iVar7;
-                local_9f0 = iVar10;
-                uVar5 = setQuadFaceFromNormal(&local_9f8,&local_8d8,&local_244);
-                ChunkBuffer_vector_insert_8(uVar5);
-                piVar9 = local_bec;
-                local_848 = 1;
-                local_844 = 0;
-                local_840 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,local_bec,iVar10,&local_848);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_4bc = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_4b8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_4b4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_63c = CONCAT44(fStack_4b8,local_4bc);
-                uStack_4b0 = 0x3f800000;
-                local_634 = CONCAT44(0x3f800000,local_4b4);
-                local_4dc = local_be4;
-                fStack_4d8 = local_be0;
-                local_4d4 = local_bd8;
-                uStack_4d0 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
-                _local_164 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_15c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                local_a88 = (int)local_bd4;
-                _local_2e4 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_4b8,
-                                      (float)local_bd0 * local_be4 + fVar13 * local_4bc);
-                local_8f0 = 1;
-                local_8ec = 0;
-                local_8e8 = 0;
-                local_a84 = piVar9;
-                _local_2dc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + fVar13 * local_4b4);
-                local_a80 = iVar10;
-                uVar5 = setQuadFaceFromNormal(&local_a88,&local_8f0,&local_2e4);
-                ChunkBuffer_vector_insert_8(uVar5);
-LAB_004e8dc5:
-                pvVar11 = local_be8;
-                iVar7 = (int)piVar9 + -1;
-                if ((((local_bdc < 0) || (iVar7 < 0)) || ((int)local_be8 < 0)) ||
-                   (((*(int *)(self + 0x44) <= local_bdc || (*(int *)(self + 0x48) <= iVar7)) ||
-                    (*(int *)(self + 0x4c) <= (int)local_be8)))) {
-                  local_bd0 = &DAT_0076b340;
-                }
-                else {
-                  local_bd0 = (undefined1 *)
-                              (((*(int *)(self + 0x48) * (int)local_be8 + iVar7) *
-                                *(int *)(self + 0x44) + local_bdc) * 3 + *(int *)(self + 0x30));
-                }
-                iVar7 = 0;
-                local_bd0 = local_bd0 + -0x76b340;
-                do {
-                  if ((&DAT_0076b340)[(int)(local_bd0 + iVar7)] != (&DAT_0076b340)[iVar7])
-                  goto LAB_004e979a;
-                  iVar7 = iVar7 + 1;
-                } while (iVar7 < 3);
-                local_908 = 0;
-                local_904 = 0xffffffff;
-                local_900 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,local_be8,&local_908);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_6fc = (float)*(byte *)(self + 0x5c) / 255.0;
-                local_6f4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                fStack_6f8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_4fc = CONCAT44(fStack_6f8,local_6fc);
-                uStack_6f0 = 0x3f800000;
-                local_4f4 = CONCAT44(0x3f800000,local_6f4);
-                local_65c = local_be4;
-                fStack_658 = local_be0;
-                local_654 = local_bd8;
-                uStack_650 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
-                local_a10 = 0;
-                _local_e4 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_dc = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                _local_264 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_6f8,
-                                      (float)local_bd0 * local_be4 + fVar13 * local_6fc);
-                _local_25c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + fVar13 * local_6f4);
-                local_920 = local_bdc;
-                local_a0c = 0xffffffff;
-                local_a08 = 0;
-                local_918 = pvVar11;
-                local_91c = piVar9;
-                uVar5 = setQuadFaceFromNormal(&local_920,&local_a10,&local_264);
-                ChunkBuffer_vector_insert_8(uVar5);
-                local_ad0 = 0;
-                local_acc = 0xffffffff;
-                local_ac8 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,piVar9,pvVar11,&local_ad0);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_51c = (float)*(byte *)(self + 0x5c) / 255.0;
-                local_514 = (float)*(byte *)(self + 0x5e) / 255.0;
-                fStack_518 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_75c = CONCAT44(fStack_518,local_51c);
-                uStack_510 = 0x3f800000;
-                local_754 = CONCAT44(0x3f800000,local_514);
-                local_53c = local_be4;
-                fStack_538 = local_be0;
-                local_534 = local_bd8;
-                uStack_530 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
-                _local_144 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_13c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                local_a28 = (int)local_bd4;
-                _local_1c4 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_518,
-                                      (float)local_bd0 * local_be4 + fVar13 * local_51c);
-                local_938 = 0;
-                local_934 = 0xffffffff;
-                local_930 = 0;
-                local_a20 = pvVar11;
-                _local_1bc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + fVar13 * local_514);
-                local_a24 = piVar9;
-                uVar5 = setQuadFaceFromNormal(&local_a28,&local_938,&local_1c4);
-                ChunkBuffer_vector_insert_8(uVar5);
-                iVar7 = (int)pvVar11 + 1;
-                local_950 = 0;
-                local_94c = 0xffffffff;
-                local_948 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,local_bec,iVar7,&local_950);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                fStack_678 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_674 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_67c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fVar13 = 1.0 - (float)local_bd0;
-                local_55c = CONCAT44(fStack_678,local_67c);
-                uStack_670 = 0x3f800000;
-                local_554 = CONCAT44(0x3f800000,local_674);
-                local_71c = local_be4;
-                fStack_718 = local_be0;
-                local_714 = local_bd8;
-                uStack_710 = 0x3f800000;
-                local_968 = (int)local_bd4;
-                local_964 = local_bec;
-                _local_44 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_3c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                local_aa0 = 0;
-                _local_1b4 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_678,
-                                      (float)local_bd0 * local_be4 + fVar13 * local_67c);
-                local_a9c = 0xffffffff;
-                local_a98 = 0;
-                _local_1ac = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + fVar13 * local_674);
-                local_960 = iVar7;
-                uVar5 = setQuadFaceFromNormal(&local_968,&local_aa0,&local_1b4);
-                ChunkBuffer_vector_insert_8(uVar5);
-                local_a40 = 0;
-                local_a3c = 0xffffffff;
-                local_a38 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,local_bec,iVar7,&local_a40);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_57c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_578 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_574 = (float)*(byte *)(self + 0x5e) / 255.0;
-                uStack_570 = 0x3f800000;
-                local_34c = CONCAT44(fStack_578,local_57c);
-                local_344 = CONCAT44(0x3f800000,local_574);
-                fVar13 = 1.0 - (float)local_bd0;
-                uStack_360 = 0x3f800000;
-                local_7f4 = local_bdc;
-                local_36c = local_be4;
-                fStack_368 = local_be0;
-                local_364 = local_bd8;
-                local_7f0 = local_bec;
-                _local_64 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_5c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                local_7dc = 0;
-                local_7d8 = 0xffffffff;
-                local_7d4 = 0;
-                _local_1d4 = CONCAT44((float)local_bd0 * local_be0 + fStack_578 * fVar13,
-                                      (float)local_bd0 * local_be4 + local_57c * fVar13);
-                _local_1cc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + local_574 * fVar13);
-                local_7ec = iVar7;
-                uVar5 = setQuadFaceFromNormal(&local_7f4,&local_7dc,&local_1d4);
-                ChunkBuffer_vector_insert_8(uVar5);
-                piVar9 = local_bec;
-LAB_004e979a:
-                pvVar1 = (void *)((int)piVar9 + 1);
-                if (((local_bdc < 0) || ((int)pvVar1 < 0)) ||
-                   (((int)pvVar11 < 0 ||
-                    (((*(int *)(self + 0x44) <= local_bdc ||
-                      (*(int *)(self + 0x48) <= (int)pvVar1)) ||
-                     (*(int *)(self + 0x4c) <= (int)pvVar11)))))) {
-                  puVar6 = &DAT_0076b340;
-                }
-                else {
-                  puVar6 = (undefined1 *)
-                           (((int)(*(int *)(self + 0x48) * (int)pvVar11 + (int)pvVar1) *
-                             *(int *)(self + 0x44) + local_bdc) * 3 + *(int *)(self + 0x30));
-                }
-                iVar7 = 0;
-                local_bd0 = puVar6 + -0x76b340;
-                do {
-                  local_be8 = pvVar1;
-                  if (puVar6[iVar7] != (&DAT_0076b340)[iVar7]) goto LAB_004ea1c6;
-                  iVar7 = iVar7 + 1;
-                } while (iVar7 < 3);
-                local_80c = 0;
-                local_808 = 1;
-                local_804 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,pvVar1,pvVar11,&local_80c);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_38c = (float)*(byte *)(self + 0x5c) / 255.0;
-                local_384 = (float)*(byte *)(self + 0x5e) / 255.0;
-                fStack_388 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_3ac = CONCAT44(fStack_388,local_38c);
-                uStack_380 = 0x3f800000;
-                local_3a4 = CONCAT44(0x3f800000,local_384);
-                fVar13 = 1.0 - (float)local_bd0;
-                uStack_3c0 = 0x3f800000;
-                local_3cc = local_be4;
-                fStack_3c8 = local_be0;
-                local_3c4 = local_bd8;
-                _local_74 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_6c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                _local_1f4 = CONCAT44((float)local_bd0 * local_be0 + fStack_388 * fVar13,
-                                      (float)local_bd0 * local_be4 + local_38c * fVar13);
-                local_83c = local_bdc;
-                _local_1ec = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + local_384 * fVar13);
-                local_824 = 0;
-                local_820 = 1;
-                local_81c = 0;
-                local_834 = pvVar11;
-                local_838 = pvVar1;
-                uVar5 = setQuadFaceFromNormal(&local_83c,&local_824,&local_1f4);
-                ChunkBuffer_vector_insert_8(uVar5);
-                iVar7 = (int)pvVar11 + 1;
-                local_854 = 0;
-                local_850 = 1;
-                local_84c = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,local_be8,iVar7,&local_854);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_3e4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_3ec = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_3e8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_40c = CONCAT44(fStack_3e8,local_3ec);
-                uStack_3e0 = 0x3f800000;
-                local_404 = CONCAT44(0x3f800000,local_3e4);
-                fVar13 = 1.0 - (float)local_bd0;
-                uStack_420 = 0x3f800000;
-                local_42c = local_be4;
-                fStack_428 = local_be0;
-                local_424 = local_bd8;
-                _local_94 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_8c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                local_884 = local_bdc;
-                local_880 = local_be8;
-                _local_214 = CONCAT44((float)local_bd0 * local_be0 + fStack_3e8 * fVar13,
-                                      (float)local_bd0 * local_be4 + local_3ec * fVar13);
-                local_86c = 0;
-                local_868 = 1;
-                local_864 = 0;
-                _local_20c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + local_3e4 * fVar13);
-                local_87c = iVar7;
-                uVar5 = setQuadFaceFromNormal(&local_884,&local_86c,&local_214);
-                ChunkBuffer_vector_insert_8(uVar5);
-                local_89c = 0;
-                local_898 = 1;
-                local_894 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,local_be8,iVar7,&local_89c);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_444 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_44c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_448 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_46c = CONCAT44(fStack_448,local_44c);
-                uStack_440 = 0x3f800000;
-                local_464 = CONCAT44(0x3f800000,local_444);
-                fVar13 = 1.0 - (float)local_bd0;
-                local_48c = local_be4;
-                fStack_488 = local_be0;
-                local_484 = local_bd8;
-                uStack_480 = 0x3f800000;
-                local_7c4 = (int)local_bd4;
-                local_7c0 = local_be8;
-                _local_b4 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_ac = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
-                local_8b4 = 0;
-                _local_234 = CONCAT44((float)local_bd0 * local_be0 + fStack_448 * fVar13,
-                                      (float)local_bd0 * local_be4 + local_44c * fVar13);
-                local_8b0 = 1;
-                local_8ac = 0;
-                _local_22c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd0 * (float)local_bd8 + local_444 * fVar13);
-                local_7bc = iVar7;
-                uVar5 = setQuadFaceFromNormal(&local_7c4,&local_8b4,&local_234);
-                ChunkBuffer_vector_insert_8(uVar5);
-                pvVar1 = local_be8;
-                local_7d0 = 0;
-                local_7cc = 1;
-                local_7c8 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,local_be8,pvVar11,&local_7d0);
-                local_bd0 = (undefined1 *)(float)fVar12;
-                local_4ac = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_4a8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_4a4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_4cc = CONCAT44(fStack_4a8,local_4ac);
-                uStack_4a0 = 0x3f800000;
-                local_4c4 = CONCAT44(0x3f800000,local_4a4);
-                fVar13 = 1.0 - (float)local_bd0;
-                uStack_4e0 = 0x3f800000;
-                local_8e4 = (int)local_bd4;
-                local_4ec = local_be4;
-                fStack_4e8 = local_be0;
-                local_4e4 = local_bd8;
-                _local_d4 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                local_8cc = 0;
-                local_8c8 = 1;
-                _local_cc = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                local_8c4 = 0;
-                local_8e0 = pvVar1;
-                local_8dc = pvVar11;
-                _local_254 = CONCAT44(local_be0 * (float)local_bd0 + fStack_4a8 * fVar13,
-                                      local_be4 * (float)local_bd0 + local_4ac * fVar13);
-                _local_24c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                      (float)local_bd8 * (float)local_bd0 + local_4a4 * fVar13);
-                uVar5 = setQuadFaceFromNormal(&local_8e4,&local_8cc,&local_254);
-                ChunkBuffer_vector_insert_8(uVar5);
-                piVar9 = local_bec;
-LAB_004ea1c6:
-                iVar7 = (int)pvVar11 + -1;
-                if (((local_bdc < 0) || ((int)piVar9 < 0)) ||
-                   (((iVar7 < 0 ||
-                     ((*(int *)(self + 0x44) <= local_bdc ||
-                      (*(int *)(self + 0x48) <= (int)piVar9)))) ||
-                    (*(int *)(self + 0x4c) <= iVar7)))) {
-                  puVar6 = &DAT_0076b340;
-                }
-                else {
-                  puVar6 = (undefined1 *)
-                           (((int)(iVar7 * *(int *)(self + 0x48) + (int)piVar9) *
-                             *(int *)(self + 0x44) + local_bdc) * 3 + *(int *)(self + 0x30));
-                }
-                cVar3 = GameController_match_transparent_color(puVar6,1);
-                if (cVar3 != '\0') {
-                  local_8fc = 0;
-                  local_8f8 = 0;
-                  local_8f4 = 0xffffffff;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,pvVar11,&local_8fc);
-                  local_bd0 = (undefined1 *)(float)fVar12;
-                  local_504 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_50c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_508 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_52c = CONCAT44(fStack_508,local_50c);
-                  uStack_500 = 0x3f800000;
-                  local_524 = CONCAT44(0x3f800000,local_504);
-                  local_54c = local_be4;
-                  fStack_548 = local_be0;
-                  local_544 = local_bd8;
-                  uStack_540 = 0x3f800000;
-                  fVar13 = 1.0 - (float)local_bd0;
-                  _local_f4 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  _local_ec = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                  _local_274 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_508,
-                                        local_be4 * (float)local_bd0 + fVar13 * local_50c);
-                  _local_26c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                        (float)local_bd8 * (float)local_bd0 + fVar13 * local_504);
-                  local_92c = local_bdc;
-                  local_914 = 0;
-                  local_910 = 0;
-                  local_90c = 0xffffffff;
-                  local_924 = pvVar11;
-                  local_928 = piVar9;
-                  uVar5 = setQuadFaceFromNormal(&local_92c,&local_914,&local_274);
-                  ChunkBuffer_vector_insert_8(uVar5);
-                  local_944 = 0;
-                  local_940 = 0;
-                  local_93c = 0xffffffff;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bdc,(int)piVar9 + 1,pvVar11,&local_944);
-                  local_bd0 = (undefined1 *)(float)fVar12;
-                  local_564 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_56c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_568 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_58c = CONCAT44(fStack_568,local_56c);
-                  uStack_560 = 0x3f800000;
-                  local_584 = CONCAT44(0x3f800000,local_564);
-                  local_5ac = local_be4;
-                  fStack_5a8 = local_be0;
-                  local_5a4 = local_bd8;
-                  uStack_5a0 = 0x3f800000;
-                  fVar13 = 1.0 - (float)local_bd0;
-                  _local_114 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  local_974 = local_bdc;
-                  _local_10c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                  local_970 = (int)piVar9 + 1;
-                  _local_294 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_568,
-                                        local_be4 * (float)local_bd0 + fVar13 * local_56c);
-                  local_95c = 0;
-                  local_958 = 0;
-                  local_954 = 0xffffffff;
-                  local_96c = pvVar11;
-                  _local_28c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                        (float)local_bd8 * (float)local_bd0 + fVar13 * local_564);
-                  uVar5 = setQuadFaceFromNormal(&local_974,&local_95c,&local_294);
-                  ChunkBuffer_vector_insert_8(uVar5);
-                  local_98c = 0;
-                  local_988 = 0;
-                  local_984 = 0xffffffff;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bd4,(int)piVar9 + 1,pvVar11,&local_98c);
-                  local_bd0 = (undefined1 *)(float)fVar12;
-                  fStack_5c8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_5cc = (float)*(byte *)(self + 0x5c) / 255.0;
-                  local_5c4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  fVar13 = 1.0 - (float)local_bd0;
-                  local_5ec = CONCAT44(fStack_5c8,local_5cc);
-                  uStack_5c0 = 0x3f800000;
-                  local_5e4 = CONCAT44(0x3f800000,local_5c4);
-                  local_60c = local_be4;
-                  fStack_608 = local_be0;
-                  local_604 = local_bd8;
-                  uStack_600 = 0x3f800000;
-                  local_9bc = (int)local_bd4;
-                  local_9b8 = (int)piVar9 + 1;
-                  _local_134 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  _local_12c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                  local_9a4 = 0;
-                  local_9a0 = 0;
-                  local_99c = 0xffffffff;
-                  local_9b4 = pvVar11;
-                  _local_2b4 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_5c8,
-                                        local_be4 * (float)local_bd0 + fVar13 * local_5cc);
-                  _local_2ac = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                        (float)local_bd8 * (float)local_bd0 + fVar13 * local_5c4);
-                  uVar5 = setQuadFaceFromNormal(&local_9bc,&local_9a4,&local_2b4);
-                  ChunkBuffer_vector_insert_8(uVar5);
-                  local_9d4 = 0;
-                  local_9d0 = 0;
-                  local_9cc = 0xffffffff;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bd4,piVar9,pvVar11,&local_9d4);
-                  local_bd0 = (undefined1 *)(float)fVar12;
-                  local_62c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_628 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_624 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_64c = CONCAT44(fStack_628,local_62c);
-                  uStack_620 = 0x3f800000;
-                  local_644 = CONCAT44(0x3f800000,local_624);
-                  local_66c = local_be4;
-                  fStack_668 = local_be0;
-                  local_664 = local_bd8;
-                  uStack_660 = 0x3f800000;
-                  fVar13 = 1.0 - (float)local_bd0;
-                  _local_154 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  _local_14c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                  local_a04 = (int)local_bd4;
-                  _local_2d4 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_628,
-                                        local_be4 * (float)local_bd0 + fVar13 * local_62c);
-                  local_9ec = 0;
-                  local_9e8 = 0;
-                  local_9e4 = 0xffffffff;
-                  local_9fc = pvVar11;
-                  _local_2cc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                        (float)local_bd8 * (float)local_bd0 + fVar13 * local_624);
-                  local_a00 = piVar9;
-                  uVar5 = setQuadFaceFromNormal(&local_a04,&local_9ec,&local_2d4);
-                  ChunkBuffer_vector_insert_8(uVar5);
-                }
-                iVar7 = (int)pvVar11 + 1;
-                if (((((local_bdc < 0) || ((int)piVar9 < 0)) || (iVar7 < 0)) ||
-                    ((*(int *)(self + 0x44) <= local_bdc ||
-                     (*(int *)(self + 0x48) <= (int)piVar9)))) ||
-                   (*(int *)(self + 0x4c) <= iVar7)) {
-                  puVar6 = &DAT_0076b340;
-                }
-                else {
-                  puVar6 = (undefined1 *)
-                           (((int)(*(int *)(self + 0x48) * iVar7 + (int)piVar9) *
-                             *(int *)(self + 0x44) + local_bdc) * 3 + *(int *)(self + 0x30));
-                }
-                cVar3 = GameController_match_transparent_color(puVar6,1);
-                if (cVar3 != '\0') {
-                  local_a1c = 0;
-                  local_a18 = 0;
-                  local_a14 = 1;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,(int)pvVar11 + 1,&local_a1c);
-                  local_bd0 = (undefined1 *)(float)fVar12;
-                  local_684 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_68c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_688 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_6ac = CONCAT44(fStack_688,local_68c);
-                  uStack_680 = 0x3f800000;
-                  local_6a4 = CONCAT44(0x3f800000,local_684);
-                  local_6cc = local_be4;
-                  fStack_6c8 = local_be0;
-                  local_6c4 = local_bd8;
-                  uStack_6c0 = 0x3f800000;
-                  fVar13 = 1.0 - (float)local_bd0;
-                  _local_174 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  _local_16c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                  _local_2f4 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_688,
-                                        local_be4 * (float)local_bd0 + fVar13 * local_68c);
-                  local_a4c = local_bdc;
-                  local_a44 = (int)pvVar11 + 1;
-                  _local_2ec = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                        (float)local_bd8 * (float)local_bd0 + fVar13 * local_684);
-                  local_a34 = 0;
-                  local_a30 = 0;
-                  local_a2c = 1;
-                  local_a48 = piVar9;
-                  uVar5 = setQuadFaceFromNormal(&local_a4c,&local_a34,&local_2f4);
-                  ChunkBuffer_vector_insert_8(uVar5);
-                  local_a64 = 0;
-                  local_a60 = 0;
-                  local_a5c = 1;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bd4,piVar9,(int)pvVar11 + 1,&local_a64);
-                  local_bd0 = (undefined1 *)(float)fVar12;
-                  local_6e4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_6ec = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_6e8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_70c = CONCAT44(fStack_6e8,local_6ec);
-                  uStack_6e0 = 0x3f800000;
-                  local_704 = CONCAT44(0x3f800000,local_6e4);
-                  fVar13 = 1.0 - (float)local_bd0;
-                  uStack_720 = 0x3f800000;
-                  local_72c = local_be4;
-                  fStack_728 = local_be0;
-                  local_724 = local_bd8;
-                  _local_194 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  local_a94 = (int)local_bd4;
-                  local_a8c = (int)pvVar11 + 1;
-                  _local_18c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                  local_a7c = 0;
-                  _local_314 = CONCAT44(local_be0 * (float)local_bd0 + fStack_6e8 * fVar13,
-                                        local_be4 * (float)local_bd0 + local_6ec * fVar13);
-                  local_a78 = 0;
-                  local_a74 = 1;
-                  _local_30c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                        (float)local_bd8 * (float)local_bd0 + local_6e4 * fVar13);
-                  local_a90 = piVar9;
-                  uVar5 = setQuadFaceFromNormal(&local_a94,&local_a7c,&local_314);
-                  ChunkBuffer_vector_insert_8(uVar5);
-                  local_aac = 0;
-                  local_aa8 = 0;
-                  local_aa4 = 1;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bd4,(int)piVar9 + 1,(int)pvVar11 + 1,
-                                                 &local_aac);
-                  local_bd0 = (undefined1 *)(float)fVar12;
-                  local_744 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_74c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_748 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_76c = CONCAT44(fStack_748,local_74c);
-                  uStack_740 = 0x3f800000;
-                  local_764 = CONCAT44(0x3f800000,local_744);
-                  fVar13 = 1.0 - (float)local_bd0;
-                  local_78c = local_be4;
-                  fStack_788 = local_be0;
-                  local_784 = local_bd8;
-                  uStack_780 = 0x3f800000;
-                  local_adc = (int)local_bd4;
-                  local_ad8 = (int)piVar9 + 1;
-                  _local_104 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  local_ad4 = (int)pvVar11 + 1;
-                  _local_fc = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                  local_ac4 = 0;
-                  local_ac0 = 0;
-                  local_abc = 1;
-                  _local_2c4 = CONCAT44(local_be0 * (float)local_bd0 + fStack_748 * fVar13,
-                                        local_be4 * (float)local_bd0 + local_74c * fVar13);
-                  _local_2bc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                        (float)local_bd8 * (float)local_bd0 + local_744 * fVar13);
-                  uVar5 = setQuadFaceFromNormal(&local_adc,&local_ac4,&local_2c4);
-                  ChunkBuffer_vector_insert_8(uVar5);
-                  local_af4 = 0;
-                  local_af0 = 0;
-                  local_aec = 1;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bdc,(int)piVar9 + 1,(int)pvVar11 + 1,
-                                                 &local_af4);
-                  local_bd0 = (undefined1 *)(float)fVar12;
-                  local_7a4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_7ac = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_7a8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_35c = CONCAT44(fStack_7a8,local_7ac);
-                  uStack_7a0 = 0x3f800000;
-                  local_354 = CONCAT44(0x3f800000,local_7a4);
-                  fVar13 = 1.0 - (float)local_bd0;
-                  uStack_330 = 0x3f800000;
-                  local_7e8 = local_bdc;
-                  local_7e4 = (int)piVar9 + 1;
-                  local_33c = local_be4;
-                  fStack_338 = local_be0;
-                  local_334 = local_bd8;
-                  local_7e0 = (int)pvVar11 + 1;
-                  _local_54 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  local_b0c = 0;
-                  _local_4c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
-                  local_b08 = 0;
-                  local_b04 = 1;
-                  _local_1a4 = CONCAT44(local_be0 * (float)local_bd0 + fStack_7a8 * fVar13,
-                                        local_be4 * (float)local_bd0 + local_7ac * fVar13);
-                  _local_19c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
-                                        (float)local_bd8 * (float)local_bd0 + local_7a4 * fVar13);
-                  uVar5 = setQuadFaceFromNormal(&local_7e8,&local_b0c,&local_1a4);
-                  ChunkBuffer_vector_insert_8(uVar5);
-                }
-              }
-              local_be8 = (void *)((int)pvVar11 + 1);
-              iVar7 = local_bdc;
-            } while ((int)local_be8 < *(int *)(self + 0x4c));
-          }
-          local_bec = (int *)((int)piVar9 + 1);
-        } while ((int)local_bec < *(int *)(self + 0x48));
-      }
-      local_bdc = iVar7 + 1;
-    } while (local_bdc < *(int *)(self + 0x44));
-  }
-  vector_u16_resize(((uint)((int)local_bf4 - (int)local_bf8 >> 3) >> 2) * 6);
-  iVar7 = 0;
-  if (0 < (int)(((int)local_bf4 - (int)local_bf8 >> 3) +
-               ((int)local_bf4 - (int)local_bf8 >> 0x1f & 3U)) >> 2) {
-    iVar10 = 0;
-    do {
-      sVar8 = (short)iVar7 * 4;
-      *(short *)((int)local_c04 + iVar10) = sVar8;
-      *(short *)((int)local_c04 + iVar10 + 2) = sVar8 + 1;
-      *(short *)((int)local_c04 + iVar10 + 4) = sVar8 + 2;
-      iVar7 = iVar7 + 1;
-      *(short *)((int)local_c04 + iVar10 + 6) = sVar8;
-      *(short *)((int)local_c04 + iVar10 + 8) = sVar8 + 2;
-      *(short *)((int)local_c04 + iVar10 + 10) = sVar8 + 3;
-      iVar10 = iVar10 + 0xc;
-    } while (iVar7 < (int)(((int)local_bf4 - (int)local_bf8 >> 3) +
-                          ((int)local_bf4 - (int)local_bf8 >> 0x1f & 3U)) >> 2);
-  }
-  local_bd0 = (undefined1 *)((int)local_bf4 - (int)local_bf8 >> 3);
-  *(undefined1 **)(self + 0x3c) = local_bd0;
-  *(uint *)(self + 0x40) = (uint)((int)local_c00 - (int)local_c04 >> 1) / 3;
-  if ((local_c04 != local_c00) && (local_bf8 != local_bf4)) {
-    (**(code **)(**(int **)(self + 0x58) + 0x68))
-              (*(int **)(self + 0x58),(int)local_bd0 << 3,8,0,1,&local_bd8,0,uVar4);
-    (**(code **)(**(int **)(self + 0x58) + 0x6c))
-              (*(int **)(self + 0x58),(int)local_c00 - (int)local_c04 & 0xfffffffe,8,0x65,1,
-               &local_bec,0);
-    (**(code **)(*(int *)local_bd8 + 0x2c))
-              (local_bd8,0,(int)local_bf4 - (int)local_bf8 & 0xfffffff8,&local_be8,0);
-    memcpy(local_be8,local_bf8,(int)local_bf4 - (int)local_bf8 & 0xfffffff8);
-    (**(code **)(*(int *)local_bd8 + 0x30))(local_bd8);
-    (**(code **)(*local_bec + 0x2c))
-              (local_bec,0,(int)local_c00 - (int)local_c04 & 0xfffffffe,&local_be8,0);
-    memcpy(local_be8,local_c04,(int)local_c00 - (int)local_c04 & 0xfffffffe);
-    (**(code **)(*local_bec + 0x30))(local_bec);
-    piVar9 = *(int **)(self + 0x38);
-    piVar2 = *(int **)(self + 0x34);
-    *(int **)(self + 0x38) = local_bec;
-    *(byte **)(self + 0x34) = local_bd8;
-    if (piVar2 != (int *)0x0) {
-      (**(code **)(*piVar2 + 8))(piVar2);
-    }
-    if (piVar9 != (int *)0x0) {
-      (**(code **)(*piVar9 + 8))(piVar9);
-    }
-  }
-  *(undefined1 *)(self + 0x54) = 0;
-  local_8 = local_8 & 0xffffff00;
-  if (local_c04 == (void *)0x0) {
-    local_8 = 0xffffffff;
-    if (local_bf8 == (void *)0x0) {
-      ExceptionList = local_10;
-      __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
-      return;
-    }
-    std::_Container_base0::_Orphan_all((_Container_base0 *)&local_bf8);
-    operator_delete(local_bf8);
-  }
-  std::_Container_base0::_Orphan_all((_Container_base0 *)&local_c04);
-  operator_delete(local_c04);
-}
-
-
-
-
-/* [AUDIT] proposed: VoxelModel::compute_ao  (confidence: med)
- * purpose: Computes ambient-occlusion ratio for a voxel corner by sampling neighboring filled voxels along a direction
- * vars: param_4=direction; ratio filled/total returned as float10
- */
-/* Global::VoxelModel_compute_ao @ 004eb8d0 */
-
-float10 VoxelModel_compute_ao(int x,int y,int z,int *dir)
-
-{
-  int in_ECX;
-  int sx;
-  int iVar2;
-  undefined1 *puVar3;
-  int iVar4;
-  int sy;
-  int iVar6;
-  int sz;
-  int matchCount;
-  int totalSamples;
-  int local_14;
-  int local_10;
-  int local_c;
-  int local_8;
-  
-  iVar2 = -3;
-  iVar4 = 3;
-  local_10 = -3;
-  local_14 = 3;
-  local_8 = -3;
-  local_c = 3;
-  if (0 < *dir) {
-    iVar2 = 0;
-    iVar4 = 1;
-  }
-  if (*dir < 0) {
-    iVar2 = -1;
-    iVar4 = 0;
-  }
-  if (0 < dir[1]) {
-    local_10 = 0;
-    local_14 = 1;
-  }
-  if (dir[1] < 0) {
-    local_10 = -1;
-    local_14 = 0;
-  }
-  if (dir[2] < 1) {
-    iVar6 = -3;
-  }
-  else {
-    iVar6 = 0;
-    local_8 = 0;
-    local_c = 1;
-  }
-  if (dir[2] < 0) {
-    iVar6 = -1;
-    local_8 = -1;
-    local_c = 0;
-  }
-  totalSamples = 0;
-  matchCount = 0;
-  if (iVar2 < iVar4) {
-    sx = x + iVar2;
-    iVar4 = iVar4 - iVar2;
-    do {
-      if (local_10 < local_14) {
-        sy = y + local_10;
-        iVar2 = local_14 - local_10;
-        do {
-          if (iVar6 < local_c) {
-            sz = iVar6 + z;
-            x = local_c - local_8;
-            totalSamples = totalSamples + x;
-            do {
-              if ((((sx < 0) || (sy < 0)) || (sz < 0)) ||
-                 (((*(int *)(in_ECX + 0x44) <= sx || (*(int *)(in_ECX + 0x48) <= sy)) ||
-                  (*(int *)(in_ECX + 0x4c) <= sz)))) {
-                puVar3 = &DAT_0076b340;
-              }
-              else {
-                puVar3 = (undefined1 *)
-                         (((sz * *(int *)(in_ECX + 0x48) + sy) * *(int *)(in_ECX + 0x44) +
-                          sx) * 3 + *(int *)(in_ECX + 0x30));
-              }
-              iVar6 = 0;
-              do {
-                if (puVar3[iVar6] != (&DAT_0076b340)[iVar6]) goto LAB_004eba08;
-                iVar6 = iVar6 + 1;
-              } while (iVar6 < 3);
-              matchCount = matchCount + 1;
-LAB_004eba08:
-              sz = sz + 1;
-              x = x + -1;
-              iVar6 = local_8;
-            } while (x != 0);
-          }
-          sy = sy + 1;
-          iVar2 = iVar2 + -1;
-        } while (iVar2 != 0);
-      }
-      sx = sx + 1;
-      iVar4 = iVar4 + -1;
-    } while (iVar4 != 0);
-    if (0 < totalSamples) {
-      return (float10)((float)matchCount / (float)totalSamples);
-    }
-  }
-  return (float10)0;
-}
-
-
-
-
 /* [AUDIT] proposed: map::alloc_node_swap  (confidence: med)
- * purpose: Allocates a map node (std_list_allocNode), zeroes key, moves in string/data payload from x
- * vars: x=source pair; node key +0x10
+ * purpose: Allocates a map node (std_list_allocNode), zeroes key, moves in string/data payload from param_1
+ * vars: param_1=source pair; node key +0x10
  */
 /* Global::map_alloc_node_swap @ 004eba80 */
 
@@ -10950,6 +15999,7 @@ void map_insert_rebalance(undefined4 *param_1,char insertLeft,undefined4 *parent
   
   if (0x9249247 < (uint)in_ECX[1]) {
     std_Tree_destroyHead(node);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -11365,8 +16415,10 @@ undefined4 * map_subscript_int(int *key)
   *valueList = valueList;
   valueList[1] = valueList;
   if (puVar1 != valueList) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(puVar1);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(valueList);
 }
 
@@ -11818,6 +16870,7 @@ void Member_Destroy(void)
   
   if (*(int *)(self + 0x48) != 0) {
     std_vector_destroy_ptr_elems_stride3(*(int *)(self + 0x48),*(undefined4 *)(self + 0x4c),&dummy);
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(self + 0x48));
   }
   return;
@@ -12605,6 +17658,7 @@ LAB_005967fd:
         }
       }
 LAB_00596c6a:
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
   }
@@ -12615,8 +17669,10 @@ LAB_00596ad8:
   puVar10[1] = puVar10;
   local_310 = 0;
   if (puVar3 == puVar10) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(puVar10);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(puVar3);
 }
 
@@ -13046,8 +18102,10 @@ void CombatBehavior_spawnProjectileHit(float attacker,int source,float range,cha
       local_310[1] = (int)local_310;
       local_30c = 0;
       if (piVar8 == local_310) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(local_310);
       }
+                    /* WARNING: Subroutine does not return */
       operator_delete(piVar8);
     }
     if (((char)param_5 != '\0') && (0.0 < local_324)) {
@@ -13127,6 +18185,7 @@ void CombatBehavior_spawnProjectileHit(float attacker,int source,float range,cha
           iVar6 = map_insertVal_4599a0(local_344,*(undefined4 *)((int)local_344 + 4),&local_68);
           fVar11 = pfVar2[1];
           if (fVar11 == 5.266214e-37) {
+                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           pfVar2[1] = (float)((int)fVar11 + 1);
@@ -13142,8 +18201,10 @@ void CombatBehavior_spawnProjectileHit(float attacker,int source,float range,cha
       local_318[1] = (int)local_318;
       local_314 = 0;
       if (piVar9 == local_318) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(local_318);
       }
+                    /* WARNING: Subroutine does not return */
       operator_delete(piVar9);
     }
     if (*(char *)(local_338 + 0x68) == '\x1c') {
@@ -13331,6 +18392,7 @@ LAB_00597e5e:
     local_300 = CONCAT31(local_300._1_3_,4);
     iVar6 = map_insertVal_3x64payload(local_344,*(undefined4 *)((int)local_344 + 4),&local_300);
     if (*(int *)((int)attacker + 0x117c) == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     local_2d8 = CONCAT44(fStack_2fc,local_300);
@@ -13346,6 +18408,7 @@ LAB_00597e5e:
     local_2dc = *(undefined4 *)((int)attacker + 0xc);
     iVar6 = map_insertVal_5x64payload(local_344,*(undefined4 *)((int)local_344 + 4),&local_2e8);
     if (param_9[0x17] == 1.0030884e-35) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_9[0x17] = (float)((int)param_9[0x17] + 1);
@@ -13491,6 +18554,7 @@ switchD_0059829d_caseD_6:
         local_214 = 0x17;
         iVar6 = Map_InsertVec6(local_344,*(undefined4 *)((int)local_344 + 4),&local_220);
         if (param_9[3] == 3.8518594e-34) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         param_9[3] = (float)((int)param_9[3] + 1);
@@ -13507,6 +18571,7 @@ switchD_0059829d_caseD_6:
   fVar11 = *param_9;
   iVar6 = map_insertVal_4599a0(fVar11,*(undefined4 *)((int)fVar11 + 4),&local_290);
   if (param_9[1] == 5.266214e-37) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_9[1] = (float)((int)param_9[1] + 1);
@@ -13530,6 +18595,7 @@ LAB_005986d7:
  */
 /* Global::VoxelChunk_cellAt @ 00598930 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * VoxelChunk_cellAt(int x,int y,int z)
 
@@ -13655,6 +18721,7 @@ void CombatBehavior_spawnHitParticles(undefined8 *posA,undefined8 *posB,float si
         lifetime = *(int *)(list + 0x10);
         node = map_insertVal_00465e60(lifetime,*(undefined4 *)(lifetime + 4),&particlePos);
         if (*(int *)(list + 0x14) == 0x3333332) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         *(int *)(list + 0x14) = *(int *)(list + 0x14) + 1;
@@ -14876,22 +19943,6 @@ double * Terrain_sampleHeightNoise(double *param_1,int x,int y)
 
 
 
-/* [AUDIT] proposed: Terrain::sampleBlockAt_fwd  (confidence: high)
- * purpose: Thin wrapper forwarding first two fields of x to WorldMap_lookupTileValue2
- * vars: x=coord pair; returns param_1
- */
-/* Global::Terrain_sampleBlockAt_fwd @ 0059fe70 */
-
-undefined4 Terrain_sampleBlockAt_fwd(undefined4 out,undefined1 *coord_pair)
-
-{
-  WorldMap_lookupTileValue2(out,*coord_pair,coord_pair[1]);
-  return out;
-}
-
-
-
-
 /* [AUDIT] proposed: Terrain::sampleBlockBrightness  (confidence: med)
  * purpose: Looks up block at 16.16 world coords and returns its normalized light/opacity (byte/255)
  * vars: __alldiv 0x10000; 0042f7e0=block query; +3&0x1f=type; 0xd=air->0xff
@@ -14998,6 +20049,7 @@ void Entity_onStateChangeEmitEffect(int *entity,int event_list,char new_state)
     z = (float)*(longlong *)(entity + 6) * 1.5258789e-05;
     node = Map_InsertVec6(timer,*(undefined4 *)(timer + 4),&x);
     if (*(int *)(event_list + 0xc) == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(event_list + 0xc) = *(int *)(event_list + 0xc) + 1;
@@ -15220,200 +20272,6 @@ float * randomizeVec3(float *out_color)
 
 
 
-/* [AUDIT] proposed: WorldMap::lookupTileValue2  (confidence: med)
- * purpose: Map lower_bound by (x,y) vs end at +0x80012c; return value struct {0,0,7} from node +0x18 or raise error; twin of 5a5240
- * vars: +0x80012c=map end (different map than 5a5240); result offsets +8/+0x10/+0x14
- */
-/* Global::WorldMap_lookupTileValue2 @ 005a64b0 */
-
-undefined2 * WorldMap_lookupTileValue2(undefined2 *out,int x,int z)
-
-{
-  int end;
-  int result;
-  int found;
-  int world;
-  int key_x;
-  int key_z;
-  undefined4 local_8;
-  
-  local_8 = 0;
-  key_x = x;
-  key_z = z;
-  found = std_Tree_lower_bound_xy(&key_x);
-  end = *(int *)(world + 0x80012c);
-  result = end;
-  if (((found != end) && (*(int *)(found + 0x10) <= x)) &&
-     ((*(int *)(found + 0x10) < x || (*(int *)(found + 0x14) <= z)))) {
-    result = found;
-  }
-  x = result;
-  if (x != end) {
-    *(undefined4 *)(out + 10) = 7;
-    *(undefined4 *)(out + 8) = 0;
-    *out = 0;
-    u16string_replaceRange(x + 0x18,0,0xffffffff);
-    return out;
-  }
-  u16string_assignCStr(&PTR_006fccac);
-  return out;
-}
-
-
-
-
-/* [AUDIT] proposed: NameGen::generateRegionName  (confidence: med)
- * purpose: Lazily init syllable tables (reon/mala/rion...) guarded by DAT_0076dbb8, then build random region/place name indexing tables at +0x80028c/+0x800290
- * vars: DAT_0076dbb8=init guard; %0x14=table slot; inputs bounded <0x1000000; SEH frame
- */
-/* Global::NameGen_generateRegionName @ 005a6550 */
-
-void NameGen_generateRegionName(undefined2 *param_1,uint x,int z)
-
-{
-  int iVar1;
-  undefined4 uVar2;
-  int in_ECX;
-  undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
-  undefined4 uVar3;
-  undefined1 local_44 [16];
-  undefined2 local_34 [8];
-  undefined4 local_24;
-  undefined4 local_20;
-  int local_1c;
-  int local_18;
-  uint local_14;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 name_index;
-  
-  name_index = 0xffffffff;
-  puStack_c = &LAB_006f33d0;
-  local_10 = ExceptionList;
-  local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  ExceptionList = &local_10;
-  uVar3 = 0;
-  if ((x < 0x1000000) && (z < 0x1000000)) {
-    if ((DAT_0076dbb8 & 1) == 0) {
-      DAT_0076dbb8 = DAT_0076dbb8 | 1;
-      name_index = 0;
-      u16string_assignCStr(&DAT_0071d15c);
-      name_index._0_1_ = 1;
-      u16string_assignCStr(&DAT_0071d164);
-      name_index._0_1_ = 2;
-      u16string_assignCStr(&DAT_0071d16c);
-      name_index._0_1_ = 3;
-      u16string_assignCStr(&DAT_0071c794);
-      name_index._0_1_ = 4;
-      u16string_assignCStr(&DAT_0071cb8c);
-      name_index._0_1_ = 5;
-      u16string_assignCStr(&DAT_0071cad0);
-      name_index._0_1_ = 6;
-      u16string_assignCStr(&DAT_0071d174);
-      name_index._0_1_ = 7;
-      u16string_assignCStr(&DAT_0071d17c);
-      name_index._0_1_ = 8;
-      u16string_assignCStr(&DAT_0071d184);
-      name_index._0_1_ = 9;
-      u16string_assignCStr(&DAT_0071d18c);
-      name_index._0_1_ = 10;
-      u16string_assignCStr(&DAT_0071cbf0);
-      name_index._0_1_ = 0xb;
-      u16string_assignCStr(&DAT_0071d194);
-      name_index._0_1_ = 0xc;
-      u16string_assignCStr(&DAT_0071d19c);
-      name_index._0_1_ = 0xd;
-      u16string_assignCStr(&DAT_0071d18c);
-      name_index._0_1_ = 0xe;
-      u16string_assignCStr(&DAT_0071c970);
-      name_index._0_1_ = 0xf;
-      u16string_assignCStr(&DAT_0071ce10);
-      name_index._0_1_ = 0x10;
-      u16string_assignCStr(&DAT_0071d1a4);
-      name_index._0_1_ = 0x11;
-      u16string_assignCStr(&DAT_0071cf6c);
-      name_index._0_1_ = 0x12;
-      u16string_assignCStr(&DAT_0071d1ac);
-      name_index = CONCAT31(name_index._1_3_,0x13);
-      u16string_assignCStr(&DAT_0071d1b4);
-      _atexit((_func_4879 *)&LAB_006fb6b0);
-    }
-    if ((DAT_0076dbb8 & 2) == 0) {
-      DAT_0076dbb8 = DAT_0076dbb8 | 2;
-      name_index = 0x14;
-      u16string_assignCStr(&DAT_0071cc2c);
-      name_index._0_1_ = 0x15;
-      u16string_assignCStr(L"mala");
-      name_index._0_1_ = 0x16;
-      u16string_assignCStr(&DAT_0071d1c8);
-      name_index._0_1_ = 0x17;
-      u16string_assignCStr(&DAT_0071d1d0);
-      name_index._0_1_ = 0x18;
-      u16string_assignCStr(&DAT_0071d1d8);
-      name_index._0_1_ = 0x19;
-      u16string_assignCStr(&DAT_0071d1e0);
-      name_index._0_1_ = 0x1a;
-      u16string_assignCStr(&DAT_0071ca64);
-      name_index._0_1_ = 0x1b;
-      u16string_assignCStr(&DAT_0071c7e8);
-      name_index._0_1_ = 0x1c;
-      u16string_assignCStr(&DAT_0071d1e8);
-      name_index._0_1_ = 0x1d;
-      u16string_assignCStr(&DAT_0071d1f0);
-      name_index._0_1_ = 0x1e;
-      u16string_assignCStr(&DAT_0071c7e8);
-      name_index._0_1_ = 0x1f;
-      u16string_assignCStr(&DAT_0071cce8);
-      name_index._0_1_ = 0x20;
-      u16string_assignCStr(&DAT_0071c7f0);
-      name_index._0_1_ = 0x21;
-      u16string_assignCStr(L"rion");
-      name_index._0_1_ = 0x22;
-      u16string_assignCStr(L"remo");
-      name_index._0_1_ = 0x23;
-      u16string_assignCStr(L"antis");
-      name_index._0_1_ = 0x24;
-      u16string_assignCStr(&DAT_0071d21c);
-      name_index._0_1_ = 0x25;
-      u16string_assignCStr(&DAT_0071d224);
-      name_index._0_1_ = 0x26;
-      u16string_assignCStr(L"reon");
-      name_index = CONCAT31(name_index._1_3_,0x27);
-      u16string_assignCStr(L"tuma");
-      _atexit((_func_4879 *)&LAB_006fb950);
-    }
-    name_index = 0xffffffff;
-    uVar2 = Terrain_sampleHeightNoise(local_44,x,z);
-    Vec2_DoubleToInt(uVar2);
-    iVar1 = *(int *)(in_ECX + 0x800290);
-    local_34[0] = 0;
-    local_20 = 7;
-    local_24 = 0;
-    u16string_replaceRange(&DAT_0076d9d8 +
-                 ((local_18 * 3 + *(int *)(in_ECX + 0x80028c) + local_1c) % 0x14) * 0x18,0,
-                 0xffffffff);
-    name_index = 0x28;
-    std_u16string_replace(&DAT_0076dbc0 + ((local_1c * 3 + iVar1 + local_18) % 0x14) * 0x18,0,0xffffffff);
-    u16string_moveConstruct(local_34);
-    std_string_FreeMember();
-    uVar2 = extraout_EDX;
-  }
-  else {
-    *(undefined4 *)(param_1 + 10) = 7;
-    *(undefined4 *)(param_1 + 8) = 0;
-    *param_1 = 0;
-    u16string_assignPtrLen(&PTR_006fccac,0);
-    uVar2 = extraout_EDX_00;
-  }
-  ExceptionList = local_10;
-  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc,uVar2,uVar3);
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: moveConstruct9Field  (confidence: high)
  * purpose: Move-construct: zero dest, steal 3-ptr buffer from source (nulling src[0..2]), copy remaining fields src[3..8]
  * vars: in_ECX[0..2]=moved buffer; [3..8]=copied payload
@@ -15441,29 +20299,6 @@ void moveConstruct9Field(undefined4 *src)
   dest[7] = src[7];
   dest[8] = src[8];
   return;
-}
-
-
-
-
-/* [AUDIT] proposed: allocObjectWithVec3  (confidence: high)
- * purpose: Allocate object via list_allocNode20 and store vec3 (param_3[0..2]) at +8/+0xc/+0x10
- * vars: +8/+0xc/+0x10=vec3 payload
- */
-/* Global::allocObjectWithVec3 @ 005a6b60 */
-
-int allocObjectWithVec3(undefined4 param_1,undefined4 param_2,undefined4 *pos)
-
-{
-  int node;
-  
-  node = list_allocNode20(param_1,param_2);
-  if ((undefined4 *)(node + 8) != (undefined4 *)0x0) {
-    *(undefined4 *)(node + 8) = *pos;
-    *(undefined4 *)(node + 0xc) = pos[1];
-    *(undefined4 *)(node + 0x10) = pos[2];
-  }
-  return node;
 }
 
 
@@ -15589,6 +20424,7 @@ void PathNodeMap_insertOrUpdate(undefined4 *key)
   new_node = allocNodeMovePayload(temp);
   map_insertUniqueWithHint(local_3c,node,new_node + 0x10,new_node);
   if (temp[0] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(temp[0]);
   }
 LAB_005a7b26:
@@ -15638,6 +20474,7 @@ undefined4 * PathNode_allocFromKey(void)
   
   node = operator_new(0x34);
   if (node == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *node = *proto;
@@ -15682,6 +20519,7 @@ void Pathfinding_reconstructPath(int self)
   *(int *)(*piVar1 + 4) = *piVar1;
   *(undefined4 *)(self + 0x1464) = 0;
   if (pvVar3 != (void *)*piVar1) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar3);
   }
   local_2c[7] = local_2c[4];
@@ -15700,6 +20538,7 @@ void Pathfinding_reconstructPath(int self)
   node = allocObjectWithVec3(head,*(undefined4 *)(head + 4),local_2c + 6);
   if (*(int *)(self + 0x1464) == 0xccccccb) {
 LAB_005a7d65:
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x1464) = *(int *)(self + 0x1464) + 1;
@@ -15779,6 +20618,7 @@ void PathMap_probeClosedSet(undefined4 x,undefined4 y,undefined4 z)
   if (found != iVar1) {
     lexicographicalLess(puVar2,local_c,*(undefined4 *)(found + 0x10),*(undefined4 *)(found + 0x14));
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(key);
 }
 
@@ -15876,6 +20716,7 @@ LAB_005a9f51:
   *(int *)(local_14 + 0x1408) = x;
 LAB_005a9f62:
   if (node != (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(node);
   }
   ExceptionList = local_10;
@@ -18263,11 +23104,13 @@ LAB_005ad8f3:
       if (local_184 != (undefined4 *)0x0) {
         while( true ) {
           if (puVar3 == local_180) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_184);
           }
           if ((void *)*puVar3 != (void *)0x0) break;
           puVar3 = puVar3 + 3;
         }
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar3);
       }
       iy = iy + 7;
@@ -18279,11 +23122,13 @@ LAB_005adaaf:
   if (local_30c != (undefined4 *)0x0) {
     while( true ) {
       if (puVar3 == local_308) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(local_30c);
       }
       if ((void *)*puVar3 != (void *)0x0) break;
       puVar3 = puVar3 + 3;
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*puVar3);
   }
 LAB_005adafe:
@@ -19587,6 +24432,7 @@ LAB_005bf37f:
           if (local_86c != (void *)0x0) {
             std::_Container_base0::_Orphan_all((_Container_base0 *)&local_86c);
             std_vector_destroy_ptr_elems_stride3(local_86c,local_868,&local_5cea,local_5d44);
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_86c);
           }
         }
@@ -19639,6 +24485,7 @@ LAB_005bf37f:
             if (local_19fc != (void *)0x0) {
               std::_Container_base0::_Orphan_all((_Container_base0 *)&local_19fc);
               std_vector_destroy_ptr_elems_stride3(local_19fc,local_19f8,&local_5cea,local_5d44);
+                    /* WARNING: Subroutine does not return */
               operator_delete(local_19fc);
             }
           }
@@ -19673,6 +24520,7 @@ LAB_005bf37f:
             if (local_16ec != (void *)0x0) {
               std::_Container_base0::_Orphan_all((_Container_base0 *)&local_16ec);
               std_vector_destroy_ptr_elems_stride3(local_16ec,local_16e8,&local_5cea,local_5d44);
+                    /* WARNING: Subroutine does not return */
               operator_delete(local_16ec);
             }
           }
@@ -19708,6 +24556,7 @@ LAB_005bf37f:
             if (local_1874 != (void *)0x0) {
               std::_Container_base0::_Orphan_all((_Container_base0 *)&local_1874);
               std_vector_destroy_ptr_elems_stride3(local_1874,local_1870,&local_5cea,local_5d44);
+                    /* WARNING: Subroutine does not return */
               operator_delete(local_1874);
             }
           }
@@ -26457,6 +31306,7 @@ switchD_005bf8e6_default:
     return;
   }
   std_vector_destroy_ptr_elems_stride3(local_154,local_150,&local_1a5,local_1a0);
+                    /* WARNING: Subroutine does not return */
   operator_delete(local_154);
 }
 
@@ -26612,6 +31462,787 @@ void copyByteTripleToInts(byte *src)
   out[1] = (uint)src[1];
   out[2] = (uint)src[2];
   return;
+}
+
+
+
+
+/* Global::FUN_005c0170 @ 005c0170 */
+
+void FUN_005c0170(int param_1,int param_2,int param_3,undefined4 param_4,undefined4 param_5)
+
+{
+  float *pfVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar3 = param_2;
+  while( true ) {
+    iVar4 = iVar3 * 2 + 2;
+    if (param_3 <= iVar4) break;
+    fVar2 = *(float *)(param_1 + -0xc + iVar4 * 0xc);
+    pfVar1 = (float *)(param_1 + iVar4 * 0xc);
+    if (*pfVar1 <= fVar2 && fVar2 != *pfVar1) {
+      iVar4 = iVar3 * 2 + 1;
+    }
+    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + iVar4 * 0xc);
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar4 * 0xc);
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar4 * 0xc);
+    iVar3 = iVar4;
+  }
+  if (iVar4 == param_3) {
+    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -0xc + param_3 * 0xc);
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -8 + param_3 * 0xc);
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -4 + param_3 * 0xc);
+    iVar3 = param_3 + -1;
+  }
+  FUN_005c2070(param_1,iVar3,param_2,param_4,param_5);
+  return;
+}
+
+
+
+
+/* Global::FUN_005c02b0 @ 005c02b0 */
+
+void FUN_005c02b0(int param_1,int param_2,int param_3,undefined4 param_4,undefined4 param_5)
+
+{
+  float *pfVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar3 = param_2;
+  while( true ) {
+    iVar4 = iVar3 * 2 + 2;
+    if (param_3 <= iVar4) break;
+    fVar2 = *(float *)(param_1 + iVar4 * 0xc);
+    pfVar1 = (float *)(param_1 + -0xc + iVar4 * 0xc);
+    if (*pfVar1 <= fVar2 && fVar2 != *pfVar1) {
+      iVar4 = iVar3 * 2 + 1;
+    }
+    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + iVar4 * 0xc);
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar4 * 0xc);
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar4 * 0xc);
+    iVar3 = iVar4;
+  }
+  if (iVar4 == param_3) {
+    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -0xc + param_3 * 0xc);
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -8 + param_3 * 0xc);
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -4 + param_3 * 0xc);
+    iVar3 = param_3 + -1;
+  }
+  FUN_005c2170(param_1,iVar3,param_2,param_4,param_5);
+  return;
+}
+
+
+
+
+/* Global::FUN_005c0e10 @ 005c0e10 */
+
+void FUN_005c0e10(float *param_1,float *param_2)
+
+{
+  float *pfVar1;
+  float fVar2;
+  float fVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  float *pfVar6;
+  uint uVar7;
+  float *pfVar8;
+  
+  uVar7 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  pfVar6 = param_1;
+  if (param_1 != param_2) {
+    while (pfVar6 = pfVar6 + 3, pfVar6 != param_2) {
+      fVar2 = *pfVar6;
+      uVar5 = *(undefined8 *)(pfVar6 + 1);
+      uVar4 = *(undefined8 *)(pfVar6 + 1);
+      if (*param_1 <= fVar2) {
+        fVar3 = pfVar6[-3];
+        pfVar8 = pfVar6;
+        while (fVar2 < fVar3) {
+          *pfVar8 = fVar3;
+          pfVar8[1] = pfVar8[-2];
+          pfVar8[2] = pfVar8[-1];
+          fVar3 = pfVar8[-6];
+          pfVar8 = pfVar8 + -3;
+        }
+        *pfVar8 = fVar2;
+        *(undefined8 *)(pfVar8 + 1) = uVar5;
+      }
+      else {
+        if (param_1 != pfVar6) {
+          pfVar8 = pfVar6 + 4;
+          do {
+            pfVar8[-4] = pfVar8[-7];
+            pfVar8[-3] = pfVar8[-6];
+            pfVar8[-2] = pfVar8[-5];
+            pfVar1 = pfVar8 + -7;
+            pfVar8 = pfVar8 + -3;
+          } while (pfVar1 != param_1);
+        }
+        *param_1 = fVar2;
+        *(undefined8 *)(param_1 + 1) = uVar4;
+      }
+    }
+  }
+  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_005c0f80 @ 005c0f80 */
+
+void FUN_005c0f80(float *param_1,float *param_2)
+
+{
+  float *pfVar1;
+  float fVar2;
+  float fVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  float *pfVar6;
+  uint uVar7;
+  float *pfVar8;
+  
+  uVar7 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  pfVar6 = param_1;
+  if (param_1 != param_2) {
+    while (pfVar6 = pfVar6 + 3, pfVar6 != param_2) {
+      fVar2 = *pfVar6;
+      uVar5 = *(undefined8 *)(pfVar6 + 1);
+      uVar4 = *(undefined8 *)(pfVar6 + 1);
+      if (fVar2 < *param_1 || fVar2 == *param_1) {
+        fVar3 = pfVar6[-3];
+        pfVar8 = pfVar6;
+        while (fVar3 < fVar2) {
+          *pfVar8 = fVar3;
+          pfVar8[1] = pfVar8[-2];
+          pfVar8[2] = pfVar8[-1];
+          fVar3 = pfVar8[-6];
+          pfVar8 = pfVar8 + -3;
+        }
+        *pfVar8 = fVar2;
+        *(undefined8 *)(pfVar8 + 1) = uVar5;
+      }
+      else {
+        if (param_1 != pfVar6) {
+          pfVar8 = pfVar6 + 4;
+          do {
+            pfVar8[-4] = pfVar8[-7];
+            pfVar8[-3] = pfVar8[-6];
+            pfVar8[-2] = pfVar8[-5];
+            pfVar1 = pfVar8 + -7;
+            pfVar8 = pfVar8 + -3;
+          } while (pfVar1 != param_1);
+        }
+        *param_1 = fVar2;
+        *(undefined8 *)(param_1 + 1) = uVar4;
+      }
+    }
+  }
+  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_005c1100 @ 005c1100 */
+
+void FUN_005c1100(int param_1,int param_2)
+
+{
+  undefined8 *puVar1;
+  float *pfVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  undefined8 uVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  
+  uVar7 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  iVar5 = (param_2 - param_1) / 0xc;
+  iVar12 = iVar5 / 2;
+  if (0 < iVar12) {
+    iVar10 = iVar12 * 2 + 2;
+    iVar8 = param_1 + iVar12 * 0xc + 8;
+    do {
+      puVar1 = (undefined8 *)(iVar8 + -0x10);
+      fVar3 = *(float *)(iVar8 + -0x14);
+      iVar8 = iVar8 + -0xc;
+      uVar6 = *puVar1;
+      iVar10 = iVar10 + -2;
+      iVar12 = iVar12 + -1;
+      iVar11 = iVar10;
+      iVar9 = iVar12;
+      while (iVar13 = iVar11, iVar13 < iVar5) {
+        fVar4 = *(float *)(param_1 + -0xc + iVar13 * 0xc);
+        pfVar2 = (float *)(param_1 + iVar13 * 0xc);
+        if (*pfVar2 <= fVar4 && fVar4 != *pfVar2) {
+          iVar13 = iVar13 + -1;
+        }
+        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + iVar13 * 0xc);
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar13 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar13 * 0xc);
+        iVar9 = iVar13;
+        iVar11 = iVar13 * 2 + 2;
+      }
+      if (iVar13 == iVar5) {
+        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -0xc + iVar5 * 0xc);
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -8 + iVar5 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -4 + iVar5 * 0xc);
+        iVar9 = iVar5 + -1;
+      }
+      while (iVar12 < iVar9) {
+        iVar11 = (iVar9 + -1) / 2;
+        fVar4 = *(float *)(param_1 + iVar11 * 0xc);
+        if (fVar3 <= fVar4) break;
+        *(float *)(param_1 + iVar9 * 0xc) = fVar4;
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar11 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar11 * 0xc);
+        iVar9 = iVar11;
+      }
+      *(float *)(param_1 + iVar9 * 0xc) = fVar3;
+      *(undefined8 *)(param_1 + 4 + iVar9 * 0xc) = uVar6;
+    } while (0 < iVar12);
+  }
+  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_005c1380 @ 005c1380 */
+
+void FUN_005c1380(int param_1,int param_2)
+
+{
+  undefined8 *puVar1;
+  float *pfVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  undefined8 uVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  
+  uVar7 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  iVar5 = (param_2 - param_1) / 0xc;
+  iVar12 = iVar5 / 2;
+  if (0 < iVar12) {
+    iVar10 = iVar12 * 2 + 2;
+    iVar8 = param_1 + iVar12 * 0xc + 8;
+    do {
+      puVar1 = (undefined8 *)(iVar8 + -0x10);
+      fVar3 = *(float *)(iVar8 + -0x14);
+      iVar8 = iVar8 + -0xc;
+      uVar6 = *puVar1;
+      iVar10 = iVar10 + -2;
+      iVar12 = iVar12 + -1;
+      iVar11 = iVar10;
+      iVar9 = iVar12;
+      while (iVar13 = iVar11, iVar13 < iVar5) {
+        fVar4 = *(float *)(param_1 + iVar13 * 0xc);
+        pfVar2 = (float *)(param_1 + -0xc + iVar13 * 0xc);
+        if (*pfVar2 <= fVar4 && fVar4 != *pfVar2) {
+          iVar13 = iVar13 + -1;
+        }
+        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + iVar13 * 0xc);
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar13 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar13 * 0xc);
+        iVar9 = iVar13;
+        iVar11 = iVar13 * 2 + 2;
+      }
+      if (iVar13 == iVar5) {
+        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -0xc + iVar5 * 0xc);
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -8 + iVar5 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -4 + iVar5 * 0xc);
+        iVar9 = iVar5 + -1;
+      }
+      while (iVar12 < iVar9) {
+        iVar11 = (iVar9 + -1) / 2;
+        fVar4 = *(float *)(param_1 + iVar11 * 0xc);
+        if (fVar4 <= fVar3) break;
+        *(float *)(param_1 + iVar9 * 0xc) = fVar4;
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar11 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar11 * 0xc);
+        iVar9 = iVar11;
+      }
+      *(float *)(param_1 + iVar9 * 0xc) = fVar3;
+      *(undefined8 *)(param_1 + 4 + iVar9 * 0xc) = uVar6;
+    } while (0 < iVar12);
+  }
+  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_005c1720 @ 005c1720 */
+
+void FUN_005c1720(float *param_1,float *param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  float *pfVar6;
+  float *pfVar7;
+  
+  fVar1 = *param_1;
+  iVar5 = ((int)param_3 - (int)param_1) / 0xc;
+  if (iVar5 < 0x29) {
+    fVar2 = *param_2;
+    if (fVar2 < fVar1) {
+      fVar3 = param_2[1];
+      fVar4 = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = param_1[1];
+      param_2[2] = param_1[2];
+      *param_1 = fVar2;
+      param_1[1] = fVar3;
+      param_1[2] = fVar4;
+    }
+    fVar1 = *param_3;
+    if (fVar1 < *param_2) {
+      fVar2 = param_3[1];
+      fVar3 = param_3[2];
+      *param_3 = *param_2;
+      param_3[1] = param_2[1];
+      param_3[2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (fVar1 < *param_1) {
+        *param_2 = *param_1;
+        param_2[1] = param_1[1];
+        param_2[2] = param_1[2];
+        *param_1 = fVar1;
+        param_1[1] = fVar2;
+        param_1[2] = fVar3;
+      }
+    }
+  }
+  else {
+    iVar5 = iVar5 + 1;
+    iVar5 = (int)(iVar5 + (iVar5 >> 0x1f & 7U)) >> 3;
+    fVar2 = param_1[iVar5 * 3];
+    if (fVar2 < fVar1) {
+      fVar3 = param_1[iVar5 * 3 + 2];
+      fVar4 = param_1[iVar5 * 3 + 1];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = param_1[1];
+      param_1[iVar5 * 3 + 2] = param_1[2];
+      *param_1 = fVar2;
+      param_1[2] = fVar3;
+      param_1[1] = fVar4;
+    }
+    fVar1 = param_1[iVar5 * 6];
+    if (fVar1 < param_1[iVar5 * 3]) {
+      fVar2 = param_1[iVar5 * 6 + 1];
+      fVar3 = param_1[iVar5 * 6 + 2];
+      param_1[iVar5 * 6] = param_1[iVar5 * 3];
+      param_1[iVar5 * 6 + 1] = param_1[iVar5 * 3 + 1];
+      param_1[iVar5 * 6 + 2] = param_1[iVar5 * 3 + 2];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = fVar2;
+      param_1[iVar5 * 3 + 2] = fVar3;
+      fVar1 = param_1[iVar5 * 3];
+      if (fVar1 < *param_1) {
+        param_1[iVar5 * 3] = *param_1;
+        param_1[iVar5 * 3 + 1] = param_1[1];
+        param_1[iVar5 * 3 + 2] = param_1[2];
+        *param_1 = fVar1;
+        param_1[1] = fVar2;
+        param_1[2] = fVar3;
+      }
+    }
+    fVar1 = *param_2;
+    pfVar6 = param_2 + iVar5 * -3;
+    if (fVar1 < *pfVar6) {
+      fVar2 = param_2[1];
+      fVar3 = param_2[2];
+      *param_2 = *pfVar6;
+      param_2[1] = pfVar6[1];
+      param_2[2] = pfVar6[2];
+      *pfVar6 = fVar1;
+      pfVar6[1] = fVar2;
+      pfVar6[2] = fVar3;
+    }
+    fVar1 = param_2[iVar5 * 3];
+    if (fVar1 < *param_2) {
+      fVar2 = param_2[iVar5 * 3 + 1];
+      fVar3 = param_2[iVar5 * 3 + 2];
+      param_2[iVar5 * 3] = *param_2;
+      param_2[iVar5 * 3 + 1] = param_2[1];
+      param_2[iVar5 * 3 + 2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (fVar1 < *pfVar6) {
+        *param_2 = *pfVar6;
+        param_2[1] = pfVar6[1];
+        param_2[2] = pfVar6[2];
+        *pfVar6 = fVar1;
+        pfVar6[1] = fVar2;
+        pfVar6[2] = fVar3;
+      }
+    }
+    pfVar7 = param_3 + iVar5 * -6;
+    pfVar6 = param_3 + iVar5 * -3;
+    fVar1 = *pfVar6;
+    if (fVar1 < *pfVar7) {
+      fVar2 = pfVar6[2];
+      fVar3 = pfVar6[1];
+      *pfVar6 = *pfVar7;
+      pfVar6[1] = pfVar7[1];
+      pfVar6[2] = pfVar7[2];
+      *pfVar7 = fVar1;
+      pfVar7[2] = fVar2;
+      pfVar7[1] = fVar3;
+    }
+    fVar1 = *param_3;
+    if (fVar1 < *pfVar6) {
+      fVar2 = param_3[1];
+      fVar3 = param_3[2];
+      *param_3 = *pfVar6;
+      param_3[1] = pfVar6[1];
+      param_3[2] = pfVar6[2];
+      *pfVar6 = fVar1;
+      pfVar6[1] = fVar2;
+      pfVar6[2] = fVar3;
+      fVar1 = *pfVar6;
+      if (fVar1 < *pfVar7) {
+        fVar2 = pfVar6[1];
+        *pfVar6 = *pfVar7;
+        pfVar6[1] = pfVar7[1];
+        pfVar6[2] = pfVar7[2];
+        *pfVar7 = fVar1;
+        pfVar7[1] = fVar2;
+        pfVar7[2] = fVar3;
+      }
+    }
+    fVar1 = *param_2;
+    if (fVar1 < param_1[iVar5 * 3]) {
+      fVar2 = param_2[1];
+      fVar3 = param_2[2];
+      *param_2 = param_1[iVar5 * 3];
+      param_2[1] = param_1[iVar5 * 3 + 1];
+      param_2[2] = param_1[iVar5 * 3 + 2];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = fVar2;
+      param_1[iVar5 * 3 + 2] = fVar3;
+    }
+    fVar1 = *pfVar6;
+    if (fVar1 < *param_2) {
+      fVar2 = pfVar6[1];
+      fVar3 = pfVar6[2];
+      *pfVar6 = *param_2;
+      pfVar6[1] = param_2[1];
+      pfVar6[2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (fVar1 < param_1[iVar5 * 3]) {
+        *param_2 = param_1[iVar5 * 3];
+        param_2[1] = param_1[iVar5 * 3 + 1];
+        param_2[2] = param_1[iVar5 * 3 + 2];
+        param_1[iVar5 * 3] = fVar1;
+        param_1[iVar5 * 3 + 1] = fVar2;
+        param_1[iVar5 * 3 + 2] = fVar3;
+        return;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_005c1b60 @ 005c1b60 */
+
+void FUN_005c1b60(float *param_1,float *param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  float *pfVar6;
+  float *pfVar7;
+  
+  fVar1 = *param_1;
+  iVar5 = ((int)param_3 - (int)param_1) / 0xc;
+  if (iVar5 < 0x29) {
+    fVar2 = *param_2;
+    if (fVar1 < fVar2) {
+      fVar3 = param_2[1];
+      fVar4 = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = param_1[1];
+      param_2[2] = param_1[2];
+      *param_1 = fVar2;
+      param_1[1] = fVar3;
+      param_1[2] = fVar4;
+    }
+    fVar1 = *param_3;
+    if (*param_2 < fVar1) {
+      fVar2 = param_3[1];
+      fVar3 = param_3[2];
+      *param_3 = *param_2;
+      param_3[1] = param_2[1];
+      param_3[2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (*param_1 < fVar1) {
+        *param_2 = *param_1;
+        param_2[1] = param_1[1];
+        param_2[2] = param_1[2];
+        *param_1 = fVar1;
+        param_1[1] = fVar2;
+        param_1[2] = fVar3;
+      }
+    }
+  }
+  else {
+    iVar5 = iVar5 + 1;
+    iVar5 = (int)(iVar5 + (iVar5 >> 0x1f & 7U)) >> 3;
+    fVar2 = param_1[iVar5 * 3];
+    if (fVar1 < fVar2) {
+      fVar3 = param_1[iVar5 * 3 + 2];
+      fVar4 = param_1[iVar5 * 3 + 1];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = param_1[1];
+      param_1[iVar5 * 3 + 2] = param_1[2];
+      *param_1 = fVar2;
+      param_1[2] = fVar3;
+      param_1[1] = fVar4;
+    }
+    fVar1 = param_1[iVar5 * 6];
+    if (param_1[iVar5 * 3] < fVar1) {
+      fVar2 = param_1[iVar5 * 6 + 1];
+      fVar3 = param_1[iVar5 * 6 + 2];
+      param_1[iVar5 * 6] = param_1[iVar5 * 3];
+      param_1[iVar5 * 6 + 1] = param_1[iVar5 * 3 + 1];
+      param_1[iVar5 * 6 + 2] = param_1[iVar5 * 3 + 2];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = fVar2;
+      param_1[iVar5 * 3 + 2] = fVar3;
+      fVar1 = param_1[iVar5 * 3];
+      if (*param_1 < fVar1) {
+        param_1[iVar5 * 3] = *param_1;
+        param_1[iVar5 * 3 + 1] = param_1[1];
+        param_1[iVar5 * 3 + 2] = param_1[2];
+        *param_1 = fVar1;
+        param_1[1] = fVar2;
+        param_1[2] = fVar3;
+      }
+    }
+    fVar1 = *param_2;
+    pfVar6 = param_2 + iVar5 * -3;
+    if (*pfVar6 < fVar1) {
+      fVar2 = param_2[1];
+      fVar3 = param_2[2];
+      *param_2 = *pfVar6;
+      param_2[1] = pfVar6[1];
+      param_2[2] = pfVar6[2];
+      *pfVar6 = fVar1;
+      pfVar6[1] = fVar2;
+      pfVar6[2] = fVar3;
+    }
+    fVar1 = param_2[iVar5 * 3];
+    if (*param_2 < fVar1) {
+      fVar2 = param_2[iVar5 * 3 + 1];
+      fVar3 = param_2[iVar5 * 3 + 2];
+      param_2[iVar5 * 3] = *param_2;
+      param_2[iVar5 * 3 + 1] = param_2[1];
+      param_2[iVar5 * 3 + 2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (*pfVar6 < fVar1) {
+        *param_2 = *pfVar6;
+        param_2[1] = pfVar6[1];
+        param_2[2] = pfVar6[2];
+        *pfVar6 = fVar1;
+        pfVar6[1] = fVar2;
+        pfVar6[2] = fVar3;
+      }
+    }
+    pfVar7 = param_3 + iVar5 * -6;
+    pfVar6 = param_3 + iVar5 * -3;
+    fVar1 = *pfVar6;
+    if (*pfVar7 < fVar1) {
+      fVar2 = pfVar6[2];
+      fVar3 = pfVar6[1];
+      *pfVar6 = *pfVar7;
+      pfVar6[1] = pfVar7[1];
+      pfVar6[2] = pfVar7[2];
+      *pfVar7 = fVar1;
+      pfVar7[2] = fVar2;
+      pfVar7[1] = fVar3;
+    }
+    fVar1 = *param_3;
+    if (*pfVar6 < fVar1) {
+      fVar2 = param_3[1];
+      fVar3 = param_3[2];
+      *param_3 = *pfVar6;
+      param_3[1] = pfVar6[1];
+      param_3[2] = pfVar6[2];
+      *pfVar6 = fVar1;
+      pfVar6[1] = fVar2;
+      pfVar6[2] = fVar3;
+      fVar1 = *pfVar6;
+      if (*pfVar7 < fVar1) {
+        fVar2 = pfVar6[1];
+        *pfVar6 = *pfVar7;
+        pfVar6[1] = pfVar7[1];
+        pfVar6[2] = pfVar7[2];
+        *pfVar7 = fVar1;
+        pfVar7[1] = fVar2;
+        pfVar7[2] = fVar3;
+      }
+    }
+    fVar1 = *param_2;
+    if (param_1[iVar5 * 3] < fVar1) {
+      fVar2 = param_2[1];
+      fVar3 = param_2[2];
+      *param_2 = param_1[iVar5 * 3];
+      param_2[1] = param_1[iVar5 * 3 + 1];
+      param_2[2] = param_1[iVar5 * 3 + 2];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = fVar2;
+      param_1[iVar5 * 3 + 2] = fVar3;
+    }
+    fVar1 = *pfVar6;
+    if (*param_2 < fVar1) {
+      fVar2 = pfVar6[1];
+      fVar3 = pfVar6[2];
+      *pfVar6 = *param_2;
+      pfVar6[1] = param_2[1];
+      pfVar6[2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (param_1[iVar5 * 3] < fVar1) {
+        *param_2 = param_1[iVar5 * 3];
+        param_2[1] = param_1[iVar5 * 3 + 1];
+        param_2[2] = param_1[iVar5 * 3 + 2];
+        param_1[iVar5 * 3] = fVar1;
+        param_1[iVar5 * 3 + 1] = fVar2;
+        param_1[iVar5 * 3 + 2] = fVar3;
+        return;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_005c2070 @ 005c2070 */
+
+void FUN_005c2070(int param_1,int param_2,int param_3,float *param_4)
+
+{
+  float fVar1;
+  int iVar2;
+  
+  while (param_3 < param_2) {
+    iVar2 = (param_2 + -1) / 2;
+    fVar1 = *(float *)(param_1 + iVar2 * 0xc);
+    if (*param_4 <= fVar1) break;
+    *(float *)(param_1 + param_2 * 0xc) = fVar1;
+    *(undefined4 *)(param_1 + 4 + param_2 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar2 * 0xc);
+    *(undefined4 *)(param_1 + 8 + param_2 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar2 * 0xc);
+    param_2 = iVar2;
+  }
+  *(float *)(param_1 + param_2 * 0xc) = *param_4;
+  *(float *)(param_1 + 4 + param_2 * 0xc) = param_4[1];
+  *(float *)(param_1 + 8 + param_2 * 0xc) = param_4[2];
+  return;
+}
+
+
+
+
+/* Global::FUN_005c2170 @ 005c2170 */
+
+void FUN_005c2170(int param_1,int param_2,int param_3,float *param_4)
+
+{
+  float fVar1;
+  int iVar2;
+  
+  while (param_3 < param_2) {
+    iVar2 = (param_2 + -1) / 2;
+    fVar1 = *(float *)(param_1 + iVar2 * 0xc);
+    if (fVar1 < *param_4 || fVar1 == *param_4) break;
+    *(float *)(param_1 + param_2 * 0xc) = fVar1;
+    *(undefined4 *)(param_1 + 4 + param_2 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar2 * 0xc);
+    *(undefined4 *)(param_1 + 8 + param_2 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar2 * 0xc);
+    param_2 = iVar2;
+  }
+  *(float *)(param_1 + param_2 * 0xc) = *param_4;
+  *(float *)(param_1 + 4 + param_2 * 0xc) = param_4[1];
+  *(float *)(param_1 + 8 + param_2 * 0xc) = param_4[2];
+  return;
+}
+
+
+
+
+/* Global::FUN_005c37d0 @ 005c37d0 */
+
+undefined4 * FUN_005c37d0(int param_1,int param_2,undefined4 *param_3)
+
+{
+  if (param_1 != param_2) {
+    param_1 = param_1 - (int)param_3;
+    do {
+      if (param_3 != (undefined4 *)0x0) {
+        *param_3 = *(undefined4 *)(param_1 + (int)param_3);
+        param_3[1] = *(undefined4 *)(param_1 + 4 + (int)param_3);
+        param_3[2] = *(undefined4 *)(param_1 + 8 + (int)param_3);
+      }
+      param_3 = param_3 + 3;
+    } while (param_1 + (int)param_3 != param_2);
+    return param_3;
+  }
+  return param_3;
 }
 
 
@@ -26832,8 +32463,49 @@ void ctor_from_two_vec3(undefined4 *a,undefined4 *b)
 
 
 
+/* [AUDIT] proposed: Region_ctor  (confidence: high)
+ * purpose: Region constructor: zero-inits ~0x60-byte struct, sets flag [9]=1
+ * vars: class Region; field[9]=1 default
+ */
+/* Global::Region_ctor @ 005c3bb0 */
+
+void Region_ctor(void)
+
+{
+  undefined4 *self;
+  
+  *self = 0;
+  self[1] = 0;
+  self[2] = 0;
+  self[3] = 0;
+  self[4] = 0;
+  self[5] = 0;
+  self[6] = 0;
+  self[7] = 0;
+  self[8] = 0;
+  self[9] = 1;
+  self[10] = 0;
+  self[0xb] = 0;
+  self[0xc] = 0;
+  self[0xd] = 0;
+  self[0xe] = 0;
+  self[0xf] = 0;
+  *(undefined2 *)(self + 0x10) = 0;
+  self[0x11] = 0;
+  self[0x12] = 0;
+  self[0x13] = 0;
+  self[0x14] = 0;
+  self[0x15] = 0;
+  self[0x16] = 0;
+  *(undefined1 *)(self + 0x17) = 0;
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: dtor_free_two_buffers  (confidence: high)
- * purpose: Destructor freeing two heap buffers via operator_delete (out[3] then out[0]); container teardown
+ * purpose: Destructor freeing two heap buffers via operator_delete (self[3] then self[0]); container teardown
  * vars: frees [3] and [0]; many Unwind callers
  */
 /* Global::dtor_free_two_buffers @ 005c3c70 */
@@ -26844,9 +32516,11 @@ void dtor_free_two_buffers(void)
   undefined4 *self;
   
   if ((void *)self[3] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[3]);
   }
   if ((void *)*self != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*self);
   }
   return;
@@ -26949,9 +32623,36 @@ uint * uint128_sub(uint *out,uint *rhs)
 
 
 
+/* Global::FUN_005c4480 @ 005c4480 */
+
+void FUN_005c4480(uint param_1)
+
+{
+  uint uVar1;
+  int *in_ECX;
+  
+  if (param_1 <= (uint)((in_ECX[2] - in_ECX[1]) / 0xc)) {
+    return;
+  }
+  if (0x15555555U - (in_ECX[1] - *in_ECX) / 0xc < param_1) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("vector<T> too long");
+  }
+  uVar1 = (in_ECX[2] - *in_ECX) / 0xc;
+  if (0x15555555 - (uVar1 >> 1) < uVar1) {
+    FUN_005c4230();
+    return;
+  }
+  FUN_005c4230();
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: terrain_biomeColorFromNoise  (confidence: med)
  * purpose: Computes clamped RGB terrain/biome color from two Perlin-noise (perlinNoise2D_cosInterp) layers using world seeds
- * vars: lhs+0x800274.. noise seeds; out RGB clamped 0-255
+ * vars: in_ECX+0x800274.. noise seeds; out RGB clamped 0-255
  */
 /* Global::terrain_biomeColorFromNoise @ 005c4520 */
 
@@ -35071,6 +40772,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar8 + 1);
@@ -35094,6 +40796,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar10 = (int)local_198 - (int)local_19c >> 2;
         if (iVar10 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar20 = (int)local_194 - (int)local_19c >> 2;
@@ -35120,6 +40823,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar8 + 1);
@@ -35143,6 +40847,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar10 = (int)local_198 - (int)local_19c >> 2;
         if (iVar10 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar20 = (int)local_194 - (int)local_19c >> 2;
@@ -35169,6 +40874,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar8 + 1);
@@ -35192,6 +40898,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar10 = (int)local_198 - (int)local_19c >> 2;
         if (iVar10 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar20 = (int)local_194 - (int)local_19c >> 2;
@@ -35218,6 +40925,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar8 + 1);
@@ -35241,6 +40949,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar10 = (int)local_198 - (int)local_19c >> 2;
         if (iVar10 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar20 = (int)local_194 - (int)local_19c >> 2;
@@ -35267,6 +40976,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar8 + 1);
@@ -35290,6 +41000,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar10 = (int)local_198 - (int)local_19c >> 2;
         if (iVar10 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar20 = (int)local_194 - (int)local_19c >> 2;
@@ -35316,6 +41027,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar8 + 1);
@@ -35339,6 +41051,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar10 = (int)local_198 - (int)local_19c >> 2;
         if (iVar10 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar20 = (int)local_194 - (int)local_19c >> 2;
@@ -35365,6 +41078,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar8 + 1);
@@ -35388,6 +41102,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar10 = (int)local_198 - (int)local_19c >> 2;
         if (iVar10 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar20 = (int)local_194 - (int)local_19c >> 2;
@@ -35414,6 +41129,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar7 = (int)local_194 - (int)local_19c >> 2;
@@ -35437,6 +41153,7 @@ LAB_005d6185:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar10 = (int)local_198 - (int)local_19c >> 2;
         if (iVar10 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar7 = (int)local_194 - (int)local_19c >> 2;
@@ -35519,6 +41236,7 @@ LAB_005d6185:
     iVar8 = IntMap_SetScalar(iVar10,*(undefined4 *)(iVar10 + 4),&local_1ec);
     if (*(int *)(uVar7 + 8) == 0x15555554) {
 LAB_005d719c:
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(uVar7 + 8) = *(int *)(uVar7 + 8) + 1;
@@ -35536,6 +41254,7 @@ LAB_005d719c:
     local_8._0_1_ = 1;
     iVar8 = IntMap_SetScalar(iVar10,*(undefined4 *)(iVar10 + 4),&local_208);
     if (*(int *)(uVar7 + 8) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(uVar7 + 8) = *(int *)(uVar7 + 8) + 1;
@@ -35590,6 +41309,7 @@ LAB_005d719c:
     iVar10 = *(int *)(local_1cc + 4);
     iVar8 = IntMap_SetScalar(iVar10,*(undefined4 *)(iVar10 + 4),local_218 + 2);
     if (*(int *)(uVar7 + 8) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(uVar7 + 8) = *(int *)(uVar7 + 8) + 1;
@@ -35609,6 +41329,7 @@ LAB_005d719c:
     iVar8 = local_1b8;
     piVar21 = local_1d0;
     if (*(int *)(uVar7 + 8) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(uVar7 + 8) = *(int *)(uVar7 + 8) + 1;
@@ -35824,14 +41545,17 @@ LAB_005d719c:
     local_8 = (uint)local_8._1_3_ << 8;
     if (local_19c != (uint *)0x0) {
       std::_Container_base0::_Orphan_all((_Container_base0 *)&local_19c);
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_19c);
     }
     puVar9 = (undefined4 *)*local_1e4;
     *local_1e4 = local_1e4;
     local_1e4[1] = local_1e4;
     if (puVar9 != local_1e4) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(puVar9);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1e4);
   }
 LAB_005d7a51:
@@ -36369,8 +42093,10 @@ LAB_005d940a:
     *local_cc = local_cc;
     local_cc[1] = local_cc;
     if (puVar7 == local_cc) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_cc);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(puVar7);
   }
   iVar16 = (int)((int)local_80 + ((int)local_80 >> 0x1f & 0x3fU)) >> 6;
@@ -36590,6 +42316,7 @@ LAB_005d8c5a:
                     iVar8 = ((int)piVar15 - (int)piVar14) / 0xc;
                     if (iVar8 == 0x15555555) {
 LAB_005d91b3:
+                    /* WARNING: Subroutine does not return */
                       std::_Xlength_error("vector<T> too long");
                     }
                     uVar6 = iVar8 + 1;
@@ -36688,9 +42415,11 @@ LAB_005d92fe:
             *(int *)(local_64 + 0x4c) = iVar16;
             *(int *)(local_64 + 0x50) = iVar8;
             local_8 = CONCAT31(local_8._1_3_,2);
+                    /* WARNING: Subroutine does not return */
             operator_delete(piVar14);
           }
           if (piVar14 != (int *)0x0) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(piVar14);
           }
           goto LAB_005d93cd;
@@ -36737,6 +42466,7 @@ LAB_005d9319:
   iVar16 = *(int *)(iVar12 + 100);
   if (iVar16 == 0x3fffffe) {
 LAB_005d93b6:
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(iVar12 + 100) = iVar16 + 1;
@@ -36747,8 +42477,10 @@ LAB_005d93cd:
   *local_c4 = local_c4;
   local_c4[1] = local_c4;
   if (puVar7 == local_c4) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_c4);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(puVar7);
 }
 
@@ -36984,6 +42716,7 @@ void World_generateTreeRecursive(int chunk)
           local_8 = 0xffffffff;
           iVar12 = IntMap_SetScalar(local_138,*(undefined4 *)((int)local_138 + 4),&local_134);
           if (*(int *)(iVar21 + 8) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           *(int *)(iVar21 + 8) = *(int *)(iVar21 + 8) + 1;
@@ -37001,6 +42734,7 @@ void World_generateTreeRecursive(int chunk)
           local_8 = 0xffffffff;
           uVar6 = IntMap_SetScalar(local_134,local_134[1],&local_138);
           if (*(int *)(iVar21 + 8) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           *(int *)(iVar21 + 8) = *(int *)(iVar21 + 8) + 1;
@@ -37219,6 +42953,7 @@ LAB_005d9d2f:
           uStack_60 = uStack_18;
           iVar13 = map_insertVal_465c00(iVar8,*(undefined4 *)(iVar8 + 4),&local_64);
           if (*(int *)(list + 100) == 0x3fffffe) {
+                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           *(int *)(list + 100) = *(int *)(list + 100) + 1;
@@ -37395,8 +43130,10 @@ LAB_005da13c:
   *puVar7 = puVar7;
   puVar7[1] = puVar7;
   if (puVar20 == puVar7) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(puVar7);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(puVar20);
 }
 
@@ -38367,6 +44104,7 @@ LAB_005ded3e:
               if (local_458 != (void *)0x0) {
                 std::_Container_base0::_Orphan_all((_Container_base0 *)&local_458);
 LAB_005ddd6a:
+                    /* WARNING: Subroutine does not return */
                 operator_delete(local_458);
               }
               goto LAB_005df485;
@@ -38424,6 +44162,7 @@ LAB_005ddd6a:
             iVar13 = IntMap_SetScalar(iVar3,*(undefined4 *)(iVar3 + 4),local_66c + 2);
             if (*(int *)(uVar2 + 8) == 0x15555554) {
 LAB_005df5a4:
+                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             *(int *)(uVar2 + 8) = *(int *)(uVar2 + 8) + 1;
@@ -38948,11 +44687,13 @@ LAB_005de6d3:
                 if (local_384 != (undefined4 *)0x0) {
                   while( true ) {
                     if (puVar16 == local_380) {
+                    /* WARNING: Subroutine does not return */
                       operator_delete(local_384);
                     }
                     if ((void *)*puVar16 != (void *)0x0) break;
                     puVar16 = puVar16 + 3;
                   }
+                    /* WARNING: Subroutine does not return */
                   operator_delete((void *)*puVar16);
                 }
                 local_408 = (uint *)((int)local_408 + 7);
@@ -38966,12 +44707,14 @@ LAB_005de6d3:
               this = local_1fc;
               while( true ) {
                 if (this == local_1f8) {
+                    /* WARNING: Subroutine does not return */
                   operator_delete(local_1fc);
                 }
                 if (*(int *)this != 0) break;
                 this = this + 0xc;
               }
               std::_Container_base0::_Orphan_all(this);
+                    /* WARNING: Subroutine does not return */
               operator_delete(*(void **)this);
             }
           }
@@ -39106,6 +44849,7 @@ LAB_005de6d3:
         local_8._0_1_ = 2;
         if (local_458 != (void *)0x0) {
           std::_Container_base0::_Orphan_all((_Container_base0 *)&local_458);
+                    /* WARNING: Subroutine does not return */
           operator_delete(local_458);
         }
       }
@@ -39137,17 +44881,20 @@ LAB_005df485:
   local_8 = CONCAT31(local_8._1_3_,1);
   if (local_46c != (void *)0x0) {
     std::_Container_base0::_Orphan_all((_Container_base0 *)&local_46c);
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_46c);
   }
   local_8 = (uint)local_8._1_3_ << 8;
   if (local_420 != (void *)0x0) {
     std::_Container_base0::_Orphan_all((_Container_base0 *)&local_420);
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_420);
   }
   local_8 = 0xffffffff;
   if (local_430 != (void *)0x0) {
     std::_Container_base0::_Orphan_all((_Container_base0 *)&local_430);
     std_destroyRange_T24(local_430,local_42c,&local_479,local_410);
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_430);
   }
 LAB_005df586:
@@ -40630,6 +46377,7 @@ LAB_005e200e:
     iVar13 = ChunkBuffer_loadAndNotify(local_5d4,*(undefined4 *)((int)local_5d4 + 4),local_3e0);
     if (*(int *)(iVar2 + 8) == 0x38e38e2) {
 LAB_005e20f0:
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(iVar2 + 8) = *(int *)(iVar2 + 8) + 1;
@@ -41625,45 +47373,9 @@ LAB_005ee430:
 
 
 
-/* [AUDIT] proposed: assign_two_dwords  (confidence: high)
- * purpose: Copies two 32-bit fields from x to vol (POD pair assignment)
- * vars: vol dst; x src; 2x undefined4
- */
-/* Global::assign_two_dwords @ 005ee4b0 */
-
-void assign_two_dwords(undefined4 *out_min,undefined4 *out_max)
-
-{
-  int tile;
-  
-  *out_min = 1;
-  *out_max = 10;
-  if (*(float *)(tile + 0x10) <= 0.2 && *(float *)(tile + 0x10) != 0.2) {
-    *out_min = 10;
-    *out_max = 0x14;
-  }
-  if ((*(float *)(tile + 0xc) <= 0.2 && *(float *)(tile + 0xc) != 0.2) &&
-     (0.8 < *(float *)(tile + 0x10))) {
-    *out_min = 0xf;
-    *out_max = 0x19;
-  }
-  if ((0.8 < *(float *)(tile + 0xc)) && (0.8 < *(float *)(tile + 0x10))) {
-    *out_min = 10;
-    *out_max = 0x14;
-  }
-  if (*(char *)(tile + 8) == '\x01') {
-    *out_min = 0x14;
-    *out_max = 0x1e;
-  }
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: World_getColumnDataAt  (confidence: med)
- * purpose: Returns pointer to per-column/cell float data at (out_max,param_3)
- * vars: out_min float* out/base; out_max/3 x,z indices
+ * purpose: Returns pointer to per-column/cell float data at (x,y)
+ * vars: vol float* out/base; x/3 x,z indices
  */
 /* Global::World_getColumnDataAt @ 005ee540 */
 
@@ -41770,6 +47482,7 @@ void World_appendMeshBatch(undefined4 x,undefined4 y,int owner)
   local_8 = 0xffffffff;
   iVar4 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&local_14);
   if (*(int *)(behavior_list + 8) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(behavior_list + 8) = *(int *)(behavior_list + 8) + 1;
@@ -41790,12 +47503,14 @@ void World_appendMeshBatch(undefined4 x,undefined4 y,int owner)
   iVar5 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&local_14);
   iVar4 = owner;
   if (*(int *)(behavior_list + 8) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(behavior_list + 8) = *(int *)(behavior_list + 8) + 1;
   *(int *)(iVar1 + 4) = iVar5;
   **(int **)(iVar5 + 4) = iVar5;
   if (*(void **)(owner + 0x13e4) != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(owner + 0x13e4));
   }
   *(undefined8 *)(owner + 0x178) = 0x3f80000042c80000;
@@ -43021,6 +48736,7 @@ switchD_005f6f5b_default:
     return;
   }
   std_vector_destroy_ptr_elems_stride3(local_154,local_150,&local_1a1,local_1a0);
+                    /* WARNING: Subroutine does not return */
   operator_delete(local_154);
 }
 
@@ -43875,113 +49591,9 @@ undefined2 * Item_generateStats(undefined2 *out_item,undefined2 count)
 
 
 
-/* [AUDIT] proposed: vec3_distanceSquared  (confidence: med)
- * purpose: Computes squared distance (float10) between two position vectors; shared helper (label 'itembox')
- * vars: out_item/count pos vec; 'itembox' near ref
- */
-/* Global::vec3_distanceSquared @ 005f8e10 */
-
-float10 vec3_distanceSquared(uint *x_fixed,uint *y_fixed)
-
-{
-  float radius;
-  uint uVar2;
-  uint uVar3;
-  uint uVar4;
-  double dVar5;
-  float fVar6;
-  uint uVar7;
-  uint type;
-  uint uVar9;
-  uint uVar10;
-  uint *effect;
-  int iVar11;
-  int iVar12;
-  undefined8 uVar13;
-  undefined8 local_2c;
-  
-  radius = (float)effect[4];
-  if (radius < 0.001) {
-    return (float10)0;
-  }
-  type = effect[6];
-  if (((type != 0xb) && (type != 0xc)) && (type != 0xe)) {
-    uVar2 = *y_fixed;
-    uVar3 = y_fixed[1];
-    if (type == 0xd) {
-      uVar13 = float_to_uint64_round();
-      iVar11 = (int)((ulonglong)uVar13 >> 0x20);
-      uVar9 = (uint)uVar13;
-      type = *x_fixed;
-      uVar4 = x_fixed[1];
-      uVar13 = float_to_uint64_round();
-      iVar12 = (int)((ulonglong)uVar13 >> 0x20);
-      uVar10 = (uint)uVar13;
-      local_2c = CONCAT44((1 - iVar11) - (uint)(0x617d0000 < uVar9),0x617d0000 - uVar9);
-      dVar5 = (double)local_2c;
-      local_2c = CONCAT44((0x80 - iVar12) - (uint)(0xad580000 < uVar10),-0x52a80000 - uVar10);
-      perlinNoise2D_cosInterp((double)local_2c * 1.52587890625e-05,dVar5 * 1.52587890625e-05);
-      uVar13 = float_to_uint64_round();
-      uVar7 = (uint)uVar13 - *effect;
-      local_2c = CONCAT44((((int)((ulonglong)uVar13 >> 0x20) - effect[1]) -
-                          (uint)((uint)uVar13 < *effect)) + uVar4 + (uint)CARRY4(uVar7,type),
-                          uVar7 + type);
-      fVar6 = (float)local_2c;
-      local_2c = CONCAT44(-(uint)(0x700000 < uVar9) - iVar11,0x700000 - uVar9);
-      dVar5 = (double)local_2c;
-      local_2c = CONCAT44(-(uint)(0xd5f0000 < uVar10) - iVar12,0xd5f0000 - uVar10);
-      perlinNoise2D_cosInterp((double)local_2c * 1.52587890625e-05,dVar5 * 1.52587890625e-05);
-      uVar13 = float_to_uint64_round();
-      type = (uint)uVar13 - effect[2];
-      local_2c = CONCAT44((((int)((ulonglong)uVar13 >> 0x20) - effect[3]) -
-                          (uint)((uint)uVar13 < effect[2])) + uVar3 + (uint)CARRY4(type,uVar2),
-                          type + uVar2);
-      return (float10)(((float)local_2c * 1.5258789e-05 * (float)local_2c * 1.5258789e-05 +
-                       fVar6 * 1.5258789e-05 * fVar6 * 1.5258789e-05) / (radius * radius));
-    }
-    uVar13 = float_to_uint64_round();
-    iVar11 = (int)((ulonglong)uVar13 >> 0x20);
-    uVar9 = (uint)uVar13;
-    type = *x_fixed;
-    uVar4 = x_fixed[1];
-    uVar13 = float_to_uint64_round();
-    iVar12 = (int)((ulonglong)uVar13 >> 0x20);
-    uVar10 = (uint)uVar13;
-    local_2c = CONCAT44((1 - iVar11) - (uint)(0x617d0000 < uVar9),0x617d0000 - uVar9);
-    dVar5 = (double)local_2c;
-    local_2c = CONCAT44((0x80 - iVar12) - (uint)(0xad580000 < uVar10),-0x52a80000 - uVar10);
-    perlinNoise2D_cosInterp((double)local_2c * 1.52587890625e-05,dVar5 * 1.52587890625e-05);
-    uVar13 = float_to_uint64_round();
-    uVar7 = (uint)uVar13 - *effect;
-    local_2c = CONCAT44((((int)((ulonglong)uVar13 >> 0x20) - effect[1]) -
-                        (uint)((uint)uVar13 < *effect)) + uVar4 + (uint)CARRY4(uVar7,type),
-                        uVar7 + type);
-    fVar6 = (float)local_2c;
-    local_2c = CONCAT44(-(uint)(0x700000 < uVar9) - iVar11,0x700000 - uVar9);
-    dVar5 = (double)local_2c;
-    local_2c = CONCAT44(-(uint)(0xd5f0000 < uVar10) - iVar12,0xd5f0000 - uVar10);
-    perlinNoise2D_cosInterp((double)local_2c * 1.52587890625e-05,dVar5 * 1.52587890625e-05);
-    uVar13 = float_to_uint64_round();
-    type = (uint)uVar13 - effect[2];
-    local_2c = CONCAT44((((int)((ulonglong)uVar13 >> 0x20) - effect[3]) -
-                        (uint)((uint)uVar13 < effect[2])) + uVar3 + (uint)CARRY4(type,uVar2),
-                        type + uVar2);
-    return (float10)(((float)local_2c * 1.5258789e-05 * (float)local_2c * 1.5258789e-05 +
-                     fVar6 * 1.5258789e-05 * fVar6 * 1.5258789e-05) / (radius * radius));
-  }
-  local_2c = CONCAT44((x_fixed[1] - effect[1]) - (uint)(*x_fixed < *effect),*x_fixed - *effect);
-  fVar6 = (float)local_2c;
-  local_2c = CONCAT44((y_fixed[1] - effect[3]) - (uint)(*y_fixed < effect[2]),*y_fixed - effect[2]);
-  return (float10)(((float)local_2c * 1.5258789e-05 * (float)local_2c * 1.5258789e-05 +
-                   fVar6 * 1.5258789e-05 * fVar6 * 1.5258789e-05) / (radius * radius));
-}
-
-
-
-
 /* [AUDIT] proposed: vec3_store4  (confidence: med)
- * purpose: Stores/returns a vec3+scalar record into x_fixed from indices
- * vars: x_fixed float* out; y_fixed..4 components
+ * purpose: Stores/returns a vec3+scalar record into out_item from indices
+ * vars: out_item float* out; count..4 components
  */
 /* Global::vec3_store4 @ 005f9620 */
 
@@ -44407,6 +50019,29 @@ void copy_two_int_ptrs(int *px,int *py)
     }
   }
   return;
+}
+
+
+
+
+/* [AUDIT] proposed: GameController_entityDistanceSq  (confidence: med)
+ * purpose: Returns squared distance to an entity via vec3_distanceSquared (vfunc_10)
+ * vars: px/2 entity refs
+ */
+/* Global::GameController_entityDistanceSq @ 005fa4c0 */
+
+float10 GameController_entityDistanceSq(undefined4 x,undefined4 y)
+
+{
+  float10 fVar1;
+  float inv;
+  
+  fVar1 = (float10)vec3_distanceSquared(x,y);
+  inv = 1.0 - (float)fVar1;
+  if (inv <= 0.0) {
+    return (float10)0;
+  }
+  return (float10)(inv * inv);
 }
 
 
@@ -45034,6 +50669,38 @@ void vec3_lerp(float *out,undefined8 *targets,int count,float t)
   }
   __security_check_cookie(uVar2 ^ (uint)&stack0xfffffffc);
   return;
+}
+
+
+
+
+/* [AUDIT] proposed: copy_two_words  (confidence: high)
+ * purpose: Copies two 16-bit fields from targets to out, returns out
+ * vars: out dst; targets src (undefined2)
+ */
+/* Global::copy_two_words @ 006089c0 */
+
+undefined2 * copy_two_words(undefined2 *out,undefined4 *str)
+
+{
+  int iVar1;
+  undefined4 *puVar2;
+  undefined4 *puVar3;
+  
+  puVar3 = str;
+  if (0xf < (uint)str[5]) {
+    puVar3 = (undefined4 *)*str;
+  }
+  iVar1 = str[4];
+  puVar2 = str;
+  if (0xf < (uint)str[5]) {
+    puVar2 = (undefined4 *)*str;
+  }
+  *(undefined4 *)(out + 10) = 7;
+  *(undefined4 *)(out + 8) = 0;
+  *out = 0;
+  u16string_assignCharRange(puVar2,iVar1 + (int)puVar3,str);
+  return out;
 }
 
 
@@ -47086,11 +52753,6 @@ LAB_0060baa3:
 
 
 
-/* [AUDIT] proposed: GameController_updateSubsystems  (confidence: med)
- * purpose: Per-frame subsystem update (vfunc_10): drives many system updates incl. exp decay (exp_decay_factor)
- * vars: 16+ subsystem calls; exp_decay_factor exp; Float_FromRef
- */
-/* FAILED GameController_updateSubsystems @ 0060c510 : Exception while decompiling 0060c510: process: timeout
  */
 
 
@@ -49014,6 +54676,7 @@ void plasma::Widget::ctor_0(void)
   if (node != (int *)self[0x54]) {
     do {
       if ((void *)node[5] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)node[5]);
       }
       if (*(char *)((int)node + 0xd) == '\0') {
@@ -49046,6 +54709,7 @@ void plasma::Widget::ctor_0(void)
   }
   local_8 = CONCAT31(local_8._1_3_,1);
   std_Tree_eraseRange(local_18,*(undefined4 *)self[0x54],(undefined4 *)self[0x54]);
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[0x54]);
 }
 
@@ -49199,18 +54863,27 @@ void Widget_setScroll(undefined4 pos_x,undefined4 pos_y,undefined4 notify)
 
 
 
-/* [AUDIT] proposed: Widget_layoutChildren  (confidence: low)
- * purpose: Lays out children via AdaptionWidget_measureContent + AdaptionWidget_applyScrollLayout
- * vars: pos_x..3
+/* [AUDIT] proposed: AdaptionWidget_onContentResized  (confidence: low)
+ * purpose: Notifies/handles content resize (no callees); shared vfunc target
+ * vars: no args
  */
-/* Global::Widget_layoutChildren @ 0062baf0 */
+/* Global::AdaptionWidget_onContentResized @ 0062b400 */
 
-void Widget_layoutChildren(undefined4 position,undefined4 delta,undefined4 apply)
+undefined4 AdaptionWidget_onContentResized(void)
 
 {
-  AdaptionWidget_applyScrollLayout(position,0);
-  AdaptionWidget_measureContent(delta,apply);
-  return;
+  int child;
+  int self;
+  
+  child = *(int *)(*(int *)(self + 0x148) + 0x28);
+  while( true ) {
+    if (child == 0) {
+      return 0;
+    }
+    if (*(int *)(child + 0x40) != 0) break;
+    child = *(int *)(child + 0x28);
+  }
+  return *(undefined4 *)(child + 0x40);
 }
 
 
@@ -49218,7 +54891,7 @@ void Widget_layoutChildren(undefined4 position,undefined4 delta,undefined4 apply
 
 /* [AUDIT] proposed: Widget_layoutChildrenGuarded  (confidence: low)
  * purpose: Cookie-guarded child layout (AdaptionWidget_measureContent + AdaptionWidget_applyScrollLayout)
- * vars: position..4
+ * vars: param_1..4
  */
 /* Global::Widget_layoutChildrenGuarded @ 0062bb20 */
 
@@ -49246,33 +54919,9 @@ void Widget_layoutChildrenGuarded(undefined4 pos_x,undefined4 pos_y,undefined4 d
 
 
 
-/* [AUDIT] proposed: Widget_measureContentEntry  (confidence: low)
- * purpose: Entry to content measure via AdaptionWidget_measureContent
- * vars: pos_x..3
- */
-/* Global::Widget_measureContentEntry @ 0062c570 */
-
-void Widget_measureContentEntry(undefined4 delta_x,undefined4 delta_y,undefined4 apply)
-
-{
-  undefined4 delta;
-  undefined4 local_c;
-  uint local_8;
-  
-  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  delta = delta_x;
-  local_c = delta_y;
-  AdaptionWidget_measureContent(&delta,apply);
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: Widget_updateCaption  (confidence: low)
  * purpose: Updates caption via AdaptionWidget_setCaption + u16string_replaceRange
- * vars: delta_x; delta_y flag
+ * vars: pos_x; pos_y flag
  */
 /* Global::Widget_updateCaption @ 0062ddc0 */
 
@@ -49309,6 +54958,111 @@ void get_widget_field(int parent)
   }
   *(int *)(self + 0x148) = parent;
   return;
+}
+
+
+
+
+/* [AUDIT] proposed: AdaptionWidget_getBoundsRect  (confidence: med)
+ * purpose: Returns pointer to widget bounds rect (float* to x,y,...); heavily shared
+ * vars: returns float* rect; +4 = y
+ */
+/* Global::AdaptionWidget_getBoundsRect @ 0062de60 */
+
+void AdaptionWidget_getBoundsRect(float *out_size)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  int child;
+  float *pfVar5;
+  int self;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float local_d0;
+  float local_cc;
+  undefined1 inv_matrix [64];
+  undefined1 matrix [64];
+  float local_48;
+  float local_44;
+  float local_38;
+  float local_34;
+  float local_28;
+  float local_24;
+  float local_18;
+  float local_14;
+  uint local_8;
+  
+  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  fVar7 = *(float *)(self + 0x50);
+  fVar8 = *(float *)(self + 0x60);
+  fVar10 = *(float *)(self + 0x54);
+  fVar12 = (*(float *)(self + 0x78) + fVar7) - fVar8;
+  fVar9 = (*(float *)(self + 0x74) + fVar10) - *(float *)(self + 100);
+  fVar11 = (*(float *)(self + 0x7c) + fVar10) - *(float *)(self + 100);
+  fVar6 = (*(float *)(self + 0x70) + fVar7) - fVar8;
+  if (fVar12 < 0.0) {
+    fVar12 = 0.0;
+  }
+  if (fVar6 < fVar12) {
+    fVar6 = fVar12;
+  }
+  if (fVar11 < 0.0) {
+    fVar11 = 0.0;
+  }
+  if (fVar9 < fVar11) {
+    fVar9 = fVar11;
+  }
+  fVar10 = (fVar9 + *(float *)(self + 100)) - fVar10;
+  fVar7 = (fVar6 + fVar8) - fVar7;
+  mat4_identity();
+  child = *(int *)(*(int *)(self + 0x148) + 0x28);
+  do {
+    if (child == 0) {
+LAB_0062df31:
+      local_d0 = local_14;
+      local_cc = local_18;
+LAB_0062df4b:
+      pfVar5 = (float *)AdaptionWidget_computeBoundsUnion(matrix);
+      fVar8 = pfVar5[4];
+      fVar6 = pfVar5[1];
+      fVar9 = *pfVar5;
+      fVar11 = pfVar5[2];
+      fVar12 = pfVar5[6];
+      fVar1 = pfVar5[3];
+      fVar2 = pfVar5[7];
+      fVar3 = pfVar5[5];
+      *out_size = fVar7 * (local_48 * *pfVar5 + local_38 * pfVar5[1] + local_28 * pfVar5[2] +
+                         local_cc * pfVar5[3]) +
+                 fVar10 * (local_38 * pfVar5[5] + local_48 * pfVar5[4] + local_28 * pfVar5[6] +
+                          local_cc * pfVar5[7]);
+      out_size[1] = fVar7 * (local_44 * fVar9 + local_34 * fVar6 + local_24 * fVar11 +
+                           local_d0 * fVar1) +
+                   fVar10 * (local_34 * fVar3 + local_44 * fVar8 + local_24 * fVar12 +
+                            local_d0 * fVar2);
+      __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+      return;
+    }
+    if (*(int *)(child + 0x40) != 0) {
+      if (*(int *)(child + 0x40) != 0) {
+        pfVar5 = (float *)AdaptionWidget_computeBoundsUnion(inv_matrix);
+        fVar8 = 1.0 / (pfVar5[7] * 0.0 + pfVar5[3] * 0.0 + pfVar5[0xf]);
+        fVar6 = (pfVar5[4] * 0.0 + *pfVar5 * 0.0 + pfVar5[0xc]) * fVar8 * -1.0;
+        fVar8 = (pfVar5[5] * 0.0 + pfVar5[1] * 0.0 + pfVar5[0xd]) * fVar8 * -1.0;
+        local_cc = local_38 * fVar8 + local_48 * fVar6 + local_18;
+        local_d0 = local_34 * fVar8 + local_44 * fVar6 + local_14;
+        goto LAB_0062df4b;
+      }
+      goto LAB_0062df31;
+    }
+    child = *(int *)(child + 0x28);
+  } while( true );
 }
 
 
@@ -49614,6 +55368,7 @@ LAB_00630355:
     iVar1 = *dst_tree;
     new_node = tree_findOrInsert(iVar1,*(undefined4 *)(iVar1 + 4),first + 2);
     if (dst_tree[1] == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     dst_tree[1] = dst_tree[1] + 1;
@@ -49640,6 +55395,7 @@ undefined4 * tree_nodeAlloc(void)
   
   header = operator_new(0x40);
   if (header == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *header = *nil_node;
@@ -49669,17 +55425,20 @@ void tree_destroyRecursive(void *node)
   }
   tree_destroyRecursive(*(undefined4 *)((int)node + 8));
   if (0xf < *(uint *)((int)node + 0x3c)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)node + 0x28));
   }
   *(undefined4 *)((int)node + 0x3c) = 0xf;
   *(undefined4 *)((int)node + 0x38) = 0;
   *(undefined1 *)((int)node + 0x28) = 0;
   if (0xf < *(uint *)((int)node + 0x24)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)node + 0x10));
   }
   *(undefined4 *)((int)node + 0x24) = 0xf;
   *(undefined4 *)((int)node + 0x20) = 0;
   *(undefined1 *)((int)node + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(node);
 }
 
@@ -50474,6 +56233,7 @@ void Node_collect_matching_children(int *out_list,undefined4 *widget)
     widget = self;
     new_node = IntMap_SetScalar(cmp,*(undefined4 *)(cmp + 4),&widget);
     if (out_list[1] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     out_list[1] = out_list[1] + 1;
@@ -50829,83 +56589,9 @@ void Node_project_bounds_recursive(float *out_min,float *out_max,float *matrix,c
 
 
 
-/* [AUDIT] proposed: Node::get_first_material_name  (confidence: med)
- * purpose: Recursively find first child whose material/state==3 and copy its name std::string into out
- * vars: out_min=out string; +0x34 state obj; +0x48 offset 3
- */
-/* Global::Node_get_first_material_name @ 00634940 */
-
-void Node_get_first_material_name(undefined4 *out_text)
-
-{
-  int style;
-  int iVar2;
-  int self;
-  undefined4 extraout_EDX;
-  int *child;
-  undefined4 uVar4;
-  void *child_text [4];
-  int child_len;
-  uint child_cap;
-  uint local_8;
-  
-  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  style = *(int *)(self + 0x34);
-  uVar4 = 0;
-  if ((style != 0) && (*(int *)(style + 0x48) == 3)) {
-    iVar2 = *(int *)(style + 0x7c);
-    style = *(int *)(style + 0xa8);
-    out_text[5] = 7;
-    out_text[4] = 0;
-    *(undefined2 *)out_text = 0;
-    u16string_replaceRange(style + iVar2 * 0x18,0,0xffffffff);
-    __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc,extraout_EDX,uVar4);
-    return;
-  }
-  child = (int *)**(int **)(self + 0x2c);
-  if (child != *(int **)(self + 0x2c)) {
-    do {
-      Node_get_first_material_name(child_text);
-      if (child_len != 0) {
-        out_text[5] = 7;
-        out_text[4] = 0;
-        *(undefined2 *)out_text = 0;
-        if (child_cap < 8) {
-          if (child_len + 1 != 0) {
-            memmove(out_text,child_text,(child_len + 1) * 2);
-            out_text[4] = child_len;
-            out_text[5] = child_cap;
-            goto LAB_00634a00;
-          }
-        }
-        else {
-          *out_text = child_text[0];
-        }
-        out_text[4] = child_len;
-        out_text[5] = child_cap;
-        goto LAB_00634a00;
-      }
-      if (7 < child_cap) {
-        operator_delete(child_text[0]);
-      }
-      child = (int *)*child;
-    } while (child != (int *)*(int *)(self + 0x2c));
-  }
-  out_text[5] = 7;
-  out_text[4] = 0;
-  *(undefined2 *)out_text = 0;
-  u16string_assignPtrLen(&PTR_006fccac,0);
-LAB_00634a00:
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: Node::transform_pair_to_screen  (confidence: med)
  * purpose: Transform two 2D points through node matrix, compute min/max screen rect (calls Node_compute_screen_aabb_recursive)
- * vars: out_text/2=pts; local_4c..5c matrix rows
+ * vars: out_min/2=pts; local_4c..5c matrix rows
  */
 /* Global::Node_transform_pair_to_screen @ 00634a70 */
 
@@ -51355,6 +57041,7 @@ void Node_attach_transform_multiply(float child,int list_node)
   }
   iVar12 = IntMap_SetScalar(list_node,*(undefined4 *)(list_node + 4),&local_4c);
   if (*(int *)(self + 0x30) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x30) = *(int *)(self + 0x30) + 1;
@@ -51729,6 +57416,40 @@ void Node_frustum_visibility_test(void)
 
 
 
+/* [AUDIT] proposed: AdaptionWidget::apply_to_attributes  (confidence: high)
+ * purpose: Invoke Widget_triggerTracksByName on each populated attribute slot (+0x34/38/3c) then recurse children
+ * vars: param_1/2 args forwarded; +0x2c children
+ */
+/* Global::AdaptionWidget_apply_to_attributes @ 00636810 */
+
+void AdaptionWidget_apply_to_attributes(undefined4 param_1,undefined4 param_2)
+
+{
+  int self;
+  int *child;
+  
+  if (*(int *)(self + 0x34) != 0) {
+    Widget_triggerTracksByName(param_1,param_2);
+  }
+  if (*(int *)(self + 0x38) != 0) {
+    Widget_triggerTracksByName(param_1,param_2);
+  }
+  if (*(int *)(self + 0x3c) != 0) {
+    Widget_triggerTracksByName(param_1,param_2);
+  }
+  child = (int *)**(int **)(self + 0x2c);
+  if (child != *(int **)(self + 0x2c)) {
+    do {
+      AdaptionWidget_apply_to_attributes(param_1,param_2);
+      child = (int *)*child;
+    } while (child != (int *)*(int *)(self + 0x2c));
+  }
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: Node::set_font_slot  (confidence: high)
  * purpose: Set attribute/font slot at +0x3c: release old (refcount==1 -> FontNode_unregister_and_release) and retain new
  * vars: +0x3c slot; +0x208 refcount flag
@@ -51856,6 +57577,42 @@ void Node_set_adaption_slot(int controller)
     return;
   }
   *(undefined4 *)(self + 0x40) = 0;
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: AdaptionWidget::apply_attributes_v2  (confidence: high)
+ * purpose: Invoke Widget_resetAnimations on populated attribute slots then recurse active children
+ * vars: +0x34/38/3c slots; +0x2c children
+ */
+/* Global::AdaptionWidget_apply_attributes_v2 @ 00636f10 */
+
+void AdaptionWidget_apply_attributes_v2(void)
+
+{
+  int self;
+  int *child;
+  
+  if (*(int *)(self + 0x34) != 0) {
+    Widget_resetAnimations();
+  }
+  if (*(int *)(self + 0x38) != 0) {
+    Widget_resetAnimations();
+  }
+  if (*(int *)(self + 0x3c) != 0) {
+    Widget_resetAnimations();
+  }
+  child = (int *)**(int **)(self + 0x2c);
+  if (child != *(int **)(self + 0x2c)) {
+    do {
+      if ((~(byte)(*(uint *)(child[2] + 200) >> 2) & 1) != 0) {
+        AdaptionWidget_apply_attributes_v2();
+      }
+      child = (int *)*child;
+    } while (child != (int *)*(int *)(self + 0x2c));
+  }
   return;
 }
 
@@ -52146,6 +57903,48 @@ void plasma::Edit::ctor_0(undefined4 param_1,undefined4 parent,undefined4 name)
 
 
 
+/* plasma::FontEngine::ctor_1 @ 00638fa0 */
+
+void plasma::FontEngine::ctor_1(undefined4 param_1)
+
+{
+  uint uVar1;
+  undefined4 uVar2;
+  undefined4 *in_ECX;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006f5aa6;
+  local_10 = ExceptionList;
+  uVar1 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  *in_ECX = vftable;
+  in_ECX[1] = param_1;
+  in_ECX[2] = 0;
+  in_ECX[3] = 0;
+  uVar2 = std_list_alloc_sentinel_0x34(uVar1);
+  in_ECX[2] = uVar2;
+  local_8 = 0;
+  in_ECX[4] = 0;
+  in_ECX[5] = 0;
+  uVar2 = std_list_alloc_sentinel_0x2c();
+  in_ECX[4] = uVar2;
+  local_8 = CONCAT31(local_8._1_3_,1);
+  in_ECX[7] = 0;
+  in_ECX[8] = 0;
+  uVar2 = list_allocNode32(0,0);
+  in_ECX[7] = uVar2;
+  FUN_0068e900(in_ECX + 6);
+  InitializeCriticalSectionAndSpinCount((LPCRITICAL_SECTION)(in_ECX + 9),0x80000400);
+  ExceptionList = local_10;
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: FontCache::find_or_create_scalable  (confidence: med)
  * purpose: Under CS, split path, find/create plasma::ScalableFont in RB-tree at +0x10 keyed by filename
  * vars: +0x24 CS; +0x10 map; ScalableFont::ctor_0
@@ -52243,6 +58042,7 @@ LAB_006398e0:
           local_8._0_1_ = 3;
           local_5d = Font_loadByFileExtension(*(undefined4 *)(self + 0x18),uVar8,0);
           if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_44[0]);
           }
           local_30 = 7;
@@ -52250,6 +58050,7 @@ LAB_006398e0:
           local_44[0] = (void *)((uint)local_44[0] & 0xffff0000);
           local_8._0_1_ = 0;
           if (7 < local_48) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_5c[0]);
           }
           if (local_5d != '\0') goto LAB_00639a1f;
@@ -52277,7 +58078,38 @@ LAB_00639a1f:
     __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
     return;
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(filename[0]);
+}
+
+
+
+
+/* [AUDIT] proposed: AdaptionWidget::draw_text_locked  (confidence: med)
+ * purpose: Under CS, begin/end render state (vtbl 0x40/0x44) and draw text run via Font_drawTextTransformed
+ * vars: +0x24 CS; +4 render dev; many text params
+ */
+/* Global::AdaptionWidget_draw_text_locked @ 00639b30 */
+
+void AdaptionWidget_draw_text_locked(undefined4 font_name,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,
+                 undefined4 param_9,undefined4 param_10,undefined4 param_11,undefined4 param_12,
+                 undefined4 param_13,undefined4 param_14)
+
+{
+  int font;
+  int self;
+  
+  font = FontCache_find_or_create_scalable(font_name);
+  if (font != 0) {
+    EnterCriticalSection((LPCRITICAL_SECTION)(self + 0x24));
+    (**(code **)(**(int **)(self + 4) + 0x40))(0);
+    Font_drawTextTransformed(param_2,param_5,param_6,param_7,param_8,param_3,param_4,param_13,param_9,param_10,
+                 param_11,param_12,param_14);
+    (**(code **)(**(int **)(self + 4) + 0x44))(0);
+    LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x24));
+  }
+  return;
 }
 
 
@@ -52372,6 +58204,1137 @@ void plasma::SmoothMeshShape::ctor_0(undefined4 param_1,undefined4 name)
   self[0x12] = 2;
   InitializeCriticalSectionAndSpinCount((LPCRITICAL_SECTION)(self + 0x307),0x80000400);
   ExceptionList = local_14;
+  return;
+}
+
+
+
+
+/* Global::FUN_0063e020 @ 0063e020 */
+
+void FUN_0063e020(int param_1,int param_2,float param_3,int param_4,int param_5)
+
+{
+  int iVar1;
+  undefined8 *puVar2;
+  undefined4 *puVar3;
+  int iVar4;
+  int in_ECX;
+  float *pfVar5;
+  float *pfVar6;
+  int iVar7;
+  undefined4 *puVar8;
+  float fVar9;
+  double dVar10;
+  float fVar11;
+  float fVar12;
+  undefined8 uVar13;
+  int local_e8;
+  float local_e4;
+  float local_e0;
+  int local_dc;
+  float local_d8;
+  float local_d4;
+  float local_d0;
+  undefined8 local_cc;
+  undefined8 local_c4;
+  undefined8 local_bc;
+  undefined8 local_b4;
+  float local_ac [4];
+  float local_9c;
+  float fStack_98;
+  float local_94;
+  float fStack_90;
+  float local_8c;
+  float fStack_88;
+  float local_84;
+  float fStack_80;
+  float local_7c;
+  float fStack_78;
+  float local_74;
+  float fStack_70;
+  float local_6c;
+  float fStack_68;
+  float local_64;
+  float fStack_60;
+  float local_5c;
+  float fStack_58;
+  float local_54;
+  float fStack_50;
+  undefined8 local_4c;
+  undefined8 local_44;
+  undefined8 local_3c;
+  undefined8 local_34;
+  undefined8 local_2c;
+  undefined8 local_24;
+  undefined8 local_1c;
+  undefined8 local_14;
+  uint local_c;
+  
+  local_c = DAT_0076aa78 ^ (uint)&local_e8;
+  iVar1 = *(int *)(in_ECX + 0xbcc);
+  local_e0 = (float)(param_1 * 0xc);
+  local_e4 = (float)((param_2 + 2U) %
+                    (uint)(*(int *)(iVar1 + 4 + (int)local_e0) - *(int *)(iVar1 + (int)local_e0) >>
+                          3));
+  iVar1 = *(int *)(iVar1 + (int)local_e0);
+  local_d4 = 1.0 - param_3;
+  iVar7 = *(int *)((int)local_e0 + *(int *)(in_ECX + 0xbe4));
+  fStack_70 = 0.5;
+  fStack_78 = local_d4 * 0.5 *
+              (*(float *)(iVar1 + 0xc + param_2 * 8) + *(float *)(iVar1 + 4 + param_2 * 8)) +
+              param_3 * 0.5 *
+              (*(float *)(iVar1 + 0xc + (int)local_e4 * 8) +
+              *(float *)(iVar1 + 4 + (int)local_e4 * 8));
+  local_7c = local_d4 * 0.5 *
+             (*(float *)(iVar1 + 8 + param_2 * 8) + *(float *)(iVar1 + param_2 * 8)) +
+             param_3 * 0.5 *
+             (*(float *)(iVar1 + 8 + (int)local_e4 * 8) + *(float *)(iVar1 + (int)local_e4 * 8));
+  local_6c = (local_d4 * *(float *)(iVar1 + param_2 * 8) +
+             *(float *)(iVar1 + (int)local_e4 * 8) * param_3) - local_7c;
+  fStack_68 = (local_d4 * *(float *)(iVar1 + 4 + param_2 * 8) +
+              *(float *)(iVar1 + 4 + (int)local_e4 * 8) * param_3) - fStack_78;
+  fStack_50 = -local_6c;
+  local_74 = *(float *)(iVar7 + (int)local_e4 * 8) * param_3 +
+             local_d4 * *(float *)(iVar7 + param_2 * 8);
+  dVar10 = (double)(fStack_50 * fStack_50 + fStack_68 * fStack_68);
+  local_e8 = in_ECX;
+  local_54 = fStack_68;
+  libm_sse2_sqrt_precise();
+  fVar9 = local_e4;
+  fVar12 = (*(float *)(iVar1 + 8 + param_2 * 8) + *(float *)(iVar1 + param_2 * 8)) * 0.5 -
+           (*(float *)(iVar1 + 8 + (int)local_e4 * 8) + *(float *)(iVar1 + (int)local_e4 * 8)) * 0.5
+  ;
+  fVar11 = (*(float *)(iVar1 + 0xc + param_2 * 8) + *(float *)(iVar1 + 4 + param_2 * 8)) * 0.5 -
+           (*(float *)(iVar1 + 0xc + (int)local_e4 * 8) + *(float *)(iVar1 + 4 + (int)local_e4 * 8))
+           * 0.5;
+  local_d8 = (*(float *)(iVar7 + (int)local_e4 * 8) - *(float *)(iVar7 + param_2 * 8)) *
+             (float)dVar10;
+  dVar10 = (double)(fVar12 * fVar12 + fVar11 * fVar11);
+  libm_sse2_sqrt_precise();
+  local_64 = -(local_d8 / (float)dVar10);
+  iVar1 = *(int *)((int)local_e0 + *(int *)(local_e8 + 0xbd8));
+  pfVar6 = (float *)((int)fVar9 * 0x10 + iVar1);
+  local_d8 = 0.0;
+  pfVar5 = (float *)(param_2 * 0x10 + iVar1);
+  local_ac[0] = local_d4 * *pfVar5 + *pfVar6 * param_3;
+  local_ac[1] = local_d4 * pfVar5[1] + pfVar6[1] * param_3;
+  local_ac[2] = local_d4 * pfVar5[2] + pfVar6[2] * param_3;
+  local_ac[3] = local_d4 * pfVar5[3] + pfVar6[3] * param_3;
+  fStack_60 = 0.0;
+  local_5c = 0.0;
+  fStack_58 = -0.5;
+  if (param_4 != 0) {
+    local_d8 = (0.5 / (float)param_5 + 1.0) * 1.5707964 + 0.0;
+  }
+  local_d4 = 0.0;
+  if (0 < param_5) {
+    local_d0 = (float)param_5 + 0.5;
+    do {
+      local_e4 = (((float)(int)local_d4 + 0.5) * 1.5707964) / local_d0 + local_d8;
+      dVar10 = (double)local_e4;
+      libm_sse2_cos_precise();
+      local_e0 = (float)dVar10;
+      dVar10 = (double)local_e4;
+      libm_sse2_sin_precise();
+      uVar13 = CONCAT44(fStack_78,local_7c);
+      local_e4 = (float)dVar10;
+      local_4c = CONCAT44(fStack_68,local_6c);
+      local_14 = CONCAT44(fStack_50,local_54);
+      fVar9 = local_7c + local_54 * local_e0;
+      iVar1 = *(int *)(local_e8 + 0xc14);
+      puVar2 = *(undefined8 **)(iVar1 + 8);
+      fVar11 = fStack_78 + fStack_50 * local_e0;
+      _local_94 = CONCAT44(fVar11,fVar9);
+      local_cc = CONCAT44(fVar11 + fStack_68 * local_e4,fVar9 + local_6c * local_e4);
+      if (&local_cc < puVar2) {
+        if (&local_cc < *(undefined8 **)(iVar1 + 4)) goto LAB_0063e4dc;
+        iVar7 = (int)&local_cc - (int)*(undefined8 **)(iVar1 + 4) >> 3;
+        if (puVar2 == *(undefined8 **)(iVar1 + 0xc)) {
+          vectorReserveCheck8(1);
+          uVar13 = CONCAT44(fStack_78,local_7c);
+        }
+        puVar3 = *(undefined4 **)(iVar1 + 8);
+        local_dc = *(int *)(iVar1 + 4);
+        if (puVar3 != (undefined4 *)0x0) {
+          *puVar3 = *(undefined4 *)(local_dc + iVar7 * 8);
+          puVar3[1] = *(undefined4 *)(local_dc + 4 + iVar7 * 8);
+        }
+      }
+      else {
+LAB_0063e4dc:
+        if (puVar2 == *(undefined8 **)(iVar1 + 0xc)) {
+          vectorReserveCheck8(1);
+          uVar13 = CONCAT44(fStack_78,local_7c);
+        }
+        if (*(undefined8 **)(iVar1 + 8) != (undefined8 *)0x0) {
+          **(undefined8 **)(iVar1 + 8) = local_cc;
+        }
+      }
+      local_3c = CONCAT44(fStack_68,local_6c);
+      local_1c = CONCAT44(fStack_50,local_54);
+      local_8c = (float)uVar13;
+      *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + 8;
+      iVar1 = *(int *)(local_e8 + 0xc14);
+      local_8c = local_8c + local_54 * local_e0;
+      puVar2 = *(undefined8 **)(iVar1 + 8);
+      fStack_88 = (float)((ulonglong)uVar13 >> 0x20);
+      fStack_88 = fStack_88 + fStack_50 * local_e0;
+      local_b4 = CONCAT44(fStack_88 - fStack_68 * local_e4,local_8c - local_6c * local_e4);
+      if (&local_b4 < puVar2) {
+        if (&local_b4 < *(undefined8 **)(iVar1 + 4)) goto LAB_0063e614;
+        iVar7 = (int)&local_b4 - (int)*(undefined8 **)(iVar1 + 4) >> 3;
+        if (puVar2 == *(undefined8 **)(iVar1 + 0xc)) {
+          vectorReserveCheck8(1);
+        }
+        puVar3 = *(undefined4 **)(iVar1 + 8);
+        local_dc = *(int *)(iVar1 + 4);
+        if (puVar3 != (undefined4 *)0x0) {
+          *puVar3 = *(undefined4 *)(local_dc + iVar7 * 8);
+          puVar3[1] = *(undefined4 *)(local_dc + 4 + iVar7 * 8);
+        }
+      }
+      else {
+LAB_0063e614:
+        if (puVar2 == *(undefined8 **)(iVar1 + 0xc)) {
+          vectorReserveCheck8(1);
+        }
+        if (*(undefined8 **)(iVar1 + 8) != (undefined8 *)0x0) {
+          **(undefined8 **)(iVar1 + 8) = local_b4;
+        }
+      }
+      *(int *)(iVar1 + 8) = *(int *)(iVar1 + 8) + 8;
+      iVar1 = *(int *)(local_e8 + 0xc14);
+      pfVar5 = *(float **)(iVar1 + 0x20);
+      if (local_ac < pfVar5) {
+        pfVar6 = *(float **)(iVar1 + 0x1c);
+        if (local_ac < pfVar6) goto LAB_0063e692;
+        if (pfVar5 == *(float **)(iVar1 + 0x24)) {
+          vectorReserveCheck16(1);
+        }
+        puVar3 = *(undefined4 **)(iVar1 + 0x20);
+        puVar8 = (undefined4 *)
+                 (((int)local_ac - (int)pfVar6 & 0xfffffff0U) + *(int *)(iVar1 + 0x1c));
+        if (puVar3 != (undefined4 *)0x0) {
+          *puVar3 = *puVar8;
+          puVar3[1] = puVar8[1];
+          puVar3[2] = puVar8[2];
+          puVar3[3] = puVar8[3];
+        }
+      }
+      else {
+LAB_0063e692:
+        if (pfVar5 == *(float **)(iVar1 + 0x24)) {
+          vectorReserveCheck16(1);
+        }
+        puVar2 = *(undefined8 **)(iVar1 + 0x20);
+        if (puVar2 != (undefined8 *)0x0) {
+          *puVar2 = CONCAT44(local_ac[1],local_ac[0]);
+          puVar2[1] = CONCAT44(local_ac[3],local_ac[2]);
+        }
+      }
+      *(int *)(iVar1 + 0x20) = *(int *)(iVar1 + 0x20) + 0x10;
+      iVar1 = *(int *)(local_e8 + 0xc14);
+      pfVar5 = *(float **)(iVar1 + 0x20);
+      if (local_ac < pfVar5) {
+        pfVar6 = *(float **)(iVar1 + 0x1c);
+        if (local_ac < pfVar6) goto LAB_0063e71b;
+        if (pfVar5 == *(float **)(iVar1 + 0x24)) {
+          vectorReserveCheck16(1);
+        }
+        puVar3 = *(undefined4 **)(iVar1 + 0x20);
+        puVar8 = (undefined4 *)
+                 (((int)local_ac - (int)pfVar6 & 0xfffffff0U) + *(int *)(iVar1 + 0x1c));
+        if (puVar3 != (undefined4 *)0x0) {
+          *puVar3 = *puVar8;
+          puVar3[1] = puVar8[1];
+          puVar3[2] = puVar8[2];
+          puVar3[3] = puVar8[3];
+        }
+      }
+      else {
+LAB_0063e71b:
+        if (pfVar5 == *(float **)(iVar1 + 0x24)) {
+          vectorReserveCheck16(1);
+        }
+        puVar2 = *(undefined8 **)(iVar1 + 0x20);
+        if (puVar2 != (undefined8 *)0x0) {
+          *puVar2 = CONCAT44(local_ac[1],local_ac[0]);
+          puVar2[1] = CONCAT44(local_ac[3],local_ac[2]);
+        }
+      }
+      local_2c = CONCAT44(fStack_58,local_5c);
+      uVar13 = CONCAT44(fStack_70,local_74);
+      local_44 = CONCAT44(fStack_60,local_64);
+      *(int *)(iVar1 + 0x20) = *(int *)(iVar1 + 0x20) + 0x10;
+      iVar1 = *(int *)(local_e8 + 0xc14);
+      fVar9 = local_74 + local_64 * local_e0;
+      puVar2 = *(undefined8 **)(iVar1 + 0x14);
+      fVar11 = fStack_70 + fStack_60 * local_e0;
+      _local_84 = CONCAT44(fVar11,fVar9);
+      local_c4 = CONCAT44(fVar11 + fStack_58 * local_e4,fVar9 + local_5c * local_e4);
+      if (&local_c4 < puVar2) {
+        if (&local_c4 < *(undefined8 **)(iVar1 + 0x10)) goto LAB_0063e870;
+        iVar7 = (int)&local_c4 - (int)*(undefined8 **)(iVar1 + 0x10) >> 3;
+        if (puVar2 == *(undefined8 **)(iVar1 + 0x18)) {
+          vectorReserveCheck8(1);
+          uVar13 = CONCAT44(fStack_70,local_74);
+        }
+        puVar3 = *(undefined4 **)(iVar1 + 0x14);
+        local_dc = *(int *)(iVar1 + 0x10);
+        if (puVar3 != (undefined4 *)0x0) {
+          *puVar3 = *(undefined4 *)(local_dc + iVar7 * 8);
+          puVar3[1] = *(undefined4 *)(local_dc + 4 + iVar7 * 8);
+        }
+      }
+      else {
+LAB_0063e870:
+        if (puVar2 == *(undefined8 **)(iVar1 + 0x18)) {
+          vectorReserveCheck8(1);
+          uVar13 = CONCAT44(fStack_70,local_74);
+        }
+        if (*(undefined8 **)(iVar1 + 0x14) != (undefined8 *)0x0) {
+          **(undefined8 **)(iVar1 + 0x14) = local_c4;
+        }
+      }
+      local_34 = CONCAT44(fStack_58,local_5c);
+      local_24 = CONCAT44(fStack_60,local_64);
+      local_9c = (float)uVar13;
+      *(int *)(iVar1 + 0x14) = *(int *)(iVar1 + 0x14) + 8;
+      iVar1 = *(int *)(local_e8 + 0xc14);
+      local_9c = local_9c + local_64 * local_e0;
+      puVar2 = *(undefined8 **)(iVar1 + 0x14);
+      fStack_98 = (float)((ulonglong)uVar13 >> 0x20);
+      fStack_98 = fStack_98 + fStack_60 * local_e0;
+      local_bc = CONCAT44(fStack_98 - fStack_58 * local_e4,local_9c - local_5c * local_e4);
+      if (&local_bc < puVar2) {
+        if (&local_bc < *(undefined8 **)(iVar1 + 0x10)) goto LAB_0063e99e;
+        iVar7 = (int)&local_bc - (int)*(undefined8 **)(iVar1 + 0x10) >> 3;
+        if (puVar2 == *(undefined8 **)(iVar1 + 0x18)) {
+          vectorReserveCheck8(1);
+        }
+        puVar3 = *(undefined4 **)(iVar1 + 0x14);
+        iVar4 = *(int *)(iVar1 + 0x10);
+        if (puVar3 != (undefined4 *)0x0) {
+          *puVar3 = *(undefined4 *)(iVar4 + iVar7 * 8);
+          puVar3[1] = *(undefined4 *)(iVar4 + 4 + iVar7 * 8);
+        }
+      }
+      else {
+LAB_0063e99e:
+        if (puVar2 == *(undefined8 **)(iVar1 + 0x18)) {
+          vectorReserveCheck8(1);
+        }
+        if (*(undefined8 **)(iVar1 + 0x14) != (undefined8 *)0x0) {
+          **(undefined8 **)(iVar1 + 0x14) = local_bc;
+        }
+      }
+      *(int *)(iVar1 + 0x14) = *(int *)(iVar1 + 0x14) + 8;
+      local_d4 = (float)((int)local_d4 + 1);
+    } while ((int)local_d4 < param_5);
+  }
+  __security_check_cookie(local_c ^ (uint)&local_e8);
+  return;
+}
+
+
+
+
+/* Global::FUN_0063ea00 @ 0063ea00 */
+
+void FUN_0063ea00(int param_1,int param_2,float param_3,int param_4)
+
+{
+  int iVar1;
+  int iVar2;
+  undefined4 *puVar3;
+  int in_ECX;
+  float *pfVar4;
+  float *pfVar5;
+  undefined4 *puVar6;
+  float fVar7;
+  double dVar8;
+  float fVar9;
+  undefined1 auStack_60 [4];
+  float local_5c;
+  float local_58;
+  float local_54;
+  float local_50;
+  int local_4c;
+  float local_48;
+  float local_44;
+  float local_40;
+  float local_3c;
+  float local_38;
+  float local_34 [3];
+  float local_28;
+  float local_24;
+  float local_20;
+  float local_1c [4];
+  uint local_c;
+  
+  local_c = DAT_0076aa78 ^ (uint)auStack_60;
+  iVar1 = *(int *)(in_ECX + 0xbcc);
+  local_54 = (float)(param_1 * 0xc);
+  local_58 = (float)((param_2 + 2U) %
+                    (uint)(*(int *)(iVar1 + 4 + (int)local_54) - *(int *)(iVar1 + (int)local_54) >>
+                          3));
+  iVar1 = *(int *)(iVar1 + (int)local_54);
+  local_50 = 1.0 - param_3;
+  iVar2 = *(int *)((int)local_54 + *(int *)(in_ECX + 0xbe4));
+  local_44 = (*(float *)(iVar1 + 0xc + param_2 * 8) + *(float *)(iVar1 + 4 + param_2 * 8)) *
+             local_50 * 0.5 +
+             (*(float *)(iVar1 + 0xc + (int)local_58 * 8) +
+             *(float *)(iVar1 + 4 + (int)local_58 * 8)) * param_3 * 0.5;
+  local_40 = (*(float *)(iVar1 + param_2 * 8) + *(float *)(iVar1 + 8 + param_2 * 8)) *
+             local_50 * 0.5 +
+             (*(float *)(iVar1 + (int)local_58 * 8) + *(float *)(iVar1 + 8 + (int)local_58 * 8)) *
+             param_3 * 0.5;
+  local_48 = (*(float *)(iVar1 + 4 + param_2 * 8) * local_50 +
+             *(float *)(iVar1 + 4 + (int)local_58 * 8) * param_3) - local_44;
+  local_24 = (*(float *)(iVar1 + param_2 * 8) * local_50 +
+             *(float *)(iVar1 + (int)local_58 * 8) * param_3) - local_40;
+  local_34[0] = *(float *)(iVar2 + (int)local_58 * 8) * param_3 +
+                local_50 * *(float *)(iVar2 + param_2 * 8);
+  local_3c = -local_24;
+  dVar8 = (double)(local_3c * local_3c + local_48 * local_48);
+  local_4c = in_ECX;
+  local_34[2] = local_48;
+  libm_sse2_sqrt_precise();
+  fVar7 = (*(float *)(iVar1 + 0xc + param_2 * 8) + *(float *)(iVar1 + 4 + param_2 * 8)) * 0.5 -
+          (*(float *)(iVar1 + 0xc + (int)local_58 * 8) + *(float *)(iVar1 + 4 + (int)local_58 * 8))
+          * 0.5;
+  fVar9 = (*(float *)(iVar1 + param_2 * 8) + *(float *)(iVar1 + 8 + param_2 * 8)) * 0.5 -
+          (*(float *)(iVar1 + (int)local_58 * 8) + *(float *)(iVar1 + 8 + (int)local_58 * 8)) * 0.5;
+  local_5c = (*(float *)(iVar2 + (int)local_58 * 8) - *(float *)(iVar2 + param_2 * 8)) *
+             (float)dVar8;
+  dVar8 = (double)(fVar9 * fVar9 + fVar7 * fVar7);
+  libm_sse2_sqrt_precise();
+  iVar1 = local_4c;
+  local_5c = -(local_5c / (float)dVar8);
+  if (param_4 != 0) {
+    local_34[2] = local_48 * -1.0;
+    local_5c = -local_5c;
+    local_3c = local_3c * -1.0;
+  }
+  iVar2 = *(int *)((int)local_54 + *(int *)(local_4c + 0xbd8));
+  pfVar4 = (float *)((int)local_58 * 0x10 + iVar2);
+  pfVar5 = (float *)(param_2 * 0x10 + iVar2);
+  local_58 = *pfVar4 * param_3 + local_50 * *pfVar5;
+  local_40 = local_40 + local_34[2];
+  local_54 = pfVar4[1] * param_3 + local_50 * pfVar5[1];
+  local_44 = local_44 + local_3c;
+  local_34[2] = local_40 + local_24;
+  local_38 = pfVar4[2] * param_3 + local_50 * pfVar5[2];
+  local_50 = local_50 * pfVar5[3] + pfVar4[3] * param_3;
+  local_28 = local_44 + local_48;
+  local_1c[0] = local_58;
+  local_1c[1] = local_54;
+  local_1c[2] = local_38;
+  local_1c[3] = local_50;
+  FUN_00642590(local_34 + 2);
+  local_24 = local_40 - local_24;
+  local_20 = local_44 - local_48;
+  FUN_00642590(&local_24);
+  iVar2 = *(int *)(iVar1 + 0xc14);
+  pfVar4 = *(float **)(iVar2 + 0x20);
+  if (local_1c < pfVar4) {
+    pfVar5 = *(float **)(iVar2 + 0x1c);
+    if (local_1c < pfVar5) goto LAB_0063edcc;
+    if (pfVar4 == *(float **)(iVar2 + 0x24)) {
+      vectorReserveCheck16(1);
+    }
+    puVar3 = *(undefined4 **)(iVar2 + 0x20);
+    puVar6 = (undefined4 *)(((int)local_1c - (int)pfVar5 & 0xfffffff0U) + *(int *)(iVar2 + 0x1c));
+    if (puVar3 != (undefined4 *)0x0) {
+      *puVar3 = *puVar6;
+      puVar3[1] = puVar6[1];
+      puVar3[2] = puVar6[2];
+      puVar3[3] = puVar6[3];
+    }
+  }
+  else {
+LAB_0063edcc:
+    if (pfVar4 == *(float **)(iVar2 + 0x24)) {
+      vectorReserveCheck16(1);
+    }
+    pfVar4 = *(float **)(iVar2 + 0x20);
+    local_4c = iVar1;
+    if (pfVar4 != (float *)0x0) {
+      *pfVar4 = local_58;
+      pfVar4[1] = local_54;
+      pfVar4[2] = local_38;
+      pfVar4[3] = local_50;
+    }
+  }
+  *(int *)(iVar2 + 0x20) = *(int *)(iVar2 + 0x20) + 0x10;
+  iVar1 = *(int *)(local_4c + 0xc14);
+  pfVar4 = *(float **)(iVar1 + 0x20);
+  if (local_1c < pfVar4) {
+    pfVar5 = *(float **)(iVar1 + 0x1c);
+    if (pfVar5 <= local_1c) {
+      if (pfVar4 == *(float **)(iVar1 + 0x24)) {
+        vectorReserveCheck16(1);
+      }
+      puVar3 = *(undefined4 **)(iVar1 + 0x20);
+      puVar6 = (undefined4 *)(((int)local_1c - (int)pfVar5 & 0xfffffff0U) + *(int *)(iVar1 + 0x1c));
+      if (puVar3 != (undefined4 *)0x0) {
+        *puVar3 = *puVar6;
+        puVar3[1] = puVar6[1];
+        puVar3[2] = puVar6[2];
+        puVar3[3] = puVar6[3];
+      }
+      goto LAB_0063eeaa;
+    }
+  }
+  if (pfVar4 == *(float **)(iVar1 + 0x24)) {
+    vectorReserveCheck16(1);
+  }
+  pfVar4 = *(float **)(iVar1 + 0x20);
+  if (pfVar4 != (float *)0x0) {
+    *pfVar4 = local_58;
+    pfVar4[1] = local_54;
+    pfVar4[2] = local_38;
+    pfVar4[3] = local_50;
+  }
+LAB_0063eeaa:
+  local_5c = local_5c + local_34[0];
+  *(int *)(iVar1 + 0x20) = *(int *)(iVar1 + 0x20) + 0x10;
+  local_34[1] = 0.0;
+  local_34[0] = local_5c;
+  FUN_00642590(local_34);
+  local_34[0] = local_5c;
+  local_34[1] = 1.0;
+  FUN_00642590(local_34);
+  __security_check_cookie(local_c ^ (uint)auStack_60);
+  return;
+}
+
+
+
+
+/* Global::FUN_0063ef20 @ 0063ef20 */
+
+void FUN_0063ef20(int param_1,int param_2,float param_3)
+
+{
+  int iVar1;
+  int iVar2;
+  float *pfVar3;
+  float *pfVar4;
+  undefined4 *puVar5;
+  int in_ECX;
+  uint uVar6;
+  int iVar7;
+  undefined4 *puVar8;
+  int iVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float fVar13;
+  float local_38;
+  float local_34;
+  float local_30;
+  float local_2c;
+  float local_28 [4];
+  float local_18;
+  float local_14;
+  float local_10;
+  float local_c;
+  uint local_8;
+  
+  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  param_1 = param_1 * 0xc;
+  iVar1 = *(int *)(in_ECX + 0xbcc);
+  uVar6 = (param_2 + 2U) % (uint)(*(int *)(param_1 + 4 + iVar1) - *(int *)(param_1 + iVar1) >> 3);
+  iVar2 = *(int *)(param_1 + iVar1);
+  fVar11 = 1.0 - param_3;
+  iVar9 = param_2 * 8;
+  iVar1 = uVar6 * 8;
+  local_10 = *(float *)(iVar9 + iVar2) * fVar11 + *(float *)(iVar1 + iVar2) * param_3;
+  local_c = *(float *)(iVar9 + 4 + iVar2) * fVar11 + *(float *)(iVar1 + 4 + iVar2) * param_3;
+  local_14 = (float)iVar9;
+  FUN_00642590(&local_10);
+  iVar2 = *(int *)(param_1 + *(int *)(in_ECX + 0xbcc));
+  local_10 = *(float *)(iVar9 + 8 + iVar2) * fVar11 + *(float *)(iVar2 + 8 + iVar1) * param_3;
+  local_c = *(float *)(iVar9 + 0xc + iVar2) * fVar11 + *(float *)(iVar2 + 0xc + iVar1) * param_3;
+  FUN_00642590(&local_10);
+  iVar2 = *(int *)(param_1 + *(int *)(in_ECX + 0xbd8));
+  iVar7 = uVar6 * 0x10;
+  param_2 = param_2 * 0x10;
+  iVar9 = *(int *)(in_ECX + 0xc14);
+  pfVar3 = *(float **)(iVar9 + 0x20);
+  fVar12 = fVar11 * *(float *)(param_2 + iVar2) + *(float *)(iVar7 + iVar2) * param_3;
+  local_2c = fVar11 * *(float *)(param_2 + 0xc + iVar2) + *(float *)(iVar7 + 0xc + iVar2) * param_3;
+  fVar13 = fVar11 * *(float *)(param_2 + 4 + iVar2) + *(float *)(iVar7 + 4 + iVar2) * param_3;
+  fVar10 = fVar11 * *(float *)(param_2 + 8 + iVar2) + *(float *)(iVar7 + 8 + iVar2) * param_3;
+  local_38 = fVar12;
+  local_34 = fVar13;
+  local_30 = fVar10;
+  local_c = local_2c;
+  if ((&local_38 < pfVar3) && (pfVar4 = *(float **)(iVar9 + 0x1c), pfVar4 <= &local_38)) {
+    if (pfVar3 == *(float **)(iVar9 + 0x24)) {
+      vectorReserveCheck16(1);
+    }
+    puVar5 = *(undefined4 **)(iVar9 + 0x20);
+    puVar8 = (undefined4 *)(((int)&local_38 - (int)pfVar4 & 0xfffffff0U) + *(int *)(iVar9 + 0x1c));
+    if (puVar5 != (undefined4 *)0x0) {
+      *puVar5 = *puVar8;
+      puVar5[1] = puVar8[1];
+      puVar5[2] = puVar8[2];
+      puVar5[3] = puVar8[3];
+    }
+  }
+  else {
+    if (pfVar3 == *(float **)(iVar9 + 0x24)) {
+      vectorReserveCheck16(1);
+    }
+    pfVar3 = *(float **)(iVar9 + 0x20);
+    if (pfVar3 != (float *)0x0) {
+      pfVar3[2] = fVar10;
+      *pfVar3 = fVar12;
+      pfVar3[1] = fVar13;
+      pfVar3[3] = local_c;
+    }
+  }
+  *(int *)(iVar9 + 0x20) = *(int *)(iVar9 + 0x20) + 0x10;
+  iVar2 = *(int *)(param_1 + *(int *)(in_ECX + 0xbd8));
+  iVar9 = *(int *)(in_ECX + 0xc14);
+  local_28[0] = fVar11 * *(float *)(param_2 + 0x10 + iVar2) +
+                *(float *)(iVar7 + 0x10 + iVar2) * param_3;
+  fVar13 = fVar11 * *(float *)(param_2 + 0x14 + iVar2) + *(float *)(iVar7 + 0x14 + iVar2) * param_3;
+  pfVar3 = *(float **)(iVar9 + 0x20);
+  fVar10 = fVar11 * *(float *)(param_2 + 0x18 + iVar2) + *(float *)(iVar7 + 0x18 + iVar2) * param_3;
+  fVar12 = fVar11 * *(float *)(param_2 + 0x1c + iVar2) + *(float *)(iVar7 + 0x1c + iVar2) * param_3;
+  local_28[1] = fVar13;
+  local_28[2] = fVar10;
+  local_28[3] = fVar12;
+  local_c = local_28[0];
+  if (local_28 < pfVar3) {
+    pfVar4 = *(float **)(iVar9 + 0x1c);
+    if (pfVar4 <= local_28) {
+      if (pfVar3 == *(float **)(iVar9 + 0x24)) {
+        vectorReserveCheck16(1);
+      }
+      puVar5 = *(undefined4 **)(iVar9 + 0x20);
+      puVar8 = (undefined4 *)(((int)local_28 - (int)pfVar4 & 0xfffffff0U) + *(int *)(iVar9 + 0x1c));
+      if (puVar5 != (undefined4 *)0x0) {
+        *puVar5 = *puVar8;
+        puVar5[1] = puVar8[1];
+        puVar5[2] = puVar8[2];
+        puVar5[3] = puVar8[3];
+      }
+      goto LAB_0063f2de;
+    }
+  }
+  if (pfVar3 == *(float **)(iVar9 + 0x24)) {
+    vectorReserveCheck16(1);
+  }
+  pfVar3 = *(float **)(iVar9 + 0x20);
+  if (pfVar3 != (float *)0x0) {
+    pfVar3[2] = fVar10;
+    *pfVar3 = local_c;
+    pfVar3[1] = fVar13;
+    pfVar3[3] = fVar12;
+  }
+LAB_0063f2de:
+  fVar10 = local_14;
+  *(int *)(iVar9 + 0x20) = *(int *)(iVar9 + 0x20) + 0x10;
+  iVar2 = *(int *)(param_1 + *(int *)(in_ECX + 0xbe4));
+  local_18 = fVar11 * *(float *)(iVar2 + (int)local_14) + *(float *)(iVar2 + iVar1) * param_3;
+  local_14 = fVar11 * *(float *)(iVar2 + 4 + (int)local_14) +
+             *(float *)(iVar2 + 4 + iVar1) * param_3;
+  FUN_00642590(&local_18);
+  iVar2 = *(int *)(param_1 + *(int *)(in_ECX + 0xbe4));
+  local_18 = *(float *)(iVar2 + 8 + (int)fVar10) * fVar11 + *(float *)(iVar2 + 8 + iVar1) * param_3;
+  local_14 = *(float *)(iVar2 + 0xc + (int)fVar10) * fVar11 +
+             *(float *)(iVar2 + 0xc + iVar1) * param_3;
+  FUN_00642590(&local_18);
+  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_0063f3b0 @ 0063f3b0 */
+
+void FUN_0063f3b0(int param_1,float param_2,float param_3)
+
+{
+  undefined8 uVar1;
+  int iVar2;
+  int *piVar3;
+  int *piVar4;
+  int *piVar5;
+  undefined8 *puVar6;
+  int iVar7;
+  char cVar8;
+  int in_ECX;
+  uint uVar9;
+  uint uVar10;
+  int iVar11;
+  undefined8 *puVar12;
+  int iVar13;
+  int iVar14;
+  double dVar15;
+  undefined8 *local_6c;
+  int local_68;
+  uint local_64;
+  int local_60;
+  int local_5c;
+  undefined8 *local_58;
+  int local_54;
+  int local_50;
+  undefined8 *local_4c;
+  int local_48 [3];
+  int local_3c;
+  float local_38;
+  int local_34;
+  undefined8 *local_30;
+  uint local_2c;
+  int local_28 [3];
+  int local_1c [2];
+  undefined8 local_14;
+  uint local_c;
+  
+  local_c = DAT_0076aa78 ^ (uint)&local_6c;
+  local_5c = param_1 * 0xc;
+  local_60 = param_1;
+  if (*(int *)(*(int *)(in_ECX + 0xbcc) + local_5c) !=
+      *(int *)(*(int *)(in_ECX + 0xbcc) + 4 + local_5c)) {
+    iVar14 = *(int *)(in_ECX + 0xba8);
+    local_28[1] = *(int *)(iVar14 + 4 + local_5c) - *(int *)(iVar14 + local_5c) >> 3;
+    local_58 = (undefined8 *)0x0;
+    local_38 = 0.0;
+    if ((~(byte)(*(uint *)(in_ECX + 0x85c) >> 3) & 1) == 0) {
+      local_28[1] = local_28[1] + -1;
+    }
+    local_48[1] = 0;
+    local_68 = in_ECX;
+    if (0 < local_28[1]) {
+      local_2c = *(int *)(local_5c + *(int *)(in_ECX + 0xb9c));
+      local_6c = *(undefined8 **)(iVar14 + local_5c);
+      do {
+        uVar10 = local_48[1] + 1;
+        uVar9 = uVar10 % (uint)(*(int *)(iVar14 + 4 + local_5c) - *(int *)(iVar14 + local_5c) >> 3);
+        uVar1 = *local_6c;
+        local_14._0_4_ = (float)uVar1;
+        local_14._4_4_ = (float)((ulonglong)uVar1 >> 0x20);
+        local_14._4_4_ = local_14._4_4_ - *(float *)(*(int *)(iVar14 + local_5c) + 4 + uVar9 * 8);
+        local_14._0_4_ = (float)local_14 - *(float *)(*(int *)(iVar14 + local_5c) + uVar9 * 8);
+        dVar15 = (double)(local_14._4_4_ * local_14._4_4_ + (float)local_14 * (float)local_14);
+        local_14 = uVar1;
+        libm_sse2_sqrt_precise();
+        local_6c = local_6c + 1;
+        local_38 = ((float)dVar15 * 2.0) /
+                   (*(float *)(local_2c + local_48[1] * 4) + *(float *)(local_2c + uVar9 * 4)) +
+                   local_38;
+        local_48[1] = uVar10;
+      } while ((int)uVar10 < local_28[1]);
+    }
+    puVar12 = (undefined8 *)0x0;
+    local_2c = (uint)(local_38 / (param_2 + param_3));
+    if (local_2c != 0) {
+      local_38 = local_38 / ((float)(int)local_2c * (param_2 + param_3));
+      param_2 = local_38 * param_2;
+      local_38 = local_38 * param_3;
+      local_28[2] = *(int *)(local_68 + 0xb28) / 2;
+      local_14 = CONCAT44(local_14._4_4_,param_2);
+      local_6c = (undefined8 *)0x0;
+      local_48[1] = 0;
+      iVar14 = local_68;
+      if (0 < (int)local_2c) {
+        while( true ) {
+          puVar6 = local_6c;
+          iVar11 = 0;
+          local_48[2] = *(int *)(*(int *)(iVar14 + 0xc14) + 8) -
+                        *(int *)(*(int *)(iVar14 + 0xc14) + 4) >> 3;
+          cVar8 = FUN_006414c0(local_60,local_6c,puVar12,param_2,&local_4c,&local_30);
+          iVar7 = local_28[2];
+          iVar13 = local_68;
+          if (cVar8 == '\0') break;
+          if ((local_48[1] == local_2c) && (local_28[1] <= (int)local_4c)) {
+            local_4c = (undefined8 *)(local_28[1] + -1);
+            local_30 = (undefined8 *)0x3f800000;
+            if ((int)local_4c < (int)puVar6) break;
+          }
+          iVar14 = *(int *)(iVar14 + 0xbc0);
+          iVar2 = *(int *)(local_68 + 0xbcc);
+          uVar10 = (uint)(*(int *)(*(int *)(local_5c + iVar14) +
+                                  (((int)local_6c + 1U) %
+                                  (uint)(*(int *)(local_5c + 4 + iVar14) -
+                                         *(int *)(local_5c + iVar14) >> 2)) * 4) +
+                         (*(int *)(local_5c + 4 + iVar2) - *(int *)(local_5c + iVar2) >> 3) + -2) %
+                   (uint)(*(int *)(local_5c + 4 + iVar2) - *(int *)(local_5c + iVar2) >> 3);
+          if (*(int *)(local_68 + 0x864) == 1) {
+            FUN_0063e020(local_60,uVar10,local_58,0,local_28[2]);
+            iVar11 = iVar7;
+          }
+          else if (*(int *)(local_68 + 0x864) == 2) {
+            FUN_0063ea00(local_60,uVar10,local_58,0);
+            iVar11 = 1;
+          }
+          FUN_0063ef20(local_60,uVar10,local_58,1);
+          iVar14 = *(int *)(iVar13 + 0xbcc);
+          iVar13 = *(int *)(iVar13 + 0xbc0);
+          puVar12 = (undefined8 *)(iVar11 + 1);
+          local_54 = *(int *)(local_5c + iVar13);
+          local_58 = local_4c;
+          uVar10 = (uint)(*(int *)(local_54 +
+                                  (((int)local_4c + 1U) %
+                                  (uint)(*(int *)(local_5c + 4 + iVar13) - local_54 >> 2)) * 4) +
+                         (*(int *)(local_5c + 4 + iVar14) - *(int *)(local_5c + iVar14) >> 3) + -2)
+                   % (uint)(*(int *)(local_5c + 4 + iVar14) - *(int *)(local_5c + iVar14) >> 3);
+          if (((int)local_6c < (int)local_4c) &&
+             (iVar14 = *(int *)(local_54 + 4 + (int)local_6c * 4), iVar14 <= (int)uVar10)) {
+            local_6c = (undefined8 *)((int)puVar12 + (uVar10 - iVar14 >> 1) + 1);
+            do {
+              FUN_0063ef20(local_60,iVar14,0,0);
+              iVar14 = iVar14 + 2;
+              puVar12 = local_6c;
+            } while (iVar14 <= (int)uVar10);
+          }
+          puVar6 = local_4c;
+          local_6c = local_30;
+          FUN_0063ef20(local_60,uVar10,local_30,0);
+          iVar13 = (int)puVar12 + 1;
+          if (*(int *)(local_68 + 0x864) == 1) {
+            FUN_0063e020(local_60,uVar10,local_6c,1,local_28[2]);
+            iVar13 = iVar13 + local_28[2];
+          }
+          else if (*(int *)(local_68 + 0x864) == 2) {
+            FUN_0063ea00(local_60,uVar10,local_6c,1);
+            iVar13 = (int)puVar12 + 2;
+          }
+          iVar14 = local_68;
+          FUN_006414c0(local_60,puVar6,local_6c,local_38,&local_4c,&local_30);
+          local_1c[1] = iVar13 + -1;
+          local_6c = local_4c;
+          local_58 = local_30;
+          local_54 = 0;
+          if (0 < local_1c[1]) {
+            do {
+              iVar14 = *(int *)(iVar14 + 0xc14);
+              local_34 = local_48[2] + local_54 * 2;
+              piVar3 = *(int **)(iVar14 + 0x38);
+              if ((&local_34 < piVar3) && (piVar4 = *(int **)(iVar14 + 0x34), piVar4 <= &local_34))
+              {
+                piVar5 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar5) && ((int)piVar5 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - (int)piVar4 >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  local_64 = iVar13 + 1;
+                  uVar10 = (int)piVar5 - (int)piVar4 >> 2;
+                  if (0x3fffffff - (uVar10 >> 1) < uVar10) {
+                    uVar10 = 0;
+                  }
+                  else {
+                    uVar10 = uVar10 + (uVar10 >> 1);
+                  }
+                  if (uVar10 < local_64) {
+                    uVar10 = local_64;
+                  }
+                  std_vector_grow_realloc_stride4(uVar10);
+                }
+                if (*(undefined4 **)(iVar14 + 0x38) != (undefined4 *)0x0) {
+                  **(undefined4 **)(iVar14 + 0x38) =
+                       *(undefined4 *)
+                        (*(int *)(iVar14 + 0x34) + ((int)&local_34 - (int)piVar4 >> 2) * 4);
+                }
+              }
+              else {
+                piVar4 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar4) && ((int)piVar4 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - *(int *)(iVar14 + 0x34) >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  uVar9 = (int)piVar4 - *(int *)(iVar14 + 0x34) >> 2;
+                  uVar10 = iVar13 + 1;
+                  if (0x3fffffff - (uVar9 >> 1) < uVar9) {
+                    uVar9 = 0;
+                  }
+                  else {
+                    uVar9 = uVar9 + (uVar9 >> 1);
+                  }
+                  if (uVar9 < uVar10) {
+                    uVar9 = uVar10;
+                  }
+                  std_vector_grow_realloc_stride4(uVar9);
+                }
+                if (*(int **)(iVar14 + 0x38) != (int *)0x0) {
+                  **(int **)(iVar14 + 0x38) = local_34;
+                }
+              }
+              *(int *)(iVar14 + 0x38) = *(int *)(iVar14 + 0x38) + 4;
+              local_50 = local_48[2] + (local_54 + 1) * 2;
+              iVar14 = *(int *)(local_68 + 0xc14);
+              piVar3 = *(int **)(iVar14 + 0x38);
+              if ((&local_50 < piVar3) && (piVar4 = *(int **)(iVar14 + 0x34), piVar4 <= &local_50))
+              {
+                piVar5 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar5) && ((int)piVar5 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - (int)piVar4 >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  local_64 = iVar13 + 1;
+                  uVar10 = (int)piVar5 - (int)piVar4 >> 2;
+                  if (0x3fffffff - (uVar10 >> 1) < uVar10) {
+                    uVar10 = 0;
+                  }
+                  else {
+                    uVar10 = uVar10 + (uVar10 >> 1);
+                  }
+                  if (uVar10 < local_64) {
+                    uVar10 = local_64;
+                  }
+                  std_vector_grow_realloc_stride4(uVar10);
+                }
+                if (*(undefined4 **)(iVar14 + 0x38) != (undefined4 *)0x0) {
+                  **(undefined4 **)(iVar14 + 0x38) =
+                       *(undefined4 *)
+                        (*(int *)(iVar14 + 0x34) + ((int)&local_50 - (int)piVar4 >> 2) * 4);
+                }
+              }
+              else {
+                piVar4 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar4) && ((int)piVar4 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - *(int *)(iVar14 + 0x34) >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  uVar9 = (int)piVar4 - *(int *)(iVar14 + 0x34) >> 2;
+                  uVar10 = iVar13 + 1;
+                  if (0x3fffffff - (uVar9 >> 1) < uVar9) {
+                    uVar9 = 0;
+                  }
+                  else {
+                    uVar9 = uVar9 + (uVar9 >> 1);
+                  }
+                  if (uVar9 < uVar10) {
+                    uVar9 = uVar10;
+                  }
+                  std_vector_grow_realloc_stride4(uVar9);
+                }
+                if (*(int **)(iVar14 + 0x38) != (int *)0x0) {
+                  **(int **)(iVar14 + 0x38) = local_50;
+                }
+              }
+              *(int *)(iVar14 + 0x38) = *(int *)(iVar14 + 0x38) + 4;
+              local_48[0] = local_54 * 2 + 1 + local_48[2];
+              iVar14 = *(int *)(local_68 + 0xc14);
+              piVar3 = *(int **)(iVar14 + 0x38);
+              if ((local_48 < piVar3) && (piVar4 = *(int **)(iVar14 + 0x34), piVar4 <= local_48)) {
+                piVar5 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar5) && ((int)piVar5 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - (int)piVar4 >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  local_64 = iVar13 + 1;
+                  uVar10 = (int)piVar5 - (int)piVar4 >> 2;
+                  if (0x3fffffff - (uVar10 >> 1) < uVar10) {
+                    uVar10 = 0;
+                  }
+                  else {
+                    uVar10 = uVar10 + (uVar10 >> 1);
+                  }
+                  if (uVar10 < local_64) {
+                    uVar10 = local_64;
+                  }
+                  std_vector_grow_realloc_stride4(uVar10);
+                }
+                if (*(undefined4 **)(iVar14 + 0x38) != (undefined4 *)0x0) {
+                  **(undefined4 **)(iVar14 + 0x38) =
+                       *(undefined4 *)
+                        (*(int *)(iVar14 + 0x34) + ((int)local_48 - (int)piVar4 >> 2) * 4);
+                }
+              }
+              else {
+                piVar4 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar4) && ((int)piVar4 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - *(int *)(iVar14 + 0x34) >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  uVar9 = (int)piVar4 - *(int *)(iVar14 + 0x34) >> 2;
+                  uVar10 = iVar13 + 1;
+                  if (0x3fffffff - (uVar9 >> 1) < uVar9) {
+                    uVar9 = 0;
+                  }
+                  else {
+                    uVar9 = uVar9 + (uVar9 >> 1);
+                  }
+                  if (uVar9 < uVar10) {
+                    uVar9 = uVar10;
+                  }
+                  std_vector_grow_realloc_stride4(uVar9);
+                }
+                if (*(int **)(iVar14 + 0x38) != (int *)0x0) {
+                  **(int **)(iVar14 + 0x38) = local_48[0];
+                }
+              }
+              *(int *)(iVar14 + 0x38) = *(int *)(iVar14 + 0x38) + 4;
+              iVar14 = *(int *)(local_68 + 0xc14);
+              piVar3 = *(int **)(iVar14 + 0x38);
+              local_1c[0] = local_48[0];
+              if ((local_1c < piVar3) && (piVar4 = *(int **)(iVar14 + 0x34), piVar4 <= local_1c)) {
+                piVar5 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar5) && ((int)piVar5 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - (int)piVar4 >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  local_64 = iVar13 + 1;
+                  uVar10 = (int)piVar5 - (int)piVar4 >> 2;
+                  if (0x3fffffff - (uVar10 >> 1) < uVar10) {
+                    uVar10 = 0;
+                  }
+                  else {
+                    uVar10 = uVar10 + (uVar10 >> 1);
+                  }
+                  if (uVar10 < local_64) {
+                    uVar10 = local_64;
+                  }
+                  std_vector_grow_realloc_stride4(uVar10);
+                }
+                if (*(undefined4 **)(iVar14 + 0x38) != (undefined4 *)0x0) {
+                  **(undefined4 **)(iVar14 + 0x38) =
+                       *(undefined4 *)
+                        (*(int *)(iVar14 + 0x34) + ((int)local_1c - (int)piVar4 >> 2) * 4);
+                }
+              }
+              else {
+                piVar4 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar4) && ((int)piVar4 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - *(int *)(iVar14 + 0x34) >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  uVar9 = (int)piVar4 - *(int *)(iVar14 + 0x34) >> 2;
+                  uVar10 = iVar13 + 1;
+                  if (0x3fffffff - (uVar9 >> 1) < uVar9) {
+                    uVar9 = 0;
+                  }
+                  else {
+                    uVar9 = uVar9 + (uVar9 >> 1);
+                  }
+                  if (uVar9 < uVar10) {
+                    uVar9 = uVar10;
+                  }
+                  std_vector_grow_realloc_stride4(uVar9);
+                }
+                if (*(int **)(iVar14 + 0x38) != (int *)0x0) {
+                  **(int **)(iVar14 + 0x38) = local_48[0];
+                }
+              }
+              *(int *)(iVar14 + 0x38) = *(int *)(iVar14 + 0x38) + 4;
+              iVar14 = *(int *)(local_68 + 0xc14);
+              piVar3 = *(int **)(iVar14 + 0x38);
+              local_28[0] = local_50;
+              if ((local_28 < piVar3) && (piVar4 = *(int **)(iVar14 + 0x34), piVar4 <= local_28)) {
+                piVar5 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar5) && ((int)piVar5 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - (int)piVar4 >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  local_64 = iVar13 + 1;
+                  uVar10 = (int)piVar5 - (int)piVar4 >> 2;
+                  if (0x3fffffff - (uVar10 >> 1) < uVar10) {
+                    uVar10 = 0;
+                  }
+                  else {
+                    uVar10 = uVar10 + (uVar10 >> 1);
+                  }
+                  if (uVar10 < local_64) {
+                    uVar10 = local_64;
+                  }
+                  std_vector_grow_realloc_stride4(uVar10);
+                }
+                if (*(undefined4 **)(iVar14 + 0x38) != (undefined4 *)0x0) {
+                  **(undefined4 **)(iVar14 + 0x38) =
+                       *(undefined4 *)
+                        (*(int *)(iVar14 + 0x34) + ((int)local_28 - (int)piVar4 >> 2) * 4);
+                }
+              }
+              else {
+                piVar4 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar4) && ((int)piVar4 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - *(int *)(iVar14 + 0x34) >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  uVar9 = (int)piVar4 - *(int *)(iVar14 + 0x34) >> 2;
+                  uVar10 = iVar13 + 1;
+                  if (0x3fffffff - (uVar9 >> 1) < uVar9) {
+                    uVar9 = 0;
+                  }
+                  else {
+                    uVar9 = uVar9 + (uVar9 >> 1);
+                  }
+                  if (uVar9 < uVar10) {
+                    uVar9 = uVar10;
+                  }
+                  std_vector_grow_realloc_stride4(uVar9);
+                }
+                if (*(int **)(iVar14 + 0x38) != (int *)0x0) {
+                  **(int **)(iVar14 + 0x38) = local_50;
+                }
+              }
+              *(int *)(iVar14 + 0x38) = *(int *)(iVar14 + 0x38) + 4;
+              local_3c = local_54 * 2 + 3 + local_48[2];
+              iVar14 = *(int *)(local_68 + 0xc14);
+              piVar3 = *(int **)(iVar14 + 0x38);
+              if ((&local_3c < piVar3) && (piVar4 = *(int **)(iVar14 + 0x34), piVar4 <= &local_3c))
+              {
+                piVar5 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar5) && ((int)piVar5 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - (int)piVar4 >> 2;
+                  if (iVar13 == 0x3fffffff) {
+LAB_0063fe5c:
+                    /* WARNING: Subroutine does not return */
+                    std::_Xlength_error("vector<T> too long");
+                  }
+                  local_64 = iVar13 + 1;
+                  uVar10 = (int)piVar5 - (int)piVar4 >> 2;
+                  if (0x3fffffff - (uVar10 >> 1) < uVar10) {
+                    uVar10 = 0;
+                  }
+                  else {
+                    uVar10 = uVar10 + (uVar10 >> 1);
+                  }
+                  if (uVar10 < local_64) {
+                    uVar10 = local_64;
+                  }
+                  std_vector_grow_realloc_stride4(uVar10);
+                }
+                if (*(undefined4 **)(iVar14 + 0x38) != (undefined4 *)0x0) {
+                  **(undefined4 **)(iVar14 + 0x38) =
+                       *(undefined4 *)
+                        (*(int *)(iVar14 + 0x34) + ((int)&local_3c - (int)piVar4 >> 2) * 4);
+                }
+              }
+              else {
+                piVar4 = *(int **)(iVar14 + 0x3c);
+                if ((piVar3 == piVar4) && ((int)piVar4 - (int)piVar3 >> 2 == 0)) {
+                  iVar13 = (int)piVar3 - *(int *)(iVar14 + 0x34) >> 2;
+                  if (iVar13 == 0x3fffffff) goto LAB_0063fe5c;
+                  uVar9 = (int)piVar4 - *(int *)(iVar14 + 0x34) >> 2;
+                  uVar10 = iVar13 + 1;
+                  if (0x3fffffff - (uVar9 >> 1) < uVar9) {
+                    uVar9 = 0;
+                  }
+                  else {
+                    uVar9 = uVar9 + (uVar9 >> 1);
+                  }
+                  if (uVar9 < uVar10) {
+                    uVar9 = uVar10;
+                  }
+                  std_vector_grow_realloc_stride4(uVar9);
+                }
+                if (*(int **)(iVar14 + 0x38) != (int *)0x0) {
+                  **(int **)(iVar14 + 0x38) = local_3c;
+                }
+              }
+              *(int *)(iVar14 + 0x38) = *(int *)(iVar14 + 0x38) + 4;
+              local_54 = local_54 + 1;
+              iVar14 = local_68;
+            } while (local_54 < local_1c[1]);
+          }
+          local_48[1] = local_48[1] + 1;
+          if ((int)local_2c <= local_48[1]) break;
+          param_2 = (float)local_14;
+          puVar12 = local_58;
+        }
+      }
+    }
+  }
+  __security_check_cookie(local_c ^ (uint)&local_6c);
   return;
 }
 
@@ -53071,6 +60034,7 @@ LAB_006409d7:
   }
   local_8 = CONCAT31(local_8._1_3_,1);
   std_Tree_eraseRange(local_108,*local_50,local_50);
+                    /* WARNING: Subroutine does not return */
   operator_delete(local_50);
 }
 
@@ -53139,8 +60103,101 @@ undefined4 StaticMeshShape_build_from_buffers(void)
 
 
 
+/* Global::FUN_006414c0 @ 006414c0 */
+
+undefined1
+FUN_006414c0(int param_1,int param_2,float param_3,float param_4,int *param_5,float *param_6)
+
+{
+  int iVar1;
+  undefined1 uVar2;
+  int in_ECX;
+  uint uVar3;
+  float fVar4;
+  double dVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  
+  uVar3 = (param_2 + 1U) %
+          (uint)(*(int *)(*(int *)(in_ECX + 0xba8) + 4 + param_1 * 0xc) -
+                 *(int *)(*(int *)(in_ECX + 0xba8) + param_1 * 0xc) >> 3);
+  if (param_4 <= 0.0) {
+    param_4 = 0.0;
+  }
+  iVar1 = *(int *)(*(int *)(in_ECX + 0xba8) + param_1 * 0xc);
+  fVar4 = *(float *)(iVar1 + 4 + param_2 * 8) - *(float *)(iVar1 + 4 + uVar3 * 8);
+  fVar6 = *(float *)(iVar1 + param_2 * 8) - *(float *)(iVar1 + uVar3 * 8);
+  dVar5 = (double)(fVar4 * fVar4 + fVar6 * fVar6);
+  libm_sse2_sqrt_precise();
+  iVar1 = *(int *)(*(int *)(in_ECX + 0xb9c) + param_1 * 0xc);
+  fVar4 = *(float *)(iVar1 + uVar3 * 4);
+  fVar6 = *(float *)(iVar1 + param_2 * 4);
+  fVar8 = (float)dVar5;
+  fVar7 = (fVar8 * param_3 * 2.0) / ((1.0 - param_3) * fVar6 + fVar4 * param_3 + fVar6) + param_4;
+  fVar9 = 1.0 - ((fVar4 - fVar6) * fVar7) / (fVar8 * 2.0);
+  if (fVar9 < 1e-07) {
+    fVar9 = 1e-07;
+  }
+  fVar9 = (fVar7 * fVar6) / fVar9;
+  if (fVar9 <= fVar8) {
+    *param_5 = param_2;
+    *param_6 = fVar9 / fVar8;
+    return 1;
+  }
+  uVar2 = FUN_006414c0(param_1,uVar3,0,param_4 - ((fVar8 - fVar8 * param_3) * 2.0) / (fVar4 + fVar6)
+                       ,param_5,param_6);
+  if (*param_5 < param_2) {
+    uVar2 = 0;
+  }
+  return uVar2;
+}
+
+
+
+
+/* [AUDIT] proposed: WorldInfo::move_string  (confidence: high)
+ * purpose: Move-construct one std::string (SSO-aware) from param_1 into this+4, resetting source
+ * vars: +1 buf; [5]=len [6]=cap
+ */
+/* Global::WorldInfo_move_string @ 0064aec0 */
+
+void WorldInfo_move_string(undefined4 *src)
+
+{
+  undefined4 *_Dst;
+  undefined4 *_Src;
+  undefined4 *dst;
+  
+  _Dst = dst + 1;
+  *dst = *src;
+  _Src = src + 1;
+  dst[6] = 0xf;
+  dst[5] = 0;
+  *(undefined1 *)_Dst = 0;
+  if ((uint)src[6] < 0x10) {
+    if (src[5] + 1 != 0) {
+      memmove(_Dst,_Src,src[5] + 1);
+    }
+  }
+  else {
+    *_Dst = *_Src;
+    *_Src = 0;
+  }
+  dst[5] = src[5];
+  dst[6] = src[6];
+  src[6] = 0xf;
+  src[5] = 0;
+  *(undefined1 *)_Src = 0;
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: NamedValue::move_two_strings  (confidence: high)
- * purpose: Move-construct two std::strings (name+value pair) from param_1, resetting sources
+ * purpose: Move-construct two std::strings (name+value pair) from src, resetting sources
  * vars: [0..5] str1; [6..0xb] str2
  */
 /* Global::NamedValue_move_two_strings @ 0064af30 */
@@ -53276,9 +60333,11 @@ void NamedValue_assign_pair_free(undefined4 param_1,undefined4 src1,undefined4 s
   uVar2 = NamedValue_move_construct_pair(src1,src2,0);
   NamedValue_move_two_strings(uVar2,0);
   if (0xf < local_c) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(tmp1);
   }
   if (0xf < local_24) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(tmp2);
   }
   __security_check_cookie(uVar1 ^ (uint)&stack0xfffffffc,extraout_EDX,uVar3);
@@ -54113,9 +61172,233 @@ void plasma::DiscreteAttribute<int>::ctor_2(undefined4 param_1,undefined4 defaul
 
 
 
+/* plasma::ObjectManager::ctor_1 @ 0064d0f0 */
+
+void plasma::ObjectManager::ctor_1(void)
+
+{
+  undefined4 uVar1;
+  void *pvVar2;
+  undefined4 *in_ECX;
+  undefined4 local_2c;
+  undefined4 local_1c;
+  uint local_18;
+  uint local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_006f6299;
+  local_10 = ExceptionList;
+  local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  *in_ECX = vftable;
+  *(undefined1 *)(in_ECX + 1) = 0;
+  in_ECX[2] = 0;
+  in_ECX[3] = 0;
+  uVar1 = list_buyNode_0c(0,0);
+  in_ECX[2] = uVar1;
+  *in_ECX = Engine::vftable;
+  in_ECX[5] = 0x447a0000;
+  in_ECX[6] = 0x447a0000;
+  in_ECX[7] = 0x42900000;
+  in_ECX[8] = 0;
+  in_ECX[9] = 0x3f800000;
+  in_ECX[10] = 0x3f800000;
+  in_ECX[0xb] = 0x3f800000;
+  in_ECX[0xc] = 0;
+  in_ECX[0xe] = 0;
+  in_ECX[0xf] = 0;
+  in_ECX[0x10] = 0;
+  in_ECX[0x11] = 0;
+  in_ECX[0x12] = 0xffffffff;
+  in_ECX[0x13] = 0;
+  local_8._0_1_ = 1;
+  local_8._1_3_ = 0;
+  in_ECX[0x14] = 0;
+  in_ECX[0x15] = 0;
+  uVar1 = list_buyNode_0c(0,0);
+  in_ECX[0x14] = uVar1;
+  local_8._0_1_ = 2;
+  in_ECX[0x1d] = 0;
+  in_ECX[0x1e] = 0;
+  uVar1 = list_buyNode_0c(0,0);
+  in_ECX[0x1d] = uVar1;
+  local_8._0_1_ = 3;
+  in_ECX[0x1f] = 0;
+  in_ECX[0x20] = 0;
+  uVar1 = list_buyNode_0c(0,0);
+  in_ECX[0x1f] = uVar1;
+  local_8._0_1_ = 4;
+  in_ECX[0x21] = 0;
+  in_ECX[0x22] = 0;
+  uVar1 = list_buyNode_0c(0,0);
+  in_ECX[0x21] = uVar1;
+  local_8._0_1_ = 5;
+  in_ECX[0x23] = 0;
+  in_ECX[0x24] = 0;
+  uVar1 = list_buyNode_0c(0,0);
+  in_ECX[0x23] = uVar1;
+  local_8._0_1_ = 6;
+  in_ECX[0x25] = 0;
+  in_ECX[0x26] = 0;
+  uVar1 = list_buyNode_0c(0,0);
+  in_ECX[0x25] = uVar1;
+  local_8._0_1_ = 7;
+  in_ECX[0x27] = 0;
+  in_ECX[0x28] = 0;
+  uVar1 = list_buyNode_0c(0,0);
+  in_ECX[0x27] = uVar1;
+  local_8._0_1_ = 8;
+  in_ECX[0x29] = 0;
+  in_ECX[0x2a] = 0;
+  uVar1 = list_buyNode_0c(0,0);
+  in_ECX[0x29] = uVar1;
+  local_8._0_1_ = 9;
+  in_ECX[0x2b] = 0;
+  in_ECX[0x2c] = 0;
+  uVar1 = std_list_alloc_sentinel_0x2c();
+  in_ECX[0x2b] = uVar1;
+  in_ECX[0x30] = 0;
+  in_ECX[0x31] = 0;
+  in_ECX[0x32] = 0;
+  in_ECX[0x33] = 0;
+  in_ECX[0x34] = 0;
+  in_ECX[0x35] = 0;
+  in_ECX[0x36] = 0;
+  in_ECX[0x37] = 0;
+  in_ECX[0x38] = 0;
+  in_ECX[0x39] = 0;
+  in_ECX[0x3a] = 0;
+  local_8._0_1_ = 10;
+  in_ECX[0x3b] = 0;
+  in_ECX[0x3c] = 0;
+  uVar1 = FUN_0064e3a0();
+  in_ECX[0x3b] = uVar1;
+  in_ECX[0x3d] = 0;
+  in_ECX[0x3f] = 0;
+  in_ECX[0x41] = 0;
+  in_ECX[0x42] = 0;
+  in_ECX[0x43] = 1000;
+  in_ECX[0x44] = 800;
+  in_ECX[0x45] = 0;
+  in_ECX[0x46] = 0;
+  local_8._0_1_ = 0xb;
+  in_ECX[0x47] = 0;
+  in_ECX[0x48] = 0;
+  uVar1 = std_list_alloc_sentinel_0x2c();
+  in_ECX[0x47] = uVar1;
+  local_8._0_1_ = 0xc;
+  in_ECX[0x49] = 0;
+  in_ECX[0x4a] = 0;
+  uVar1 = list_allocNode32(0,0);
+  in_ECX[0x49] = uVar1;
+  local_8._0_1_ = 0xd;
+  in_ECX[0x4b] = 0;
+  in_ECX[0x4c] = 0;
+  uVar1 = rbtree_allocHead24();
+  in_ECX[0x4b] = uVar1;
+  local_8._0_1_ = 0xe;
+  in_ECX[0x4d] = 0;
+  in_ECX[0x4e] = 0;
+  uVar1 = rbtree_allocHead24();
+  in_ECX[0x4d] = uVar1;
+  local_8._0_1_ = 0xf;
+  in_ECX[0x4f] = 0;
+  in_ECX[0x50] = 0;
+  uVar1 = list_allocNode32(0,0);
+  in_ECX[0x4f] = uVar1;
+  local_8._0_1_ = 0x10;
+  in_ECX[0x51] = 0;
+  in_ECX[0x52] = 0;
+  uVar1 = list_buyNode_18(0,0);
+  in_ECX[0x51] = uVar1;
+  local_8._0_1_ = 0x11;
+  in_ECX[0x53] = 0;
+  in_ECX[0x54] = 0;
+  uVar1 = list_buyNode_18(0,0);
+  in_ECX[0x53] = uVar1;
+  local_8._0_1_ = 0x12;
+  in_ECX[0x55] = 0;
+  in_ECX[0x56] = 0;
+  uVar1 = list_buyNode_18(0,0);
+  in_ECX[0x55] = uVar1;
+  in_ECX[0x57] = 0x3f800000;
+  in_ECX[0x58] = 0x3f800000;
+  in_ECX[0x59] = 0x3f800000;
+  in_ECX[0x5a] = 0x3f800000;
+  in_ECX[0x5b] = 0x3f800000;
+  in_ECX[0x5c] = 0x3f800000;
+  in_ECX[0x5d] = 0x3f800000;
+  in_ECX[0x5e] = 0x3f800000;
+  in_ECX[0x5f] = 0x3f800000;
+  in_ECX[0x60] = 0x3f800000;
+  in_ECX[0x61] = 0x3f800000;
+  in_ECX[0x62] = 0x3f800000;
+  local_8._0_1_ = 0x13;
+  in_ECX[99] = 7;
+  *(undefined1 *)(in_ECX + 100) = 1;
+  InitializeCriticalSectionAndSpinCount((LPCRITICAL_SECTION)(in_ECX + 0x16),0x80000400);
+  pvVar2 = operator_new(0x3c);
+  local_8._0_1_ = 0x14;
+  if (pvVar2 == (void *)0x0) {
+    uVar1 = 0;
+  }
+  else {
+    uVar1 = FontEngine::ctor_1(in_ECX);
+  }
+  in_ECX[0xd] = uVar1;
+  local_8._0_1_ = 0x13;
+  FUN_0068e900(in_ECX + 0x1c);
+  local_18 = 7;
+  local_1c = 0;
+  local_2c = (void *)((uint)local_2c._2_2_ << 0x10);
+  u16string_assignPtrLen(L"root",4);
+  local_8._0_1_ = 0x15;
+  uVar1 = NamedObject_create_with_defaults(0,0,0,0,&local_2c);
+  in_ECX[0x2d] = uVar1;
+  local_8._0_1_ = 0x13;
+  if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_2c);
+  }
+  local_18 = 7;
+  local_1c = 0;
+  local_2c = (void *)((uint)local_2c & 0xffff0000);
+  u16string_assignPtrLen(L"sources",7);
+  local_8._0_1_ = 0x16;
+  uVar1 = NamedObject_create_with_defaults(0,0,0,0,&local_2c);
+  in_ECX[0x2e] = uVar1;
+  local_8._0_1_ = 0x13;
+  if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_2c);
+  }
+  *(uint *)(in_ECX[0x2e] + 200) = *(uint *)(in_ECX[0x2e] + 200) | 8;
+  local_18 = 7;
+  local_1c = 0;
+  local_2c = (void *)((uint)local_2c & 0xffff0000);
+  u16string_assignPtrLen(L"fonts",5);
+  local_8 = CONCAT31(local_8._1_3_,0x17);
+  uVar1 = NamedObject_create_with_defaults(0,0,0,0,&local_2c);
+  in_ECX[0x2f] = uVar1;
+  if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
+    operator_delete(local_2c);
+  }
+  *(uint *)(in_ECX[0x2f] + 200) = *(uint *)(in_ECX[0x2f] + 200) | 8;
+  ExceptionList = local_10;
+  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: NamedValue::dtor_free_strings  (confidence: high)
  * purpose: Destructor: free the two std::string buffers (name+value) if heap-allocated
- * vars: self[5]/[0xb] caps
+ * vars: in_ECX[5]/[0xb] caps
  */
 /* Global::NamedValue_dtor_free_strings @ 0064dd90 */
 
@@ -54125,12 +61408,14 @@ void NamedValue_dtor_free_strings(void)
   undefined4 *self;
   
   if (0xf < (uint)self[0xb]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[6]);
   }
   self[0xb] = 0xf;
   self[10] = 0;
   *(undefined1 *)(self + 6) = 0;
   if (0xf < (uint)self[5]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*self);
   }
   self[5] = 0xf;
@@ -54155,10 +61440,41 @@ void Node_dtor_free_vectors(void)
   undefined1 local_8 [4];
   
   if (*(void **)(self + 100) != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(self + 100));
   }
   Sprite_map_erase_range(local_8,**(undefined4 **)(self + 0x58),*(undefined4 **)(self + 0x58));
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(self + 0x58));
+}
+
+
+
+
+/* Global::FUN_0064e3a0 @ 0064e3a0 */
+
+void FUN_0064e3a0(void)
+
+{
+  void *pvVar1;
+  
+  pvVar1 = operator_new(0x10);
+  if (pvVar1 == (void *)0x0) {
+                    /* WARNING: Could not recover jumptable at 0x0064e3ae. Too many branches */
+                    /* WARNING: Subroutine does not return */
+                    /* WARNING: Treating indirect jump as call */
+    std::_Xbad_alloc();
+    return;
+  }
+  *(void **)pvVar1 = pvVar1;
+  if ((undefined4 *)((int)pvVar1 + 4) != (undefined4 *)0x0) {
+    *(undefined4 *)((int)pvVar1 + 4) = pvVar1;
+  }
+  if ((undefined4 *)((int)pvVar1 + 8) != (undefined4 *)0x0) {
+    *(undefined4 *)((int)pvVar1 + 8) = pvVar1;
+  }
+  *(undefined2 *)((int)pvVar1 + 0xc) = 0x101;
+  return;
 }
 
 
@@ -54225,6 +61541,7 @@ undefined4 * Registry_push_node_locked_0x8c(undefined4 *out)
   list = *(int *)(self + 0x8c);
   new_node = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&stack0x00000008);
   if (*(int *)(self + 0x90) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x90) = *(int *)(self + 0x90) + 1;
@@ -54255,6 +61572,7 @@ undefined4 * Registry_push_node_locked_0x08(undefined4 *out)
   list = *(int *)(self + 8);
   new_node = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&stack0x00000008);
   if (*(int *)(self + 0xc) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0xc) = *(int *)(self + 0xc) + 1;
@@ -54285,6 +61603,7 @@ undefined4 * Registry_push_node_locked_0x74(undefined4 *out)
   list = *(int *)(self + 0x74);
   new_node = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&stack0x00000008);
   if (*(int *)(self + 0x78) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x78) = *(int *)(self + 0x78) + 1;
@@ -54315,6 +61634,7 @@ undefined4 * Registry_push_node_locked_0x84(undefined4 *out)
   list = *(int *)(self + 0x84);
   new_node = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&stack0x00000008);
   if (*(int *)(self + 0x88) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x88) = *(int *)(self + 0x88) + 1;
@@ -54368,6 +61688,7 @@ void Widget_ensure_frame_subwidget(undefined4 param_1)
           iVar5 = (int)ppiVar2 - (int)ppiVar3 >> 2;
           if (iVar5 == 0x3fffffff) {
 LAB_0064ef64:
+                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("vector<T> too long");
           }
           arg_y = (float)(iVar5 + 1);
@@ -54848,31 +62169,11 @@ void FontNode_unregister_and_release(undefined4 *object)
   if (node != *(int **)(self + 0x8c)) {
     *(int *)node[1] = *node;
     *(int *)(*node + 4) = node[1];
+                    /* WARNING: Subroutine does not return */
     operator_delete(node);
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x58));
   (**(code **)*object)(1);
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: Object::release_if_nonnull  (confidence: high)
- * purpose: Call virtual release/destructor (vtbl[0]) on object if pointer non-null
- * vars: indirect vtbl call
- */
-/* Global::Object_release_if_nonnull @ 006504c0 */
-
-void Object_release_if_nonnull(undefined4 *object)
-
-{
-  if (object != (undefined4 *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x006504d4. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
-    (**(code **)*object)();
-    return;
-  }
   return;
 }
 
@@ -54900,6 +62201,7 @@ void Node_unregister_notify_release(undefined4 *obj)
   if (listNode != *(int **)(self + 0x9c)) {
     *(int *)listNode[1] = *listNode;
     *(int *)(*listNode + 4) = listNode[1];
+                    /* WARNING: Subroutine does not return */
     operator_delete(listNode);
   }
   tmp = (undefined4 *)std_map_equal_range(nameBuf,obj + 0x13);
@@ -54929,6 +62231,7 @@ void StyleNode_unregister_and_release(undefined4 *obj)
   if (listNode != *(int **)(self + 0x84)) {
     *(int *)listNode[1] = *listNode;
     *(int *)(*listNode + 4) = listNode[1];
+                    /* WARNING: Subroutine does not return */
     operator_delete(listNode);
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x58));
@@ -55120,6 +62423,7 @@ void FontCache_load_font_by_name(int fontPath,float fontSize,undefined4 fontStyl
     std::basic_filebuf<char,std::char_traits<char>_>::ctor_5(savedPath,fontSize,local_70);
   }
   if (7 < local_5c) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_70[0]);
   }
   local_5c = 7;
@@ -55127,6 +62431,7 @@ void FontCache_load_font_by_name(int fontPath,float fontSize,undefined4 fontStyl
   local_70[0] = (void *)((uint)local_70[0] & 0xffff0000);
 LAB_00650d5d:
   if (7 < local_1c) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_30[0]);
   }
   local_1c = 7;
@@ -55134,6 +62439,7 @@ LAB_00650d5d:
   local_30[0] = (ushort ***)((uint)local_30[0] & 0xffff0000);
 LAB_00650cb1:
   if (7 < local_34) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_48[0]);
   }
   ehepilogue_restore_cookie();
@@ -55235,6 +62541,7 @@ int Button_deserialize(basic_istream<char,std::char_traits<char>_> *stream)
   }
   ehState = 0xffffffff;
   if (7 < nameCap) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(nameBuf);
   }
   nameBuf = (void *)((uint)nameBuf & 0xffff0000);
@@ -55376,6 +62683,7 @@ void SmoothMeshShape_deserialize(basic_istream<char,std::char_traits<char>_> *st
                                 (local_48,&local_a4);
   }
   if (7 < chunkEndHi) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_a4);
   }
   chunkEndHi = 7;
@@ -55406,6 +62714,7 @@ void SmoothMeshShape_deserialize(basic_istream<char,std::char_traits<char>_> *st
       Widget_setFieldAndClamp388(length);
       (**(code **)(*objPtr + 4))(1);
       if (local_74 != (char *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(local_74);
       }
       ExceptionList = savedExceptionList;
@@ -55425,12 +62734,14 @@ void SmoothMeshShape_deserialize(basic_istream<char,std::char_traits<char>_> *st
         u16string_replaceRange();
       }
       if (7 < posHigh._4_4_) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)basePos);
       }
       posHigh = 0x700000000;
       basePos = basePos & 0xffffffffffff0000;
       ehState._0_1_ = 2;
       if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(local_44[0]);
       }
       break;
@@ -55684,6 +62995,7 @@ void GenericShape_deserialize(basic_istream<char,std::char_traits<char>_> *strea
     length = (int *)plasma::GenericShape::ctor_0();
   }
   if (7 < local_cc) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(strTmp);
   }
   local_cc = 7;
@@ -55691,6 +63003,7 @@ void GenericShape_deserialize(basic_istream<char,std::char_traits<char>_> *strea
   strTmp = (void *)((uint)strTmp & 0xffff0000);
   ehState = 0xffffffff;
   if (7 < local_b4) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_c8);
   }
   local_c8 = (void *)((uint)local_c8 & 0xffff0000);
@@ -55726,6 +63039,7 @@ void GenericShape_deserialize(basic_istream<char,std::char_traits<char>_> *strea
         u16string_replaceRange();
       }
       if (7 < local_28) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(local_3c[0]);
       }
       local_28 = 7;
@@ -55733,6 +63047,7 @@ void GenericShape_deserialize(basic_istream<char,std::char_traits<char>_> *strea
       local_3c[0] = (void *)((uint)local_3c[0] & 0xffff0000);
       ehState = 0xffffffff;
       if (0xf < local_58) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(nameBuf3[0]);
       }
       local_58 = 0xf;
@@ -55751,6 +63066,7 @@ void GenericShape_deserialize(basic_istream<char,std::char_traits<char>_> *strea
         u16string_replaceRange();
       }
       if (7 < local_70) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(posBuf[0]);
       }
       local_70 = 7;
@@ -55758,6 +63074,7 @@ void GenericShape_deserialize(basic_istream<char,std::char_traits<char>_> *strea
       posBuf[0] = (void *)((uint)posBuf[0] & 0xffff0000);
       ehState = 0xffffffff;
       if (0xf < local_40) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(nameBuf2[0]);
       }
       local_40 = 0xf;
@@ -56006,6 +63323,7 @@ void PopUpButton_deserialize(basic_istream<char,std::char_traits<char>_> *stream
         ehState = CONCAT31(ehState._1_3_,1);
         local_94 = NamedObject_find_or_create(uVar8);
         if (7 < local_48) {
+                    /* WARNING: Subroutine does not return */
           operator_delete(nameBufB[0]);
         }
         local_48 = 7;
@@ -56013,6 +63331,7 @@ void PopUpButton_deserialize(basic_istream<char,std::char_traits<char>_> *stream
         nameBufB[0] = (void *)((uint)nameBufB[0] & 0xffff0000);
         ehState = 0xffffffff;
         if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
           operator_delete(nameBufA[0]);
         }
         local_30 = 0xf;
@@ -56091,6 +63410,7 @@ void PopUpButton_deserialize(basic_istream<char,std::char_traits<char>_> *stream
         ppvVar7 = (void **)istream_read_string(nameBufC,stream);
         if (strTmp != ppvVar7) {
           if ((void *)0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(strTmp[0]);
           }
           local_18 = (void *)0xf;
@@ -56112,6 +63432,7 @@ void PopUpButton_deserialize(basic_istream<char,std::char_traits<char>_> *stream
           *(undefined1 *)ppvVar7 = 0;
         }
         if (0xf < local_60) {
+                    /* WARNING: Subroutine does not return */
           operator_delete(nameBufC[0]);
         }
         local_60 = 0xf;
@@ -56139,6 +63460,7 @@ void PopUpButton_deserialize(basic_istream<char,std::char_traits<char>_> *stream
     ehState = CONCAT31(ehState._1_3_,3);
     std_vector_findOrAppendNamed(uVar8,local_c8);
     if (7 < local_78) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(nameBufD[0]);
     }
     local_78 = 7;
@@ -56147,6 +63469,7 @@ void PopUpButton_deserialize(basic_istream<char,std::char_traits<char>_> *stream
     ehState = 0xffffffff;
     signExt = chunkEndHi;
     if ((void *)0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strTmp[0]);
     }
   } while( true );
@@ -56269,6 +63592,7 @@ void FontCache_create_font_from_path(void **nameOut,undefined4 fontSize,undefine
           ehState._0_1_ = 0xe;
           dotPos = Texture_load_from_file_freeimage(uVar5);
           if (7 < local_48) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(joinedStr[0]);
           }
           local_48 = 7;
@@ -56278,6 +63602,7 @@ void FontCache_create_font_from_path(void **nameOut,undefined4 fontSize,undefine
           flagByte = (undefined1)ehState;
           ehState._0_1_ = 1;
           if (7 < local_60) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(itemStr[0]);
           }
           local_60 = 7;
@@ -56317,6 +63642,7 @@ LAB_00657345:
               ctor_15(dotPos,0xffffffff,0xffffffff,&local_9c);
       ehState = CONCAT31(ehState._1_3_,1);
       if (7 < local_88) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(local_9c);
       }
       local_88 = 7;
@@ -56329,12 +63655,14 @@ LAB_00657345:
   }
 LAB_00657420:
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(extStr[0]);
   }
   local_18 = 7;
   local_1c = 0;
   extStr[0] = (void *)((uint)extStr[0] & 0xffff0000);
   if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(upperExt[0]);
   }
   ExceptionList = savedExceptionList;
@@ -56483,6 +63811,7 @@ void GameController_clearAllEntities(void)
         if (charIter != charNode) {
           do {
             if ((void *)charIter[5] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
               operator_delete((void *)charIter[5]);
             }
             if (*(char *)((int)charIter + 0xd) == '\0') {
@@ -56513,6 +63842,7 @@ void GameController_clearAllEntities(void)
         charListPtr = (undefined4 *)fontIter[7];
         if (charListPtr != (undefined4 *)0x0) {
           std_Tree_eraseRange(strTmp,*(undefined4 *)*charListPtr,(undefined4 *)*charListPtr);
+                    /* WARNING: Subroutine does not return */
           operator_delete((void *)*charListPtr);
         }
       }
@@ -56544,6 +63874,7 @@ void GameController_clearAllEntities(void)
   headNode = *(void **)(*(int *)(self + 0x68) + 4);
   if (*(char *)((int)headNode + 0xd) == '\0') {
     rbtree_destroyRec_simple(*(undefined4 *)((int)headNode + 8));
+                    /* WARNING: Subroutine does not return */
     operator_delete(headNode);
   }
   *(int *)(*(int *)(self + 0x68) + 4) = *(int *)(self + 0x68);
@@ -56559,6 +63890,7 @@ void GameController_clearAllEntities(void)
         if (charIter != charNode) {
           do {
             if ((void *)charIter[5] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
               operator_delete((void *)charIter[5]);
             }
             if (*(char *)((int)charIter + 0xd) == '\0') {
@@ -56589,6 +63921,7 @@ void GameController_clearAllEntities(void)
         charListPtr = (undefined4 *)fontIter[9];
         if (charListPtr != (undefined4 *)0x0) {
           std_Tree_eraseRange(strTmp,*(undefined4 *)*charListPtr,(undefined4 *)*charListPtr);
+                    /* WARNING: Subroutine does not return */
           operator_delete((void *)*charListPtr);
         }
       }
@@ -56627,6 +63960,7 @@ void GameController_clearAllEntities(void)
   if (fontIter != (int *)*charNode) {
     do {
       if ((void *)fontIter[5] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)fontIter[5]);
       }
       if (*(char *)((int)fontIter + 0xd) == '\0') {
@@ -56668,6 +64002,7 @@ void GameController_clearAllEntities(void)
     return;
   }
   rbtree_destroyRec_simple(*(undefined4 *)((int)headNode + 8));
+                    /* WARNING: Subroutine does not return */
   operator_delete(headNode);
 }
 
@@ -56777,6 +64112,7 @@ LAB_0065bf1b:
     Font_layoutAndDrawGlyphs(clippedText,arg2,arg3,param_9,param_10,param_11,flags);
     ehState = 0xffffffff;
     if (7 < local_58) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(clippedText[0]);
     }
     local_58 = 7;
@@ -57423,6 +64759,7 @@ void Font_measureTextScaled(undefined4 text,undefined4 matrix,float size,undefin
     TextRender_layoutAndWrap(clippedText,arg7);
     Font_measureTextLine(clippedText,minOut,maxOut,flags,param_12,param_13);
     if (7 < clipCap) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(clippedText[0]);
     }
   }
@@ -57505,6 +64842,7 @@ void Font_loadByFileExtension(undefined4 result,int pathObj,int *curTexture)
     __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc);
     return;
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(extStr[0]);
 }
 
@@ -57556,6 +64894,7 @@ void Font_loadFaceFromFile(undefined4 result,undefined4 pathObj)
   textureField = (int *)(self + 0xd8);
   loadResult = FT_New_Memory_Face(result,fieldPtr,0,textureField);
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(strTmp2[0]);
   }
   if (loadResult == 0) {
@@ -57580,6 +64919,7 @@ void Font_loadFaceFromFile(undefined4 result,undefined4 pathObj)
     fieldPtr = (undefined4 *)(self + 0x38);
     if (fieldPtr != strTmp) {
       if (7 < *(uint *)(self + 0x4c)) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*fieldPtr);
       }
       *(undefined4 *)(self + 0x4c) = 7;
@@ -57588,6 +64928,7 @@ void Font_loadFaceFromFile(undefined4 result,undefined4 pathObj)
       u16string_move(strTmp);
     }
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strTmp2[0]);
     }
     local_18 = 7;
@@ -57595,6 +64936,7 @@ void Font_loadFaceFromFile(undefined4 result,undefined4 pathObj)
     strTmp2[0] = (void *)((uint)strTmp2[0] & 0xffff0000);
     ehState = 0xffffffff;
     if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf2[0]);
     }
     strBuf = *(char **)(*textureField + 0x18);
@@ -57618,6 +64960,7 @@ void Font_loadFaceFromFile(undefined4 result,undefined4 pathObj)
     fieldPtr = (undefined4 *)(self + 0x20);
     if (fieldPtr != strTmp) {
       if (7 < *(uint *)(self + 0x34)) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*fieldPtr);
       }
       *(undefined4 *)(self + 0x34) = 7;
@@ -57626,6 +64969,7 @@ void Font_loadFaceFromFile(undefined4 result,undefined4 pathObj)
       u16string_move(strTmp);
     }
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strTmp2[0]);
     }
     local_18 = 7;
@@ -57633,6 +64977,7 @@ void Font_loadFaceFromFile(undefined4 result,undefined4 pathObj)
     strTmp2[0] = (void *)((uint)strTmp2[0] & 0xffff0000);
     ehState = 0xffffffff;
     if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf2[0]);
     }
     loadResult = FT_Get_Postscript_Name(*textureField);
@@ -57643,6 +64988,7 @@ void Font_loadFaceFromFile(undefined4 result,undefined4 pathObj)
       fieldPtr = (undefined4 *)(self + 0x50);
       if (fieldPtr != strTmp) {
         if (7 < *(uint *)(self + 100)) {
+                    /* WARNING: Subroutine does not return */
           operator_delete((void *)*fieldPtr);
         }
         *(undefined4 *)(self + 100) = 7;
@@ -57651,12 +64997,14 @@ void Font_loadFaceFromFile(undefined4 result,undefined4 pathObj)
         u16string_move(strTmp);
       }
       if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(strTmp2[0]);
       }
       local_18 = 7;
       local_1c = 0;
       strTmp2[0] = (void *)((uint)strTmp2[0] & 0xffff0000);
       if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(strBuf2[0]);
       }
     }
@@ -57746,6 +65094,7 @@ void Font_loadFaceFromMemory(undefined4 result,undefined4 pathObj,undefined4 mem
     fieldPtr = (undefined4 *)(self + 0x38);
     if (fieldPtr != strTmp) {
       if (7 < *(uint *)(self + 0x4c)) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*fieldPtr);
       }
       *(undefined4 *)(self + 0x4c) = 7;
@@ -57754,6 +65103,7 @@ void Font_loadFaceFromMemory(undefined4 result,undefined4 pathObj,undefined4 mem
       u16string_move(strTmp);
     }
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strTmp2[0]);
     }
     local_18 = 7;
@@ -57761,6 +65111,7 @@ void Font_loadFaceFromMemory(undefined4 result,undefined4 pathObj,undefined4 mem
     strTmp2[0] = (void *)((uint)strTmp2[0] & 0xffff0000);
     ehState = 0xffffffff;
     if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf2[0]);
     }
     strBuf = *(char **)(*textureField + 0x18);
@@ -57784,6 +65135,7 @@ void Font_loadFaceFromMemory(undefined4 result,undefined4 pathObj,undefined4 mem
     fieldPtr = (undefined4 *)(self + 0x20);
     if (fieldPtr != strTmp) {
       if (7 < *(uint *)(self + 0x34)) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*fieldPtr);
       }
       *(undefined4 *)(self + 0x34) = 7;
@@ -57792,6 +65144,7 @@ void Font_loadFaceFromMemory(undefined4 result,undefined4 pathObj,undefined4 mem
       u16string_move(strTmp);
     }
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strTmp2[0]);
     }
     local_18 = 7;
@@ -57799,6 +65152,7 @@ void Font_loadFaceFromMemory(undefined4 result,undefined4 pathObj,undefined4 mem
     strTmp2[0] = (void *)((uint)strTmp2[0] & 0xffff0000);
     ehState = 0xffffffff;
     if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf2[0]);
     }
     loadResult = FT_Get_Postscript_Name(*textureField);
@@ -57809,6 +65163,7 @@ void Font_loadFaceFromMemory(undefined4 result,undefined4 pathObj,undefined4 mem
       fieldPtr = (undefined4 *)(self + 0x50);
       if (fieldPtr != strTmp) {
         if (7 < *(uint *)(self + 100)) {
+                    /* WARNING: Subroutine does not return */
           operator_delete((void *)*fieldPtr);
         }
         *(undefined4 *)(self + 100) = 7;
@@ -57817,12 +65172,14 @@ void Font_loadFaceFromMemory(undefined4 result,undefined4 pathObj,undefined4 mem
         u16string_move(strTmp);
       }
       if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(strTmp2[0]);
       }
       local_18 = 7;
       local_1c = 0;
       strTmp2[0] = (void *)((uint)strTmp2[0] & 0xffff0000);
       if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(strBuf2[0]);
       }
     }
@@ -58172,6 +65529,7 @@ void Anim_removeTrackReferences(int frame)
         keyArray = (int *)(arrayBase - count);
         size = IntMap_SetScalar(snapshotList,snapshotList[1],&keyArray);
         if (count == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         snapshotList[1] = size;
@@ -58191,8 +65549,10 @@ void Anim_removeTrackReferences(int frame)
   *snapshotList = snapshotList;
   snapshotList[1] = snapshotList;
   if (snapEntry == snapshotList) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(snapshotList);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(snapEntry);
 }
 
@@ -58261,8 +65621,10 @@ LAB_0066222c:
     } while (cmp < found);
   }
   if ((void *)*treeEnd == (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(treeEnd);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*treeEnd);
 }
 
@@ -58553,6 +65915,7 @@ undefined4 * vector_moveAssignStringRange(undefined4 *srcFirst,undefined4 *srcLa
   do {
     if (dst != srcFirst) {
       if (7 < (uint)dst[5]) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*dst);
       }
       dst[5] = 7;
@@ -58722,6 +66085,7 @@ void vector_insertN(int *result,int insertPos,uint count,undefined4 value)
       oldSize = (oldSize - *self) / 0x18;
       if (0xaaaaaaaU - oldSize < count) {
         cookiePtr2 = (undefined1 *)&stackCookie;
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       cookiePtr2 = (undefined1 *)&stackCookie;
@@ -58735,6 +66099,7 @@ void vector_insertN(int *result,int insertPos,uint count,undefined4 value)
       oldSize = *self;
       if (*self != 0) {
         dtor_stringRange_0x18(*self,self[1],&tmpByte,result);
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*self);
       }
       *self = newBuf;
@@ -58757,6 +66122,7 @@ void vector_insertN(int *result,int insertPos,uint count,undefined4 value)
       vector_destroyStringRange(insertPos,self[1] + count * -0x18,tmpBufB);
       cookiePtr = (uint *)cookiePtr2;
       if (7 < local_1c) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(tmpBufB[0]);
       }
     }
@@ -58774,6 +66140,7 @@ void vector_insertN(int *result,int insertPos,uint count,undefined4 value)
       vector_destroyStringRange(insertPos,count * 0x18 + insertPos,tmpBufA);
       cookiePtr = (uint *)cookiePtr2;
       if (7 < local_34) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(tmpBufA[0]);
       }
     }
@@ -58879,6 +66246,65 @@ int list_sumFieldAcrossNodes(void)
     total = total + *(int *)(faceIter[2] + 8);
   }
   return total;
+}
+
+
+
+
+/* [AUDIT] proposed: Widget::triggerTracksByName  (confidence: low)
+ * purpose: Frees a temp key string, iterates a list of tracks and for each matching name plays its keyframes, marking a dirty flag
+ * vars: self+0x24=list; +0x2c=dirty; uses 661d90/661df0
+ */
+/* Global::Widget_triggerTracksByName @ 00664c10 */
+
+void Widget_triggerTracksByName(int key,undefined4 frame)
+
+{
+  int matched;
+  int self;
+  int *trackIter;
+  
+  if (self + 0x30 != key) {
+    u16string_replaceRange(key,0,0xffffffff);
+  }
+  trackIter = (int *)**(int **)(self + 0x24);
+  if (trackIter != *(int **)(self + 0x24)) {
+    do {
+      matched = AnimMap_findValueByKey(key);
+      if (matched != 0) {
+        Anim_playTrackByName(key,frame);
+        *(undefined1 *)(self + 0x2c) = 1;
+      }
+      trackIter = (int *)*trackIter;
+    } while (trackIter != (int *)*(int *)(self + 0x24));
+  }
+  return;
+}
+
+
+
+
+/* [AUDIT] proposed: Widget::resetAnimations  (confidence: high)
+ * purpose: Clears the dirty flag and iterates the controller list resetting each animation's time to zero
+ * vars: self+0x2c=dirty; +0x24=list; per-node 6626b0
+ */
+/* Global::Widget_resetAnimations @ 00664cc0 */
+
+void Widget_resetAnimations(void)
+
+{
+  int self;
+  int *trackIter;
+  
+  *(undefined1 *)(self + 0x2c) = 0;
+  trackIter = (int *)**(int **)(self + 0x24);
+  if (trackIter != *(int **)(self + 0x24)) {
+    do {
+      Spline_resetTime();
+      trackIter = (int *)*trackIter;
+    } while (trackIter != (int *)*(int *)(self + 0x24));
+  }
+  return;
 }
 
 
@@ -59199,6 +66625,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousArrayAttribute<plasma::Vector<2,float>_>::ctor_1(attrBufB,&defVal);
   ehState._0_1_ = 5;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59215,6 +66642,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousArrayAttribute<plasma::Vector<2,float>_>::ctor_1(attrBufA,&defVal);
   ehState._0_1_ = 10;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59231,6 +66659,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousArrayAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufB,&defVal);
   ehState._0_1_ = 0xf;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59247,6 +66676,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousArrayAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufA,&defVal);
   ehState._0_1_ = 0x14;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59263,6 +66693,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousArrayAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufB,&defVal);
   ehState._0_1_ = 0x19;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59279,6 +66710,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousArrayAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufA,&defVal);
   ehState._0_1_ = 0x1e;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59294,6 +66726,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ehState._0_1_ = 0x20;
   ContinuousArrayAttribute<float>::ctor_1(attrBufB,&defVal);
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   self[0xb1] = 0;
@@ -59313,6 +66746,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousAttribute<plasma::Vector<2,float>_>::ctor_0(attrBufA,&local_4c);
   ehState._0_1_ = 0x28;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59328,6 +66762,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousAttribute<plasma::Vector<2,float>_>::ctor_0(attrBufB,&local_4c);
   ehState._0_1_ = 0x2b;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59351,6 +66786,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_0xc(2,&defVal);
   ehState._0_1_ = 0x30;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59364,6 +66800,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousAttribute<plasma::Matrix<float>_>::ctor_0(attrBufB,matrixTmp);
   ehState._0_1_ = 0x33;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59385,6 +66822,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_4byte(2,&rotField);
   ehState._0_1_ = 0x38;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59406,6 +66844,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_4byte(2,&rotField);
   ehState._0_1_ = 0x3d;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59427,6 +66866,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_4byte(2,&rotField);
   ehState._0_1_ = 0x42;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59448,6 +66888,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_4byte(2,&rotField);
   ehState._0_1_ = 0x47;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59469,6 +66910,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_4byte(2,&rotField);
   ehState._0_1_ = 0x4c;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59490,6 +66932,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_4byte(2,&rotField);
   ehState._0_1_ = 0x51;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59511,6 +66954,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_4byte(2,&rotField);
   ehState._0_1_ = 0x56;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59529,6 +66973,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_4byte(2,&rotField);
   ehState._0_1_ = 0x5b;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59547,6 +66992,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_4byte(2,&rotField);
   ehState._0_1_ = 0x60;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59557,6 +67003,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ContinuousAttribute<plasma::Matrix<float>_>::ctor_0(attrBufB,matrixTmp);
   ehState._0_1_ = 99;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_18 = 0xf;
@@ -59575,6 +67022,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   std_vector_resize_erase_4(2,&rotField);
   ehState._0_1_ = 0x68;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_30 = 0xf;
@@ -59593,6 +67041,7 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   ehState._0_1_ = 0x6b;
   std_vector_resize_erase_4(2,&rotField);
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   self[0x217] = 0;
@@ -59642,6 +67091,829 @@ void plasma::DiscreteAttribute<int>::ctor_1(undefined4 ownerArg,undefined4 defau
   mat4_identity();
   ExceptionList = savedExceptionList;
   __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_0066cc10 @ 0066cc10 */
+
+void FUN_0066cc10(int param_1,uint param_2,int param_3,int param_4,uint param_5)
+
+{
+  uint uVar1;
+  
+  uVar1 = param_2;
+  while ((param_2 = uVar1, param_2 != param_5 || (param_1 != param_4))) {
+    if (param_3 == 0) {
+      uVar1 = Concurrency::details::_Concurrent_vector_base_v4::_Segment_index_of(param_2);
+      param_3 = *(int *)(*(int *)(param_1 + 0x1c) + uVar1 * 4) +
+                (param_2 - (1 << ((byte)uVar1 & 0x1f) & 0xfffffffeU)) * 0x4c;
+    }
+    FUN_0066ec30(param_3);
+    uVar1 = param_2 + 1;
+    if (param_3 != 0) {
+      if ((uVar1 & param_2 - 1) == 0) {
+        param_3 = 0;
+      }
+      else {
+        param_3 = param_3 + 0x4c;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_0066cc90 @ 0066cc90 */
+
+void FUN_0066cc90(int param_1,uint param_2,int param_3,int param_4,uint param_5)
+
+{
+  uint uVar1;
+  
+  uVar1 = param_2;
+  while ((param_2 = uVar1, param_2 != param_5 || (param_1 != param_4))) {
+    if (param_3 == 0) {
+      uVar1 = Concurrency::details::_Concurrent_vector_base_v4::_Segment_index_of(param_2);
+      param_3 = *(int *)(*(int *)(param_1 + 0x1c) + uVar1 * 4) +
+                (param_2 - (1 << ((byte)uVar1 & 0x1f) & 0xfffffffeU)) * 0x7c;
+    }
+    FUN_0066f1d0(param_3);
+    uVar1 = param_2 + 1;
+    if (param_3 != 0) {
+      if ((uVar1 & param_2 - 1) == 0) {
+        param_3 = 0;
+      }
+      else {
+        param_3 = param_3 + 0x7c;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_0066dcb0 @ 0066dcb0 */
+
+void FUN_0066dcb0(int *param_1,int *param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  int iVar3;
+  uint uVar4;
+  int *piVar5;
+  undefined4 local_8;
+  
+  uVar1 = param_1[1];
+  if ((uVar1 < (uint)param_2[1]) && (iVar2 = *param_1, iVar2 == *param_2)) {
+    iVar3 = param_2[1] - uVar1;
+    if (iVar3 == 1) {
+      piVar5 = (int *)param_1[2];
+      if (piVar5 == (int *)0x0) {
+        uVar4 = Concurrency::details::_Concurrent_vector_base_v4::_Segment_index_of(uVar1);
+        piVar5 = (int *)(*(int *)(*(int *)(iVar2 + 0x1c) + uVar4 * 4) +
+                        (uVar1 - (1 << ((byte)uVar4 & 0x1f) & 0xfffffffeU)) * 4);
+        param_1[2] = (int)piVar5;
+      }
+      iVar2 = *piVar5;
+      *(undefined4 *)(iVar2 + 0x2c) = 0;
+      *(undefined4 *)(iVar2 + 0xc) = 0;
+      *(undefined4 *)(iVar2 + 0x10) = 0;
+      *(undefined4 *)(iVar2 + 0x14) = 0;
+      *(undefined4 *)(iVar2 + 0x18) = 0;
+      *(undefined4 *)(iVar2 + 0x1c) = 0;
+      *(undefined4 *)(iVar2 + 0x20) = 0;
+      *(undefined4 *)(iVar2 + 0x24) = 0;
+      *(undefined4 *)(iVar2 + 0x28) = 0;
+      return;
+    }
+    local_8 = 1;
+    std::bad_alloc::ctor_10(param_1,iVar3,&local_8,param_3,param_4);
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_0066dd80 @ 0066dd80 */
+
+void FUN_0066dd80(int *param_1,int *param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  uint uVar5;
+  undefined4 *puVar6;
+  
+  piVar3 = param_1;
+  uVar1 = param_1[1];
+  if ((uVar1 < (uint)param_2[1]) && (iVar2 = *param_1, iVar2 == *param_2)) {
+    iVar4 = param_2[1] - uVar1;
+    if (iVar4 == 1) {
+      puVar6 = (undefined4 *)param_1[2];
+      if (puVar6 == (undefined4 *)0x0) {
+        uVar5 = Concurrency::details::_Concurrent_vector_base_v4::_Segment_index_of(uVar1);
+        puVar6 = (undefined4 *)
+                 (*(int *)(*(int *)(iVar2 + 0x1c) + uVar5 * 4) +
+                 (uVar1 - (1 << ((byte)uVar5 & 0x1f) & 0xfffffffeU)) * 4);
+        piVar3[2] = (int)puVar6;
+      }
+      FUN_0066f380(*puVar6);
+      return;
+    }
+    param_1 = (int *)0x1;
+    std::bad_alloc::ctor_7(piVar3,iVar4,&param_1,param_3,param_4);
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_0066de00 @ 0066de00 */
+
+void FUN_0066de00(int *param_1,int *param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  uint uVar5;
+  
+  piVar3 = param_1;
+  uVar1 = param_1[1];
+  if ((uVar1 < (uint)param_2[1]) && (iVar2 = *param_1, iVar2 == *param_2)) {
+    iVar4 = param_2[1] - uVar1;
+    if (iVar4 == 1) {
+      iVar4 = param_1[2];
+      if (iVar4 == 0) {
+        uVar5 = Concurrency::details::_Concurrent_vector_base_v4::_Segment_index_of(uVar1);
+        iVar4 = *(int *)(*(int *)(iVar2 + 0x1c) + uVar5 * 4) +
+                (uVar1 - (1 << ((byte)uVar5 & 0x1f) & 0xfffffffeU)) * 0x4c;
+        piVar3[2] = iVar4;
+      }
+      FUN_0066eef0(iVar4);
+      return;
+    }
+    param_1 = (int *)0x1;
+    std::bad_alloc::ctor_8(piVar3,iVar4,&param_1,param_3,param_4);
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_0066de80 @ 0066de80 */
+
+void FUN_0066de80(int *param_1,int *param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  uint uVar5;
+  
+  piVar3 = param_1;
+  uVar1 = param_1[1];
+  if ((uVar1 < (uint)param_2[1]) && (iVar2 = *param_1, iVar2 == *param_2)) {
+    iVar4 = param_2[1] - uVar1;
+    if (iVar4 == 1) {
+      iVar4 = param_1[2];
+      if (iVar4 == 0) {
+        uVar5 = Concurrency::details::_Concurrent_vector_base_v4::_Segment_index_of(uVar1);
+        iVar4 = *(int *)(*(int *)(iVar2 + 0x1c) + uVar5 * 4) +
+                (uVar1 - (1 << ((byte)uVar5 & 0x1f) & 0xfffffffeU)) * 0x4c;
+        piVar3[2] = iVar4;
+      }
+      FUN_0066f280(iVar4);
+      return;
+    }
+    param_1 = (int *)0x1;
+    std::bad_alloc::ctor_9(piVar3,iVar4,&param_1,param_3,param_4);
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_0066df00 @ 0066df00 */
+
+void FUN_0066df00(int *param_1,int *param_2,undefined4 param_3,undefined4 param_4)
+
+{
+  uint uVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  uint uVar5;
+  
+  piVar3 = param_1;
+  uVar1 = param_1[1];
+  if ((uVar1 < (uint)param_2[1]) && (iVar2 = *param_1, iVar2 == *param_2)) {
+    iVar4 = param_2[1] - uVar1;
+    if (iVar4 == 1) {
+      iVar4 = param_1[2];
+      if (iVar4 == 0) {
+        uVar5 = Concurrency::details::_Concurrent_vector_base_v4::_Segment_index_of(uVar1);
+        iVar4 = *(int *)(*(int *)(iVar2 + 0x1c) + uVar5 * 4) +
+                (uVar1 - (1 << ((byte)uVar5 & 0x1f) & 0xfffffffeU)) * 0x7c;
+        piVar3[2] = iVar4;
+      }
+      FUN_0066ed80(iVar4);
+      return;
+    }
+    param_1 = (int *)0x1;
+    std::bad_alloc::ctor_6(piVar3,iVar4,&param_1,param_3,param_4);
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_0066df80 @ 0066df80 */
+
+void FUN_0066df80(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6,undefined4 param_7)
+
+{
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+  undefined1 local_5;
+  
+  local_14 = param_4;
+  local_10 = param_5;
+  local_c = param_6;
+  local_20 = param_1;
+  local_1c = param_2;
+  local_18 = param_3;
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',1);
+  FUN_0066dcb0(&local_20,&local_14,param_7,&local_5,param_6);
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',2);
+  return;
+}
+
+
+
+
+/* Global::FUN_0066dff0 @ 0066dff0 */
+
+void FUN_0066dff0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6,undefined4 param_7)
+
+{
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+  undefined1 local_5;
+  
+  local_14 = param_4;
+  local_10 = param_5;
+  local_c = param_6;
+  local_20 = param_1;
+  local_1c = param_2;
+  local_18 = param_3;
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',1);
+  FUN_0066dd80(&local_20,&local_14,param_7,&local_5,param_6);
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',2);
+  return;
+}
+
+
+
+
+/* Global::FUN_0066e060 @ 0066e060 */
+
+void FUN_0066e060(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6,undefined4 param_7)
+
+{
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+  undefined1 local_5;
+  
+  local_14 = param_4;
+  local_10 = param_5;
+  local_c = param_6;
+  local_20 = param_1;
+  local_1c = param_2;
+  local_18 = param_3;
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',1);
+  FUN_0066de00(&local_20,&local_14,param_7,&local_5,param_6);
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',2);
+  return;
+}
+
+
+
+
+/* Global::FUN_0066e0d0 @ 0066e0d0 */
+
+void FUN_0066e0d0(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6,undefined4 param_7)
+
+{
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+  undefined1 local_5;
+  
+  local_14 = param_4;
+  local_10 = param_5;
+  local_c = param_6;
+  local_20 = param_1;
+  local_1c = param_2;
+  local_18 = param_3;
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',1);
+  FUN_0066de80(&local_20,&local_14,param_7,&local_5,param_6);
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',2);
+  return;
+}
+
+
+
+
+/* Global::FUN_0066e140 @ 0066e140 */
+
+void FUN_0066e140(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
+                 undefined4 param_5,undefined4 param_6,undefined4 param_7)
+
+{
+  undefined4 local_20;
+  undefined4 local_1c;
+  undefined4 local_18;
+  undefined4 local_14;
+  undefined4 local_10;
+  undefined4 local_c;
+  undefined1 local_5;
+  
+  local_14 = param_4;
+  local_10 = param_5;
+  local_c = param_6;
+  local_20 = param_1;
+  local_1c = param_2;
+  local_18 = param_3;
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',1);
+  FUN_0066df00(&local_20,&local_14,param_7,&local_5,param_6);
+  Concurrency::_Trace_ppl_function((_GUID *)&DAT_006fcbb0,'\x04',2);
+  return;
+}
+
+
+
+
+/* Global::FUN_0066ec30 @ 0066ec30 */
+
+void FUN_0066ec30(int *param_1)
+
+{
+  int *piVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float fVar13;
+  float fVar14;
+  float fVar15;
+  float fVar16;
+  float fVar17;
+  undefined4 *puVar18;
+  undefined4 *puVar19;
+  float *pfVar20;
+  float *pfVar21;
+  int iVar22;
+  int iVar23;
+  int *piVar24;
+  
+  puVar18 = (undefined4 *)param_1[3];
+  puVar19 = (undefined4 *)param_1[2];
+  fVar2 = *(float *)*puVar18;
+  fVar3 = *(float *)*puVar19;
+  fVar4 = ((float *)*puVar18)[1];
+  pfVar20 = (float *)puVar18[1];
+  fVar5 = ((float *)*puVar19)[1];
+  pfVar21 = (float *)puVar19[1];
+  fVar6 = *pfVar20;
+  fVar7 = pfVar20[1];
+  fVar8 = pfVar20[2];
+  fVar9 = pfVar20[3];
+  fVar10 = *pfVar21;
+  fVar11 = pfVar21[1];
+  fVar12 = pfVar21[2];
+  fVar13 = pfVar21[3];
+  fVar14 = *(float *)puVar18[2];
+  fVar15 = *(float *)puVar19[2];
+  piVar24 = param_1 + 2;
+  fVar16 = ((float *)puVar18[2])[1];
+  fVar17 = ((float *)puVar19[2])[1];
+  iVar23 = 2;
+  do {
+    if ((((*(byte *)(*piVar24 + 0x30) & 1) == 0) || (*param_1 == 0)) || (param_1[1] == 0)) {
+      piVar1 = (int *)(*piVar24 + 0x2c);
+      *piVar1 = *piVar1 + 1;
+      iVar22 = *piVar24;
+      *(float *)(iVar22 + 0xc) = *(float *)(iVar22 + 0xc) + (fVar2 + fVar3) * 0.5;
+      *(float *)(iVar22 + 0x10) = (fVar4 + fVar5) * 0.5 + *(float *)(iVar22 + 0x10);
+      *(float *)(iVar22 + 0x14) = (fVar6 + fVar10) * 0.5 + *(float *)(iVar22 + 0x14);
+      *(float *)(iVar22 + 0x18) = (fVar7 + fVar11) * 0.5 + *(float *)(iVar22 + 0x18);
+      *(float *)(iVar22 + 0x1c) = (fVar8 + fVar12) * 0.5 + *(float *)(iVar22 + 0x1c);
+      *(float *)(iVar22 + 0x20) = (fVar9 + fVar13) * 0.5 + *(float *)(iVar22 + 0x20);
+      *(float *)(iVar22 + 0x24) = (fVar14 + fVar15) * 0.5 + *(float *)(iVar22 + 0x24);
+      *(float *)(iVar22 + 0x28) = (fVar16 + fVar17) * 0.5 + *(float *)(iVar22 + 0x28);
+    }
+    piVar24 = piVar24 + 1;
+    iVar23 = iVar23 + -1;
+  } while (iVar23 != 0);
+  return;
+}
+
+
+
+
+/* Global::FUN_0066ed80 @ 0066ed80 */
+
+void FUN_0066ed80(int *param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float *pfVar13;
+  float *pfVar14;
+  float *pfVar15;
+  float *pfVar16;
+  float *pfVar17;
+  
+  fVar1 = (*(float **)param_1[1])[1];
+  fVar2 = (*(float **)*param_1)[1];
+  fVar3 = (*(float **)param_1[2])[1];
+  fVar4 = (*(float **)param_1[3])[1];
+  pfVar13 = (float *)param_1[4];
+  *pfVar13 = (**(float **)*param_1 + **(float **)param_1[1] + **(float **)param_1[2] +
+             **(float **)param_1[3]) * 0.25;
+  pfVar13[1] = (fVar4 + fVar3 + fVar1 + fVar2) * 0.25;
+  pfVar13 = *(float **)(param_1[1] + 4);
+  fVar1 = pfVar13[1];
+  pfVar14 = *(float **)(*param_1 + 4);
+  fVar2 = pfVar14[1];
+  fVar3 = *pfVar14;
+  fVar4 = pfVar13[3];
+  fVar5 = pfVar14[3];
+  fVar6 = *pfVar13;
+  pfVar15 = *(float **)(param_1[2] + 4);
+  fVar7 = pfVar15[1];
+  fVar8 = *pfVar15;
+  fVar9 = pfVar15[3];
+  pfVar16 = *(float **)(param_1[3] + 4);
+  fVar10 = pfVar16[1];
+  fVar11 = *pfVar16;
+  fVar12 = pfVar16[3];
+  pfVar17 = (float *)param_1[5];
+  pfVar17[2] = (pfVar16[2] + pfVar15[2] + pfVar13[2] + pfVar14[2]) * 0.25;
+  *pfVar17 = (fVar3 + fVar6 + fVar8 + fVar11) * 0.25;
+  pfVar17[3] = (fVar12 + fVar9 + fVar4 + fVar5) * 0.25;
+  pfVar17[1] = (fVar10 + fVar7 + fVar1 + fVar2) * 0.25;
+  fVar1 = (*(float **)(param_1[1] + 8))[1];
+  fVar2 = (*(float **)(*param_1 + 8))[1];
+  fVar3 = (*(float **)(param_1[2] + 8))[1];
+  fVar4 = (*(float **)(param_1[3] + 8))[1];
+  pfVar13 = (float *)param_1[6];
+  *pfVar13 = (**(float **)(param_1[3] + 8) +
+             **(float **)(*param_1 + 8) + **(float **)(param_1[1] + 8) +
+             **(float **)(param_1[2] + 8)) * 0.25;
+  pfVar13[1] = (fVar4 + fVar3 + fVar1 + fVar2) * 0.25;
+  return;
+}
+
+
+
+
+/* Global::FUN_0066eef0 @ 0066eef0 */
+
+void FUN_0066eef0(int *param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float fVar13;
+  float fVar14;
+  float *pfVar15;
+  float *pfVar16;
+  float *pfVar17;
+  float *pfVar18;
+  float *pfVar19;
+  float *pfVar20;
+  float *pfVar21;
+  undefined4 *in_ECX;
+  
+  *(byte *)(param_1 + 0x10) = *(byte *)(param_1 + 0x10) & 0xf9;
+  if ((((*param_1 != 0) && (param_1[1] != 0)) &&
+      ((*(byte *)((undefined4 *)param_1[2] + 0xc) & 2) == 0)) &&
+     ((*(byte *)((undefined4 *)param_1[3] + 0xc) & 2) == 0)) {
+    pfVar15 = *(float **)(*param_1 + 0x10);
+    pfVar16 = *(float **)(param_1[1] + 0x10);
+    fVar1 = pfVar16[1];
+    fVar2 = pfVar15[1];
+    pfVar17 = *(float **)param_1[2];
+    pfVar18 = *(float **)param_1[3];
+    fVar3 = pfVar18[1];
+    fVar4 = pfVar17[1];
+    pfVar19 = (float *)in_ECX[1];
+    pfVar20 = (float *)*in_ECX;
+    fVar5 = *pfVar20;
+    fVar6 = *pfVar19;
+    pfVar21 = (float *)param_1[4];
+    *pfVar21 = ((*pfVar17 + *pfVar18) * *pfVar20 + (*pfVar15 + *pfVar16) * *pfVar19) * 0.5;
+    pfVar21[1] = ((fVar3 + fVar4) * fVar5 + (fVar1 + fVar2) * fVar6) * 0.5;
+    fVar1 = *pfVar19;
+    pfVar15 = *(float **)(param_1[1] + 0x14);
+    fVar2 = pfVar15[1];
+    pfVar16 = *(float **)(*param_1 + 0x14);
+    fVar3 = pfVar15[2];
+    fVar4 = pfVar16[1];
+    fVar5 = pfVar16[2];
+    fVar6 = pfVar15[3];
+    fVar7 = pfVar16[3];
+    pfVar17 = *(float **)(param_1[3] + 4);
+    fVar8 = pfVar17[2];
+    pfVar18 = *(float **)(param_1[2] + 4);
+    fVar9 = pfVar17[3];
+    fVar10 = pfVar18[2];
+    fVar11 = pfVar18[3];
+    fVar12 = pfVar17[1];
+    fVar13 = pfVar18[1];
+    pfVar21 = (float *)param_1[5];
+    fVar14 = *pfVar20;
+    *pfVar21 = ((*pfVar16 + *pfVar15) * fVar1 + (*pfVar18 + *pfVar17) * fVar14) * 0.5;
+    pfVar21[1] = ((fVar2 + fVar4) * fVar1 + (fVar12 + fVar13) * fVar14) * 0.5;
+    pfVar21[2] = ((fVar3 + fVar5) * fVar1 + (fVar8 + fVar10) * fVar14) * 0.5;
+    pfVar21[3] = ((fVar6 + fVar7) * fVar1 + (fVar9 + fVar11) * fVar14) * 0.5;
+    fVar1 = (*(float **)(param_1[1] + 0x18))[1];
+    fVar2 = (*(float **)(*param_1 + 0x18))[1];
+    fVar3 = (*(float **)(param_1[3] + 8))[1];
+    fVar4 = (*(float **)(param_1[2] + 8))[1];
+    fVar5 = *pfVar19;
+    fVar6 = *pfVar20;
+    pfVar15 = (float *)param_1[6];
+    *pfVar15 = ((**(float **)(param_1[3] + 8) + **(float **)(param_1[2] + 8)) * *pfVar20 +
+               (**(float **)(*param_1 + 0x18) + **(float **)(param_1[1] + 0x18)) * *pfVar19) * 0.5;
+    pfVar15[1] = ((fVar3 + fVar4) * fVar6 + (fVar1 + fVar2) * fVar5) * 0.5;
+    return;
+  }
+  fVar1 = **(float **)param_1[2];
+  fVar2 = **(float **)param_1[3];
+  pfVar15 = (float *)param_1[4];
+  pfVar15[1] = ((*(float **)param_1[3])[1] + (*(float **)param_1[2])[1]) * 0.5;
+  *pfVar15 = (fVar1 + fVar2) * 0.5;
+  pfVar15 = *(float **)(param_1[3] + 4);
+  pfVar16 = *(float **)(param_1[2] + 4);
+  fVar1 = pfVar15[3];
+  fVar2 = pfVar16[3];
+  fVar3 = *pfVar15;
+  fVar4 = *pfVar16;
+  fVar5 = pfVar15[1];
+  fVar6 = pfVar16[1];
+  pfVar17 = (float *)param_1[5];
+  pfVar17[2] = (pfVar15[2] + pfVar16[2]) * 0.5;
+  pfVar17[3] = (fVar1 + fVar2) * 0.5;
+  *pfVar17 = (fVar3 + fVar4) * 0.5;
+  pfVar17[1] = (fVar5 + fVar6) * 0.5;
+  fVar1 = **(float **)(param_1[2] + 8);
+  fVar2 = **(float **)(param_1[3] + 8);
+  pfVar15 = (float *)param_1[6];
+  pfVar15[1] = ((*(float **)(param_1[3] + 8))[1] + (*(float **)(param_1[2] + 8))[1]) * 0.5;
+  *pfVar15 = (fVar1 + fVar2) * 0.5;
+  if (((*(byte *)(param_1[2] + 0x30) & 4) != 0) || ((*(byte *)(param_1[3] + 0x30) & 4) != 0)) {
+    *(byte *)(param_1 + 0x10) = *(byte *)(param_1 + 0x10) | 4;
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_0066f1d0 @ 0066f1d0 */
+
+void FUN_0066f1d0(int param_1)
+
+{
+  int *piVar1;
+  int iVar2;
+  float *pfVar3;
+  int iVar4;
+  
+  iVar4 = 0;
+  do {
+    iVar2 = *(int *)(param_1 + iVar4 * 4);
+    if ((*(byte *)(iVar2 + 0x30) & 1) == 0) {
+      piVar1 = (int *)(iVar2 + 0x2c);
+      *piVar1 = *piVar1 + 1;
+      iVar2 = *(int *)(param_1 + iVar4 * 4);
+      pfVar3 = *(float **)(param_1 + 0x10);
+      *(float *)(iVar2 + 0xc) = *pfVar3 + *(float *)(iVar2 + 0xc);
+      *(float *)(iVar2 + 0x10) = pfVar3[1] + *(float *)(iVar2 + 0x10);
+      pfVar3 = *(float **)(param_1 + 0x14);
+      *(float *)(iVar2 + 0x14) = *pfVar3 + *(float *)(iVar2 + 0x14);
+      *(float *)(iVar2 + 0x18) = pfVar3[1] + *(float *)(iVar2 + 0x18);
+      *(float *)(iVar2 + 0x1c) = pfVar3[2] + *(float *)(iVar2 + 0x1c);
+      *(float *)(iVar2 + 0x20) = pfVar3[3] + *(float *)(iVar2 + 0x20);
+      pfVar3 = *(float **)(param_1 + 0x18);
+      *(float *)(iVar2 + 0x24) = *(float *)(iVar2 + 0x24) + *pfVar3;
+      *(float *)(iVar2 + 0x28) = pfVar3[1] + *(float *)(iVar2 + 0x28);
+    }
+    iVar4 = iVar4 + 1;
+  } while (iVar4 < 4);
+  return;
+}
+
+
+
+
+/* Global::FUN_0066f280 @ 0066f280 */
+
+void FUN_0066f280(int *param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
+  float fVar6;
+  float *pfVar7;
+  float *pfVar8;
+  float *pfVar9;
+  
+  if ((((*param_1 == 0) || (param_1[1] == 0)) &&
+      ((*(byte *)((undefined4 *)param_1[2] + 0xc) & 4) != 0)) &&
+     ((*(byte *)((undefined4 *)param_1[3] + 0xc) & 4) != 0)) {
+    pfVar7 = *(float **)param_1[2];
+    pfVar8 = *(float **)param_1[3];
+    fVar1 = pfVar8[1];
+    fVar2 = pfVar7[1];
+    pfVar9 = (float *)param_1[4];
+    *pfVar9 = (*pfVar8 + *pfVar7) * 0.5;
+    pfVar9[1] = (fVar1 + fVar2) * 0.5;
+    pfVar7 = *(float **)(param_1[3] + 4);
+    pfVar8 = *(float **)(param_1[2] + 4);
+    fVar1 = pfVar7[3];
+    fVar2 = pfVar8[3];
+    fVar3 = *pfVar7;
+    fVar4 = *pfVar8;
+    fVar5 = pfVar7[1];
+    fVar6 = pfVar8[1];
+    pfVar9 = (float *)param_1[5];
+    pfVar9[2] = (pfVar7[2] + pfVar8[2]) * 0.5;
+    pfVar9[3] = (fVar1 + fVar2) * 0.5;
+    *pfVar9 = (fVar3 + fVar4) * 0.5;
+    pfVar9[1] = (fVar5 + fVar6) * 0.5;
+    fVar1 = **(float **)(param_1[2] + 8);
+    fVar2 = **(float **)(param_1[3] + 8);
+    pfVar7 = (float *)param_1[6];
+    pfVar7[1] = ((*(float **)(param_1[3] + 8))[1] + (*(float **)(param_1[2] + 8))[1]) * 0.5;
+    *pfVar7 = (fVar1 + fVar2) * 0.5;
+    *(byte *)(param_1 + 0x10) = *(byte *)(param_1 + 0x10) & 0xfb | 2;
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_0066f380 @ 0066f380 */
+
+void FUN_0066f380(int *param_1)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  byte bVar5;
+  float *pfVar6;
+  float *pfVar7;
+  undefined4 *in_ECX;
+  float fVar8;
+  
+  bVar5 = *(byte *)(param_1 + 0xc);
+  if (((bVar5 & 2) == 0) && (param_1[0xb] != 0)) {
+    fVar8 = (float)param_1[0xb];
+    if ((bVar5 & 1) != 0) {
+      if ((bVar5 & 4) == 0) {
+        fVar1 = (float)param_1[3];
+        fVar8 = *(float *)*in_ECX / fVar8;
+        pfVar6 = (float *)*param_1;
+        pfVar7 = (float *)in_ECX[1];
+        fVar2 = *pfVar7;
+        pfVar6[1] = pfVar6[1] * *pfVar7 + (float)param_1[4] * fVar8;
+        *pfVar6 = *pfVar6 * fVar2 + fVar1 * fVar8;
+        fVar1 = (float)param_1[7];
+        pfVar6 = (float *)param_1[1];
+        fVar2 = (float)param_1[6];
+        fVar3 = (float)param_1[8];
+        fVar4 = *pfVar7;
+        *pfVar6 = (float)param_1[5] * fVar8 + *pfVar6 * fVar4;
+        pfVar6[1] = fVar2 * fVar8 + pfVar6[1] * fVar4;
+        pfVar6[2] = fVar1 * fVar8 + pfVar6[2] * fVar4;
+        pfVar6[3] = pfVar6[3] * fVar4 + fVar3 * fVar8;
+        pfVar6 = (float *)param_1[2];
+        fVar1 = (float)param_1[10];
+        fVar2 = *pfVar7;
+        *pfVar6 = *pfVar6 * *pfVar7 + (float)param_1[9] * fVar8;
+        pfVar6[1] = pfVar6[1] * fVar2 + fVar1 * fVar8;
+        return;
+      }
+      fVar8 = 1.0 / fVar8;
+      fVar1 = (float)param_1[4];
+      pfVar6 = (float *)*param_1;
+      *pfVar6 = (float)param_1[3] * fVar8;
+      pfVar6[1] = fVar1 * fVar8;
+      fVar1 = (float)param_1[6];
+      fVar2 = (float)param_1[7];
+      fVar3 = (float)param_1[8];
+      pfVar6 = (float *)param_1[1];
+      *pfVar6 = (float)param_1[5] * fVar8;
+      pfVar6[1] = fVar1 * fVar8;
+      pfVar6[2] = fVar2 * fVar8;
+      pfVar6[3] = fVar3 * fVar8;
+      fVar1 = (float)param_1[9];
+      pfVar6 = (float *)param_1[2];
+      pfVar6[1] = (float)param_1[10] * fVar8;
+      *pfVar6 = fVar1 * fVar8;
+      return;
+    }
+    fVar8 = 0.75 / fVar8;
+    pfVar6 = (float *)*param_1;
+    fVar1 = (float)param_1[4];
+    *pfVar6 = *pfVar6 * 0.25 + (float)param_1[3] * fVar8;
+    pfVar6[1] = pfVar6[1] * 0.25 + fVar1 * fVar8;
+    pfVar6 = (float *)param_1[1];
+    fVar1 = (float)param_1[5];
+    fVar2 = (float)param_1[7];
+    fVar3 = (float)param_1[8];
+    pfVar6[1] = pfVar6[1] * 0.25 + (float)param_1[6] * fVar8;
+    pfVar6[2] = pfVar6[2] * 0.25 + fVar2 * fVar8;
+    *pfVar6 = *pfVar6 * 0.25 + fVar1 * fVar8;
+    pfVar6[3] = pfVar6[3] * 0.25 + fVar3 * fVar8;
+    pfVar6 = (float *)param_1[2];
+    fVar1 = (float)param_1[9];
+    pfVar6[1] = pfVar6[1] * 0.25 + (float)param_1[10] * fVar8;
+    *pfVar6 = *pfVar6 * 0.25 + fVar1 * fVar8;
+  }
   return;
 }
 
@@ -59816,6 +68088,7 @@ LAB_00671535:
   }
   ehState = 0xffffffff;
   std_Tree_eraseRange(strTmp,*vertMap,vertMap);
+                    /* WARNING: Subroutine does not return */
   operator_delete(vertMap);
 }
 
@@ -60225,6 +68498,286 @@ void AdaptionWidget_buildTopology(uint srcMesh)
 
 
 
+/* Global::FUN_006721d0 @ 006721d0 */
+
+void FUN_006721d0(int param_1,int param_2,int param_3,undefined4 param_4,undefined4 param_5)
+
+{
+  undefined8 uVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  undefined8 uVar6;
+  int iVar7;
+  bool bVar8;
+  double dVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  float fVar13;
+  undefined1 auStack_8c [4];
+  float local_88;
+  float local_84;
+  int local_80;
+  int local_7c;
+  int local_78;
+  float local_74;
+  undefined4 local_70;
+  undefined8 local_6c;
+  undefined8 local_64;
+  undefined8 local_5c;
+  undefined8 local_54;
+  undefined8 local_4c;
+  undefined8 local_44;
+  float local_3c;
+  float fStack_38;
+  float local_34;
+  float fStack_30;
+  undefined8 local_2c;
+  undefined8 local_24;
+  undefined8 local_1c;
+  undefined8 local_14;
+  uint local_c;
+  
+  local_c = DAT_0076aa78 ^ (uint)auStack_8c;
+  iVar7 = param_2 * 2 + 2;
+  local_80 = param_2;
+  local_7c = param_3;
+  local_70 = param_4;
+  local_78 = param_2;
+  bVar8 = iVar7 == param_3;
+  if (iVar7 < param_3) {
+    do {
+      puVar2 = *(undefined4 **)(param_1 + 8 + iVar7 * 0xc);
+      iVar3 = *(int *)(param_1 + 4 + iVar7 * 0xc);
+      iVar4 = *(int *)*puVar2;
+      uVar1 = *(undefined8 *)(iVar4 + *(int *)(param_1 + iVar7 * 0xc) * 8);
+      local_5c._0_4_ = (float)uVar1;
+      local_5c._0_4_ = *(float *)(iVar4 + iVar3 * 8) + (float)local_5c;
+      local_5c._4_4_ = (float)((ulonglong)uVar1 >> 0x20);
+      local_5c._4_4_ = *(float *)(iVar4 + 4 + iVar3 * 8) + local_5c._4_4_;
+      local_2c = local_5c;
+      fVar10 = (float)local_5c * 0.5;
+      fVar12 = local_5c._4_4_ * 0.5;
+      local_3c = (float)puVar2[5] * fVar12 + fVar10 * (float)puVar2[1] + (float)puVar2[0xd];
+      fStack_38 = (float)puVar2[2] * fVar10 + (float)puVar2[6] * fVar12 + (float)puVar2[0xe];
+      local_84 = 1.0 / ((float)puVar2[4] * fVar10 + (float)puVar2[8] * fVar12 + (float)puVar2[0x10])
+      ;
+      local_88 = local_84 * local_3c;
+      local_84 = local_84 * fStack_38;
+      local_6c = CONCAT44(local_84,local_88);
+      local_1c = local_6c;
+      local_84 = local_84 - fVar12;
+      local_88 = local_88 - fVar10;
+      fVar10 = local_84 * local_84 + local_88 * local_88;
+      if (0.0 < fVar10) {
+        dVar9 = (double)fVar10;
+        libm_sse2_sqrt_precise();
+        local_88 = local_88 * (1.0 / (float)dVar9);
+        local_84 = local_84 * (1.0 / (float)dVar9);
+      }
+      local_4c = local_6c;
+      uVar6 = local_4c;
+      local_4c._0_4_ = (float)local_6c;
+      local_4c._4_4_ = (float)((ulonglong)local_6c >> 0x20);
+      puVar5 = *(undefined4 **)(param_1 + -4 + iVar7 * 0xc);
+      iVar3 = *(int *)*puVar5;
+      local_84 = local_84 * (local_4c._4_4_ - (float)puVar2[0xe]) +
+                 ((float)local_4c - (float)puVar2[0xd]) * local_88;
+      iVar4 = *(int *)(param_1 + -8 + iVar7 * 0xc);
+      uVar1 = *(undefined8 *)(iVar3 + *(int *)(param_1 + -0xc + iVar7 * 0xc) * 8);
+      local_54._0_4_ = (float)uVar1;
+      local_54._0_4_ = *(float *)(iVar3 + iVar4 * 8) + (float)local_54;
+      local_54._4_4_ = (float)((ulonglong)uVar1 >> 0x20);
+      local_54._4_4_ = *(float *)(iVar3 + 4 + iVar4 * 8) + local_54._4_4_;
+      local_44 = local_54;
+      fVar11 = (float)local_54 * 0.5;
+      fVar13 = local_54._4_4_ * 0.5;
+      local_34 = (float)puVar5[5] * fVar13 + (float)puVar5[1] * fVar11 + (float)puVar5[0xd];
+      fStack_30 = (float)puVar5[2] * fVar11 + (float)puVar5[6] * fVar13 + (float)puVar5[0xe];
+      fVar12 = 1.0 / ((float)puVar5[4] * fVar11 + (float)puVar5[8] * fVar13 + (float)puVar5[0x10]);
+      fVar10 = fVar12 * local_34;
+      fVar12 = fVar12 * fStack_30;
+      local_64 = CONCAT44(fVar12,fVar10);
+      local_24 = local_64;
+      fVar12 = fVar12 - fVar13;
+      fVar10 = fVar10 - fVar11;
+      fVar11 = fVar12 * fVar12 + fVar10 * fVar10;
+      local_88 = fVar10;
+      local_74 = fVar12;
+      local_4c = uVar6;
+      if (0.0 < fVar11) {
+        dVar9 = (double)fVar11;
+        libm_sse2_sqrt_precise();
+        fVar10 = local_88 * (1.0 / (float)dVar9);
+        fVar12 = local_74 * (1.0 / (float)dVar9);
+      }
+      local_14 = local_64;
+      uVar1 = local_14;
+      local_14._0_4_ = (float)local_64;
+      local_14._4_4_ = (float)((ulonglong)local_64 >> 0x20);
+      param_2 = iVar7;
+      if (local_84 <
+          fVar12 * (local_14._4_4_ - (float)puVar5[0xe]) +
+          ((float)local_14 - (float)puVar5[0xd]) * fVar10) {
+        param_2 = iVar7 + -1;
+      }
+      *(undefined4 *)(param_1 + local_80 * 0xc) = *(undefined4 *)(param_1 + param_2 * 0xc);
+      *(undefined4 *)(param_1 + 4 + local_80 * 0xc) = *(undefined4 *)(param_1 + 4 + param_2 * 0xc);
+      *(undefined4 *)(param_1 + 8 + local_80 * 0xc) = *(undefined4 *)(param_1 + 8 + param_2 * 0xc);
+      iVar7 = param_2 * 2 + 2;
+      bVar8 = iVar7 == local_7c;
+      local_80 = param_2;
+      local_14 = uVar1;
+    } while (iVar7 < local_7c);
+  }
+  iVar7 = param_2;
+  if (bVar8) {
+    *(undefined4 *)(param_1 + param_2 * 0xc) = *(undefined4 *)(param_1 + -0xc + local_7c * 0xc);
+    *(undefined4 *)(param_1 + 4 + param_2 * 0xc) = *(undefined4 *)(param_1 + -8 + local_7c * 0xc);
+    *(undefined4 *)(param_1 + 8 + param_2 * 0xc) = *(undefined4 *)(param_1 + -4 + local_7c * 0xc);
+    iVar7 = local_7c + -1;
+  }
+  local_80 = param_2;
+  FUN_00672600(param_1,iVar7,local_78,local_70,param_5);
+  __security_check_cookie(local_c ^ (uint)auStack_8c);
+  return;
+}
+
+
+
+
+/* Global::FUN_00672600 @ 00672600 */
+
+void FUN_00672600(int param_1,int param_2,int param_3,int *param_4)
+
+{
+  undefined8 uVar1;
+  undefined4 *puVar2;
+  int iVar3;
+  int iVar4;
+  undefined4 *puVar5;
+  undefined8 uVar6;
+  int iVar7;
+  double dVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
+  float fVar12;
+  undefined1 auStack_84 [4];
+  float local_80;
+  int local_7c;
+  float local_78;
+  float local_74;
+  int local_70;
+  undefined8 local_6c;
+  undefined8 local_64;
+  undefined8 local_5c;
+  undefined8 local_54;
+  undefined8 local_4c;
+  undefined8 local_44;
+  float local_3c;
+  float fStack_38;
+  float local_34;
+  float fStack_30;
+  undefined8 local_2c;
+  undefined8 local_24;
+  undefined8 local_1c;
+  undefined8 local_14;
+  uint local_c;
+  
+  local_c = DAT_0076aa78 ^ (uint)auStack_84;
+  local_7c = param_2;
+  while (param_3 < local_7c) {
+    iVar7 = (local_7c + -1) / 2;
+    puVar2 = *(undefined4 **)(param_1 + 8 + iVar7 * 0xc);
+    iVar3 = *(int *)*puVar2;
+    iVar4 = *(int *)(param_1 + 4 + iVar7 * 0xc);
+    local_70 = *(int *)(param_1 + iVar7 * 0xc);
+    uVar1 = *(undefined8 *)(iVar3 + local_70 * 8);
+    local_54._0_4_ = (float)uVar1;
+    local_54._0_4_ = *(float *)(iVar3 + iVar4 * 8) + (float)local_54;
+    local_54._4_4_ = (float)((ulonglong)uVar1 >> 0x20);
+    local_54._4_4_ = *(float *)(iVar3 + 4 + iVar4 * 8) + local_54._4_4_;
+    local_2c = local_54;
+    fVar9 = (float)local_54 * 0.5;
+    fVar11 = local_54._4_4_ * 0.5;
+    local_3c = (float)puVar2[5] * fVar11 + fVar9 * (float)puVar2[1] + (float)puVar2[0xd];
+    fStack_38 = (float)puVar2[2] * fVar9 + (float)puVar2[6] * fVar11 + (float)puVar2[0xe];
+    local_78 = 1.0 / ((float)puVar2[4] * fVar9 + (float)puVar2[8] * fVar11 + (float)puVar2[0x10]);
+    local_80 = local_3c * local_78;
+    local_78 = fStack_38 * local_78;
+    local_6c = CONCAT44(local_78,local_80);
+    local_1c = local_6c;
+    local_80 = local_80 - fVar9;
+    local_78 = local_78 - fVar11;
+    fVar9 = local_78 * local_78 + local_80 * local_80;
+    if (0.0 < fVar9) {
+      dVar8 = (double)fVar9;
+      libm_sse2_sqrt_precise();
+      local_80 = local_80 * (1.0 / (float)dVar8);
+      local_78 = local_78 * (1.0 / (float)dVar8);
+    }
+    local_4c = local_6c;
+    uVar6 = local_4c;
+    local_4c._0_4_ = (float)local_6c;
+    local_4c._4_4_ = (float)((ulonglong)local_6c >> 0x20);
+    puVar5 = (undefined4 *)param_4[2];
+    iVar3 = *(int *)*puVar5;
+    local_74 = (local_4c._4_4_ - (float)puVar2[0xe]) * local_78 +
+               ((float)local_4c - (float)puVar2[0xd]) * local_80;
+    uVar1 = *(undefined8 *)(iVar3 + *param_4 * 8);
+    local_5c._0_4_ = (float)uVar1;
+    local_5c._0_4_ = (float)local_5c + *(float *)(iVar3 + param_4[1] * 8);
+    local_5c._4_4_ = (float)((ulonglong)uVar1 >> 0x20);
+    local_5c._4_4_ = *(float *)(iVar3 + 4 + param_4[1] * 8) + local_5c._4_4_;
+    local_44 = local_5c;
+    fVar10 = (float)local_5c * 0.5;
+    fVar12 = local_5c._4_4_ * 0.5;
+    local_34 = (float)puVar5[5] * fVar12 + (float)puVar5[1] * fVar10 + (float)puVar5[0xd];
+    fStack_30 = (float)puVar5[2] * fVar10 + (float)puVar5[6] * fVar12 + (float)puVar5[0xe];
+    fVar11 = 1.0 / ((float)puVar5[4] * fVar10 + (float)puVar5[8] * fVar12 + (float)puVar5[0x10]);
+    fVar9 = fVar11 * local_34;
+    fVar11 = fVar11 * fStack_30;
+    local_64 = CONCAT44(fVar11,fVar9);
+    local_24 = local_64;
+    fVar11 = fVar11 - fVar12;
+    fVar9 = fVar9 - fVar10;
+    fVar10 = fVar11 * fVar11 + fVar9 * fVar9;
+    local_80 = fVar11;
+    local_78 = fVar9;
+    local_4c = uVar6;
+    if (0.0 < fVar10) {
+      dVar8 = (double)fVar10;
+      libm_sse2_sqrt_precise();
+      fVar9 = local_78 * (1.0 / (float)dVar8);
+      fVar11 = local_80 * (1.0 / (float)dVar8);
+    }
+    local_14 = local_64;
+    uVar1 = local_14;
+    local_14._0_4_ = (float)local_64;
+    local_14._4_4_ = (float)((ulonglong)local_64 >> 0x20);
+    fVar12 = (float)local_14 - (float)puVar5[0xd];
+    fVar10 = local_14._4_4_ - (float)puVar5[0xe];
+    local_14 = uVar1;
+    if (fVar11 * fVar10 + fVar12 * fVar9 <= local_74) break;
+    *(int *)(param_1 + local_7c * 0xc) = local_70;
+    *(undefined4 *)(param_1 + 4 + local_7c * 0xc) = *(undefined4 *)(param_1 + 4 + iVar7 * 0xc);
+    *(undefined4 *)(param_1 + 8 + local_7c * 0xc) = *(undefined4 *)(param_1 + 8 + iVar7 * 0xc);
+    local_7c = iVar7;
+    local_14 = local_64;
+  }
+  *(int *)(param_1 + local_7c * 0xc) = *param_4;
+  *(int *)(param_1 + 4 + local_7c * 0xc) = param_4[1];
+  *(int *)(param_1 + 8 + local_7c * 0xc) = param_4[2];
+  __security_check_cookie(local_c ^ (uint)auStack_84);
+  return;
+}
+
+
+
+
 /* plasma::StaticMeshShape::ctor_0 @ 00677290 */
 
 void plasma::StaticMeshShape::ctor_0
@@ -60326,6 +68879,7 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_0(int *ownerArg
   ContinuousArrayAttribute<plasma::Vector<2,float>_>::ctor_1(attrBufB,&defVecA);
   ehState._0_1_ = 5;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_30 = 0xf;
@@ -60342,6 +68896,7 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_0(int *ownerArg
   ContinuousArrayAttribute<float>::ctor_1(attrBufC,&defVecA);
   ehState._0_1_ = 10;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufC[0]);
   }
   local_18 = 0xf;
@@ -60358,6 +68913,7 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_0(int *ownerArg
   ContinuousArrayAttribute<plasma::Vector<2,float>_>::ctor_1(attrBufB,&defVecA);
   ehState._0_1_ = 0xf;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_30 = 0xf;
@@ -60374,6 +68930,7 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_0(int *ownerArg
   ContinuousArrayAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufC,&defVecA);
   ehState._0_1_ = 0x14;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufC[0]);
   }
   local_18 = 0xf;
@@ -60387,6 +68944,7 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_0(int *ownerArg
   ContinuousAttribute<plasma::Vector<2,float>_>::ctor_0(attrBufB,&defVecB);
   ehState._0_1_ = 0x17;
   if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_30 = 0xf;
@@ -60400,6 +68958,7 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_0(int *ownerArg
   ContinuousAttribute<plasma::Vector<2,float>_>::ctor_0(attrBufC,&defVecB);
   ehState._0_1_ = 0x1a;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufC[0]);
   }
   local_18 = 0xf;
@@ -60421,6 +68980,7 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_0(int *ownerArg
   std_vector_resize_0xc(2,defTmp);
   ehState._0_1_ = 0x1f;
   if (0xf < local_48) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_48 = 0xf;
@@ -60434,6 +68994,7 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_0(int *ownerArg
   ContinuousAttribute<plasma::Matrix<float>_>::ctor_0(attrBufC,matrixTmp);
   ehState._0_1_ = 0x22;
   if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufC[0]);
   }
   local_18 = 0xf;
@@ -60449,6 +69010,7 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_0(int *ownerArg
   ehState._0_1_ = 0x24;
   ContinuousArrayAttribute<float>::ctor_1(attrBufA,&defVecA);
   if (0xf < local_48) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   self[0xdd] = 0;
@@ -60901,6 +69463,7 @@ LAB_0067ff76:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -61119,6 +69682,7 @@ LAB_00680266:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -61337,6 +69901,7 @@ LAB_00680556:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -61511,6 +70076,7 @@ LAB_00680827:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -61684,6 +70250,7 @@ LAB_00680a76:
       }
       ehState = 0xffffffff;
       if (0xf < tokenCap) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(token[0]);
       }
       tokenCap = 0xf;
@@ -61862,6 +70429,7 @@ LAB_00680cb7:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -62035,6 +70603,7 @@ LAB_00680f06:
       }
       ehState = 0xffffffff;
       if (0xf < tokenCap) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(token[0]);
       }
       tokenCap = 0xf;
@@ -62212,6 +70781,7 @@ LAB_00681156:
       }
       ehState = 0xffffffff;
       if (0xf < tokenCap) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(token[0]);
       }
       tokenCap = 0xf;
@@ -62301,6 +70871,7 @@ void plasma::Exception::ctor_2(undefined4 nameArg)
   *(undefined1 *)(self + 7) = 0;
   string_assignSubstr(nameArg,0,0xffffffff);
   if (0xf < msgCap) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(msgStr[0]);
   }
   *self = InvalidDemoLicenseException::vftable;
@@ -62345,6 +70916,7 @@ void plasma::Exception::ctor_3(undefined4 nameArg)
   *(undefined1 *)(self + 7) = 0;
   string_assignSubstr(nameArg,0,0xffffffff);
   if (0xf < msgCap) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(msgStr[0]);
   }
   *self = InvalidFileFormatException::vftable;
@@ -62389,6 +70961,7 @@ void plasma::Exception::ctor_4(undefined4 nameArg)
   *(undefined1 *)(self + 7) = 0;
   string_assignSubstr(nameArg,0,0xffffffff);
   if (0xf < msgCap) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(msgStr[0]);
   }
   *self = InvalidVersionException::vftable;
@@ -62525,6 +71098,7 @@ LAB_00682b36:
       ehState._0_1_ = 2;
       curSeq = Container_resetAndInsert(nameVal);
       if (7 < local_60) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(nameBufB[0]);
       }
       local_60 = 7;
@@ -62532,6 +71106,7 @@ LAB_00682b36:
       nameBufB[0] = (void *)((uint)nameBufB[0] & 0xffff0000);
       ehState = (uint)ehState._1_3_ << 8;
       if (0xf < local_78) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(nameBufA[0]);
       }
       local_78 = 0xf;
@@ -62595,6 +71170,7 @@ LAB_00682c66:
         curSeq = Container_resetAndInsert(nameVal);
         ehState = (uint)ehState._1_3_ << 8;
         if (7 < local_48) {
+                    /* WARNING: Subroutine does not return */
           operator_delete(nameBufC[0]);
         }
         local_48 = 7;
@@ -62792,6 +71368,7 @@ LAB_00682eae:
             }
             ehState = ehState & 0xffffff00;
             if (0xf < local_30) {
+                    /* WARNING: Subroutine does not return */
               operator_delete(keyBuf[0]);
             }
             atEnd = StreamReader_endBlockCheckPos();
@@ -62805,6 +71382,7 @@ LAB_00682eae:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -62866,6 +71444,7 @@ void plasma::NamedObject::ctor_3(int owner,int nameArg)
   ehState = CONCAT31(ehState._1_3_,3);
   listNode = IntMap_SetScalar(nameArg,*(undefined4 *)(nameArg + 4),&owner);
   if (*(int *)(savedOwner + 0xa8) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(savedOwner + 0xa8) = *(int *)(savedOwner + 0xa8) + 1;
@@ -62968,45 +71547,6 @@ void _eh_vector_destructor_iterator_
 
 
 
-/* [AUDIT] proposed: float_to_uint64_round_guarded  (confidence: med)
- * purpose: Converts float10 ST0 to rounded unsigned 64-bit; if DAT_0076e2a0 set uses simple truncation
- * vars: in_ST0=input; DAT_0076e2a0=mode flag
- */
-/* Global::float_to_uint64_round_guarded @ 0068d910 */
-
-ulonglong float_to_uint64_round_guarded(void)
-
-{
-  ulonglong rounded;
-  uint adjust;
-  undefined4 highDword;
-  float lowWord;
-  float10 in_ST0;
-  uint lowBits;
-  float highBits;
-  
-  if (DAT_0076e2a0 == 0) {
-    rounded = (ulonglong)ROUND(in_ST0);
-    lowBits = (uint)rounded;
-    highBits = (float)(rounded >> 0x20);
-    lowWord = (float)in_ST0;
-    if ((lowBits != 0) || (lowWord = highBits, (rounded & 0x7fffffff00000000) != 0)) {
-      if ((int)lowWord < 0) {
-        rounded = rounded + (0x80000000 < (uint)-(float)(in_ST0 - (float10)(longlong)rounded));
-      }
-      else {
-        adjust = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float10)(longlong)rounded));
-        rounded = CONCAT44((int)highBits - (uint)(lowBits < adjust),lowBits - adjust);
-      }
-    }
-    return rounded;
-  }
-  return CONCAT44(highDword,(int)in_ST0);
-}
-
-
-
-
 /* [AUDIT] proposed: float_to_uint64_round  (confidence: med)
  * purpose: Converts float10 ST0 to rounded unsigned 64-bit integer with banker's-style correction
  * vars: in_ST0=input
@@ -63064,6 +71604,405 @@ void _eh_vector_constructor_iterator_
     (*ctor)(elemPtr);
   }
   eh_vector_ctor_iterator_helper();
+  return;
+}
+
+
+
+
+/* Global::FUN_0068e8d0 @ 0068e8d0 */
+
+void FUN_0068e8d0(undefined4 param_1)
+
+{
+  undefined *puVar1;
+  undefined **ppuVar2;
+  
+  puVar1 = &DAT_00736340;
+  ppuVar2 = &PTR_DAT_00722650;
+  do {
+    FUN_00693fc0(param_1,puVar1);
+    puVar1 = ppuVar2[1];
+    ppuVar2 = ppuVar2 + 1;
+  } while (puVar1 != (undefined *)0x0);
+  return;
+}
+
+
+
+
+/* Global::FUN_0068e900 @ 0068e900 */
+
+int FUN_0068e900(undefined4 *param_1)
+
+{
+  void *_Memory;
+  int iVar1;
+  
+  _Memory = (void *)FUN_006cc680();
+  if (_Memory == (void *)0x0) {
+    return 7;
+  }
+  iVar1 = FUN_00693440(_Memory,param_1);
+  if (iVar1 != 0) {
+    free(_Memory);
+    return iVar1;
+  }
+  FUN_0068e8d0(*param_1);
+  return 0;
+}
+
+
+
+
+/* Global::FUN_0068fd60 @ 0068fd60 */
+
+void FUN_0068fd60(void)
+
+{
+  undefined4 uVar1;
+  int unaff_ESI;
+  
+  uVar1 = ft_find_charmap_by_encoding();
+  *(undefined4 *)(unaff_ESI + 0xa4) = uVar1;
+  return;
+}
+
+
+
+
+/* Global::FUN_00691b30 @ 00691b30 */
+
+void FUN_00691b30(void)
+
+{
+  undefined4 *puVar1;
+  undefined4 uVar2;
+  int iVar3;
+  int iVar4;
+  int in_EDX;
+  int iVar5;
+  undefined8 uVar6;
+  
+  uVar2 = **(undefined4 **)(in_EDX + 4);
+  puVar1 = *(undefined4 **)(in_EDX + 4) + 0x27;
+  uVar6 = ft_list_find_by_data(puVar1);
+  iVar5 = (int)((ulonglong)uVar6 >> 0x20);
+  iVar4 = (int)uVar6;
+  if (iVar4 != 0) {
+    iVar3 = *(int *)(iVar5 + 0x14);
+    if ((*(int *)(iVar3 + 0x24) == 0x6f75746c) && (iVar5 = *(int *)(iVar5 + 0x3c), iVar5 != 0)) {
+      (**(code **)(*(int *)(iVar3 + 0x38) + 0x14))(iVar5);
+    }
+    FT_List_Remove(puVar1,iVar4);
+    FT_Mem_Free(uVar2,iVar4);
+    FUN_0068fd60();
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_00692a70 @ 00692a70 */
+
+void FUN_00692a70(void)
+
+{
+  undefined4 *unaff_ESI;
+  
+  FT_List_Finalize(unaff_ESI + 6,ft_face_destroy_inner,unaff_ESI[2]);
+  if ((*(uint *)*unaff_ESI & 0x200) == 0) {
+    ft_glyphslot_done(unaff_ESI[9]);
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_006932c0 @ 006932c0 */
+
+int FUN_006932c0(void)
+
+{
+  undefined4 uVar1;
+  int iVar2;
+  code *pcVar3;
+  int iVar4;
+  int iVar5;
+  int *unaff_EDI;
+  int local_8;
+  undefined4 *local_4;
+  
+  local_4 = (undefined4 *)unaff_EDI[1];
+  uVar1 = *local_4;
+  iVar4 = FT_Mem_QAlloc_Clear(uVar1,0xc,&local_8);
+  if (local_8 != 0) {
+    return local_8;
+  }
+  iVar2 = *unaff_EDI;
+  unaff_EDI[5] = iVar2;
+  unaff_EDI[6] = *(int *)(iVar2 + 0x24);
+  if ((*(int *)(iVar2 + 0x24) == 0x6f75746c) &&
+     (pcVar3 = *(code **)(*(int *)(iVar2 + 0x38) + 4), pcVar3 != (code *)0x0)) {
+    iVar5 = (*pcVar3)(uVar1,unaff_EDI + 0xf);
+    if (iVar5 != 0) {
+      FT_Mem_Free(uVar1,iVar4);
+      return iVar5;
+    }
+    unaff_EDI[0x10] = *(int *)(*(int *)(iVar2 + 0x38) + 0x10);
+    unaff_EDI[0x11] = *(int *)(iVar2 + 0x28);
+  }
+  *(int **)(iVar4 + 8) = unaff_EDI;
+  FT_List_Add(local_4 + 0x27,iVar4);
+  FUN_0068fd60();
+  return 0;
+}
+
+
+
+
+/* Global::FUN_00693370 @ 00693370 */
+
+void FUN_00693370(void)
+
+{
+  int iVar1;
+  int iVar2;
+  int iVar3;
+  int *in_EAX;
+  
+  iVar1 = in_EAX[2];
+  iVar2 = *in_EAX;
+  iVar3 = in_EAX[1];
+  if ((code *)in_EAX[4] != (code *)0x0) {
+    (*(code *)in_EAX[4])();
+  }
+  if ((iVar3 != 0) && (*(int **)(iVar3 + 0xa8) == in_EAX)) {
+    *(undefined4 *)(iVar3 + 0xa8) = 0;
+  }
+  if ((*(byte *)*in_EAX & 2) != 0) {
+    FUN_00691b30();
+  }
+  if ((*(byte *)*in_EAX & 1) != 0) {
+    FUN_00692a70();
+  }
+  if (*(code **)(iVar2 + 0x1c) != (code *)0x0) {
+    (**(code **)(iVar2 + 0x1c))();
+  }
+  FT_Mem_Free(iVar1);
+  return;
+}
+
+
+
+
+/* Global::FUN_006933e0 @ 006933e0 */
+
+undefined4 FUN_006933e0(int param_1,int param_2)
+
+{
+  int iVar1;
+  int *piVar2;
+  int *piVar3;
+  int *piVar4;
+  
+  if (param_1 == 0) {
+    return 0x21;
+  }
+  if (param_2 != 0) {
+    piVar3 = (int *)(param_1 + 0x1c);
+    piVar2 = piVar3 + *(int *)(param_1 + 0x18);
+    for (; piVar3 < piVar2; piVar3 = piVar3 + 1) {
+      if (*piVar3 == param_2) {
+        piVar2 = piVar2 + -1;
+        *(int *)(param_1 + 0x18) = *(int *)(param_1 + 0x18) + -1;
+        if (piVar3 < piVar2) {
+          piVar4 = piVar3;
+          for (iVar1 = ((uint)((int)piVar2 + (-1 - (int)piVar3)) >> 2) + 1; piVar3 = piVar3 + 1,
+              iVar1 != 0; iVar1 = iVar1 + -1) {
+            *piVar4 = *piVar3;
+            piVar4 = piVar4 + 1;
+          }
+        }
+        *piVar2 = 0;
+        FUN_00693370();
+        return 0;
+      }
+    }
+  }
+  return 0x22;
+}
+
+
+
+
+/* Global::FUN_00693440 @ 00693440 */
+
+int FUN_00693440(int param_1,int *param_2)
+
+{
+  int iVar1;
+  int iVar2;
+  int *piVar3;
+  int iVar4;
+  
+  iVar1 = param_1;
+  if (param_1 == 0) {
+    return 6;
+  }
+  piVar3 = (int *)FT_Mem_QAlloc_Clear(param_1,0xc4,&param_1);
+  if (param_1 == 0) {
+    *piVar3 = iVar1;
+    piVar3[0x2c] = 0x4000;
+    iVar4 = FT_Mem_QAlloc_Clear(iVar1,0x4000,&param_1);
+    iVar2 = param_1;
+    piVar3[0x2b] = iVar4;
+    if (param_1 != 0) {
+      FT_Mem_Free(iVar1,piVar3);
+      return iVar2;
+    }
+    piVar3[3] = 2;
+    piVar3[4] = 4;
+    piVar3[5] = 1;
+    *param_2 = (int)piVar3;
+    param_1 = 0;
+  }
+  return param_1;
+}
+
+
+
+
+/* Global::FUN_00693fc0 @ 00693fc0 */
+
+int FUN_00693fc0(byte *param_1,byte *param_2)
+
+{
+  byte bVar1;
+  int *piVar2;
+  undefined4 uVar3;
+  uint *puVar4;
+  undefined4 *puVar5;
+  byte *pbVar6;
+  int iVar7;
+  undefined4 *puVar8;
+  int iVar9;
+  byte *pbVar10;
+  uint uVar11;
+  bool bVar12;
+  
+  puVar5 = (undefined4 *)param_1;
+  if (param_1 == (byte *)0x0) {
+    return 0x21;
+  }
+  if (param_2 == (byte *)0x0) {
+    return 6;
+  }
+  if (0x20004 < *(int *)(param_2 + 0x10)) {
+    return 4;
+  }
+  uVar11 = 0;
+  if (*(int *)((int)param_1 + 0x18) != 0) {
+    puVar8 = (undefined4 *)((int)param_1 + 0x1c);
+    do {
+      piVar2 = (int *)*puVar8;
+      pbVar6 = *(byte **)(*piVar2 + 8);
+      pbVar10 = *(byte **)(param_2 + 8);
+      do {
+        bVar1 = *pbVar6;
+        bVar12 = bVar1 < *pbVar10;
+        if (bVar1 != *pbVar10) {
+LAB_00694030:
+          iVar7 = (1 - (uint)bVar12) - (uint)(bVar12 != 0);
+          goto LAB_00694035;
+        }
+        if (bVar1 == 0) break;
+        bVar1 = pbVar6[1];
+        bVar12 = bVar1 < pbVar10[1];
+        if (bVar1 != pbVar10[1]) goto LAB_00694030;
+        pbVar6 = pbVar6 + 2;
+        pbVar10 = pbVar10 + 2;
+      } while (bVar1 != 0);
+      iVar7 = 0;
+LAB_00694035:
+      if (iVar7 == 0) {
+        if (*(int *)(param_2 + 0xc) <= *(int *)(*piVar2 + 0xc)) {
+          return 5;
+        }
+        param_1 = *(byte **)(param_2 + 8);
+        FUN_006933e0(puVar5,piVar2);
+        break;
+      }
+      uVar11 = uVar11 + 1;
+      puVar8 = puVar8 + 1;
+    } while (uVar11 < *(uint *)((int)param_1 + 0x18));
+  }
+  uVar3 = *puVar5;
+  param_1 = (byte *)0x0;
+  if (0x1f < (uint)puVar5[6]) {
+    return 0x30;
+  }
+  puVar8 = (undefined4 *)FT_Mem_QAlloc_Clear(uVar3,*(undefined4 *)(param_2 + 4),&param_1);
+  iVar7 = (int)param_1;
+  if (param_1 == (byte *)0x0) {
+    puVar8[1] = puVar5;
+    puVar8[2] = uVar3;
+    *puVar8 = param_2;
+    if ((*param_2 & 2) != 0) {
+      iVar9 = FUN_006932c0();
+      iVar7 = 0;
+      if (iVar9 != 0) goto LAB_0069410c;
+    }
+    if ((*(byte *)*puVar8 & 4) != 0) {
+      puVar5[0x2a] = puVar8;
+    }
+    puVar4 = (uint *)*puVar8;
+    if (((*puVar4 & 1) != 0) && (puVar8[5] = puVar4, (*puVar4 & 0x200) == 0)) {
+      iVar9 = ft_alloc_charmap_obj(uVar3,puVar8 + 9);
+      iVar7 = 0;
+      if (iVar9 != 0) goto LAB_0069410c;
+    }
+    if (*(code **)(param_2 + 0x18) != (code *)0x0) {
+      iVar9 = (**(code **)(param_2 + 0x18))(puVar8);
+      iVar7 = 0;
+      if (iVar9 != 0) {
+LAB_0069410c:
+        if (((*(uint *)*puVar8 & 1) != 0) && ((*(uint *)*puVar8 & 0x200) == 0)) {
+          ft_glyphslot_done(puVar8[9]);
+        }
+        if ((((*(byte *)*puVar8 & 2) != 0) && (*(int *)(puVar8[5] + 0x24) == 0x6f75746c)) &&
+           (puVar8[0xf] != 0)) {
+          (**(code **)(*(int *)(puVar8[5] + 0x38) + 0x14))(puVar8[0xf]);
+        }
+        FT_Mem_Free(uVar3,puVar8);
+        return iVar9;
+      }
+    }
+    puVar5[puVar5[6] + 7] = puVar8;
+    puVar5[6] = puVar5[6] + 1;
+  }
+  return iVar7;
+}
+
+
+
+
+/* Global::FUN_006cc680 @ 006cc680 */
+
+void FUN_006cc680(void)
+
+{
+  undefined4 *puVar1;
+  
+  puVar1 = malloc(0x10);
+  if (puVar1 != (undefined4 *)0x0) {
+    *puVar1 = 0;
+    puVar1[1] = &LAB_006cc560;
+    puVar1[3] = &LAB_006cc570;
+    puVar1[2] = &LAB_006cc590;
+  }
   return;
 }
 

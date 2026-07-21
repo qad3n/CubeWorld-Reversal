@@ -5,7 +5,6 @@
 
 void __fastcall Speech_scrambleBlob(int *param_1);
 uint __thiscall SpeechDb_createBlobsTable(void *this,int *param_1);
-undefined4 __thiscall SpeechDb_loadBlobToVector(void *this,undefined4 *param_1,undefined4 *param_2);
 int * __fastcall XmlDoc_ctorInit(int *param_1);
 uint __thiscall Iterator_notEqual(void *this,uint *param_1);
 int __fastcall compareResultToSign(int *param_1);

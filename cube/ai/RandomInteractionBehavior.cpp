@@ -332,6 +332,7 @@ LAB_004dbb48:
               local_e4 = 3;
               chunkY = map_insertVal_4594c0(timer,*(undefined4 *)(timer + 4),local_20c);
               if (*(int *)(self + 0x1310) == 0xd4c77a) {
+                    /* WARNING: Subroutine does not return */
                 std::_Xlength_error("list<T> too long");
               }
               *(int *)(self + 0x1310) = *(int *)(self + 0x1310) + 1;

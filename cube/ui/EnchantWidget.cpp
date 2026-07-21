@@ -31,6 +31,7 @@ void cube::EnchantWidget::ctor_0
   plasma::NamedObject::ctor_4(parent,name,nameBuf);
   local_8 = CONCAT31(local_8._1_3_,2);
   if (7 < nameCap) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(nameBuf[0]);
   }
   nameBuf[0] = (void *)((uint)nameBuf[0] & 0xffff0000);

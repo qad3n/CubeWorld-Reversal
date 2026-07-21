@@ -64,6 +64,7 @@ void plasma::Widget::MemberFunctionConnection<cube::InventoryWidget>::ctor_0
   ExceptionList = &savedExcList;
   pSlot = (undefined4 *)rbtree_findOrInsert_intKey(&pName);
   if ((void *)*pSlot != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*pSlot);
   }
   pConn = operator_new(0x18);
@@ -95,8 +96,10 @@ void plasma::Widget::MemberFunctionConnection<cube::InventoryWidget>::ctor_0
     pList[1] = (int)pList;
     local_18 = 0;
     if (pChild != pList) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(pChild);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(pList);
   }
   ExceptionList = savedExcList;
@@ -141,6 +144,7 @@ void cube::InventoryWidget::ctor_0
   plasma::NamedObject::ctor_4(*(undefined4 *)(pGame + 0x800710),pParent,strBuf);
   ehState._0_1_ = 2;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(strBuf[0]);
   }
   pThis[0x58] = 0;
@@ -196,6 +200,7 @@ void cube::InventoryWidget::ctor_0
     InventoryWidget_dispatchEvent(strBuf,2,pThis,GameController_decrement_tab_value,0,1);
     ehState._0_1_ = 4;
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf[0]);
     }
   }
@@ -211,6 +216,7 @@ void cube::InventoryWidget::ctor_0
     InventoryWidget_dispatchEvent(strBuf,2,pThis,GameController_increment_tab_value,0,1);
     ehState._0_1_ = 4;
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf[0]);
     }
   }
@@ -226,6 +232,7 @@ void cube::InventoryWidget::ctor_0
     InventoryWidget_dispatchEvent(local_44,0xc,pThis,GameController_set_slider_from_mouse,0,1);
     ehState._0_1_ = 4;
     if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_44[0]);
     }
   }
@@ -259,6 +266,7 @@ void InventoryWidget_dtor(void)
   int pThis;
   
   if (*(void **)(pThis + 0x198) != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(pThis + 0x198));
   }
   pList = *(undefined4 **)(pThis + 0x17c);
@@ -267,8 +275,10 @@ void InventoryWidget_dtor(void)
   *(int *)(*(int *)(pThis + 0x17c) + 4) = *(int *)(pThis + 0x17c);
   *(undefined4 *)(pThis + 0x180) = 0;
   if (pFirst != *(void **)(pThis + 0x17c)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pFirst);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(pThis + 0x17c));
 }
 
@@ -284,6 +294,7 @@ void cube::InventoryWidget::vfunc_0(byte flags)
   
   InventoryWidget_dtor();
   if ((flags & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pThis);
   }
   return;
@@ -338,6 +349,7 @@ void cube::InventoryWidget::vfunc_10(void)
       if (*(int *)(pNode[2] + 0x34) == *(int *)(*(int *)(pThis + 0x168) + 0x34)) {
         iVar6 = IntMap_SetScalar(pList,pList[1],pNode + 2);
         if (count == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         pList[1] = iVar6;
@@ -401,8 +413,10 @@ void cube::InventoryWidget::vfunc_10(void)
   *pList = pList;
   pList[1] = pList;
   if (puVar2 != pList) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(puVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(pList);
 }
 

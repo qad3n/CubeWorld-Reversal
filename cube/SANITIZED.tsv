@@ -7005,7 +7005,4 @@ Unwind@006f9320	eh_unwind_006f9320	1
 Unwind@006f9350	eh_unwind_006f9350	1
 Unwind@006f9380	eh_unwind_006f9380	1
 Unwind@006f93b0	eh_unwind_006f93b0	1
-_Destroy_range@ca	eh_destroy_range_ca	1
-_Tidy_deallocate@ca	eh_tidy_deallocate_ca	1
 __security_check_cookie@4	eh_security_check_cookie_4	2
-dtor_and_free@ca	eh_dtor_ca	1

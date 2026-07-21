@@ -1,4 +1,4 @@
-// crt_stl (_library) — server. 1018 functions. Bodies = Ghidra pseudo-C.
+// crt_stl (_library) — server. 999 functions. Bodies = Ghidra pseudo-C.
 #include "crt_stl.h"
 
 /* [AUDIT] proposed: assign_two_qwords  (confidence: low)
@@ -402,6 +402,7 @@ void Catch_All_004017c3(void)
   puVar1[5] = 0xf;
   puVar1[4] = 0;
   *(undefined1 *)puVar1 = 0;
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -422,6 +423,7 @@ bool __thiscall std_string_grow(void *this,uint param_1,char param_2)
   uint _Size;
   
   if (param_1 == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   uVar1 = *(uint *)((int)this + 0x14);
@@ -472,6 +474,7 @@ void * std_allocate(uint param_1)
   
   pvVar1 = (void *)0x0;
   if ((param_1 != 0) && (pvVar1 = operator_new(param_1), pvVar1 == (void *)0x0)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   return pvVar1;
@@ -1070,6 +1073,7 @@ void Catch_All_004027ef(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -1084,6 +1088,7 @@ void Catch_All_00402954(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -5383,27 +5388,13 @@ void __thiscall std_list_push_back(void *this,undefined8 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = list_emplaceCopy40(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x5555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
   puVar1[1] = iVar2;
   **(int **)(iVar2 + 4) = iVar2;
   return;
-}
-
-
-
-
-/* [AUDIT] proposed: formula_inverse  (confidence: med)
- * purpose: Game curve: (1/(1-x)-1)*20+1
- * vars: param_1
- */
-/* Global::formula_inverse @ 00411090 */
-
-float10 __cdecl formula_inverse(float param_1)
-
-{
-  return (float10)((1.0 / (1.0 - param_1) - 1.0) * 20.0 + 1.0);
 }
 
 
@@ -5828,6 +5819,7 @@ uint __thiscall std_vector_allocate(void *this,uint param_1)
   }
   pvVar1 = operator_new(param_1);
   if (pvVar1 == (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *(void **)this = pvVar1;
@@ -6373,6 +6365,7 @@ void __thiscall std_vector_reallocate_0x118(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x118);
       if (pvVar3 != (void *)0x0) goto LAB_004138a4;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004138a4:
@@ -6401,6 +6394,7 @@ void Catch_All_0041391e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -6425,6 +6419,7 @@ int __thiscall std_vector_reserve_0x118(void *this,uint param_1)
   if ((uint)(iVar3 / 0x118) < param_1) {
     iVar2 = (*(int *)((int)this + 4) - *(int *)this) / 0x118;
     if (0xea0ea0U - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = vector_calc_growth_0x118(this,iVar2 + param_1);
@@ -6835,6 +6830,7 @@ net_encode_field_u8(undefined4 *param_1,uint *param_2,uint *param_3,char *param_
     local_8 = 1;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -6888,6 +6884,7 @@ net_encode_field_u16(undefined4 *param_1,uint *param_2,uint *param_3,short *para
     local_8 = 2;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -6940,6 +6937,7 @@ net_encode_field_u32(undefined4 *param_1,uint *param_2,uint *param_3,int *param_
     local_8 = 4;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -6993,6 +6991,7 @@ net_encode_field_f32(undefined4 *param_1,uint *param_2,uint *param_3,float *para
     local_8 = 4;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -7055,6 +7054,7 @@ net_encode_field_vec5(undefined4 *param_1,uint *param_2,uint *param_3,float *par
   local_8 = 0x14;
   iVar5 = lib_fn_549300(puVar3,(undefined4 *)puVar3[1],&local_c);
   if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7110,6 +7110,7 @@ net_encode_field_struct0xac(undefined4 *param_1,uint *param_2,uint *param_3,void
   local_c[1] = 0xac;
   iVar4 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],local_c);
   if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7167,6 +7168,7 @@ net_encode_field_creature(undefined4 *param_1,uint *param_2,uint *param_3,void *
   local_8 = 0xe38;
   iVar4 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
   if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7223,6 +7225,7 @@ net_encode_field_item0x118(undefined4 *param_1,uint *param_2,uint *param_3,void 
   local_8 = 0x118;
   iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
   if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7287,6 +7290,7 @@ net_encode_field_int3(undefined4 *param_1,uint *param_2,uint *param_3,int param_
   local_c = 0xc;
   iVar5 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_10);
   if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7356,6 +7360,7 @@ net_encode_field_f32x3(undefined4 *param_1,uint *param_2,uint *param_3,int param
   local_8 = 0xc;
   iVar6 = lib_fn_549300(puVar2,(undefined4 *)puVar2[1],&local_c);
   if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7419,6 +7424,7 @@ net_encode_field_2int_0x18(undefined4 *param_1,uint *param_2,uint *param_3,int p
   local_c = 0x18;
   iVar5 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_10);
   if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7469,6 +7475,7 @@ net_encode_field_int2(undefined4 *param_1,uint *param_2,uint *param_3,int *param
     local_8 = 8;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -8187,6 +8194,7 @@ LAB_00415b65:
   local_8 = 0x10;
   iVar4 = lib_fn_549300(puVar2,(undefined4 *)puVar2[1],&local_c);
   if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -8251,6 +8259,7 @@ net_encode_field_struct0x2c(undefined4 *param_1,uint *param_2,uint *param_3,int 
   local_c = 0x2c;
   iVar5 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_10);
   if (param_1[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -8655,38 +8664,6 @@ void __cdecl free(void *_Memory)
 
 
 
-/* [AUDIT] proposed: std::string::string(string&&)  (confidence: high)
- * purpose: SSO(16) move-construct std::basic_string<char>, steals heap ptr, resets source
- * vars: this=dst,param_1=src str
- */
-/* Global::std_string_string_string @ 00416a20 */
-
-undefined4 * __thiscall std_string_string_string(void *this,undefined4 *param_1)
-
-{
-  *(undefined4 *)((int)this + 0x14) = 0xf;
-  *(undefined4 *)((int)this + 0x10) = 0;
-  *(undefined1 *)this = 0;
-  if ((uint)param_1[5] < 0x10) {
-    if (param_1[4] + 1 != 0) {
-      memmove(this,param_1,param_1[4] + 1);
-    }
-  }
-  else {
-    *(undefined4 *)this = *param_1;
-    *param_1 = 0;
-  }
-  *(undefined4 *)((int)this + 0x10) = param_1[4];
-  *(undefined4 *)((int)this + 0x14) = param_1[5];
-  param_1[5] = 0xf;
-  param_1[4] = 0;
-  *(undefined1 *)param_1 = 0;
-  return this;
-}
-
-
-
-
 /* Global::thunk_FUN_00417cc0 @ 00416b80 */
 
 void __fastcall thunk_FUN_00417cc0(int *param_1)
@@ -8868,6 +8845,7 @@ void Catch_All_00416e3c(void)
   puVar1[5] = 7;
   puVar1[4] = 0;
   *(undefined2 *)puVar1 = 0;
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -8891,6 +8869,7 @@ void * std_wstring_Allocate(uint param_1)
   if ((param_1 < 0x80000000) && (pvVar1 = operator_new(param_1 * 2), pvVar1 != (void *)0x0)) {
     return pvVar1;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -8911,11 +8890,13 @@ int * __thiscall std_string_append_count_char(void *this,uint param_1,char param
   
   sVar2 = *(size_t *)((int)this + 0x10);
   if (-sVar2 - 1 <= param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_1 != 0) {
     uVar1 = sVar2 + param_1;
     if (uVar1 == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if (*(uint *)((int)this + 0x14) < uVar1) {
@@ -8970,6 +8951,7 @@ void Catch_All_0041a657(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -8984,6 +8966,7 @@ void Catch_All_0041a78f(void)
   int unaff_EBP;
   
   Tree_destroyRec_oneStr(*(int **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -8995,6 +8978,7 @@ void Catch_All_0041a78f(void)
 void Catch_All_0041aaef(void)
 
 {
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9024,6 +9008,7 @@ void Catch_All_0041bb5f(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9117,6 +9102,7 @@ void __thiscall std_list_push_back_41caf0(void *this,undefined1 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = RandomBehavior_listEmplaceCopy(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xd4c77a) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -9475,6 +9461,7 @@ void Catch_All_0041d4c6(void)
   for (puVar2 = *(undefined4 **)(unaff_EBP + -0x14); puVar2 != puVar1; puVar2 = puVar2 + 3) {
     free_string_buffer(puVar2);
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9710,6 +9697,7 @@ void Catch_All_0041d7bf(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9728,24 +9716,6 @@ int __fastcall struct_clear_fields_c_10(int param_1)
   *(undefined4 *)(param_1 + 0xc) = 0;
   *(undefined4 *)(param_1 + 0x10) = 0;
   return param_1;
-}
-
-
-
-
-/* [AUDIT] proposed: RefCountedNode::init  (confidence: med)
- * purpose: Init node: value=param, refcount(+4)=1, weak(+8)=0
- * vars: this,param_1=value
- */
-/* Global::RefCountedNode_init @ 0041d800 */
-
-undefined4 * __thiscall RefCountedNode_init(void *this,undefined4 param_1)
-
-{
-  *(undefined4 *)this = param_1;
-  *(undefined4 *)((int)this + 4) = 1;
-  *(undefined4 *)((int)this + 8) = 0;
-  return this;
 }
 
 
@@ -9876,6 +9846,7 @@ void Catch_All_0041dac0(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9951,6 +9922,7 @@ void Catch_All_0041dc43(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10042,6 +10014,7 @@ void Catch_All_0041de13(void)
   int unaff_EBP;
   
   std_vector_string_tidy(*(undefined4 **)(unaff_EBP + -0x20));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10261,6 +10234,7 @@ uint __thiscall std_vector_Reserve(void *this,uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0xe6c2b4 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x11c);
@@ -10271,6 +10245,7 @@ uint __thiscall std_vector_Reserve(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10296,6 +10271,7 @@ uint __thiscall std_vector_Reserve_41e390(void *this,uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0xc7ce0c < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x148);
@@ -10306,6 +10282,7 @@ uint __thiscall std_vector_Reserve_41e390(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10367,6 +10344,7 @@ void __thiscall std_vector_Reallocate(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0x14);
       if (puVar3 != (undefined4 *)0x0) goto LAB_0041e4af;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041e4af:
@@ -10395,6 +10373,7 @@ void Catch_All_0041e520(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10427,6 +10406,7 @@ void __thiscall std_vector_Reallocate_41e540(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0x11c);
       if (puVar3 != (undefined4 *)0x0) goto LAB_0041e5a4;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041e5a4:
@@ -10455,6 +10435,7 @@ void Catch_All_0041e61e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10487,6 +10468,7 @@ void __thiscall std_vector_Reallocate_41e640(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x148);
       if (pvVar3 != (void *)0x0) goto LAB_0041e6a4;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041e6a4:
@@ -10515,6 +10497,7 @@ void Catch_All_0041e71c(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10547,6 +10530,7 @@ void __thiscall std_vector_Reallocate_41e740(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0xc);
       if (puVar3 != (undefined4 *)0x0) goto LAB_0041e79f;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041e79f:
@@ -10576,6 +10560,7 @@ void Catch_All_0041e820(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10600,6 +10585,7 @@ void __thiscall std_vector_reserve(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x14;
   if (0xcccccccU - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x14;
@@ -10641,6 +10627,7 @@ int __thiscall std_vector_Grow_by(void *this,uint param_1)
   if ((uint)(iVar3 / 0x11c) < param_1) {
     iVar2 = (*(int *)((int)this + 4) - *(int *)this) / 0x11c;
     if (0xe6c2b4U - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = std_vector_Grow_calc(this,iVar2 + param_1);
@@ -10670,6 +10657,7 @@ void __thiscall std_vector_reserve_41e960(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x148;
   if (0xc7ce0cU - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x148;
@@ -10711,6 +10699,7 @@ void __thiscall std_vector_reserve_41ea10(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0xc;
   if (0x15555555U - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0xc;
@@ -10816,175 +10805,6 @@ byte __fastcall rbtree_node_isRed(int param_1)
 
 {
   return ~(*(byte *)(param_1 + 3) >> 7) & 1;
-}
-
-
-
-
-/* [AUDIT] proposed: readCombatActionFromStream  (confidence: med)
- * purpose: Deserialize 0x28 record from recv buffer: 5 ints,2 bytes,2 ints,int64
- * vars: this=stream,param_1=out
- */
-/* Global::readCombatActionFromStream @ 0041ebc0 */
-
-void __thiscall readCombatActionFromStream(void *this,int param_1)
-
-{
-  int *piVar1;
-  int iVar2;
-  
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined4 *)((int)this + 8) = *(undefined4 *)(*piVar1 + piVar1[3]);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined4 *)(param_1 + 4) = *(undefined4 *)(*piVar1 + piVar1[3]);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined4 *)(param_1 + 8) = *(undefined4 *)(*piVar1 + piVar1[3]);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined4 *)(param_1 + 0xc) = *(undefined4 *)(*piVar1 + piVar1[3]);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined4 *)(param_1 + 0x10) = *(undefined4 *)(*piVar1 + piVar1[3]);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 1) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined1 *)(param_1 + 0x14) = *(undefined1 *)(piVar1[3] + *piVar1);
-    piVar1[3] = piVar1[3] + 1;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 1) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined1 *)(param_1 + 0x15) = *(undefined1 *)(piVar1[3] + *piVar1);
-    piVar1[3] = piVar1[3] + 1;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined4 *)(param_1 + 0x18) = *(undefined4 *)(piVar1[3] + *piVar1);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined4 *)(param_1 + 0x1c) = *(undefined4 *)(piVar1[3] + *piVar1);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 8) {
-    piVar1[3] = iVar2;
-    return;
-  }
-  *(undefined8 *)(param_1 + 0x20) = *(undefined8 *)(piVar1[3] + *piVar1);
-  piVar1[3] = piVar1[3] + 8;
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: readHitFromStream  (confidence: med)
- * purpose: Deserialize 0x14 record from recv buffer: 2 ints,int,byte,int64
- * vars: this=stream,param_1=out
- */
-/* Global::readHitFromStream @ 0041ed50 */
-
-void __thiscall readHitFromStream(void *this,undefined4 *param_1)
-
-{
-  int *piVar1;
-  int iVar2;
-  
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined4 *)((int)this + 8) = *(undefined4 *)(*piVar1 + piVar1[3]);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *param_1 = *(undefined4 *)(*piVar1 + piVar1[3]);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 4) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    param_1[1] = *(undefined4 *)(*piVar1 + piVar1[3]);
-    piVar1[3] = piVar1[3] + 4;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 1) {
-    piVar1[3] = iVar2;
-  }
-  else {
-    *(undefined1 *)(param_1 + 2) = *(undefined1 *)(*piVar1 + piVar1[3]);
-    piVar1[3] = piVar1[3] + 1;
-  }
-  piVar1 = *(int **)this;
-  iVar2 = piVar1[1] - *piVar1;
-  if (iVar2 < piVar1[3] + 8) {
-    piVar1[3] = iVar2;
-    return;
-  }
-  *(undefined8 *)(param_1 + 3) = *(undefined8 *)(*piVar1 + piVar1[3]);
-  piVar1[3] = piVar1[3] + 8;
-  return;
 }
 
 
@@ -11222,6 +11042,7 @@ void __thiscall World_deserializeZonePacket(void *this,void *param_1,int param_2
              ) {
             iVar7 = std_list_insertNode1(puVar5,(undefined4 *)puVar5[1],&local_17c);
             if (local_180 == (int *)0x15555554) {
+                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             puVar5[1] = iVar7;
@@ -11486,6 +11307,7 @@ void Catch_All_0041f75d(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -11548,6 +11370,7 @@ void Catch_All_0041f860(void)
   int unaff_EBP;
   
   std_vector_string_tidy(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12005,6 +11828,7 @@ void Catch_All_004201e2(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12054,6 +11878,7 @@ void Catch_All_00420299(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12121,6 +11946,7 @@ void Catch_All_00420362(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12247,6 +12073,7 @@ void Catch_All_0042052c(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12261,6 +12088,7 @@ void Catch_All_004205df(void)
   int unaff_EBP;
   
   std_Rb_tree_destroy_recursive_B(*(int **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12287,6 +12115,7 @@ std_map_Insert_rebalance(void *this,undefined4 *param_1,char param_2,undefined4 
   
   if (0xea0e8 < *(uint *)((int)this + 4)) {
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -12556,6 +12385,7 @@ void Catch_All_00420a0f(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12658,6 +12488,7 @@ void Catch_All_00420b74(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12694,6 +12525,7 @@ void __thiscall std_list_Assign_0x28(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12717,6 +12549,7 @@ void Catch_All_00420c39(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12753,6 +12586,7 @@ void __thiscall std_list_Assign_str(void *this,undefined4 *param_1,undefined4 *p
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12776,6 +12610,7 @@ void Catch_All_00420d09(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12812,6 +12647,7 @@ void __thiscall std_list_Assign_str2(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12835,6 +12671,7 @@ void Catch_All_00420dd9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12871,6 +12708,7 @@ void __thiscall std_list_Assign_0x1c(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12894,6 +12732,7 @@ void Catch_All_00420ea9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12930,6 +12769,7 @@ void __thiscall std_list_Assign_0x47a(void *this,undefined4 *param_1,undefined4 
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12953,6 +12793,7 @@ void Catch_All_00420f79(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12989,6 +12830,7 @@ void __thiscall std_list_Assign_list(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13012,6 +12854,7 @@ void Catch_All_00421049(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13048,6 +12891,7 @@ void __thiscall std_list_Assign_str3(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13071,6 +12915,7 @@ void Catch_All_00421119(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13107,6 +12952,7 @@ void __thiscall std_list_Assign_0x18(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13130,6 +12976,7 @@ void Catch_All_004211e9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13166,6 +13013,7 @@ void __thiscall std_list_Assign_0x28b(void *this,undefined4 *param_1,undefined4 
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13189,6 +13037,7 @@ void Catch_All_004212b9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13225,6 +13074,7 @@ void __thiscall std_list_Assign_0x48(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13248,6 +13098,7 @@ void Catch_All_00421389(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13284,6 +13135,7 @@ void __thiscall std_list_Assign_0x40(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13307,6 +13159,7 @@ void Catch_All_00421459(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13343,6 +13196,7 @@ void __thiscall std_list_Assign_0x08b(void *this,undefined4 *param_1,undefined4 
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13366,6 +13220,7 @@ void Catch_All_00421529(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13402,6 +13257,7 @@ void __thiscall std_list_Assign(void *this,undefined4 *param_1,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13425,6 +13281,7 @@ void Catch_All_004215f9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13461,6 +13318,7 @@ void __thiscall std_list_Assign_0x14b(void *this,undefined4 *param_1,undefined4 
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13484,6 +13342,7 @@ void Catch_All_004216c9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13520,6 +13379,7 @@ void __thiscall std_list_Assign_0x70(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13543,6 +13403,7 @@ void Catch_All_00421799(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13579,6 +13440,7 @@ void __thiscall std_list_Assign_arr_0x1c(void *this,undefined4 *param_1,undefine
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = param_2 + 5;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13602,6 +13464,7 @@ void Catch_All_00421867(void)
       iVar1 = iVar1 + 0x14;
     } while (iVar1 != *(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13638,6 +13501,7 @@ void __thiscall std_list_Assign_arr(void *this,undefined4 *param_1,undefined1 *p
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = param_2 + 0x148;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13661,6 +13525,7 @@ void Catch_All_00421939(void)
       iVar1 = iVar1 + 0x148;
     } while (iVar1 != *(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14072,6 +13937,7 @@ void Catch_All_00421eff(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14117,6 +13983,7 @@ void Catch_All_00421f9f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14162,6 +14029,7 @@ void Catch_All_0042203f(void)
   int unaff_EBP;
   
   Connection_destroyNestedLists(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14207,6 +14075,7 @@ void Catch_All_004220df(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14252,6 +14121,7 @@ void Catch_All_0042217f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14297,6 +14167,7 @@ void Catch_All_0042221f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14342,6 +14213,7 @@ void Catch_All_004222bf(void)
   int unaff_EBP;
   
   Connection_destroyNestedLists(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14387,6 +14259,7 @@ void Catch_All_0042235f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14432,6 +14305,7 @@ void Catch_All_004223ff(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14477,6 +14351,7 @@ void Catch_All_0042249f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14522,6 +14397,7 @@ void Catch_All_0042253f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14567,6 +14443,7 @@ void Catch_All_004225df(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14612,6 +14489,7 @@ void Catch_All_0042267f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14657,6 +14535,7 @@ void Catch_All_0042271f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14702,6 +14581,7 @@ void Catch_All_004227bf(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -15479,6 +15359,7 @@ LAB_00424084:
                   if (iVar3 == 0x2222222) {
 LAB_00425173:
                     local_80 = local_a8;
+                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("vector<T> too long");
                   }
                   uVar1 = iVar3 + 1;
@@ -16591,6 +16472,7 @@ LAB_00425c84:
           piVar14 = operator_new(0x40);
           if (piVar14 == (int *)0x0) {
 LAB_00426017:
+                    /* WARNING: Subroutine does not return */
             std::_Xbad_alloc();
           }
           *piVar14 = (int)vftable;
@@ -17036,6 +16918,7 @@ void std_list_Buyheadnode_0x1180(void)
   pvVar1 = operator_new(0x1180);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x004267c1. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -17077,6 +16960,7 @@ void std_list_Buynode_0x150(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -17095,6 +16979,7 @@ _Func_impl<std::_Callable_obj<<lambda_ab9fa502c78db4b4288c2bfaac953e1a>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0x40);
     if (param_1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -17285,6 +17170,7 @@ _Func_impl<std::_Callable_obj<<lambda_38361316b522edf94308fdf9d1a2954a>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0x38);
     if (param_1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -17312,6 +17198,7 @@ _Func_impl<std::_Callable_obj<<lambda_8ac7a930af6f0ab005bd27e10d1330ab>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0xc);
     if (param_1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -17349,6 +17236,7 @@ void __thiscall std_vector_Reallocate_426db0(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x78);
       if (pvVar3 != (void *)0x0) goto LAB_00426e13;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00426e13:
@@ -17377,6 +17265,7 @@ void Catch_All_00426e8e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -17903,6 +17792,7 @@ void __thiscall game_buildItemDefinition(void *this,undefined4 *param_1)
                   iVar5 = std_map_insert_node_list(puVar10,(undefined4 *)puVar10[1],&local_24);
                   if (*(int *)(iVar7 + 0x44) == 0xaaaaaa9) {
 LAB_00427fb9:
+                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("list<T> too long");
                   }
                   *(int *)(iVar7 + 0x44) = *(int *)(iVar7 + 0x44) + 1;
@@ -18082,9 +17972,11 @@ int * __thiscall std_basic_string_resize(void *this,uint param_1,undefined2 para
 
 {
   if (param_1 == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (0x7ffffffe < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (*(uint *)((int)this + 0x14) < param_1) {
@@ -18332,6 +18224,7 @@ void __thiscall std_list_push_back_428360(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x70(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x2222221) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18358,6 +18251,7 @@ void __thiscall std_list_push_back_4283b0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_wstring(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x6666665) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18384,6 +18278,7 @@ void __thiscall std_list_push_back_428400(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x47a(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x3333332) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18410,6 +18305,7 @@ void __thiscall std_list_push_back_428450(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_list(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xaaaaaa9) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18436,6 +18332,7 @@ void __thiscall std_list_push_back_4284a0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x28b(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x3fffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18462,6 +18359,7 @@ void __thiscall std_list_push_back_4284f0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x48(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x2aaaaa9) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18488,6 +18386,7 @@ void __thiscall std_list_push_back_428540(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x40(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x3333332) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18514,6 +18413,7 @@ void __thiscall std_list_push_back_428590(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = lib_fn_4f3ba0(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18540,6 +18440,7 @@ void __thiscall std_list_push_back_4285e0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18760,6 +18661,7 @@ void Catch_All_00429180(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18774,6 +18676,7 @@ void Catch_All_00429227(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18788,6 +18691,7 @@ void Catch_All_0042931d(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18802,6 +18706,7 @@ void Catch_All_00429415(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18816,6 +18721,7 @@ void Catch_All_0042954f(void)
   int unaff_EBP;
   
   SpeechTree_destroyRec(*(int **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18830,6 +18736,7 @@ void Catch_All_0042a018(void)
   int unaff_EBP;
   
   Catch_operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18844,6 +18751,7 @@ void Catch_All_0042a244(void)
   int unaff_EBP;
   
   Catch_operator_delete_42d000(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18858,6 +18766,7 @@ void Catch_All_0042a434(void)
   int unaff_EBP;
   
   Catch_cleanup_thunk(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18872,6 +18781,7 @@ void Catch_All_0042a624(void)
   int unaff_EBP;
   
   node_free_twoStrings(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18886,6 +18796,7 @@ void Catch_All_0042a814(void)
   int unaff_EBP;
   
   QuestText_node_free(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18900,6 +18811,7 @@ void Catch_All_0042a908(void)
   int unaff_EBP;
   
   Catch_operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18914,6 +18826,7 @@ void Catch_All_0042aac0(void)
   int unaff_EBP;
   
   Catch_cleanup_thunk(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18928,6 +18841,7 @@ void Catch_All_0042ac24(void)
   int unaff_EBP;
   
   node_free_twoStrings(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18942,6 +18856,7 @@ void Catch_All_0042ad84(void)
   int unaff_EBP;
   
   QuestText_node_free(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18965,6 +18880,7 @@ void Catch_All_0042ae29(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18979,6 +18895,7 @@ void Catch_All_0042af1d(void)
   int unaff_EBP;
   
   std_list_clear(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18996,6 +18913,7 @@ void Catch_All_0042b0b6(void)
   piVar1 = (int *)**(undefined4 **)(unaff_EBP + -0x18);
   SpeechMap_eraseRange(*(undefined4 **)(unaff_EBP + -0x18),(undefined4 *)(unaff_EBP + 8),(int *)*piVar1,
                piVar1);
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -19013,6 +18931,7 @@ void Catch_All_0042b156(void)
   piVar1 = (int *)**(undefined4 **)(unaff_EBP + -0x18);
   Tree_eraseRange_variant(*(undefined4 **)(unaff_EBP + -0x18),(undefined4 *)(unaff_EBP + 8),(int *)*piVar1,
                piVar1);
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -19027,6 +18946,7 @@ void Catch_All_0042b1ff(void)
   int unaff_EBP;
   
   std_list_clear(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -19801,6 +19721,7 @@ LAB_0042ea1f:
     pfVar4 = local_14;
     if (uVar2 == 0xffffffff) {
       std::bad_cast::bad_cast(local_24,"bad cast");
+                    /* WARNING: Subroutine does not return */
       _CxxThrowException(local_24,(ThrowInfo *)&DAT_005779e4);
     }
     DAT_00583e04 = local_14;
@@ -20257,6 +20178,7 @@ void Catch_All_0042f318(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -20625,6 +20547,7 @@ void Catch_All_00430033(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -21076,6 +20999,7 @@ void Catch_All_00430911(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -21102,6 +21026,7 @@ std_Tree_Insert(void *this,undefined4 *param_1,char param_2,undefined4 *param_3,
   
   if (0x9249247 < *(uint *)((int)this + 4)) {
     std_Tree_Erase_node_with_list(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -21363,6 +21288,7 @@ void Catch_All_00430d18(void)
   int unaff_EBP;
   
   std_Tree_Erase_node_with_list(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -21450,6 +21376,7 @@ void Catch_All_00430e4d(void)
   int unaff_EBP;
   
   std_Tree_Erase_node_with_list(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -21646,6 +21573,7 @@ int * __thiscall std_basic_string_replace(void *this,undefined4 *param_1,uint pa
   void *pvVar3;
   
   if ((uint)param_1[4] < param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar2 = param_1[4] - param_2;
@@ -21654,11 +21582,13 @@ int * __thiscall std_basic_string_replace(void *this,undefined4 *param_1,uint pa
     param_3 = uVar2;
   }
   if (-sVar1 - 1 <= param_3) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_3 != 0) {
     uVar2 = sVar1 + param_3;
     if (uVar2 == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if (*(uint *)((int)this + 0x14) < uVar2) {
@@ -21737,11 +21667,13 @@ int * __thiscall std_basic_string_append(void *this,int *param_1,uint param_2)
   }
   sVar2 = *(size_t *)((int)this + 0x10);
   if (-sVar2 - 1 <= param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_2 != 0) {
     uVar1 = sVar2 + param_2;
     if (uVar1 == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if (*(uint *)((int)this + 0x14) < uVar1) {
@@ -40431,6 +40363,7 @@ void __thiscall std_list_Insert(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_list_insertNode3(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xccccccb) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -40488,6 +40421,7 @@ void Catch_All_004c5cfd(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40699,6 +40633,7 @@ void Catch_All_004c7527(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40713,6 +40648,7 @@ void Catch_All_004c776f(void)
   int unaff_EBP;
   
   lib_fn_4ce6e0(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40727,6 +40663,7 @@ void Catch_All_004c7994(void)
   int unaff_EBP;
   
   Catch_operator_delete_42d000(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40741,6 +40678,7 @@ void Catch_All_004c7a8a(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40755,6 +40693,7 @@ void Catch_All_004c7c38(void)
   int unaff_EBP;
   
   lib_fn_4ce6e0(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40769,6 +40708,7 @@ void Catch_All_004c7dbd(void)
   int unaff_EBP;
   
   Catch_operator_delete_42d000(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40783,6 +40723,7 @@ void Catch_All_004c7f4d(void)
   int unaff_EBP;
   
   Catch_operator_delete_42d000(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40830,6 +40771,7 @@ void Catch_All_004c7fdd(void)
   for (puVar2 = *(undefined4 **)(unaff_EBP + -0x14); puVar2 != puVar1; puVar2 = puVar2 + 3) {
     free_string_buffer(puVar2);
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40877,6 +40819,7 @@ void Catch_All_004c808c(void)
   for (iVar2 = *(int *)(unaff_EBP + -0x14); iVar2 != iVar1; iVar2 = iVar2 + 0x188) {
     lib_fn_4c80d0(iVar2);
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -41046,6 +40989,7 @@ void Catch_All_004c833c(void)
   int unaff_EBP;
   
   std_vector_string_tidy(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -41444,6 +41388,7 @@ undefined4 __thiscall lib_fn_4ce580(void *this,uint param_1)
     return 0;
   }
   if (0x15555555 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0xc);
@@ -41454,6 +41399,7 @@ undefined4 __thiscall lib_fn_4ce580(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -41500,6 +41446,7 @@ void __thiscall lib_fn_4ce7e0(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x188);
       if (pvVar3 != (void *)0x0) goto LAB_004ce841;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004ce841:
@@ -41529,6 +41476,7 @@ void Catch_All_004ce8c7(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -41549,6 +41497,7 @@ void __thiscall lib_fn_4ce8e0(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x188;
   if (0xa72f05U - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x188;
@@ -42144,6 +42093,7 @@ switchD_004cf51a_caseD_6:
                           iVar12 = std_map_insert_node_str_2(local_2ec,(undefined4 *)local_2ec[1],&local_1a4);
                           if (*(int *)((int)pvVar16 + 0x44) == 0xdd67c7) {
 LAB_004cfc8a:
+                    /* WARNING: Subroutine does not return */
                             std::_Xlength_error("list<T> too long");
                           }
                           *(int *)((int)pvVar16 + 0x44) = *(int *)((int)pvVar16 + 0x44) + 1;
@@ -42783,6 +42733,7 @@ stl_fn_4cfd50(void *this,float param_1,void *param_2,float param_3,char param_4,
           iVar7 = std_map_insert_node_0x47a(local_344,(undefined4 *)local_344[1],&local_68);
           iVar5 = puVar1[1];
           if (iVar5 == 0x3333332) {
+                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           puVar1[1] = iVar5 + 1;
@@ -42993,6 +42944,7 @@ LAB_004d0e7e:
     local_300 = CONCAT31(local_300._1_3_,4);
     iVar5 = list_emplaceCopy24(local_344,(undefined4 *)local_344[1],(undefined8 *)&local_300);
     if (*(int *)((int)param_1 + 0x117c) == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     local_2d8 = CONCAT44(fStack_2fc,local_300);
@@ -43008,6 +42960,7 @@ LAB_004d0e7e:
     local_2dc = *(undefined4 *)((int)param_1 + 0xc);
     iVar5 = list_emplaceCopy40(local_344,(undefined4 *)local_344[1],(undefined8 *)&local_2e8);
     if (param_9[0x17] == 0x5555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_9[0x17] = param_9[0x17] + 1;
@@ -43153,6 +43106,7 @@ switchD_004d12bd_caseD_6:
         local_214 = 0x17;
         iVar5 = lib_fn_4f3ba0(local_344,(undefined4 *)local_344[1],&local_220);
         if (param_9[3] == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         param_9[3] = param_9[3] + 1;
@@ -43169,6 +43123,7 @@ switchD_004d12bd_caseD_6:
   puVar1 = (undefined4 *)*param_9;
   iVar5 = std_map_insert_node_0x47a(puVar1,(undefined4 *)puVar1[1],(undefined4 *)&local_290);
   if (param_9[1] == 0x3333332) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_9[1] = param_9[1] + 1;
@@ -43684,6 +43639,7 @@ void lib_fn_4d2190(undefined8 *param_1,undefined8 *param_2,float param_3,char pa
         puVar1 = *(undefined4 **)(param_6 + 0x10);
         iVar4 = std_map_insert_node_0x40(puVar1,(undefined4 *)puVar1[1],(undefined4 *)&local_60);
         if (*(int *)(param_6 + 0x14) == 0x3333332) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         *(int *)(param_6 + 0x14) = *(int *)(param_6 + 0x14) + 1;
@@ -43732,6 +43688,7 @@ uint __thiscall lib_fn_4d2340(void *this,uint param_1,uint param_2,undefined8 pa
 
 /* Global::lib_fn_4d23f0 @ 004d23f0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * __thiscall lib_fn_4d23f0(void *this,int param_1)
 
@@ -45434,25 +45391,6 @@ void ** __thiscall lib_fn_4d6670(void *this,void **param_1)
 
 
 
-/* Global::World_featureTier @ 004d7870 */
-
-int World_featureTier(int param_1,int param_2)
-
-{
-  double dVar1;
-  
-  if ((param_1 == 0x200) && (param_2 == 0x200)) {
-    return 1;
-  }
-  dVar1 = (double)((float)(0x200 - param_2) * (float)(0x200 - param_2) +
-                  (float)(0x200 - param_1) * (float)(0x200 - param_1));
-  libm_sse2_sqrt_precise();
-  return 2 - (int)((float)dVar1 * -0.75);
-}
-
-
-
-
 /* Global::lib_fn_4d78e0 @ 004d78e0 */
 
 void __thiscall lib_fn_4d78e0(void *this,int param_1,int param_2)
@@ -45674,7 +45612,7 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_0
         local_8._0_1_ = 4;
         puVar3 = RefCountedNode_init(local_1cc,&local_5c);
         writeCombatActionToStream(puVar3,(int)puVar4);
-        puVar4 = lib_fn_4d8f70(local_110,local_2c);
+        puVar4 = FUN_004d8f70(local_110,local_2c);
         local_8._0_1_ = 5;
         db_store_blob_wrapper(local_3c,puVar4,(int *)&local_5c);
         local_8._0_1_ = 4;
@@ -45718,7 +45656,7 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_0
         puVar4 = puVar6;
         puVar3 = RefCountedNode_init(local_1d8,&local_4c);
         writeHitToStream(puVar3,puVar4);
-        puVar4 = lib_fn_4d8f70(local_1c0,local_2c);
+        puVar4 = FUN_004d8f70(local_1c0,local_2c);
         local_8 = CONCAT31(local_8._1_3_,0xb);
         db_store_blob_wrapper(local_3c,puVar4,(int *)&local_4c);
         if (0xf < local_18) {
@@ -45873,7 +45811,7 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_3
     local_8._0_1_ = 4;
     puVar4 = RefCountedNode_init(local_20,&local_3c);
     World_serializeZoneSaveData(puVar4,param_1);
-    puVar4 = lib_fn_4d8f70(local_f0,local_2c);
+    puVar4 = FUN_004d8f70(local_f0,local_2c);
     local_8 = CONCAT31(local_8._1_3_,5);
     db_store_blob_wrapper(this + 0xac,puVar4,(int *)&local_3c);
     if (0xf < local_18) {
@@ -46139,7 +46077,7 @@ std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_5
     pbVar5 = ostream_writeCString((basic_ostream<char,std::char_traits<char>_> *)local_ec,"Save/world_");
     pbVar5 = lib_fn_4c6580(pbVar5,pcVar2);
     ostream_writeCString(pbVar5,unaff_EBX);
-    piVar6 = lib_fn_4d8f70(&stack0xffffff04,local_2c);
+    piVar6 = FUN_004d8f70(&stack0xffffff04,local_2c);
     local_8 = CONCAT31(local_8._1_3_,4);
     SpeechDb_createBlobsTable(pbVar1 + 0xac,piVar6);
     if (0xf < local_18) {
@@ -46440,6 +46378,7 @@ void lib_fn_4d8c90(int *param_1,int param_2,char param_3)
     local_18 = (float)*(longlong *)(param_1 + 6) * 1.5258789e-05;
     iVar2 = lib_fn_4f3ba0(puVar1,(undefined4 *)puVar1[1],&local_20);
     if (*(int *)(param_2 + 0xc) == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(param_2 + 0xc) = *(int *)(param_2 + 0xc) + 1;
@@ -46515,75 +46454,6 @@ float10 __fastcall lib_fn_4d8e30(double *param_1)
 
 {
   return (float10)(*param_1 * *param_1 + param_1[1] * param_1[1]);
-}
-
-
-
-
-/* Global::lib_fn_4d8e60 @ 004d8e60 */
-
-void __thiscall lib_fn_4d8e60(void *this,void *param_1)
-
-{
-  uint uVar1;
-  uint uVar2;
-  void *local_20 [4];
-  undefined4 local_10;
-  uint local_c;
-  uint local_8;
-  
-  local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  if (((*(uint *)((int)this + 0x3c) & 2) == 0) &&
-     (uVar1 = **(uint **)((int)this + 0x20), uVar1 != 0)) {
-    uVar2 = *(uint *)((int)this + 0x38);
-    if (*(uint *)((int)this + 0x38) < uVar1) {
-      uVar2 = uVar1;
-    }
-    local_c = 0xf;
-    local_10 = 0;
-    local_20[0] = (void *)((uint)local_20[0]._1_3_ << 8);
-    String_assign(local_20,(int *)**(undefined4 **)((int)this + 0x10),
-                 uVar2 - (int)**(undefined4 **)((int)this + 0x10));
-    std_string_string_string(param_1,local_20);
-    if (0xf < local_c) {
-      operator_delete(local_20[0]);
-      __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-      return;
-    }
-  }
-  else {
-    if (((*(uint *)((int)this + 0x3c) & 4) == 0) && (**(int **)((int)this + 0x1c) != 0)) {
-      local_c = 0xf;
-      local_10 = 0;
-      local_20[0] = (void *)((uint)local_20[0]._1_3_ << 8);
-      String_assign(local_20,(int *)**(undefined4 **)((int)this + 0xc),
-                   (**(int **)((int)this + 0x2c) + **(int **)((int)this + 0x1c)) -
-                   (int)**(undefined4 **)((int)this + 0xc));
-    }
-    else {
-      local_c = 0xf;
-      local_10 = 0;
-      local_20[0] = (void *)((uint)local_20[0]._1_3_ << 8);
-    }
-    std_string_string_string(param_1,local_20);
-    if (0xf < local_c) {
-      operator_delete(local_20[0]);
-    }
-  }
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* Global::lib_fn_4d8f70 @ 004d8f70 */
-
-void * __thiscall lib_fn_4d8f70(void *this,void *param_1)
-
-{
-  lib_fn_4d8e60((void *)((int)this + 0x18),param_1);
-  return param_1;
 }
 
 
@@ -46739,6 +46609,7 @@ void __thiscall lib_fn_4d9160(void *this,int param_1,int *param_2,uint param_3,u
                    (*(byte *)(iVar11 + 3) & 0x1f) == 0)) {
                   iVar11 = std_list_insertNode1(puVar9,(undefined4 *)puVar9[1],&param_2);
                   if (local_20 == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("list<T> too long");
                   }
                   puVar9[1] = iVar11;
@@ -46856,6 +46727,7 @@ void Catch_All_004d9aa8(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46870,6 +46742,7 @@ void Catch_All_004d9b31(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46931,6 +46804,7 @@ void Catch_All_004d9cff(void)
   int unaff_EBP;
   
   RBTree_destroyRec(*(int **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46945,6 +46819,7 @@ void Catch_All_004d9dbf(void)
   int unaff_EBP;
   
   RBTree_destroyRec(*(int **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46959,6 +46834,7 @@ void Catch_All_004da44c(void)
   int unaff_EBP;
   
   lib_fn_4daf10(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46973,6 +46849,7 @@ void Catch_All_004da611(void)
   int unaff_EBP;
   
   lib_fn_4daf10(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46984,6 +46861,7 @@ void Catch_All_004da611(void)
 void Catch_All_004da75f(void)
 
 {
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46995,6 +46873,7 @@ void Catch_All_004da75f(void)
 void Catch_All_004da906(void)
 
 {
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -47070,6 +46949,7 @@ void Catch_All_004dab0f(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -47661,6 +47541,7 @@ LAB_004dba99:
               if (local_3e4 == local_3e0) goto LAB_004dbade;
               iVar25 = std_list_insertNode1(local_39c,(undefined4 *)local_39c[1],&local_3c4);
               if (local_398 == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
                 std::_Xlength_error("list<T> too long");
               }
               local_398 = local_398 + 1;
@@ -48900,6 +48781,7 @@ void __thiscall lib_fn_4e1280(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0x18);
       if (puVar3 != (undefined4 *)0x0) goto LAB_004e12df;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004e12df:
@@ -48928,6 +48810,7 @@ void Catch_All_004e1350(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -48948,6 +48831,7 @@ void __thiscall lib_fn_4e1370(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x18;
   if (0xaaaaaaaU - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x18;
@@ -49134,28 +49018,6 @@ void __cdecl lib_fn_4e1e00(undefined8 *param_1,undefined8 *param_2,undefined8 *p
 
 
 
-/* Global::lib_fn_4e1e50 @ 004e1e50 */
-
-undefined4 * __cdecl lib_fn_4e1e50(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
-
-{
-  if (param_1 == param_2) {
-    return param_3;
-  }
-  do {
-    if (param_3 != (undefined4 *)0x0) {
-      *param_3 = *param_1;
-      param_3[1] = param_1[1];
-    }
-    param_1 = param_1 + 2;
-    param_3 = param_3 + 2;
-  } while (param_1 != param_2);
-  return param_3;
-}
-
-
-
-
 /* Global::lib_fn_4e1e90 @ 004e1e90 */
 
 undefined4 * __thiscall
@@ -49224,6 +49086,7 @@ void Catch_All_004e1f6c(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -49405,6 +49268,7 @@ void __thiscall lib_fn_4e2400(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0x1c);
       if (puVar3 != (undefined8 *)0x0) goto LAB_004e2465;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004e2465:
@@ -49433,6 +49297,7 @@ void Catch_All_004e24e4(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -49461,6 +49326,7 @@ void __thiscall lib_fn_4e2500(void *this,uint param_1)
       puVar3 = operator_new(param_1 << 5);
       if (puVar3 != (undefined4 *)0x0) goto LAB_004e2561;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004e2561:
@@ -49489,49 +49355,8 @@ void Catch_All_004e25bc(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
-}
-
-
-
-
-/* Global::lib_fn_4e25e0 @ 004e25e0 */
-
-void __thiscall lib_fn_4e25e0(void *this,uint param_1)
-
-{
-  void *pvVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_00554fc0;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  puVar3 = (undefined4 *)0x0;
-  if (param_1 != 0) {
-    if (param_1 < 0x20000000) {
-      puVar3 = operator_new(param_1 * 8);
-      if (puVar3 != (undefined4 *)0x0) goto LAB_004e2640;
-    }
-    std::_Xbad_alloc();
-  }
-LAB_004e2640:
-  local_8 = 0;
-  lib_fn_4e1e50(*(undefined4 **)this,*(undefined4 **)((int)this + 4),puVar3);
-  pvVar1 = *(void **)this;
-  iVar2 = *(int *)((int)this + 4);
-  if (pvVar1 != (void *)0x0) {
-    operator_delete(pvVar1);
-  }
-  *(undefined4 **)((int)this + 8) = puVar3 + param_1 * 2;
-  *(undefined4 **)this = puVar3;
-  *(undefined4 **)((int)this + 4) = puVar3 + (iVar2 - (int)pvVar1 >> 3) * 2;
-  ExceptionList = local_10;
-  return;
 }
 
 
@@ -49545,6 +49370,7 @@ void Catch_All_004e269d(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -49565,6 +49391,7 @@ int __thiscall lib_fn_4e26c0(void *this,uint param_1)
   if ((uint)(iVar3 / 0x1c) < param_1) {
     iVar2 = (*(int *)((int)this + 4) - *(int *)this) / 0x1c;
     if (0x9249249U - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = lib_fn_4e23b0(this,iVar2 + param_1);
@@ -49590,6 +49417,7 @@ void __thiscall lib_fn_4e2730(void *this,uint param_1)
   }
   iVar2 = *(int *)((int)this + 4) - *(int *)this >> 5;
   if (0x7ffffffU - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar3 = iVar2 + param_1;
@@ -49627,6 +49455,7 @@ void __thiscall lib_fn_4e27b0(void *this,uint param_1)
   }
   iVar2 = *(int *)((int)this + 4) - *(int *)this >> 3;
   if (0x1fffffffU - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar3 = iVar2 + param_1;
@@ -49636,14 +49465,14 @@ void __thiscall lib_fn_4e27b0(void *this,uint param_1)
     if (uVar3 != 0) {
       uVar1 = uVar3;
     }
-    lib_fn_4e25e0(this,uVar1);
+    FUN_004e25e0(this,uVar1);
     return;
   }
   uVar1 = uVar1 + (uVar1 >> 1);
   if (uVar1 < uVar3) {
     uVar1 = uVar3;
   }
-  lib_fn_4e25e0(this,uVar1);
+  FUN_004e25e0(this,uVar1);
   return;
 }
 
@@ -58622,6 +58451,7 @@ void Catch_All_004f3803(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -58762,6 +58592,7 @@ stl_fn_4f3c60(void *this,undefined4 *param_1,char param_2,undefined4 *param_3,un
   
   if (0x9249247 < *(uint *)((int)this + 4)) {
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -59020,6 +58851,7 @@ void Catch_All_004f427f(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -59141,6 +58973,7 @@ void Catch_All_004f4505(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -59237,6 +59070,7 @@ void Catch_All_004f469e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -59346,6 +59180,7 @@ void Catch_All_004f483e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -59464,32 +59299,8 @@ void Catch_All_004f71a6(void)
   for (puVar2 = *(undefined4 **)(unaff_EBP + -0x14); puVar2 != puVar1; puVar2 = puVar2 + 6) {
     lib_fn_4f7270(puVar2);
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
-}
-
-
-
-
-/* Global::lib_fn_4f71e0 @ 004f71e0 */
-
-undefined4 * __cdecl lib_fn_4f71e0(int param_1,int param_2,undefined4 *param_3)
-
-{
-  int iVar1;
-  
-  if (param_1 != param_2) {
-    iVar1 = param_1 - (int)param_3;
-    do {
-      if (param_3 != (undefined4 *)0x0) {
-        *param_3 = *(undefined4 *)(iVar1 + (int)param_3);
-        param_3[1] = *(undefined4 *)(iVar1 + 4 + (int)param_3);
-        param_3[2] = *(undefined4 *)(iVar1 + 8 + (int)param_3);
-      }
-      param_3 = param_3 + 3;
-    } while (iVar1 + (int)param_3 != param_2);
-    return param_3;
-  }
-  return param_3;
 }
 
 
@@ -59948,6 +59759,7 @@ void __thiscall lib_fn_4f7d00(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x140);
       if (pvVar3 != (void *)0x0) goto LAB_004f7d5f;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004f7d5f:
@@ -59976,6 +59788,7 @@ void Catch_All_004f7dd4(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -60004,6 +59817,7 @@ void __thiscall lib_fn_4f7df0(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x18);
       if (pvVar3 != (void *)0x0) goto LAB_004f7e4f;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004f7e4f:
@@ -60033,49 +59847,8 @@ void Catch_All_004f7ed1(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
-}
-
-
-
-
-/* Global::lib_fn_4f7ef0 @ 004f7ef0 */
-
-void __thiscall lib_fn_4f7ef0(void *this,uint param_1)
-
-{
-  int iVar1;
-  int iVar2;
-  undefined4 *puVar3;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_00555690;
-  local_10 = ExceptionList;
-  ExceptionList = &local_10;
-  puVar3 = (undefined4 *)0x0;
-  if (param_1 != 0) {
-    if (param_1 < 0x15555556) {
-      puVar3 = operator_new(param_1 * 0xc);
-      if (puVar3 != (undefined4 *)0x0) goto LAB_004f7f4f;
-    }
-    std::_Xbad_alloc();
-  }
-LAB_004f7f4f:
-  local_8 = 0;
-  lib_fn_4f71e0(*(int *)this,*(int *)((int)this + 4),puVar3);
-  iVar1 = *(int *)((int)this + 4);
-  iVar2 = *(int *)this;
-  if (*(void **)this != (void *)0x0) {
-    operator_delete(*(void **)this);
-  }
-  *(undefined4 **)this = puVar3;
-  *(undefined4 **)((int)this + 8) = puVar3 + param_1 * 3;
-  *(undefined4 **)((int)this + 4) = puVar3 + ((iVar1 - iVar2) / 0xc) * 3;
-  ExceptionList = local_10;
-  return;
 }
 
 
@@ -60089,6 +59862,7 @@ void Catch_All_004f7fbf(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -60117,6 +59891,7 @@ void __thiscall lib_fn_4f7fe0(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0xc);
       if (puVar3 != (undefined4 *)0x0) goto LAB_004f803f;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004f803f:
@@ -60145,6 +59920,7 @@ void Catch_All_004f80af(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -60165,6 +59941,7 @@ void __thiscall lib_fn_4f80d0(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x140;
   if (0xccccccU - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x140;
@@ -60202,6 +59979,7 @@ void __thiscall lib_fn_4f8180(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x18;
   if (0xaaaaaaaU - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x18;
@@ -60219,43 +59997,6 @@ void __thiscall lib_fn_4f8180(void *this,uint param_1)
     uVar2 = uVar3;
   }
   lib_fn_4f7df0(this,uVar2);
-  return;
-}
-
-
-
-
-/* Global::lib_fn_4f8230 @ 004f8230 */
-
-void __thiscall lib_fn_4f8230(void *this,uint param_1)
-
-{
-  int iVar1;
-  uint uVar2;
-  uint uVar3;
-  
-  if (param_1 <= (uint)((*(int *)((int)this + 8) - *(int *)((int)this + 4)) / 0xc)) {
-    return;
-  }
-  iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0xc;
-  if (0x15555555U - iVar1 < param_1) {
-    std::_Xlength_error("vector<T> too long");
-  }
-  uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0xc;
-  uVar3 = iVar1 + param_1;
-  if (0x15555555 - (uVar2 >> 1) < uVar2) {
-    uVar2 = 0;
-    if (uVar3 != 0) {
-      uVar2 = uVar3;
-    }
-    lib_fn_4f7ef0(this,uVar2);
-    return;
-  }
-  uVar2 = uVar2 + (uVar2 >> 1);
-  if (uVar2 < uVar3) {
-    uVar2 = uVar3;
-  }
-  lib_fn_4f7ef0(this,uVar2);
   return;
 }
 
@@ -60336,333 +60077,6 @@ undefined1 * __thiscall lib_fn_4f84a0(void *this,int param_1,int param_2,int par
   }
   DAT_005842c8 = 1;
   return &DAT_005842c8;
-}
-
-
-
-
-/* Global::World_temperatureBlend @ 004f8570 */
-
-void __thiscall World_temperatureBlend(void *this,float param_1,uint param_2)
-
-{
-  uint uVar1;
-  int iVar2;
-  uint uVar3;
-  uint uVar4;
-  float fVar5;
-  uint *puVar6;
-  float10 fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  uint local_b4;
-  uint local_b0;
-  uint local_ac;
-  uint local_a8;
-  uint *local_a4;
-  int local_a0;
-  int local_9c;
-  uint local_98;
-  float local_94;
-  int local_90;
-  int local_8c;
-  float local_88;
-  int local_84;
-  int local_80;
-  void *local_7c;
-  int local_78;
-  float local_74;
-  float local_70;
-  uint *local_6c;
-  float local_68;
-  float local_64;
-  float local_60;
-  float local_5c;
-  uint local_58;
-  uint uStack_54;
-  uint local_50;
-  uint uStack_4c;
-  uint local_48;
-  uint uStack_44;
-  uint local_40;
-  uint uStack_3c;
-  float local_38;
-  float local_34;
-  float local_30;
-  float local_2c;
-  undefined8 local_28;
-  undefined8 local_20;
-  undefined8 local_18;
-  undefined8 local_10;
-  uint local_8;
-  
-  local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  local_84 = (int)((int)param_1 + -0x4000 + ((int)param_1 + -0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
-  local_80 = (int)((param_2 - 0x4000) + ((int)(param_2 - 0x4000) >> 0x1f & 0x3fffU)) >> 0xe;
-  local_68 = (float)((int)((int)param_1 + 0x4000 + ((int)param_1 + 0x4000 >> 0x1f & 0x3fffU)) >> 0xe
-                    );
-  fVar5 = (float)((int)(((int)(param_2 + 0x4000) >> 0x1f & 0x3fffU) + param_2 + 0x4000) >> 0xe);
-  local_94 = param_1;
-  local_98 = param_2;
-  local_7c = this;
-  local_74 = fVar5;
-  fVar7 = valueNoise2D(SUB84((double)(int)param_2 * 0.0005,0),
-                       (int)((ulonglong)((double)(int)param_2 * 0.0005) >> 0x20),3423.0);
-  local_70 = (float)fVar7;
-  local_88 = local_70 * 3.0 * 256.0;
-  local_60 = local_88;
-  fVar7 = valueNoise2D(SUB84((double)(int)param_1 * 0.0005,0),
-                       (int)((ulonglong)((double)(int)param_1 * 0.0005) >> 0x20),23421.0);
-  fVar8 = local_94;
-  uVar1 = local_98;
-  local_5c = (float)fVar7 * 3.0 * 256.0;
-  puVar6 = (uint *)0x0;
-  local_a4 = (uint *)0x0;
-  local_70 = (float)(int)((float)(int)param_1 + local_88);
-  local_8c = 0;
-  local_88 = (float)(int)((float)(int)local_98 + local_5c);
-  local_a0 = local_84;
-  if (local_84 <= (int)local_68) {
-    local_90 = local_84 * 0x400 + 0x10002f;
-    local_78 = local_90;
-    do {
-      local_9c = local_80;
-      if (local_80 <= (int)fVar5) {
-        do {
-          if ((((local_a0 < 0) || (local_9c < 0)) || (0x20002e < local_78)) ||
-             ((0x3ff < local_9c ||
-              (local_6c = *(uint **)((int)this + (local_9c + local_78) * 4), local_6c == (uint *)0x0
-              )))) goto LAB_004f8b21;
-          local_48 = *local_6c;
-          uStack_44 = ((int)local_48 >> 0x1f) << 0x10 | local_48 >> 0x10;
-          local_48 = local_48 * 0x10000;
-          local_40 = local_6c[1];
-          uStack_3c = ((int)local_40 >> 0x1f) << 0x10 | local_40 >> 0x10;
-          local_40 = local_40 * 0x10000;
-          local_18 = CONCAT44((uStack_44 -
-                              (((int)local_70 >> 0x1f) << 0x10 | (uint)local_70 >> 0x10)) -
-                              (uint)(local_48 < (uint)((int)local_70 * 0x10000)),
-                              local_48 + (int)local_70 * -0x10000);
-          local_10 = CONCAT44((uStack_3c -
-                              (((int)local_88 >> 0x1f) << 0x10 | (uint)local_88 >> 0x10)) -
-                              (uint)(local_40 < (uint)((int)local_88 * 0x10000)),
-                              local_40 + (int)local_88 * -0x10000);
-          local_64 = (float)local_10;
-          local_30 = (float)local_18 * 1.5258789e-05;
-          local_2c = local_64 * 1.5258789e-05;
-          iVar2 = (int)(local_2c * local_2c + local_30 * local_30);
-          if ((local_a4 == (uint *)0x0) || (iVar2 < local_8c)) {
-            local_a4 = local_6c;
-            local_8c = iVar2;
-          }
-          local_9c = local_9c + 1;
-          fVar5 = local_74;
-          this = local_7c;
-          puVar6 = local_a4;
-        } while (local_9c <= (int)local_74);
-      }
-      local_a0 = local_a0 + 1;
-      local_78 = local_78 + 0x400;
-    } while (local_a0 <= (int)local_68);
-    if (puVar6 != (uint *)0x0) {
-      fVar10 = 0.0;
-      fVar9 = 0.0;
-      do {
-        local_78 = local_80;
-        if (local_80 <= (int)fVar5) {
-          do {
-            if (((local_84 < 0) || (local_78 < 0)) ||
-               ((0x20002e < local_90 ||
-                ((0x3ff < local_78 ||
-                 (local_6c = *(uint **)((int)this + (local_78 + local_90) * 4),
-                 local_6c == (uint *)0x0)))))) goto LAB_004f8b21;
-            local_58 = *local_6c;
-            uStack_54 = ((int)local_58 >> 0x1f) << 0x10 | local_58 >> 0x10;
-            local_58 = local_58 * 0x10000;
-            local_50 = local_6c[1];
-            uStack_4c = ((int)local_50 >> 0x1f) << 0x10 | local_50 >> 0x10;
-            local_50 = local_50 * 0x10000;
-            local_28 = CONCAT44((uStack_54 -
-                                (((int)local_70 >> 0x1f) << 0x10 | (uint)local_70 >> 0x10)) -
-                                (uint)(local_58 < (uint)((int)local_70 * 0x10000)),
-                                local_58 + (int)local_70 * -0x10000);
-            local_20 = CONCAT44((uStack_4c -
-                                (((int)local_88 >> 0x1f) << 0x10 | (uint)local_88 >> 0x10)) -
-                                (uint)(local_50 < (uint)((int)local_88 * 0x10000)),
-                                local_50 + (int)local_88 * -0x10000);
-            local_64 = (float)local_20;
-            local_38 = (float)local_28 * 1.5258789e-05;
-            local_34 = local_64 * 1.5258789e-05;
-            fVar5 = (float)((int)(local_34 * local_34 + local_38 * local_38) - local_8c) * 5e-07;
-            if (1.0 < fVar5) {
-              fVar5 = 1.0;
-            }
-            fVar10 = fVar10 + (1.0 - fVar5);
-            local_78 = local_78 + 1;
-            fVar9 = fVar9 + (float)local_6c[3] * (1.0 - fVar5);
-            fVar5 = local_74;
-            this = local_7c;
-          } while (local_78 <= (int)local_74);
-        }
-        local_84 = local_84 + 1;
-        local_90 = local_90 + 0x400;
-        this = local_7c;
-      } while (local_84 <= (int)local_68);
-      if (0.0 < fVar10) {
-        local_74 = fVar9 / fVar10;
-        uVar3 = (int)local_98 >> 0x1f;
-        uVar4 = (int)local_94 >> 0x1f;
-        local_68 = local_74;
-        puVar6 = (uint *)World_getTileAtCoords(local_7c,(int)((int)local_94 + (uVar4 & 0x7ff)) >> 0xb,
-                                      (int)(local_98 + (uVar3 & 0x7ff)) >> 0xb);
-        if (((local_74 < 0.2) && (puVar6 != (uint *)0x0)) && (puVar6[6] == 3)) {
-          local_b0 = uVar3 << 0x10 | uVar1 >> 0x10;
-          local_b4 = uVar1 << 0x10;
-          local_a8 = uVar4 << 0x10 | (uint)fVar8 >> 0x10;
-          local_ac = (int)fVar8 << 0x10;
-          fVar7 = World_objectFalloffWeight(puVar6,&local_ac,&local_b4);
-          local_94 = (float)fVar7;
-          fVar5 = 1.0 - local_94;
-          fVar8 = 0.0;
-          if (0.0 < fVar5) {
-            fVar8 = fVar5 * fVar5;
-          }
-          local_68 = fVar8 * 0.3 + local_74;
-          if (1.0 < local_68) {
-            local_68 = 1.0;
-          }
-        }
-        __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-        return;
-      }
-    }
-  }
-LAB_004f8b21:
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* Global::World_humidityBlend @ 004f8b40 */
-
-void __thiscall World_humidityBlend(void *this,int param_1,int param_2)
-
-{
-  uint uVar1;
-  uint uVar2;
-  uint uVar3;
-  int iVar4;
-  int iVar5;
-  uint uVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  int iVar12;
-  int iVar13;
-  uint *puVar14;
-  float10 fVar15;
-  float10 fVar16;
-  float fVar17;
-  float fVar18;
-  uint *local_90;
-  int local_84;
-  undefined4 local_7c;
-  undefined8 local_28;
-  undefined8 local_20;
-  undefined8 local_18;
-  undefined8 local_10;
-  
-  uVar3 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  local_7c = (int)(param_1 + -0x4000 + (param_1 + -0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
-  iVar4 = (int)(param_2 + -0x4000 + (param_2 + -0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
-  iVar5 = (int)(param_1 + 0x4000 + (param_1 + 0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
-  iVar13 = (int)((param_2 + 0x4000 >> 0x1f & 0x3fffU) + param_2 + 0x4000) >> 0xe;
-  fVar15 = valueNoise2D(SUB84((double)param_2 * 0.0005,0),
-                        (int)((ulonglong)((double)param_2 * 0.0005) >> 0x20),3423.0);
-  fVar16 = valueNoise2D(SUB84((double)param_1 * 0.0005,0),
-                        (int)((ulonglong)((double)param_1 * 0.0005) >> 0x20),23421.0);
-  uVar6 = (uint)((float)param_1 + (float)fVar15 * 3.0 * 256.0);
-  puVar14 = (uint *)0x0;
-  local_90 = (uint *)0x0;
-  local_84 = 0;
-  uVar7 = (uint)((float)param_2 + (float)fVar16 * 3.0 * 256.0);
-  if (local_7c <= iVar5) {
-    iVar11 = local_7c * 0x400 + 0x10002f;
-    iVar10 = iVar11;
-    iVar12 = local_7c;
-    do {
-      for (iVar9 = iVar4; iVar9 <= iVar13; iVar9 = iVar9 + 1) {
-        if ((((iVar12 < 0) || (iVar9 < 0)) || (0x20002e < iVar10)) ||
-           ((0x3ff < iVar9 ||
-            (puVar14 = *(uint **)((int)this + (iVar9 + iVar10) * 4), puVar14 == (uint *)0x0))))
-        goto LAB_004f8ff6;
-        uVar1 = *puVar14;
-        uVar2 = puVar14[1];
-        local_28 = CONCAT44(((((int)uVar1 >> 0x1f) << 0x10 | uVar1 >> 0x10) -
-                            (((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10)) -
-                            (uint)(uVar1 * 0x10000 < uVar6 * 0x10000),
-                            uVar1 * 0x10000 + uVar6 * -0x10000);
-        local_20 = CONCAT44(((((int)uVar2 >> 0x1f) << 0x10 | uVar2 >> 0x10) -
-                            (((int)uVar7 >> 0x1f) << 0x10 | uVar7 >> 0x10)) -
-                            (uint)(uVar2 * 0x10000 < uVar7 * 0x10000),
-                            uVar2 * 0x10000 + uVar7 * -0x10000);
-        iVar8 = (int)((float)local_20 * 1.5258789e-05 * (float)local_20 * 1.5258789e-05 +
-                     (float)local_28 * 1.5258789e-05 * (float)local_28 * 1.5258789e-05);
-        if ((local_90 == (uint *)0x0) || (iVar8 < local_84)) {
-          local_90 = puVar14;
-          local_84 = iVar8;
-        }
-        puVar14 = local_90;
-      }
-      iVar12 = iVar12 + 1;
-      iVar10 = iVar10 + 0x400;
-    } while (iVar12 <= iVar5);
-    if (puVar14 != (uint *)0x0) {
-      fVar18 = 0.0;
-      iVar10 = iVar4;
-      do {
-        for (; iVar10 <= iVar13; iVar10 = iVar10 + 1) {
-          if (((local_7c < 0) || (iVar10 < 0)) ||
-             ((0x20002e < iVar11 ||
-              ((0x3ff < iVar10 ||
-               (puVar14 = *(uint **)((int)this + (iVar10 + iVar11) * 4), puVar14 == (uint *)0x0)))))
-             ) goto LAB_004f8ff6;
-          uVar1 = *puVar14;
-          uVar2 = puVar14[1];
-          local_18 = CONCAT44(((((int)uVar1 >> 0x1f) << 0x10 | uVar1 >> 0x10) -
-                              (((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10)) -
-                              (uint)(uVar1 * 0x10000 < uVar6 * 0x10000),
-                              uVar1 * 0x10000 + uVar6 * -0x10000);
-          local_10 = CONCAT44(((((int)uVar2 >> 0x1f) << 0x10 | uVar2 >> 0x10) -
-                              (((int)uVar7 >> 0x1f) << 0x10 | uVar7 >> 0x10)) -
-                              (uint)(uVar2 * 0x10000 < uVar7 * 0x10000),
-                              uVar2 * 0x10000 + uVar7 * -0x10000);
-          fVar17 = (float)((int)((float)local_10 * 1.5258789e-05 * (float)local_10 * 1.5258789e-05 +
-                                (float)local_18 * 1.5258789e-05 * (float)local_18 * 1.5258789e-05) -
-                          local_84) * 5e-07;
-          if (1.0 < fVar17) {
-            fVar17 = 1.0;
-          }
-          fVar18 = fVar18 + (1.0 - fVar17);
-        }
-        local_7c = local_7c + 1;
-        iVar11 = iVar11 + 0x400;
-        iVar10 = iVar4;
-      } while (local_7c <= iVar5);
-      if (0.0 < fVar18) {
-        __security_check_cookie(uVar3 ^ (uint)&stack0xfffffffc);
-        return;
-      }
-    }
-  }
-LAB_004f8ff6:
-  __security_check_cookie(uVar3 ^ (uint)&stack0xfffffffc);
-  return;
 }
 
 
@@ -61078,6 +60492,10 @@ lib_fn_4f9450(void *this,undefined4 *param_1,float param_2,float param_3,int par
 
 
 
+/* [AUDIT] proposed: World_rockGroundBaseColor  (confidence: high)
+ * purpose: Rock/ground base color helper (matches cw_color.rock_base)
+ * vars: 
+ */
 /* Global::World_rockGroundBaseColor @ 004fae90 */
 
 void __thiscall
@@ -69782,6 +69200,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -69805,6 +69224,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -69831,6 +69251,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -69854,6 +69275,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -69880,6 +69302,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -69903,6 +69326,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -69929,6 +69353,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -69952,6 +69377,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -69978,6 +69404,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -70001,6 +69428,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -70027,6 +69455,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -70050,6 +69479,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -70076,6 +69506,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -70099,6 +69530,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -70125,6 +69557,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar7 = (int)local_194 - (int)local_19c >> 2;
@@ -70148,6 +69581,7 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar7 = (int)local_194 - (int)local_19c >> 2;
@@ -70231,6 +69665,7 @@ LAB_00509f85:
     iVar8 = std_list_insertNode1(puVar9,(undefined4 *)puVar9[1],&local_1ec);
     if (puVar13[2] == 0x15555554) {
 LAB_0050af9c:
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     puVar13[2] = puVar13[2] + 1;
@@ -70248,6 +69683,7 @@ LAB_0050af9c:
     local_8._0_1_ = 1;
     iVar8 = std_list_insertNode1(puVar9,(undefined4 *)puVar9[1],&local_208);
     if (puVar13[2] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     puVar13[2] = puVar13[2] + 1;
@@ -70304,6 +69740,7 @@ LAB_0050af9c:
     puVar9 = (undefined4 *)local_1cc[1];
     iVar8 = std_list_insertNode1(puVar9,(undefined4 *)puVar9[1],local_218 + 2);
     if (puVar13[2] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     puVar13[2] = puVar13[2] + 1;
@@ -70323,6 +69760,7 @@ LAB_0050af9c:
     puVar3 = local_1b8;
     piVar17 = local_1d0;
     if (puVar13[2] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     puVar13[2] = puVar13[2] + 1;
@@ -70556,159 +69994,6 @@ LAB_0050b851:
   ExceptionList = local_10;
   __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
   return;
-}
-
-
-
-
-/* Global::World_generateRegionSite @ 0050b870 */
-
-int * __thiscall World_generateRegionSite(void *this,int param_1,int param_2)
-
-{
-  int iVar1;
-  int *piVar2;
-  int iVar3;
-  uint uVar4;
-  int iVar5;
-  bool bVar6;
-  bool bVar7;
-  float10 fVar8;
-  float10 fVar9;
-  float fVar10;
-  double dVar11;
-  double dVar12;
-  
-  if ((((param_1 < 0) || (param_2 < 0)) || (0x3ff < param_1)) || (0x3ff < param_2)) {
-    return (int *)0x0;
-  }
-  iVar1 = param_1 * 0x400 + param_2;
-  piVar2 = *(int **)((int)this + iVar1 * 4 + 0x4000bc);
-  if (piVar2 != (int *)0x0) {
-    return piVar2;
-  }
-  srand(param_1 + 0x108a + param_2 * 0x400 + *(int *)((int)this + 0x800188) * 3);
-  piVar2 = operator_new(0x1c);
-  piVar2[5] = param_2 * 0x400 + param_1 + *(int *)((int)this + 0x800188);
-  *(undefined1 *)(piVar2 + 2) = 0;
-  iVar3 = (int)*(float *)((int)this + 0x8000f0) +
-          ((int)*(float *)((int)this + 0x8000f0) >> 0x1f & 0xffU);
-  if ((param_1 != (int)((iVar3 >> 8) + (iVar3 >> 0x1f & 0x3fU)) >> 6) ||
-     (bVar7 = true,
-     iVar3 = (int)*(float *)((int)this + 0x8000f4) +
-             ((int)*(float *)((int)this + 0x8000f4) >> 0x1f & 0xffU),
-     param_2 != (int)((iVar3 >> 8) + (iVar3 >> 0x1f & 0x3fU)) >> 6)) {
-    bVar7 = false;
-  }
-  uVar4 = rand();
-  uVar4 = uVar4 & 0x80000001;
-  bVar6 = uVar4 == 0;
-  if ((int)uVar4 < 0) {
-    bVar6 = (uVar4 - 1 | 0xfffffffe) == 0xffffffff;
-  }
-  if ((bVar6) || (bVar7)) {
-    iVar3 = rand();
-    piVar2[3] = (int)(((float)iVar3 * 0.4) / 32767.0 + 0.3);
-    iVar3 = rand();
-    piVar2[4] = (int)(((float)iVar3 * 0.4) / 32767.0 + 0.4);
-    if (bVar7) {
-      iVar3 = (int)*(float *)((int)this + 0x8000f0);
-      piVar2[1] = (int)*(float *)((int)this + 0x8000f4);
-      goto LAB_0050bb29;
-    }
-    iVar3 = rand();
-    if (iVar3 % 10 == 0) {
-      *(undefined1 *)(piVar2 + 2) = 1;
-      iVar3 = rand();
-      piVar2[4] = (int)(((float)iVar3 * 0.2) / 32767.0 + 0.8);
-      iVar3 = rand();
-      piVar2[3] = (int)(((float)iVar3 * 0.5) / 32767.0);
-    }
-  }
-  else {
-    uVar4 = rand();
-    uVar4 = uVar4 & 0x80000001;
-    bVar6 = uVar4 == 0;
-    if ((int)uVar4 < 0) {
-      bVar6 = (uVar4 - 1 | 0xfffffffe) == 0xffffffff;
-    }
-    if (bVar6) {
-      iVar3 = rand();
-      fVar10 = ((float)iVar3 * 0.1) / 32767.0;
-    }
-    else {
-      iVar3 = rand();
-      fVar10 = ((float)iVar3 * 0.1) / 32767.0 + 0.9;
-    }
-    piVar2[3] = (int)fVar10;
-    uVar4 = rand();
-    uVar4 = uVar4 & 0x80000001;
-    bVar6 = uVar4 == 0;
-    if ((int)uVar4 < 0) {
-      bVar6 = (uVar4 - 1 | 0xfffffffe) == 0xffffffff;
-    }
-    if (bVar6) {
-      iVar3 = rand();
-      piVar2[4] = (int)(((float)iVar3 * 0.1) / 32767.0);
-    }
-    else {
-      iVar3 = rand();
-      piVar2[4] = (int)(((float)iVar3 * 0.1) / 32767.0 + 0.9);
-    }
-  }
-  iVar3 = rand();
-  iVar5 = rand();
-  piVar2[1] = param_2 * 0x4000 + iVar3 % 0x3c00 + 0x200;
-  iVar3 = param_1 * 0x4000 + 0x200 + iVar5 % 0x3c00;
-LAB_0050bb29:
-  *piVar2 = iVar3;
-  *piVar2 = (iVar3 + (iVar3 >> 0x1f & 0x7ffU) & 0xfffff800) + 0x400;
-  piVar2[1] = (piVar2[1] + (piVar2[1] >> 0x1f & 0x7ffU) & 0xfffff800) + 0x400;
-  dVar12 = (double)*(int *)((int)this + 0x800188);
-  dVar11 = (double)param_1 * 1.4 + dVar12;
-  fVar8 = valueNoise2D(SUB84(dVar11,0),(int)((ulonglong)dVar11 >> 0x20),
-                       (double)param_2 * 1.4 + dVar12 + 843.0);
-  dVar11 = (double)param_1 * 4.0 + dVar12;
-  fVar9 = valueNoise2D(SUB84(dVar11,0),(int)((ulonglong)dVar11 >> 0x20),
-                       (double)param_2 * 4.0 + dVar12 + 843.0);
-  iVar3 = (int)((((float)fVar8 + 1.0) * 100.0 - 70.0) + (float)fVar9 * 30.0);
-  piVar2[6] = iVar3;
-  if (iVar3 < 1) {
-    *(undefined1 *)(piVar2 + 2) = 0;
-    if (bVar7) {
-      iVar3 = rand();
-      piVar2[6] = iVar3 % 0x32 + 0x14;
-      *(int **)((int)this + iVar1 * 4 + 0x4000bc) = piVar2;
-      return piVar2;
-    }
-    piVar2[6] = piVar2[6] + -100;
-    iVar3 = piVar2[6];
-    if (iVar3 < -100) {
-      iVar3 = -100;
-    }
-    piVar2[6] = iVar3;
-    uVar4 = rand();
-    uVar4 = uVar4 & 0x80000001;
-    bVar7 = uVar4 == 0;
-    if ((int)uVar4 < 0) {
-      bVar7 = (uVar4 - 1 | 0xfffffffe) == 0xffffffff;
-    }
-    if (bVar7) {
-      iVar3 = rand();
-      piVar2[3] = (int)(((float)iVar3 * 0.1) / 32767.0 + 0.9);
-      iVar3 = rand();
-      fVar10 = ((float)iVar3 * 0.1) / 32767.0 + 0.9;
-    }
-    else {
-      iVar3 = rand();
-      piVar2[3] = (int)(((float)iVar3 * 0.4) / 32767.0 + 0.3);
-      iVar3 = rand();
-      fVar10 = ((float)iVar3 * 0.4) / 32767.0 + 0.4;
-    }
-    piVar2[4] = (int)fVar10;
-  }
-  *(int **)((int)this + iVar1 * 4 + 0x4000bc) = piVar2;
-  return piVar2;
 }
 
 
@@ -71430,6 +70715,7 @@ LAB_0050d119:
             iVar19 = *(int *)(iVar9 + 100);
             if (iVar19 == 0x3fffffe) {
 LAB_0050d1b6:
+                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             *(int *)(iVar9 + 100) = iVar19 + 1;
@@ -71511,6 +70797,7 @@ LAB_0050cc3f:
                       iVar9 = ((int)pfVar18 - (int)pfVar20) / 0xc;
                       if (iVar9 == 0x15555555) {
 LAB_0050cfb3:
+                    /* WARNING: Subroutine does not return */
                         std::_Xlength_error("vector<T> too long");
                       }
                       uVar7 = iVar9 + 1;
@@ -71886,6 +71173,7 @@ void __thiscall lib_fn_50d260(void *this,int param_1)
           local_8 = 0xffffffff;
           iVar19 = std_list_insertNode1((undefined4 *)local_138,*(undefined4 **)(local_138 + 4),&local_134);
           if (puVar8[2] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           puVar8[2] = puVar8[2] + 1;
@@ -71903,6 +71191,7 @@ void __thiscall lib_fn_50d260(void *this,int param_1)
           local_8 = 0xffffffff;
           uVar10 = std_list_insertNode1(local_134,(undefined4 *)local_134[1],&local_138);
           if (puVar8[2] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           puVar8[2] = puVar8[2] + 1;
@@ -72139,6 +71428,7 @@ LAB_0050db2f:
             iVar6 = std_map_insert_node_0x28b(local_70,(undefined4 *)local_70[1],&local_64);
             iVar7 = *(int *)(iVar16 + 100);
             if (iVar7 == 0x3fffffe) {
+                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             *(int *)(iVar16 + 100) = iVar7 + 1;
@@ -72349,1298 +71639,6 @@ LAB_0050e05a:
   ExceptionList = local_10;
   __security_check_cookie(local_1c[2] ^ (uint)&stack0xfffffffc);
   return;
-}
-
-
-
-
-/* World_generateRegionFeatures @ 0050e080 */
-
-/* WARNING: Removing unreachable block (ram,0x0050eac3) */
-
-void __thiscall
-World_generateRegionFeatures
-          (basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_> *this,int param_1,
-          int param_2)
-
-{
-  float *pfVar1;
-  uint *puVar2;
-  longlong lVar3;
-  float *pfVar4;
-  basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_> *this_00;
-  char cVar5;
-  uint uVar6;
-  uint *puVar7;
-  float *pfVar8;
-  basic_ostream<char,std::char_traits<char>_> *pbVar9;
-  undefined4 *puVar10;
-  undefined4 uVar11;
-  undefined4 *puVar12;
-  undefined4 extraout_ECX;
-  float *pfVar13;
-  uint uVar14;
-  undefined4 extraout_EDX;
-  int iVar15;
-  basic_ostream<char,struct_std::char_traits<char>_> *pbVar16;
-  undefined4 *puVar17;
-  int iVar18;
-  uint uVar19;
-  undefined **ppuVar20;
-  code *pcVar21;
-  float fVar22;
-  basic_ostream<char,struct_std::char_traits<char>_> *pbVar23;
-  int iVar24;
-  uint uVar25;
-  float fVar26;
-  undefined4 *puVar27;
-  float10 fVar28;
-  double dVar29;
-  ulonglong uVar30;
-  undefined8 uVar31;
-  undefined8 uVar32;
-  char *in_stack_fffffcac;
-  basic_ostream<char,struct_std::char_traits<char>_> *pbVar33;
-  char *pcVar34;
-  float fVar35;
-  undefined1 auStack_324 [4];
-  int iStack_320;
-  float local_318;
-  undefined4 local_314;
-  float local_310;
-  uint local_30c;
-  undefined4 *local_308;
-  char cStack_301;
-  float local_300;
-  undefined **local_2fc;
-  basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_> *local_2f8;
-  uint local_2f4;
-  undefined4 *local_2f0;
-  undefined **local_2ec;
-  double local_2e8;
-  float *local_2dc;
-  int local_2d8;
-  int local_2d4;
-  uint *local_2d0;
-  undefined **local_2cc;
-  uint local_2c8;
-  float *local_2c4;
-  float *local_2c0;
-  undefined4 local_2bc;
-  int *local_2b8;
-  int *local_2b4;
-  int *local_2b0;
-  int local_2ac;
-  undefined **local_2a8;
-  uint local_2a4;
-  float local_2a0;
-  float local_29c;
-  basic_ostream<char,struct_std::char_traits<char>_> *local_298;
-  basic_ostream<char,struct_std::char_traits<char>_> *local_294;
-  basic_ostream<char,struct_std::char_traits<char>_> *local_290;
-  float local_28c;
-  float local_288;
-  float local_284;
-  float local_280;
-  float local_27c;
-  float local_278;
-  int local_274;
-  float local_270;
-  uint local_26c;
-  float local_268;
-  uint local_264;
-  void *pvStack_260;
-  undefined4 uStack_25c;
-  undefined4 uStack_258;
-  undefined4 uStack_254;
-  float local_240;
-  uint local_23c;
-  double local_238;
-  undefined8 local_230;
-  undefined **local_228;
-  uint local_224;
-  int local_21c;
-  undefined **appuStack_218 [2];
-  undefined **appuStack_210 [4];
-  undefined **appuStack_200 [2];
-  basic_iostream<char,std::char_traits<char>_> abStack_1f8 [4];
-  undefined4 *puStack_1f4;
-  undefined4 *puStack_1f0;
-  undefined4 *puStack_1e0;
-  undefined4 uStack_1d8;
-  undefined4 uStack_1d4;
-  undefined4 *puStack_1d0;
-  undefined4 uStack_1c8;
-  uint uStack_1c4;
-  code *pcStack_1c0;
-  basic_ios<char,std::char_traits<char>_> abStack_1b0 [36];
-  int iStack_18c;
-  undefined **appuStack_188 [3];
-  int iStack_17c;
-  undefined **appuStack_178 [2];
-  undefined **appuStack_170 [4];
-  undefined **appuStack_160 [2];
-  basic_iostream<char,std::char_traits<char>_> local_158 [4];
-  undefined4 *puStack_154;
-  undefined4 *local_150;
-  undefined4 *puStack_140;
-  undefined4 uStack_138;
-  undefined4 uStack_134;
-  undefined4 *puStack_130;
-  undefined4 uStack_128;
-  uint uStack_124;
-  code *pcStack_120;
-  basic_ios<char,std::char_traits<char>_> abStack_110 [76];
-  undefined1 auStack_c4 [28];
-  undefined1 auStack_a8 [12];
-  int local_9c;
-  float fStack_98;
-  float local_94;
-  int iStack_90;
-  int local_8c;
-  int iStack_88;
-  float local_84;
-  float local_80;
-  int iStack_7c;
-  undefined **local_78;
-  int iStack_74;
-  undefined **local_70;
-  uint uStack_6c;
-  float local_68;
-  undefined **local_64;
-  int iStack_60;
-  void *local_5c;
-  float local_58;
-  uint local_54;
-  uint local_50;
-  uint uStack_48;
-  void *apvStack_34 [2];
-  undefined4 uStack_2c;
-  uint uStack_20;
-  uint local_1c;
-  void *local_14;
-  undefined1 *puStack_10;
-  undefined4 local_c;
-  
-  local_c = 0xffffffff;
-  puStack_10 = &LAB_00555c01;
-  local_14 = ExceptionList;
-  local_1c = DAT_00583cc8 ^ (uint)auStack_324;
-  ExceptionList = &local_14;
-  local_2d4 = param_1;
-  local_2d8 = param_2;
-  local_278 = 0.0;
-  local_2f8 = this;
-  if ((((-1 < param_1) && (-1 < param_2)) && (param_1 < 0x400)) &&
-     ((param_2 < 0x400 &&
-      (local_274 = param_1 * 0x400 + param_2, *(int *)(this + local_274 * 4 + 0xbc) == 0)))) {
-    iVar24 = -2;
-    do {
-      iVar18 = -2;
-      do {
-        World_generateRegionSite(this,local_2d4 + iVar24,local_2d8 + iVar18);
-        iVar15 = local_2d8;
-        iVar18 = iVar18 + 1;
-      } while (iVar18 < 3);
-      iVar24 = iVar24 + 1;
-    } while (iVar24 < 3);
-    srand(*(int *)(this + 0x800188) + local_2d8 * 0x400 + local_2d4);
-    local_308 = operator_new(0x15a28);
-    local_c = 0;
-    if (local_308 == (undefined4 *)0x0) {
-      local_2f0 = (undefined4 *)0x0;
-    }
-    else {
-      local_2f0 = cube::Region::ctor_0(local_308);
-    }
-    puVar17 = local_2f0;
-    local_c = 0xffffffff;
-    iVar24 = World_featureTier(local_2d4,iVar15);
-    pcVar21 = rand_exref;
-    puVar17[3] = iVar24;
-    puVar17[4] = 0;
-    if (4 < iVar24) {
-      iVar24 = rand();
-      puVar17[4] = iVar24 % 5;
-    }
-    uVar6 = rand();
-    uVar6 = uVar6 & 0x80000003;
-    if ((int)uVar6 < 0) {
-      uVar6 = (uVar6 - 1 | 0xfffffffc) + 1;
-    }
-    puVar17[5] = uVar6;
-    local_2ac = rand();
-    local_2ac = local_2ac % 10000;
-    puVar7 = *(uint **)(this + local_274 * 4 + 0x4000bc);
-    local_2d0 = puVar7;
-    if (0.81 < (float)puVar7[4]) {
-      uVar6 = rand();
-      uVar6 = uVar6 & 0x80000001;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xfffffffe) + 1;
-      }
-      puVar17[5] = uVar6 + 4;
-    }
-    local_310 = 1.4013e-45;
-    World_featureCountRange(puVar7,&local_310,&local_21c);
-    local_2c4 = (float *)0x0;
-    local_2c0 = (float *)0x0;
-    local_2bc = 0;
-    local_54 = *puVar7;
-    local_50 = puVar7[1];
-    local_c = 1;
-    local_228 = (undefined **)
-                ((int)(((int)local_54 >> 0x1f & 0x7ffU) + local_54) >> 0xb & 0x80000007);
-    if ((int)local_228 < 0) {
-      local_228 = (undefined **)(((int)local_228 - 1U | 0xfffffff8) + 1);
-    }
-    uStack_6c = (int)(local_50 + ((int)local_50 >> 0x1f & 0x7ffU)) >> 0xb & 0x80000007;
-    if ((int)uStack_6c < 0) {
-      uStack_6c = (uStack_6c - 1 | 0xfffffff8) + 1;
-    }
-    local_230 = (double)CONCAT44(local_230._4_4_,uStack_6c);
-    local_300 = (float)(local_2d8 << 0xe);
-    local_2c8 = local_2d4 * 0x4000;
-    local_2fc = (undefined **)0x0;
-    local_314 = local_2c8 + 0x800;
-    local_2a8 = (undefined **)0x0;
-    pfVar8 = (float *)(puVar17 + 0x500a);
-    local_70 = local_228;
-    do {
-      local_2f4 = (int)local_300 + 0x800;
-      local_30c = 0;
-      local_2ec = (undefined **)0x0;
-      do {
-        puVar7 = local_2d0;
-        local_2dc = pfVar8;
-        if (((*(int *)(local_2f8 + 0xa4) == 0) || (local_2fc != local_228)) ||
-           (local_30c != (int)local_230)) {
-          puVar7 = (uint *)World_findNearestEntityInRegion(local_2f8,local_314 - 0x400,local_2f4 - 0x400);
-          if (puVar7 == local_2d0) {
-            uVar6 = (*pcVar21)();
-            uVar6 = uVar6 & 0x800000ff;
-            if ((int)uVar6 < 0) {
-              uVar6 = (uVar6 - 1 | 0xffffff00) + 1;
-            }
-            iVar24 = (int)local_300 >> 0x1f;
-            *pfVar8 = (float)(int)(uVar6 + 0x200);
-            local_280 = (float)(int)(uVar6 + 0x200) * 65536.0;
-            iVar18 = (int)local_2ec >> 0x1f;
-            uVar6 = (uint)local_300 >> 0x10;
-            uVar19 = (uint)local_2ec >> 0x10;
-            uVar14 = (int)local_300 * 0x10000;
-            uVar25 = (int)local_2ec * 0x10000;
-            uVar30 = ftol2_round();
-            lVar3 = uVar30 + CONCAT44((iVar18 << 0x10 | uVar19) + (iVar24 << 0x10 | uVar6) +
-                                      (uint)CARRY4(uVar25,uVar14),uVar25 + uVar14) + 0x1000000;
-            local_2a0 = (float)((ulonglong)lVar3 >> 0x20);
-            local_318 = *local_2dc + 256.0;
-            iVar24 = rand();
-            local_288 = (((float)iVar24 * (2048.0 - local_318 * 2.0)) / 32767.0) * 65536.0;
-            uVar30 = ftol2_round();
-            local_29c = local_318 * 65536.0;
-            lVar3 = uVar30 + CONCAT44(local_2a0,(int)lVar3);
-            local_308 = (undefined4 *)((ulonglong)lVar3 >> 0x20);
-            local_2e8 = (double)CONCAT44(local_2e8._4_4_,(int)lVar3);
-            iVar24 = (int)local_2c8 >> 0x1f;
-            iVar18 = (int)local_2a8 >> 0x1f;
-            uVar6 = local_2c8 >> 0x10;
-            uVar19 = (uint)local_2a8 >> 0x10;
-            uVar14 = local_2c8 * 0x10000;
-            uVar25 = (int)local_2a8 * 0x10000;
-            uVar30 = ftol2_round();
-            pcVar21 = rand_exref;
-            lVar3 = uVar30 + CONCAT44((iVar18 << 0x10 | uVar19) + (iVar24 << 0x10 | uVar6) +
-                                      (uint)CARRY4(uVar25,uVar14),uVar25 + uVar14);
-            local_2a0 = (float)((ulonglong)lVar3 >> 0x20);
-            iVar24 = rand();
-            pfVar8 = local_2dc;
-            local_2cc = (undefined **)
-                        ((((float)iVar24 * (2048.0 - (*local_2dc + 256.0) * 2.0)) / 32767.0) *
-                        65536.0);
-            uVar30 = ftol2_round();
-            *(ulonglong *)(pfVar8 + -4) = uVar30 + CONCAT44(local_2a0,(int)lVar3);
-            pfVar8[-2] = local_2e8._0_4_;
-            pfVar8[-1] = (float)local_308;
-            uVar31 = __alldiv((uint)local_2e8._0_4_,(uint)local_308,0x10000,0);
-            uVar32 = __alldiv((uint)pfVar8[-4],(uint)pfVar8[-3],0x10000,0);
-            fVar28 = (float10)World_baseHeightField(local_2f8,(uint)uVar32,(float)uVar31,0);
-            pfVar8[1] = (float)fVar28;
-            pfVar8[5] = local_310;
-            uVar31 = __alldiv((uint)pfVar8[-2],(uint)pfVar8[-1],0x10000,0);
-            uVar32 = __alldiv((uint)pfVar8[-4],(uint)pfVar8[-3],0x10000,0);
-            puVar7 = (uint *)World_findNearestEntityInRegion(local_2f8,(int)uVar32,(int)uVar31);
-            uVar6 = local_30c;
-            if (puVar7 == local_2d0) {
-              local_5c = (void *)(float)((int)local_70 - (int)local_2fc);
-              local_58 = (float)(int)(uStack_6c - local_30c);
-              _local_8c = CONCAT44(uStack_6c - local_30c,(int)local_70 - (int)local_2fc);
-              dVar29 = (double)(local_58 * local_58 + (float)local_5c * (float)local_5c);
-              libm_sse2_sqrt_precise();
-              local_308 = (undefined4 *)(float)dVar29;
-              iVar24 = rand();
-              local_78 = local_2fc;
-              iStack_74 = uVar6;
-              local_68 = (((float)iVar24 * 4.0) / 32767.0 + (float)local_308) - 2.0;
-              local_64 = local_2fc;
-              iStack_60 = uVar6;
-              lib_fn_5286a0(&local_2c4,&local_68);
-            }
-          }
-        }
-        else {
-          pfVar8[2] = 1.4013e-45;
-          pfVar8[3] = (float)local_2f0[5];
-          pfVar8[4] = (float)local_2d0[5];
-          iVar24 = (*pcVar21)();
-          *pfVar8 = (float)(iVar24 % 200 + 0x200);
-          uVar6 = *puVar7;
-          pfVar8[-4] = (float)(uVar6 << 0x10);
-          pfVar8[-3] = (float)(((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10);
-          uVar6 = puVar7[1];
-          pfVar8[-2] = (float)(uVar6 << 0x10);
-          pfVar8[-1] = (float)(((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10);
-          local_238 = (double)CONCAT44(local_238._4_4_,*pfVar8 * 65536.0);
-          uVar30 = ftol2_round();
-          uVar19 = (int)pfVar8[-4] - (int)(float)uVar30;
-          iVar24 = (((int)pfVar8[-3] - (int)(uVar30 >> 0x20)) -
-                   (uint)((uint)pfVar8[-4] < (uint)(float)uVar30)) - (uint)(uVar19 < 0x1000000);
-          local_318 = (float)(local_314 - 0x800);
-          uVar6 = ((int)local_318 >> 0x1f) << 0x10 | (uint)local_318 >> 0x10;
-          if ((iVar24 <= (int)uVar6) &&
-             ((iVar24 < (int)uVar6 || (uVar19 - 0x1000000 < (uint)((int)local_318 * 0x10000))))) {
-            local_240 = ((float)(int)local_318 + *pfVar8 + 256.0) * 65536.0;
-            uVar30 = ftol2_round();
-            *(ulonglong *)(pfVar8 + -4) = uVar30;
-          }
-          local_270 = *pfVar8 * 65536.0;
-          uVar30 = ftol2_round();
-          uVar19 = local_2f4;
-          uVar6 = (int)pfVar8[-2] - (int)(float)uVar30;
-          local_318 = (float)(uVar6 - 0x1000000);
-          iVar24 = (((int)pfVar8[-1] - (int)(uVar30 >> 0x20)) -
-                   (uint)((uint)pfVar8[-2] < (uint)(float)uVar30)) - (uint)(uVar6 < 0x1000000);
-          uVar6 = local_2f4 - 0x800;
-          uVar14 = ((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10;
-          if ((iVar24 <= (int)uVar14) &&
-             ((iVar24 < (int)uVar14 || ((uint)local_318 < uVar6 * 0x10000)))) {
-            local_268 = ((float)(int)(local_2f4 - 0x800) + *pfVar8 + 256.0) * 65536.0;
-            uVar30 = ftol2_round();
-            *(ulonglong *)(pfVar8 + -2) = uVar30;
-          }
-          local_94 = *pfVar8 * 65536.0;
-          uVar30 = ftol2_round();
-          uVar6 = (uint)uVar30 + (int)pfVar8[-4];
-          local_318 = (float)(uVar6 + 0x1000000);
-          iVar24 = (int)(uVar30 >> 0x20) + (int)pfVar8[-3] +
-                   (uint)CARRY4((uint)uVar30,(uint)pfVar8[-4]) + (uint)(0xfeffffff < uVar6);
-          uVar6 = ((int)local_314 >> 0x1f) << 0x10 | local_314 >> 0x10;
-          if (((int)uVar6 <= iVar24) &&
-             (((int)uVar6 < iVar24 || (local_314 << 0x10 < (uint)local_318)))) {
-            local_27c = (((float)(int)local_314 - *pfVar8) - 256.0) * 65536.0;
-            uVar30 = ftol2_round();
-            *(ulonglong *)(pfVar8 + -4) = uVar30;
-          }
-          local_28c = *pfVar8 * 65536.0;
-          uVar30 = ftol2_round();
-          uVar6 = (uint)uVar30 + (int)pfVar8[-2];
-          local_318 = (float)(uVar6 + 0x1000000);
-          iVar24 = (int)(uVar30 >> 0x20) + (int)pfVar8[-1] +
-                   (uint)CARRY4((uint)uVar30,(uint)pfVar8[-2]) + (uint)(0xfeffffff < uVar6);
-          uVar6 = ((int)uVar19 >> 0x1f) << 0x10 | uVar19 >> 0x10;
-          if (((int)uVar6 <= iVar24) &&
-             (((int)uVar6 < iVar24 || (uVar19 << 0x10 < (uint)local_318)))) {
-            local_284 = (((float)(int)uVar19 - *pfVar8) - 256.0) * 65536.0;
-            uVar30 = ftol2_round();
-            *(ulonglong *)(pfVar8 + -2) = uVar30;
-          }
-          uVar31 = __alldiv((uint)pfVar8[-2],(uint)pfVar8[-1],0x10000,0);
-          uVar32 = __alldiv((uint)pfVar8[-4],(uint)pfVar8[-3],0x10000,0);
-          fVar28 = (float10)World_baseHeightField(local_2f8,(uint)uVar32,(float)uVar31,0);
-          local_318 = (float)fVar28;
-          pfVar8[1] = local_318;
-          if (local_318 < 0.0) {
-            pfVar8[1] = 0.0;
-          }
-        }
-        local_2ec = (undefined **)((int)local_2ec + 0x800);
-        local_30c = local_30c + 1;
-        pfVar8 = pfVar8 + 0x1a;
-        local_2f4 = local_2f4 + 0x800;
-      } while ((int)local_2ec < 0x4000);
-      local_2fc = (undefined **)((int)local_2fc + 1);
-      local_2a8 = local_2a8 + 0x200;
-      local_314 = local_314 + 0x800;
-    } while ((int)local_2a8 < 0x4000);
-    local_308 = (undefined4 *)((uint)local_308 & 0xffffff00);
-    local_2dc = pfVar8;
-    lib_fn_4f5cc0(local_2c4,local_2c0,((int)local_2c0 - (int)local_2c4) / 0xc,local_308);
-    local_30c = 0;
-    pfVar8 = local_2c4;
-    pfVar13 = local_2c0;
-    do {
-      puVar17 = local_2f0;
-      uVar6 = local_30c;
-      if (pfVar8 == pfVar13) break;
-      if ((local_30c & 1) != 0) goto LAB_0050f27c;
-      local_2cc = (undefined **)pfVar8[1];
-      fVar22 = pfVar8[2];
-      pfVar1 = pfVar8 + 1;
-      local_2e8 = (double)CONCAT44(local_2e8._4_4_,fVar22);
-      pfVar4 = pfVar13;
-      while (pfVar8 = pfVar8 + 3, pfVar8 != pfVar13) {
-        pfVar1[-1] = *pfVar8;
-        *pfVar1 = pfVar8[1];
-        pfVar1[1] = pfVar8[2];
-        pfVar1 = pfVar1 + 3;
-        pfVar4 = local_2c0;
-      }
-      iVar24 = (int)fVar22 + (int)local_2cc * 8;
-      uVar19 = iVar24 * 0x68;
-      local_2c0 = pfVar4 + -3;
-      if ((float)local_2f0[iVar24 * 0x1a + 0x500b] <= 0.0 &&
-          (float)local_2f0[iVar24 * 0x1a + 0x500b] != 0.0) {
-        local_2f0[iVar24 * 0x1a + 0x500b] = 0;
-      }
-      local_314 = uVar19;
-      formula_inverse((float)(int)local_30c * 0.015625);
-      uVar30 = lib_fn_54a910(extraout_ECX,extraout_EDX);
-      puVar17[iVar24 * 0x1a + 0x500f] = (int)uVar30;
-      pcVar21 = rand_exref;
-      if ((uVar6 >> 1 & 0x80000001) != 0) {
-        puVar17[iVar24 * 0x1a + 0x500c] = 0xe;
-        puVar17[iVar24 * 0x1a + 0x500a] = 0x43160000;
-        uVar31 = __alldiv(puVar17[iVar24 * 0x1a + 0x5008],puVar17[iVar24 * 0x1a + 0x5009],0x10000,0)
-        ;
-        uVar6 = ((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU) & 0xffffff00) + 0x80;
-        uVar14 = ((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10;
-        local_240 = (float)(uVar6 * 0x10000);
-        local_23c = uVar14;
-        uVar31 = __alldiv(*(uint *)(local_314 + 0x14018 + (int)puVar17),
-                          *(uint *)(local_314 + 0x1401c + (int)puVar17),0x10000,0);
-        uVar19 = ((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU) & 0xffffff00) + 0x80;
-        *(uint *)(local_314 + 0x1401c + (int)puVar17) =
-             ((int)uVar19 >> 0x1f) << 0x10 | uVar19 >> 0x10;
-        *(uint *)(local_314 + 0x14018 + (int)puVar17) = uVar19 * 0x10000;
-        *(uint *)(local_314 + 0x14020 + (int)puVar17) = uVar6 * 0x10000;
-        *(uint *)(local_314 + 0x14024 + (int)puVar17) = uVar14;
-        local_2e8 = (double)*(longlong *)(local_314 + 0x14018 + (int)puVar17);
-        local_238 = local_2e8 * 0.00390625;
-        uVar30 = ftol2_round();
-        uVar31 = __alldiv((uint)uVar30,(uint)(uVar30 >> 0x20),0x10000,0);
-        uVar6 = (uint)uVar31 & 0x8000003f;
-        if ((int)uVar6 < 0) {
-          uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-        }
-        local_2e8 = (double)*(longlong *)(local_314 + 0x14020 + (int)puVar17);
-        local_230 = local_2e8 * 0.00390625;
-        uVar30 = ftol2_round();
-        uVar31 = __alldiv((uint)uVar30,(uint)(uVar30 >> 0x20),0x10000,0);
-        uVar19 = (uint)uVar31 & 0x8000003f;
-        if ((int)uVar19 < 0) {
-          uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-        }
-        local_29c = (float)(uVar6 * 0x40 + uVar19);
-        local_2fc = (undefined **)((int)local_29c * 0x10);
-        *(undefined1 *)((int)(local_2fc + 6) + (int)puVar17) = 3;
-        uVar14 = rand();
-        this_00 = local_2f8;
-        uVar14 = uVar14 & 0x80000003;
-        if ((int)uVar14 < 0) {
-          uVar14 = (uVar14 - 1 | 0xfffffffc) + 1;
-        }
-        *(char *)((int)local_2fc + 0x19 + (int)puVar17) = (char)uVar14;
-        local_2cc = (undefined **)((local_2d4 * 0x40 + uVar6) * 0x100 + 0x80);
-        uVar6 = (local_2d8 * 0x40 + uVar19) * 0x100 + 0x80;
-        fVar28 = (float10)World_humidityBlend(local_2f8,(int)local_2cc,uVar6);
-        local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar28);
-        if (0.8 < (float)fVar28) {
-          fVar28 = (float10)World_temperatureBlend(this_00,(float)local_2cc,uVar6);
-          local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar28);
-          *(char *)((int)local_2fc + 0x19 + (int)puVar17) = ((float)fVar28 <= 0.8) + '\x04';
-        }
-        iVar24 = rand();
-        uVar6 = local_314;
-        *(int *)((int)(local_2fc + 7) + (int)puVar17) = iVar24 % 10000000 + 1;
-        puVar17[((int)local_29c + 2) * 4] = *(undefined4 *)(local_314 + 0x1403c + (int)puVar17);
-        *(int *)(local_314 + 0x14038 + (int)puVar17) = local_2ac;
-        iVar24 = rand();
-        local_2ac = local_2ac + 1 + iVar24 % 0x32;
-        *(uint *)(uVar6 + 0x14034 + (int)puVar17) =
-             (uint)*(byte *)((int)local_2fc + 0x19 + (int)puVar17);
-        iVar24 = *(int *)(uVar6 + 0x1403c + (int)puVar17);
-        if (iVar24 < 5) {
-          *(undefined1 *)((int)(local_2fc + 9) + (int)puVar17) = 0;
-          pfVar8 = local_2c4;
-          pfVar13 = local_2c0;
-        }
-        else if (iVar24 < 10) {
-          uVar6 = rand();
-          uVar6 = uVar6 & 0x80000001;
-          if ((int)uVar6 < 0) {
-            *(byte *)((int)(local_2fc + 9) + (int)puVar17) = ((char)uVar6 - 1U | 0xfe) + 1;
-            pfVar8 = local_2c4;
-            pfVar13 = local_2c0;
-          }
-          else {
-LAB_0050edc0:
-            *(char *)((int)(local_2fc + 9) + (int)puVar17) = (char)uVar6;
-            pfVar8 = local_2c4;
-            pfVar13 = local_2c0;
-          }
-        }
-        else if (iVar24 < 0xf) {
-          iVar24 = rand();
-          *(char *)((int)(local_2fc + 9) + (int)puVar17) = (char)(iVar24 % 3);
-          pfVar8 = local_2c4;
-          pfVar13 = local_2c0;
-        }
-        else {
-          if (0x12 < iVar24) {
-            uVar6 = rand();
-            uVar6 = uVar6 & 0x80000003;
-            if ((int)uVar6 < 0) {
-              uVar6 = (uVar6 - 1 | 0xfffffffc) + 1;
-            }
-            uVar6 = uVar6 + 1;
-            goto LAB_0050edc0;
-          }
-          iVar24 = rand();
-          *(char *)((int)(local_2fc + 9) + (int)puVar17) = (char)(iVar24 % 3) + '\x01';
-          pfVar8 = local_2c4;
-          pfVar13 = local_2c0;
-        }
-        goto LAB_0050f27c;
-      }
-      uVar6 = rand();
-      uVar6 = uVar6 & 0x80000007;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xfffffff8) + 1;
-      }
-      switch(uVar6) {
-      case 0:
-        puVar17[iVar24 * 0x1a + 0x500c] = 2;
-        break;
-      case 1:
-        puVar17[iVar24 * 0x1a + 0x500c] = 3;
-        iVar18 = rand();
-        puVar17[iVar24 * 0x1a + 0x500d] = iVar18 % 3;
-        break;
-      case 2:
-        uVar11 = 4;
-        goto LAB_0050ee27;
-      case 3:
-        puVar17[iVar24 * 0x1a + 0x500c] = 5;
-        if ((float)local_2d0[4] <= 0.8) {
-LAB_0050ee95:
-          puVar17[iVar24 * 0x1a + 0x500d] = 0;
-        }
-        else if ((float)local_2d0[3] <= 0.8) {
-          if (0.2 <= (float)local_2d0[3]) goto LAB_0050ee95;
-          puVar17[iVar24 * 0x1a + 0x500d] = 2;
-        }
-        else {
-          puVar17[iVar24 * 0x1a + 0x500d] = 3;
-        }
-        uVar6 = rand();
-        uVar6 = uVar6 & 0x800000ff;
-        if ((int)uVar6 < 0) {
-          uVar6 = (uVar6 - 1 | 0xffffff00) + 1;
-        }
-        iVar15 = (int)local_300 >> 0x1f;
-        iVar18 = (int)local_2e8._0_4_ << 0xb;
-        puVar17[iVar24 * 0x1a + 0x500a] = (float)(int)(uVar6 + 0x100);
-        local_2a0 = (float)(int)(uVar6 + 0x100) * 65536.0;
-        uVar6 = (uint)local_300 >> 0x10;
-        uVar19 = (uint)local_2e8._0_4_ & 0x1fffff;
-        uVar14 = (int)local_300 * 0x10000;
-        uVar25 = (int)local_2e8._0_4_ * 0x8000000;
-        uVar30 = ftol2_round();
-        lVar3 = uVar30 + CONCAT44(((iVar18 >> 0x1f) << 0x10 | uVar19 >> 5) +
-                                  (iVar15 << 0x10 | uVar6) + (uint)CARRY4(uVar25,uVar14),
-                                  uVar25 + uVar14) + 0x1000000;
-        local_318 = *(float *)(local_314 + 0x14028 + (int)local_2f0) + 256.0;
-        local_2e8._0_4_ = (float)(int)((ulonglong)lVar3 >> 0x20);
-        iVar24 = rand();
-        local_288 = (((float)iVar24 * (2048.0 - local_318 * 2.0)) / 32767.0) * 65536.0;
-        uVar30 = ftol2_round();
-        local_280 = local_318 * 65536.0;
-        lVar3 = uVar30 + CONCAT44(local_2e8._0_4_,(int)lVar3);
-        local_29c = (float)lVar3;
-        local_28c = (float)((ulonglong)lVar3 >> 0x20);
-        iVar18 = (int)local_2c8 >> 0x1f;
-        iVar24 = (int)local_2cc << 0xb;
-        uVar6 = local_2c8 >> 0x10;
-        uVar19 = (uint)local_2cc & 0x1fffff;
-        uVar14 = local_2c8 * 0x10000;
-        uVar25 = (int)local_2cc * 0x8000000;
-        uVar30 = ftol2_round();
-        lVar3 = uVar30 + CONCAT44(((iVar24 >> 0x1f) << 0x10 | uVar19 >> 5) +
-                                  (iVar18 << 0x10 | uVar6) + (uint)CARRY4(uVar25,uVar14),
-                                  uVar25 + uVar14);
-        uVar6 = (uint)lVar3;
-        local_2e8 = (double)CONCAT44(local_2e8._4_4_,(int)((ulonglong)lVar3 >> 0x20));
-        iVar24 = rand();
-        puVar17 = local_2f0;
-        uVar19 = local_314;
-        local_284 = (((float)iVar24 *
-                     (2048.0 - (*(float *)(local_314 + 0x14028 + (int)local_2f0) + 256.0) * 2.0)) /
-                    32767.0) * 65536.0;
-        uVar30 = ftol2_round();
-        *(uint *)(uVar19 + 0x14018 + (int)puVar17) = (uint)uVar30 + uVar6;
-        *(float *)(uVar19 + 0x14020 + (int)puVar17) = local_29c;
-        *(uint *)(uVar19 + 0x1401c + (int)puVar17) =
-             (int)(uVar30 >> 0x20) + (int)local_2e8._0_4_ + (uint)CARRY4((uint)uVar30,uVar6);
-        *(float *)(uVar19 + 0x14024 + (int)puVar17) = local_28c;
-        pcVar21 = rand_exref;
-        break;
-      case 4:
-        uVar11 = 6;
-LAB_0050ee27:
-        if ((int)local_2d0[6] < 0) {
-          uVar11 = 0xf;
-        }
-        puVar17[iVar24 * 0x1a + 0x500c] = uVar11;
-        break;
-      case 5:
-        puVar17[iVar24 * 0x1a + 0x500c] = (uint)((int)local_2d0[6] < 0) * 8 + 7;
-        break;
-      case 6:
-        puVar17[iVar24 * 0x1a + 0x500c] = 0xb;
-        puVar17[iVar24 * 0x1a + 0x500a] = 0x43000000;
-        uVar31 = __alldiv(puVar17[iVar24 * 0x1a + 0x5008],puVar17[iVar24 * 0x1a + 0x5009],0x10000,0)
-        ;
-        uVar6 = ((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU) & 0xffffff00) + 0x80;
-        uVar19 = ((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10;
-        ppuVar20 = (undefined **)(uVar6 * 0x10000);
-        local_228 = ppuVar20;
-        local_224 = uVar19;
-        goto LAB_0050f173;
-      case 7:
-        puVar17[iVar24 * 0x1a + 0x500c] = 0xc;
-        puVar17[iVar24 * 0x1a + 0x500a] = 0x43000000;
-        uVar31 = __alldiv(puVar17[iVar24 * 0x1a + 0x5008],puVar17[iVar24 * 0x1a + 0x5009],0x10000,0)
-        ;
-        uVar6 = ((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU) & 0xffffff00) + 0x80;
-        uVar19 = ((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10;
-        ppuVar20 = (undefined **)(uVar6 * 0x10000);
-        local_2a8 = ppuVar20;
-        local_2a4 = uVar19;
-LAB_0050f173:
-        uVar31 = __alldiv(*(uint *)(local_314 + 0x14018 + (int)puVar17),
-                          *(uint *)(local_314 + 0x1401c + (int)puVar17),0x10000,0);
-        uVar6 = ((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU) & 0xffffff00) + 0x80;
-        *(uint *)(local_314 + 0x14018 + (int)puVar17) = uVar6 * 0x10000;
-        *(uint *)(local_314 + 0x1401c + (int)puVar17) = ((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10
-        ;
-        *(uint *)(local_314 + 0x14024 + (int)puVar17) = uVar19;
-        *(undefined ***)(local_314 + 0x14020 + (int)puVar17) = ppuVar20;
-        pcVar21 = rand_exref;
-        uVar19 = local_314;
-      }
-      iVar24 = *(int *)(uVar19 + 0x1403c + (int)puVar17);
-      if (iVar24 < 5) {
-        *(undefined4 *)(uVar19 + 0x14040 + (int)puVar17) = 0;
-      }
-      else if (iVar24 < 10) {
-        uVar6 = (*pcVar21)();
-        uVar6 = uVar6 & 0x80000001;
-        if ((int)uVar6 < 0) {
-          uVar6 = (uVar6 - 1 | 0xfffffffe) + 1;
-        }
-LAB_0050f240:
-        *(uint *)(uVar19 + 0x14040 + (int)puVar17) = uVar6;
-      }
-      else if (iVar24 < 0xf) {
-        iVar24 = (*pcVar21)();
-        *(int *)(uVar19 + 0x14040 + (int)puVar17) = iVar24 % 3;
-      }
-      else {
-        if (0x12 < iVar24) {
-          uVar6 = (*pcVar21)();
-          uVar6 = uVar6 & 0x80000003;
-          if ((int)uVar6 < 0) {
-            uVar6 = (uVar6 - 1 | 0xfffffffc) + 1;
-          }
-          uVar6 = uVar6 + 1;
-          goto LAB_0050f240;
-        }
-        iVar24 = (*pcVar21)();
-        *(int *)(uVar19 + 0x14040 + (int)puVar17) = iVar24 % 3 + 1;
-      }
-      *(int *)(uVar19 + 0x14038 + (int)puVar17) = local_2ac;
-      iVar24 = (*pcVar21)();
-      local_2ac = local_2ac + 1 + iVar24 % 0x32;
-      pfVar8 = local_2c4;
-      pfVar13 = local_2c0;
-LAB_0050f27c:
-      local_30c = local_30c + 1;
-    } while ((int)local_30c < 0x40);
-    puVar17 = local_2f0;
-    local_310 = 0.0;
-    do {
-      if (pfVar8 == pfVar13) break;
-      uVar6 = rand();
-      uVar6 = uVar6 % (uint)(((int)pfVar13 - (int)pfVar8) / 0xc);
-      local_308 = (undefined4 *)local_2c4[uVar6 * 3 + 2];
-      fVar22 = local_2c4[uVar6 * 3 + 1];
-      pfVar8 = local_2c4 + uVar6 * 3 + 3;
-      if (pfVar8 != local_2c0) {
-        pfVar13 = pfVar8 + -2;
-        do {
-          pfVar13[-1] = *pfVar8;
-          *pfVar13 = pfVar13[3];
-          pfVar8 = pfVar8 + 3;
-          pfVar13[1] = pfVar13[4];
-          pfVar13 = pfVar13 + 3;
-        } while (pfVar8 != local_2c0);
-      }
-      local_2c0 = local_2c0 + -3;
-      iVar24 = (int)local_308 + (int)fVar22 * 8;
-      puVar17[iVar24 * 0x1a + 0x500c] = 10;
-      iVar18 = rand();
-      puVar17[iVar24 * 0x1a + 0x500e] = iVar18 % 10000000 + 1;
-      uVar31 = __alldiv(puVar17[iVar24 * 0x1a + 0x5006],puVar17[iVar24 * 0x1a + 0x5007],0x10000,0);
-      uVar6 = (int)(((int)uVar31 >> 0x1f & 0xffU) + (int)uVar31) >> 8 & 0x8000003f;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-      }
-      uVar31 = __alldiv(puVar17[iVar24 * 0x1a + 0x5008],puVar17[iVar24 * 0x1a + 0x5009],0x10000,0);
-      uVar19 = (int)((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU)) >> 8 & 0x8000003f;
-      if ((int)uVar19 < 0) {
-        uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-      }
-      iVar18 = uVar6 * 0x40 + uVar19;
-      local_310 = (float)((int)local_310 + 1);
-      *(undefined1 *)(puVar17 + iVar18 * 4 + 6) = 4;
-      puVar17[iVar18 * 4 + 7] = puVar17[iVar24 * 0x1a + 0x500e];
-      pfVar8 = local_2c4;
-      pfVar13 = local_2c0;
-    } while ((int)local_310 < 5);
-    puVar7 = puVar17 + 0x5008;
-    local_310 = 1.12104e-44;
-    do {
-      uVar31 = __alldiv(puVar7[-2],puVar7[-1],0x10000,0);
-      uVar6 = (int)(((int)uVar31 >> 0x1f & 0xffU) + (int)uVar31) >> 8 & 0x8000003f;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-      }
-      uVar31 = __alldiv(*puVar7,puVar7[1],0x10000,0);
-      uVar19 = (int)((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU)) >> 8 & 0x8000003f;
-      if ((int)uVar19 < 0) {
-        uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-      }
-      puVar17[(uVar19 + 2 + uVar6 * 0x40) * 4] = puVar7[7];
-      uVar31 = __alldiv(puVar7[0x18],puVar7[0x19],0x10000,0);
-      uVar6 = (int)(((int)uVar31 >> 0x1f & 0xffU) + (int)uVar31) >> 8 & 0x8000003f;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-      }
-      uVar31 = __alldiv(puVar7[0x1a],puVar7[0x1b],0x10000,0);
-      uVar19 = (int)((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU)) >> 8 & 0x8000003f;
-      if ((int)uVar19 < 0) {
-        uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-      }
-      puVar17[(uVar19 + 2 + uVar6 * 0x40) * 4] = puVar7[0x21];
-      uVar31 = __alldiv(puVar7[0x32],puVar7[0x33],0x10000,0);
-      uVar6 = (int)(((int)uVar31 >> 0x1f & 0xffU) + (int)uVar31) >> 8 & 0x8000003f;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-      }
-      uVar31 = __alldiv(puVar7[0x34],puVar7[0x35],0x10000,0);
-      uVar19 = (int)((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU)) >> 8 & 0x8000003f;
-      if ((int)uVar19 < 0) {
-        uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-      }
-      puVar17[(uVar19 + 2 + uVar6 * 0x40) * 4] = puVar7[0x3b];
-      uVar31 = __alldiv(puVar7[0x4c],puVar7[0x4d],0x10000,0);
-      uVar6 = (int)(((int)uVar31 >> 0x1f & 0xffU) + (int)uVar31) >> 8 & 0x8000003f;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-      }
-      uVar31 = __alldiv(puVar7[0x4e],puVar7[0x4f],0x10000,0);
-      uVar19 = (int)((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU)) >> 8 & 0x8000003f;
-      if ((int)uVar19 < 0) {
-        uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-      }
-      puVar17[(uVar19 + 2 + uVar6 * 0x40) * 4] = puVar7[0x55];
-      uVar31 = __alldiv(puVar7[0x66],puVar7[0x67],0x10000,0);
-      uVar6 = (int)(((int)uVar31 >> 0x1f & 0xffU) + (int)uVar31) >> 8 & 0x8000003f;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-      }
-      uVar31 = __alldiv(puVar7[0x68],puVar7[0x69],0x10000,0);
-      uVar19 = (int)((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU)) >> 8 & 0x8000003f;
-      if ((int)uVar19 < 0) {
-        uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-      }
-      puVar17[(uVar19 + 2 + uVar6 * 0x40) * 4] = puVar7[0x6f];
-      uVar31 = __alldiv(puVar7[0x80],puVar7[0x81],0x10000,0);
-      uVar6 = (int)(((int)uVar31 >> 0x1f & 0xffU) + (int)uVar31) >> 8 & 0x8000003f;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-      }
-      uVar31 = __alldiv(puVar7[0x82],puVar7[0x83],0x10000,0);
-      uVar19 = (int)((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU)) >> 8 & 0x8000003f;
-      if ((int)uVar19 < 0) {
-        uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-      }
-      puVar17[(uVar19 + 2 + uVar6 * 0x40) * 4] = puVar7[0x89];
-      uVar31 = __alldiv(puVar7[0x9a],puVar7[0x9b],0x10000,0);
-      uVar6 = (int)(((int)uVar31 >> 0x1f & 0xffU) + (int)uVar31) >> 8 & 0x8000003f;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-      }
-      uVar31 = __alldiv(puVar7[0x9c],puVar7[0x9d],0x10000,0);
-      uVar19 = (int)((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU)) >> 8 & 0x8000003f;
-      if ((int)uVar19 < 0) {
-        uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-      }
-      puVar17[(uVar19 + 2 + uVar6 * 0x40) * 4] = puVar7[0xa3];
-      uVar31 = __alldiv(puVar7[0xb4],puVar7[0xb5],0x10000,0);
-      uVar6 = (int)(((int)uVar31 >> 0x1f & 0xffU) + (int)uVar31) >> 8 & 0x8000003f;
-      if ((int)uVar6 < 0) {
-        uVar6 = (uVar6 - 1 | 0xffffffc0) + 1;
-      }
-      pbVar33 = (basic_ostream<char,struct_std::char_traits<char>_> *)0x50f737;
-      uVar31 = __alldiv(puVar7[0xb6],puVar7[0xb7],0x10000,0);
-      uVar19 = (int)((int)uVar31 + ((int)uVar31 >> 0x1f & 0xffU)) >> 8 & 0x8000003f;
-      if ((int)uVar19 < 0) {
-        uVar19 = (uVar19 - 1 | 0xffffffc0) + 1;
-      }
-      puVar2 = puVar7 + 0xbd;
-      puVar7 = puVar7 + 0xd0;
-      local_310 = (float)((int)local_310 + -1);
-      puVar17[(uVar19 + 2 + uVar6 * 0x40) * 4] = *puVar2;
-    } while (local_310 != 0.0);
-    local_2b8 = (int *)0x0;
-    local_2b4 = (int *)0x0;
-    local_2b0 = (int *)0x0;
-    local_c = CONCAT31(local_c._1_3_,2);
-    local_2ec = (undefined **)(local_2d4 << 6);
-    local_2f4 = 0;
-    local_2e8 = (double)CONCAT44(local_2e8._4_4_,local_2d8 * 0x140);
-    local_2a8 = (undefined **)(local_2d8 * 0x140);
-    local_2cc = local_2ec;
-    do {
-      local_310 = (float)(local_2c8 + 0x100);
-      local_318 = 0.0;
-      fVar22 = local_300;
-      do {
-        fVar26 = local_318;
-        local_2dc = (float *)fVar22;
-        World_baseHeightField(local_2f8,local_2c8,fVar22,0);
-        World_baseHeightField(local_2f8,(uint)local_310,fVar22,0);
-        World_baseHeightField(local_2f8,local_2c8,(float)((int)fVar22 + 0x100),0);
-        fVar35 = 0.0;
-        uVar31 = CONCAT44(local_310,0x50f829);
-        World_baseHeightField(local_2f8,(uint)local_310,(float)((int)fVar22 + 0x100),0);
-        if (((int)local_2ec + (int)local_2a8) % 0xd == 0) {
-          local_9c = local_2f4;
-          fStack_98 = fVar26;
-          if ((&local_9c < local_2b4) && (local_2b8 <= &local_9c)) {
-            iVar24 = (int)&local_9c - (int)local_2b8 >> 3;
-            if ((local_2b4 == local_2b0) && ((int)local_2b0 - (int)local_2b4 >> 3 == 0)) {
-              iVar18 = (int)local_2b4 - (int)local_2b8 >> 3;
-              if (iVar18 == 0x1fffffff) {
-LAB_0050f9e0:
-                std::_Xlength_error("vector<T> too long");
-              }
-              local_308 = (undefined4 *)(iVar18 + 1);
-              uVar6 = (int)local_2b0 - (int)local_2b8 >> 3;
-              if (0x1fffffff - (uVar6 >> 1) < uVar6) {
-                fVar35 = 0.0;
-              }
-              else {
-                fVar35 = (float)(uVar6 + (uVar6 >> 1));
-              }
-              if ((uint)fVar35 < local_308) {
-                fVar35 = (float)local_308;
-              }
-              lib_fn_4e25e0(&local_2b8,(uint)fVar35);
-            }
-            if (local_2b4 != (int *)0x0) {
-              *local_2b4 = local_2b8[iVar24 * 2];
-              local_2b4[1] = local_2b8[iVar24 * 2 + 1];
-            }
-          }
-          else {
-            if ((local_2b4 == local_2b0) && ((int)local_2b0 - (int)local_2b4 >> 3 == 0)) {
-              iVar24 = (int)local_2b4 - (int)local_2b8 >> 3;
-              if (iVar24 == 0x1fffffff) goto LAB_0050f9e0;
-              local_308 = (undefined4 *)(iVar24 + 1);
-              uVar6 = (int)local_2b0 - (int)local_2b8 >> 3;
-              if (0x1fffffff - (uVar6 >> 1) < uVar6) {
-                fVar35 = 0.0;
-              }
-              else {
-                fVar35 = (float)(uVar6 + (uVar6 >> 1));
-              }
-              if ((uint)fVar35 < local_308) {
-                fVar35 = (float)local_308;
-              }
-              lib_fn_4e25e0(&local_2b8,(uint)fVar35);
-            }
-            local_318 = fVar26;
-            if (local_2b4 != (int *)0x0) {
-              *local_2b4 = local_9c;
-              local_2b4[1] = (int)fStack_98;
-            }
-          }
-          local_2b4 = local_2b4 + 2;
-          fVar26 = local_318;
-        }
-        local_2a8 = (undefined **)((int)local_2a8 + 5);
-        local_318 = (float)((int)fVar26 + 1);
-        fVar22 = (float)((int)local_2dc + 0x100);
-      } while ((int)local_318 < 0x40);
-      local_2ec = (undefined **)((int)local_2ec + 1);
-      local_2f4 = local_2f4 + 1;
-      local_2c8 = local_2c8 + 0x100;
-      if (0x3f < (int)local_2f4) goto LAB_0050f9eb;
-      local_2a8 = (undefined **)local_2e8._0_4_;
-    } while( true );
-  }
-LAB_00510493:
-  ExceptionList = local_14;
-  __security_check_cookie(local_1c ^ (uint)auStack_324);
-  return;
-LAB_0050f9eb:
-  local_2fc = (undefined **)(puVar17 + 0x5006);
-  local_300 = 0.0;
-  local_2dc = (float *)fVar22;
-  do {
-    local_2f4 = 0;
-    local_2ec = local_2fc;
-    fVar22 = local_300;
-    do {
-      if (local_2ec[6] == (undefined *)0x1) {
-        pbVar33 = (basic_ostream<char,struct_std::char_traits<char>_> *)0x0;
-        pbVar16 = (basic_ostream<char,struct_std::char_traits<char>_> *)0x0;
-        local_298 = (basic_ostream<char,struct_std::char_traits<char>_> *)0x0;
-        local_294 = (basic_ostream<char,struct_std::char_traits<char>_> *)0x0;
-        local_290 = (basic_ostream<char,struct_std::char_traits<char>_> *)0x0;
-        local_308 = (undefined4 *)((local_2f4 + local_2d8 * 8) * 0x800 + 0x80);
-        local_c = CONCAT31(local_c._1_3_,3);
-        local_30c = ((int)local_300 + local_2d4 * 8) * 0x800 + 0x80;
-        local_2dc = (float *)0x0;
-        do {
-          local_26c = ((int)local_30c >> 0x1f) << 0x10 | local_30c >> 0x10;
-          local_270 = (float)(local_30c << 0x10);
-          local_2a8 = (undefined **)0x0;
-          local_94 = (float)((int)local_2dc + (int)local_300 * 8);
-          local_318 = (float)local_308;
-          do {
-            pbVar23 = local_294;
-            local_264 = ((int)local_318 >> 0x1f) << 0x10 | (uint)local_318 >> 0x10;
-            local_268 = (float)((int)local_318 << 0x10);
-            fVar28 = World_objectFalloffWeight((uint *)local_2ec,(uint *)&local_270,(uint *)&local_268);
-            local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar28);
-            local_310 = 1.0 - (float)fVar28;
-            if (0.0 < local_310) {
-              local_310 = local_310 * local_310;
-            }
-            else {
-              local_310 = 0.0;
-            }
-            iStack_90 = (int)local_2a8 + local_2f4 * 8;
-            local_80 = local_94;
-            local_84 = local_310;
-            iStack_7c = iStack_90;
-            if (((basic_ostream<char,struct_std::char_traits<char>_> *)&local_84 < pbVar23) &&
-               (pbVar33 <= (basic_ostream<char,struct_std::char_traits<char>_> *)&local_84)) {
-              local_310 = (float)(((int)&local_84 - (int)pbVar33) / 0xc);
-              if ((pbVar23 == pbVar16) &&
-                 (iVar24 = (int)pbVar16 - (int)pbVar23 >> 0x1f,
-                 ((int)pbVar16 - (int)pbVar23) / 0xc + iVar24 == iVar24)) {
-                iVar24 = ((int)pbVar23 - (int)pbVar33) / 0xc;
-                if (iVar24 == 0x15555555) goto LAB_0050f9e0;
-                uVar19 = ((int)pbVar16 - (int)pbVar33) / 0xc;
-                uVar6 = iVar24 + 1;
-                if (0x15555555 - (uVar19 >> 1) < uVar19) {
-                  uVar19 = 0;
-                }
-                else {
-                  uVar19 = uVar19 + (uVar19 >> 1);
-                }
-                if (uVar19 < uVar6) {
-                  uVar19 = uVar6;
-                }
-                lib_fn_4f7ef0(&local_298,uVar19);
-                pbVar16 = local_290;
-                pbVar23 = local_294;
-                pbVar33 = local_298;
-              }
-              if (pbVar23 != (basic_ostream<char,struct_std::char_traits<char>_> *)0x0) {
-                *(int *)pbVar23 = *(int *)(pbVar33 + (int)local_310 * 0xc);
-                *(int *)(pbVar23 + 4) = *(int *)(pbVar33 + (int)local_310 * 0xc + 4);
-                *(int *)(pbVar23 + 8) = *(int *)(pbVar33 + (int)local_310 * 0xc + 8);
-              }
-            }
-            else {
-              if ((pbVar23 == pbVar16) &&
-                 (iVar24 = (int)pbVar16 - (int)pbVar23 >> 0x1f,
-                 ((int)pbVar16 - (int)pbVar23) / 0xc + iVar24 == iVar24)) {
-                iVar24 = ((int)pbVar23 - (int)pbVar33) / 0xc;
-                if (iVar24 == 0x15555555) goto LAB_0050f9e0;
-                uVar19 = ((int)pbVar16 - (int)pbVar33) / 0xc;
-                uVar6 = iVar24 + 1;
-                if (0x15555555 - (uVar19 >> 1) < uVar19) {
-                  uVar19 = 0;
-                }
-                else {
-                  uVar19 = uVar19 + (uVar19 >> 1);
-                }
-                if (uVar19 < uVar6) {
-                  uVar19 = uVar6;
-                }
-                lib_fn_4f7ef0(&local_298,uVar19);
-                pbVar16 = local_290;
-                pbVar23 = local_294;
-                pbVar33 = local_298;
-              }
-              if (pbVar23 != (basic_ostream<char,struct_std::char_traits<char>_> *)0x0) {
-                *(float *)pbVar23 = local_310;
-                *(float *)(pbVar23 + 4) = local_94;
-                *(int *)(pbVar23 + 8) = iStack_90;
-              }
-            }
-            local_2a8 = (undefined **)((int)local_2a8 + 1);
-            local_294 = pbVar23 + 0xc;
-            local_318 = (float)((int)local_318 + 0x100);
-          } while ((int)local_2a8 < 8);
-          local_2dc = (float *)((int)local_2dc + 1);
-          local_30c = local_30c + 0x100;
-        } while ((int)local_2dc < 8);
-        local_27c = (float)((uint)local_27c & 0xffffff00);
-        uVar31 = CONCAT44(local_294,pbVar33);
-        fVar35 = local_27c;
-        lib_fn_4f5f40((float *)pbVar33,(float *)local_294,((int)local_294 - (int)pbVar33) / 0xc,
-                     local_27c);
-        puVar17 = local_2f0;
-        *(undefined1 *)(local_2f0 + (*(int *)(pbVar33 + 4) * 0x40 + *(int *)(pbVar33 + 8)) * 4 + 6)
-             = 1;
-        *(undefined1 *)
-         ((int)local_2f0 + (*(int *)(pbVar33 + 4) * 0x40 + *(int *)(pbVar33 + 8)) * 0x10 + 0x19) = 1
-        ;
-        *(undefined1 *)
-         (local_2f0 + (*(int *)(pbVar33 + 0x10) * 0x40 + *(int *)(pbVar33 + 0x14)) * 4 + 6) = 1;
-        *(undefined1 *)
-         ((int)local_2f0 +
-         (*(int *)(pbVar33 + 0x10) * 0x40 + *(int *)(pbVar33 + 0x14)) * 0x10 + 0x19) = 2;
-        *(undefined1 *)
-         (local_2f0 + (*(int *)(pbVar33 + 0x1c) * 0x40 + *(int *)(pbVar33 + 0x20)) * 4 + 6) = 1;
-        *(undefined1 *)
-         ((int)local_2f0 +
-         (*(int *)(pbVar33 + 0x1c) * 0x40 + *(int *)(pbVar33 + 0x20)) * 0x10 + 0x19) = 3;
-        *(undefined1 *)
-         (local_2f0 + (*(int *)(pbVar33 + 0x28) * 0x40 + *(int *)(pbVar33 + 0x2c)) * 4 + 6) = 1;
-        *(undefined1 *)
-         ((int)local_2f0 +
-         (*(int *)(pbVar33 + 0x28) * 0x40 + *(int *)(pbVar33 + 0x2c)) * 0x10 + 0x19) = 4;
-        operator_delete(pbVar33);
-        local_298 = (basic_ostream<char,struct_std::char_traits<char>_> *)0x0;
-        local_294 = (basic_ostream<char,struct_std::char_traits<char>_> *)0x0;
-        local_290 = (basic_ostream<char,struct_std::char_traits<char>_> *)0x0;
-        fVar22 = local_300;
-      }
-      local_2f4 = local_2f4 + 1;
-      local_2ec = local_2ec + 0x1a;
-    } while ((int)local_2f4 < 8);
-    local_300 = (float)((int)fVar22 + 1);
-    local_2fc = local_2fc + 0xd0;
-  } while ((int)local_300 < 8);
-  if ((local_2f8[0xb4] == (basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>)0x0)
-     && (*(int *)(local_2f8 + 0xa4) != 0)) {
-    puVar27 = puVar17 + 0x501b;
-    local_308 = (undefined4 *)((int)((local_2d8 * 0x40 >> 0x1f & 7U) + local_2d8 * 0x40) >> 3);
-    local_30c = (int)((int)local_2cc + ((int)local_2cc >> 0x1f & 7U)) >> 3;
-    local_318 = 1.12104e-44;
-    fVar22 = local_278;
-    do {
-      local_310 = 1.12104e-44;
-      local_300 = (float)local_308;
-      do {
-        pcVar34 = (char *)uVar31;
-        appuStack_188[0] = &PTR_0055b2c0;
-        appuStack_178[0] = &PTR_00571718;
-        pcStack_120 = _vftable__exref;
-        local_298 = (basic_ostream<char,struct_std::char_traits<char>_> *)((uint)fVar22 | 1);
-        uStack_2c = CONCAT31(uStack_2c._1_3_,4);
-        std::basic_iostream<char,std::char_traits<char>_>::
-        basic_iostream<char,std::char_traits<char>_>
-                  ((basic_iostream<char,std::char_traits<char>_> *)appuStack_188,
-                   (basic_streambuf<char,std::char_traits<char>_> *)appuStack_170);
-        uStack_2c = 5;
-        *(undefined ***)((int)appuStack_188 + (int)appuStack_188[0][1]) =
-             basic_stringstream<char,std::char_traits<char>,std::allocator<char>_>::vftable;
-        *(undefined **)((int)&iStack_18c + (int)appuStack_188[0][1]) = appuStack_188[0][1] + -0x68;
-        std::basic_streambuf<char,std::char_traits<char>_>::
-        basic_streambuf<char,std::char_traits<char>_>
-                  ((basic_streambuf<char,std::char_traits<char>_> *)appuStack_170);
-        appuStack_170[0] = vftable;
-        uStack_138 = 0;
-        uStack_134 = 0;
-        uStack_2c = CONCAT31(uStack_2c._1_3_,7);
-        iVar24 = iStack_320;
-        pbVar9 = ostream_writeCString((basic_ostream<char,std::char_traits<char>_> *)appuStack_178,"mission"
-                             );
-        pbVar16 = std::basic_ostream<char,std::char_traits<char>_>::operator<<(pbVar9,iVar24);
-        pbVar9 = ostream_writeCString((basic_ostream<char,std::char_traits<char>_> *)pbVar16,
-                              in_stack_fffffcac);
-        std::basic_ostream<char,std::char_traits<char>_>::operator<<(pbVar9,(int)pbVar33);
-        pvStack_260 = (void *)0x0;
-        uStack_25c = 0;
-        uStack_258 = 0;
-        uStack_254 = 0;
-        local_1c._0_1_ = 8;
-        puVar10 = lib_fn_4d8f70(appuStack_178,&local_5c);
-        local_1c._0_1_ = 9;
-        uVar11 = SpeechDb_loadBlobToVector((void *)((int)local_308 + 0xac),puVar10,&pvStack_260);
-        local_314 = CONCAT13((char)uVar11,(undefined3)local_314);
-        local_1c = CONCAT31(local_1c._1_3_,8);
-        cVar5 = (char)uVar11;
-        if (0xf < uStack_48) {
-          operator_delete(local_5c);
-          cVar5 = local_314._3_1_;
-        }
-        if (cVar5 != '\0') {
-          puVar10 = puVar27 + -10;
-          puVar12 = RefCountedNode_init(auStack_c4,&pvStack_260);
-          readCombatActionFromStream(puVar12,(int)puVar10);
-          *(undefined1 *)(puVar17 + 0x5686) = 1;
-        }
-        if (pvStack_260 != (void *)0x0) {
-          operator_delete(pvStack_260);
-          pvStack_260 = (void *)0x0;
-          uStack_25c = 0;
-          uStack_258 = 0;
-        }
-        local_1c = CONCAT31(local_1c._1_3_,2);
-        *(undefined ***)((int)appuStack_178 + (int)appuStack_178[0][1]) =
-             basic_stringstream<char,std::char_traits<char>,std::allocator<char>_>::vftable;
-        *(undefined **)((int)&iStack_17c + (int)appuStack_178[0][1]) = appuStack_178[0][1] + -0x68;
-        appuStack_160[0] = vftable;
-        if ((uStack_124 & 1) != 0) {
-          operator_delete((void *)*puStack_154);
-        }
-        std::basic_streambuf<char,std::char_traits<char>_>::setg
-                  ((basic_streambuf<char,std::char_traits<char>_> *)appuStack_160,(char *)0x0,
-                   (char *)0x0,(char *)0x0);
-        *local_150 = 0;
-        *puStack_140 = 0;
-        *puStack_130 = 0;
-        uStack_124 = uStack_124 & 0xfffffffe;
-        uStack_128 = 0;
-        std::basic_streambuf<char,std::char_traits<char>_>::
-        ~basic_streambuf<char,std::char_traits<char>_>
-                  ((basic_streambuf<char,std::char_traits<char>_> *)appuStack_160);
-        std::basic_iostream<char,std::char_traits<char>_>::
-        ~basic_iostream<char,std::char_traits<char>_>(local_158);
-        std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
-                  (abStack_110);
-        local_228 = &PTR_0055b2c0;
-        appuStack_218[0] = &PTR_00571718;
-        pcStack_1c0 = _vftable__exref;
-        fVar22 = (float)((uint)fVar22 | 3);
-        local_1c = CONCAT31(local_1c._1_3_,10);
-        local_288 = fVar22;
-        std::basic_iostream<char,std::char_traits<char>_>::
-        basic_iostream<char,std::char_traits<char>_>
-                  ((basic_iostream<char,std::char_traits<char>_> *)&local_228,
-                   (basic_streambuf<char,std::char_traits<char>_> *)appuStack_210);
-        local_1c = 0xb;
-        *(undefined ***)((int)&local_228 + (int)local_228[1]) =
-             basic_stringstream<char,std::char_traits<char>,std::allocator<char>_>::vftable;
-        *(undefined **)((int)&local_230 + (int)(local_228[1] + 4)) = local_228[1] + -0x68;
-        std::basic_streambuf<char,std::char_traits<char>_>::
-        basic_streambuf<char,std::char_traits<char>_>
-                  ((basic_streambuf<char,std::char_traits<char>_> *)appuStack_210);
-        appuStack_210[0] = vftable;
-        uStack_1d8 = 0;
-        uStack_1d4 = 0;
-        local_1c = CONCAT31(local_1c._1_3_,0xd);
-        in_stack_fffffcac = "monster";
-        fVar26 = local_310;
-        pbVar9 = ostream_writeCString((basic_ostream<char,std::char_traits<char>_> *)appuStack_218,"monster"
-                             );
-        pbVar33 = std::basic_ostream<char,std::char_traits<char>_>::operator<<(pbVar9,(int)fVar26);
-        pbVar9 = ostream_writeCString((basic_ostream<char,std::char_traits<char>_> *)pbVar33,pcVar34);
-        std::basic_ostream<char,std::char_traits<char>_>::operator<<(pbVar9,(int)fVar35);
-        pvStack_260 = (void *)0x0;
-        uStack_25c = 0;
-        uStack_258 = 0;
-        uStack_254 = 0;
-        local_c._0_1_ = 0xe;
-        puVar10 = lib_fn_4d8f70(appuStack_218,apvStack_34);
-        local_c._0_1_ = 0xf;
-        uVar11 = SpeechDb_loadBlobToVector(local_2f8 + 0xac,puVar10,&pvStack_260);
-        cStack_301 = (char)uVar11;
-        local_c = CONCAT31(local_c._1_3_,0xe);
-        if (0xf < uStack_20) {
-          operator_delete(apvStack_34[0]);
-        }
-        if (cStack_301 != '\0') {
-          puVar10 = puVar27;
-          puVar12 = RefCountedNode_init(auStack_a8,&pvStack_260);
-          readHitFromStream(puVar12,puVar10);
-        }
-        if (pvStack_260 != (void *)0x0) {
-          operator_delete(pvStack_260);
-          pvStack_260 = (void *)0x0;
-          uStack_25c = 0;
-          uStack_258 = 0;
-        }
-        local_c = CONCAT31(local_c._1_3_,2);
-        *(undefined ***)((int)appuStack_218 + (int)appuStack_218[0][1]) =
-             basic_stringstream<char,std::char_traits<char>,std::allocator<char>_>::vftable;
-        *(undefined **)((int)&local_21c + (int)appuStack_218[0][1]) = appuStack_218[0][1] + -0x68;
-        appuStack_200[0] = vftable;
-        if ((uStack_1c4 & 1) != 0) {
-          operator_delete((void *)*puStack_1f4);
-        }
-        uVar31 = 0x51038c;
-        std::basic_streambuf<char,std::char_traits<char>_>::setg
-                  ((basic_streambuf<char,std::char_traits<char>_> *)appuStack_200,(char *)0x0,
-                   (char *)0x0,(char *)0x0);
-        *puStack_1f0 = 0;
-        *puStack_1e0 = 0;
-        *puStack_1d0 = 0;
-        uStack_1c4 = uStack_1c4 & 0xfffffffe;
-        uStack_1c8 = 0;
-        std::basic_streambuf<char,std::char_traits<char>_>::
-        ~basic_streambuf<char,std::char_traits<char>_>
-                  ((basic_streambuf<char,std::char_traits<char>_> *)appuStack_200);
-        std::basic_iostream<char,std::char_traits<char>_>::
-        ~basic_iostream<char,std::char_traits<char>_>(abStack_1f8);
-        fVar35 = 7.440083e-39;
-        std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
-                  (abStack_1b0);
-        local_300 = (float)((int)local_300 + 1);
-        puVar27 = puVar27 + 0x1a;
-        local_310 = (float)((int)local_310 + -1);
-      } while (local_310 != 0.0);
-      local_30c = local_30c + 1;
-      local_318 = (float)((int)local_318 + -1);
-    } while (local_318 != 0.0);
-    local_310 = 0.0;
-    local_318 = 0.0;
-  }
-  local_c = CONCAT31(local_c._1_3_,1);
-  *(undefined4 **)(local_2f8 + local_274 * 4 + 0xbc) = puVar17;
-  if (local_2b8 != (int *)0x0) {
-    std::_Container_base0::_Orphan_all((_Container_base0 *)&local_2b8);
-    operator_delete(local_2b8);
-    local_2b8 = (int *)0x0;
-    local_2b4 = (int *)0x0;
-    local_2b0 = (int *)0x0;
-  }
-  local_c = 0xffffffff;
-  if (local_2c4 != (float *)0x0) {
-    std::_Container_base0::_Orphan_all((_Container_base0 *)&local_2c4);
-    operator_delete(local_2c4);
-  }
-  goto LAB_00510493;
 }
 
 
@@ -74683,6 +72681,7 @@ LAB_00512b3e:
             iVar14 = std_list_insertNode1(puVar12,(undefined4 *)puVar12[1],&local_664);
             if (puVar17[2] == 0x15555554) {
 LAB_005133a4:
+                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             puVar17[2] = puVar17[2] + 1;
@@ -76932,6 +74931,7 @@ LAB_00515e0e:
     iVar15 = lib_fn_4c6770(local_5d4,(undefined4 *)local_5d4[1],local_3e0);
     if (*(int *)(iVar5 + 8) == 0x38e38e2) {
 LAB_00515ef0:
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(iVar5 + 8) = *(int *)(iVar5 + 8) + 1;
@@ -77694,6 +75694,10 @@ LAB_00516682:
 
 
 
+/* [AUDIT] proposed: World_buildVoxelColumn  (confidence: high)
+ * purpose: Voxel column builder: terrain skin + water/rivers + feature/decoration passes
+ * vars: top of the gen tree; writes via World_fillVoxelColumn
+ */
 /* Global::World_buildVoxelColumn @ 00518630 */
 
 /* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
@@ -80190,6 +78194,7 @@ LAB_0051d429:
         iVar34 = lib_fn_4f3ba0(local_137c,(undefined4 *)local_137c[1],&local_324);
         if (local_1378 == 0x7fffffe) {
 LAB_0051d544:
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         local_1378 = local_1378 + 1;
@@ -82080,7 +80085,7 @@ LAB_00520371:
           std::basic_ostream<char,std::char_traits<char>_>::operator<<(pbVar23,in_stack_ffffe7d0);
           initStruct_0x10_zero(local_1578);
           local_8._0_1_ = 0xc;
-          puVar15 = lib_fn_4d8f70(&stack0xffffe7d0,local_7c8);
+          puVar15 = FUN_004d8f70(&stack0xffffe7d0,local_7c8);
           local_8._0_1_ = 0xd;
           uVar14 = SpeechDb_loadBlobToVector((void *)((int)pvVar10 + 0xac),puVar15,local_1578);
           local_130d = (byte)uVar14;
@@ -82422,36 +80427,6 @@ LAB_00522210:
 
 
 
-/* Global::World_featureCountRange @ 00522290 */
-
-void __thiscall World_featureCountRange(void *this,undefined4 *param_1,undefined4 *param_2)
-
-{
-  *param_1 = 1;
-  *param_2 = 10;
-  if (*(float *)((int)this + 0x10) <= 0.2 && *(float *)((int)this + 0x10) != 0.2) {
-    *param_1 = 10;
-    *param_2 = 0x14;
-  }
-  if ((*(float *)((int)this + 0xc) <= 0.2 && *(float *)((int)this + 0xc) != 0.2) &&
-     (0.8 < *(float *)((int)this + 0x10))) {
-    *param_1 = 0xf;
-    *param_2 = 0x19;
-  }
-  if ((0.8 < *(float *)((int)this + 0xc)) && (0.8 < *(float *)((int)this + 0x10))) {
-    *param_1 = 10;
-    *param_2 = 0x14;
-  }
-  if (*(char *)((int)this + 8) == '\x01') {
-    *param_1 = 0x14;
-    *param_2 = 0x1e;
-  }
-  return;
-}
-
-
-
-
 /* Global::lib_fn_522320 @ 00522320 */
 
 float * lib_fn_522320(float *param_1,int param_2,int param_3)
@@ -82557,6 +80532,7 @@ void __thiscall lib_fn_522580(void *this,uint param_1,undefined4 param_2,int par
   local_8 = 0xffffffff;
   iVar3 = std_list_insertNode1(puVar1,(undefined4 *)puVar1[1],&local_14);
   if (puVar2[2] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   puVar2[2] = puVar2[2] + 1;
@@ -82577,6 +80553,7 @@ void __thiscall lib_fn_522580(void *this,uint param_1,undefined4 param_2,int par
   iVar4 = std_list_insertNode1(puVar1,(undefined4 *)puVar1[1],&local_14);
   iVar3 = param_3;
   if (puVar2[2] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   puVar2[2] = puVar2[2] + 1;
@@ -83042,6 +81019,10 @@ float10 __thiscall lib_fn_523b90(void *param_1,float param_2,uint param_3,int pa
 
 
 
+/* [AUDIT] proposed: World_landMask  (confidence: high)
+ * purpose: Ridged land base gated by smoothstep(gate)*smoothstep(water_depth) + per-feature deforms
+ * vars: 
+ */
 /* Global::World_landMask @ 00523d80 */
 
 void World_landMask(uint param_1,float param_2,float param_3)
@@ -84139,6 +82120,7 @@ LAB_00524f80:
     iVar3 = std_map_insert_node_0x1c(puVar6,(undefined4 *)puVar6[1],(undefined4 *)((int)&local_38 + 4));
     if (*(int *)(param_9 + 0x1c) == 0x9249248) {
 LAB_00528343:
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(param_9 + 0x1c) = *(int *)(param_9 + 0x1c) + 1;
@@ -85602,6 +83584,7 @@ void __thiscall lib_fn_5283b0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = lib_fn_52df40(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xaaaaaa9) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -85624,6 +83607,7 @@ void __thiscall lib_fn_528400(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x1c(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x9249248) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -85646,6 +83630,7 @@ void __thiscall lib_fn_528450(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = lib_fn_4c6770(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x38e38e2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -85769,49 +83754,6 @@ void __thiscall lib_fn_5285c0(void *this,int *param_1)
 LAB_0052867d:
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0x18;
   ExceptionList = local_10;
-  return;
-}
-
-
-
-
-/* Global::lib_fn_5286a0 @ 005286a0 */
-
-void __thiscall lib_fn_5286a0(void *this,undefined4 *param_1)
-
-{
-  undefined4 *puVar1;
-  int iVar2;
-  int iVar3;
-  
-  puVar1 = *(undefined4 **)((int)this + 4);
-  if ((param_1 < puVar1) && (*(undefined4 **)this <= param_1)) {
-    iVar3 = ((int)param_1 - (int)*(undefined4 **)this) / 0xc;
-    if (puVar1 == *(undefined4 **)((int)this + 8)) {
-      lib_fn_4f8230(this,1);
-    }
-    puVar1 = *(undefined4 **)((int)this + 4);
-    iVar2 = *(int *)this;
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = *(undefined4 *)(iVar2 + iVar3 * 0xc);
-      puVar1[1] = *(undefined4 *)(iVar2 + 4 + iVar3 * 0xc);
-      puVar1[2] = *(undefined4 *)(iVar2 + 8 + iVar3 * 0xc);
-      *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0xc;
-      return;
-    }
-  }
-  else {
-    if (puVar1 == *(undefined4 **)((int)this + 8)) {
-      lib_fn_4f8230(this,1);
-    }
-    puVar1 = *(undefined4 **)((int)this + 4);
-    if (puVar1 != (undefined4 *)0x0) {
-      *puVar1 = *param_1;
-      puVar1[1] = param_1[1];
-      puVar1[2] = param_1[2];
-    }
-  }
-  *(int *)((int)this + 4) = *(int *)((int)this + 4) + 0xc;
   return;
 }
 
@@ -89100,6 +87042,7 @@ void Catch_All_0052e02c(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -89191,6 +87134,7 @@ void Catch_All_0052e1bf(void)
   int unaff_EBP;
   
   std_Rb_tree_destroy_recursive_B(*(int **)(unaff_EBP + 0xc));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -89258,6 +87202,7 @@ stl_fn_52e250(void *this,undefined4 *param_1,char param_2,undefined4 *param_3,un
   int *piVar7;
   
   if (0xaaaaaa8 < *(uint *)((int)this + 4)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   piVar3 = std_Tree_node_alloc_assign2(this,param_4);
@@ -89497,6 +87442,7 @@ LAB_0052e514:
 void Catch_All_0052e567(void)
 
 {
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -89529,6 +87475,7 @@ void __thiscall lib_fn_52e590(void *this,undefined4 *param_1,undefined4 *param_2
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = param_2 + 4;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -89552,6 +87499,7 @@ void Catch_All_0052e617(void)
       iVar1 = iVar1 + 0x10;
     } while (iVar1 != *(int *)(unaff_EBP + 0xc));
   }
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -89695,6 +87643,7 @@ void Catch_All_0052e906(void)
   piVar1 = (int *)**(undefined4 **)(unaff_EBP + -0x18);
   std_map_erase_range_B(*(undefined4 **)(unaff_EBP + -0x18),(undefined4 *)(unaff_EBP + 8),(int *)*piVar1,
                piVar1);
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -89843,6 +87792,7 @@ void Catch_All_0052eb79(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -89974,6 +87924,7 @@ uint __thiscall lib_fn_52ecc0(void *this,uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0x7ffffff < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x20);
@@ -89984,6 +87935,7 @@ uint __thiscall lib_fn_52ecc0(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -89998,6 +87950,7 @@ void Catch_All_0052ee5c(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
+                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -90186,6 +88139,7 @@ void __thiscall lib_fn_5307f0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_string(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xaaaaaa9) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -91032,8 +88986,10621 @@ LAB_00531823:
 
 
 
-/* FAILED lib_fn_5322d0 @ 005322d0 : Exception while decompiling 005322d0: process: timeout
  */
+
+
+/* [AUDIT] proposed: GameController_updateSubsystems  (confidence: med)
+ * purpose: Server build of cube 0x60c510 GameController_updateSubsystems: top-callee call-count profile matches exactly (242/154/152/111/103/89/76/69/67/61/56/56 + CRefTime::Millisecs x53). 60129 B; was misnamed lib_fn_5322d0 and misclassified lib/other (never-game-called blind spot; fixed via curated_override.tsv). Ghidra process:timeout in full export; recovered with 3600s + 512MB payload (383s); body in gap/server/extra_bodies.c.
+ * vars: -
+ */
+/* Global::GameController_updateSubsystems @ 005322d0 */
+
+/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
+
+void GameController_updateSubsystems(uint param_1,int *param_2,void *param_3)
+
+{
+  ushort uVar1;
+  bool bVar2;
+  char cVar3;
+  undefined1 uVar4;
+  char cVar5;
+  CRefTime CVar6;
+  byte bVar7;
+  int iVar8;
+  uint *puVar9;
+  int *piVar10;
+  int iVar11;
+  uint uVar12;
+  CRefTime *pCVar13;
+  long lVar14;
+  CRefTime *pCVar15;
+  long lVar16;
+  int iVar17;
+  uint *puVar18;
+  void *pvVar19;
+  undefined4 uVar20;
+  int *piVar21;
+  undefined4 *puVar22;
+  int *piVar23;
+  float fVar24;
+  float *pfVar25;
+  uint *puVar26;
+  ulonglong *puVar27;
+  uint *puVar28;
+  char *pcVar29;
+  undefined3 extraout_var;
+  float *pfVar30;
+  pair<unsigned___int64,unsigned___int64> *ppVar31;
+  longlong *plVar32;
+  undefined4 *puVar33;
+  undefined8 *puVar34;
+  CRefTime *pCVar35;
+  undefined *puVar36;
+  undefined3 extraout_var_00;
+  float *pfVar37;
+  CRefTime *pCVar38;
+  undefined1 *puVar39;
+  undefined1 *puVar40;
+  ulonglong *puVar41;
+  undefined3 extraout_var_01;
+  undefined3 extraout_var_02;
+  undefined3 extraout_var_03;
+  Creature *pCVar42;
+  void **ppvVar43;
+  void *pvVar44;
+  undefined3 extraout_var_04;
+  void *this;
+  Creature **ppCVar45;
+  byte *pbVar46;
+  void *in_ECX;
+  int iVar47;
+  CRefTime *pCVar48;
+  uint extraout_ECX;
+  CRefTime *pCVar49;
+  code *pcVar50;
+  float10 fVar51;
+  float fVar52;
+  ulonglong uVar53;
+  ulonglong in_stack_ffffc88c;
+  ulonglong uVar54;
+  uint uVar55;
+  CRefTime *in_stack_ffffc894;
+  undefined4 uVar56;
+  uint uVar57;
+  ulonglong *puVar58;
+  uint uVar59;
+  undefined *puVar60;
+  int iVar61;
+  undefined4 uVar62;
+  int local_3750 [2];
+  int local_3748 [2];
+  int local_3740 [2];
+  int local_3738 [2];
+  int local_3730 [2];
+  int local_3728 [2];
+  int local_3720 [2];
+  int local_3718 [2];
+  int local_3710 [2];
+  int local_3708 [2];
+  int local_3700 [2];
+  int local_36f8 [2];
+  int local_36f0 [2];
+  int local_36e8 [2];
+  int local_36e0 [2];
+  int local_36d8 [2];
+  int local_36d0 [2];
+  int local_36c8 [2];
+  int local_36c0 [2];
+  int local_36b8 [2];
+  int local_36b0 [2];
+  int local_36a8 [2];
+  int local_36a0 [2];
+  undefined1 local_3698 [8];
+  int local_3690 [2];
+  ulonglong local_3688;
+  int local_3680 [2];
+  int local_3678 [2];
+  int local_3670 [2];
+  int local_3668 [2];
+  int local_3660 [2];
+  int local_3658 [2];
+  ulonglong local_3650;
+  int local_3648 [2];
+  int local_3640 [2];
+  int local_3638 [2];
+  int local_3630 [2];
+  int local_3628 [2];
+  int local_3620 [2];
+  int local_3618 [2];
+  uint local_3610 [2];
+  int local_3608 [2];
+  int local_3600 [2];
+  int local_35f8 [2];
+  int local_35f0 [2];
+  int local_35e8 [2];
+  int local_35e0 [2];
+  int local_35d8 [2];
+  int local_35d0 [2];
+  int local_35c8 [2];
+  int local_35c0 [2];
+  int local_35b8 [2];
+  int local_35b0 [2];
+  int local_35a8 [2];
+  int local_35a0 [2];
+  int local_3598 [2];
+  int local_3590 [2];
+  int local_3588 [2];
+  int local_3580 [2];
+  int local_3578 [2];
+  int local_3570 [2];
+  int local_3568 [2];
+  undefined4 auStack_3560 [2];
+  int local_3558 [2];
+  int aiStack_3550 [2];
+  int local_3548 [2];
+  uint auStack_3540 [2];
+  int local_3538 [2];
+  int aiStack_3530 [2];
+  int local_3528 [2];
+  int aiStack_3520 [2];
+  int local_3518 [2];
+  undefined4 auStack_3510 [2];
+  int local_3508 [2];
+  undefined4 auStack_3500 [2];
+  int local_34f8 [2];
+  int local_34f0 [2];
+  int local_34e8 [2];
+  int aiStack_34e0 [2];
+  int local_34d8 [2];
+  int local_34d0 [2];
+  int local_34c8 [2];
+  int local_34c0 [2];
+  int local_34b8 [2];
+  uint auStack_34b0 [2];
+  int local_34a8 [2];
+  int local_34a0 [2];
+  int local_3498 [2];
+  undefined1 local_3490 [8];
+  int local_3488 [2];
+  int local_3480 [2];
+  int local_3478 [2];
+  int local_3470 [2];
+  int local_3468 [2];
+  int local_3460 [2];
+  int local_3458 [2];
+  int local_3450 [2];
+  ulonglong local_3448;
+  ulonglong local_3440;
+  ulonglong local_3438;
+  int local_3430 [2];
+  int local_3428 [2];
+  int aiStack_3420 [2];
+  int local_3418 [2];
+  int aiStack_3410 [2];
+  int local_3408 [2];
+  int aiStack_3400 [2];
+  int local_33f8 [2];
+  int aiStack_33f0 [2];
+  int local_33e8 [2];
+  int aiStack_33e0 [2];
+  int local_33d8 [2];
+  int aiStack_33d0 [2];
+  int local_33c8 [2];
+  int aiStack_33c0 [2];
+  int local_33b8 [2];
+  int aiStack_33b0 [2];
+  int local_33a8 [2];
+  undefined4 auStack_33a0 [2];
+  int local_3398 [2];
+  undefined4 auStack_3390 [2];
+  int local_3388 [2];
+  int local_3380 [2];
+  int local_3378 [2];
+  int local_3370 [2];
+  int local_3368 [2];
+  uint local_3360 [2];
+  int local_3358 [2];
+  int local_3350 [2];
+  int local_3348 [2];
+  int local_3340 [2];
+  int local_3338 [2];
+  int local_3330 [2];
+  int local_3328 [2];
+  int local_3320 [2];
+  int local_3318 [2];
+  int local_3310 [2];
+  int local_3308 [2];
+  int local_3300 [2];
+  int local_32f8 [2];
+  int local_32f0 [2];
+  int local_32e8 [2];
+  int local_32e0 [2];
+  int local_32d8 [2];
+  uint local_32d0 [2];
+  int local_32c8 [2];
+  uint local_32c0 [2];
+  int local_32b8 [2];
+  undefined1 local_32b0 [8];
+  int local_32a8 [2];
+  CRefTime local_32a0 [8];
+  int local_3298 [2];
+  int local_3290 [2];
+  int local_3288 [2];
+  int local_3280 [2];
+  int local_3278 [2];
+  undefined1 local_3270 [8];
+  int local_3268 [2];
+  int local_3260 [2];
+  int local_3258 [2];
+  int local_3250 [2];
+  int local_3248 [2];
+  undefined1 local_3240 [8];
+  int local_3238 [2];
+  int local_3230 [2];
+  int local_3228 [2];
+  int local_3220 [2];
+  int local_3218 [2];
+  int local_3210 [2];
+  int local_3208 [2];
+  undefined1 local_3200 [8];
+  int local_31f8 [2];
+  int local_31f0 [2];
+  int local_31e8 [2];
+  int local_31e0 [2];
+  int local_31d8 [2];
+  undefined1 local_31d0 [8];
+  int local_31c8 [2];
+  int local_31c0 [2];
+  int local_31b8 [2];
+  int local_31b0 [2];
+  int local_31a8 [2];
+  float fStack_31a0;
+  float fStack_319c;
+  float fStack_3198;
+  float fStack_3194;
+  undefined8 uStack_3190;
+  undefined8 uStack_3188;
+  undefined8 uStack_3180;
+  float fStack_3178;
+  float fStack_3174;
+  float fStack_3170;
+  float fStack_316c;
+  undefined8 uStack_3168;
+  undefined8 uStack_3160;
+  undefined4 uStack_3158;
+  undefined4 uStack_3154;
+  float fStack_3150;
+  float fStack_314c;
+  float fStack_3148;
+  float fStack_3144;
+  undefined8 uStack_3140;
+  undefined8 uStack_3138;
+  undefined8 uStack_3130;
+  float fStack_3128;
+  float fStack_3124;
+  float fStack_3120;
+  float fStack_311c;
+  undefined8 uStack_3118;
+  undefined8 uStack_3110;
+  undefined8 uStack_3108;
+  float fStack_3100;
+  float fStack_30fc;
+  float fStack_30f8;
+  float fStack_30f4;
+  undefined8 uStack_30f0;
+  undefined8 uStack_30e8;
+  undefined4 uStack_30e0;
+  undefined4 uStack_30dc;
+  float fStack_30d8;
+  float fStack_30d4;
+  float fStack_30d0;
+  float fStack_30cc;
+  undefined8 uStack_30c8;
+  undefined8 uStack_30c0;
+  undefined4 uStack_30b8;
+  undefined4 uStack_30b4;
+  float fStack_30b0;
+  float fStack_30ac;
+  float fStack_30a8;
+  float fStack_30a4;
+  undefined8 uStack_30a0;
+  undefined8 uStack_3098;
+  undefined4 uStack_3090;
+  undefined4 uStack_308c;
+  undefined1 auStack_3088 [4];
+  ulonglong uStack_3084;
+  int iStack_307c;
+  undefined4 local_3078 [2];
+  undefined1 auStack_3070 [4];
+  int iStack_306c;
+  int iStack_3068;
+  ulonglong local_3064;
+  int iStack_305c;
+  int local_3058;
+  int iStack_3054;
+  int iStack_3050;
+  undefined4 uStack_304c;
+  uint local_3048 [2];
+  int local_3040;
+  ulonglong uStack_303c;
+  int local_3034;
+  undefined4 local_3030;
+  undefined4 local_302c;
+  int local_3028;
+  undefined4 local_3024;
+  int iStack_3020;
+  int iStack_301c;
+  int iStack_3018;
+  int iStack_3014;
+  ulonglong local_3010;
+  int local_3008;
+  ulonglong local_3004;
+  undefined4 local_2ffc;
+  ulonglong uStack_2ff8;
+  undefined4 uStack_2ff0;
+  uint auStack_2fec [2];
+  int local_2fe4;
+  int local_2fe0;
+  int local_2fdc;
+  undefined4 local_2fd8;
+  int local_2fd4;
+  int local_2fd0;
+  undefined4 local_2fcc;
+  undefined4 uStack_2fc8;
+  int local_2fc4;
+  undefined4 uStack_2fc0;
+  undefined4 local_2fbc;
+  int iStack_2fb8;
+  int local_2fb4;
+  undefined4 uStack_2fb0;
+  undefined1 auStack_2fac [4];
+  undefined4 uStack_2fa8;
+  int local_2fa4;
+  int local_2fa0;
+  int iStack_2f9c;
+  char cStack_2f98;
+  undefined7 uStack_2f97;
+  undefined4 uStack_2f90;
+  undefined4 uStack_2f8c;
+  undefined4 uStack_2f88;
+  undefined4 uStack_2f84;
+  char local_2f80;
+  undefined7 uStack_2f7f;
+  undefined4 local_2f78;
+  undefined4 uStack_2f74;
+  undefined8 local_2f70;
+  char local_2f68;
+  undefined7 uStack_2f67;
+  undefined4 local_2f60;
+  undefined4 uStack_2f5c;
+  undefined8 local_2f58;
+  char cStack_2f50;
+  undefined7 uStack_2f4f;
+  undefined4 uStack_2f48;
+  undefined4 uStack_2f44;
+  undefined8 uStack_2f40;
+  char cStack_2f38;
+  undefined7 uStack_2f37;
+  undefined4 uStack_2f30;
+  undefined4 uStack_2f2c;
+  undefined8 uStack_2f28;
+  char cStack_2f20;
+  undefined7 uStack_2f1f;
+  undefined4 uStack_2f18;
+  undefined4 uStack_2f14;
+  undefined4 uStack_2f10;
+  undefined4 uStack_2f0c;
+  char cStack_2f08;
+  undefined7 uStack_2f07;
+  undefined4 uStack_2f00;
+  undefined4 uStack_2efc;
+  undefined4 uStack_2ef8;
+  undefined4 uStack_2ef4;
+  char cStack_2ef0;
+  undefined7 uStack_2eef;
+  undefined4 uStack_2ee8;
+  undefined4 uStack_2ee4;
+  undefined4 uStack_2ee0;
+  undefined4 uStack_2edc;
+  char cStack_2ed8;
+  undefined7 uStack_2ed7;
+  undefined4 uStack_2ed0;
+  undefined4 uStack_2ecc;
+  undefined8 uStack_2ec8;
+  char cStack_2ec0;
+  undefined7 uStack_2ebf;
+  undefined4 uStack_2eb8;
+  undefined4 uStack_2eb4;
+  undefined4 uStack_2eb0;
+  undefined4 uStack_2eac;
+  char acStack_2ea8 [4];
+  CRefTime *pCStack_2ea4;
+  undefined4 uStack_2ea0;
+  float fStack_2e98;
+  float fStack_2e94;
+  undefined1 local_2e90 [4];
+  undefined1 local_2e8c [4];
+  undefined4 uStack_2e88;
+  float fStack_2e84;
+  undefined4 uStack_2e80;
+  undefined4 uStack_2e7c;
+  undefined4 uStack_2e78;
+  undefined4 uStack_2e74;
+  float local_2e70;
+  float local_2e6c;
+  float local_2e68;
+  float local_2e64;
+  undefined8 local_2e60;
+  undefined8 local_2e58;
+  undefined8 local_2e50;
+  float local_2e48;
+  undefined4 local_2e44;
+  undefined4 local_2e40;
+  undefined4 uStack_2e3c;
+  undefined4 local_2e38;
+  undefined4 uStack_2e34;
+  undefined4 local_2e30;
+  float local_2e2c;
+  undefined4 *local_2e28;
+  undefined4 local_2e24;
+  undefined4 local_2e20;
+  undefined4 uStack_2e1c;
+  undefined4 local_2e18;
+  undefined4 local_2e14;
+  undefined4 local_2e10;
+  undefined4 local_2e0c;
+  undefined4 local_2e08;
+  float local_2e04;
+  undefined4 local_2e00;
+  undefined4 local_2dfc;
+  undefined4 local_2df8;
+  undefined4 uStack_2df4;
+  undefined4 local_2df0;
+  undefined4 local_2dec;
+  undefined4 local_2de8;
+  undefined4 local_2de4;
+  undefined4 local_2de0;
+  undefined4 local_2ddc;
+  undefined4 local_2dd8;
+  undefined4 local_2dd4;
+  undefined4 local_2dd0;
+  uint local_2dcc [2];
+  undefined4 local_2dc4;
+  undefined4 local_2dc0;
+  undefined4 local_2dbc;
+  undefined4 local_2db8;
+  undefined4 local_2db4;
+  uint local_2db0 [2];
+  undefined4 local_2da8;
+  undefined4 local_2da4;
+  undefined4 local_2da0;
+  undefined4 local_2d9c;
+  undefined4 local_2d98;
+  float local_2d94;
+  undefined4 local_2d90;
+  undefined4 uStack_2d8c;
+  undefined4 local_2d88;
+  undefined4 uStack_2d84;
+  undefined4 local_2d80;
+  undefined4 uStack_2d7c;
+  undefined4 local_2d78;
+  undefined4 uStack_2d74;
+  undefined4 local_2d70;
+  undefined4 local_2d6c;
+  undefined4 local_2d68;
+  undefined4 local_2d64;
+  undefined4 local_2d60;
+  undefined4 local_2d5c;
+  undefined4 local_2d58;
+  undefined4 local_2d54;
+  undefined4 local_2d50;
+  undefined4 local_2d4c;
+  undefined4 local_2d48;
+  undefined4 local_2d44;
+  undefined4 local_2d40;
+  undefined4 local_2d3c;
+  undefined4 local_2d38;
+  undefined4 local_2d34;
+  undefined4 local_2d30;
+  undefined4 local_2d2c;
+  undefined4 local_2d28;
+  undefined4 local_2d24;
+  undefined4 local_2d20;
+  undefined4 local_2d1c;
+  undefined4 local_2d18;
+  void *local_2d14;
+  undefined4 local_2d10;
+  float local_2d0c;
+  undefined4 local_2d08;
+  undefined4 local_2d04;
+  undefined4 local_2d00;
+  undefined4 local_2cfc;
+  float local_2cf8;
+  undefined4 local_2cf4;
+  undefined4 local_2cf0;
+  undefined4 local_2cec;
+  undefined4 uStack_2ce8;
+  int local_2ce4;
+  int local_2ce0 [2];
+  undefined4 local_2cd8 [2];
+  int local_2cd0 [2];
+  int *local_2cc8;
+  float local_2cc4;
+  Creature *local_2cc0;
+  void *local_2cbc;
+  int local_2cb8;
+  int local_2cb4;
+  undefined4 local_2cb0;
+  int local_2cac;
+  int local_2ca8;
+  Creature *local_2ca4;
+  int local_2ca0;
+  int local_2c9c;
+  int iStack_2c98;
+  uint local_2c94;
+  int local_2c90;
+  int local_2c8c;
+  int local_2c88;
+  int iStack_2c84;
+  int local_2c80;
+  int iStack_2c7c;
+  undefined4 local_2c78;
+  uint uStack_2c74;
+  int local_2c70;
+  int iStack_2c6c;
+  int iStack_2c68;
+  int iStack_2c64;
+  undefined4 uStack_2c60;
+  int local_2c5c;
+  int iStack_2c58;
+  int iStack_2c54;
+  int local_2c50;
+  int local_2c4c;
+  int local_2c48;
+  int local_2c44;
+  undefined4 local_2c40;
+  int local_2c3c;
+  int local_2c38;
+  undefined8 uStack_2c34;
+  undefined8 uStack_2c2c;
+  int local_2c24;
+  int local_2c20;
+  Creature *local_2c1c;
+  undefined8 local_2c18;
+  undefined1 auStack_2c10 [4];
+  uint local_2c0c;
+  int local_2c08;
+  uint local_2c04;
+  int local_2c00;
+  int local_2bfc [2];
+  undefined4 local_2bf4;
+  undefined4 local_2bf0;
+  undefined4 local_2bec [2];
+  int *local_2be4;
+  uint local_2be0;
+  uint *local_2bdc;
+  int local_2bd8;
+  undefined4 local_2bd4;
+  Creature *local_2bd0;
+  char local_2bc9;
+  int local_2bc8;
+  int local_2bc4;
+  CRefTime *local_2bc0;
+  CRefTime *local_2bbc;
+  float *local_2bb8;
+  CRefTime *local_2bb4;
+  uint local_2bb0;
+  int *local_2bac;
+  int local_2ba8;
+  float local_2ba4;
+  CRefTime *local_2ba0;
+  CRefTime *local_2b9c;
+  CRefTime *local_2b98;
+  CRefTime *local_2b94;
+  void *local_2b90;
+  float local_2b8c;
+  CRefTime *local_2b88;
+  CRefTime *local_2b84;
+  int local_2b80;
+  float local_2b7c;
+  CRefTime *local_2b78;
+  uint *local_2b74;
+  undefined4 *local_2b70;
+  CRefTime *local_2b6c;
+  CRefTime *local_2b68;
+  CRefTime *local_2b64;
+  CRefTime *local_2b60;
+  undefined4 *local_2b5c;
+  CRefTime *local_2b58;
+  CRefTime *local_2b54;
+  CRefTime *local_2b50;
+  CRefTime *local_2b4c;
+  Creature *local_2b48;
+  CRefTime *local_2b44;
+  CRefTime *local_2b40;
+  CRefTime *local_2b3c;
+  byte local_2b35;
+  Creature *local_2b34;
+  char local_2b2d;
+  int *local_2b2c;
+  uint local_2b28;
+  CRefTime *local_2b24;
+  CRefTime *local_2b20;
+  void *local_2b1c;
+  CRefTime *local_2b18;
+  undefined4 local_2b14 [43];
+  undefined1 local_2a68 [88];
+  undefined1 local_2a10 [88];
+  undefined1 local_29b8 [88];
+  undefined1 auStack_2960 [88];
+  undefined1 local_2908 [88];
+  undefined1 auStack_28b0 [88];
+  undefined1 auStack_2858 [88];
+  float fStack_2800;
+  float fStack_27fc;
+  undefined1 auStack_27f8 [280];
+  uint local_26e0 [6];
+  uint auStack_26c8 [6];
+  CRefTime local_26b0 [24];
+  uint local_2698 [6];
+  CRefTime local_2680 [24];
+  uint auStack_2668 [6];
+  uint auStack_2650 [6];
+  uint auStack_2638 [6];
+  uint auStack_2620 [6];
+  uint local_2608 [6];
+  uint local_25f0 [6];
+  uint local_25d8 [6];
+  uint auStack_25c0 [6];
+  uint local_25a8 [6];
+  uint local_2590 [6];
+  uint auStack_2578 [6];
+  uint local_2560 [6];
+  uint auStack_2548 [6];
+  uint local_2530 [6];
+  uint auStack_2518 [6];
+  uint local_2500 [6];
+  uint auStack_24e8 [6];
+  uint local_24d0 [6];
+  uint local_24b8 [6];
+  uint local_24a0 [6];
+  uint auStack_2488 [6];
+  uint local_2470 [6];
+  uint local_2458 [6];
+  uint local_2440 [6];
+  uint auStack_2428 [6];
+  uint local_2410 [6];
+  uint auStack_23f8 [6];
+  undefined1 local_23e0 [24];
+  uint auStack_23c8 [6];
+  undefined4 local_23b0 [6];
+  uint auStack_2398 [6];
+  uint local_2380 [6];
+  uint local_2368 [6];
+  uint local_2350 [6];
+  uint auStack_2338 [6];
+  uint local_2320 [6];
+  uint auStack_2308 [6];
+  uint local_22f0 [6];
+  uint local_22d8 [6];
+  uint local_22c0 [6];
+  uint local_22a8 [6];
+  uint local_2290 [6];
+  uint local_2278 [6];
+  undefined4 local_2260 [6];
+  uint local_2248 [6];
+  uint local_2230 [6];
+  uint local_2218 [6];
+  uint local_2200 [6];
+  uint local_21e8 [6];
+  uint local_21d0 [6];
+  uint local_21b8 [6];
+  uint local_21a0 [6];
+  uint auStack_2188 [6];
+  uint local_2170 [6];
+  uint auStack_2158 [6];
+  uint local_2140 [6];
+  undefined1 auStack_2128 [24];
+  uint local_2110 [6];
+  undefined1 auStack_20f8 [24];
+  undefined4 local_20e0 [6];
+  uint auStack_20c8 [6];
+  uint local_20b0 [6];
+  undefined1 auStack_2098 [24];
+  uint local_2080 [6];
+  uint auStack_2068 [6];
+  uint local_2050 [6];
+  undefined1 local_2038 [24];
+  uint local_2020 [6];
+  undefined1 local_2008 [24];
+  uint local_1ff0 [6];
+  undefined1 auStack_1fd8 [24];
+  uint local_1fc0 [6];
+  uint auStack_1fa8 [6];
+  uint local_1f90 [6];
+  uint auStack_1f78 [6];
+  uint local_1f60 [6];
+  uint auStack_1f48 [6];
+  uint local_1f30 [6];
+  undefined1 auStack_1f18 [24];
+  uint local_1f00 [6];
+  uint auStack_1ee8 [6];
+  uint local_1ed0 [6];
+  uint local_1eb8 [6];
+  uint local_1ea0 [6];
+  uint local_1e88 [6];
+  uint local_1e70 [6];
+  uint local_1e58 [6];
+  uint local_1e40 [6];
+  uint local_1e28 [6];
+  uint local_1e10 [6];
+  uint local_1df8 [6];
+  undefined4 local_1de0 [16];
+  undefined4 local_1da0 [16];
+  undefined4 local_1d60 [16];
+  undefined4 auStack_1d20 [16];
+  undefined4 local_1ce0 [16];
+  undefined4 local_1ca0 [16];
+  undefined4 local_1c60 [16];
+  undefined1 auStack_1c20 [16];
+  pair<unsigned___int64,unsigned___int64> apStack_1c10 [16];
+  pair<unsigned___int64,unsigned___int64> local_1c00 [16];
+  undefined1 auStack_1bf0 [16];
+  undefined1 local_1be0 [16];
+  pair<unsigned___int64,unsigned___int64> local_1bd0 [16];
+  undefined1 local_1bc0 [16];
+  pair<unsigned___int64,unsigned___int64> apStack_1bb0 [16];
+  undefined1 local_1ba0 [16];
+  undefined1 auStack_1b90 [16];
+  undefined1 local_1b80 [16];
+  undefined4 auStack_1b70 [16];
+  undefined1 local_1b30 [24];
+  float afStack_1b18 [3];
+  uint local_1b0c [6];
+  uint local_1af4 [6];
+  uint local_1adc [6];
+  undefined1 auStack_1ac4 [12];
+  uint local_1ab8 [6];
+  undefined1 local_1aa0 [12];
+  uint local_1a94 [6];
+  float afStack_1a7c [3];
+  uint local_1a70 [6];
+  undefined1 local_1a58 [12];
+  uint local_1a4c [6];
+  float local_1a34 [3];
+  uint local_1a28 [6];
+  undefined1 local_1a10 [12];
+  uint local_1a04 [6];
+  float afStack_19ec [3];
+  uint local_19e0 [6];
+  float afStack_19c8 [3];
+  uint local_19bc [6];
+  undefined1 auStack_19a4 [12];
+  uint auStack_1998 [6];
+  undefined1 local_1980 [12];
+  uint auStack_1974 [6];
+  float local_195c [3];
+  uint auStack_1950 [6];
+  float local_1938 [3];
+  uint auStack_192c [6];
+  float local_1914 [3];
+  uint auStack_1908 [6];
+  undefined1 local_18f0 [12];
+  uint auStack_18e4 [6];
+  float afStack_18cc [3];
+  uint auStack_18c0 [6];
+  float afStack_18a8 [3];
+  uint auStack_189c [6];
+  undefined1 auStack_1884 [12];
+  uint auStack_1878 [6];
+  undefined1 auStack_1860 [12];
+  uint auStack_1854 [6];
+  undefined1 auStack_183c [12];
+  uint auStack_1830 [6];
+  undefined1 local_1818 [12];
+  uint auStack_180c [6];
+  undefined1 local_17f4 [12];
+  uint auStack_17e8 [6];
+  undefined1 auStack_17d0 [12];
+  uint auStack_17c4 [6];
+  float local_17ac [3];
+  undefined1 local_17a0 [12];
+  float local_1794 [3];
+  undefined1 local_1788 [12];
+  undefined1 local_177c [12];
+  undefined1 local_1770 [12];
+  float local_1764 [3];
+  undefined1 local_1758 [12];
+  float local_174c [3];
+  undefined1 local_1740 [12];
+  undefined1 local_1734 [12];
+  float local_1728 [3];
+  undefined1 local_171c [12];
+  float local_1710 [3];
+  undefined1 local_1704 [12];
+  undefined1 local_16f8 [12];
+  float afStack_16ec [3];
+  undefined1 local_16e0 [12];
+  float afStack_16d4 [3];
+  undefined1 local_16c8 [12];
+  float afStack_16bc [3];
+  undefined1 local_16b0 [12];
+  undefined1 auStack_16a4 [12];
+  undefined1 local_1698 [12];
+  undefined1 auStack_168c [12];
+  float local_1680 [3];
+  undefined1 auStack_1674 [12];
+  undefined1 local_1668 [12];
+  undefined1 auStack_165c [12];
+  float local_1650 [3];
+  undefined1 auStack_1644 [12];
+  undefined1 auStack_1638 [12];
+  undefined1 auStack_162c [12];
+  float local_1620 [3];
+  undefined1 auStack_1614 [12];
+  undefined1 local_1608 [12];
+  undefined1 auStack_15fc [12];
+  float local_15f0 [3];
+  undefined1 local_15e4 [12];
+  undefined1 local_15d8 [12];
+  undefined1 local_15cc [12];
+  undefined1 local_15c0 [12];
+  undefined1 local_15b4 [12];
+  undefined1 local_15a8 [12];
+  undefined1 auStack_159c [12];
+  undefined1 local_1590 [12];
+  undefined1 local_1584 [12];
+  undefined1 local_1578 [12];
+  undefined1 local_156c [12];
+  undefined1 local_1560 [12];
+  float local_1554 [3];
+  CRefTime local_1548 [12];
+  undefined1 local_153c [12];
+  float local_1530 [3];
+  float local_1524 [3];
+  undefined1 local_1518 [12];
+  float local_150c [3];
+  undefined1 local_1500 [12];
+  float local_14f4 [3];
+  undefined1 local_14e8 [12];
+  undefined1 local_14dc [12];
+  undefined1 local_14d0 [12];
+  float local_14c4 [3];
+  undefined1 local_14b8 [12];
+  float local_14ac [3];
+  undefined1 local_14a0 [12];
+  undefined1 local_1494 [12];
+  undefined1 local_1488 [12];
+  float local_147c [3];
+  float local_1470 [3];
+  float local_1464 [3];
+  undefined1 local_1458 [12];
+  undefined1 local_144c [12];
+  undefined1 local_1440 [12];
+  undefined1 local_1434 [12];
+  undefined1 local_1428 [12];
+  undefined1 local_141c [12];
+  float local_1410 [3];
+  float afStack_1404 [3];
+  undefined1 local_13f8 [12];
+  float afStack_13ec [3];
+  undefined1 local_13e0 [12];
+  float afStack_13d4 [3];
+  undefined1 local_13c8 [12];
+  float afStack_13bc [3];
+  undefined1 local_13b0 [12];
+  float afStack_13a4 [3];
+  undefined1 local_1398 [12];
+  float afStack_138c [3];
+  undefined1 local_1380 [12];
+  undefined1 auStack_1374 [12];
+  undefined1 local_1368 [12];
+  float afStack_135c [3];
+  undefined1 local_1350 [12];
+  float afStack_1344 [3];
+  undefined1 local_1338 [12];
+  float afStack_132c [3];
+  undefined1 local_1320 [12];
+  undefined1 auStack_1314 [12];
+  float local_1308 [3];
+  undefined1 auStack_12fc [12];
+  float local_12f0 [3];
+  undefined1 auStack_12e4 [12];
+  undefined1 local_12d8 [12];
+  undefined1 auStack_12cc [12];
+  float local_12c0 [3];
+  undefined1 auStack_12b4 [12];
+  undefined1 local_12a8 [12];
+  float afStack_129c [3];
+  float local_1290 [3];
+  float afStack_1284 [3];
+  float local_1278 [3];
+  undefined4 auStack_126c [3];
+  float local_1260 [3];
+  undefined1 auStack_1254 [12];
+  undefined1 local_1248 [12];
+  undefined1 auStack_123c [12];
+  float local_1230 [3];
+  undefined1 auStack_1224 [12];
+  float local_1218 [3];
+  undefined1 auStack_120c [12];
+  undefined1 local_1200 [12];
+  undefined1 local_11f4 [12];
+  undefined1 local_11e8 [12];
+  undefined1 local_11dc [12];
+  float local_11d0 [3];
+  int local_11c4 [3];
+  undefined1 local_11b8 [12];
+  undefined1 local_11ac [12];
+  float local_11a0 [3];
+  undefined1 local_1194 [12];
+  float local_1188 [3];
+  undefined1 local_117c [12];
+  undefined1 auStack_1170 [12];
+  undefined1 local_1164 [12];
+  float local_1158 [3];
+  undefined1 local_114c [12];
+  float local_1140 [3];
+  undefined1 auStack_1134 [12];
+  float local_1128 [3];
+  undefined1 auStack_111c [12];
+  undefined1 local_1110 [12];
+  undefined1 auStack_1104 [12];
+  float local_10f8 [3];
+  float local_10ec [3];
+  undefined1 local_10e0 [12];
+  float local_10d4 [3];
+  float local_10c8 [3];
+  float afStack_10bc [3];
+  undefined1 auStack_10b0 [12];
+  undefined4 local_10a4 [16];
+  undefined4 local_1064 [16];
+  undefined4 auStack_1024 [6];
+  undefined1 auStack_100c [12];
+  pair<unsigned___int64,unsigned___int64> apStack_1000 [16];
+  undefined4 uStack_ff0;
+  undefined4 uStack_fec;
+  undefined4 auStack_fdc [6];
+  undefined1 auStack_fc4 [12];
+  pair<unsigned___int64,unsigned___int64> apStack_fb8 [16];
+  undefined4 uStack_fa8;
+  undefined4 uStack_fa4;
+  undefined4 uStack_fa0;
+  undefined4 auStack_f94 [6];
+  undefined1 auStack_f7c [28];
+  undefined4 uStack_f60;
+  undefined4 uStack_f5c;
+  undefined4 uStack_f58;
+  undefined4 uStack_f54;
+  undefined8 uStack_f4c;
+  float fStack_f44;
+  float fStack_f40;
+  uint uStack_f3c;
+  undefined1 uStack_f38;
+  undefined1 auStack_f2c [40];
+  undefined4 local_f04 [16];
+  undefined1 local_ec4 [8];
+  undefined1 local_ebc [8];
+  undefined1 local_eb4 [24];
+  undefined1 local_e9c [8];
+  undefined1 local_e94 [8];
+  undefined1 local_e8c [16];
+  undefined1 local_e7c [8];
+  uint auStack_e74 [6];
+  undefined1 local_e5c [8];
+  undefined1 local_e54 [16];
+  undefined1 local_e44 [8];
+  float fStack_e3c;
+  float fStack_e38;
+  float fStack_e34;
+  float fStack_e30;
+  CRefTime *pCStack_e2c;
+  undefined1 uStack_e28;
+  undefined1 auStack_e1c [40];
+  undefined1 local_df4 [8];
+  undefined1 local_dec [8];
+  float fStack_de4;
+  float fStack_de0;
+  undefined1 auStack_ddc [16];
+  undefined1 auStack_dcc [36];
+  undefined1 auStack_da8 [12];
+  float fStack_d9c;
+  undefined4 uStack_d98;
+  float fStack_d90;
+  undefined4 uStack_d8c;
+  undefined1 uStack_d88;
+  undefined4 uStack_d84;
+  undefined4 uStack_d7c;
+  float fStack_d74;
+  float fStack_d70;
+  undefined4 uStack_d6c;
+  undefined4 uStack_d68;
+  undefined4 uStack_d64;
+  undefined1 uStack_d60;
+  undefined1 auStack_d54 [37];
+  undefined1 uStack_d2f;
+  float fStack_d2c;
+  float fStack_d28;
+  float fStack_d24;
+  float fStack_d20;
+  float fStack_d1c;
+  undefined1 uStack_d18;
+  undefined1 auStack_d0c [40];
+  undefined4 auStack_ce4 [6];
+  undefined1 auStack_ccc [12];
+  pair<unsigned___int64,unsigned___int64> apStack_cc0 [16];
+  undefined4 uStack_cb0;
+  undefined4 uStack_cac;
+  undefined4 uStack_ca8;
+  undefined4 uStack_ca4;
+  float fStack_c9c;
+  float fStack_c98;
+  undefined4 uStack_c94;
+  undefined4 uStack_c90;
+  undefined4 uStack_c8c;
+  undefined1 uStack_c88;
+  undefined1 auStack_c7c [37];
+  undefined1 uStack_c57;
+  float fStack_c54;
+  float fStack_c50;
+  float fStack_c4c;
+  float fStack_c48;
+  float fStack_c44;
+  undefined1 uStack_c40;
+  undefined1 auStack_c34 [40];
+  float local_c0c;
+  float local_c08;
+  undefined4 local_c04;
+  undefined4 local_c00;
+  undefined4 local_bfc;
+  undefined1 local_bf8;
+  undefined1 local_bec [37];
+  undefined1 local_bc7;
+  float fStack_bc4;
+  float fStack_bc0;
+  undefined4 uStack_bbc;
+  undefined4 uStack_bb8;
+  undefined4 uStack_bb4;
+  undefined1 uStack_bb0;
+  undefined1 auStack_ba4 [37];
+  undefined1 uStack_b7f;
+  float fStack_b7c;
+  float fStack_b78;
+  undefined1 auStack_b64 [36];
+  undefined1 auStack_b40 [12];
+  float fStack_b34;
+  undefined4 uStack_b30;
+  undefined4 uStack_b2c;
+  undefined4 uStack_b28;
+  undefined4 uStack_b24;
+  undefined1 uStack_b20;
+  undefined4 uStack_b1c;
+  char cStack_b18;
+  undefined4 uStack_b14;
+  float fStack_b0c;
+  float fStack_b08;
+  undefined1 auStack_af4 [36];
+  undefined1 auStack_ad0 [12];
+  float fStack_ac4;
+  undefined4 uStack_ac0;
+  undefined4 uStack_abc;
+  undefined4 uStack_ab8;
+  undefined4 uStack_ab4;
+  undefined1 uStack_ab0;
+  undefined4 uStack_aac;
+  undefined1 uStack_aa8;
+  undefined4 uStack_aa4;
+  float fStack_a9c;
+  float fStack_a98;
+  undefined1 auStack_a84 [36];
+  undefined1 auStack_a60 [12];
+  float fStack_a54;
+  undefined4 uStack_a50;
+  undefined4 uStack_a4c;
+  undefined4 uStack_a48;
+  undefined4 uStack_a44;
+  undefined1 uStack_a40;
+  undefined4 uStack_a3c;
+  undefined1 uStack_a38;
+  undefined4 uStack_a34;
+  uint local_a2c;
+  uint local_a28;
+  float local_a24;
+  float local_a20;
+  float local_a1c;
+  undefined1 local_a18;
+  undefined1 local_a0c [40];
+  undefined4 auStack_9e4 [3];
+  undefined4 uStack_9d8;
+  undefined4 auStack_9cc [3];
+  undefined4 uStack_9c0;
+  uint local_9b4 [6];
+  float local_99c [3];
+  uint auStack_990 [6];
+  float local_978 [3];
+  undefined4 local_96c [6];
+  undefined1 local_954 [12];
+  pair<unsigned___int64,unsigned___int64> local_948 [16];
+  undefined4 local_938;
+  undefined4 local_934;
+  uint auStack_924 [6];
+  undefined4 auStack_90c [3];
+  undefined4 uStack_900;
+  float fStack_8fc;
+  undefined4 local_8f4 [3];
+  undefined4 local_8e8;
+  undefined4 local_8e4;
+  undefined4 auStack_8dc [3];
+  undefined4 uStack_8d0;
+  float fStack_8cc;
+  undefined4 auStack_8c4 [3];
+  undefined4 uStack_8b8;
+  float fStack_8b4;
+  undefined4 auStack_8ac [3];
+  undefined4 uStack_8a0;
+  undefined4 uStack_89c;
+  undefined4 auStack_894 [3];
+  undefined4 uStack_888;
+  float fStack_884;
+  undefined4 auStack_87c [3];
+  undefined4 uStack_870;
+  undefined4 uStack_86c;
+  undefined4 auStack_864 [3];
+  undefined4 uStack_858;
+  float fStack_854;
+  undefined4 auStack_84c [3];
+  undefined4 uStack_840;
+  float fStack_83c;
+  undefined4 auStack_834 [3];
+  undefined4 uStack_828;
+  float fStack_824;
+  undefined4 auStack_81c [3];
+  undefined4 uStack_810;
+  undefined4 uStack_80c;
+  undefined4 auStack_804 [3];
+  int iStack_7f8;
+  float fStack_7f4;
+  undefined4 auStack_7ec [3];
+  undefined4 uStack_7e0;
+  float fStack_7dc;
+  undefined4 auStack_7d4 [3];
+  undefined4 uStack_7c8;
+  float fStack_7c4;
+  undefined8 local_7bc;
+  float local_7b4;
+  float local_7b0;
+  CRefTime *local_7ac;
+  undefined1 local_7a8;
+  undefined1 local_7a4 [8];
+  undefined1 local_79c [4];
+  pair<unsigned___int64,unsigned___int64> local_798 [16];
+  undefined4 local_788;
+  undefined4 local_784;
+  undefined4 auStack_774 [3];
+  undefined4 uStack_768;
+  undefined4 uStack_760;
+  undefined4 auStack_75c [3];
+  undefined4 uStack_750;
+  float fStack_74c;
+  undefined4 auStack_744 [3];
+  undefined4 uStack_738;
+  float fStack_734;
+  undefined4 auStack_72c [3];
+  undefined4 uStack_720;
+  float fStack_71c;
+  undefined4 auStack_714 [3];
+  undefined4 uStack_708;
+  float fStack_704;
+  undefined4 auStack_6fc [3];
+  undefined4 uStack_6f0;
+  float fStack_6ec;
+  undefined4 auStack_6e4 [3];
+  undefined4 uStack_6d8;
+  float fStack_6d4;
+  undefined4 auStack_6cc [3];
+  undefined4 uStack_6c0;
+  float fStack_6bc;
+  undefined4 auStack_6b4 [3];
+  undefined4 uStack_6a8;
+  float fStack_6a4;
+  undefined4 auStack_69c [3];
+  undefined4 uStack_690;
+  float fStack_68c;
+  undefined4 auStack_684 [3];
+  undefined4 uStack_678;
+  undefined4 uStack_674;
+  undefined4 auStack_66c [3];
+  undefined4 uStack_660;
+  float fStack_65c;
+  undefined4 auStack_654 [3];
+  undefined4 uStack_648;
+  undefined4 uStack_644;
+  undefined4 auStack_63c [3];
+  undefined4 uStack_630;
+  undefined4 uStack_62c;
+  undefined4 auStack_624 [3];
+  undefined4 uStack_618;
+  float fStack_614;
+  undefined4 auStack_60c [3];
+  undefined4 uStack_600;
+  float fStack_5fc;
+  undefined4 auStack_5f4 [3];
+  undefined4 uStack_5e8;
+  undefined4 uStack_5e4;
+  undefined4 auStack_5dc [3];
+  undefined4 uStack_5d0;
+  float fStack_5cc;
+  undefined4 local_5c4 [3];
+  undefined4 local_5b8;
+  undefined4 local_5b4;
+  undefined4 local_5ac [3];
+  undefined4 local_5a0;
+  undefined4 local_59c;
+  undefined4 auStack_594 [3];
+  undefined4 uStack_588;
+  undefined4 uStack_584;
+  float fStack_57c;
+  float fStack_578;
+  undefined1 auStack_574 [16];
+  undefined1 auStack_564 [36];
+  undefined1 auStack_540 [12];
+  float fStack_534;
+  float fStack_530;
+  float fStack_52c;
+  CRefTime *pCStack_528;
+  CRefTime *pCStack_524;
+  char cStack_520;
+  undefined4 uStack_51c;
+  undefined4 uStack_514;
+  undefined4 local_50c;
+  undefined4 local_508;
+  float local_504;
+  float local_500;
+  uint local_4fc;
+  undefined1 local_4f8;
+  undefined1 local_4f4 [8];
+  undefined1 local_4ec [4];
+  pair<unsigned___int64,unsigned___int64> local_4e8 [16];
+  undefined4 local_4d8;
+  undefined4 local_4d4;
+  undefined4 local_4d0;
+  int aiStack_4c4 [3];
+  undefined4 auStack_4b8 [3];
+  undefined1 auStack_4ac [4];
+  undefined4 uStack_4a8;
+  uint local_4a4 [6];
+  uint local_48c [6];
+  undefined4 local_474 [3];
+  undefined4 local_468;
+  float local_464;
+  undefined4 local_460;
+  uint local_45c [6];
+  undefined4 auStack_444 [3];
+  undefined1 auStack_438 [4];
+  undefined4 uStack_434;
+  uint auStack_430 [6];
+  uint local_418 [6];
+  void *local_400 [4];
+  undefined4 local_3f0;
+  uint local_3ec;
+  float fStack_3e8;
+  float fStack_3e4;
+  undefined1 auStack_3e0 [16];
+  undefined1 auStack_3d0 [36];
+  undefined1 auStack_3ac [12];
+  float fStack_3a0;
+  float fStack_39c;
+  float fStack_398;
+  float fStack_394;
+  char cStack_38c;
+  undefined4 uStack_388;
+  char cStack_384;
+  undefined4 uStack_380;
+  int local_378 [3];
+  uint local_36c [6];
+  int local_354 [3];
+  uint local_348 [6];
+  int local_330 [3];
+  float local_324 [3];
+  uint auStack_318 [6];
+  int local_300 [3];
+  int local_2f4 [3];
+  int local_2e8 [3];
+  int local_2dc [3];
+  int local_2d0 [3];
+  float local_2c4 [3];
+  float local_2b8 [3];
+  float afStack_2ac [3];
+  float local_2a0 [3];
+  float local_294 [3];
+  float afStack_288 [3];
+  undefined4 auStack_27c [3];
+  undefined4 uStack_270;
+  undefined4 uStack_26c;
+  undefined4 uStack_268;
+  float local_264 [2];
+  undefined8 local_25c;
+  undefined4 local_254 [4];
+  float local_244;
+  float local_240;
+  float local_23c;
+  float local_238;
+  undefined8 local_234;
+  undefined8 local_22c;
+  undefined8 local_224;
+  undefined4 local_21c;
+  int iStack_218;
+  undefined1 auStack_214 [4];
+  undefined1 local_210 [4];
+  undefined4 local_20c;
+  uint local_208 [3];
+  undefined4 local_1fc;
+  uint local_1f0 [3];
+  undefined4 local_1e4;
+  undefined4 local_1d8 [3];
+  undefined4 local_1cc;
+  float local_1c8;
+  undefined1 local_1c0 [12];
+  undefined4 local_1b4 [3];
+  undefined4 local_1a8;
+  float local_1a4;
+  uint local_19c [6];
+  undefined4 auStack_184 [3];
+  undefined4 uStack_178;
+  float fStack_174;
+  undefined4 auStack_16c [3];
+  undefined4 uStack_160;
+  CRefTime *pCStack_15c;
+  float local_154 [3];
+  undefined1 local_148 [12];
+  undefined4 local_13c [2];
+  float local_134 [3];
+  float local_128 [2];
+  float local_120 [3];
+  uint auStack_114 [6];
+  undefined4 local_fc [3];
+  int local_f0;
+  float local_ec;
+  undefined4 local_e8;
+  float afStack_e4 [3];
+  float local_d8;
+  undefined4 local_d4 [2];
+  undefined1 auStack_cc [12];
+  float local_c0 [3];
+  float local_b4 [3];
+  float local_a8 [2];
+  float local_a0 [2];
+  float local_98 [2];
+  float local_90 [2];
+  float local_88 [2];
+  undefined4 local_80 [3];
+  undefined4 local_74;
+  float local_70;
+  undefined4 local_6c;
+  uint auStack_68 [3];
+  float local_5c [3];
+  float local_50 [3];
+  float local_44 [3];
+  int local_38 [3];
+  int local_2c [3];
+  float local_20 [3];
+  uint local_14;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_005564a6;
+  local_10 = ExceptionList;
+  local_14 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  local_2b28 = param_1;
+  local_2b70 = (undefined4 *)((int)in_ECX + 4);
+  local_2b44 = *(CRefTime **)*local_2b70;
+  local_2b2c = param_2;
+  local_2b2d = '\0';
+  local_2b1c = in_ECX;
+  if (local_2b44 != (CRefTime *)*local_2b70) {
+    do {
+      fVar24 = *(float *)(local_2b44 + 0x18);
+      if ((((fVar24 != 0.0) && (*(char *)((int)fVar24 + 0x60) == '\0')) &&
+          (*(char *)((int)fVar24 + 0x68) == 'T')) && (0.0 < *(float *)((int)fVar24 + 0x16c))) {
+        if (fVar24 == *(float *)((int)in_ECX + 0xb8)) {
+          iVar8 = *(int *)((int)in_ECX + 0xb8);
+          fVar51 = Combat_computeMaxHealth(iVar8);
+          local_2b3c = (CRefTime *)(float)fVar51;
+          *(float *)(iVar8 + 0x16c) =
+               (float)local_2b3c * (float)(int)local_2b28 * 0.001 * 0.05 + *(float *)(iVar8 + 0x16c)
+          ;
+          iVar8 = *(int *)((int)in_ECX + 0xb8);
+          fVar51 = Combat_computeMaxHealth(iVar8);
+          local_2b3c = (CRefTime *)(float)fVar51;
+          if ((float)local_2b3c < *(float *)(iVar8 + 0x16c)) {
+            fVar51 = Combat_computeMaxHealth(*(int *)((int)in_ECX + 0xb8));
+            *(float *)(*(int *)((int)in_ECX + 0xb8) + 0x16c) = (float)fVar51;
+          }
+        }
+        local_2b2d = '\x01';
+      }
+      RBTree_iterIncrement((int *)&local_2b44);
+    } while (local_2b44 != *(CRefTime **)((int)in_ECX + 4));
+  }
+  *(int *)((int)in_ECX + 0x8000bc) = *(int *)((int)in_ECX + 0x8000bc) + local_2b28;
+  if (local_2b2d == '\0') {
+    iVar8 = local_2b28 * 10;
+  }
+  else {
+    iVar8 = local_2b28 * 100;
+  }
+  *(int *)((int)in_ECX + 0x80015c) = *(int *)((int)in_ECX + 0x80015c) + iVar8;
+  if (*(int *)((int)in_ECX + 0xa4) == 0) {
+    *(undefined4 *)((int)in_ECX + 0x80015c) = 32400000;
+  }
+  iVar8 = *(int *)((int)in_ECX + 0x80015c);
+  while (86400000 < iVar8) {
+    *(int *)((int)in_ECX + 0x800160) = *(int *)((int)in_ECX + 0x800160) + 1;
+    *(int *)((int)in_ECX + 0x80015c) = *(int *)((int)in_ECX + 0x80015c) + -86400000;
+    lib_fn_524500((int)in_ECX);
+    iVar8 = *(int *)((int)in_ECX + 0x80015c);
+  }
+  if (((*(int *)((int)in_ECX + 0x8000bc) / 10000 !=
+        (int)(local_2b28 + *(int *)((int)in_ECX + 0x8000bc)) / 10000) &&
+      (bVar2 = is_field4_nonzero((int)in_ECX + 0xac), bVar2)) && (*(int *)((int)in_ECX + 0xa4) != 0)) {
+    local_2cb8 = 0;
+    local_2cb4 = 0;
+    local_2cb0 = 0;
+    local_2cac = 0;
+    local_8 = 0;
+    vector_resizeZero(&local_2cb8,4);
+    *(undefined4 *)(local_2cac + local_2cb8) = *(undefined4 *)((int)in_ECX + 0x800160);
+    local_2cac = local_2cac + 4;
+    vector_resizeZero(&local_2cb8,(local_2cb4 - local_2cb8) + 4);
+    *(undefined4 *)(local_2cac + local_2cb8) = *(undefined4 *)((int)in_ECX + 0x80015c);
+    local_2cac = local_2cac + 4;
+    String_ctorFromCStr(local_400,(int *)&DAT_0056d08c);
+    local_8 = CONCAT31(local_8._1_3_,1);
+    db_store_blob_wrapper((void *)((int)in_ECX + 0xac),local_400,&local_2cb8);
+    if (0xf < local_3ec) {
+      operator_delete(local_400[0]);
+    }
+    local_3ec = 0xf;
+    local_3f0 = 0;
+    local_400[0] = (void *)((uint)local_400[0] & 0xffffff00);
+    local_8 = 0xffffffff;
+    std_vector_free(&local_2cb8);
+  }
+  local_2b8c = (float)(int)local_2b28;
+  local_2ba4 = local_2b8c * 0.001;
+  local_2bd4 = 0;
+  local_2bd8 = std_List_node_alloc_0xc((undefined4 *)0x0,(undefined4 *)0x0);
+  local_8 = 2;
+  local_2bf4 = 0;
+  local_2bf0 = 0;
+  local_2bf4 = std_List_init_sentinel();
+  local_8._0_1_ = 3;
+  if (((*(int *)((int)in_ECX + 0xb8) != 0) &&
+      (iVar8 = *(int *)((int)in_ECX + 0xb8), *(char *)(iVar8 + 0x1020) == '\x13')) &&
+     ((*(char *)(iVar8 + 0x1021) == '\x18' && (1 < *(short *)(iVar8 + 0x1030))))) {
+    *(undefined1 *)(iVar8 + 0x1021) = 0x19;
+  }
+  local_2b5c = (undefined4 *)**(int **)((int)in_ECX + 4);
+  if (local_2b5c != *(int **)((int)in_ECX + 4)) {
+    do {
+      if (local_2b5c[6] != 0) {
+        if (*(char *)(local_2b5c[6] + 0x60) == '\x03') {
+          iVar8 = getField_plus0x10((int *)&local_2b5c);
+          iVar8 = identity_return(iVar8);
+          bVar2 = lib_fn_4e28d0((int *)(*(int *)(iVar8 + 8) + 0x11dc));
+          if (bVar2) {
+            iVar8 = getField_plus0x10((int *)&local_2b5c);
+            local_2b3c = *(CRefTime **)(iVar8 + 8);
+            pCVar13 = local_2b3c + 0x1b0;
+            puVar9 = (uint *)getElemPtr4(pCVar13,1);
+            uVar12 = *puVar9;
+            puVar9 = (uint *)getElemPtr4(pCVar13,0);
+            iVar8 = Region_getChunkCell(in_ECX,*puVar9,uVar12);
+            if (iVar8 != 0) {
+              piVar10 = (int *)getElemPtr4(pCVar13,2);
+              iVar17 = *piVar10;
+              if ((-1 < iVar17) && (iVar11 = std_vector_size_41fff0((int *)(iVar8 + 0x18)), iVar17 < iVar11))
+              {
+                piVar10 = (int *)ptr_index_dword((void *)(iVar8 + 0x18),iVar17);
+                struct_copyAssign_vec_str(local_2b3c + 0x11dc,(int *)(*piVar10 + 0xf6c));
+              }
+            }
+          }
+        }
+        iVar8 = getField_plus0x10((int *)&local_2b5c);
+        pCVar13 = (CRefTime *)(iVar8 + 8);
+        fVar24 = *(float *)pCVar13;
+        local_2b94 = pCVar13;
+        if (((*(ushort *)((int)fVar24 + 0x7e) & 0x2000) != 0) &&
+           (bVar2 = lib_fn_530540((int)fVar24 + 0x13a4), bVar2)) {
+          piVar10 = (int *)getElemPtr4((void *)((int)fVar24 + 0x1b0),1);
+          uVar12 = (int)(*piVar10 + (*piVar10 >> 0x1f & 7U)) >> 3;
+          piVar10 = (int *)getElemPtr4((void *)((int)fVar24 + 0x1b0),0);
+          iVar8 = World_getTileAtCoords(local_2b1c,(int)(*piVar10 + (*piVar10 >> 0x1f & 7U)) >> 3,uVar12);
+          if ((iVar8 != 0) && ((*(int *)(iVar8 + 0x34) != 0 && (*(char *)(iVar8 + 0x41) == '\x02')))
+             ) {
+            *(undefined4 *)((int)fVar24 + 0x16c) = 0;
+            *(undefined4 *)((int)*(float *)pCVar13 + 0x6c) = 0;
+          }
+        }
+        in_ECX = local_2b1c;
+        if (*(char *)((int)*(float *)pCVar13 + 0x60) == '\0') {
+          lib_fn_4d6620(&local_2bd8,(undefined4 *)pCVar13);
+          fVar24 = *(float *)pCVar13;
+          pCVar13 = (CRefTime *)lib_fn_4e2320((void *)((int)fVar24 + 0x10),0);
+          lVar14 = CRefTime::Millisecs(pCVar13);
+          iVar8 = (int)((lVar14 >> 0x1f & 0xffU) + lVar14) >> 8;
+          pCVar13 = (CRefTime *)lib_fn_4e2320((void *)((int)fVar24 + 0x10),1);
+          lVar14 = CRefTime::Millisecs(pCVar13);
+          pCVar13 = (CRefTime *)(iVar8 + -1);
+          pCVar15 = (CRefTime *)(iVar8 + 1);
+          local_2b20 = (CRefTime *)((int)((lVar14 >> 0x1f & 0xffU) + lVar14) >> 8);
+          local_2b44 = pCVar15;
+          local_2b3c = pCVar13;
+          if ((int)pCVar13 <= (int)pCVar15) {
+            local_2b4c = local_2b20 + -1;
+            pCVar38 = local_2b20 + 1;
+            do {
+              pCVar49 = local_2b4c;
+              if ((int)local_2b4c <= (int)pCVar38) {
+                do {
+                  local_2b3c = (CRefTime *)Region_getChunkCell(local_2b1c,(uint)pCVar13,(uint)pCVar49);
+                  if (local_2b3c != (CRefTime *)0x0) {
+                    lib_fn_4d4f60(&local_2bf4,local_2dcc,(uint *)&local_2b3c);
+                  }
+                  pCVar49 = pCVar49 + 1;
+                  pCVar38 = local_2b20 + 1;
+                  pCVar15 = local_2b44;
+                } while ((int)pCVar49 <= (int)pCVar38);
+              }
+              pCVar13 = pCVar13 + 1;
+            } while ((int)pCVar13 <= (int)pCVar15);
+          }
+          pCVar13 = local_2b94;
+          in_ECX = local_2b1c;
+          if (*(char *)((int)local_2b1c + 0xb4) == '\0') {
+            fVar24 = *(float *)local_2b94;
+            pCVar15 = (CRefTime *)lib_fn_4e2320((void *)((int)fVar24 + 0x10),1);
+            lVar14 = CRefTime::Millisecs(pCVar15);
+            pCVar15 = (CRefTime *)lib_fn_4e2320((void *)((int)fVar24 + 0x10),0);
+            lVar16 = CRefTime::Millisecs(pCVar15);
+            in_stack_ffffc894 = (CRefTime *)0x532926;
+            World_findNearestFeatureCell(local_2b1c,&local_25c,lVar16,lVar14);
+            piVar10 = (int *)getElemPtr4(&local_25c,1);
+            iVar8 = *piVar10;
+            piVar10 = (int *)getElemPtr4(&local_25c,0);
+            local_2b3c = (CRefTime *)*piVar10;
+            iVar17 = Grid_lookup1024(local_2b1c,(int)local_2b3c,iVar8);
+            if ((iVar17 != 0) && (*(char *)(iVar17 + 0x15a18) == '\0')) {
+              in_stack_ffffc894 = (CRefTime *)0x53297c;
+              stl_fn_50d8d0(local_2b1c,(int)local_2b3c,iVar8,(int)local_2b2c);
+            }
+            fVar24 = *(float *)pCVar13;
+            pCVar15 = (CRefTime *)lib_fn_4e2320((void *)((int)fVar24 + 0x10),1);
+            lVar14 = CRefTime::Millisecs(pCVar15);
+            iVar8 = lVar14 + (lVar14 >> 0x1f & 0xffU);
+            iVar8 = (int)((iVar8 >> 8) + (iVar8 >> 0x1f & 7U)) >> 3;
+            pCVar15 = (CRefTime *)lib_fn_4e2320((void *)((int)fVar24 + 0x10),0);
+            lVar14 = CRefTime::Millisecs(pCVar15);
+            iVar17 = lVar14 + (lVar14 >> 0x1f & 0xffU);
+            pair_set2(local_13c,(int)((iVar17 >> 8) + (iVar17 >> 0x1f & 7U)) >> 3,iVar8);
+            puVar9 = (uint *)getElemPtr4(local_13c,1);
+            uVar12 = *puVar9;
+            puVar9 = (uint *)getElemPtr4(local_13c,0);
+            local_2b3c = (CRefTime *)World_getTileAtCoords(local_2b1c,*puVar9,uVar12);
+            in_ECX = local_2b1c;
+            if (((local_2b3c != (CRefTime *)0x0) && (*(float *)(local_2b3c + 0x34) != 0.0)) &&
+               (local_2b3c[0x41] == (CRefTime)0x0)) {
+              fVar24 = *(float *)pCVar13;
+              puVar9 = (uint *)lib_fn_4e2320((void *)((int)fVar24 + 0x10),1);
+              puVar18 = (uint *)lib_fn_4e2320((void *)((int)fVar24 + 0x10),0);
+              pCVar13 = local_2b3c;
+              fVar51 = World_falloffSquared((uint *)local_2b3c,puVar18,puVar9);
+              local_2b3c = (CRefTime *)(float)fVar51;
+              in_ECX = local_2b1c;
+              if (0.0 < (float)local_2b3c) {
+                pCVar13[0x41] = (CRefTime)0x1;
+                initStruct_0x38_zero(local_254);
+                std_pair_copy_ctor2(local_254,local_13c);
+                copyStruct_0x28(&local_244,(undefined4 *)(pCVar13 + 0x2c));
+                std_list_push_back_4284a0(local_2b2c + 0x18,local_254);
+                in_ECX = local_2b1c;
+              }
+            }
+          }
+        }
+      }
+      RBTree_iterIncrement((int *)&local_2b5c);
+    } while (local_2b5c != *(undefined4 **)((int)in_ECX + 4));
+  }
+  lib_fn_52e930(local_2bec);
+  local_8._0_1_ = 4;
+  lib_fn_52e930(local_2cd8);
+  local_8._0_1_ = 5;
+  if (param_3 != (void *)0x0) {
+    bVar2 = lib_fn_530540((int)param_3);
+    if (!bVar2) {
+      if (*(char *)((int)in_ECX + 0xb4) != '\0') {
+        std_list_Tidy_no_size(local_2b2c);
+      }
+      deref_getFirst(param_3,&local_2b24);
+      piVar10 = (int *)World_getField0(param_3,&local_2d30);
+      bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+      if (bVar2) {
+        do {
+          puVar22 = local_2bec;
+          piVar10 = local_2b2c;
+          puVar9 = (uint *)lib_fn_52eb90((int *)&local_2b24);
+          in_stack_ffffc894 = (CRefTime *)0x532b60;
+          lib_fn_4cea80(in_ECX,puVar9,piVar10,puVar22);
+          lib_fn_52ebf0(&local_2b24,&local_2b48);
+          piVar10 = (int *)World_getField0(param_3,&local_2d30);
+          bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+        } while (bVar2);
+      }
+    }
+    pCVar13 = (CRefTime *)((int)param_3 + 0x58);
+    local_2b3c = pCVar13;
+    bVar2 = lib_fn_530540((int)pCVar13);
+    if (!bVar2) {
+      deref_getFirst(pCVar13,&local_2b24);
+      piVar10 = (int *)World_getField0(pCVar13,&local_2d78);
+      bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+      if (bVar2) {
+        do {
+          iVar8 = lib_fn_52eb90((int *)&local_2b24);
+          uVar12 = std_map_find_value(local_2b1c,(uint *)(iVar8 + 8));
+          if (uVar12 != 0) {
+            pcVar29 = (char *)(iVar8 + 0x10);
+            pvVar19 = (void *)std_map_find_value(local_2b1c,(uint *)(iVar8 + 8));
+            Combat_upsertBuffEntry(pvVar19,pcVar29);
+          }
+          lib_fn_52ebf0(&local_2b24,&local_2b48);
+          piVar10 = (int *)World_getField0(local_2b3c,&local_2d78);
+          bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+          in_ECX = local_2b1c;
+        } while (bVar2);
+      }
+      if (*(char *)((int)in_ECX + 0xb4) != '\0') {
+        std_list_Tidy_no_size(local_2b2c + 0x16);
+      }
+    }
+  }
+  deref_getFirst(&local_2bf4,&local_2b68);
+  piVar10 = (int *)World_getField0(&local_2bf4,&local_2d10);
+  bVar2 = std_iterator_notEqual(&local_2b68,piVar10);
+  if (bVar2) {
+    do {
+      lib_fn_4c8280(local_2bfc);
+      local_8 = CONCAT31(local_8._1_3_,6);
+      pCVar13 = (CRefTime *)getField_plus0x10((int *)&local_2b68);
+      fVar24 = *(float *)pCVar13;
+      local_2b40 = pCVar13;
+      World_getField0((void *)((int)fVar24 + 0x30),&local_2b84);
+      piVar10 = (int *)lib_fn_4d3de0((void *)((int)fVar24 + 0x30),&local_2da8);
+      bVar2 = std_iterator_notEqual(&local_2b84,piVar10);
+      if (bVar2) {
+        do {
+          pCVar15 = (CRefTime *)lib_fn_4ce1f0(&local_2b84);
+          local_2b44 = pCVar15;
+          if (*pCVar15 == (CRefTime)0x10) {
+            pCVar15 = pCVar15 + 0x118;
+            local_2b24 = (CRefTime *)lib_fn_4e2320(pCVar15,2);
+            local_2b98 = (CRefTime *)lib_fn_4e2320(pCVar15,1);
+            puVar9 = (uint *)int64_sub_shifted(local_2b98,local_31e0,1);
+            local_2b60 = (CRefTime *)lib_fn_4e2320(pCVar15,0);
+            iVar8 = World_getBlockFloat(local_2b1c,*(uint *)local_2b60,*(uint *)(local_2b60 + 4),*puVar9,
+                                 puVar9[1],(uint)*(float *)local_2b24,
+                                 (uint)*(float *)(local_2b24 + 4),0);
+            uVar20 = check_type_low5_active(iVar8);
+            pCVar13 = local_2b98;
+            if ((char)uVar20 != '\0') {
+              piVar10 = local_31f0;
+              uVar12 = CRefTime::Millisecs(local_2b98);
+              piVar21 = lib_fn_4cde40(local_3200,uVar12);
+              puVar22 = (undefined4 *)int64_add_timecall(piVar21,piVar10);
+              std_pair_copy_ctor2(pCVar13,puVar22);
+              *(float *)(local_2b44 + 0x130) = 180.0;
+            }
+            pCVar15 = local_2b44;
+            puVar9 = (uint *)int64_add_shifted(pCVar13,local_3210,1);
+            iVar8 = World_getBlockFloat(local_2b1c,*(uint *)local_2b60,*(uint *)(local_2b60 + 4),*puVar9,
+                                 puVar9[1],(uint)*(float *)local_2b24,
+                                 (uint)*(float *)(local_2b24 + 4),0);
+            uVar20 = check_type_low5_active(iVar8);
+            if ((char)uVar20 != '\0') {
+              piVar10 = local_3220;
+              uVar59 = 1;
+              piVar21 = local_3230;
+              uVar12 = CRefTime::Millisecs(pCVar13);
+              piVar23 = lib_fn_4cde40(local_3240,uVar12);
+              pvVar19 = (void *)int64_add_shifted(piVar23,piVar21,uVar59);
+              puVar22 = (undefined4 *)int64_sub_timecall(pvVar19,piVar10);
+              std_pair_copy_ctor2(pCVar13,puVar22);
+              *(float *)(pCVar15 + 0x130) = 0.0;
+            }
+            puVar9 = (uint *)int64_sub_shifted(local_2b60,local_3250,1);
+            iVar8 = World_getBlockFloat(local_2b1c,*puVar9,puVar9[1],*(uint *)pCVar13,
+                                 *(uint *)(pCVar13 + 4),(uint)*(float *)local_2b24,
+                                 (uint)*(float *)(local_2b24 + 4),0);
+            uVar20 = check_type_low5_active(iVar8);
+            if ((char)uVar20 != '\0') {
+              piVar10 = local_3260;
+              uVar12 = CRefTime::Millisecs(local_2b60);
+              piVar21 = lib_fn_4cde40(local_3270,uVar12);
+              puVar22 = (undefined4 *)int64_add_timecall(piVar21,piVar10);
+              std_pair_copy_ctor2(local_2b60,puVar22);
+              *(float *)(pCVar15 + 0x130) = 90.0;
+            }
+            puVar9 = (uint *)int64_add_shifted(local_2b60,local_3280,1);
+            in_stack_ffffc894 = *(CRefTime **)(pCVar13 + 4);
+            in_stack_ffffc88c = CONCAT44(*(uint *)pCVar13,puVar9[1]);
+            iVar8 = World_getBlockFloat(local_2b1c,*puVar9,puVar9[1],*(uint *)pCVar13,
+                                 (uint)in_stack_ffffc894,(uint)*(float *)local_2b24,
+                                 (uint)*(float *)(local_2b24 + 4),0);
+            uVar20 = check_type_low5_active(iVar8);
+            pCVar13 = local_2b40;
+            if ((char)uVar20 != '\0') {
+              piVar10 = local_3290;
+              uVar59 = 1;
+              in_stack_ffffc894 = local_32a0;
+              uVar12 = CRefTime::Millisecs(local_2b60);
+              piVar21 = lib_fn_4cde40(local_32b0,uVar12);
+              in_stack_ffffc88c = 0x532f6600000000;
+              pvVar19 = (void *)int64_add_shifted(piVar21,(int *)in_stack_ffffc894,uVar59);
+              puVar22 = (undefined4 *)int64_sub_timecall(pvVar19,piVar10);
+              std_pair_copy_ctor2(local_2b60,puVar22);
+              *(float *)(pCVar15 + 0x130) = 270.0;
+              pCVar13 = local_2b40;
+            }
+          }
+          if ((0 < (int)*(float *)(pCVar15 + 0x140)) &&
+             (fVar24 = (float)((int)*(float *)(pCVar15 + 0x140) - local_2b28),
+             *(float *)(pCVar15 + 0x140) = fVar24, (int)fVar24 < 0)) {
+            *(float *)(pCVar15 + 0x140) = 0.0;
+          }
+          if (((0 < (int)*(float *)(pCVar15 + 0x13c)) &&
+              (fVar24 = (float)((int)*(float *)(pCVar15 + 0x13c) - local_2b28),
+              *(float *)(pCVar15 + 0x13c) = fVar24, (int)fVar24 < 1)) &&
+             (*(float *)(pCVar15 + 0x13c) = 0.0, *(char *)((int)local_2b1c + 0xb4) == '\0')) {
+            lib_fn_4c8530((int)local_fc);
+            Vec3i64_toFloatScaled(local_fc,(longlong *)(pCVar15 + 0x118));
+            local_e8 = 0x3f800000;
+            iVar8 = rand();
+            local_ec = ((float)iVar8 * 0.1) / 32767.0 + 1.0;
+            local_f0 = (*pCVar15 != (CRefTime)0xc) + 0x3a;
+            std_list_push_back_428590(local_2b2c + 2,local_fc);
+          }
+          std_vector_back_slot(&local_2b84,(int *)&local_2b48);
+          piVar10 = (int *)lib_fn_4d3de0((void *)((int)*(float *)pCVar13 + 0x30),&local_2da8);
+          bVar2 = std_iterator_notEqual(&local_2b84,piVar10);
+        } while (bVar2);
+      }
+      World_getField0(local_2bfc,&local_2b80);
+      piVar10 = (int *)deref_getFirst(local_2bfc,&local_2d00);
+      bVar2 = lib_fn_52df20(&local_2b80,piVar10);
+      if (bVar2) {
+        do {
+          puVar22 = (undefined4 *)lib_fn_52eba0(&local_2b80);
+          lib_fn_4d4430((void *)((int)*(float *)pCVar13 + 0x30),&local_2b90,(void *)*puVar22);
+          lib_fn_52ec10(&local_2b80,(int *)&local_2b48);
+          piVar10 = (int *)deref_getFirst(local_2bfc,&local_2d00);
+          bVar2 = lib_fn_52df20(&local_2b80,piVar10);
+        } while (bVar2);
+      }
+      fVar24 = *(float *)pCVar13;
+      local_2b7c = 0.0;
+      World_getField0((void *)((int)fVar24 + 0xc),&local_2b88);
+      piVar10 = (int *)lib_fn_4d3de0((void *)((int)fVar24 + 0xc),&local_2db4);
+      bVar2 = std_iterator_notEqual(&local_2b88,piVar10);
+      if (bVar2) {
+        do {
+          piVar10 = (int *)lib_fn_4ce1f0(&local_2b88);
+          piVar10[0xd] = piVar10[0xd] + local_2b28;
+          if (piVar10[0x10] == 0 && piVar10[0x11] == 0) {
+LAB_005336af:
+            pvVar19 = local_2b1c;
+            if (*(char *)((int)local_2b1c + 0xb4) == '\0') {
+              iVar8 = *piVar10;
+              if (iVar8 == 6) {
+LAB_005336ea:
+                if (2000 < piVar10[0xd]) {
+                  piVar21 = piVar10;
+                  if ((char)piVar10[0xc] == '\0') {
+                    deref_getFirst((void *)((int)local_2b1c + 4),&local_2ba8);
+                    piVar23 = (int *)World_getField0((void *)((int)pvVar19 + 4),&local_2e24);
+                    bVar2 = std_iterator_notEqual(&local_2ba8,piVar23);
+                    if (bVar2) {
+                      do {
+                        iVar8 = getField_plus0x10(&local_2ba8);
+                        iVar8 = *(int *)(iVar8 + 8);
+                        if ((iVar8 != 0) && (*(char *)(iVar8 + 0x60) == '\0')) {
+                          puVar9 = local_32c0;
+                          uVar12 = 900;
+                          in_stack_ffffc894 = local_2680;
+                          in_stack_ffffc88c = 0x5337c700000000;
+                          puVar18 = Vec3i64_subtract(piVar10 + 2,(uint *)in_stack_ffffc894,
+                                                 (uint *)(iVar8 + 0x10));
+                          puVar9 = vec_op_self_wrapper(puVar18,puVar9);
+                          iVar8 = fixedpoint_greater(puVar9,uVar12);
+                          if ((char)iVar8 != '\0') {
+                            uVar53 = (ulonglong)CONCAT14((char)piVar10[0xc] == '\0',local_2b2c);
+                            piVar23 = (int *)lib_fn_4ce1f0(&local_2b88);
+                            lib_fn_4d8c90(piVar23,(int)uVar53,(char)(uVar53 >> 0x20));
+                            fVar24 = *(float *)local_2b40;
+                            fVar52 = local_2b7c;
+                            puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),1);
+                            uVar20 = *puVar22;
+                            puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),0);
+                            in_stack_ffffc894 = (CRefTime *)*puVar22;
+                            in_stack_ffffc88c = 0x53386600000000;
+                            puVar22 = vec3_store(local_15b4,in_stack_ffffc894,uVar20,fVar52);
+                            puVar39 = local_29b8;
+                            goto LAB_0053386c;
+                          }
+                        }
+                        RBTree_copyBeginThenInc(&local_2ba8,(int *)&local_2bd0);
+                        piVar23 = (int *)World_getField0((void *)((int)pvVar19 + 4),&local_2e24);
+                        bVar2 = std_iterator_notEqual(&local_2ba8,piVar23);
+                      } while (bVar2);
+                    }
+                  }
+                  else {
+                    uVar53 = ZEXT48(local_2b2c);
+                    piVar23 = (int *)lib_fn_4ce1f0(&local_2b88);
+                    lib_fn_4d8c90(piVar23,(int)uVar53,(char)(uVar53 >> 0x20));
+                    fVar24 = *(float *)local_2b40;
+                    fVar52 = local_2b7c;
+                    puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),1);
+                    uVar20 = *puVar22;
+                    puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),0);
+                    in_stack_ffffc894 = (CRefTime *)*puVar22;
+                    in_stack_ffffc88c = 0x53374c00000000;
+                    puVar22 = vec3_store(local_1164,in_stack_ffffc894,uVar20,fVar52);
+                    puVar39 = local_2a68;
+LAB_0053386c:
+                    puVar22 = copyStruct_head_plus_0x48(puVar39,puVar22,piVar21);
+                    std_list_push_back_4284f0(local_2b2c + 0xc,puVar22);
+                    pvVar19 = local_2b1c;
+                  }
+                }
+              }
+              else {
+                if ((iVar8 != 7) && (iVar8 != 8)) goto LAB_00533b17;
+                if ((iVar8 == 6) || ((iVar8 == 8 || (iVar8 == 7)))) goto LAB_005336ea;
+              }
+              if ((char)piVar10[0xc] != '\0') {
+                iVar8 = *piVar10;
+                if ((iVar8 == 6) || (iVar8 == 7)) {
+                  if (*(int *)((int)pvVar19 + 0x8000bc) / 200 ==
+                      (int)(local_2b28 + *(int *)((int)pvVar19 + 0x8000bc)) / 200) {
+                    iVar8 = *piVar10;
+                    goto LAB_005338d4;
+                  }
+                }
+                else {
+LAB_005338d4:
+                  if ((iVar8 != 8) || (piVar10[0xd] != 0)) goto LAB_00533b17;
+                }
+                deref_getFirst(local_2b70,&local_2b5c);
+                piVar21 = (int *)World_getField0(local_2b70,&local_2d08);
+                bVar2 = std_iterator_notEqual(&local_2b5c,piVar21);
+                if (bVar2) {
+                  do {
+                    iVar8 = getField_plus0x10((int *)&local_2b5c);
+                    local_2b44 = (CRefTime *)(iVar8 + 8);
+                    if (*(float *)local_2b44 != 0.0) {
+                      puVar18 = local_32d0;
+                      uVar12 = 0x19;
+                      in_stack_ffffc894 = local_26b0;
+                      puVar9 = (uint *)(piVar10 + 2);
+                      in_stack_ffffc88c = 0x53395c00000000;
+                      puVar26 = Vec3i64_subtract(puVar9,(uint *)in_stack_ffffc894,
+                                             (uint *)((int)*(float *)local_2b44 + 0x10));
+                      puVar18 = vec_op_self_wrapper(puVar26,puVar18);
+                      iVar8 = fixedpoint_greater(puVar18,uVar12);
+                      if (((char)iVar8 != '\0') &&
+                         (*(char *)((int)*(float *)local_2b44 + 0x60) != '\x01')) {
+                        puVar18 = Vec3i64_subtract((void *)((int)*(float *)local_2b44 + 0x10),local_26e0
+                                               ,puVar9);
+                        Vec3i64_toFloatScaled(local_c0,(longlong *)puVar18);
+                        local_2b20 = (CRefTime *)getElemPtr4(local_c0,2);
+                        *(float *)local_2b20 = 0.0;
+                        fVar51 = vec3_length_sq(local_c0);
+                        local_2b3c = (CRefTime *)(float)fVar51;
+                        if (0.0 < (float)local_2b3c) {
+                          vec3_normalize(local_c0);
+                        }
+                        vec3_scale(local_c0,20.0);
+                        *(float *)local_2b20 = 5.0;
+                        if (*piVar10 == 8) {
+                          vec3_scale(local_c0,2.0);
+                        }
+                        puVar27 = (ulonglong *)lib_fn_4e2320(puVar9,1);
+                        uVar53 = *puVar27;
+                        puVar18 = (uint *)lib_fn_4e2320(puVar9,0);
+                        lib_fn_4d2340(local_2b1c,*puVar18,puVar18[1],uVar53);
+                        fVar51 = std_powf(2.0);
+                        local_2b3c = (CRefTime *)(float)fVar51;
+                        iVar8 = *piVar10;
+                        fVar24 = (float)local_2b3c * 10.0;
+                        if (iVar8 == 8) {
+                          fVar24 = fVar24 * 5.0;
+                        }
+                        in_stack_ffffc894 = (CRefTime *)(uint)(iVar8 == 6);
+                        in_stack_ffffc88c = CONCAT44(local_2bec,local_2b2c);
+                        stl_fn_4cfd50(local_2b1c,*(float *)local_2b44,(void *)0x0,fVar24,'\0','\0',
+                                     0.0,puVar9,local_c0,local_2b2c,local_2bec,iVar8 == 6,0,0,'\x01'
+                                    );
+                      }
+                    }
+                    RBTree_copyBeginThenInc(&local_2b5c,(int *)&local_2c1c);
+                    piVar21 = (int *)World_getField0(local_2b70,&local_2d08);
+                    bVar2 = std_iterator_notEqual(&local_2b5c,piVar21);
+                  } while (bVar2);
+                }
+              }
+            }
+          }
+          else {
+            pCVar13 = (CRefTime *)std_map_find_value(local_2b1c,(uint *)(piVar10 + 0x10));
+            local_2b60 = pCVar13;
+            piVar21 = piVar10;
+            if ((pCVar13 == (CRefTime *)0x0) || (0 < *(int *)(pCVar13 + 300))) {
+              if (*(char *)((int)local_2b1c + 0xb4) == '\0') {
+                piVar10[0x10] = 0;
+                piVar10[0x11] = 0;
+                fVar24 = *(float *)local_2b40;
+                fVar52 = local_2b7c;
+                puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),1);
+                uVar20 = *puVar22;
+                puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),0);
+                in_stack_ffffc894 = (CRefTime *)*puVar22;
+                in_stack_ffffc88c = 0x53369400000000;
+                puVar22 = vec3_store(local_1980,in_stack_ffffc894,uVar20,fVar52);
+                puVar39 = local_2a10;
+                goto LAB_0053369a;
+              }
+            }
+            else {
+              switch(*piVar10) {
+              case 0x10:
+              case 0x12:
+                pfVar25 = (float *)getElemPtr4(pCVar13 + 0x80,2);
+                local_2b3c = (CRefTime *)(*pfVar25 * 0.5);
+                pfVar25 = (float *)getElemPtr4(piVar10 + 9,2);
+                Vec3_set(auStack_1638,0,0,(float)local_2b3c + *pfVar25);
+                Vec3i64_randomize((int)local_19c);
+                puVar9 = Vec3i64_add(piVar10 + 2,auStack_25c0,local_19c);
+                Copy24Bytes(pCVar13 + 0x10,puVar9);
+                in_stack_ffffc894 = (CRefTime *)&UNK_00533284;
+                puVar22 = Vec3_set(auStack_1170,0,0,0);
+                Vec3_copy(pCVar13 + 0x34,puVar22);
+                iVar8 = piVar10[8];
+                pfVar25 = (float *)getElemPtr4(local_2b60 + 0x28,2);
+                *pfVar25 = (float)((iVar8 + 2) * 0x5a);
+                local_2b60[0x68] = (CRefTime)0x53;
+                break;
+              case 0x13:
+              case 0x44:
+              case 0x45:
+                pfVar25 = (float *)getElemPtr4(pCVar13 + 0x80,2);
+                local_2b3c = (CRefTime *)(*pfVar25 * 0.5);
+                pfVar25 = (float *)getElemPtr4(piVar10 + 9,2);
+                Vec3_set(auStack_10b0,0,0,(float)local_2b3c + *pfVar25);
+                Vec3i64_randomize((int)auStack_924);
+                puVar9 = Vec3i64_add(piVar10 + 2,auStack_2488,auStack_924);
+                Copy24Bytes(pCVar13 + 0x10,puVar9);
+                in_stack_ffffc894 = (CRefTime *)&UNK_0053336a;
+                puVar22 = Vec3_set(auStack_1104,0,0,0);
+                Vec3_copy(pCVar13 + 0x34,puVar22);
+                iVar8 = piVar10[8];
+                pfVar25 = (float *)getElemPtr4(local_2b60 + 0x28,2);
+                *pfVar25 = (float)(iVar8 * 0x5a);
+                local_2b60[0x68] = (CRefTime)0x54;
+              }
+              pCVar13 = local_2b60;
+              puVar9 = Vec3i64_subtract(local_2b60 + 0x10,local_25f0,(uint *)(piVar10 + 2));
+              pfVar25 = Vec3i64_toFloatScaled(local_1584,(longlong *)puVar9);
+              fVar51 = vec3_length_sq(pfVar25);
+              local_2b3c = (CRefTime *)(float)fVar51;
+              if ((float)local_2b3c <= 16.0) {
+                fVar51 = vec3_length_sq((float *)(pCVar13 + 0x40));
+                local_2b3c = (CRefTime *)(float)fVar51;
+                if (((float)local_2b3c <= 0.0) &&
+                   ((pCVar13[0x68] == (CRefTime)0x53 || (pCVar13[0x68] == (CRefTime)0x54)))) {
+                  switch(*piVar10) {
+                  case 0x10:
+                  case 0x12:
+                    pfVar25 = (float *)getElemPtr4(pCVar13 + 0x80,2);
+                    local_2b3c = (CRefTime *)(*pfVar25 * 0.5);
+                    pfVar25 = (float *)getElemPtr4(piVar10 + 9,2);
+                    Vec3_set(auStack_111c,0,0,(float)local_2b3c + *pfVar25);
+                    Vec3i64_randomize((int)local_1f0);
+                    puVar9 = Vec3i64_add(piVar10 + 2,auStack_2620,local_1f0);
+                    Copy24Bytes(pCVar13 + 0x10,puVar9);
+                    in_stack_ffffc894 = (CRefTime *)&UNK_005334d7;
+                    puVar22 = Vec3_set(auStack_17d0,0,0,0);
+                    Vec3_copy(pCVar13 + 0x34,puVar22);
+                    iVar8 = piVar10[8];
+                    pfVar25 = (float *)getElemPtr4(local_2b60 + 0x28,2);
+                    *pfVar25 = (float)((iVar8 + 2) * 0x5a);
+                    break;
+                  case 0x13:
+                  case 0x44:
+                  case 0x45:
+                    pfVar25 = (float *)getElemPtr4(pCVar13 + 0x80,2);
+                    local_2b3c = (CRefTime *)(*pfVar25 * 0.5);
+                    pfVar25 = (float *)getElemPtr4(piVar10 + 9,2);
+                    Vec3_set(auStack_1134,0,0,(float)local_2b3c + *pfVar25);
+                    Vec3i64_randomize((int)local_208);
+                    puVar9 = Vec3i64_add(piVar10 + 2,auStack_2650,local_208);
+                    Copy24Bytes(pCVar13 + 0x10,puVar9);
+                    in_stack_ffffc894 = (CRefTime *)&UNK_005335b3;
+                    puVar22 = Vec3_set(auStack_159c,0,0,0);
+                    Vec3_copy(pCVar13 + 0x34,puVar22);
+                    iVar8 = piVar10[8];
+                    pfVar25 = (float *)getElemPtr4(local_2b60 + 0x28,2);
+                    *pfVar25 = (float)(iVar8 * 0x5a);
+                  }
+                  goto LAB_005336af;
+                }
+              }
+              if (*(char *)((int)local_2b1c + 0xb4) == '\0') {
+                piVar10[0x10] = 0;
+                piVar10[0x11] = 0;
+                fVar24 = *(float *)local_2b40;
+                fVar52 = local_2b7c;
+                puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),1);
+                uVar20 = *puVar22;
+                puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),0);
+                in_stack_ffffc894 = (CRefTime *)*puVar22;
+                in_stack_ffffc88c = 0x53363700000000;
+                puVar22 = vec3_store(local_114c,in_stack_ffffc894,uVar20,fVar52);
+                puVar39 = local_2908;
+LAB_0053369a:
+                puVar22 = copyStruct_head_plus_0x48(puVar39,puVar22,piVar21);
+                std_list_push_back_4284f0(local_2b2c + 0xc,puVar22);
+                goto LAB_005336af;
+              }
+            }
+          }
+LAB_00533b17:
+          local_2b7c = (float)((int)local_2b7c + 1);
+          lib_fn_4ce200(&local_2b88,(int *)&local_2b48);
+          piVar10 = (int *)lib_fn_4d3de0((void *)((int)*(float *)local_2b40 + 0xc),&local_2db4);
+          bVar2 = std_iterator_notEqual(&local_2b88,piVar10);
+        } while (bVar2);
+      }
+      local_8._0_1_ = 5;
+      std_list_Tidy(local_2bfc);
+      RBTree_copyBeginThenInc(&local_2b68,(int *)&local_2ca4);
+      piVar10 = (int *)World_getField0(&local_2bf4,&local_2d10);
+      bVar2 = std_iterator_notEqual(&local_2b68,piVar10);
+      in_ECX = local_2b1c;
+    } while (bVar2);
+  }
+  if (*(char *)((int)in_ECX + 0xb4) == '\0') {
+    deref_getFirst(&local_2bf4,&local_2b24);
+    piVar10 = (int *)World_getField0(&local_2bf4,&local_2d18);
+    bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+    if (bVar2) {
+      do {
+        piVar10 = (int *)0x0;
+        local_2bac = (int *)0x0;
+        local_2b3c = (CRefTime *)getField_plus0x10((int *)&local_2b24);
+        piVar21 = (int *)((int)*(float *)local_2b3c + 0x18);
+        iVar8 = std_vector_size_41fff0(piVar21);
+        if (0 < iVar8) {
+          do {
+            puVar22 = (undefined4 *)ptr_index_dword(piVar21,(int)piVar10);
+            local_2b98 = (CRefTime *)*puVar22;
+            pCVar13 = local_2b98 + 0x10a0;
+            iVar17 = 0;
+            local_2b44 = pCVar13;
+            iVar8 = std_vector_size_428ee0((int *)pCVar13);
+            if (0 < iVar8) {
+              do {
+                iVar8 = array_index_stride32(pCVar13,iVar17);
+                iVar11 = getFieldAtFixedOffset((int)local_2b1c);
+                pCVar13 = local_2b44;
+                if (*(int *)(iVar8 + 0x18) <= iVar11) {
+                  puVar22 = (undefined4 *)array_index_stride32(local_2b44,iVar17);
+                  Copy24Bytes(local_2b98 + 0x10,puVar22);
+                }
+                iVar17 = iVar17 + 1;
+                iVar8 = std_vector_size_428ee0((int *)pCVar13);
+              } while (iVar17 < iVar8);
+            }
+            *(uint *)(local_2b98 + 0x38) = (int)*(float *)(local_2b98 + 0x38) - local_2b28;
+            piVar21 = (int *)((int)*(float *)local_2b3c + 0x18);
+            piVar10 = (int *)((int)local_2bac + 1);
+            local_2bac = piVar10;
+            iVar8 = std_vector_size_41fff0(piVar21);
+          } while ((int)piVar10 < iVar8);
+        }
+        RBTree_copyBeginThenInc(&local_2b24,(int *)&local_2b48);
+        piVar10 = (int *)World_getField0(&local_2bf4,&local_2d18);
+        bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+      } while (bVar2);
+    }
+    lib_fn_4c8280(&local_2bc8);
+    puVar22 = local_2b70;
+    local_8 = CONCAT31(local_8._1_3_,7);
+    deref_getFirst(local_2b70,&local_2b5c);
+    piVar10 = (int *)World_getField0(puVar22,&local_2dbc);
+    bVar2 = std_iterator_notEqual(&local_2b5c,piVar10);
+    if (bVar2) {
+      do {
+        iVar8 = getField_plus0x10((int *)&local_2b5c);
+        piVar10 = (int *)(iVar8 + 8);
+        iVar8 = *piVar10;
+        if ((((iVar8 != 0) && (*(char *)(iVar8 + 0x60) != '\0')) &&
+            (*(char *)(iVar8 + 0x60) != '\x05')) && (0.0 < *(float *)(iVar8 + 0x16c))) {
+          deref_getFirst((void *)(iVar8 + 0x13a4),&local_2b24);
+          piVar21 = (int *)World_getField0((void *)(iVar8 + 0x13a4),&local_2d20);
+          bVar2 = std_iterator_notEqual(&local_2b24,piVar21);
+          if (bVar2) {
+            do {
+              puVar9 = (uint *)getField_plus0x10((int *)&local_2b24);
+              if (((*puVar9 != 0 || puVar9[1] != 0) &&
+                  (uVar12 = std_map_find_value(local_2b1c,puVar9), uVar12 != 0)) &&
+                 ((uVar12 = std_map_find_value(local_2b1c,puVar9), *(char *)(uVar12 + 0x60) == '\0' &&
+                  (0.0 < (float)puVar9[2])))) {
+                puVar9 = Vec3i64_subtract((void *)(*piVar10 + 0x10),local_1e28,
+                                      (uint *)(*piVar10 + 0x1c0));
+                pfVar25 = Vec3i64_toFloatScaled(local_117c,(longlong *)puVar9);
+                fVar51 = vec3_length_sq(pfVar25);
+                local_2b3c = (CRefTime *)(float)fVar51;
+                if ((float)local_2b3c < 262144.0) goto LAB_005340fa;
+              }
+              RBTree_copyBeginThenInc(&local_2b24,(int *)&local_2b48);
+              piVar21 = (int *)World_getField0((void *)(*piVar10 + 0x13a4),&local_2d20);
+              bVar2 = std_iterator_notEqual(&local_2b24,piVar21);
+            } while (bVar2);
+          }
+          local_2b6c = (CRefTime *)0xbf800000;
+          deref_getFirst(&local_2bd8,&local_2b84);
+          piVar21 = (int *)World_getField0(&local_2bd8,&local_2d28);
+          bVar2 = std_iterator_notEqual(&local_2b84,piVar21);
+          if (bVar2) {
+            do {
+              piVar21 = (int *)lib_fn_52eb90((int *)&local_2b84);
+              puVar9 = Vec3i64_subtract((void *)(*piVar10 + 0x10),local_24b8,(uint *)(*piVar21 + 0x10));
+              pfVar25 = Vec3i64_toFloatScaled(local_17f4,(longlong *)puVar9);
+              fVar51 = vec3_length_sq(pfVar25);
+              local_2b3c = (CRefTime *)(float)fVar51;
+              if (((float)local_2b6c < 0.0) || ((float)local_2b3c < (float)local_2b6c)) {
+                local_2b6c = local_2b3c;
+              }
+              lib_fn_52ebf0(&local_2b84,&local_2b90);
+              piVar21 = (int *)World_getField0(&local_2bd8,&local_2d28);
+              bVar2 = std_iterator_notEqual(&local_2b84,piVar21);
+            } while (bVar2);
+          }
+          fVar24 = *(float *)(*piVar10 + 0x1d2c) + 20.0;
+          if (fVar24 * fVar24 < (float)local_2b6c) {
+            lib_fn_4d6620(&local_2bc8,&local_2b5c);
+            puVar22 = local_2b70;
+            deref_getFirst(local_2b70,&local_2b80);
+            piVar21 = (int *)World_getField0(puVar22,&local_2d24);
+            bVar2 = std_iterator_notEqual(&local_2b80,piVar21);
+            if (bVar2) {
+              do {
+                iVar8 = getField_plus0x10(&local_2b80);
+                if (*(int *)(iVar8 + 8) != 0) {
+                  lib_fn_530560((void *)(*(int *)(iVar8 + 8) + 0x13a4),(uint *)(*piVar10 + 8));
+                }
+                RBTree_copyBeginThenInc(&local_2b80,(int *)&local_2bd0);
+                piVar21 = (int *)World_getField0(puVar22,&local_2d24);
+                bVar2 = std_iterator_notEqual(&local_2b80,piVar21);
+              } while (bVar2);
+            }
+          }
+        }
+LAB_005340fa:
+        RBTree_copyBeginThenInc(&local_2b5c,(int *)&local_2c1c);
+        puVar22 = local_2b70;
+        piVar10 = (int *)World_getField0(local_2b70,&local_2dbc);
+        bVar2 = std_iterator_notEqual(&local_2b5c,piVar10);
+      } while (bVar2);
+    }
+    deref_getFirst(&local_2bc8,&local_2b24);
+    piVar10 = (int *)World_getField0(&local_2bc8,&local_2d2c);
+    bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+    if (bVar2) {
+      do {
+        piVar10 = (int *)lib_fn_52eb90((int *)&local_2b24);
+        iVar8 = getField_plus0x10(piVar10);
+        if (*(undefined4 **)(iVar8 + 8) != (undefined4 *)0x0) {
+          (**(code **)**(undefined4 **)(iVar8 + 8))();
+        }
+        RBTree_eraseNode_plain(puVar22,&local_2b48,(int *)*piVar10);
+        lib_fn_52ebf0(&local_2b24,&local_2b90);
+        piVar10 = (int *)World_getField0(&local_2bc8,&local_2d2c);
+        bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+      } while (bVar2);
+    }
+    pvVar19 = local_2b1c;
+    bVar2 = std_string_empty((int)local_2b1c + 0x94);
+    if (!bVar2) {
+      deref_getFirst(&local_2bd8,&local_2b80);
+      piVar10 = (int *)World_getField0(&local_2bd8,&local_2d3c);
+      bVar2 = std_iterator_notEqual(&local_2b80,piVar10);
+      if (bVar2) {
+        do {
+          pCVar13 = (CRefTime *)lib_fn_52eb90(&local_2b80);
+          fVar24 = *(float *)pCVar13;
+          local_2b4c = pCVar13;
+          if (*(char *)((int)fVar24 + 0x1020) == '\x13') {
+            if ((*(int *)((int)fVar24 + 0x11c8) == 0 && *(int *)((int)fVar24 + 0x11cc) == 0) ||
+               (uVar12 = std_map_find_value(local_2b1c,(uint *)((int)fVar24 + 0x11c8)), uVar12 == 0)) {
+              puVar22 = local_2b70;
+              *(uint *)((int)fVar24 + 0x11c8) = 0;
+              *(undefined4 *)((int)fVar24 + 0x11cc) = 0;
+              deref_getFirst(local_2b70,&local_2b5c);
+              piVar10 = (int *)World_getField0(puVar22,&local_2e44);
+              bVar2 = std_iterator_notEqual(&local_2b5c,piVar10);
+              if (bVar2) {
+                do {
+                  iVar8 = getField_plus0x10((int *)&local_2b5c);
+                  iVar8 = *(int *)(iVar8 + 8);
+                  if ((((iVar8 != 0) && (*(char *)(iVar8 + 0x60) == '\x05')) &&
+                      (*(int *)(iVar8 + 0x198) == *(int *)((int)*(float *)pCVar13 + 8))) &&
+                     (*(int *)(iVar8 + 0x19c) == *(int *)((int)*(float *)pCVar13 + 0xc))) {
+                    iVar8 = getField_plus0x10((int *)&local_2b5c);
+                    iVar8 = *(int *)(iVar8 + 8);
+                    fVar24 = *(float *)pCVar13;
+                    *(undefined4 *)((int)fVar24 + 0x11c8) = *(undefined4 *)(iVar8 + 8);
+                    *(undefined4 *)((int)fVar24 + 0x11cc) = *(undefined4 *)(iVar8 + 0xc);
+                    break;
+                  }
+                  RBTree_copyBeginThenInc(&local_2b5c,(int *)&local_2b48);
+                  piVar10 = (int *)World_getField0(puVar22,&local_2e44);
+                  bVar2 = std_iterator_notEqual(&local_2b5c,piVar10);
+                } while (bVar2);
+              }
+            }
+            puVar9 = (uint *)((int)*(float *)pCVar13 + 0x11c8);
+            local_2b2d = '\0';
+            if (((*puVar9 != 0 || *(int *)((int)*(float *)pCVar13 + 0x11cc) != 0) &&
+                (pCVar15 = (CRefTime *)std_map_find_value(local_2b1c,puVar9), local_2b20 = pCVar15,
+                pCVar15 != (CRefTime *)0x0)) &&
+               ((fVar24 = *(float *)pCVar13,
+                *(int *)((int)fVar24 + 0x1d44) != *(int *)((int)fVar24 + 0x1138) ||
+                (bVar2 = item_not_equals((void *)((int)fVar24 + 0x1020),(char *)((int)fVar24 + 0x1d48))
+                , bVar2)))) {
+              local_2b2d = '\x01';
+              creature_reset_state((int)pCVar15);
+              local_2b3c = pCVar15 + 100;
+              *(uint *)local_2b3c = (uint)*(byte *)((int)*(float *)pCVar13 + 0x1021);
+              *(int *)(pCVar15 + 400) = (int)*(short *)((int)*(float *)pCVar13 + 0x1030);
+              *(float *)(pCVar15 + 0x194) = *(float *)((int)*(float *)pCVar13 + 0x1024);
+              fVar24 = *(float *)pCVar13;
+              if (*(int *)((int)fVar24 + 0x1134) < 0x10) {
+                iVar8 = 0;
+                if (0 < *(int *)((int)fVar24 + 0x1134)) {
+                  do {
+                    pCVar15[iVar8 + 0x1168] = *(CRefTime *)((int)fVar24 + 0x1037 + iVar8 * 8);
+                    fVar24 = *(float *)pCVar13;
+                    iVar8 = iVar8 + 1;
+                  } while (iVar8 < *(int *)((int)fVar24 + 0x1134));
+                }
+                pCVar15[*(int *)((int)*(float *)pCVar13 + 0x1134) + 0x1168] = (CRefTime)0x0;
+              }
+              fVar24 = *(float *)pCVar13;
+              *(float *)(pCVar15 + 0x198) = *(float *)((int)fVar24 + 8);
+              *(float *)(pCVar15 + 0x19c) = *(float *)((int)fVar24 + 0xc);
+              puVar22 = CreatureAppearance_initDefault(local_2b14);
+              copy_struct_0xac(pCVar15 + 0x78,(undefined1 *)puVar22);
+              generate_entity_appearance((uint *)local_2b3c,(int)(pCVar15 + 0x78),(undefined4 *)0x0);
+              in_stack_ffffc894 = (CRefTime *)0x53447d;
+              lib_fn_522580(local_2b1c,*(uint *)((int)*(float *)pCVar13 + 8),
+                           *(undefined4 *)((int)*(float *)pCVar13 + 0xc),(int)local_2b20);
+            }
+            *(undefined4 *)((int)*(float *)pCVar13 + 0x1d44) =
+                 *(undefined4 *)((int)*(float *)pCVar13 + 0x1138);
+            Struct_copy0x118((void *)((int)*(float *)pCVar13 + 0x1d48),
+                         (undefined1 *)((int)*(float *)pCVar13 + 0x1020));
+            pvVar19 = local_2b1c;
+            if (((local_2b2d == '\0') &&
+                (fVar24 = *(float *)pCVar13,
+                *(int *)((int)fVar24 + 0x11c8) == 0 && *(int *)((int)fVar24 + 0x11cc) == 0)) &&
+               ((*(byte *)((int)fVar24 + 0x124) & 0x10) == 0)) {
+              local_2c18 = 0;
+              deref_getFirst(local_2b70,&local_2b24);
+              piVar10 = (int *)World_getField0(local_2b70,&local_2d34);
+              bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+              uVar12 = (uint)local_2c18;
+              if (bVar2) {
+                uVar59 = local_2c18._4_4_;
+                do {
+                  puVar9 = (uint *)getField_plus0x10((int *)&local_2b24);
+                  if (puVar9[2] != 0) {
+                    uVar57 = puVar9[1];
+                    if (((int)uVar57 <= (int)uVar59) &&
+                       (((int)uVar57 < (int)uVar59 || (*puVar9 < uVar12)))) {
+                      uVar12 = *puVar9;
+                      uVar59 = uVar57;
+                      local_2c18 = *(undefined8 *)puVar9;
+                    }
+                  }
+                  RBTree_copyBeginThenInc(&local_2b24,(int *)&local_2b90);
+                  piVar10 = (int *)World_getField0(local_2b70,&local_2d34);
+                  bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+                  pCVar13 = local_2b4c;
+                } while (bVar2);
+              }
+              iVar8 = local_2c18._4_4_ + -1 + (uint)(uVar12 != 0);
+              local_2c18 = CONCAT44(iVar8,uVar12 - 1);
+              fVar24 = *(float *)pCVar13;
+              *(uint *)((int)fVar24 + 0x11c8) = uVar12 - 1;
+              *(int *)((int)fVar24 + 0x11cc) = iVar8;
+              local_2bd0 = operator_new(0x1e60);
+              local_8._0_1_ = 8;
+              if (local_2bd0 == (Creature *)0x0) {
+                puVar22 = (undefined4 *)0x0;
+              }
+              else {
+                puVar22 = cube::Creature::ctor_1(local_2bd0,(undefined4 *)&local_2c18);
+              }
+              local_8 = CONCAT31(local_8._1_3_,7);
+              puVar9 = RBTree_findOrInsert(local_2b70,(uint *)&local_2c18);
+              *puVar9 = (uint)puVar22;
+              creature_reset_state((int)puVar22);
+              fVar24 = *(float *)pCVar13;
+              puVar22[0x66] = *(undefined4 *)((int)fVar24 + 8);
+              puVar22[0x67] = *(undefined4 *)((int)fVar24 + 0xc);
+              *(undefined1 *)(puVar22 + 0x18) = 5;
+              puVar22[0x19] = (uint)*(byte *)((int)*(float *)pCVar13 + 0x1021);
+              puVar22[100] = (int)*(short *)((int)*(float *)pCVar13 + 0x1030);
+              puVar22[0x65] = *(undefined4 *)((int)*(float *)pCVar13 + 0x1024);
+              Copy24Bytes(puVar22 + 4,(undefined4 *)((int)*(float *)pCVar13 + 0x10));
+              fVar51 = Combat_computeMaxHealth((int)puVar22);
+              puVar22[0x5b] = (float)fVar51;
+              fVar24 = *(float *)pCVar13;
+              if (*(int *)((int)fVar24 + 0x1134) < 0x10) {
+                if (0 < *(int *)((int)fVar24 + 0x1134)) {
+                  iVar8 = 0;
+                  do {
+                    *(undefined1 *)((int)puVar22 + iVar8 + 0x1168) =
+                         *(undefined1 *)((int)fVar24 + 0x1037 + iVar8 * 8);
+                    fVar24 = *(float *)pCVar13;
+                    iVar8 = iVar8 + 1;
+                  } while (iVar8 < *(int *)((int)fVar24 + 0x1134));
+                }
+                *(undefined1 *)(*(int *)((int)*(float *)pCVar13 + 0x1134) + 0x1168 + (int)puVar22) =
+                     0;
+              }
+              generate_entity_appearance(puVar22 + 0x19,(int)(puVar22 + 0x1e),(undefined4 *)0x0);
+              pvVar19 = local_2b1c;
+              in_stack_ffffc894 = (CRefTime *)0x5346c1;
+              lib_fn_522580(local_2b1c,*(uint *)((int)*(float *)pCVar13 + 8),
+                           *(undefined4 *)((int)*(float *)pCVar13 + 0xc),(int)puVar22);
+            }
+          }
+          else {
+            local_2b3c = (CRefTime *)std_map_find_value(pvVar19,(uint *)((int)fVar24 + 0x11c8));
+            if (local_2b3c != (CRefTime *)0x0) {
+              pCVar15 = local_2b3c + 0x1178;
+              deref_getFirst(pCVar15,&local_2b84);
+              piVar10 = (int *)World_getField0(pCVar15,&local_2dc4);
+              bVar2 = std_iterator_notEqual(&local_2b84,piVar10);
+              pvVar19 = local_2b1c;
+              if (bVar2) {
+                do {
+                  pcVar29 = (char *)lib_fn_52eb90((int *)&local_2b84);
+                  pvVar19 = local_2b1c;
+                  if (*pcVar29 == '\a') goto LAB_0053478d;
+                  lib_fn_52ebf0(&local_2b84,&local_2bd0);
+                  piVar10 = (int *)World_getField0(pCVar15,&local_2dc4);
+                  bVar2 = std_iterator_notEqual(&local_2b84,piVar10);
+                  pvVar19 = local_2b1c;
+                } while (bVar2);
+              }
+            }
+            fVar24 = *(float *)pCVar13;
+            *(undefined4 *)((int)fVar24 + 0x11c8) = 0;
+            *(undefined4 *)((int)fVar24 + 0x11cc) = 0;
+            if (local_2b3c != (CRefTime *)0x0) {
+              *(float *)(local_2b3c + 0x16c) = 0.0;
+            }
+          }
+LAB_0053478d:
+          lib_fn_52ebf0(&local_2b80,&local_2bd0);
+          piVar10 = (int *)World_getField0(&local_2bd8,&local_2d3c);
+          bVar2 = std_iterator_notEqual(&local_2b80,piVar10);
+        } while (bVar2);
+      }
+    }
+    puVar22 = local_2b70;
+    deref_getFirst(local_2b70,&local_2b24);
+    piVar10 = (int *)World_getField0(puVar22,&local_2e0c);
+    bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+    if (bVar2) {
+      do {
+        iVar8 = getField_plus0x10((int *)&local_2b24);
+        piVar10 = (int *)(iVar8 + 8);
+        iVar8 = *piVar10;
+        if (iVar8 != 0) {
+          uVar12 = std_map_find_value(local_2b1c,(uint *)(iVar8 + 0x11c8));
+          if (((iVar8 == *(int *)((int)local_2b1c + 0xb8)) && (uVar12 != 0)) &&
+             (*(char *)(*(int *)((int)local_2b1c + 0xb8) + 0x1020) == '\x13')) {
+            *(undefined2 *)(iVar8 + 0x1030) = *(undefined2 *)(uVar12 + 400);
+            *(undefined4 *)(*piVar10 + 0x1024) = *(undefined4 *)(uVar12 + 0x194);
+          }
+          iVar8 = *piVar10;
+          if (((*(char *)(iVar8 + 0x60) == '\x05') &&
+              (uVar12 = std_map_find_value(local_2b1c,(uint *)(iVar8 + 0x198)), uVar12 != 0)) &&
+             ((*(int *)(uVar12 + 0x11c8) != *(int *)(iVar8 + 8) ||
+              (*(int *)(uVar12 + 0x11cc) != *(int *)(iVar8 + 0xc))))) {
+            creature_reset_state(iVar8);
+            *(undefined4 *)(*piVar10 + 0x16c) = 0;
+            *(undefined1 *)(*piVar10 + 0x60) = 3;
+            *(undefined4 *)(*piVar10 + 0x6c) = 5000;
+            iVar8 = *piVar10;
+            *(undefined4 *)(iVar8 + 0x198) = 0;
+            *(undefined4 *)(iVar8 + 0x19c) = 0;
+          }
+        }
+        RBTree_copyBeginThenInc(&local_2b24,(int *)&local_2b48);
+        puVar22 = local_2b70;
+        piVar10 = (int *)World_getField0(local_2b70,&local_2e0c);
+        bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+      } while (bVar2);
+    }
+    std_list_Tidy_no_size(&local_2bc8);
+    deref_getFirst(puVar22,&local_2b5c);
+    piVar10 = (int *)World_getField0(puVar22,&local_2d4c);
+    bVar2 = std_iterator_notEqual(&local_2b5c,piVar10);
+    if (bVar2) {
+      do {
+        iVar8 = getField_plus0x10((int *)&local_2b5c);
+        local_2bac = (int *)(iVar8 + 8);
+        pCVar13 = (CRefTime *)*local_2bac;
+        local_2b50 = pCVar13;
+        if (((pCVar13 != (CRefTime *)0x0) && (*(float *)(pCVar13 + 0x16c) <= 0.0)) &&
+           (pCVar13[0x60] != (CRefTime)0x0)) {
+          if ((*(float *)(pCVar13 + 0x6c) == 0.0) && (*(float *)(pCVar13 + 100) == 2.01787e-43)) {
+            lib_fn_4c8510((int)&local_50c);
+            pCVar13 = pCVar13 + 0x10;
+            local_2b84 = pCVar13;
+            Copy24Bytes(&local_50c,(undefined4 *)pCVar13);
+            local_4d4 = 0x14;
+            local_4d8 = 0x3e800000;
+            local_4d0 = 1;
+            ppVar31 = (pair<unsigned___int64,unsigned___int64> *)
+                      Vec3_set(local_1bc0,0x3f800000,0x3e4ccccd,0x3f000000);
+            std::pair<unsigned___int64,unsigned___int64>::
+            operator=<std::pair<unsigned___int64,unsigned___int64>,0>(local_4e8,ppVar31);
+            puVar22 = Vec3_set(local_1194,0,0,0x41a00000);
+            Vec3_copy(local_4f4,puVar22);
+            std_list_push_back_428540(local_2b2c + 4,&local_50c);
+            local_2b2d = '\0';
+            local_2b24 = (CRefTime *)0xfffffff8;
+            do {
+              local_2b6c = (CRefTime *)0xfffffff8;
+              do {
+                iVar8 = -8;
+                do {
+                  in_stack_ffffc894 = (CRefTime *)0x534a93;
+                  puVar9 = vec3_store(local_15cc,local_2b24,local_2b6c,iVar8);
+                  lib_fn_4d99d0(local_19c,puVar9);
+                  Vec3i64_add(pCVar13,local_418,local_19c);
+                  puVar9 = Vec3i64_subtract(local_418,local_1e58,(uint *)pCVar13);
+                  pfVar25 = Vec3i64_toFloatScaled(local_11ac,(longlong *)puVar9);
+                  fVar51 = vec3_length_sq(pfVar25);
+                  local_2b3c = (CRefTime *)(float)fVar51;
+                  if ((float)local_2b3c < 64.0) {
+                    pCVar13 = (CRefTime *)lib_fn_4e2320(local_418,2);
+                    local_2b3c = pCVar13;
+                    local_2b44 = (CRefTime *)lib_fn_4e2320(local_418,1);
+                    local_2b20 = (CRefTime *)lib_fn_4e2320(local_418,0);
+                    in_stack_ffffc894 = *(CRefTime **)(local_2b44 + 4);
+                    in_stack_ffffc88c = CONCAT44(*(float *)local_2b44,*(float *)(local_2b20 + 4));
+                    pvVar19 = (void *)World_getBlockFloat(local_2b1c,(uint)*(float *)local_2b20,
+                                                   (uint)*(float *)(local_2b20 + 4),
+                                                   (uint)*(float *)local_2b44,
+                                                   (uint)in_stack_ffffc894,(uint)*(float *)pCVar13,
+                                                   (uint)*(float *)(pCVar13 + 4),0);
+                    bVar7 = lib_fn_5306c0((int)pvVar19);
+                    pCVar13 = local_2b84;
+                    if (bVar7 != 0) {
+                      lib_fn_4c8510((int)&local_7bc);
+                      Copy24Bytes(&local_7bc,local_418);
+                      uVar20 = 0x3f800000;
+                      local_788 = 0x3f000000;
+                      pbVar46 = (byte *)ptr_add_offset(pvVar19,2);
+                      fVar24 = (float)*pbVar46 / 255.0;
+                      pbVar46 = (byte *)ptr_add_offset(pvVar19,1);
+                      fVar52 = (float)*pbVar46 / 255.0;
+                      pbVar46 = (byte *)ptr_add_offset(pvVar19,0);
+                      in_stack_ffffc88c = 0x534c0200000000;
+                      ppVar31 = (pair<unsigned___int64,unsigned___int64> *)
+                                store_4_dwords(local_1be0,(float)*pbVar46 / 255.0,fVar52,fVar24,uVar20
+                                            );
+                      std::pair<unsigned___int64,unsigned___int64>::
+                      operator=<std::pair<unsigned___int64,unsigned___int64>,0>(local_798,ppVar31);
+                      puVar22 = Vec3_set(local_1a58,0,0,0x41200000);
+                      Vec3_copy(local_7a4,puVar22);
+                      local_784 = 3;
+                      std_list_push_back_428540(local_2b2c + 4,(undefined4 *)&local_7bc);
+                      uVar53 = fixedpoint_to_int_floor((uint *)local_2b3c);
+                      iVar17 = (int)uVar53;
+                      uVar12 = CRefTime::Millisecs(local_2b44);
+                      uVar59 = CRefTime::Millisecs(local_2b20);
+                      pvVar19 = local_2b1c;
+                      in_stack_ffffc894 = (CRefTime *)0x534c92;
+                      lib_fn_530470(local_2b1c,uVar59,uVar12,iVar17);
+                      struct_clear_fields_c_10((int)&local_21c);
+                      puVar22 = (undefined4 *)Vec3i64_toBlockCoords(local_11c4,local_418);
+                      Vec3_copy(&local_21c,puVar22);
+                      local_20c = *(undefined4 *)((int)pvVar19 + 0x800160);
+                      copy_4_bytes_b(local_210,&DAT_005842d8);
+                      lib_fn_528400(local_2b2c + 6,&local_21c);
+                      local_2b2d = '\x01';
+                      pCVar13 = local_2b84;
+                    }
+                  }
+                  iVar8 = iVar8 + 1;
+                } while (iVar8 < 9);
+                local_2b6c = local_2b6c + 1;
+              } while ((int)local_2b6c < 9);
+              local_2b24 = local_2b24 + 1;
+            } while ((int)local_2b24 < 9);
+            if (local_2b2d != '\0') {
+              lib_fn_4c8530((int)local_80);
+              Vec3i64_toFloatScaled(local_80,(longlong *)pCVar13);
+              iVar8 = rand();
+              local_70 = ((float)iVar8 * 0.4) / 32767.0 + 0.5;
+              local_74 = 1;
+              std_list_push_back_428590(local_2b2c + 2,local_80);
+              if (*(int *)((int)local_2b1c + 0xb8) == 0) {
+                pvVar19 = (void *)lib_fn_4e2320(pCVar13,1);
+                pvVar44 = (void *)lib_fn_4e2320(pCVar13,0);
+                iVar17 = 0;
+                iVar8 = 8;
+                pCVar13 = (CRefTime *)int64_add_shifted(pvVar19,local_32e0,8);
+                lVar14 = CRefTime::Millisecs(pCVar13);
+                pCVar13 = (CRefTime *)int64_add_shifted(pvVar44,local_32f0,8);
+                lVar16 = CRefTime::Millisecs(pCVar13);
+                pCVar13 = (CRefTime *)int64_sub_shifted(pvVar19,local_3300,8);
+                uVar12 = CRefTime::Millisecs(pCVar13);
+                pCVar13 = (CRefTime *)int64_sub_shifted(pvVar44,local_3310,8);
+                uVar59 = CRefTime::Millisecs(pCVar13);
+                lib_fn_4d1a70(local_2b1c,uVar59,uVar12,lVar16,lVar14,iVar8,iVar17);
+                pCVar13 = local_2b84;
+              }
+              lib_fn_4d3e00((int)local_2b1c);
+              pvVar19 = (void *)lib_fn_4e2320(pCVar13,1);
+              pvVar44 = (void *)lib_fn_4e2320(pCVar13,0);
+              pCVar13 = (CRefTime *)int64_add_shifted(pvVar19,local_3320,8);
+              uVar12 = CRefTime::Millisecs(pCVar13);
+              pCVar13 = (CRefTime *)int64_add_shifted(pvVar44,local_3330,8);
+              uVar59 = CRefTime::Millisecs(pCVar13);
+              pCVar13 = (CRefTime *)int64_sub_shifted(pvVar19,local_3340,8);
+              piVar10 = (int *)CRefTime::Millisecs(pCVar13);
+              pCVar13 = (CRefTime *)int64_sub_shifted(pvVar44,local_3350,8);
+              in_stack_ffffc894 = (CRefTime *)CRefTime::Millisecs(pCVar13);
+              in_stack_ffffc88c = 0x534eca00000000;
+              lib_fn_4d9160(local_2b1c,(int)in_stack_ffffc894,piVar10,uVar59,uVar12);
+              lib_fn_4d5c70((int)local_2b1c);
+            }
+            pCVar15 = local_2b84;
+            Copy24Bytes(local_eb4,(undefined4 *)local_2b84);
+            deref_getFirst(local_2b70,&local_2b80);
+            piVar10 = (int *)World_getField0(local_2b70,&local_2d44);
+            bVar2 = std_iterator_notEqual(&local_2b80,piVar10);
+            pCVar13 = local_2b50;
+            if (bVar2) {
+              do {
+                iVar8 = getField_plus0x10(&local_2b80);
+                pCVar38 = *(CRefTime **)(iVar8 + 8);
+                pCVar13 = local_2b50;
+                local_2bbc = pCVar38;
+                if ((((pCVar38 != (CRefTime *)0x0) && (pCVar38 != local_2b50)) &&
+                    (uVar20 = lib_fn_4d18c0((int)local_2b50,(int)pCVar38), pCVar13 = local_2b50,
+                    (char)uVar20 != '\0')) &&
+                   (((local_2b94 = pCVar38 + 8,
+                     *(float *)(pCVar38 + 8) != *(float *)(local_2b50 + 0x11c0) ||
+                     (*(float *)(pCVar38 + 0xc) != *(float *)(local_2b50 + 0x11c4))) &&
+                    ((0.0 < *(float *)(pCVar38 + 0x16c) && (*(float *)(pCVar38 + 0x128) == 0.0))))))
+                {
+                  local_2b3c = local_2b50 + 0x11ac;
+                  piVar10 = (int *)World_getField0(local_2b3c,&local_3030);
+                  in_stack_ffffc894 = (CRefTime *)0x534fd6;
+                  pvVar19 = (void *)std_map_lower_bound_yx(local_2b3c,&local_2fe0,(uint *)(pCVar38 + 8));
+                  bVar2 = std_iterator_notEqual(pvVar19,piVar10);
+                  pCVar13 = local_2b50;
+                  if (!bVar2) {
+                    local_2b3c = pCVar38 + 0x80;
+                    getElemPtr4(local_2b3c,0);
+                    puVar9 = local_3360;
+                    pCVar38 = pCVar38 + 0x10;
+                    in_stack_ffffc88c = 0x53503b00000000;
+                    local_2b4c = pCVar38;
+                    puVar18 = Vec3i64_subtract(local_eb4,local_22a8,(uint *)pCVar38);
+                    ppVar31 = (pair<unsigned___int64,unsigned___int64> *)identityReturn(puVar18);
+                    in_stack_ffffc894 = (CRefTime *)0x53504e;
+                    ppVar31 = std::pair<unsigned___int64,unsigned___int64>::
+                              operator=<std::pair<unsigned___int64,unsigned___int64>,0>
+                                        (local_1c00,ppVar31);
+                    puVar9 = computeLengthSquared_16_16(ppVar31,puVar9);
+                    uVar20 = lib_fn_4dade0(puVar9);
+                    pCVar13 = local_2b50;
+                    if ((char)uVar20 != '\0') {
+                      puVar9 = (uint *)lib_fn_4e2320(pCVar38,2);
+                      piVar10 = local_3370;
+                      in_stack_ffffc894 = (CRefTime *)0x535082;
+                      pvVar19 = (void *)lib_fn_4e2320(local_eb4,2);
+                      plVar32 = (longlong *)int64_sub(pvVar19,piVar10,puVar9);
+                      fVar51 = fixedpoint16_to_float(plVar32);
+                      fVar51 = std_fabsf((float)fVar51);
+                      local_2b20 = (CRefTime *)(float)fVar51;
+                      pfVar25 = (float *)getElemPtr4(local_2b50 + 0x80,2);
+                      pfVar30 = (float *)getElemPtr4(local_2b3c,2);
+                      pCVar13 = local_2b50;
+                      if ((float)local_2b20 < *pfVar30 * 0.5 + *pfVar25 + 8.0) {
+                        puVar9 = Vec3i64_subtract(local_2b4c,local_1e88,(uint *)pCVar15);
+                        Vec3i64_toFloatScaled(local_134,(longlong *)puVar9);
+                        puVar22 = (undefined4 *)getElemPtr4(local_134,2);
+                        *puVar22 = 0;
+                        fVar51 = vec3_length_sq(local_134);
+                        local_2b3c = (CRefTime *)(float)fVar51;
+                        if (0.01 < (float)local_2b3c) {
+                          vec3_normalize(local_134);
+                        }
+                        *puVar22 = 0x3e800000;
+                        uVar12 = rand();
+                        uVar12 = uVar12 & 0x80000003;
+                        bVar2 = uVar12 == 0;
+                        if ((int)uVar12 < 0) {
+                          bVar2 = (uVar12 - 1 | 0xfffffffc) == 0xffffffff;
+                        }
+                        local_2b98 = (CRefTime *)CONCAT31(local_2b98._1_3_,bVar2);
+                        vec3_scale(local_134,10.0);
+                        pCVar13 = local_2b50;
+                        fVar51 = calc_damage_value(local_2b50);
+                        local_2b3c = (CRefTime *)(float)fVar51;
+                        local_2b44 = (CRefTime *)((float)local_2b3c * 25.0);
+                        if ((char)local_2b98 != '\0') {
+                          local_2b44 = (CRefTime *)((float)local_2b44 * 2.0);
+                        }
+                        lib_fn_530690(pCVar13 + 0x11ac,local_2dcc,(uint *)local_2b94);
+                        in_stack_ffffc894 = (CRefTime *)0x1;
+                        in_stack_ffffc88c = CONCAT44(local_2bec,local_2b2c);
+                        stl_fn_4cfd50(local_2b1c,(float)local_2bbc,pCVar13,(float)local_2b44,
+                                     (char)local_2b98,'\x01',0.0,pCVar15,local_134,local_2b2c,
+                                     local_2bec,'\x01',0,0,'\x01');
+                      }
+                    }
+                  }
+                }
+                RBTree_copyBeginThenInc(&local_2b80,(int *)&local_2b48);
+                piVar10 = (int *)World_getField0(local_2b70,&local_2d44);
+                bVar2 = std_iterator_notEqual(&local_2b80,piVar10);
+              } while (bVar2);
+            }
+          }
+          piVar10 = local_2bac;
+          *(uint *)(pCVar13 + 0x6c) = (int)*(float *)(pCVar13 + 0x6c) + local_2b28;
+          if (pCVar13[0x60] == (CRefTime)0x5) {
+            pCVar15 = pCVar13 + 0x198;
+            uVar12 = std_map_find_value(local_2b1c,(uint *)pCVar15);
+            if (((uVar12 != 0) && (19999 < (int)*(float *)(pCVar13 + 0x6c))) &&
+               (uVar12 = std_map_find_value(local_2b1c,(uint *)pCVar15), 0.0 <= *(float *)(uVar12 + 0x16c)
+               )) {
+              fVar51 = Combat_computeMaxHealth((int)pCVar13);
+              *(float *)(pCVar13 + 0x16c) = (float)fVar51;
+              uVar12 = std_map_find_value(local_2b1c,(uint *)pCVar15);
+              Copy24Bytes(pCVar13 + 0x10,(undefined4 *)(uVar12 + 0x10));
+              *(float *)(pCVar13 + 0x11d0) = 0.0;
+              *(float *)(pCVar13 + 0x11d4) = 0.0;
+              std_map_clear((int *)(pCVar13 + 0x13a4));
+              uVar12 = std_map_find_value(local_2b1c,(uint *)pCVar15);
+              std_map_clear((int *)(uVar12 + 0x13ac));
+            }
+          }
+          else if (999 < (int)*(float *)(pCVar13 + 0x6c)) {
+            lib_fn_4d6620(&local_2bc8,&local_2b5c);
+            deref_getFirst(local_2b70,&local_2ba8);
+            piVar21 = (int *)World_getField0(local_2b70,&local_2dd0);
+            bVar2 = std_iterator_notEqual(&local_2ba8,piVar21);
+            if (bVar2) {
+              do {
+                iVar8 = getField_plus0x10(&local_2ba8);
+                if (*(int *)(iVar8 + 8) != 0) {
+                  lib_fn_530560((void *)(*(int *)(iVar8 + 8) + 0x13a4),(uint *)(*piVar10 + 8));
+                  lib_fn_530560((void *)(*(int *)(iVar8 + 8) + 0x13ac),(uint *)(*piVar10 + 8));
+                }
+                RBTree_copyBeginThenInc(&local_2ba8,(int *)&local_2b90);
+                piVar21 = (int *)World_getField0(local_2b70,&local_2dd0);
+                bVar2 = std_iterator_notEqual(&local_2ba8,piVar21);
+              } while (bVar2);
+            }
+          }
+        }
+        RBTree_copyBeginThenInc(&local_2b5c,(int *)&local_2bd0);
+        puVar22 = local_2b70;
+        piVar10 = (int *)World_getField0(local_2b70,&local_2d4c);
+        bVar2 = std_iterator_notEqual(&local_2b5c,piVar10);
+      } while (bVar2);
+    }
+    deref_getFirst(&local_2bc8,&local_2b24);
+    piVar10 = (int *)World_getField0(&local_2bc8,&local_2dd4);
+    bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+    if (bVar2) {
+      do {
+        piVar10 = (int *)lib_fn_52eb90((int *)&local_2b24);
+        iVar8 = getField_plus0x10(piVar10);
+        if (*(undefined4 **)(iVar8 + 8) != (undefined4 *)0x0) {
+          (**(code **)**(undefined4 **)(iVar8 + 8))();
+        }
+        RBTree_eraseNode_plain(puVar22,&local_2b48,(int *)*piVar10);
+        lib_fn_52ebf0(&local_2b24,&local_2b90);
+        piVar10 = (int *)World_getField0(&local_2bc8,&local_2dd4);
+        bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+      } while (bVar2);
+    }
+    lib_fn_4c8280(&local_2c4c);
+    pvVar19 = (void *)((int)local_2b1c + 0xc);
+    local_8 = CONCAT31(local_8._1_3_,9);
+    deref_getFirst(pvVar19,&local_2b5c);
+    piVar10 = (int *)World_getField0(pvVar19,&local_2dd8);
+    bVar2 = std_iterator_notEqual(&local_2b5c,piVar10);
+    if (bVar2) {
+      do {
+        iVar8 = getField_plus0x10((int *)&local_2b5c);
+        if (*(int *)(iVar8 + 8) != 0) {
+          deref_getFirst(&local_2bd8,&local_2b24);
+          piVar10 = (int *)World_getField0(&local_2bd8,&local_2d54);
+          bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+          if (bVar2) {
+            do {
+              piVar10 = (int *)lib_fn_52eb90((int *)&local_2b24);
+              puVar9 = Vec3i64_subtract((void *)(*(int *)(iVar8 + 8) + 0x10),local_25d8,
+                                    (uint *)(*piVar10 + 0x10));
+              pfVar25 = Vec3i64_toFloatScaled(local_15e4,(longlong *)puVar9);
+              fVar51 = vec3_length_sq(pfVar25);
+              local_2b3c = (CRefTime *)(float)fVar51;
+              if ((float)local_2b3c < 262144.0) goto LAB_00535609;
+              lib_fn_52ebf0(&local_2b24,&local_2b48);
+              piVar10 = (int *)World_getField0(&local_2bd8,&local_2d54);
+              bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+            } while (bVar2);
+          }
+          lib_fn_4d6620(&local_2c4c,&local_2b5c);
+        }
+LAB_00535609:
+        RBTree_copyBeginThenInc(&local_2b5c,(int *)&local_2b90);
+        piVar10 = (int *)World_getField0(pvVar19,&local_2dd8);
+        bVar2 = std_iterator_notEqual(&local_2b5c,piVar10);
+      } while (bVar2);
+    }
+    deref_getFirst(&local_2c4c,&local_2b24);
+    piVar10 = (int *)World_getField0(&local_2c4c,&local_2d5c);
+    bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+    if (bVar2) {
+      do {
+        piVar10 = (int *)lib_fn_52eb90((int *)&local_2b24);
+        iVar8 = getField_plus0x10(piVar10);
+        if (*(void **)(iVar8 + 8) != (void *)0x0) {
+          lib_fn_4ce500(*(void **)(iVar8 + 8),1);
+        }
+        RBTree_eraseNode_plain(pvVar19,&local_2b48,(int *)*piVar10);
+        lib_fn_52ebf0(&local_2b24,&local_2b90);
+        piVar10 = (int *)World_getField0(&local_2c4c,&local_2d5c);
+        bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+      } while (bVar2);
+    }
+    std_list_Tidy(&local_2c4c);
+    local_8._0_1_ = 5;
+    std_list_Tidy(&local_2bc8);
+  }
+  else {
+    deref_getFirst((void *)((int)in_ECX + 4),&local_2b24);
+    piVar10 = (int *)World_getField0((void *)((int)in_ECX + 4),&local_2d1c);
+    bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+    if (bVar2) {
+      do {
+        iVar8 = getField_plus0x10((int *)&local_2b24);
+        iVar8 = *(int *)(iVar8 + 8);
+        if ((iVar8 != 0) && (*(char *)(iVar8 + 0x60) == '\x05')) {
+          uVar12 = std_map_find_value(local_2b1c,(uint *)(iVar8 + 0x198));
+          if (uVar12 != 0) {
+            uVar12 = std_map_find_value(local_2b1c,(uint *)(iVar8 + 0x198));
+            *(undefined4 *)(uVar12 + 0x11c8) = *(undefined4 *)(iVar8 + 8);
+            *(undefined4 *)(uVar12 + 0x11cc) = *(undefined4 *)(iVar8 + 0xc);
+          }
+        }
+        RBTree_copyBeginThenInc(&local_2b24,(int *)&local_2b48);
+        piVar10 = (int *)World_getField0(local_2b70,&local_2d1c);
+        bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+      } while (bVar2);
+    }
+  }
+  pvVar19 = local_2b1c;
+  if ((*(char *)((int)local_2b1c + 0xb4) == '\0') &&
+     (bVar2 = std_string_empty((int)local_2b1c + 0x94), !bVar2)) {
+    deref_getFirst(&local_2bf4,&local_2b7c);
+    piVar10 = (int *)World_getField0(&local_2bf4,&local_2de4);
+    bVar2 = std_iterator_notEqual(&local_2b7c,piVar10);
+    if (bVar2) {
+      do {
+        iVar17 = 0;
+        local_2b40 = (CRefTime *)getField_plus0x10((int *)&local_2b7c);
+        piVar10 = (int *)((int)*(float *)local_2b40 + 0x24);
+        iVar8 = std_vector_size_41fff0(piVar10);
+        if (0 < iVar8) {
+          do {
+            puVar22 = (undefined4 *)ptr_index_dword(piVar10,iVar17);
+            pCVar13 = (CRefTime *)*puVar22;
+            local_2b20 = pCVar13;
+            piVar10 = (int *)World_getField0((void *)((int)local_2b1c + 0xc),&local_302c);
+            in_stack_ffffc894 = (CRefTime *)0x5357c3;
+            pvVar19 = (void *)std_map_lower_bound_yx((void *)((int)local_2b1c + 0xc),&local_3040,
+                                           (uint *)pCVar13);
+            bVar2 = std_iterator_notEqual(pvVar19,piVar10);
+            if (!bVar2) {
+              deref_getFirst(&local_2bd8,&local_2b24);
+              piVar10 = (int *)World_getField0(&local_2bd8,&local_2ddc);
+              bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+              if (bVar2) {
+                do {
+                  piVar10 = (int *)lib_fn_52eb90((int *)&local_2b24);
+                  puVar9 = Vec3i64_subtract(pCVar13 + 0x10,local_1eb8,(uint *)(*piVar10 + 0x10));
+                  pfVar25 = Vec3i64_toFloatScaled(local_11dc,(longlong *)puVar9);
+                  fVar51 = vec3_length_sq(pfVar25);
+                  local_2b3c = (CRefTime *)(float)fVar51;
+                  if ((float)local_2b3c < 262144.0) {
+                    local_2b48 = operator_new(0xa0);
+                    local_8._0_1_ = 10;
+                    if (local_2b48 == (Creature *)0x0) {
+                      puVar9 = (uint *)0x0;
+                    }
+                    else {
+                      puVar9 = lib_fn_52e9e0(local_2b48,(undefined4 *)local_2b20);
+                    }
+                    local_8._0_1_ = 5;
+                    puVar18 = RBTree_findOrInsert((void *)((int)local_2b1c + 0xc),puVar9);
+                    *puVar18 = (uint)puVar9;
+                    Copy24Bytes(puVar9 + 0x20,puVar9 + 4);
+                    puVar9[0x26] = puVar9[0xd];
+                    break;
+                  }
+                  lib_fn_52ebf0(&local_2b24,&local_2b48);
+                  piVar10 = (int *)World_getField0(&local_2bd8,&local_2ddc);
+                  bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+                } while (bVar2);
+              }
+            }
+            iVar17 = iVar17 + 1;
+            piVar10 = (int *)((int)*(float *)local_2b40 + 0x24);
+            iVar8 = std_vector_size_41fff0(piVar10);
+          } while (iVar17 < iVar8);
+        }
+        fVar24 = *(float *)local_2b40;
+        piVar10 = (int *)getElemPtr4((void *)((int)fVar24 + 0x60),1);
+        uVar12 = (int)(*piVar10 + (*piVar10 >> 0x1f & 7U)) >> 3;
+        piVar10 = (int *)getElemPtr4((void *)((int)fVar24 + 0x60),0);
+        piVar10 = (int *)World_getTileAtCoords(local_2b1c,(int)(*piVar10 + (*piVar10 >> 0x1f & 7U)) >> 3,
+                                      uVar12);
+        piVar21 = (int *)((int)fVar24 + 0x18);
+        local_2b68 = (CRefTime *)0x0;
+        local_2bac = piVar10;
+        iVar8 = std_vector_size_41fff0(piVar21);
+        if (0 < iVar8) {
+          do {
+            puVar22 = (undefined4 *)ptr_index_dword(piVar21,(int)local_2b68);
+            pCVar13 = (CRefTime *)*puVar22;
+            local_2b98 = pCVar13;
+            if (((*(float *)(pCVar13 + 0x40) == *(float *)(pCVar13 + 0x44)) ||
+                ((iVar8 = getFieldAtFixedOffset((int)local_2b1c), (int)*(float *)(pCVar13 + 0x40) <= iVar8 &&
+                 (iVar8 = getFieldAtFixedOffset((int)local_2b1c), iVar8 <= (int)*(float *)(pCVar13 + 0x44))))
+                ) && (uVar12 = std_map_find_value(local_2b1c,(uint *)(pCVar13 + 0x48)), uVar12 == 0)) {
+              fVar24 = *(float *)(pCVar13 + 0x38);
+              if ((int)fVar24 < 0) {
+                *(float *)(pCVar13 + 0x38) = 0.0;
+              }
+              if (((int)fVar24 < 1) ||
+                 (*(float *)(pCVar13 + 0x3c) != *(float *)((int)local_2b1c + 0x800160))) {
+                deref_getFirst(&local_2bd8,&local_2b84);
+                piVar21 = (int *)World_getField0(&local_2bd8,&local_2d64);
+                bVar2 = std_iterator_notEqual(&local_2b84,piVar21);
+                if (bVar2) {
+LAB_00535a24:
+                  pCVar15 = pCVar13 + 0x10;
+                  local_2b3c = *(CRefTime **)(pCVar13 + 8);
+                  puVar9 = local_22d8;
+                  piVar21 = (int *)lib_fn_52eb90((int *)&local_2b84);
+                  puVar9 = Vec3i64_subtract((void *)(*piVar21 + 0x10),puVar9,(uint *)pCVar15);
+                  pfVar25 = Vec3i64_toFloatScaled(local_1818,(longlong *)puVar9);
+                  fVar51 = vec3_length_sq(pfVar25);
+                  local_2b20 = (CRefTime *)(float)fVar51;
+                  if ((float)local_2b3c * (float)local_2b3c <= (float)local_2b20)
+                  goto code_r0x00535a7c;
+                  if (((piVar10 != (int *)0x0) && (piVar10[0xd] == 5)) &&
+                     ((*(ushort *)(pCVar13 + 0x7a) & 0x1000) != 0)) {
+                    if (*(float *)(pCVar13 + 0x28) != 8.40779e-45) {
+                      *(int *)(pCVar13 + 0x34) = piVar10[0xf];
+                      pCVar13[0x58] = *(CRefTime *)(piVar10 + 0x10);
+                    }
+                    srand(piVar10[0xc] + (int)*(float *)(pCVar13 + 0x48));
+                    lib_fn_4fb480((int)pCVar13,1);
+                    if ((*(ushort *)(pCVar13 + 0x7a) & 0x200) == 0) {
+                      roll_random_level(pCVar13 + 0x8c8,0.05,'\0');
+                      roll_random_level(pCVar13 + 0x7b0,0.05,'\0');
+                      roll_random_level(pCVar13 + 0x698,0.05,'\0');
+                      roll_random_level(pCVar13 + 0x350,0.05,'\0');
+                      roll_random_level(pCVar13 + 0x580,0.05,'\0');
+                      roll_random_level(pCVar13 + 0x468,0.05,'\0');
+                      roll_random_level(pCVar13 + 0x238,0.05,'\0');
+                      roll_random_level(pCVar13 + 0x9e0,0.05,'\0');
+                      roll_random_level(pCVar13 + 0xaf8,0.05,'\0');
+                    }
+                    else if (pCVar13[0x10e8] != (CRefTime)0x0) {
+                      *(ushort *)(pCVar13 + 0x7a) = *(ushort *)(pCVar13 + 0x7a) | 0x2000;
+                    }
+                    pCVar15 = pCVar13 + 0xf6c;
+                    local_2b20 = pCVar15;
+                    World_getField0(pCVar15,&local_2ba8);
+                    piVar10 = (int *)lib_fn_4d3de0(pCVar15,&local_2d6c);
+                    bVar2 = std_iterator_notEqual(&local_2ba8,piVar10);
+                    if (bVar2) {
+                      do {
+                        pCVar13 = (CRefTime *)lib_fn_4ce1f0(&local_2ba8);
+                        local_2b3c = pCVar13;
+                        World_getField0(pCVar13,&local_2b80);
+                        piVar10 = (int *)lib_fn_4d3de0(pCVar13,&local_2e14);
+                        bVar2 = std_iterator_notEqual(&local_2b80,piVar10);
+                        if (bVar2) {
+                          do {
+                            piVar10 = (int *)lib_fn_4ce1f0(&local_2b80);
+                            if ((*piVar10 != 0) &&
+                               (cVar3 = game_isEntityTypeSolid((char *)(piVar10 + 1)), cVar3 != '\0')) {
+                              *(short *)(piVar10 + 5) = (short)local_2bac[0xf];
+                              cVar3 = (char)piVar10[1];
+                              if (((cVar3 == '\x03') || ((cVar3 == '\a' || (cVar3 == '\x05')))) ||
+                                 ((cVar3 == '\x04' ||
+                                  (((cVar3 == '\x06' || (cVar3 == '\b')) || (cVar3 == '\t')))))) {
+                                *(char *)(piVar10 + 4) = (char)local_2bac[0x10] + '\x01';
+                                iVar8 = rand();
+                                if (iVar8 % 0x14 == 0) {
+                                  *(char *)(piVar10 + 4) = (char)piVar10[4] + '\x01';
+                                }
+                                iVar8 = rand();
+                                if (iVar8 % 100 == 0) {
+                                  *(char *)(piVar10 + 4) = (char)piVar10[4] + '\x01';
+                                }
+                                if (4 < *(byte *)(piVar10 + 4)) {
+                                  *(undefined1 *)(piVar10 + 4) = 4;
+                                }
+                              }
+                            }
+                            iterator_advance_0x11c(&local_2b80,(int *)&local_2b48);
+                            piVar10 = (int *)lib_fn_4d3de0(local_2b3c,&local_2e14);
+                            bVar2 = std_iterator_notEqual(&local_2b80,piVar10);
+                          } while (bVar2);
+                        }
+                        iterator_advance_0xc(&local_2ba8,(int *)&local_2b48);
+                        piVar10 = (int *)lib_fn_4d3de0(local_2b20,&local_2d6c);
+                        bVar2 = std_iterator_notEqual(&local_2ba8,piVar10);
+                        pCVar13 = local_2b98;
+                      } while (bVar2);
+                    }
+                  }
+                  local_2b48 = operator_new(0x1e60);
+                  local_8._0_1_ = 0xb;
+                  if (local_2b48 == (Creature *)0x0) {
+                    local_2b60 = (CRefTime *)0x0;
+                  }
+                  else {
+                    local_2b60 = (CRefTime *)
+                                 cube::Creature::ctor_1(local_2b48,(undefined4 *)(pCVar13 + 0x48));
+                  }
+                  pCVar15 = local_2b60;
+                  local_8._0_1_ = 5;
+                  puVar9 = RBTree_findOrInsert(local_2b70,(uint *)(pCVar13 + 0x48));
+                  *puVar9 = (uint)pCVar15;
+                  Copy24Bytes(pCVar15 + 0x10,(undefined4 *)(pCVar13 + 0x10));
+                  pfVar25 = (float *)getElemPtr4(pCVar15 + 0x28,2);
+                  *pfVar25 = *(float *)(pCVar13 + 0x54);
+                  *(float *)(pCVar15 + 400) = *(float *)(pCVar13 + 0x34);
+                  pCVar15[0x60] = pCVar13[0x28];
+                  *(float *)(pCVar15 + 100) = *(float *)(pCVar13 + 0x2c);
+                  pCVar15[0x140] = pCVar13[0x30];
+                  pCVar15[0x141] = pCVar13[0x31];
+                  pCVar15[0x1a8] = pCVar13[0x58];
+                  copy_struct_0xac(pCVar15 + 0x78,pCVar13 + 0x74);
+                  QuestText_copyStrings13(pCVar15 + 0x300,pCVar13 + 0x120);
+                  *(undefined8 *)(pCVar15 + 0x178) = *(undefined8 *)(pCVar13 + 0xf58);
+                  fVar24 = *(float *)(pCVar13 + 0xf64);
+                  *(float *)(pCVar15 + 0x180) = *(float *)(pCVar13 + 0xf60);
+                  *(float *)(pCVar15 + 0x184) = fVar24;
+                  *(float *)(pCVar15 + 0x188) = *(float *)(pCVar13 + 0xf68);
+                  Copy24Bytes(pCVar15 + 0x1c0,(undefined4 *)(pCVar13 + 0x10));
+                  set_flag_bits_0x114(pCVar15 + 0x10,8,(char)pCVar13[0x50]);
+                  fVar24 = *(float *)local_2b40;
+                  pCVar15 = local_2b68;
+                  puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),1);
+                  uVar20 = *puVar22;
+                  puVar22 = (undefined4 *)getElemPtr4((void *)((int)fVar24 + 0x60),0);
+                  in_stack_ffffc894 = (CRefTime *)0x535ead;
+                  puVar22 = vec3_store(local_11f4,*puVar22,uVar20,pCVar15);
+                  pCVar38 = local_2b60;
+                  Vec3_copy(local_2b60 + 0x1b0,puVar22);
+                  pCVar38[0x1d8] = pCVar13[0x5c];
+                  Vec3_copy(pCVar38 + 0x1dc,(undefined4 *)(pCVar13 + 0x60));
+                  *(float *)(pCVar38 + 0x1ac) = *(float *)(pCVar13 + 0x10c8);
+                  pCVar15 = pCVar13 + 0x10cc;
+                  do {
+                    CVar6 = *pCVar15;
+                    pCVar15[(int)(pCVar38 + (0x1168 - (int)(pCVar13 + 0x10cc)))] = CVar6;
+                    pCVar15 = pCVar15 + 1;
+                  } while (CVar6 != (CRefTime)0x0);
+                  local_2b44 = pCVar13 + 0x10a0;
+                  lib_fn_52ea70(pCVar38 + 0x148c,(int *)local_2b44);
+                  *(float *)(pCVar38 + 0x1d2c) = *(float *)(pCVar13 + 8);
+                  *(float *)(pCVar38 + 0x1d30) = *(float *)(pCVar13 + 0x10e0);
+                  *(float *)(pCVar38 + 0x1d34) = *(float *)(pCVar13 + 0x10e4);
+                  pCVar38[0x1d38] = pCVar13[0x10e8];
+                  local_2b5c = (undefined4 *)0x0;
+                  iVar8 = std_vector_size_428ee0((int *)(pCVar13 + 0x10a0));
+                  pCVar15 = local_2b60;
+                  puVar22 = local_2b5c;
+                  if (0 < iVar8) {
+                    do {
+                      iVar8 = array_index_stride32(local_2b44,(int)puVar22);
+                      iVar17 = getFieldAtFixedOffset((int)local_2b1c);
+                      if (*(int *)(iVar8 + 0x18) <= iVar17) {
+                        *(undefined4 **)(pCVar15 + 0x1484) = local_2b5c;
+                      }
+                      puVar22 = (undefined4 *)((int)local_2b5c + 1);
+                      local_2b5c = puVar22;
+                      iVar8 = std_vector_size_428ee0((int *)local_2b44);
+                      pCVar38 = local_2b60;
+                      pCVar13 = local_2b98;
+                    } while ((int)puVar22 < iVar8);
+                  }
+                  *(int *)(pCVar38 + 0x1488) = *(int *)(pCVar38 + 0x1484);
+                  if (*(float *)(pCVar13 + 0x109c) == 0.0) {
+                    if (*(float *)(pCVar13 + 0x28) != 8.40779e-45) {
+                      local_2b48 = operator_new(0xc);
+                      local_8._0_1_ = 0xc;
+                      if (local_2b48 == (Creature *)0x0) {
+                        local_2b5c = (undefined4 *)0x0;
+                      }
+                      else {
+                        local_2b5c = cube::SequentialBehavior::ctor_1((undefined4 *)local_2b48);
+                      }
+                      local_8._0_1_ = 5;
+                      local_2b48 = operator_new(0x14);
+                      local_8._0_1_ = 0xd;
+                      if (local_2b48 == (Creature *)0x0) {
+                        local_2b3c = (CRefTime *)0x0;
+                      }
+                      else {
+                        local_2b3c = (CRefTime *)
+                                     cube::CombatBehavior::ctor_0
+                                               ((CombatBehavior *)local_2b48,0x41a00000);
+                      }
+                      local_8._0_1_ = 5;
+                      lib_fn_4d6620(local_2b5c + 1,&local_2b3c);
+                      local_2b48 = operator_new(4);
+                      local_8._0_1_ = 0xe;
+                      if (local_2b48 == (Creature *)0x0) {
+                        local_2b3c = (CRefTime *)0x0;
+                      }
+                      else {
+                        local_2b3c = (CRefTime *)
+                                     cube::LookAtPlayerBehavior::ctor_0((undefined4 *)local_2b48);
+                      }
+                      local_8._0_1_ = 5;
+                      lib_fn_4d6620(local_2b5c + 1,&local_2b3c);
+                      puVar22 = local_2b5c;
+                      if (((((pCVar38[0x60] != (CRefTime)0x6) &&
+                            (CVar6 = pCVar38[0x140], CVar6 != (CRefTime)0x84)) &&
+                           ((CVar6 != (CRefTime)0x83 &&
+                            ((CVar6 != (CRefTime)0x80 && (CVar6 != (CRefTime)0x82)))))) &&
+                          (CVar6 != (CRefTime)0x81)) &&
+                         ((((CVar6 != (CRefTime)0x85 && (CVar6 != (CRefTime)0x86)) &&
+                           (CVar6 != (CRefTime)0x87)) && (((byte)pCVar38[0x7e] & 0x40) == 0)))) {
+                        local_2b48 = operator_new(8);
+                        local_8._0_1_ = 0xf;
+                        if (local_2b48 == (Creature *)0x0) {
+                          local_2b3c = (CRefTime *)0x0;
+                        }
+                        else {
+                          local_2b3c = (CRefTime *)
+                                       cube::RandomWalkBehavior::ctor_0((undefined4 *)local_2b48);
+                        }
+                        local_8._0_1_ = 5;
+                        lib_fn_4d6620(local_2b5c + 1,&local_2b3c);
+                        puVar22 = local_2b5c;
+                      }
+                      goto LAB_00536130;
+                    }
+                  }
+                  else {
+                    puVar22 = (undefined4 *)(**(code **)(**(int **)(pCVar13 + 0x109c) + 4))();
+LAB_00536130:
+                    *(undefined4 **)(pCVar38 + 0x13e4) = puVar22;
+                  }
+                  lib_fn_4dab90(pCVar38 + 0x13e8,(int *)(pCVar13 + 0x10ac));
+                  *(float *)(pCVar38 + 0x13f4) = *(float *)(pCVar13 + 0x10b8);
+                  lib_fn_4dab90(pCVar38 + 0x13f8,(int *)(pCVar13 + 0x10bc));
+                  struct_copyAssign_vec_str(pCVar38 + 0x11dc,(int *)(pCVar13 + 0xf6c));
+                  fVar51 = Combat_computeMaxHealth((int)pCVar38);
+                  *(float *)(pCVar38 + 0x16c) = (float)fVar51;
+                  if ((*(ushort *)(pCVar13 + 0x7a) & 0x200) != 0) {
+                    vec3_scale(pCVar38 + 0x80,2.0);
+                  }
+                  getElemPtr4(pCVar38 + 0x80,2);
+                  int64_assign_timecall((ulonglong *)local_88);
+                  pfVar25 = local_88;
+                  pvVar19 = (void *)lib_fn_4e2320(pCVar38 + 0x10,2);
+                  int64_add(pvVar19,(uint *)pfVar25);
+                  piVar10 = local_2bac;
+                }
+              }
+            }
+LAB_005361f3:
+            local_2b68 = local_2b68 + 1;
+            piVar21 = (int *)((int)*(float *)local_2b40 + 0x18);
+            iVar8 = std_vector_size_41fff0(piVar21);
+          } while ((int)local_2b68 < iVar8);
+        }
+        RBTree_copyBeginThenInc(&local_2b7c,(int *)&local_2b90);
+        piVar10 = (int *)World_getField0(&local_2bf4,&local_2de4);
+        bVar2 = std_iterator_notEqual(&local_2b7c,piVar10);
+        pvVar19 = local_2b1c;
+      } while (bVar2);
+    }
+  }
+  deref_getFirst((void *)((int)pvVar19 + 4),&local_2b6c);
+  piVar10 = (int *)World_getField0((void *)((int)pvVar19 + 4),&local_2d38);
+  bVar2 = std_iterator_notEqual(&local_2b6c,piVar10);
+  if (bVar2) {
+    do {
+      iVar8 = getField_plus0x10((int *)&local_2b6c);
+      local_2b18 = *(CRefTime **)(iVar8 + 8);
+      if (local_2b18 != (CRefTime *)0x0) {
+        pCVar13 = local_2b18 + 0x130c;
+        deref_getFirst(pCVar13,&local_2c5c);
+        piVar10 = (int *)World_getField0(pCVar13,&local_2dec);
+        bVar2 = std_iterator_notEqual(&local_2c5c,piVar10);
+        if (bVar2) {
+          do {
+            pCVar13 = (CRefTime *)lib_fn_52eb90(&local_2c5c);
+            pvVar44 = local_2b1c;
+            local_2b20 = pCVar13;
+            switch(pCVar13[0x128]) {
+            case (CRefTime)0x1:
+              if (*(char *)((int)pvVar19 + 0xb4) == '\0') {
+                if ((*pCVar13 == (CRefTime)0x1) && (pCVar13[1] == (CRefTime)0x7)) {
+                  uStack_2c2c = 0;
+                  deref_getFirst(local_2b70,&iStack_2c68);
+                  piVar10 = (int *)World_getField0(local_2b70,&uStack_2d7c);
+                  bVar2 = std_iterator_notEqual(&iStack_2c68,piVar10);
+                  uVar12 = (uint)uStack_2c2c;
+                  uVar59 = uStack_2c2c._4_4_;
+                  if (bVar2) {
+                    do {
+                      puVar9 = (uint *)getField_plus0x10(&iStack_2c68);
+                      if (puVar9[2] != 0) {
+                        uVar57 = puVar9[1];
+                        if (((int)uVar57 <= (int)uVar59) &&
+                           (((int)uVar57 < (int)uVar59 || (*puVar9 < uVar12)))) {
+                          uVar12 = *puVar9;
+                          uVar59 = uVar57;
+                          uStack_2c2c = *(undefined8 *)puVar9;
+                        }
+                      }
+                      RBTree_copyBeginThenInc(&iStack_2c68,&iStack_307c);
+                      piVar10 = (int *)World_getField0(local_2b70,&uStack_2d7c);
+                      bVar2 = std_iterator_notEqual(&iStack_2c68,piVar10);
+                    } while (bVar2);
+                  }
+                  uStack_2c2c = CONCAT44((uVar59 - 1) + (uint)(uVar12 != 0),uVar12 - 1);
+                  local_2b34 = operator_new(0x1e60);
+                  local_8._0_1_ = 0x10;
+                  if (local_2b34 == (Creature *)0x0) {
+                    puVar22 = (undefined4 *)0x0;
+                  }
+                  else {
+                    puVar22 = cube::Creature::ctor_1(local_2b34,(undefined4 *)&uStack_2c2c);
+                  }
+                  local_8._0_1_ = 5;
+                  puVar9 = RBTree_findOrInsert(local_2b70,(uint *)&uStack_2c2c);
+                  *puVar9 = (uint)puVar22;
+                  Copy24Bytes(puVar22 + 4,(undefined4 *)(local_2b18 + 0x10));
+                  puVar22[100] = (int)*(short *)(local_2b20 + 0x10);
+                  puVar22[0x19] = 0x90;
+                  *(undefined1 *)(puVar22 + 0x18) = 6;
+                  in_stack_ffffc894 = (CRefTime *)&UNK_00536fca;
+                  generate_entity_appearance(puVar22 + 0x19,(int)(puVar22 + 0x1e),(undefined4 *)0x0);
+                  pvVar19 = local_2b1c;
+                }
+                else {
+                  fVar51 = calc_heal_value((char *)pCVar13);
+                  local_2b44 = (CRefTime *)(float)fVar51;
+                  *(float *)(local_2b18 + 0x16c) =
+                       (float)local_2b44 + *(float *)(local_2b18 + 0x16c);
+                  lib_fn_4c8530((int)auStack_87c);
+                  pCVar13 = local_2b18 + 0x10;
+                  Vec3i64_toFloatScaled(auStack_87c,(longlong *)pCVar13);
+                  piVar10 = local_2b2c;
+                  uStack_86c = 0x3f800000;
+                  uStack_870 = 0x2c;
+                  std_list_push_back_428590(local_2b2c + 2,auStack_87c);
+                  initStruct_0x47_zero((int)&uStack_f4c);
+                  Copy24Bytes(auStack_f2c,(undefined4 *)pCVar13);
+                  fStack_f44 = *(float *)(local_2b18 + 8);
+                  uStack_f4c = 0;
+                  fStack_f40 = *(float *)(local_2b18 + 0xc);
+                  uStack_f3c = (uint)local_2b44 ^ 0x80000000;
+                  uStack_f38 = 0;
+                  std_list_push_back_428400(piVar10,(undefined4 *)&uStack_f4c);
+                  pvVar19 = local_2b1c;
+                }
+              }
+              break;
+            case (CRefTime)0x2:
+              if (*(char *)((int)pvVar19 + 0xb4) == '\0') {
+                deref_getFirst((void *)((int)pvVar19 + 4),&iStack_2c58);
+                piVar10 = (int *)World_getField0((void *)((int)pvVar19 + 4),&uStack_2d74);
+                bVar2 = std_iterator_notEqual(&iStack_2c58,piVar10);
+                if (bVar2) {
+                  do {
+                    iVar8 = getField_plus0x10(&iStack_2c58);
+                    iVar8 = *(int *)(iVar8 + 8);
+                    if ((iVar8 != 0) &&
+                       (iVar17 = compare_3dword_eq_a((void *)(iVar8 + 0x1b0),(int)(pCVar13 + 0x118)),
+                       pvVar19 = local_2b1c, (char)iVar17 != '\0')) {
+                      if ((*(char *)(iVar8 + 0x140) == -0x7c) &&
+                         ((64799999 < *(int *)((int)local_2b1c + 0x80015c) ||
+                          (*(int *)((int)local_2b1c + 0x80015c) < 0x1499701)))) {
+                        *(int *)((int)local_2b1c + 0x800160) =
+                             *(int *)((int)local_2b1c + 0x800160) + 1;
+                        *(undefined4 *)((int)local_2b1c + 0x80015c) = 25200000;
+                        lib_fn_4c8530((int)auStack_774);
+                        uStack_768 = 0x1d;
+                        Vec3i64_toFloatScaled(auStack_774,(longlong *)(local_2b18 + 0x10));
+                        uStack_760 = 0x3f400000;
+                        std_list_push_back_428590(local_2b2c + 2,auStack_774);
+                        lib_fn_4d7ae0();
+                        lib_fn_524500((int)pvVar19);
+                        break;
+                      }
+                      if ((*(byte *)(iVar8 + 0x7e) & 0x80) != 0) break;
+                    }
+                    RBTree_copyBeginThenInc(&iStack_2c58,&iStack_3054);
+                    piVar10 = (int *)World_getField0(local_2b70,&uStack_2d74);
+                    bVar2 = std_iterator_notEqual(&iStack_2c58,piVar10);
+                    pvVar19 = local_2b1c;
+                  } while (bVar2);
+                }
+              }
+              break;
+            case (CRefTime)0x3:
+              if (local_2b18[0x68] == (CRefTime)0x4f) {
+                local_2b18[0x68] = (CRefTime)0x0;
+                *(float *)(local_2b18 + 0x1190) = 0.0;
+              }
+              pCVar13 = pCVar13 + 0x118;
+              local_2b24 = pCVar13;
+              puVar9 = (uint *)getElemPtr4(pCVar13,1);
+              uVar12 = *puVar9;
+              puVar9 = (uint *)getElemPtr4(pCVar13,0);
+              iVar8 = Region_getChunkCell(local_2b1c,*puVar9,uVar12);
+              pvVar19 = local_2b1c;
+              if (iVar8 != 0) {
+                piVar10 = (int *)getElemPtr4(pCVar13,2);
+                iVar17 = *piVar10;
+                pvVar19 = local_2b1c;
+                if (-1 < iVar17) {
+                  pCVar13 = (CRefTime *)(iVar8 + 0xc);
+                  local_2b68 = pCVar13;
+                  iVar8 = std_vector_size_41cb40((int *)pCVar13);
+                  pvVar19 = local_2b1c;
+                  if (iVar17 < iVar8) {
+                    pCVar13 = (CRefTime *)std_vector_operator(pCVar13,iVar17);
+                    iVar8 = *(int *)pCVar13;
+                    pvVar19 = local_2b1c;
+                    local_2b60 = pCVar13;
+                    if (iVar8 == 0x2d) {
+                      if (local_2b18 == *(CRefTime **)((int)local_2b1c + 0xb8)) {
+                        pCVar15 = local_2b18 + 0x10;
+                        lib_fn_4d9410(local_2b1c,aiStack_4c4,(uint *)pCVar15);
+                        puVar9 = (uint *)getElemPtr4(aiStack_4c4,1);
+                        uVar12 = *puVar9;
+                        puVar9 = (uint *)getElemPtr4(aiStack_4c4,0);
+                        local_2b20 = (CRefTime *)Region_getChunkCell(local_2b1c,*puVar9,uVar12);
+                        pvVar19 = local_2b1c;
+                        if (((local_2b20 != (CRefTime *)0x0) &&
+                            (iVar8 = *(int *)(pCVar13 + 0x178), -1 < iVar8)) &&
+                           (iVar17 = std_vector_size_41cb40((int *)(local_2b20 + 0xc)), pvVar19 = local_2b1c,
+                           iVar8 < iVar17)) {
+                          lib_fn_4c8530((int)auStack_63c);
+                          uStack_630 = 0x2f;
+                          uStack_62c = 0x3f800000;
+                          Vec3i64_toFloatScaled(auStack_63c,(longlong *)pCVar15);
+                          puVar22 = auStack_63c;
+                          puVar60 = &UNK_00536868;
+                          std_list_push_back_428590(local_2b2c + 2,puVar22);
+                          uVar20 = 0;
+                          puVar36 = &UNK_00536874;
+                          lib_fn_4cde40(&stack0xffffc89c,0);
+                          in_stack_ffffc88c = 0x536880;
+                          lib_fn_4cde40(&stack0xffffc894,0);
+                          lib_fn_4cde40(&stack0xffffc88c,2);
+                          puVar18 = store_6_dwords(auStack_1f18,(int)in_stack_ffffc88c,
+                                                 (int)(in_stack_ffffc88c >> 0x20),puVar36,uVar20,
+                                                 puVar60,puVar22);
+                          puVar9 = auStack_2308;
+                          in_stack_ffffc894 = (CRefTime *)&UNK_005368b9;
+                          iVar8 = std_vector_operator(local_2b20 + 0xc,*(int *)(local_2b60 + 0x178));
+                          puVar9 = Vec3i64_add((void *)(iVar8 + 8),puVar9,puVar18);
+                          Copy24Bytes(pCVar15,puVar9);
+                          pvVar19 = local_2b1c;
+                        }
+                      }
+                    }
+                    else if ((((((iVar8 == 0x10) || (iVar8 == 0x12)) || (iVar8 == 0x13)) ||
+                              ((iVar8 == 0x45 || (iVar8 == 0x44)))) &&
+                             (*(int *)(pCVar13 + 0x40) == 0 && *(int *)(pCVar13 + 0x44) == 0)) &&
+                            (((CVar6 = local_2b18[0x68], CVar6 == (CRefTime)0x0 ||
+                              (CVar6 == (CRefTime)0x53)) || (CVar6 == (CRefTime)0x54)))) {
+                      if (*(char *)((int)local_2b1c + 0xb4) == '\0') {
+                        *(float *)(pCVar13 + 0x40) = *(float *)(local_2b18 + 8);
+                        *(float *)(pCVar13 + 0x44) = *(float *)(local_2b18 + 0xc);
+                        switch(iVar8) {
+                        case 0x10:
+                        case 0x12:
+                          pfVar25 = (float *)getElemPtr4(local_2b18 + 0x80,2);
+                          local_2b20 = (CRefTime *)(*pfVar25 * 0.5);
+                          pfVar25 = (float *)getElemPtr4(pCVar13 + 0x24,2);
+                          Vec3_set(auStack_19a4,0,0,(float)local_2b20 + *pfVar25);
+                          Vec3i64_randomize((int)auStack_17c4);
+                          puVar9 = Vec3i64_add(pCVar13 + 8,auStack_1f48,auStack_17c4);
+                          Copy24Bytes(local_2b18 + 0x10,puVar9);
+                          puVar22 = Vec3_set(auStack_1224,0,0,0);
+                          Vec3_copy(local_2b18 + 0x34,puVar22);
+                          iVar8 = *(int *)(pCVar13 + 0x20);
+                          pfVar25 = (float *)getElemPtr4(local_2b18 + 0x28,2);
+                          *pfVar25 = (float)((iVar8 + 2) * 0x5a);
+                          local_2b18[0x68] = (CRefTime)0x53;
+                          break;
+                        case 0x13:
+                        case 0x44:
+                        case 0x45:
+                          pfVar25 = (float *)getElemPtr4(local_2b18 + 0x80,2);
+                          local_2b20 = (CRefTime *)(*pfVar25 * 0.5);
+                          pfVar25 = (float *)getElemPtr4(pCVar13 + 0x24,2);
+                          Vec3_set(auStack_1614,0,0,(float)local_2b20 + *pfVar25);
+                          Vec3i64_randomize((int)auStack_17e8);
+                          puVar9 = Vec3i64_add(pCVar13 + 8,auStack_2668,auStack_17e8);
+                          Copy24Bytes(local_2b18 + 0x10,puVar9);
+                          puVar22 = Vec3_set(auStack_123c,0,0,0);
+                          Vec3_copy(local_2b18 + 0x34,puVar22);
+                          iVar8 = *(int *)(pCVar13 + 0x20);
+                          pfVar25 = (float *)getElemPtr4(local_2b18 + 0x28,2);
+                          *pfVar25 = (float)(iVar8 * 0x5a);
+                          local_2b18[0x68] = (CRefTime)0x54;
+                        }
+                        pvVar19 = local_2b1c;
+                        puVar22 = copyStruct_head_plus_0x48(auStack_28b0,(undefined4 *)local_2b24,
+                                               (undefined4 *)pCVar13);
+                        std_list_push_back_4284f0(local_2b2c + 0xc,puVar22);
+                      }
+                      in_stack_ffffc894 = (CRefTime *)&UNK_00536b89;
+                      puVar22 = Vec3_set(auStack_183c,0,0,0);
+                      Vec3_copy(local_2b18 + 0x40,puVar22);
+                    }
+                    else if (*(char *)((int)local_2b1c + 0xb4) == '\0') {
+                      if ((iVar8 == 10) && (pCVar13[0x30] == (CRefTime)0x2)) {
+                        pCVar13 = pCVar13 + 0x48;
+                        pCVar15 = (CRefTime *)0x0;
+                        local_2b44 = (CRefTime *)0x0;
+                        iVar8 = std_vector_size_420020((int *)pCVar13);
+                        if (0 < iVar8) {
+                          do {
+                            puVar22 = &uStack_2c60;
+                            pvVar19 = (void *)std_vector_operator_41e2e0(pCVar13,(int)pCVar15);
+                            World_getField0(pvVar19,puVar22);
+                            puVar22 = &uStack_2e3c;
+                            pvVar19 = (void *)std_vector_operator_41e2e0(pCVar13,(int)pCVar15);
+                            piVar10 = (int *)lib_fn_4d3de0(pvVar19,puVar22);
+                            bVar2 = std_iterator_notEqual(&uStack_2c60,piVar10);
+                            if (bVar2) {
+                              do {
+                                piVar10 = (int *)lib_fn_4ce1f0(&uStack_2c60);
+                                pCVar13 = local_2b60;
+                                iVar8 = *piVar10;
+                                while (iVar8 != 0) {
+                                  uVar20 = 0;
+                                  iVar8 = rand();
+                                  fVar24 = 2.0 - ((float)iVar8 * 4.0) / 32767.0;
+                                  iVar8 = rand();
+                                  Vec3_set(auStack_1254,2.0 - ((float)iVar8 * 4.0) / 32767.0,
+                                               fVar24,uVar20);
+                                  Vec3i64_randomize((int)auStack_180c);
+                                  puVar22 = local_2bec;
+                                  fVar52 = 1.0;
+                                  iVar8 = rand();
+                                  fVar24 = ((float)iVar8 * 360.0) / 32767.0;
+                                  in_stack_ffffc894 =
+                                       (CRefTime *)
+                                       Vec3i64_add(pCVar13 + 8,auStack_1f78,auStack_180c);
+                                  in_stack_ffffc88c = ZEXT48(piVar10 + 1) << 0x20;
+                                  lib_fn_4d2810((undefined1 *)(piVar10 + 1),(uint *)in_stack_ffffc894
+                                               ,fVar24,fVar52,puVar22);
+                                  func_0x00405550();
+                                  pCVar15 = local_2b44;
+                                  iVar8 = *piVar10;
+                                }
+                                iterator_advance_0x11c(&uStack_2c60,(int *)&local_2b34);
+                                puVar22 = &uStack_2e3c;
+                                pCVar13 = local_2b60 + 0x48;
+                                pvVar19 = (void *)std_vector_operator_41e2e0(pCVar13,(int)pCVar15);
+                                piVar10 = (int *)lib_fn_4d3de0(pvVar19,puVar22);
+                                bVar2 = std_iterator_notEqual(&uStack_2c60,piVar10);
+                              } while (bVar2);
+                            }
+                            pCVar15 = pCVar15 + 1;
+                            local_2b44 = pCVar15;
+                            iVar8 = std_vector_size_420020((int *)pCVar13);
+                          } while ((int)pCVar15 < iVar8);
+                        }
+                      }
+                      pvVar19 = local_2b1c;
+                      pCVar13 = local_2b60;
+                      iVar8 = *(int *)local_2b60;
+                      if ((((iVar8 == 9) || (iVar8 == 1)) || (iVar8 == 2)) ||
+                         ((iVar8 == 3 || (iVar8 == 10)))) {
+                        in_stack_ffffc894 = (CRefTime *)&UNK_00536dc8;
+                        lib_fn_4d8c90((int *)local_2b60,(int)local_2b2c,
+                                     local_2b60[0x30] == (CRefTime)0x0);
+                        puVar22 = copyStruct_head_plus_0x48(auStack_2960,(undefined4 *)local_2b24,
+                                               (undefined4 *)pCVar13);
+                        std_list_push_back_4284f0(local_2b2c + 0xc,puVar22);
+                      }
+                      if (((*(int *)pCVar13 == 9) &&
+                          (iVar8 = *(int *)(pCVar13 + 0x178), pvVar19 = local_2b1c, -1 < iVar8)) &&
+                         (iVar17 = std_vector_size_41cb40((int *)local_2b68), pvVar19 = local_2b1c,
+                         iVar8 < iVar17)) {
+                        uVar53 = (ulonglong)CONCAT14(pCVar13[0x30] != (CRefTime)0x0,local_2b2c);
+                        piVar10 = (int *)std_vector_operator(local_2b68,iVar8);
+                        pvVar19 = local_2b1c;
+                        in_stack_ffffc894 = (CRefTime *)&UNK_00536e3e;
+                        lib_fn_4d8c90(piVar10,(int)uVar53,(char)(uVar53 >> 0x20));
+                        puVar22 = copyStruct_head_plus_0x48(auStack_2858,(undefined4 *)local_2b24,
+                                               (undefined4 *)pCVar13);
+                        std_list_push_back_4284f0(local_2b2c + 0xc,puVar22);
+                      }
+                    }
+                  }
+                }
+              }
+              break;
+            case (CRefTime)0x5:
+              if (*(char *)((int)pvVar19 + 0xb4) == '\0') {
+                pCVar13 = pCVar13 + 0x118;
+                puVar9 = (uint *)getElemPtr4(pCVar13,1);
+                uVar12 = *puVar9;
+                puVar9 = (uint *)getElemPtr4(pCVar13,0);
+                pCVar15 = (CRefTime *)Region_getChunkCell(local_2b1c,*puVar9,uVar12);
+                pvVar19 = local_2b1c;
+                local_2b4c = pCVar15;
+                if (pCVar15 != (CRefTime *)0x0) {
+                  local_2b94 = (CRefTime *)getElemPtr4(pCVar13,2);
+                  fVar24 = *(float *)local_2b94;
+                  pvVar19 = local_2b1c;
+                  if (-1 < (int)fVar24) {
+                    pCVar15 = pCVar15 + 0x30;
+                    iVar8 = func_0x00420000();
+                    pvVar19 = local_2b1c;
+                    if ((int)fVar24 < iVar8) {
+                      pcVar29 = (char *)lib_fn_4ce1d0(pCVar15,(int)fVar24);
+                      bVar2 = check_quest_id_match(local_2b18,pcVar29);
+                      pvVar19 = local_2b1c;
+                      if (bVar2) {
+                        puVar9 = Vec3i64_subtract(pcVar29 + 0x118,auStack_24e8,
+                                              (uint *)(local_2b18 + 0x10));
+                        pfVar25 = Vec3i64_toFloatScaled(auStack_120c,(longlong *)puVar9);
+                        fVar51 = vec3_length_sq(pfVar25);
+                        local_2b20 = (CRefTime *)(float)fVar51;
+                        pvVar19 = local_2b1c;
+                        if ((float)local_2b20 <= 16.0) {
+                          lib_fn_4d4f60(local_2bec,auStack_3390,(uint *)&local_2b4c);
+                          lib_fn_4c83d0((int)&fStack_2800);
+                          fStack_2800 = *(float *)(local_2b18 + 8);
+                          fStack_27fc = *(float *)(local_2b18 + 0xc);
+                          Struct_copy0x118(auStack_27f8,pcVar29);
+                          lib_fn_4d65d0(local_2b2c + 0x10,&fStack_2800);
+                          if ((local_2b18 == *(CRefTime **)((int)local_2b1c + 0xb8)) &&
+                             (*pcVar29 != '\x19')) {
+                            game_inventoryAccumulateCount(local_2b18 + 0x11dc,pcVar29,-1);
+                          }
+                          lib_fn_4c8530((int)auStack_6b4);
+                          uStack_6a8 = 0x2d;
+                          iVar8 = rand();
+                          fStack_6a4 = ((float)iVar8 * 0.1) / 32767.0 + 1.0;
+                          Vec3i64_toFloatScaled(auStack_6b4,(longlong *)(local_2b18 + 0x10));
+                          std_list_push_back_428590(local_2b2c + 2,auStack_6b4);
+                          fVar24 = *(float *)local_2b94;
+                          piVar10 = &iStack_305c;
+                          in_stack_ffffc894 = (CRefTime *)&UNK_005366ee;
+                          pvVar19 = (void *)World_getField0(pCVar15,&uStack_2fa8);
+                          puVar22 = (undefined4 *)lib_fn_4ce250(pvVar19,piVar10,(int)fVar24);
+                          lib_fn_4d4430(pCVar15,&uStack_2fc8,(void *)*puVar22);
+                          pvVar19 = local_2b1c;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              break;
+            case (CRefTime)0x6:
+              if (*(char *)((int)pvVar19 + 0xb4) == '\0') {
+                pCVar15 = local_2b18 + 0x10;
+                in_stack_ffffc88c = ZEXT48(pCVar13) << 0x20;
+                in_stack_ffffc894 = pCVar15;
+                lib_fn_4d2810(pCVar13,(uint *)pCVar15,0.0,1.0,local_2bec);
+                lib_fn_4c8530((int)auStack_9e4);
+                uStack_9d8 = 0x39;
+                Vec3i64_toFloatScaled(auStack_9e4,(longlong *)pCVar15);
+                std_list_push_back_428590(local_2b2c + 2,auStack_9e4);
+                pvVar19 = local_2b1c;
+              }
+              break;
+            case (CRefTime)0x7:
+              pvVar19 = pvVar44;
+              if ((*(char *)((int)local_2b1c + 0xb4) == '\0') &&
+                 (pCVar13 = (CRefTime *)
+                            lib_fn_4d1860(local_2b1c,(undefined4 *)(int)(char)local_2b18[0x18d]),
+                 local_2b54 = pCVar13, pCVar13 != (CRefTime *)0x0)) {
+                Vec3_set(auStack_162c,0x3f000000,0x3f000000,0x3f000000);
+                Vec3i64_randomize((int)auStack_1830);
+                Vec3i64_randomize((int)auStack_1854);
+                puVar9 = auStack_1830;
+                puVar18 = auStack_2338;
+                puVar26 = Vec3i64_add(local_2b18 + 0x10,auStack_1fa8,auStack_1854);
+                puVar9 = Vec3i64_add(puVar26,puVar18,puVar9);
+                lib_fn_4c64f0(auStack_68,puVar9);
+                puVar22 = (undefined4 *)lib_fn_4d8e10(auStack_126c,auStack_68);
+                Vec3_copy(auStack_68,puVar22);
+                Matrix4_setIdentity(auStack_1b70);
+                matrix_rotate_columns(auStack_1b70,(float)(int)(char)local_2b18[0x18c] * 90.0);
+                fVar52 = 0.0;
+                iVar8 = get_field_0x48((int)pCVar13);
+                fVar24 = (float)iVar8 * -0.5;
+                iVar8 = get_field_0x44((int)pCVar13);
+                mat4_translate(auStack_1b70,(float)iVar8 * -0.5,fVar24,fVar52);
+                lib_fn_4d3e00((int)pvVar44);
+                pCVar15 = (CRefTime *)0x0;
+                local_2b40 = (CRefTime *)0x0;
+                iVar8 = get_field_0x44((int)pCVar13);
+                if (0 < iVar8) {
+                  do {
+                    local_2b60 = (CRefTime *)0x0;
+                    iVar8 = get_field_0x48((int)pCVar13);
+                    if (0 < iVar8) {
+                      do {
+                        pCVar13 = (CRefTime *)get_field_0x4c((int)pCVar13);
+                        local_2b24 = (CRefTime *)0x0;
+                        pCVar15 = (CRefTime *)0x0;
+                        iVar8 = get_field_0x4c((int)local_2b54);
+                        if (0 < iVar8) {
+                          do {
+                            puVar40 = &DAT_00583dfc;
+                            puVar39 = game_voxelColorAt(local_2b54,(int)local_2b40,(int)local_2b60,
+                                                   (int)pCVar15);
+                            cVar3 = compare_3_bytes_ne(puVar39,(int)puVar40);
+                            if (cVar3 != '\0') {
+                              if ((int)pCVar15 < (int)pCVar13) {
+                                pCVar13 = pCVar15;
+                              }
+                              if ((int)local_2b24 < (int)pCVar15) {
+                                local_2b24 = pCVar15;
+                              }
+                            }
+                            pCVar15 = pCVar15 + 1;
+                            iVar8 = get_field_0x4c((int)local_2b54);
+                          } while ((int)pCVar15 < iVar8);
+                        }
+                        iVar17 = 0;
+                        iVar8 = get_field_0x4c((int)local_2b54);
+                        if (0 < iVar8) {
+                          do {
+                            puVar39 = game_voxelColorAt(local_2b54,(int)local_2b40,(int)local_2b60,iVar17
+                                                  );
+                            copy_3_bytes(auStack_2c10,puVar39);
+                            pfVar30 = (float *)Vec3_set(auStack_1ac4,0x3f000000,0x3f000000,
+                                                            0x3f000000);
+                            pfVar25 = afStack_1284;
+                            puVar22 = Vec3_set(auStack_1644,(float)(int)local_2b40,
+                                                   (float)(int)local_2b60,(float)iVar17);
+                            pfVar25 = (float *)vec3_add(puVar22,pfVar25,pfVar30);
+                            mat4_transform_point(auStack_1b70,afStack_129c,pfVar25);
+                            Vec3i64_randomize((int)auStack_1878);
+                            puVar9 = auStack_1878;
+                            puVar18 = auStack_2518;
+                            piVar10 = lib_fn_4d99d0(auStack_1fd8,auStack_68);
+                            puVar9 = Vec3i64_add(piVar10,puVar18,puVar9);
+                            lib_fn_4c64f0(auStack_cc,puVar9);
+                            cVar3 = memcmp3_equal(auStack_2c10,0x583dfc);
+                            if (cVar3 == '\0') {
+                              local_2b68 = (CRefTime *)getElemPtr4(auStack_cc,2);
+                              local_2b58 = (CRefTime *)getElemPtr4(auStack_cc,1);
+                              local_2b44 = (CRefTime *)getElemPtr4(auStack_cc,0);
+                              puVar36 = World_getBlockAt(local_2b1c,(uint)*(float *)local_2b44,
+                                                     (uint)*(float *)local_2b58,
+                                                     (int)*(float *)local_2b68,0);
+                              if ((puVar36[3] & 0x40) == 0) {
+                                iVar8 = 0;
+                                puVar39 = copy_4_bytes(auStack_2fac,auStack_2c10,0x46);
+                                World_fillVoxelColumn(local_2b1c,*(float *)local_2b44,
+                                             (uint)*(float *)local_2b58,(int)*(float *)local_2b68,
+                                             puVar39,iVar8);
+                                struct_clear_fields_c_10((int)auStack_444);
+                                puVar39 = copy_4_bytes(auStack_3070,auStack_2c10,0x46);
+                                copy_4_bytes_b(auStack_438,puVar39);
+                                uStack_434 = *(undefined4 *)((int)local_2b1c + 0x800160);
+                                puVar22 = vec3_store(auStack_1860,*(float *)local_2b44,
+                                                       *(float *)local_2b58,*(float *)local_2b68);
+                                Vec3_copy(auStack_444,puVar22);
+                                lib_fn_528400(local_2b2c + 6,auStack_444);
+                              }
+                            }
+                            else if (((int)pCVar13 < iVar17) && (iVar17 < (int)local_2b24)) {
+                              iVar11 = 0;
+                              puVar39 = copy_4_bytes(auStack_3088,auStack_2c10,0x40);
+                              piVar10 = (int *)getElemPtr4(auStack_cc,2);
+                              iVar8 = *piVar10;
+                              puVar9 = (uint *)getElemPtr4(auStack_cc,1);
+                              uVar12 = *puVar9;
+                              pfVar25 = (float *)getElemPtr4(auStack_cc,0);
+                              World_fillVoxelColumn(local_2b1c,*pfVar25,uVar12,iVar8,puVar39,iVar11);
+                            }
+                            iVar17 = iVar17 + 1;
+                            iVar8 = get_field_0x4c((int)local_2b54);
+                          } while (iVar17 < iVar8);
+                        }
+                        pCVar13 = local_2b54;
+                        pCVar38 = local_2b60 + 1;
+                        local_2b60 = pCVar38;
+                        iVar8 = get_field_0x48((int)local_2b54);
+                        pCVar15 = local_2b40;
+                      } while ((int)pCVar38 < iVar8);
+                    }
+                    pCVar15 = pCVar15 + 1;
+                    local_2b40 = pCVar15;
+                    iVar8 = get_field_0x44((int)pCVar13);
+                  } while ((int)pCVar15 < iVar8);
+                }
+                pvVar19 = local_2b1c;
+                if (*(int *)((int)local_2b1c + 0xb8) == 0) {
+                  piVar10 = (int *)getElemPtr4(auStack_68,1);
+                  local_2b44 = (CRefTime *)(float)*piVar10;
+                  piVar10 = (int *)getElemPtr4(auStack_68,0);
+                  local_2b24 = (CRefTime *)(float)*piVar10;
+                  iVar61 = 0;
+                  iVar47 = 8;
+                  iVar8 = get_field_0x4c((int)pCVar13);
+                  iVar8 = (int)((float)iVar8 * 0.5 + (float)local_2b44);
+                  iVar17 = get_field_0x48((int)pCVar13);
+                  iVar17 = (int)((float)iVar17 * 0.5 + (float)local_2b24);
+                  iVar11 = get_field_0x48((int)pCVar13);
+                  uVar12 = (uint)((float)local_2b44 - (float)iVar11 * 0.5);
+                  iVar11 = get_field_0x44((int)pCVar13);
+                  lib_fn_4d1a70(pvVar19,(int)((float)local_2b24 - (float)iVar11 * 0.5),uVar12,iVar17,
+                               iVar8,iVar47,iVar61);
+                }
+                local_2b4c = (CRefTime *)getElemPtr4(auStack_68,1);
+                piVar10 = *(int **)local_2b4c;
+                local_2b20 = (CRefTime *)getElemPtr4(auStack_68,0);
+                in_stack_ffffc894 = *(CRefTime **)local_2b20;
+                iVar8 = get_field_0x48((int)local_2b54);
+                uVar12 = iVar8 + (int)piVar10;
+                iVar8 = get_field_0x44((int)local_2b54);
+                in_stack_ffffc88c = 0x5376ee00000000;
+                lib_fn_4d9160(local_2b1c,(int)in_stack_ffffc894,piVar10,
+                             (uint)(in_stack_ffffc894 + iVar8),uVar12);
+                pCVar13 = (CRefTime *)
+                          Region_getChunkCell(local_2b1c,
+                                       (int)((*(int *)local_2b20 >> 0x1f & 0xffU) +
+                                            *(int *)local_2b20) >> 8,
+                                       (int)((int)*(float *)local_2b4c +
+                                            ((int)*(float *)local_2b4c >> 0x1f & 0xffU)) >> 8);
+                local_2b20 = pCVar13;
+                if (pCVar13 != (CRefTime *)0x0) {
+                  Vec3_copy(auStack_214,auStack_68);
+                  iStack_218 = (int)(char)local_2b18[0x18d];
+                  lib_fn_530840(pCVar13 + 0x3c,&iStack_218);
+                  lib_fn_4d4f60(local_2cd8,auStack_33a0,(uint *)&local_2b20);
+                }
+                pvVar19 = local_2b1c;
+                lib_fn_4d5c70((int)local_2b1c);
+              }
+              break;
+            case (CRefTime)0x8:
+              if (*(char *)((int)pvVar19 + 0xb4) == '\0') {
+                uVar12 = std_map_find_value(pvVar19,(uint *)(local_2b18 + 0x11c8));
+                if (uVar12 != 0) {
+                  std_map_clear((int *)(uVar12 + 0x13a4));
+                  pCVar13 = local_2b18 + 0x10;
+                  puVar9 = Vec3i64_subtract((void *)(uVar12 + 0x10),auStack_1ee8,(uint *)pCVar13);
+                  pfVar25 = Vec3i64_toFloatScaled(auStack_15fc,(longlong *)puVar9);
+                  fVar51 = vec3_length_sq(pfVar25);
+                  local_2b20 = (CRefTime *)(float)fVar51;
+                  if (40000.0 < (float)local_2b20) {
+                    Copy24Bytes((void *)(uVar12 + 0x10),(undefined4 *)pCVar13);
+                  }
+                }
+                std_map_clear((int *)(local_2b18 + 0x13ac));
+                *(float *)(local_2b18 + 0x11d0) = 0.0;
+                *(float *)(local_2b18 + 0x11d4) = 0.0;
+                pvVar19 = local_2b1c;
+              }
+            }
+            lib_fn_52ebf0(&local_2c5c,&local_2b34);
+            pCVar13 = local_2b18 + 0x130c;
+            piVar10 = (int *)World_getField0(pCVar13,&local_2dec);
+            bVar2 = std_iterator_notEqual(&local_2c5c,piVar10);
+          } while (bVar2);
+        }
+        if (*(char *)((int)pvVar19 + 0xb4) == '\0') {
+          std_list_Tidy_no_size((int *)pCVar13);
+        }
+        fVar51 = Combat_computeMaxHealth((int)local_2b18);
+        local_2b20 = (CRefTime *)(float)fVar51;
+        if ((float)local_2b20 < *(float *)(local_2b18 + 0x16c)) {
+          fVar51 = Combat_computeMaxHealth((int)local_2b18);
+          *(float *)(local_2b18 + 0x16c) = (float)fVar51;
+        }
+        if (*(float *)(local_2b18 + 0x16c) <= 0.0) goto LAB_00545be1;
+        if ((local_2b18[0x60] != (CRefTime)0x0) && (*(char *)((int)local_2b1c + 0xb4) == '\0')) {
+          *(uint *)(local_2b18 + 0x13c4) = (int)*(float *)(local_2b18 + 0x13c4) + local_2b28;
+          if ((int)*(float *)(local_2b18 + 300) < 1) {
+            if (0x1f < (int)*(float *)(local_2b18 + 0x13c4)) {
+              if (*(float *)(local_2b18 + 0x13e4) != 0.0) {
+                in_stack_ffffc894 = local_2b18;
+                (**(code **)**(undefined4 **)(local_2b18 + 0x13e4))();
+              }
+              *(float *)(local_2b18 + 0x13c4) = 0.0;
+            }
+            if ((int)*(float *)(local_2b18 + 300) < 1) goto LAB_0053793b;
+          }
+          set_flag_bits_0x114(local_2b18 + 0x10,0x80,'\0');
+        }
+LAB_0053793b:
+        pvVar19 = local_2b1c;
+        if (*(float *)(local_2b18 + 100) == 2.01787e-43) {
+          if (*(char *)((int)local_2b1c + 0xb4) == '\0') {
+            fVar24 = *(float *)(local_2b18 + 0x16c) - local_2b8c * 0.025;
+            *(float *)(local_2b18 + 0x16c) = fVar24;
+            if (fVar24 < 0.0) {
+              *(float *)(local_2b18 + 0x16c) = 0.0;
+            }
+            goto LAB_00537987;
+          }
+        }
+        else {
+LAB_00537987:
+          if (*(char *)((int)local_2b1c + 0xb4) == '\0') {
+            pCVar13 = local_2b18 + 0x10;
+            set_flag_bits_0x114(pCVar13,0x80,'\0');
+            pCVar15 = local_2b18 + 0x1460;
+            bVar2 = lib_fn_530540((int)pCVar15);
+            pvVar19 = local_2b1c;
+            if ((!bVar2) && ((int)*(float *)(local_2b18 + 300) < 1)) {
+              set_flag_bits_0x114(pCVar13,4,'\0');
+              cVar3 = lib_fn_4db200(local_2b18,local_2b28);
+              pvVar19 = local_2b1c;
+              if (cVar3 == '\0') {
+                bVar2 = lib_fn_530540((int)pCVar15);
+                if (!bVar2) {
+                  uVar20 = 0x537a17;
+                  set_flag_bits_0x114(pCVar13,4,'\x01');
+                  puVar9 = local_2368;
+                  uVar54 = 0x3fe0000000000000;
+                  pCVar38 = pCVar13;
+                  lib_fn_4dab30((ulonglong *)&stack0xffffc894);
+                  uVar53 = 0x3fe0000000000000;
+                  lib_fn_4dab30((ulonglong *)&stack0xffffc88c);
+                  lib_fn_4dab30((ulonglong *)&stack0xffffc884);
+                  puVar26 = store_6_dwords(local_2008,(int)uVar53,(int)(uVar53 >> 0x20),(int)uVar54,
+                                         (int)(uVar54 >> 0x20),in_stack_ffffc894,uVar20);
+                  puVar18 = local_2608;
+                  puVar28 = (uint *)lib_fn_52eba0((int *)pCVar15);
+                  piVar10 = lib_fn_4d99d0(local_2038,puVar28);
+                  puVar18 = Vec3i64_add(piVar10,puVar18,puVar26);
+                  puVar9 = Vec3i64_subtract(puVar18,puVar9,(uint *)pCVar38);
+                  Vec3i64_toFloatScaled(local_2b18 + 0x160,(longlong *)puVar9);
+                }
+                set_flag_bits_0x114(pCVar13,0x80,'\x01');
+                pvVar19 = local_2b1c;
+              }
+              else {
+                NavGraph_reconstructPath(local_2b18);
+              }
+            }
+          }
+        }
+        *(uint *)(local_2b18 + 0x130) = (int)*(float *)(local_2b18 + 0x130) - local_2b28;
+        fVar24 = *(float *)(local_2b18 + 0x130);
+        if (0 < (int)fVar24) {
+          iVar8 = Combat_getWindupAndRecovery((int)local_2b18);
+          *(uint *)(local_2b18 + 0x6c) = iVar8 + 1;
+          fVar24 = *(float *)(local_2b18 + 0x130);
+        }
+        pCVar13 = local_2b18;
+        if ((int)fVar24 < 0) {
+          *(float *)(local_2b18 + 0x130) = 0.0;
+        }
+        pCVar15 = local_2b18 + 0x134;
+        *(uint *)pCVar15 = (int)*(float *)pCVar15 - local_2b28;
+        fVar24 = *(float *)(local_2b18 + 0x134);
+        if ((int)*(float *)pCVar15 < 0) {
+          fVar24 = 0.0;
+        }
+        *(float *)(local_2b18 + 0x134) = fVar24;
+        pCVar15 = local_2b18 + 0x138;
+        *(uint *)pCVar15 = (int)*(float *)pCVar15 - local_2b28;
+        fVar24 = *(float *)(local_2b18 + 0x138);
+        if ((int)*(float *)pCVar15 < 0) {
+          fVar24 = 0.0;
+        }
+        *(float *)(local_2b18 + 0x138) = fVar24;
+        if ((*(float *)(local_2b18 + 0x13c) < 0.0) &&
+           (fVar24 = local_2ba4 / 180.0 + *(float *)(local_2b18 + 0x13c),
+           *(float *)(local_2b18 + 0x13c) = fVar24, 0.0 < fVar24)) {
+          *(float *)(local_2b18 + 0x13c) = 0.0;
+        }
+        CVar6 = local_2b18[0x68];
+        switch(CVar6) {
+        case (CRefTime)0x1:
+        case (CRefTime)0x2:
+        case (CRefTime)0x3:
+        case (CRefTime)0x4:
+        case (CRefTime)0x5:
+        case (CRefTime)0x6:
+        case (CRefTime)0x7:
+        case (CRefTime)0x9:
+        case (CRefTime)0xa:
+        case (CRefTime)0xb:
+        case (CRefTime)0xc:
+        case (CRefTime)0xd:
+        case (CRefTime)0xe:
+        case (CRefTime)0xf:
+        case (CRefTime)0x10:
+        case (CRefTime)0x11:
+        case (CRefTime)0x12:
+        case (CRefTime)0x13:
+        case (CRefTime)0x14:
+        case (CRefTime)0x15:
+        case (CRefTime)0x1e:
+        case (CRefTime)0x1f:
+        case (CRefTime)0x20:
+        case (CRefTime)0x21:
+        case (CRefTime)0x33:
+        case (CRefTime)0x36:
+        case (CRefTime)0x39:
+        case (CRefTime)0x3a:
+        case (CRefTime)0x3c:
+        case (CRefTime)0x3d:
+        case (CRefTime)0x3e:
+        case (CRefTime)0x41:
+        case (CRefTime)0x42:
+        case (CRefTime)0x43:
+        case (CRefTime)0x44:
+        case (CRefTime)0x45:
+        case (CRefTime)0x46:
+        case (CRefTime)0x48:
+        case (CRefTime)0x4a:
+        case (CRefTime)0x4b:
+        case (CRefTime)0x4c:
+        case (CRefTime)0x4d:
+        case (CRefTime)0x4e:
+        case (CRefTime)0x56:
+        case (CRefTime)0x57:
+        case (CRefTime)0x58:
+        case (CRefTime)0x5b:
+        case (CRefTime)0x5d:
+        case (CRefTime)0x68:
+          if (((*(char *)((int)pvVar19 + 0xb4) == '\0') && (local_2b18[0x60] == (CRefTime)0x0)) &&
+             (local_2b18 != *(CRefTime **)((int)pvVar19 + 0xb8))) goto LAB_0053bc80;
+          if (((local_2b18[0x140] == (CRefTime)0x4) && (local_2b18[0x141] == (CRefTime)0x1)) &&
+             (((CVar6 == (CRefTime)0x11 || ((CVar6 == (CRefTime)0x5 || (CVar6 == (CRefTime)0x14))))
+              && (*(float *)(local_2b18 + 0x6c) == 0.0)))) {
+            *(float *)(local_2b18 + 0x128) = 8.40779e-43;
+          }
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          CVar6 = local_2b18[0x68];
+          if ((CVar6 == (CRefTime)0x57) || (CVar6 == (CRefTime)0x58)) {
+            fVar24 = *(float *)(local_2b18 + 0x6c);
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            pcVar50 = rand_exref;
+            if (((int)fVar24 < iVar17) &&
+               ((int)fVar24 / 200 != (int)((int)fVar24 + local_2b28) / 200)) {
+              lib_fn_4c8530((int)auStack_6fc);
+              Vec3i64_toFloatScaled(auStack_6fc,(longlong *)(local_2b18 + 0x10));
+              pcVar50 = rand_exref;
+              iVar17 = rand();
+              fStack_6ec = ((float)iVar17 * 0.25) / 32767.0 + 1.0;
+              uStack_6f0 = 0x24;
+              std_list_push_back_428590(local_2b2c + 2,auStack_6fc);
+            }
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            if (((int)((int)*(float *)(local_2b18 + 0x6c) - local_2b28) < iVar17) &&
+               (iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+               iVar17 <= (int)*(float *)(local_2b18 + 0x6c))) {
+              lib_fn_4c8510((int)auStack_f94);
+              pCVar13 = local_2b18 + 0x10;
+              Copy24Bytes(auStack_f94,(undefined4 *)pCVar13);
+              uStack_f60 = 0x3e800000;
+              uStack_f58 = 1;
+              uStack_f54 = 0x41a00000;
+              puVar22 = Vec3_set(auStack_165c,0,0,0x40000000);
+              Vec3_copy(auStack_f7c,puVar22);
+              uStack_f5c = 0x50;
+              lib_fn_4c8530((int)auStack_8ac);
+              Vec3i64_toFloatScaled(auStack_8ac,(longlong *)pCVar13);
+              piVar10 = local_2b2c;
+              uStack_89c = 0x3f800000;
+              uStack_8a0 = 0x51;
+              std_list_push_back_428590(local_2b2c + 2,auStack_8ac);
+              puVar22 = auStack_f94;
+LAB_00538498:
+              std_list_push_back_428540(piVar10 + 4,puVar22);
+              pcVar50 = rand_exref;
+            }
+          }
+          else if ((((CVar6 == (CRefTime)0x1e) || (CVar6 == (CRefTime)0x1f)) ||
+                   (CVar6 == (CRefTime)0x20)) || (CVar6 == (CRefTime)0x21)) {
+            fVar24 = *(float *)(local_2b18 + 0x6c);
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            pcVar50 = rand_exref;
+            if (((int)fVar24 < iVar17) &&
+               ((int)fVar24 / 200 != (int)((int)fVar24 + local_2b28) / 200)) {
+              lib_fn_4c8530((int)auStack_6cc);
+              Vec3i64_toFloatScaled(auStack_6cc,(longlong *)(local_2b18 + 0x10));
+              pcVar50 = rand_exref;
+              iVar17 = rand();
+              fStack_6bc = ((float)iVar17 * 0.25) / 32767.0 + 1.0;
+              uStack_6c0 = 0x24;
+              std_list_push_back_428590(local_2b2c + 2,auStack_6cc);
+            }
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            if (((int)*(float *)(local_2b18 + 0x6c) < iVar17) &&
+               (iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff), pCVar13 = local_2b18,
+               pcVar50 = rand_exref,
+               iVar17 <= (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28))) {
+              lib_fn_4c8510((int)auStack_ce4);
+              Vec3i64_randomize((int)auStack_189c);
+              puVar9 = Vec3i64_add(pCVar13 + 0x10,auStack_2398,auStack_189c);
+              Copy24Bytes(auStack_ce4,puVar9);
+              uStack_cb0 = 0x3e800000;
+              if (local_2b18[0x141] == (CRefTime)0x1) {
+                uStack_ca8 = 2;
+                ppVar31 = (pair<unsigned___int64,unsigned___int64> *)
+                          store_4_dwords(auStack_1c20,0,0x3e4ccccd,0x3f800000,0x3f800000);
+                std::pair<unsigned___int64,unsigned___int64>::
+                operator=<std::pair<unsigned___int64,unsigned___int64>,0>(apStack_cc0,ppVar31);
+              }
+              else {
+                uStack_ca8 = 1;
+              }
+              uStack_ca4 = 0x41000000;
+              puVar22 = Vec3_set(auStack_12b4,0,0,0x40000000);
+              Vec3_copy(auStack_ccc,puVar22);
+              uStack_cac = 0x14;
+              lib_fn_4c8530((int)auStack_81c);
+              Vec3i64_toFloatScaled(auStack_81c,(longlong *)(pCVar13 + 0x10));
+              piVar10 = local_2b2c;
+              uStack_810 = 0x26;
+              if (local_2b18[0x141] == (CRefTime)0x1) {
+                uStack_810 = 0x29;
+              }
+              uStack_80c = 0x3f800000;
+              std_list_push_back_428590(local_2b2c + 2,auStack_81c);
+              puVar22 = auStack_ce4;
+              goto LAB_00538498;
+            }
+          }
+          else {
+            pcVar50 = rand_exref;
+            if (((*(float *)(local_2b18 + 0x6c) == 0.0) &&
+                (cVar3 = Combat_isSpecialSpiritActive((int)local_2b18), pcVar50 = rand_exref, cVar3 != '\0')) &&
+               (local_2b18[0x68] != (CRefTime)0x5b)) {
+              lib_fn_4c8530((int)auStack_8dc);
+              Vec3i64_toFloatScaled(auStack_8dc,(longlong *)(local_2b18 + 0x10));
+              pcVar50 = rand_exref;
+              iVar17 = rand();
+              fStack_8cc = ((float)iVar17 * 0.1) / 32767.0 + 1.0;
+              uStack_8d0 = 0x11;
+              std_list_push_back_428590(local_2b2c + 2,auStack_8dc);
+            }
+          }
+          piVar10 = local_2b2c;
+          if ((((int)*(float *)(local_2b18 + 0x6c) <= iVar8) &&
+              (iVar8 < (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28))) &&
+             (local_2b18[0x68] != (CRefTime)0x5b)) {
+            lib_fn_4c8530((int)auStack_16c);
+            Vec3i64_toFloatScaled(auStack_16c,(longlong *)(local_2b18 + 0x10));
+            iVar8 = (*pcVar50)();
+            piVar10 = local_2b2c;
+            CVar6 = local_2b18[0x68];
+            pCStack_15c = (CRefTime *)(((float)iVar8 * 0.2) / 32767.0 + 0.9);
+            if (CVar6 == (CRefTime)0xa) {
+              uStack_160 = 0x10;
+              std_list_push_back_428590(local_2b2c + 2,auStack_16c);
+            }
+            else if (CVar6 == (CRefTime)0xb) {
+              uStack_160 = 0x30;
+              std_list_push_back_428590(local_2b2c + 2,auStack_16c);
+            }
+            else if (CVar6 == (CRefTime)0x36) {
+              uStack_160 = 0xe;
+              std_list_push_back_428590(local_2b2c + 2,auStack_16c);
+            }
+            else {
+              local_2b20 = (CRefTime *)((float)pCStack_15c * 1.5);
+              pCStack_15c = local_2b20;
+              cVar3 = Combat_isSpecialSpiritActive((int)local_2b18);
+              piVar10 = local_2b2c;
+              if (((cVar3 != '\0') || (CVar6 = local_2b18[0x68], CVar6 == (CRefTime)0x44)) ||
+                 ((CVar6 == (CRefTime)0x5d || (CVar6 == (CRefTime)0x45)))) {
+                pCStack_15c = (CRefTime *)((float)local_2b20 * 0.5);
+              }
+              uStack_160 = 0xf;
+              std_list_push_back_428590(local_2b2c + 2,auStack_16c);
+            }
+          }
+          CVar6 = local_2b18[0x68];
+          if ((((CVar6 == (CRefTime)0x39) || (CVar6 == (CRefTime)0x3c)) || (CVar6 == (CRefTime)0x3a)
+              ) || (CVar6 == (CRefTime)0x4a)) {
+            iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            if ((int)*(float *)(local_2b18 + 0x6c) < iVar17 + iVar8 / 2) {
+              iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+              iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+              pCVar13 = local_2b18;
+              if (iVar17 + iVar8 / 2 <= (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28)) {
+                lib_fn_4c8530((int)auStack_72c);
+                Vec3i64_toFloatScaled(auStack_72c,(longlong *)(pCVar13 + 0x10));
+                iVar8 = rand();
+                uStack_720 = 0xc;
+                fStack_71c = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+                std_list_push_back_428590(piVar10 + 2,auStack_72c);
+              }
+            }
+          }
+          iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+          iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          pCVar13 = (CRefTime *)(iVar8 / 2 + -100 + iVar17);
+          local_2b40 = pCVar13;
+          iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+          iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          local_2b54 = (CRefTime *)(iVar17 + iVar8 / 2);
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          if ((int)pCVar13 < iVar8) {
+            local_2b40 = (CRefTime *)Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          }
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+          if (iVar8 + iVar17 <= (int)local_2b54) {
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            local_2b54 = (CRefTime *)(iVar17 + iVar8 + -1);
+          }
+          if ((local_2b18[0x68] == (CRefTime)0x44) || (local_2b18[0x68] == (CRefTime)0x45)) {
+            iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            local_2b40 = (CRefTime *)(iVar8 / 3 + iVar17);
+          }
+          if (local_2b18[0x68] == (CRefTime)0x5d) {
+            iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            local_2b40 = (CRefTime *)(iVar17 + iVar8 / 5);
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            local_2b54 = (CRefTime *)(iVar8 + iVar17);
+          }
+          CVar6 = local_2b18[0x68];
+          uStack_2c74 = uStack_2c74 & 0xffffff00;
+          if (((CVar6 != (CRefTime)0x48) && (CVar6 != (CRefTime)0x56)) &&
+             ((CVar6 != (CRefTime)0x1e &&
+              (((((CVar6 != (CRefTime)0x1f && (CVar6 != (CRefTime)0x20)) &&
+                 (CVar6 != (CRefTime)0x21)) &&
+                ((CVar6 != (CRefTime)0xb && (CVar6 != (CRefTime)0x5)))) && (CVar6 != (CRefTime)0x5b)
+               ))))) goto LAB_00538e18;
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          if ((int)*(float *)(local_2b18 + 0x6c) < iVar8) {
+LAB_00538dfd:
+            local_2b54 = (CRefTime *)Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            local_2b40 = local_2b54;
+          }
+          else {
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            if (iVar8 + iVar17 <= (int)*(float *)(local_2b18 + 0x6c)) goto LAB_00538dfd;
+            iVar8 = 0xfa;
+            if (local_2b18[0x68] == (CRefTime)0x5b) {
+              iVar8 = 1000;
+            }
+            if (local_2b18[0x68] == (CRefTime)0xb) {
+              iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+              iVar8 = iVar8 / 3;
+            }
+            if (local_2b18[0x68] == (CRefTime)0x5) {
+              iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+              iVar8 = iVar8 / 3;
+            }
+            if ((local_2b18[0x68] == (CRefTime)0x1e) || (local_2b18[0x68] == (CRefTime)0x20)) {
+              iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+              iVar8 = iVar8 / 6;
+            }
+            if ((local_2b18[0x68] == (CRefTime)0x1f) || (local_2b18[0x68] == (CRefTime)0x21)) {
+              iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+              iVar8 = iVar8 / 0xc;
+            }
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            fVar24 = *(float *)(local_2b18 + 0x6c);
+            iVar11 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            local_2b40 = (CRefTime *)(iVar11 + (((int)fVar24 - iVar17) / iVar8) * iVar8);
+            local_2b54 = local_2b40 + 100;
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            iVar47 = (int)*(float *)(local_2b18 + 0x6c) + local_2b28;
+            iVar11 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            local_2b20 = (CRefTime *)(iVar11 + ((iVar47 - iVar17) / iVar8) * iVar8);
+            if (local_2b20 != local_2b40) {
+              iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+              iVar11 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+              if ((int)local_2b20 < iVar17 + iVar11) {
+                *(float *)(local_2b18 + 0x1314) = *(float *)(local_2b18 + 0x70);
+                uStack_2c74 = CONCAT31(uStack_2c74._1_3_,1);
+                std_map_clear((int *)(local_2b18 + 0x11ac));
+                std_map_clear((int *)(local_2b18 + 0x11b4));
+              }
+            }
+            uVar12 = local_2b28;
+            uStack_2c74 = uStack_2c74 & 0xff;
+            if ((int)local_2b54 < (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28)) {
+              uStack_2c74 = 1;
+            }
+            if (local_2b18[0x68] != (CRefTime)0x5) {
+              iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+              if (iVar17 <= (int)((int)*(float *)(local_2b18 + 0x6c) - uVar12)) {
+                iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+                fVar24 = *(float *)(local_2b18 + 0x6c);
+                iVar11 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+                if (((int)*(float *)(local_2b18 + 0x6c) - iVar11) / iVar8 ==
+                    (int)(((int)fVar24 + uVar12) - iVar17) / iVar8) goto LAB_00538e18;
+              }
+              lib_fn_4c8530((int)auStack_84c);
+              pCVar13 = local_2b18 + 0x10;
+              Vec3i64_toFloatScaled(auStack_84c,(longlong *)pCVar13);
+              iVar8 = rand();
+              piVar10 = local_2b2c;
+              fStack_83c = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+              uStack_840 = 0xf;
+              std_list_push_back_428590(local_2b2c + 2,auStack_84c);
+              if (local_2b18[0x68] == (CRefTime)0x5b) {
+                lib_fn_4c8530((int)auStack_75c);
+                Vec3i64_toFloatScaled(auStack_75c,(longlong *)pCVar13);
+                iVar8 = rand();
+                uStack_750 = 0x52;
+                fStack_74c = ((float)iVar8 * 0.1) / 32767.0 + 0.5;
+                std_list_push_back_428590(piVar10 + 2,auStack_75c);
+              }
+            }
+          }
+LAB_00538e18:
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          if ((int)*(float *)(local_2b18 + 0x6c) <= iVar8) {
+            *(float *)(local_2b18 + 0x1314) = *(float *)(local_2b18 + 0x70);
+            pCVar15 = local_2b18 + 0x11b4;
+            deref_getFirst(pCVar15,&iStack_2c64);
+            piVar10 = (int *)World_getField0(pCVar15,&uStack_2d84);
+            bVar2 = std_iterator_notEqual(&iStack_2c64,piVar10);
+            pCVar13 = local_2b18;
+            if (bVar2) {
+              do {
+                puVar9 = (uint *)getField_plus0x10(&iStack_2c64);
+                piVar10 = (int *)World_getField0(pCVar13 + 0x11ac,&uStack_2ff0);
+                pvVar19 = (void *)std_map_lower_bound_yx(pCVar13 + 0x11ac,&iStack_3014,puVar9);
+                bVar2 = compare_int_eq(pvVar19,piVar10);
+                if ((bVar2) &&
+                   (pvVar19 = (void *)std_map_find_value(local_2b1c,puVar9), pvVar19 != (void *)0x0)) {
+                  creature_spawn_projectile(pvVar19,(int)local_2b2c);
+                  initStruct_0x47_zero((int)&fStack_c9c);
+                  fStack_c9c = *(float *)(local_2b18 + 8);
+                  uStack_c8c = 0;
+                  fStack_c98 = *(float *)(local_2b18 + 0xc);
+                  uStack_c94 = *(undefined4 *)((int)pvVar19 + 8);
+                  uStack_c90 = *(undefined4 *)((int)pvVar19 + 0xc);
+                  uStack_c57 = 4;
+                  uStack_c88 = 0;
+                  Copy24Bytes(auStack_c7c,(undefined4 *)((int)pvVar19 + 0x10));
+                  std_list_push_back_428400(local_2b2c,&fStack_c9c);
+                }
+                RBTree_copyBeginThenInc(&iStack_2c64,&iStack_301c);
+                pCVar15 = local_2b18 + 0x11b4;
+                piVar10 = (int *)World_getField0(pCVar15,&uStack_2d84);
+                bVar2 = std_iterator_notEqual(&iStack_2c64,piVar10);
+              } while (bVar2);
+            }
+            std_map_clear((int *)(local_2b18 + 0x11ac));
+            std_map_clear((int *)pCVar15);
+            local_2b18[0x13b8] = (CRefTime)0x0;
+          }
+          if (local_2b18[0x68] == (CRefTime)0x4a) {
+            iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            pCVar13 = local_2b18;
+            iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            if ((int)*(float *)(pCVar13 + 0x6c) < iVar17 + iVar8 / 2) {
+              iVar8 = Combat_getAbilityRecovery(pCVar13,0xffffffff);
+              iVar17 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+              if (iVar17 + iVar8 / 2 <= (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28)) {
+                lib_fn_4c8530((int)auStack_90c);
+                Vec3i64_toFloatScaled(auStack_90c,(longlong *)(pCVar13 + 0x10));
+                iVar8 = rand();
+                fStack_8fc = ((float)iVar8 * 0.1) / 32767.0 + 0.5;
+                uStack_900 = 0x52;
+                std_list_push_back_428590(local_2b2c + 2,auStack_90c);
+              }
+            }
+          }
+          pCVar15 = local_2b54;
+          if ((int)local_2b54 <= (int)*(float *)(local_2b18 + 0x6c)) {
+            pCVar13 = local_2b18 + 0x11b4;
+            deref_getFirst(pCVar13,&iStack_2c6c);
+            piVar10 = (int *)World_getField0(pCVar13,&uStack_2e1c);
+            bVar2 = std_iterator_notEqual(&iStack_2c6c,piVar10);
+            pCVar38 = local_2b18;
+            if (bVar2) {
+              do {
+                puVar9 = (uint *)getField_plus0x10(&iStack_2c6c);
+                piVar10 = (int *)World_getField0(pCVar38 + 0x11ac,&uStack_304c);
+                pvVar19 = (void *)std_map_lower_bound_yx(pCVar38 + 0x11ac,&iStack_3068,puVar9);
+                bVar2 = compare_int_eq(pvVar19,piVar10);
+                if ((bVar2) &&
+                   (pvVar19 = (void *)std_map_find_value(local_2b1c,puVar9), pvVar19 != (void *)0x0)) {
+                  creature_spawn_projectile(pvVar19,(int)local_2b2c);
+                  initStruct_0x47_zero((int)&fStack_d74);
+                  uStack_d64 = 0;
+                  fStack_d74 = *(float *)(local_2b18 + 8);
+                  fStack_d70 = *(float *)(local_2b18 + 0xc);
+                  uStack_d6c = *(undefined4 *)((int)pvVar19 + 8);
+                  uStack_d68 = *(undefined4 *)((int)pvVar19 + 0xc);
+                  uStack_d2f = 4;
+                  uStack_d60 = 0;
+                  Copy24Bytes(auStack_d54,(undefined4 *)((int)pvVar19 + 0x10));
+                  std_list_push_back_428400(local_2b2c,&fStack_d74);
+                }
+                RBTree_copyBeginThenInc(&iStack_2c6c,&iStack_3018);
+                pCVar13 = local_2b18 + 0x11b4;
+                piVar10 = (int *)World_getField0(pCVar13,&uStack_2e1c);
+                bVar2 = std_iterator_notEqual(&iStack_2c6c,piVar10);
+                pCVar15 = local_2b54;
+              } while (bVar2);
+            }
+            std_map_clear((int *)pCVar13);
+          }
+          if (local_2b18[0x13b8] == (CRefTime)0x0) {
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            if (((iVar8 + iVar17 <= (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28)) &&
+                (iVar8 = Combat_getWindupAndRecovery((int)local_2b18), (int)*(float *)(local_2b18 + 0x6c) < iVar8))
+               && (*(float *)(local_2b18 + 0x128) == 0.0)) {
+              fVar51 = Combat_computeAttackSpeed((int)local_2b18);
+              local_2b20 = (CRefTime *)(float)fVar51;
+              *(float *)(local_2b18 + 0x70) = 0.0;
+              fVar51 = Combat_computeAttackSpeed((int)local_2b18);
+              local_2b4c = (CRefTime *)(float)fVar51;
+              *(int *)(local_2b18 + 0x6c) =
+                   (int)(((float)local_2b20 / (float)local_2b4c) *
+                        (float)(int)*(float *)(local_2b18 + 0x6c));
+            }
+          }
+          pCVar13 = local_2b18;
+          if ((local_2b18[0x68] == (CRefTime)0x1f) || (local_2b18[0x68] == (CRefTime)0x21)) {
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            pCVar38 = local_2b18;
+            if (((int)*(float *)(pCVar13 + 0x6c) <= iVar8) &&
+               (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), pCVar38 = pCVar13,
+               iVar8 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) {
+              *(float *)(pCVar13 + 0x13b4) = 0.1;
+              fVar51 = Combat_getAbilityResourceCost((int)pCVar13,(uint)(byte)pCVar13[0x68],-1);
+              local_2b20 = (CRefTime *)(float)fVar51;
+              fVar24 = *(float *)(pCVar13 + 0x170);
+              *(float *)(pCVar13 + 0x170) = fVar24 - (float)local_2b20;
+              pCVar38 = local_2b18;
+              if (fVar24 - (float)local_2b20 < 0.0) {
+                *(float *)(pCVar13 + 0x170) = 0.0;
+              }
+            }
+          }
+          else {
+            pCVar38 = pCVar13;
+            if (*(float *)(local_2b18 + 0x6c) == 0.0) {
+              local_2b18[0x13c0] = (CRefTime)0x0;
+              *(float *)(local_2b18 + 0x13b4) = 0.0;
+              fVar51 = Combat_getAbilityResourceCost((int)local_2b18,(uint)(byte)local_2b18[0x68],-1);
+              local_2b20 = (CRefTime *)(float)fVar51;
+              if ((float)local_2b20 <= 0.0) {
+                CVar6 = pCVar13[0x68];
+                if (((CVar6 == (CRefTime)0x11) || (CVar6 == (CRefTime)0x14)) ||
+                   (CVar6 == (CRefTime)0x5)) {
+                  *(float *)(pCVar13 + 0x13b4) = *(float *)(pCVar13 + 0x170);
+                  *(float *)(local_2b18 + 0x170) = 0.0;
+                  puVar22 = list_find_by_id_byte(local_2b18,0xb);
+                  pCVar38 = local_2b18;
+                  if (puVar22 != (undefined4 *)0x0) {
+                    CombatState_zeroInit(&cStack_2f50);
+                    pCVar13 = local_2b18;
+                    cStack_2f50 = '\v';
+                    uStack_2f48 = 0;
+                    Combat_upsertBuffEntry(local_2b18,&cStack_2f50);
+                    init_struct_fields_a((int)&fStack_3128);
+                    uStack_3118 = CONCAT71(uStack_2f4f,cStack_2f50);
+                    fStack_3124 = *(float *)(pCVar13 + 0xc);
+                    fStack_3128 = *(float *)(pCVar13 + 8);
+                    uStack_3110 = CONCAT44(uStack_2f44,uStack_2f48);
+                    uStack_3108 = uStack_2f40;
+                    fStack_3120 = fStack_3128;
+                    fStack_311c = fStack_3124;
+                    std_list_push_back(local_2b2c + 0x16,(undefined8 *)&fStack_3128);
+                    pCVar13[0x13c0] = (CRefTime)0x1;
+                    pCVar38 = local_2b18;
+                  }
+                }
+                else {
+                  pCVar38 = local_2b18;
+                  if ((((CVar6 == (CRefTime)0x36) || (CVar6 == (CRefTime)0x15)) ||
+                      (CVar6 == (CRefTime)0x57)) || (CVar6 == (CRefTime)0x58)) {
+                    *(float *)(pCVar13 + 0x13b4) = 1.0;
+                  }
+                }
+              }
+              else {
+                fVar51 = Combat_getAbilityResourceCost((int)pCVar13,(uint)(byte)pCVar13[0x68],-1);
+                local_2b20 = (CRefTime *)(float)fVar51;
+                *(CRefTime **)(pCVar13 + 0x13b4) = local_2b20;
+                *(float *)(pCVar13 + 0x170) = *(float *)(pCVar13 + 0x170) - (float)local_2b20;
+                pCVar38 = local_2b18;
+              }
+            }
+          }
+          pCVar13 = local_2b18;
+          pCVar49 = pCVar38;
+          if (0.0 < *(float *)(pCVar38 + 0x144)) {
+            *(float *)(pCVar38 + 0x13b4) = *(float *)(pCVar38 + 0x144);
+            *(float *)(pCVar38 + 0x170) = *(float *)(pCVar38 + 0x170) - *(float *)(pCVar38 + 0x144);
+            pCVar38[0x13b8] = (CRefTime)0x0;
+            pCVar49 = local_2b18;
+            if ((pCVar38[0x68] == (CRefTime)0xb) || (pCVar38[0x68] == (CRefTime)0x5)) {
+              *(float *)(local_2b18 + 0x13b4) = *(float *)(local_2b18 + 0x13b4) * 0.5;
+            }
+          }
+          *(float *)(pCVar49 + 0x144) = 0.0;
+          if (*(float *)(pCVar49 + 0x170) <= 0.0 && *(float *)(pCVar49 + 0x170) != 0.0) {
+            *(float *)(pCVar49 + 0x170) = 0.0;
+          }
+          if ((0.0 < *(float *)(pCVar49 + 0x13b4)) || (pCVar49[0x68] == (CRefTime)0xb)) {
+            uVar4 = 1;
+          }
+          else {
+            uVar4 = 0;
+          }
+          local_2c08 = CONCAT31(local_2c08._1_3_,uVar4);
+          pvVar19 = local_2b1c;
+          if (((int)local_2b40 < (int)*(float *)(local_2b18 + 0x6c)) &&
+             ((int)*(float *)(local_2b18 + 0x6c) <= (int)pCVar15)) {
+            Matrix4_setIdentity(auStack_1d20);
+            pfVar25 = (float *)getElemPtr4(pCVar13 + 0x28,2);
+            matrix_rotate_columns(auStack_1d20,*pfVar25);
+            local_2b20 = (CRefTime *)0x3fc00000;
+            pCVar15 = (CRefTime *)getElemPtr4(pCVar13 + 0x80,0);
+            fVar24 = *(float *)pCVar15;
+            CVar6 = pCVar13[0x68];
+            local_2b50 = (CRefTime *)(fVar24 * 1.5);
+            if ((((CVar6 == (CRefTime)0xd) ||
+                 ((((CVar6 == (CRefTime)0xe || (CVar6 == (CRefTime)0x2)) || (CVar6 == (CRefTime)0x1)
+                   ) || ((CVar6 == (CRefTime)0x9 || (CVar6 == (CRefTime)0x4)))))) ||
+                (CVar6 == (CRefTime)0x3)) ||
+               (((CVar6 == (CRefTime)0x7 || (CVar6 == (CRefTime)0x6)) ||
+                ((CVar6 == (CRefTime)0x12 || (pCVar13 = local_2b20, CVar6 == (CRefTime)0x13)))))) {
+              local_2b50 = (CRefTime *)(fVar24 * 2.0);
+              pCVar13 = (CRefTime *)0x3f800000;
+            }
+            if ((CVar6 == (CRefTime)0x14) || (CVar6 == (CRefTime)0x15)) {
+              local_2b50 = (CRefTime *)((float)local_2b50 * 2.0);
+            }
+            if ((CVar6 == (CRefTime)0x44) || (CVar6 == (CRefTime)0x46)) {
+              pCVar13 = (CRefTime *)0x0;
+            }
+            if (((CVar6 == (CRefTime)0x56) || (CVar6 == (CRefTime)0x5d)) ||
+               (CVar6 == (CRefTime)0x68)) {
+              local_2b50 = (CRefTime *)((float)local_2b50 * 2.0);
+              pCVar13 = (CRefTime *)0x0;
+            }
+            if ((CVar6 == (CRefTime)0x57) || (CVar6 == (CRefTime)0x58)) {
+              pCVar13 = (CRefTime *)0x0;
+              local_2b50 = (CRefTime *)0x41000000;
+            }
+            if ((CVar6 == (CRefTime)0x1e) || (CVar6 == (CRefTime)0x20)) {
+              pCVar13 = (CRefTime *)0x0;
+              local_2b50 = (CRefTime *)0x40400000;
+            }
+            if ((CVar6 == (CRefTime)0x1f) || (CVar6 == (CRefTime)0x21)) {
+              pCVar13 = (CRefTime *)0x0;
+              local_2b50 = (CRefTime *)0x40a00000;
+            }
+            if ((CVar6 == (CRefTime)0x5b) || (CVar6 == (CRefTime)0x4a)) {
+              pCVar13 = (CRefTime *)0x0;
+              local_2b50 = (CRefTime *)0x41a00000;
+            }
+            if ((((CVar6 == (CRefTime)0x48) || (CVar6 == (CRefTime)0x4e)) ||
+                (CVar6 == (CRefTime)0x4d)) || (CVar6 == (CRefTime)0x4c)) {
+              local_2b50 = (CRefTime *)((float)local_2b50 * 1.2);
+              pCVar13 = (CRefTime *)0x0;
+            }
+            local_2bbc = pCVar15;
+            pfVar25 = (float *)Vec3_set(auStack_12cc,0,fVar24 * (float)pCVar13,0);
+            lib_fn_4dde00(auStack_1d20,afStack_19c8,pfVar25);
+            Vec3i64_randomize((int)auStack_18c0);
+            pCVar13 = local_2b18 + 0x10;
+            Vec3i64_add(pCVar13,auStack_114,auStack_18c0);
+            CVar6 = local_2b18[0x68];
+            if (((CVar6 == (CRefTime)0x1e) || (CVar6 == (CRefTime)0x1f)) ||
+               ((CVar6 == (CRefTime)0x20 || (CVar6 == (CRefTime)0x21)))) {
+              Vec3i64_randomize((int)auStack_18e4);
+              puVar9 = Vec3i64_add(pCVar13,auStack_2068,auStack_18e4);
+              Copy24Bytes(auStack_114,puVar9);
+            }
+            if ((local_2b18[0x68] == (CRefTime)0x4b) || (local_2b18[0x68] == (CRefTime)0x45)) {
+              getElemPtr4(local_2b18 + 0x80,2);
+              int64_assign_timecall(&uStack_3084);
+              puVar27 = &uStack_3084;
+              pvVar19 = (void *)lib_fn_4e2320(auStack_114,2);
+              int64_sub2(pvVar19,(uint *)puVar27);
+            }
+            CVar6 = local_2b18[0x68];
+            if (((CVar6 == (CRefTime)0xb) || (CVar6 == (CRefTime)0x3d)) || (CVar6 == (CRefTime)0x36)
+               ) {
+              Copy24Bytes(auStack_114,(undefined4 *)pCVar13);
+              local_2b50 = (CRefTime *)((float)local_2b50 * 3.0);
+            }
+            if (((*(char *)((int)local_2b1c + 0xb4) == '\0') && (4.0 < *(float *)pCVar15)) &&
+               ((CVar6 = local_2b18[0x68], CVar6 != (CRefTime)0x57 &&
+                ((CVar6 != (CRefTime)0x5b && (CVar6 != (CRefTime)0x4a)))))) {
+              local_2b2d = '\0';
+              pCVar13 = (CRefTime *)(int)(float)local_2b50;
+              if (8 < (int)pCVar13) {
+                pCVar13 = (CRefTime *)0x8;
+              }
+              pCVar15 = (CRefTime *)-(int)pCVar13;
+              pCVar38 = pCVar15;
+              local_2b94 = pCVar15;
+              local_2b4c = pCVar13;
+              if ((CRefTime *)-(int)pCVar13 == pCVar13 ||
+                  SBORROW4((int)pCVar15,(int)pCVar13) != (int)pCVar13 * -2 < 0) {
+                do {
+                  local_2b68 = pCVar38;
+                  pCVar38 = local_2b68;
+                  local_2b60 = pCVar15;
+                  if ((int)local_2b68 <= (int)pCVar13) {
+                    do {
+                      if ((int)pCVar38 <= (int)pCVar13) {
+                        iVar8 = (int)pCVar13 * (int)pCVar13;
+                        pCVar49 = pCVar38;
+                        do {
+                          puVar9 = vec3_store(auStack_12e4,pCVar15,local_2b68,pCVar49);
+                          lib_fn_4d99d0(auStack_1908,puVar9);
+                          Vec3i64_add(auStack_114,auStack_430,auStack_1908);
+                          puVar9 = Vec3i64_subtract(auStack_430,auStack_2548,auStack_114);
+                          pfVar25 = Vec3i64_toFloatScaled(auStack_1674,(longlong *)puVar9);
+                          fVar51 = vec3_length_sq(pfVar25);
+                          local_2b20 = (CRefTime *)(float)fVar51;
+                          if ((float)local_2b20 < (float)iVar8) {
+                            local_2b44 = (CRefTime *)lib_fn_4e2320(auStack_430,2);
+                            local_2b40 = (CRefTime *)lib_fn_4e2320(auStack_430,1);
+                            local_2b20 = (CRefTime *)lib_fn_4e2320(auStack_430,0);
+                            local_2b24 = (CRefTime *)
+                                         World_getBlockFloat(local_2b1c,(uint)*(float *)local_2b20,
+                                                      (uint)*(float *)(local_2b20 + 4),
+                                                      (uint)*(float *)local_2b40,
+                                                      (uint)*(float *)(local_2b40 + 4),
+                                                      (uint)*(float *)local_2b44,
+                                                      (uint)*(float *)(local_2b44 + 4),0);
+                            bVar7 = lib_fn_5306c0((int)local_2b24);
+                            if (bVar7 != 0) {
+                              lib_fn_4c8510((int)auStack_1024);
+                              Copy24Bytes(auStack_1024,auStack_430);
+                              uVar20 = 0x3f800000;
+                              uStack_ff0 = 0x3f000000;
+                              pbVar46 = (byte *)ptr_add_offset(local_2b24,2);
+                              fVar24 = (float)*pbVar46 / 255.0;
+                              pbVar46 = (byte *)ptr_add_offset(local_2b24,1);
+                              fVar52 = (float)*pbVar46 / 255.0;
+                              pbVar46 = (byte *)ptr_add_offset(local_2b24,0);
+                              ppVar31 = (pair<unsigned___int64,unsigned___int64> *)
+                                        store_4_dwords(auStack_1b90,(float)*pbVar46 / 255.0,fVar52,
+                                                     fVar24,uVar20);
+                              std::pair<unsigned___int64,unsigned___int64>::
+                              operator=<std::pair<unsigned___int64,unsigned___int64>,0>
+                                        (apStack_1000,ppVar31);
+                              puVar22 = Vec3_set(auStack_12fc,0,0,0x41200000);
+                              Vec3_copy(auStack_100c,puVar22);
+                              uStack_fec = 3;
+                              std_list_push_back_428540(local_2b2c + 4,auStack_1024);
+                              lVar14 = CRefTime::Millisecs(local_2b44);
+                              uVar12 = CRefTime::Millisecs(local_2b40);
+                              uVar59 = CRefTime::Millisecs(local_2b20);
+                              lib_fn_530470(local_2b1c,uVar59,uVar12,lVar14);
+                              struct_clear_fields_c_10((int)auStack_4b8);
+                              puVar22 = lib_fn_4c64f0(auStack_1884,auStack_430);
+                              Vec3_copy(auStack_4b8,puVar22);
+                              uStack_4a8 = *(undefined4 *)((int)local_2b1c + 0x800160);
+                              copy_4_bytes_b(auStack_4ac,&DAT_005842d8);
+                              lib_fn_528400(local_2b2c + 6,auStack_4b8);
+                              local_2b2d = '\x01';
+                            }
+                          }
+                          pCVar49 = pCVar49 + 1;
+                          pCVar13 = local_2b4c;
+                          pCVar15 = local_2b60;
+                          pCVar38 = local_2b94;
+                        } while ((int)pCVar49 <= (int)local_2b4c);
+                      }
+                      local_2b68 = local_2b68 + 1;
+                    } while ((int)local_2b68 <= (int)pCVar13);
+                  }
+                  pCVar15 = pCVar15 + 1;
+                } while ((int)pCVar15 <= (int)pCVar13);
+                if (local_2b2d != '\0') {
+                  local_2b60 = pCVar15;
+                  lib_fn_4c8530((int)auStack_60c);
+                  Vec3i64_toFloatScaled(auStack_60c,(longlong *)(local_2b18 + 0x10));
+                  iVar8 = rand();
+                  fStack_5fc = ((float)iVar8 * 0.4) / 32767.0 + 0.5;
+                  uStack_600 = 2;
+                  std_list_push_back_428590(local_2b2c + 2,auStack_60c);
+                  if (*(int *)((int)local_2b1c + 0xb8) == 0) {
+                    pvVar19 = (void *)lib_fn_4e2320(auStack_114,1);
+                    pvVar44 = (void *)lib_fn_4e2320(auStack_114,0);
+                    iVar17 = 0;
+                    iVar8 = 8;
+                    pCVar13 = (CRefTime *)int64_add_timecall(pvVar19,aiStack_33b0);
+                    lVar14 = CRefTime::Millisecs(pCVar13);
+                    pCVar13 = (CRefTime *)int64_add_timecall(pvVar44,aiStack_33c0);
+                    lVar16 = CRefTime::Millisecs(pCVar13);
+                    pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,aiStack_33d0);
+                    uVar12 = CRefTime::Millisecs(pCVar13);
+                    pCVar13 = (CRefTime *)int64_sub_timecall(pvVar44,aiStack_33e0);
+                    uVar59 = CRefTime::Millisecs(pCVar13);
+                    lib_fn_4d1a70(local_2b1c,uVar59,uVar12,lVar16,lVar14,iVar8,iVar17);
+                  }
+                  pvVar19 = (void *)lib_fn_4e2320(auStack_114,1);
+                  pvVar44 = (void *)lib_fn_4e2320(auStack_114,0);
+                  pCVar13 = (CRefTime *)int64_add_timecall(pvVar19,aiStack_33f0);
+                  uVar12 = CRefTime::Millisecs(pCVar13);
+                  pCVar13 = (CRefTime *)int64_add_timecall(pvVar44,aiStack_3400);
+                  uVar59 = CRefTime::Millisecs(pCVar13);
+                  pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,aiStack_3410);
+                  piVar10 = (int *)CRefTime::Millisecs(pCVar13);
+                  pCVar13 = (CRefTime *)int64_sub_timecall(pvVar44,aiStack_3420);
+                  lVar14 = CRefTime::Millisecs(pCVar13);
+                  lib_fn_4d9160(local_2b1c,lVar14,piVar10,uVar59,uVar12);
+                }
+              }
+            }
+            pCVar13 = local_2b18;
+            CVar6 = local_2b18[0x68];
+            local_2b60 = (CRefTime *)0x3f800000;
+            if (((CVar6 == (CRefTime)0x3c) || (CVar6 == (CRefTime)0xb)) || (CVar6 == (CRefTime)0x3e)
+               ) {
+              local_2b60 = (CRefTime *)0x0;
+            }
+            local_2b2d = '\0';
+            if (((CVar6 == (CRefTime)0x1f) &&
+                (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+                iVar8 <= (int)*(float *)(pCVar13 + 0x6c))) &&
+               (puVar22 = list_find_by_id_byte(pCVar13,9), puVar22 != (undefined4 *)0x0)) {
+              CombatState_zeroInit(&cStack_2f08);
+              cStack_2f08 = '\t';
+              uStack_2f00 = 0;
+              Combat_upsertBuffEntry(pCVar13,&cStack_2f08);
+              init_struct_fields_a((int)&fStack_3178);
+              uStack_3168 = CONCAT71(uStack_2f07,cStack_2f08);
+              fStack_3174 = *(float *)(pCVar13 + 0xc);
+              fStack_3178 = *(float *)(pCVar13 + 8);
+              uStack_3160 = CONCAT44(uStack_2efc,uStack_2f00);
+              uStack_3158 = uStack_2ef8;
+              uStack_3154 = uStack_2ef4;
+              fStack_3170 = fStack_3178;
+              fStack_316c = fStack_3174;
+              std_list_push_back(local_2b2c + 0x16,(undefined8 *)&fStack_3178);
+            }
+            deref_getFirst(local_2b70,&iStack_2c7c);
+            piVar10 = (int *)World_getField0(local_2b70,&uStack_2d8c);
+            bVar2 = std_iterator_notEqual(&iStack_2c7c,piVar10);
+            pvVar19 = local_2b1c;
+            if (bVar2) {
+              do {
+                iVar8 = getField_plus0x10(&iStack_2c7c);
+                pCVar15 = *(CRefTime **)(iVar8 + 8);
+                local_2b68 = pCVar15;
+                if ((pCVar15 != (CRefTime *)0x0) && (0.0 < *(float *)(pCVar15 + 0x16c))) {
+                  local_2b9c = pCVar15 + 8;
+                  piVar10 = (int *)World_getField0(pCVar13 + 0x11ac,&uStack_2fb0);
+                  pvVar19 = (void *)std_map_lower_bound_yx(pCVar13 + 0x11ac,&iStack_3050,(uint *)(pCVar15 + 8)
+                                                );
+                  bVar2 = std_iterator_notEqual(pvVar19,piVar10);
+                  pCVar13 = local_2b18;
+                  if (!bVar2) {
+                    pfVar25 = (float *)getElemPtr4(pCVar15 + 0x80,0);
+                    pCVar13 = local_2b18 + 0x10;
+                    local_2b20 = (CRefTime *)(*pfVar25 * 0.7 + (float)local_2b50);
+                    uVar20 = 0x53a01f;
+                    Copy24Bytes(auStack_e74,(undefined4 *)pCVar13);
+                    CVar6 = local_2b18[0x68];
+                    if ((((CVar6 == (CRefTime)0x1e) || (CVar6 == (CRefTime)0x1f)) ||
+                        (CVar6 == (CRefTime)0x20)) || (CVar6 == (CRefTime)0x21)) {
+                      uVar56 = 0x53a054;
+                      pCVar38 = local_2b50;
+                      int64_assign_timecall((ulonglong *)&stack0xffffc89c);
+                      uVar53 = 0x53a060;
+                      lib_fn_4cde40(&stack0xffffc894,0);
+                      lib_fn_4cde40(&stack0xffffc88c,0);
+                      puVar9 = store_6_dwords(auStack_2098,(int)uVar53,(int)(uVar53 >> 0x20),uVar56,
+                                            pCVar38,uVar20,pCVar13);
+                      puVar9 = Vec3i64_add(auStack_114,auStack_23c8,puVar9);
+                      Copy24Bytes(auStack_e74,puVar9);
+                    }
+                    local_2b44 = local_2b68 + 0x10;
+                    puVar9 = auStack_34b0;
+                    puVar18 = Vec3i64_subtract(auStack_114,auStack_20c8,(uint *)local_2b44);
+                    ppVar31 = (pair<unsigned___int64,unsigned___int64> *)identityReturn(puVar18);
+                    ppVar31 = std::pair<unsigned___int64,unsigned___int64>::
+                              operator=<std::pair<unsigned___int64,unsigned___int64>,0>
+                                        (apStack_1c10,ppVar31);
+                    puVar9 = computeLengthSquared_16_16(ppVar31,puVar9);
+                    uVar20 = lib_fn_4dade0(puVar9);
+                    pCVar13 = local_2b18;
+                    if ((char)uVar20 != '\0') {
+                      puVar9 = (uint *)lib_fn_4e2320(local_2b44,2);
+                      piVar10 = aiStack_34e0;
+                      pvVar19 = (void *)lib_fn_4e2320(auStack_114,2);
+                      plVar32 = (longlong *)int64_sub(pvVar19,piVar10,puVar9);
+                      fVar51 = fixedpoint16_to_float(plVar32);
+                      fVar51 = std_fabsf((float)fVar51);
+                      local_2b4c = (CRefTime *)(float)fVar51;
+                      pfVar30 = (float *)getElemPtr4(pCVar15 + 0x80,2);
+                      pCVar13 = local_2b18;
+                      local_2b20 = (CRefTime *)(*pfVar30 * 0.5);
+                      pfVar30 = (float *)getElemPtr4(local_2b18 + 0x80,2);
+                      if (((float)local_2b4c < (float)local_2b20 + *pfVar30 + (float)local_2b50) &&
+                         (cVar3 = Creature_moveToward(auStack_e74,(uint *)local_2b44,'\x01',200.0),
+                         pCVar15 = local_2b68, cVar3 != '\0')) {
+                        uVar20 = lib_fn_4d18c0((int)local_2b18,(int)local_2b68);
+                        if ((char)uVar20 == '\0') {
+                          pCVar38 = pCVar15 + 8;
+                        }
+                        else {
+                          if (*(float *)(pCVar15 + 0x128) != 0.0) {
+                            lib_fn_530690(local_2b18 + 0x11b4,auStack_3500,(uint *)(pCVar15 + 8));
+                            pCVar13 = local_2b18;
+                            goto LAB_0053a977;
+                          }
+                          puVar9 = Vec3i64_subtract(pCVar15 + 0x10,auStack_26c8,
+                                                (uint *)(local_2b18 + 0x10));
+                          Vec3i64_toFloatScaled(afStack_e4,(longlong *)puVar9);
+                          puVar22 = (undefined4 *)getElemPtr4(afStack_e4,2);
+                          *puVar22 = 0;
+                          fVar51 = vec3_length_sq(afStack_e4);
+                          local_2b20 = (CRefTime *)(float)fVar51;
+                          if (0.01 < (float)local_2b20) {
+                            vec3_normalize(afStack_e4);
+                          }
+                          *puVar22 = 0x3e800000;
+                          if (local_2b18[0x13c0] == (CRefTime)0x0) {
+                            bVar2 = check_proc_chance((int)local_2b18);
+                            local_2c0c = local_2c0c & 0xffffff00;
+                            if (bVar2) goto LAB_0053a28f;
+                          }
+                          else {
+LAB_0053a28f:
+                            local_2c0c = CONCAT31(local_2c0c._1_3_,1);
+                          }
+                          pCVar13 = local_2b18;
+                          fVar51 = get_ability_cooldown((int)local_2b18,(uint)(byte)local_2b18[0x68]);
+                          local_2b20 = (CRefTime *)(float)fVar51;
+                          fVar51 = std_sqrtf(*(float *)local_2bbc / *pfVar25);
+                          vec3_scale(afStack_e4,(float)fVar51);
+                          vec3_scale(afStack_e4,(float)local_2b20);
+                          CVar6 = pCVar13[0x68];
+                          if (((CVar6 == (CRefTime)0x57) || (CVar6 == (CRefTime)0x58)) ||
+                             ((CVar6 == (CRefTime)0x1e ||
+                              (((CVar6 == (CRefTime)0x1f || (CVar6 == (CRefTime)0x20)) ||
+                               (CVar6 == (CRefTime)0x21)))))) {
+                            fVar51 = get_ability_multiplier((uint)(byte)CVar6);
+                            local_2b20 = (CRefTime *)(float)fVar51;
+                            fVar51 = calc_damage_value_b(pCVar13);
+                            local_2b4c = (CRefTime *)(float)fVar51;
+                            local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
+                            iVar8 = rand();
+                            local_2b24 = (CRefTime *)
+                                         ((1.25 - ((float)iVar8 * 0.5) / 32767.0) *
+                                          (float)local_2b20 * 1.0);
+                          }
+                          else {
+                            local_2b94 = *(CRefTime **)(pCVar13 + 0x13b4);
+                            fVar51 = get_ability_multiplier((uint)(byte)CVar6);
+                            local_2b20 = (CRefTime *)(float)fVar51;
+                            fVar51 = calc_damage_value(pCVar13);
+                            local_2b4c = (CRefTime *)(float)fVar51;
+                            local_2b20 = (CRefTime *)
+                                         ((float)local_2b20 * (float)local_2b4c *
+                                         ((float)local_2b94 * (float)local_2b94 * 5.0 +
+                                         (float)local_2b60));
+                            iVar8 = rand();
+                            local_2b24 = (CRefTime *)
+                                         (((1.25 - ((float)iVar8 * 0.5) / 32767.0) + 0.0) *
+                                         (float)local_2b20);
+                          }
+                          pCVar13 = local_2b18;
+                          if ((char)local_2c0c != '\0') {
+                            local_2b24 = (CRefTime *)((float)local_2b24 * 2.0);
+                          }
+                          bVar2 = lib_fn_530540((int)(local_2b18 + 0x11ac));
+                          pCVar38 = local_2b9c;
+                          if ((!bVar2) || (local_2b35 = 1, 0 < (int)*(float *)(pCVar13 + 300))) {
+                            local_2b35 = 0;
+                          }
+                          lib_fn_530690(pCVar13 + 0x11ac,auStack_3510,(uint *)local_2b9c);
+                          pCVar15 = local_2b68;
+                          local_2b18[0x13b8] = (CRefTime)0x1;
+                          CVar6 = local_2b18[0x68];
+                          if (((CVar6 == (CRefTime)0x1e) || (CVar6 == (CRefTime)0x1f)) ||
+                             ((CVar6 == (CRefTime)0x20 || (CVar6 == (CRefTime)0x21)))) {
+                            cVar3 = '\x01';
+                          }
+                          else {
+                            cVar3 = '\0';
+                          }
+                          cVar3 = stl_fn_4cfd50(local_2b1c,(float)local_2b68,local_2b18,
+                                               (float)local_2b24,(char)local_2c0c,(char)local_2c08,
+                                               *(float *)(local_2b18 + 0x13b4),local_2b18 + 0x10,
+                                               afStack_e4,local_2b2c,local_2bec,cVar3,
+                                               (uint)(byte)CVar6,0,'\x01');
+                          if (cVar3 != '\0') {
+                            if (((local_2b18[0x68] == (CRefTime)0x1e) &&
+                                (bVar2 = roll_probability(local_2b18,0.25), bVar2)) &&
+                               (local_2b18[0x141] == (CRefTime)0x0)) {
+                              CombatState_zeroInit(&cStack_2f98);
+                              cStack_2f98 = '\t';
+                              uStack_2f90 = 30000;
+                              Combat_upsertBuffEntry(local_2b18,&cStack_2f98);
+                              init_struct_fields_a((int)&fStack_30b0);
+                              uStack_30a0 = CONCAT71(uStack_2f97,cStack_2f98);
+                              fStack_30b0 = *(float *)(local_2b18 + 8);
+                              fStack_30ac = *(float *)(local_2b18 + 0xc);
+                              uStack_3098 = CONCAT44(uStack_2f8c,uStack_2f90);
+                              uStack_3090 = uStack_2f88;
+                              uStack_308c = uStack_2f84;
+                              fStack_30a8 = fStack_30b0;
+                              fStack_30a4 = fStack_30ac;
+                              std_list_push_back(local_2b2c + 0x16,(undefined8 *)&fStack_30b0);
+                              lib_fn_4c8530((int)auStack_9cc);
+                              uStack_9c0 = 0x2f;
+                              Vec3i64_toFloatScaled(auStack_9cc,(longlong *)(local_2b18 + 0x10));
+                              std_list_push_back_428590(local_2b2c + 2,auStack_9cc);
+                            }
+                            if (local_2b35 != 0) {
+                              *(uint *)(local_2b18 + 0x70) = (int)*(float *)(local_2b18 + 0x70) + 1;
+                              rbtree_inorder_walk((int)local_2b18);
+                              *(float *)(local_2b18 + 0x74) = 0.0;
+                            }
+                            if ((((char)local_2c08 != '\0') && (local_2b18[0x140] == (CRefTime)0x4))
+                               && ((local_2b18[0x141] == (CRefTime)0x0 &&
+                                   (fVar24 = *(float *)(local_2b18 + 0x1190),
+                                   *(float *)(local_2b18 + 0x1190) =
+                                        *(float *)(local_2b18 + 0x13b4) + fVar24,
+                                   1.0 < *(float *)(local_2b18 + 0x13b4) + fVar24)))) {
+                              *(float *)(local_2b18 + 0x1190) = 1.0;
+                            }
+                            if (((*(char *)((int)local_2b1c + 0xb4) == '\0') ||
+                                (local_2b18 == *(CRefTime **)((int)local_2b1c + 0xb8))) &&
+                               ((local_2b2d == '\0' &&
+                                ((((char)local_2c08 == '\0' && (local_2b18[0x68] != (CRefTime)0x1e))
+                                 && (local_2b18[0x68] != (CRefTime)0x20)))))) {
+                              iVar8 = rand();
+                              local_2b20 = (CRefTime *)
+                                           ((1.0 - ((float)iVar8 * 2.0) / 32767.0) * 0.05 + 0.1);
+                              iVar8 = Combat_getWindupAndRecovery((int)local_2b18);
+                              local_2b44 = (CRefTime *)(((float)iVar8 / 500.0) * (float)local_2b20);
+                              uVar12 = rand();
+                              uVar12 = uVar12 & 0x80000007;
+                              bVar2 = uVar12 == 0;
+                              if ((int)uVar12 < 0) {
+                                bVar2 = (uVar12 - 1 | 0xfffffff8) == 0xffffffff;
+                              }
+                              pCVar13 = local_2b44;
+                              if (bVar2) {
+                                pCVar13 = (CRefTime *)((float)local_2b44 * 1.5);
+                              }
+                              fVar24 = *(float *)(local_2b18 + 0x170);
+                              *(float *)(local_2b18 + 0x170) = fVar24 + (float)pCVar13;
+                              if (1.0 < fVar24 + (float)pCVar13) {
+                                *(float *)(local_2b18 + 0x170) = 1.0;
+                              }
+                            }
+                            local_2b2d = '\x01';
+                          }
+                        }
+                        pCVar13 = local_2b18;
+                        if (((local_2b18[0x68] == (CRefTime)0x21) ||
+                            (local_2b18[0x68] == (CRefTime)0x20)) &&
+                           (((char)uStack_2c74 != '\0' &&
+                            ((uVar20 = lib_fn_4d18c0((int)local_2b18,(int)pCVar15),
+                             pCVar13 = local_2b18, (char)uVar20 == '\0' &&
+                             (local_2b18[0x141] == (CRefTime)0x1)))))) {
+                          initStruct_0x47_zero((int)&fStack_d2c);
+                          Copy24Bytes(auStack_d0c,(undefined4 *)(pCVar15 + 0x10));
+                          iVar8 = rand();
+                          local_2b4c = (CRefTime *)(1.25 - ((float)iVar8 * 0.5) / 32767.0);
+                          fVar51 = calc_damage_value_b(local_2b18);
+                          local_2b20 = (CRefTime *)(float)fVar51;
+                          fStack_d1c = (float)local_2b20 * (float)local_2b4c * 1.0 * -0.1;
+                          uStack_d18 = check_proc_chance((int)local_2b18);
+                          fStack_d2c = *(float *)(local_2b18 + 8);
+                          fStack_d28 = *(float *)(local_2b18 + 0xc);
+                          fStack_d24 = *(float *)pCVar38;
+                          fStack_d20 = *(float *)(pCVar38 + 4);
+                          std_list_push_back_428400(local_2b2c,&fStack_d2c);
+                          lib_fn_4c8530((int)auStack_594);
+                          pCVar38 = local_2b18;
+                          Vec3i64_toFloatScaled(auStack_594,(longlong *)(local_2b18 + 0x10));
+                          uStack_584 = 0x3f800000;
+                          uStack_588 = 0x2a;
+                          std_list_push_back_428590(local_2b2c + 2,auStack_594);
+                          if ((*(char *)((int)local_2b1c + 0xb4) == '\0') ||
+                             ((pCVar13 = local_2b18,
+                              pCVar38 == *(CRefTime **)((int)local_2b1c + 0xb8) &&
+                              (pCVar15 == *(CRefTime **)((int)local_2b1c + 0xb8))))) {
+                            lib_fn_4cea80(local_2b1c,(uint *)&fStack_d2c,local_2b2c,local_2bec);
+                            pCVar13 = local_2b18;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+LAB_0053a977:
+                RBTree_copyBeginThenInc(&iStack_2c7c,&iStack_2fb8);
+                piVar10 = (int *)World_getField0(local_2b70,&uStack_2d8c);
+                bVar2 = std_iterator_notEqual(&iStack_2c7c,piVar10);
+              } while (bVar2);
+              pvVar19 = local_2b1c;
+              if (((local_2b2d != '\0') &&
+                  (pCVar13 = local_2b18, local_2b18[0x991] != (CRefTime)0xd)) &&
+                 ((local_2b18[0xaa8] == (CRefTime)0x0 || (local_2b18[0x990] == (CRefTime)0x3)))) {
+                Combat_getWindupAndRecovery((int)local_2b18);
+                pCVar13 = local_2b18;
+                pvVar19 = local_2b1c;
+              }
+            }
+          }
+          break;
+        case (CRefTime)0x8:
+          if (((*(char *)((int)pvVar19 + 0xb4) != '\0') || (local_2b18[0x60] == (CRefTime)0x0)) &&
+             (local_2b18 != *(CRefTime **)((int)pvVar19 + 0xb8))) goto LAB_0053bc80;
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          if (((int)*(float *)(local_2b18 + 0x6c) <= iVar8) &&
+             (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff), pCVar13 = local_2b18,
+             iVar8 < (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28))) {
+            lib_fn_4c8530((int)auStack_7ec);
+            Vec3i64_toFloatScaled(auStack_7ec,(longlong *)(pCVar13 + 0x10));
+            iVar8 = rand();
+            fStack_7dc = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+            uStack_7e0 = 0x10;
+            std_list_push_back_428590(local_2b2c + 2,auStack_7ec);
+          }
+          pCVar13 = local_2b18;
+          if ((int)*(float *)(local_2b18 + 0x6c) / 200 !=
+              (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28) / 200) {
+            lib_fn_4c8530((int)auStack_69c);
+            Vec3i64_toFloatScaled(auStack_69c,(longlong *)(local_2b18 + 0x10));
+            fStack_68c = *(float *)(local_2b18 + 0x144) * 0.5 + 1.0;
+            uStack_690 = 0x37;
+            std_list_push_back_428590(local_2b2c + 2,auStack_69c);
+            pCVar13 = local_2b18;
+          }
+          break;
+        case (CRefTime)0x16:
+        case (CRefTime)0x17:
+        case (CRefTime)0x1a:
+          if (((*(char *)((int)pvVar19 + 0xb4) == '\0') && (local_2b18[0x60] != (CRefTime)0x0)) ||
+             (local_2b18 == *(CRefTime **)((int)pvVar19 + 0xb8))) {
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            if (((int)*(float *)(pCVar13 + 0x6c) <= iVar8) &&
+               (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff),
+               iVar8 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) {
+              fVar51 = Combat_getAbilityResourceCost((int)pCVar13,(uint)(byte)pCVar13[0x68],-1);
+              local_2b20 = (CRefTime *)(float)fVar51;
+              if ((float)local_2b20 <= 0.0) {
+                fVar24 = *(float *)(pCVar13 + 0x170) - *(float *)(pCVar13 + 0x144);
+              }
+              else {
+                fVar51 = Combat_getAbilityResourceCost((int)pCVar13,(uint)(byte)pCVar13[0x68],-1);
+                local_2b20 = (CRefTime *)(float)fVar51;
+                fVar24 = *(float *)(pCVar13 + 0x170) - (float)local_2b20;
+              }
+              *(float *)(pCVar13 + 0x170) = fVar24;
+              if (*(float *)(pCVar13 + 0x170) <= 0.0 && *(float *)(pCVar13 + 0x170) != 0.0) {
+                *(float *)(pCVar13 + 0x170) = 0.0;
+              }
+              *(float *)(pCVar13 + 0x13b4) = *(float *)(pCVar13 + 0x144);
+              *(float *)(pCVar13 + 0x144) = 0.0;
+            }
+            iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+            if ((((int)*(float *)(pCVar13 + 0x6c) <= iVar8) &&
+                (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff),
+                iVar8 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) ||
+               ((pCVar13[0x68] == (CRefTime)0x1a &&
+                (((0.0 < *(float *)(pCVar13 + 0x13b4) &&
+                  (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff),
+                  (int)*(float *)(pCVar13 + 0x6c) <= iVar8 + 300)) &&
+                 (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff),
+                 iVar8 + 300 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))))))) {
+              initStruct_0x70_defaults(&fStack_57c);
+              pfVar25 = vec3_normalize_to(pCVar13 + 0x160,afStack_19ec);
+              puVar22 = (undefined4 *)lib_fn_4e1520(afStack_13a4,100.0,pfVar25);
+              Vec3_copy(auStack_540,puVar22);
+              pCStack_528 = *(CRefTime **)(pCVar13 + 0x13b4);
+              uStack_514 = 0;
+              fStack_530 = 0.5;
+              if (pCVar13[0x68] == (CRefTime)0x1a) {
+                fStack_530 = (float)pCStack_528 * 2.0;
+                pCStack_528 = (CRefTime *)((float)pCStack_528 * 0.2);
+                fStack_530 = fStack_530 + 2.0;
+              }
+              local_2b44 = pCStack_528;
+              fVar51 = Combat_getAbilityResourceCost((int)pCVar13,(uint)(byte)pCVar13[0x68],-1);
+              local_2b20 = (CRefTime *)(float)fVar51;
+              pCVar15 = local_2b44;
+              if (0.0 < (float)local_2b20) {
+                fVar51 = Combat_getAbilityResourceCost((int)pCVar13,(uint)(byte)pCVar13[0x68],-1);
+                pCStack_528 = (CRefTime *)(float)fVar51;
+                pCVar15 = pCStack_528;
+              }
+              if ((0.0 < *(float *)(pCVar13 + 0x13b4)) ||
+                 (cStack_520 = '\0', pCVar13[0x68] == (CRefTime)0x17)) {
+                cStack_520 = '\x01';
+              }
+              pCStack_524 = pCVar15;
+              Copy24Bytes(auStack_564,(undefined4 *)(pCVar13 + 0x10));
+              pCVar15 = local_2b18;
+              fStack_57c = *(float *)(local_2b18 + 8);
+              fStack_578 = *(float *)(local_2b18 + 0xc);
+              Vec3_copy(auStack_574,(undefined4 *)(local_2b18 + 0x1b0));
+              if ((cStack_520 != '\0') &&
+                 (puVar22 = list_find_by_id_byte(pCVar15,10), puVar22 != (undefined4 *)0x0)) {
+                CombatState_zeroInit(&cStack_2f38);
+                cStack_2f38 = '\n';
+                uStack_2f30 = 0;
+                Combat_upsertBuffEntry(pCVar15,&cStack_2f38);
+                init_struct_fields_a((int)&fStack_31a0);
+                fStack_31a0 = *(float *)(pCVar15 + 8);
+                uStack_3190 = CONCAT71(uStack_2f37,cStack_2f38);
+                fStack_319c = *(float *)(pCVar15 + 0xc);
+                uStack_3188 = CONCAT44(uStack_2f2c,uStack_2f30);
+                uStack_3180 = uStack_2f28;
+                fStack_3198 = fStack_31a0;
+                fStack_3194 = fStack_319c;
+                std_list_push_back(local_2b2c + 0x16,(undefined8 *)&fStack_31a0);
+              }
+              CVar6 = pCVar15[0x68];
+              if (CVar6 == (CRefTime)0x1a) {
+                fStack_52c = *(float *)(pCVar15 + 0xb0);
+                uStack_51c = 2;
+              }
+              else {
+                uStack_51c = 0;
+              }
+              local_2b44 = (CRefTime *)0x40a00000;
+              if (CVar6 == (CRefTime)0x1a) {
+                local_2b44 = (CRefTime *)0x3f800000;
+              }
+              local_2b24 = (CRefTime *)0x3f800000;
+              if (0.0 < (float)pCStack_528) {
+                local_2b24 = (CRefTime *)0x3dcccccd;
+              }
+              if (CVar6 == (CRefTime)0x17) {
+                local_2b24 = (CRefTime *)0x0;
+              }
+              local_2b94 = *(CRefTime **)(pCVar15 + 0x13b4);
+              fVar51 = get_ability_multiplier((uint)(byte)CVar6);
+              local_2b20 = (CRefTime *)(float)fVar51;
+              fVar51 = calc_damage_value(pCVar15);
+              local_2b4c = (CRefTime *)(float)fVar51;
+              local_2b20 = (CRefTime *)
+                           ((float)local_2b20 * (float)local_2b4c *
+                           ((float)local_2b94 * (float)local_2b94 * (float)local_2b44 +
+                           (float)local_2b24));
+              iVar8 = rand();
+              fStack_534 = ((1.25 - ((float)iVar8 * 0.5) / 32767.0) + 0.0) * (float)local_2b20;
+              std_list_push_back_428360((void *)((int)local_2b1c + 0x14),&fStack_57c);
+              std_list_push_back_428360(local_2b2c + 8,&fStack_57c);
+              lib_fn_4c8530((int)auStack_184);
+              Vec3i64_toFloatScaled(auStack_184,(longlong *)(pCVar13 + 0x10));
+              pCVar13 = local_2b18;
+              CVar6 = local_2b18[0x68];
+              if ((CVar6 == (CRefTime)0x16) || (CVar6 == (CRefTime)0x17)) {
+                iVar8 = rand();
+                fStack_174 = ((float)iVar8 * 0.5) / 32767.0;
+                if (cStack_520 == '\0') {
+                  fStack_174 = fStack_174 + 2.0;
+                  goto LAB_0053d3c2;
+                }
+                fStack_174 = fStack_174 + 1.0;
+                uStack_178 = 0x16;
+              }
+              else if (CVar6 == (CRefTime)0x1a) {
+                iVar8 = rand();
+                fStack_174 = ((float)iVar8 * 0.51) / 32767.0 + 0.7;
+LAB_0053d3c2:
+                uStack_178 = 0xf;
+              }
+              else {
+                iVar8 = rand();
+                uStack_178 = 0x16;
+                fStack_174 = ((float)iVar8 * 0.5) / 32767.0 + 1.0;
+              }
+              std_list_push_back_428590(local_2b2c + 2,auStack_184);
+              pvVar19 = local_2b1c;
+            }
+          }
+          break;
+        case (CRefTime)0x18:
+        case (CRefTime)0x19:
+        case (CRefTime)0x1b:
+        case (CRefTime)0x24:
+        case (CRefTime)0x3b:
+        case (CRefTime)0x3f:
+        case (CRefTime)0x40:
+          if (((*(char *)((int)pvVar19 + 0xb4) != '\0') || (local_2b18[0x60] == (CRefTime)0x0)) &&
+             (local_2b18 != *(CRefTime **)((int)pvVar19 + 0xb8))) goto LAB_0053bc80;
+          if ((int)*(float *)(local_2b18 + 0x6c) / 200 !=
+              (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28) / 200) {
+            lib_fn_4c8530((int)auStack_744);
+            pCVar13 = local_2b18;
+            Vec3i64_toFloatScaled(auStack_744,(longlong *)(local_2b18 + 0x10));
+            fStack_734 = *(float *)(pCVar13 + 0x144) * 0.5 + 1.0;
+            uStack_738 = 0x37;
+            std_list_push_back_428590(local_2b2c + 2,auStack_744);
+          }
+          break;
+        case (CRefTime)0x1c:
+        case (CRefTime)0x5e:
+        case (CRefTime)0x5f:
+          if (((*(char *)((int)pvVar19 + 0xb4) != '\0') || (local_2b18[0x60] == (CRefTime)0x0)) &&
+             (local_2b18 != *(CRefTime **)((int)pvVar19 + 0xb8))) goto LAB_0053bc80;
+          if (CVar6 == (CRefTime)0x68) {
+            if (*(float *)(local_2b18 + 0x6c) == 0.0) {
+              fVar24 = *(float *)(local_2b18 + 0x170);
+              *(float *)(local_2b18 + 0x170) = fVar24 - *(float *)(local_2b18 + 0x144);
+              if (fVar24 - *(float *)(local_2b18 + 0x144) < 0.0) {
+                *(float *)(local_2b18 + 0x170) = 0.0;
+              }
+              *(float *)(local_2b18 + 0x13b4) = *(float *)(local_2b18 + 0x144);
+              *(float *)(local_2b18 + 0x144) = 0.0;
+            }
+          }
+          else {
+            if (CVar6 == (CRefTime)0x1c) {
+              *(float *)(local_2b18 + 0x170) = *(float *)(local_2b18 + 0x170) - local_2b8c * 0.0002;
+            }
+            else {
+              iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+              pCVar13 = local_2b18;
+              if (((int)*(float *)(local_2b18 + 0x6c) <= iVar8) &&
+                 (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+                 iVar8 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) {
+                fVar51 = Combat_getAbilityResourceCost((int)pCVar13,(uint)(byte)pCVar13[0x68],-1);
+                local_2b20 = (CRefTime *)(float)fVar51;
+                *(float *)(pCVar13 + 0x170) = *(float *)(pCVar13 + 0x170) - (float)local_2b20;
+                puVar22 = list_find_by_id_byte(pCVar13,9);
+                if (puVar22 != (undefined4 *)0x0) {
+                  CombatState_zeroInit(&cStack_2ed8);
+                  cStack_2ed8 = '\t';
+                  uStack_2ed0 = 0;
+                  Combat_upsertBuffEntry(pCVar13,&cStack_2ed8);
+                  init_struct_fields_a((int)&fStack_3150);
+                  uStack_3140 = CONCAT71(uStack_2ed7,cStack_2ed8);
+                  fStack_314c = *(float *)(pCVar13 + 0xc);
+                  fStack_3150 = *(float *)(pCVar13 + 8);
+                  uStack_3138 = CONCAT44(uStack_2ecc,uStack_2ed0);
+                  uStack_3130 = uStack_2ec8;
+                  fStack_3148 = fStack_3150;
+                  fStack_3144 = fStack_314c;
+                  std_list_push_back(local_2b2c + 0x16,(undefined8 *)&fStack_3150);
+                }
+              }
+            }
+            if (*(float *)(local_2b18 + 0x170) <= 0.0 && *(float *)(local_2b18 + 0x170) != 0.0) {
+              *(float *)(local_2b18 + 0x170) = 0.0;
+              goto LAB_0053bc80;
+            }
+          }
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          pCVar13 = local_2b18;
+          if (iVar8 <= (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28)) {
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            pCVar13 = local_2b18;
+            if ((int)*(float *)(local_2b18 + 0x6c) < iVar8 + iVar17) {
+              iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+              pCVar13 = local_2b18;
+              if ((iVar8 < (int)*(float *)(local_2b18 + 0x6c)) ||
+                 (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+                 (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28) <= iVar8)) {
+                if ((pCVar13[0x68] == (CRefTime)0x5f) || (pCVar13[0x68] == (CRefTime)0x1c)) {
+                  iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+                  iVar11 = (int)*(float *)(pCVar13 + 0x6c) + local_2b28;
+                  iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+                  pCVar13 = local_2b18;
+                  if ((((int)*(float *)(local_2b18 + 0x6c) - iVar17) / 200 != (iVar11 - iVar8) / 200
+                      ) && (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff), pCVar13 = local_2b18,
+                           iVar8 < (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28)))
+                  goto LAB_0053bd1c;
+                }
+              }
+              else {
+LAB_0053bd1c:
+                pCVar13 = local_2b18 + 0x160;
+                local_2b54 = pCVar13;
+                Vec3_copy(local_44,(undefined4 *)pCVar13);
+                fVar51 = vec3_length_sq(local_44);
+                local_2b20 = (CRefTime *)(float)fVar51;
+                if (0.0 < (float)local_2b20) {
+                  vec3_normalize(local_44);
+                }
+                Combat_getProjectileSpawnPos(local_2b18,auStack_318);
+                uVar53 = 0x100000000;
+                fVar24 = 200.0;
+                pfVar25 = vec3_normalize_to(pCVar13,afStack_132c);
+                fVar51 = (float10)Creature_stepAlongPath(local_2b1c,auStack_318,pfVar25,fVar24,(char)uVar53,
+                                               (char)(uVar53 >> 0x20));
+                local_2b20 = (CRefTime *)(float)fVar51;
+                local_2b40 = local_2b20;
+                if (local_2b18[0x68] == (CRefTime)0x68) {
+                  local_2b40 = (CRefTime *)0x41200000;
+                }
+                pCVar15 = local_2b18 + 0x11ac;
+                local_2b68 = pCVar15;
+                std_map_clear((int *)pCVar15);
+                std_map_clear((int *)(local_2b18 + 0x11b4));
+                local_2b2d = '\0';
+                if ((((local_2b18[0x140] == (CRefTime)0x3) && (local_2b18[0x141] == (CRefTime)0x1))
+                    && (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+                       (int)*(float *)(local_2b18 + 0x6c) <= iVar8)) &&
+                   (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+                   iVar8 < (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28))) {
+                  initStruct_0x70_defaults(&fStack_b0c);
+                  uStack_aac = 3;
+                  uStack_ab0 = 0;
+                  uStack_ab8 = 0;
+                  uStack_ab4 = 0;
+                  fVar51 = calc_damage_value_b(local_2b18);
+                  local_2b20 = (CRefTime *)(float)fVar51;
+                  fStack_b0c = *(float *)(local_2b18 + 8);
+                  fStack_ac4 = (float)local_2b20 * 0.1;
+                  fStack_b08 = *(float *)(local_2b18 + 0xc);
+                  uStack_ac0 = 0x40800000;
+                  uStack_aa8 = 2;
+                  pfVar25 = vec3_normalize_to(pCVar13,afStack_1a7c);
+                  lib_fn_4e1520(afStack_1344,(float)local_2b40,pfVar25);
+                  Vec3i64_randomize((int)auStack_1950);
+                  puVar9 = Vec3i64_add(auStack_318,auStack_2158,auStack_1950);
+                  Copy24Bytes(auStack_af4,puVar9);
+                  uStack_abc = 0x3f800000;
+                  uStack_aa4 = 0;
+                  puVar22 = Vec3_set(auStack_16a4,0,0,0);
+                  Vec3_copy(auStack_ad0,puVar22);
+                  std_list_push_back_428360((void *)((int)local_2b1c + 0x14),&fStack_b0c);
+                  std_list_push_back_428360(local_2b2c + 8,&fStack_b0c);
+                }
+                local_2b44 = (CRefTime *)0x0;
+                if (0.0 < (float)local_2b40) {
+                  local_2b58 = (CRefTime *)0x0;
+                  puVar22 = local_2b70;
+                  do {
+                    deref_getFirst(puVar22,&iStack_2c98);
+                    piVar10 = (int *)World_getField0(puVar22,&uStack_2ce8);
+                    bVar2 = std_iterator_notEqual(&iStack_2c98,piVar10);
+                    if (bVar2) {
+                      do {
+                        iVar8 = getField_plus0x10(&iStack_2c98);
+                        pCVar15 = *(CRefTime **)(iVar8 + 8);
+                        if ((((pCVar15 != (CRefTime *)0x0) && (pCVar15 != local_2b18)) &&
+                            ((pCVar13 = local_2b54,
+                             *(float *)(pCVar15 + 8) != *(float *)(local_2b18 + 0x11c0) ||
+                             (*(float *)(pCVar15 + 0xc) != *(float *)(local_2b18 + 0x11c4))))) &&
+                           (0.0 < *(float *)(pCVar15 + 0x16c))) {
+                          piVar10 = (int *)World_getField0(local_2b68,&uStack_2fc0);
+                          pvVar19 = (void *)std_map_lower_bound_yx(local_2b68,&iStack_306c,
+                                                         (uint *)(pCVar15 + 8));
+                          bVar2 = std_iterator_notEqual(pvVar19,piVar10);
+                          pCVar13 = local_2b54;
+                          if ((!bVar2) && (*(float *)(pCVar15 + 0x128) == 0.0)) {
+                            getElemPtr4(pCVar15 + 0x80,0);
+                            puVar9 = auStack_3540;
+                            puVar18 = Vec3i64_subtract(auStack_318,auStack_2428,(uint *)(pCVar15 + 0x10)
+                                                  );
+                            ppVar31 = (pair<unsigned___int64,unsigned___int64> *)
+                                      identityReturn(puVar18);
+                            ppVar31 = std::pair<unsigned___int64,unsigned___int64>::
+                                      operator=<std::pair<unsigned___int64,unsigned___int64>,0>
+                                                (apStack_1bb0,ppVar31);
+                            puVar9 = computeLengthSquared_16_16(ppVar31,puVar9);
+                            uVar20 = lib_fn_4dade0(puVar9);
+                            pCVar13 = local_2b54;
+                            if ((char)uVar20 != '\0') {
+                              puVar9 = (uint *)lib_fn_4e2320(pCVar15 + 0x10,2);
+                              piVar10 = aiStack_3550;
+                              pvVar19 = (void *)lib_fn_4e2320(auStack_318,2);
+                              plVar32 = (longlong *)int64_sub(pvVar19,piVar10,puVar9);
+                              fVar51 = fixedpoint16_to_float(plVar32);
+                              fVar51 = std_fabsf((float)fVar51);
+                              local_2b20 = (CRefTime *)(float)fVar51;
+                              pfVar25 = (float *)getElemPtr4(pCVar15 + 0x80,2);
+                              pCVar13 = local_2b54;
+                              if ((float)local_2b20 < *pfVar25 * 0.5 + 1.0) {
+                                lib_fn_530690(local_2b68,auStack_3560,(uint *)(pCVar15 + 8));
+                                bVar2 = check_proc_chance((int)local_2b18);
+                                local_2bac = (int *)CONCAT31(local_2bac._1_3_,bVar2);
+                                puVar9 = Vec3i64_subtract(pCVar15 + 0x10,auStack_2188,
+                                                      (uint *)(local_2b18 + 0x10));
+                                Vec3i64_toFloatScaled(afStack_2ac,(longlong *)puVar9);
+                                puVar22 = (undefined4 *)getElemPtr4(afStack_2ac,2);
+                                *puVar22 = 0;
+                                fVar51 = vec3_length_sq(afStack_2ac);
+                                local_2b20 = (CRefTime *)(float)fVar51;
+                                if (0.01 < (float)local_2b20) {
+                                  vec3_normalize(afStack_2ac);
+                                }
+                                *puVar22 = 0x3e800000;
+                                iVar8 = rand();
+                                local_2b4c = (CRefTime *)(((float)iVar8 * 0.05) / 32767.0 + 1.0);
+                                fVar51 = calc_damage_value_b(local_2b18);
+                                local_2b20 = (CRefTime *)(float)fVar51;
+                                local_2b60 = (CRefTime *)
+                                             ((float)local_2b20 * 1.5 * (float)local_2b4c);
+                                if (local_2b18[0x68] == (CRefTime)0x68) {
+                                  local_2b94 = *(CRefTime **)(local_2b18 + 0x13b4);
+                                  fVar51 = get_ability_multiplier(0x68);
+                                  local_2b20 = (CRefTime *)(float)fVar51;
+                                  fVar51 = calc_damage_value(local_2b18);
+                                  local_2b4c = (CRefTime *)(float)fVar51;
+                                  local_2b20 = (CRefTime *)
+                                               ((float)local_2b20 * (float)local_2b4c *
+                                               (float)local_2b94 * (float)local_2b94 * 10.0);
+                                  iVar8 = rand();
+                                  local_2b60 = (CRefTime *)
+                                               (((1.25 - ((float)iVar8 * 0.5) / 32767.0) + 0.0) *
+                                               (float)local_2b20);
+                                }
+                                if ((char)local_2bac != '\0') {
+                                  local_2b60 = (CRefTime *)((float)local_2b60 * 2.0);
+                                }
+                                uVar20 = lib_fn_4d18c0((int)local_2b18,(int)pCVar15);
+                                pCVar13 = local_2b54;
+                                if ((char)uVar20 != '\0') {
+                                  local_2b24 = (CRefTime *)0x0;
+                                  Vec3_set(afStack_288,0,0,0);
+                                  pCVar13 = local_2b54;
+                                  if (local_2b18[0x68] == (CRefTime)0x5f) {
+                                    local_2b24 = (CRefTime *)0x3dcccccd;
+                                  }
+                                  if (local_2b18[0x68] == (CRefTime)0x68) {
+                                    local_2b24 = *(CRefTime **)(local_2b18 + 0x13b4);
+                                    pfVar25 = afStack_135c;
+                                    fVar24 = 10.0;
+                                    pfVar30 = vec3_normalize_to(local_2b54,afStack_18a8);
+                                    puVar22 = (undefined4 *)vec3_scale_to(pfVar30,pfVar25,fVar24);
+                                    Vec3_copy(afStack_288,puVar22);
+                                    puVar22 = (undefined4 *)getElemPtr4(afStack_288,2);
+                                    *puVar22 = 0x40a00000;
+                                  }
+                                  pvVar19 = local_2b1c;
+                                  CVar6 = local_2b18[0x68];
+                                  if (((CVar6 == (CRefTime)0x5f) || (CVar6 == (CRefTime)0x5e)) ||
+                                     (CVar6 == (CRefTime)0x1c)) {
+                                    cVar3 = '\x01';
+                                  }
+                                  else {
+                                    cVar3 = '\0';
+                                  }
+                                  if ((CVar6 == (CRefTime)0x5f) || (CVar6 == (CRefTime)0x68)) {
+                                    cVar5 = '\x01';
+                                  }
+                                  else {
+                                    cVar5 = '\0';
+                                  }
+                                  cVar3 = stl_fn_4cfd50(local_2b1c,(float)pCVar15,local_2b18,
+                                                       (float)local_2b60,(char)local_2bac,cVar5,
+                                                       (float)local_2b24,auStack_318,afStack_288,
+                                                       local_2b2c,local_2bec,cVar3,0,0,'\x01');
+                                  if ((cVar3 != '\0') && (local_2b18[0x141] == (CRefTime)0x2)) {
+                                    initStruct_0x47_zero((int)&fStack_e3c);
+                                    Copy24Bytes(auStack_e1c,(undefined4 *)(local_2b18 + 0x10));
+                                    local_2b60 = (CRefTime *)((uint)local_2b60 ^ 0x80000000);
+                                    uStack_e28 = (char)local_2bac;
+                                    fStack_e3c = *(float *)(local_2b18 + 8);
+                                    fStack_e38 = *(float *)(local_2b18 + 0xc);
+                                    fStack_e34 = fStack_e3c;
+                                    fStack_e30 = fStack_e38;
+                                    pCStack_e2c = local_2b60;
+                                    std_list_push_back_428400(local_2b2c,&fStack_e3c);
+                                    if (*(char *)((int)pvVar19 + 0xb4) == '\0') {
+                                      *(float *)(local_2b18 + 0x16c) =
+                                           *(float *)(local_2b18 + 0x16c) - (float)local_2b60;
+                                      fVar51 = Combat_computeMaxHealth((int)local_2b18);
+                                      local_2b20 = (CRefTime *)(float)fVar51;
+                                      if ((float)local_2b20 < *(float *)(local_2b18 + 0x16c)) {
+                                        fVar51 = Combat_computeMaxHealth((int)local_2b18);
+                                        *(float *)(local_2b18 + 0x16c) = (float)fVar51;
+                                      }
+                                    }
+                                  }
+                                  if ((((local_2b18[0x140] == (CRefTime)0x3) &&
+                                       (local_2b18[0x141] == (CRefTime)0x1)) &&
+                                      (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+                                      (int)*(float *)(local_2b18 + 0x6c) <= iVar8)) &&
+                                     (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+                                     iVar8 < (int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28))
+                                     ) {
+                                    initStruct_0x70_defaults(&fStack_a9c);
+                                    uStack_a3c = 3;
+                                    uStack_a40 = 0;
+                                    uStack_a48 = 0;
+                                    uStack_a44 = 0;
+                                    fVar51 = calc_damage_value_b(local_2b18);
+                                    local_2b20 = (CRefTime *)(float)fVar51;
+                                    fStack_a9c = *(float *)(local_2b18 + 8);
+                                    fStack_a54 = (float)local_2b20 * 0.1;
+                                    fStack_a98 = *(float *)(local_2b18 + 0xc);
+                                    uStack_a50 = 0x40800000;
+                                    uStack_a38 = 2;
+                                    Copy24Bytes(auStack_a84,auStack_318);
+                                    uStack_a4c = 0x3f800000;
+                                    uStack_a34 = 0;
+                                    puVar22 = Vec3_set(auStack_1374,0,0,0);
+                                    Vec3_copy(auStack_a60,puVar22);
+                                    std_list_push_back_428360((void *)((int)pvVar19 + 0x14),&fStack_a9c);
+                                    std_list_push_back_428360(local_2b2c + 8,&fStack_a9c);
+                                  }
+                                  local_2b2d = '\x01';
+                                }
+                              }
+                            }
+                          }
+                        }
+                        RBTree_copyBeginThenInc(&iStack_2c98,&iStack_2f9c);
+                        puVar22 = local_2b70;
+                        piVar10 = (int *)World_getField0(local_2b70,&uStack_2ce8);
+                        bVar2 = std_iterator_notEqual(&iStack_2c98,piVar10);
+                      } while (bVar2);
+                    }
+                    Vec3i64_randomize((int)auStack_1974);
+                    int64x3_add(auStack_318,auStack_1974);
+                    pCVar38 = local_2b18;
+                    local_2b44 = local_2b44 + 1;
+                    local_2b58 = (CRefTime *)(float)(int)local_2b44;
+                  } while ((float)local_2b58 < (float)local_2b40);
+                  pCVar15 = local_2b68;
+                  if (local_2b2d != '\0') {
+                    *(uint *)(local_2b18 + 0x70) = (int)*(float *)(local_2b18 + 0x70) + 1;
+                    rbtree_inorder_walk((int)local_2b18);
+                    *(float *)(pCVar38 + 0x74) = 0.0;
+                    pCVar15 = local_2b68;
+                  }
+                }
+                bVar2 = lib_fn_530540((int)pCVar15);
+                pCVar15 = local_2b18;
+                piVar10 = local_2b2c;
+                if ((bVar2) && (local_2b18[0x68] != (CRefTime)0x68)) {
+                  lib_fn_4c8510((int)auStack_fdc);
+                  pfVar25 = vec3_normalize_to(pCVar13,afStack_10bc);
+                  lib_fn_4e1520(afStack_16bc,(float)local_2b40,pfVar25);
+                  Vec3i64_randomize((int)auStack_1998);
+                  puVar9 = Vec3i64_add(pCVar15 + 0x10,auStack_2638,auStack_1998);
+                  Copy24Bytes(auStack_fdc,puVar9);
+                  uStack_fa4 = 5;
+                  uStack_fa8 = 0x3dcccccd;
+                  uStack_fa0 = 1;
+                  ppVar31 = (pair<unsigned___int64,unsigned___int64> *)
+                            Vec3_set(auStack_1bf0,0x3f800000,0x3e4ccccd,0x3f000000);
+                  std::pair<unsigned___int64,unsigned___int64>::
+                  operator=<std::pair<unsigned___int64,unsigned___int64>,0>(apStack_fb8,ppVar31);
+                  pfVar25 = lib_fn_52ec30(local_44,afStack_138c);
+                  Vec3_copy(auStack_fc4,pfVar25);
+                  piVar10 = local_2b2c;
+                  std_list_push_back_428540(local_2b2c + 4,auStack_fdc);
+                  fVar51 = Combat_computeAttackSpeed((int)pCVar15);
+                  local_2b20 = (CRefTime *)(float)fVar51;
+                  *(float *)(pCVar15 + 0x70) = 0.0;
+                  fVar51 = Combat_computeAttackSpeed((int)pCVar15);
+                  local_2b4c = (CRefTime *)(float)fVar51;
+                  *(int *)(pCVar15 + 0x6c) =
+                       (int)(((float)local_2b20 / (float)local_2b4c) *
+                            (float)(int)*(float *)(pCVar15 + 0x6c));
+                }
+                pCVar13 = pCVar15;
+                if (((pCVar15[0x68] == (CRefTime)0x5e) &&
+                    (iVar8 = Combat_getAbilityCooldown(pCVar15,0xffffffff),
+                    (int)*(float *)(pCVar15 + 0x6c) <= iVar8)) &&
+                   (iVar8 = Combat_getAbilityCooldown(pCVar15,0xffffffff),
+                   iVar8 < (int)((int)*(float *)(pCVar15 + 0x6c) + local_2b28))) {
+                  lib_fn_4c8530((int)auStack_5dc);
+                  Vec3i64_toFloatScaled(auStack_5dc,(longlong *)(pCVar15 + 0x10));
+                  iVar8 = rand();
+                  uStack_5d0 = 0x28;
+                  fStack_5cc = ((float)iVar8 * 0.1) / 32767.0 + 1.0;
+                  std_list_push_back_428590(piVar10 + 2,auStack_5dc);
+                  pvVar19 = local_2b1c;
+                }
+                else if (((pCVar15[0x68] == (CRefTime)0x68) &&
+                         (iVar8 = Combat_getAbilityCooldown(pCVar15,0xffffffff),
+                         (int)*(float *)(pCVar15 + 0x6c) <= iVar8)) &&
+                        (iVar8 = Combat_getAbilityCooldown(pCVar15,0xffffffff),
+                        iVar8 < (int)((int)*(float *)(pCVar15 + 0x6c) + local_2b28))) {
+                  lib_fn_4c8530((int)auStack_7d4);
+                  Vec3i64_toFloatScaled(auStack_7d4,(longlong *)(pCVar15 + 0x10));
+                  iVar8 = rand();
+                  uStack_7c8 = 0x10;
+                  if (local_2b2d != '\0') {
+                    uStack_7c8 = 5;
+                  }
+                  fStack_7c4 = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+                  std_list_push_back_428590(piVar10 + 2,auStack_7d4);
+                  pvVar19 = local_2b1c;
+                }
+                else {
+                  pvVar19 = local_2b1c;
+                  if ((pCVar15[0x68] != (CRefTime)0x5e) &&
+                     (pCVar13 = local_2b18,
+                     (int)*(float *)(pCVar15 + 0x6c) / 200 !=
+                     (int)((int)*(float *)(pCVar15 + 0x6c) + local_2b28) / 200)) {
+                    lib_fn_4c8530((int)auStack_804);
+                    pCVar13 = local_2b18;
+                    Vec3i64_toFloatScaled(auStack_804,(longlong *)(local_2b18 + 0x10));
+                    iVar8 = rand();
+                    fStack_7f4 = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+                    iStack_7f8 = (local_2b2d != '\0') + 0x24;
+                    std_list_push_back_428590(piVar10 + 2,auStack_804);
+                    pvVar19 = local_2b1c;
+                  }
+                }
+              }
+            }
+          }
+          break;
+        default:
+LAB_0053bc80:
+          pCVar13 = local_2b18;
+          break;
+        case (CRefTime)0x22:
+          fVar24 = *(float *)(local_2b18 + 0x6c);
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          if (((int)fVar24 < iVar8) && ((int)fVar24 / 200 != (int)((int)fVar24 + local_2b28) / 200))
+          {
+            lib_fn_4c8530((int)auStack_624);
+            Vec3i64_toFloatScaled(auStack_624,(longlong *)(local_2b18 + 0x10));
+            iVar8 = rand();
+            fStack_614 = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+            uStack_618 = 0x24;
+            std_list_push_back_428590(local_2b2c + 2,auStack_624);
+          }
+          if ((((*(char *)((int)pvVar19 + 0xb4) == '\0') && (local_2b18[0x60] != (CRefTime)0x0)) ||
+              (pCVar13 = local_2b18, local_2b18 == *(CRefTime **)((int)pvVar19 + 0xb8))) &&
+             (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff), pCVar13 = local_2b18,
+             iVar8 < (int)*(float *)(local_2b18 + 0x6c))) {
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            pCVar13 = local_2b18;
+            if ((int)*(float *)(local_2b18 + 0x6c) <= iVar8 + iVar17) {
+              iVar8 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+              pCVar13 = local_2b18;
+              iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+              iVar47 = (int)*(float *)(pCVar13 + 0x6c) + local_2b28;
+              iVar11 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+              pCVar13 = local_2b18;
+              pvVar19 = local_2b1c;
+              if (((int)*(float *)(local_2b18 + 0x6c) - iVar11) / (int)((float)iVar8 * 0.125) !=
+                  (iVar47 - iVar17) / (int)((float)iVar8 * 0.125)) {
+                fVar51 = Combat_getAbilityResourceCost((int)local_2b18,(uint)(byte)local_2b18[0x68],-1);
+                local_2b20 = (CRefTime *)(float)fVar51;
+                pCVar13 = local_2b18;
+                pvVar19 = local_2b1c;
+                if ((float)local_2b20 <= *(float *)(local_2b18 + 0x170)) {
+                  fVar51 = Combat_getAbilityResourceCost((int)local_2b18,(uint)(byte)local_2b18[0x68],-1);
+                  local_2b20 = (CRefTime *)(float)fVar51;
+                  *(float *)(local_2b18 + 0x170) =
+                       *(float *)(local_2b18 + 0x170) - (float)local_2b20;
+                  pCVar38 = (CRefTime *)std_map_find_value(local_2b1c,(uint *)(local_2b18 + 0x1a0));
+                  pCVar15 = local_2b18;
+                  if (pCVar38 == (CRefTime *)0x0) {
+                    pCVar38 = local_2b18;
+                  }
+                  initStruct_0x47_zero((int)&fStack_c54);
+                  Copy24Bytes(auStack_c34,(undefined4 *)(pCVar38 + 0x10));
+                  iVar8 = rand();
+                  local_2b4c = (CRefTime *)(1.25 - ((float)iVar8 * 0.5) / 32767.0);
+                  fVar51 = calc_damage_value_b(pCVar15);
+                  local_2b20 = (CRefTime *)(float)fVar51;
+                  fStack_c44 = (float)local_2b20 * -2.0 * (float)local_2b4c;
+                  uStack_c40 = check_proc_chance((int)pCVar15);
+                  fStack_c54 = *(float *)(pCVar15 + 8);
+                  fStack_c50 = *(float *)(pCVar15 + 0xc);
+                  fStack_c4c = *(float *)(pCVar38 + 8);
+                  fStack_c48 = *(float *)(pCVar38 + 0xc);
+                  std_list_push_back_428400(local_2b2c,&fStack_c54);
+                  lib_fn_4c8530((int)auStack_654);
+                  Vec3i64_toFloatScaled(auStack_654,(longlong *)(pCVar15 + 0x10));
+                  uStack_644 = 0x3f800000;
+                  uStack_648 = 0x29;
+                  std_list_push_back_428590(local_2b2c + 2,auStack_654);
+                  if ((*(char *)((int)local_2b1c + 0xb4) == '\0') ||
+                     ((pCVar13 = local_2b18, pvVar19 = local_2b1c,
+                      pCVar15 == *(CRefTime **)((int)local_2b1c + 0xb8) &&
+                      (pCVar38 == *(CRefTime **)((int)local_2b1c + 0xb8))))) {
+                    lib_fn_4cea80(local_2b1c,(uint *)&fStack_c54,local_2b2c,local_2bec);
+                    pCVar13 = local_2b18;
+                    pvVar19 = local_2b1c;
+                  }
+                }
+              }
+            }
+          }
+          break;
+        case (CRefTime)0x25:
+        case (CRefTime)0x26:
+        case (CRefTime)0x27:
+        case (CRefTime)0x28:
+        case (CRefTime)0x29:
+        case (CRefTime)0x2a:
+        case (CRefTime)0x2b:
+        case (CRefTime)0x2c:
+        case (CRefTime)0x2d:
+        case (CRefTime)0x2e:
+        case (CRefTime)0x6c:
+          if (((*(char *)((int)pvVar19 + 0xb4) == '\0') && (local_2b18[0x60] != (CRefTime)0x0)) ||
+             (local_2b18 == *(CRefTime **)((int)pvVar19 + 0xb8))) {
+            fVar24 = *(float *)(local_2b18 + 0x6c);
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            pCVar13 = local_2b18;
+            if (((int)fVar24 <= iVar8 + -200) &&
+               ((int)fVar24 / 200 != (int)((int)fVar24 + local_2b28) / 200)) {
+              lib_fn_4c8530((int)auStack_8c4);
+              pCVar13 = local_2b18;
+              Vec3i64_toFloatScaled(auStack_8c4,(longlong *)(local_2b18 + 0x10));
+              iVar8 = rand();
+              fStack_8b4 = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+              uStack_8b8 = 0x24;
+              std_list_push_back_428590(local_2b2c + 2,auStack_8c4);
+            }
+            iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+            if ((pCVar13[0x68] == (CRefTime)0x2e) || (pCVar13[0x68] == (CRefTime)0x2d)) {
+              iVar17 = Combat_getAbilityRecovery(pCVar13,0xffffffff);
+              iVar11 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+              iVar47 = (int)*(float *)(pCVar13 + 0x6c) + local_2b28;
+              iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+              pCVar13 = local_2b18;
+              iVar8 = (iVar17 / 3) * ((iVar47 - iVar11) / (iVar17 / 3)) + iVar8;
+              iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+              if (iVar8 < iVar17) {
+                iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+              }
+            }
+            iVar17 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+            if (((int)*(float *)(pCVar13 + 0x6c) <= iVar17) &&
+               (iVar17 = Combat_getAbilityCooldown(pCVar13,0xffffffff),
+               iVar17 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) {
+              fVar51 = vec3_length_sq((float *)(pCVar13 + 0x160));
+              local_2b20 = (CRefTime *)(float)fVar51;
+              if (0.0 < (float)local_2b20) {
+                fVar51 = Combat_getAbilityResourceCost((int)pCVar13,(uint)(byte)pCVar13[0x68],-1);
+                fVar24 = *(float *)(pCVar13 + 0x170);
+                *(float *)(pCVar13 + 0x170) = fVar24 - (float)fVar51;
+                if (fVar24 - (float)fVar51 < 0.0) {
+                  *(float *)(pCVar13 + 0x170) = 0.0;
+                }
+              }
+            }
+            local_2b20 = *(CRefTime **)(pCVar13 + 0x6c);
+            iVar17 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+            iVar11 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            pCVar13 = local_2b18;
+            pvVar19 = local_2b1c;
+            if ((((int)local_2b20 < iVar17 + iVar11) && ((int)local_2b20 <= iVar8)) &&
+               (iVar8 < (int)(local_2b20 + local_2b28))) {
+              pCVar15 = local_2b18 + 0x160;
+              fVar51 = vec3_length_sq((float *)pCVar15);
+              local_2b20 = (CRefTime *)(float)fVar51;
+              pvVar19 = local_2b1c;
+              if (0.0 < (float)local_2b20) {
+                initStruct_0x70_defaults(&fStack_3e8);
+                if (pCVar13[0xaa9] == (CRefTime)0xc) {
+                  pfVar30 = vec3_normalize_to(pCVar15,afStack_18cc);
+                  pfVar25 = afStack_13d4;
+                  fVar24 = 100.0;
+                }
+                else {
+                  pfVar30 = vec3_normalize_to(pCVar15,afStack_16ec);
+                  pfVar25 = afStack_13ec;
+                  fVar24 = 50.0;
+                }
+                puVar22 = (undefined4 *)lib_fn_4e1520(pfVar25,fVar24,pfVar30);
+                Vec3_copy(auStack_3ac,puVar22);
+                uStack_380 = 0;
+                pCVar38 = pCVar13 + 0x10;
+                fStack_39c = *(float *)(pCVar13 + 0x144) * 4.0 + 0.5;
+                local_2b20 = pCVar38;
+                Copy24Bytes(auStack_3d0,(undefined4 *)pCVar38);
+                fStack_394 = *(float *)(local_2b18 + 0x144);
+                fStack_398 = *(float *)(local_2b18 + 0x144) + 0.5;
+                if (*(float *)(local_2b18 + 100) == 1.41531e-43) {
+                  pCVar13 = local_2b18 + 0x80;
+                  getElemPtr4(pCVar13,1);
+                  int64_assign_timecall(&uStack_303c);
+                  puVar27 = &uStack_303c;
+                  pvVar19 = (void *)lib_fn_4e2320(auStack_3d0,1);
+                  int64_add(pvVar19,(uint *)puVar27);
+                  getElemPtr4(pCVar13,2);
+                  int64_assign_timecall(&uStack_2ff8);
+                  puVar27 = &uStack_2ff8;
+                  pvVar19 = (void *)lib_fn_4e2320(auStack_3d0,2);
+                  int64_add(pvVar19,(uint *)puVar27);
+                  pCVar38 = local_2b20;
+                }
+                fStack_3e8 = *(float *)(local_2b18 + 8);
+                fStack_3e4 = *(float *)(local_2b18 + 0xc);
+                Vec3_copy(auStack_3e0,(undefined4 *)(local_2b18 + 0x1b0));
+                pCVar13 = local_2b18;
+                if (local_2b18[0x68] == (CRefTime)0x6c) {
+                  uStack_388 = 4;
+                  fVar51 = get_ability_multiplier((uint)(byte)local_2b18[0x68]);
+                  local_2b20 = (CRefTime *)(float)fVar51;
+                  fVar51 = calc_damage_value(local_2b18);
+                  local_2b4c = (CRefTime *)(float)fVar51;
+                  local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
+                  iVar8 = rand();
+                  fStack_398 = 4.0;
+                  fStack_394 = 1.0;
+                  cStack_38c = 1;
+                  fStack_3a0 = (1.25 - ((float)iVar8 * 0.5) / 32767.0) * (float)local_2b20 * 1.0 *
+                               5.0;
+                  pfVar25 = vec3_normalize_to(pCVar15,afStack_1b18);
+                  puVar22 = (undefined4 *)lib_fn_4e1520(afStack_1404,100.0,pfVar25);
+                  Vec3_copy(auStack_3ac,puVar22);
+                  pCVar13 = local_2b18;
+                }
+                else {
+                  uStack_388 = 1;
+                  CVar6 = local_2b18[0x68];
+                  if ((((CVar6 == (CRefTime)0x26) || (CVar6 == (CRefTime)0x27)) ||
+                      ((CVar6 == (CRefTime)0x28 ||
+                       ((CVar6 == (CRefTime)0x2c || (CVar6 == (CRefTime)0x29)))))) ||
+                     (CVar6 == (CRefTime)0x2a)) {
+                    fVar51 = get_ability_multiplier((uint)(byte)CVar6);
+                    local_2b20 = (CRefTime *)(float)fVar51;
+                    fVar51 = calc_damage_value_b(pCVar13);
+                    local_2b4c = (CRefTime *)(float)fVar51;
+                    local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
+                    iVar8 = rand();
+                    fStack_3a0 = (1.25 - ((float)iVar8 * 0.5) / 32767.0) * (float)local_2b20 * 1.0;
+                  }
+                  else if ((CVar6 == (CRefTime)0x2e) || (CVar6 == (CRefTime)0x2d)) {
+                    fVar51 = get_ability_multiplier((uint)(byte)CVar6);
+                    local_2b20 = (CRefTime *)(float)fVar51;
+                    fVar51 = calc_damage_value_b(pCVar13);
+                    local_2b4c = (CRefTime *)(float)fVar51;
+                    local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
+                    iVar8 = rand();
+                    fStack_394 = 0.25;
+                    fStack_3a0 = (1.25 - ((float)iVar8 * 0.5) / 32767.0) * (float)local_2b20 * 1.0;
+                    fStack_398 = fStack_398 + 0.5;
+                  }
+                  else {
+                    fVar51 = get_ability_multiplier((uint)(byte)CVar6);
+                    local_2b20 = (CRefTime *)(float)fVar51;
+                    fVar51 = calc_damage_value_b(pCVar13);
+                    local_2b4c = (CRefTime *)(float)fVar51;
+                    local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
+                    iVar8 = rand();
+                    fStack_394 = 1.0;
+                    fStack_3a0 = (1.25 - ((float)iVar8 * 0.5) / 32767.0) * (float)local_2b20 * 1.0;
+                    fStack_398 = fStack_398 + 1.0;
+                  }
+                }
+                if (pCVar13[0x140] == (CRefTime)0x3) {
+                  cStack_384 = (pCVar13[0x141] == (CRefTime)0x1) + '\x01';
+                }
+                CVar6 = pCVar13[0x68];
+                if ((((CVar6 == (CRefTime)0x2e) || (CVar6 == (CRefTime)0x2d)) ||
+                    (CVar6 == (CRefTime)0x25)) || (cStack_38c = '\0', CVar6 == (CRefTime)0x2b)) {
+                  cStack_38c = '\x01';
+                }
+                std_list_push_back_428360((void *)((int)local_2b1c + 0x14),&fStack_3e8);
+                if (0.0 < *(float *)(pCVar13 + 0x144)) {
+                  fVar24 = *(float *)(pCVar13 + 0x170) - *(float *)(pCVar13 + 0x144);
+                  *(float *)(pCVar13 + 0x170) = fVar24;
+                  if (fVar24 < 0.0) {
+                    *(float *)(pCVar13 + 0x170) = 0.0;
+                  }
+                  *(float *)(pCVar13 + 0x144) = 0.0;
+                }
+                if ((cStack_38c != '\0') &&
+                   (puVar22 = list_find_by_id_byte(pCVar13,9), puVar22 != (undefined4 *)0x0)) {
+                  CombatState_zeroInit(&cStack_2ec0);
+                  cStack_2ec0 = '\t';
+                  uStack_2eb8 = 0;
+                  Combat_upsertBuffEntry(pCVar13,&cStack_2ec0);
+                  init_struct_fields_a((int)&local_244);
+                  local_234 = CONCAT71(uStack_2ebf,cStack_2ec0);
+                  local_240 = *(float *)(pCVar13 + 0xc);
+                  local_244 = *(float *)(pCVar13 + 8);
+                  local_22c = CONCAT44(uStack_2eb4,uStack_2eb8);
+                  local_224 = CONCAT44(uStack_2eac,uStack_2eb0);
+                  local_23c = local_244;
+                  local_238 = local_240;
+                  std_list_push_back(local_2b2c + 0x16,(undefined8 *)&local_244);
+                }
+                std_list_push_back_428360(local_2b2c + 8,&fStack_3e8);
+                lib_fn_4c8530((int)auStack_27c);
+                Vec3i64_toFloatScaled(auStack_27c,(longlong *)pCVar38);
+                pCVar13 = local_2b18;
+                uStack_26c = 0x3f800000;
+                CVar6 = local_2b18[0x68];
+                uStack_268 = 0x3f666666;
+                if (cStack_384 == '\x02') {
+                  uStack_270 = 0x29;
+                  if (((CVar6 == (CRefTime)0x2c) || (CVar6 == (CRefTime)0x29)) ||
+                     (CVar6 == (CRefTime)0x2a)) {
+                    uStack_26c = 0x3fa00000;
+                  }
+                }
+                else {
+                  uStack_270 = 0x26;
+                  if (((CVar6 == (CRefTime)0x26) || (CVar6 == (CRefTime)0x27)) ||
+                     (CVar6 == (CRefTime)0x28)) {
+                    uStack_26c = 0x40000000;
+                  }
+                }
+                std_list_push_back_428590(local_2b2c + 2,auStack_27c);
+                pvVar19 = local_2b1c;
+              }
+            }
+          }
+          break;
+        case (CRefTime)0x2f:
+        case (CRefTime)0x30:
+          if ((0 < (int)*(float *)(local_2b18 + 0x6c)) ||
+             ((int)((int)*(float *)(local_2b18 + 0x6c) + local_2b28) < 1)) goto LAB_0053bc80;
+          lib_fn_4c8530((int)auStack_66c);
+          pCVar13 = local_2b18;
+          Vec3i64_toFloatScaled(auStack_66c,(longlong *)(local_2b18 + 0x10));
+          iVar8 = rand();
+          fStack_65c = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+          uStack_660 = 0xe;
+          std_list_push_back_428590(local_2b2c + 2,auStack_66c);
+          break;
+        case (CRefTime)0x31:
+          if (((*(char *)((int)pvVar19 + 0xb4) != '\0') || (local_2b18[0x60] == (CRefTime)0x0)) &&
+             (local_2b18 != *(CRefTime **)((int)pvVar19 + 0xb8))) goto LAB_0053bc80;
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          pCVar13 = local_2b18;
+          if (((int)*(float *)(local_2b18 + 0x6c) <= iVar8) &&
+             (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+             iVar8 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) {
+            Vec3i64_randomize((int)auStack_192c);
+            local_2b68 = pCVar13 + 0x10;
+            Vec3i64_add(local_2b68,local_208,auStack_192c);
+            local_2b24 = (CRefTime *)0x43c80000;
+            uVar53 = CONCAT44(local_208,0x53b2f6);
+            Copy24Bytes(auStack_924,local_208);
+            local_2b44 = pCVar13 + 0x80;
+            local_2b60 = (CRefTime *)0xfffffffc;
+            do {
+              uVar12 = 0xfffffffc;
+              do {
+                uVar59 = 0xfffffffe;
+                do {
+                  uVar56 = 0x53b32b;
+                  uVar57 = uVar59;
+                  lib_fn_4cde40(&stack0xffffc89c,uVar59);
+                  uVar20 = 0x53b336;
+                  uVar55 = uVar12;
+                  lib_fn_4cde40(&stack0xffffc894,uVar12);
+                  lib_fn_4cde40(&stack0xffffc88c,(uint)local_2b60);
+                  puVar9 = store_6_dwords(auStack_20f8,uVar20,uVar55,uVar56,uVar57,(int)uVar53,
+                                        (int)(uVar53 >> 0x20));
+                  Vec3i64_add(local_208,auStack_990,puVar9);
+                  uVar53 = ZEXT48(local_2b44);
+                  puVar9 = auStack_990;
+                  uVar57 = 0x53b37e;
+                  cVar3 = WalkPathBehavior_checkPathClear(local_2b1c,puVar9,(float *)local_2b44,'\0');
+                  if (cVar3 == '\0') {
+                    puVar9 = (uint *)0x53b39b;
+                    puVar18 = Vec3i64_subtract(auStack_990,auStack_23f8,local_208);
+                    uVar20 = 0x53b3a7;
+                    pfVar25 = Vec3i64_toFloatScaled(auStack_168c,(longlong *)puVar18);
+                    uVar53 = CONCAT44(0x53b3ae,uVar20);
+                    fVar51 = vec3_length_sq(pfVar25);
+                    local_2b20 = (CRefTime *)(float)fVar51;
+                    if ((float)local_2b20 < (float)local_2b24) {
+                      uVar53 = CONCAT44(auStack_990,&LAB_0053b3e3);
+                      local_2b24 = local_2b20;
+                      Copy24Bytes(auStack_924,auStack_990);
+                    }
+                  }
+                  pCVar15 = local_2b68;
+                  uVar59 = uVar59 + 1;
+                } while ((int)uVar59 < 7);
+                uVar12 = uVar12 + 1;
+              } while ((int)uVar12 < 5);
+              local_2b60 = local_2b60 + 1;
+            } while ((int)local_2b60 < 5);
+            pCVar13 = local_2b18;
+            pvVar19 = local_2b1c;
+            if ((float)local_2b24 < 400.0) {
+              Copy24Bytes(local_2b68,auStack_924);
+              pCVar13 = local_2b44;
+              while( true ) {
+                uVar54 = ZEXT48(pCVar13);
+                uVar56 = 1;
+                uVar20 = 0x53b44f;
+                lib_fn_4cde40(&stack0xffffc894,1);
+                uVar53 = 0x53b45b;
+                lib_fn_4cde40(&stack0xffffc88c,0);
+                lib_fn_4cde40(&stack0xffffc884,0);
+                puVar9 = store_6_dwords(auStack_2128,(int)uVar53,(int)(uVar53 >> 0x20),uVar20,uVar56,
+                                      uVar57,puVar9);
+                puVar9 = Vec3i64_subtract(pCVar15,auStack_2578,puVar9);
+                cVar3 = WalkPathBehavior_checkPathClear(local_2b1c,puVar9,(float *)uVar54,(char)(uVar54 >> 0x20));
+                if (cVar3 != '\0') break;
+                pvVar19 = (void *)lib_fn_4e2320(pCVar15,2);
+                piVar10 = aiStack_3520;
+                uVar12 = 1;
+                getElemPtr4(pCVar13,2);
+                pvVar44 = (void *)int64_sub_timecall(pvVar19,aiStack_3530);
+                puVar22 = (undefined4 *)int64_sub_shifted(pvVar44,piVar10,uVar12);
+                uVar12 = puVar22[1];
+                iVar8 = 0;
+                puVar9 = (uint *)*puVar22;
+                puVar18 = (uint *)lib_fn_4e2320(local_2b68,1);
+                uVar57 = puVar18[1];
+                uVar59 = *puVar18;
+                puVar18 = (uint *)lib_fn_4e2320(local_2b68,0);
+                iVar8 = World_getBlockFloat(local_2b1c,*puVar18,puVar18[1],uVar59,uVar57,(uint)puVar9,
+                                     uVar12,iVar8);
+                bVar7 = get_low5bits_byte3(iVar8);
+                pCVar15 = local_2b68;
+                if (CONCAT31(extraout_var,bVar7) == 2) break;
+                lib_fn_4cde40(auStack_2fec,1);
+                int64_sub2(pvVar19,auStack_2fec);
+                pCVar15 = local_2b68;
+              }
+              plVar32 = (longlong *)lib_fn_4e2320(pCVar15,2);
+              fVar51 = fixedpoint16_to_float(plVar32);
+              *(float *)(local_2b18 + 0x13bc) = (float)fVar51;
+              pCVar13 = local_2b18;
+              pvVar19 = local_2b1c;
+            }
+          }
+          break;
+        case (CRefTime)0x32:
+        case (CRefTime)0x37:
+        case (CRefTime)0x60:
+          if (((*(char *)((int)pvVar19 + 0xb4) == '\0') && (local_2b18[0x60] != (CRefTime)0x0)) ||
+             (local_2b18 == *(CRefTime **)((int)pvVar19 + 0xb8))) {
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            if (((int)*(float *)(pCVar13 + 0x6c) <= iVar8) &&
+               (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff),
+               iVar8 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) {
+              *(float *)(pCVar13 + 0x13b4) = *(float *)(pCVar13 + 0x144);
+              *(float *)(pCVar13 + 0x170) =
+                   *(float *)(pCVar13 + 0x170) - *(float *)(pCVar13 + 0x144);
+              *(float *)(pCVar13 + 0x144) = 0.0;
+              puVar22 = list_find_by_id_byte(pCVar13,10);
+              if (puVar22 != (undefined4 *)0x0) {
+                CombatState_zeroInit(&cStack_2ef0);
+                cStack_2ef0 = '\n';
+                uStack_2ee8 = 0;
+                Combat_upsertBuffEntry(pCVar13,&cStack_2ef0);
+                init_struct_fields_a((int)&local_2e70);
+                local_2e60 = CONCAT71(uStack_2eef,cStack_2ef0);
+                local_2e6c = *(float *)(pCVar13 + 0xc);
+                local_2e70 = *(float *)(pCVar13 + 8);
+                local_2e58 = CONCAT44(uStack_2ee4,uStack_2ee8);
+                local_2e50 = CONCAT44(uStack_2edc,uStack_2ee0);
+                local_2e68 = local_2e70;
+                local_2e64 = local_2e6c;
+                std_list_push_back(local_2b2c + 0x16,(undefined8 *)&local_2e70);
+              }
+            }
+            iVar8 = Combat_getAbilityRecovery(pCVar13,0xffffffff);
+            iVar17 = (int)((iVar8 >> 0x1f & 3U) + iVar8) >> 2;
+            iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+            pvVar19 = local_2b1c;
+            if (iVar8 <= (int)*(float *)(pCVar13 + 0x6c)) {
+              local_2b44 = *(CRefTime **)(pCVar13 + 0x6c);
+              iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+              iVar11 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+              pCVar13 = local_2b18;
+              pvVar19 = local_2b1c;
+              if (((int)local_2b44 < iVar8 + iVar11) &&
+                 ((int)local_2b44 / iVar17 != (int)(local_2b44 + local_2b28) / iVar17)) {
+                pCVar15 = local_2b18 + 0x160;
+                fVar51 = vec3_length_sq((float *)pCVar15);
+                local_2b20 = (CRefTime *)(float)fVar51;
+                pvVar19 = local_2b1c;
+                if (0.0 < (float)local_2b20) {
+                  lib_fn_4c8530((int)auStack_894);
+                  Vec3i64_toFloatScaled(auStack_894,(longlong *)(pCVar13 + 0x10));
+                  iVar8 = rand();
+                  fStack_884 = ((float)iVar8 * 0.5) / 32767.0 + 1.0;
+                  uStack_888 = 0x16;
+                  std_list_push_back_428590(local_2b2c + 2,auStack_894);
+                  initStruct_0x70_defaults(&fStack_de4);
+                  pfVar25 = vec3_normalize_to(pCVar15,afStack_16d4);
+                  puVar22 = (undefined4 *)lib_fn_4e1520(afStack_13bc,150.0,pfVar25);
+                  Vec3_copy(auStack_da8,puVar22);
+                  fStack_d90 = *(float *)(local_2b18 + 0x13b4) * 0.25;
+                  uStack_d7c = 0;
+                  uStack_d98 = 0x3f000000;
+                  uStack_d8c = 0;
+                  uStack_d88 = 1;
+                  Copy24Bytes(auStack_dcc,(undefined4 *)(pCVar13 + 0x10));
+                  pCVar13 = local_2b18;
+                  fStack_de4 = *(float *)(local_2b18 + 8);
+                  fStack_de0 = *(float *)(local_2b18 + 0xc);
+                  Vec3_copy(auStack_ddc,(undefined4 *)(local_2b18 + 0x1b0));
+                  uStack_d84 = 0;
+                  local_2b44 = (CRefTime *)0x3f800000;
+                  if (pCVar13[0x68] == (CRefTime)0x37) {
+                    local_2b44 = (CRefTime *)0x3dcccccd;
+                  }
+                  local_2b94 = *(CRefTime **)(pCVar13 + 0x13b4);
+                  fVar51 = get_ability_multiplier((uint)(byte)pCVar13[0x68]);
+                  local_2b20 = (CRefTime *)(float)fVar51;
+                  fVar51 = calc_damage_value(pCVar13);
+                  local_2b4c = (CRefTime *)(float)fVar51;
+                  local_2b20 = (CRefTime *)
+                               ((float)local_2b20 * (float)local_2b4c *
+                               ((float)local_2b94 * (float)local_2b94 * 5.0 + (float)local_2b44));
+                  iVar8 = rand();
+                  fStack_d9c = ((1.25 - ((float)iVar8 * 0.5) / 32767.0) + 0.0) * (float)local_2b20;
+                  std_list_push_back_428360((void *)((int)local_2b1c + 0x14),&fStack_de4);
+                  std_list_push_back_428360(local_2b2c + 8,&fStack_de4);
+                  pvVar19 = local_2b1c;
+                }
+              }
+            }
+          }
+          break;
+        case (CRefTime)0x49:
+          if (*(char *)((int)pvVar19 + 0xb4) == '\0') {
+            iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+            if (((int)*(float *)(pCVar13 + 0x6c) < iVar8) &&
+               (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff),
+               iVar8 <= (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) {
+              lib_fn_4c8530((int)auStack_834);
+              Vec3i64_toFloatScaled(auStack_834,(longlong *)(pCVar13 + 0x10));
+              iVar8 = rand();
+              fStack_824 = ((float)iVar8 * 0.25) / 32767.0 + 0.6;
+              uStack_828 = 0x2b;
+              std_list_push_back_428590(local_2b2c + 2,auStack_834);
+            }
+            break;
+          }
+          goto code_r0x00537d0a;
+        case (CRefTime)0x59:
+        case (CRefTime)0x5a:
+          fVar24 = *(float *)(local_2b18 + 0x6c);
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          if (((int)fVar24 < iVar8) && ((int)fVar24 / 200 != (int)((int)fVar24 + local_2b28) / 200))
+          {
+            lib_fn_4c8530((int)auStack_6e4);
+            Vec3i64_toFloatScaled(auStack_6e4,(longlong *)(local_2b18 + 0x10));
+            iVar8 = rand();
+            fStack_6d4 = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+            uStack_6d8 = 0x24;
+            std_list_push_back_428590(local_2b2c + 2,auStack_6e4);
+          }
+          if ((((*(char *)((int)pvVar19 + 0xb4) == '\0') && (local_2b18[0x60] != (CRefTime)0x0)) ||
+              (pCVar13 = local_2b18, local_2b18 == *(CRefTime **)((int)pvVar19 + 0xb8))) &&
+             ((iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff), pCVar13 = local_2b18,
+              (int)*(float *)(local_2b18 + 0x6c) <= iVar8 &&
+              (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+              iVar8 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))))) {
+            lib_fn_4c8530((int)auStack_714);
+            Vec3i64_toFloatScaled(auStack_714,(longlong *)(pCVar13 + 0x10));
+            iVar8 = rand();
+            fStack_704 = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+            uStack_708 = 0x26;
+            std_list_push_back_428590(local_2b2c + 2,auStack_714);
+            initStruct_0x70_defaults(&fStack_b7c);
+            uStack_b1c = 3;
+            uStack_b20 = 0;
+            uStack_b28 = 0;
+            uStack_b24 = 0;
+            fVar51 = get_ability_multiplier((uint)(byte)local_2b18[0x68]);
+            local_2b20 = (CRefTime *)(float)fVar51;
+            fVar51 = calc_damage_value_b(local_2b18);
+            local_2b4c = (CRefTime *)(float)fVar51;
+            fStack_b7c = *(float *)(local_2b18 + 8);
+            fStack_b78 = *(float *)(local_2b18 + 0xc);
+            fStack_b34 = (float)local_2b20 * (float)local_2b4c * 2.0;
+            cStack_b18 = (local_2b18[0x68] == (CRefTime)0x5a) + '\x01';
+            uStack_b30 = 0x41000000;
+            Copy24Bytes(auStack_b64,(undefined4 *)(pCVar13 + 0x10));
+            uStack_b2c = 0x3f800000;
+            uStack_b14 = 0;
+            puVar22 = Vec3_set(auStack_1314,0,0,0);
+            Vec3_copy(auStack_b40,puVar22);
+            std_list_push_back_428360((void *)((int)pvVar19 + 0x14),&fStack_b7c);
+            std_list_push_back_428360(local_2b2c + 8,&fStack_b7c);
+            pCVar13 = local_2b18;
+          }
+          break;
+        case (CRefTime)0x5c:
+          if (((*(char *)((int)pvVar19 + 0xb4) != '\0') || (local_2b18[0x60] == (CRefTime)0x0)) &&
+             (local_2b18 != *(CRefTime **)((int)pvVar19 + 0xb8))) goto LAB_0053bc80;
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          pCVar13 = local_2b18;
+          if (((int)*(float *)(local_2b18 + 0x6c) <= iVar8) &&
+             (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+             iVar8 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) {
+            local_2b24 = (CRefTime *)0x0;
+            uStack_2c34 = 0;
+            deref_getFirst(local_2b70,&iStack_2c84);
+            piVar10 = (int *)World_getField0(local_2b70,&uStack_2df4);
+            bVar2 = std_iterator_notEqual(&iStack_2c84,piVar10);
+            uVar12 = (uint)uStack_2c34;
+            uVar59 = uStack_2c34._4_4_;
+            if (bVar2) {
+              do {
+                puVar9 = (uint *)getField_plus0x10(&iStack_2c84);
+                if (puVar9[2] != 0) {
+                  if ((*(float *)(puVar9[2] + 0x198) == *(float *)(local_2b18 + 8)) &&
+                     (*(float *)(puVar9[2] + 0x19c) == *(float *)(local_2b18 + 0xc))) {
+                    local_2b24 = local_2b24 + 1;
+                  }
+                  uVar57 = puVar9[1];
+                  if (((int)uVar57 <= (int)uVar59) &&
+                     (((int)uVar57 < (int)uVar59 || (*puVar9 < uVar12)))) {
+                    uVar12 = *puVar9;
+                    uVar59 = uVar57;
+                    uStack_2c34 = *(undefined8 *)puVar9;
+                  }
+                }
+                RBTree_copyBeginThenInc(&iStack_2c84,&iStack_3020);
+                piVar10 = (int *)World_getField0(local_2b70,&uStack_2df4);
+                bVar2 = std_iterator_notEqual(&iStack_2c84,piVar10);
+              } while (bVar2);
+              pCVar13 = local_2b18;
+              pvVar19 = local_2b1c;
+              if (2 < (int)local_2b24) break;
+            }
+            uStack_2c34 = CONCAT44((uVar59 - 1) + (uint)(uVar12 != 0),uVar12 - 1);
+            local_2b34 = operator_new(0x1e60);
+            local_8._0_1_ = 0x11;
+            if (local_2b34 == (Creature *)0x0) {
+              puVar22 = (undefined4 *)0x0;
+            }
+            else {
+              puVar22 = cube::Creature::ctor_1(local_2b34,(undefined4 *)&uStack_2c34);
+            }
+            local_8 = CONCAT31(local_8._1_3_,5);
+            pCVar13 = local_2b18 + 0x13f8;
+            *(char *)(puVar22 + 0x18) = (local_2b18[0x60] == (CRefTime)0x0) * '\x02' + '\x01';
+            bVar2 = lib_fn_4e28d0((int *)pCVar13);
+            if (bVar2) {
+              uVar12 = 0x25;
+              pCVar13 = local_2b18;
+            }
+            else {
+              uVar12 = std_vector_size_41fff0((int *)pCVar13);
+              uVar59 = rand();
+              pCVar13 = local_2b18;
+              puVar9 = (uint *)ptr_index_dword(local_2b18 + 0x13f8,uVar59 % uVar12);
+              uVar12 = *puVar9;
+            }
+            if (*(float *)(pCVar13 + 0x13f4) == 1.4013e-45) {
+              puVar22[0x19] = *(float *)(pCVar13 + 100);
+              QuestText_copyStrings13(puVar22 + 0xc0,pCVar13 + 0x300);
+              copy_struct_0xac(puVar22 + 0x1e,pCVar13 + 0x78);
+            }
+            else if (*(float *)(pCVar13 + 0x13f4) == 2.8026e-45) {
+              pCVar13 = (CRefTime *)std_map_find_value(local_2b1c,(uint *)(pCVar13 + 0x11d0));
+              if (pCVar13 == (CRefTime *)0x0) {
+                pCVar13 = local_2b18;
+              }
+              puVar22[0x19] = *(float *)(pCVar13 + 100);
+              QuestText_copyStrings13(puVar22 + 0xc0,pCVar13 + 0x300);
+              copy_struct_0xac(puVar22 + 0x1e,pCVar13 + 0x78);
+              pCVar13 = local_2b18;
+            }
+            else {
+              puVar22[0x19] = uVar12;
+              generate_entity_appearance(puVar22 + 0x19,(int)(puVar22 + 0x1e),(undefined4 *)0x0);
+            }
+            *(ushort *)((int)puVar22 + 0x7e) = *(ushort *)((int)puVar22 + 0x7e) & 0xfdff | 0x800;
+            puVar22[100] = *(float *)(pCVar13 + 400);
+            fVar51 = Combat_computeMaxHealth((int)pCVar13);
+            puVar22[0x5b] = (float)fVar51;
+            Copy24Bytes(puVar22 + 4,(undefined4 *)(pCVar13 + 0x10));
+            local_2b34 = operator_new(0xc);
+            local_8._0_1_ = 0x12;
+            if (local_2b34 == (Creature *)0x0) {
+              local_2b44 = (CRefTime *)0x0;
+            }
+            else {
+              local_2b44 = (CRefTime *)cube::SequentialBehavior::ctor_1((undefined4 *)local_2b34);
+            }
+            pCVar13 = local_2b44;
+            local_8._0_1_ = 5;
+            local_2b34 = operator_new(0x14);
+            local_8._0_1_ = 0x13;
+            if (local_2b34 == (Creature *)0x0) {
+              local_2b20 = (CRefTime *)0x0;
+            }
+            else {
+              local_2b20 = (CRefTime *)
+                           cube::CombatBehavior::ctor_0((CombatBehavior *)local_2b34,0x41a00000);
+            }
+            pCVar13 = pCVar13 + 4;
+            local_8._0_1_ = 5;
+            lib_fn_4d6620(pCVar13,&local_2b20);
+            local_2b34 = operator_new(0x10);
+            local_8._0_1_ = 0x14;
+            if (local_2b34 == (Creature *)0x0) {
+              local_2b20 = (CRefTime *)0x0;
+            }
+            else {
+              local_2b20 = (CRefTime *)cube::CompanionBehavior::ctor_0((undefined4 *)local_2b34);
+            }
+            *(float *)(local_2b20 + 8) = *(float *)(local_2b18 + 8);
+            *(float *)(local_2b20 + 0xc) = *(float *)(local_2b18 + 0xc);
+            local_8._0_1_ = 5;
+            lib_fn_4d6620(pCVar13,&local_2b20);
+            local_2b34 = operator_new(8);
+            local_8._0_1_ = 0x15;
+            if (local_2b34 == (Creature *)0x0) {
+              local_2b20 = (CRefTime *)0x0;
+            }
+            else {
+              local_2b20 = (CRefTime *)cube::RandomWalkBehavior::ctor_0((undefined4 *)local_2b34);
+            }
+            local_8._0_1_ = 5;
+            lib_fn_4d6620(pCVar13,&local_2b20);
+            pCVar13 = local_2b18;
+            puVar22[0x4f9] = local_2b44;
+            puVar22[0x66] = *(float *)(local_2b18 + 8);
+            puVar22[0x67] = *(float *)(local_2b18 + 0xc);
+            puVar9 = RBTree_findOrInsert(local_2b70,(uint *)&uStack_2c34);
+            *puVar9 = (uint)puVar22;
+            pvVar19 = local_2b1c;
+          }
+          break;
+        case (CRefTime)0x65:
+          if ((((*(char *)((int)pvVar19 + 0xb4) != '\0') || (local_2b18[0x60] == (CRefTime)0x0)) &&
+              (local_2b18 != *(CRefTime **)((int)pvVar19 + 0xb8))) ||
+             (*(float *)(local_2b18 + 0x6c) != 0.0)) goto LAB_0053bc80;
+          lib_fn_4c8530((int)auStack_684);
+          pCVar13 = local_2b18;
+          Vec3i64_toFloatScaled(auStack_684,(longlong *)(local_2b18 + 0x10));
+          uStack_674 = 0x3f800000;
+          uStack_678 = 0x19;
+          std_list_push_back_428590(local_2b2c + 2,auStack_684);
+          CombatState_zeroInit(&cStack_2f20);
+          uStack_2f18 = 10000;
+          cStack_2f20 = '\x01';
+          Combat_upsertBuffEntry(pCVar13,&cStack_2f20);
+          if (0 < (int)*(float *)(pCVar13 + 300)) {
+            *(float *)(pCVar13 + 300) = 0.0;
+          }
+          init_struct_fields_a((int)&fStack_30d8);
+          pCVar13 = local_2b18;
+          uStack_30c8 = CONCAT71(uStack_2f1f,cStack_2f20);
+          fStack_30d4 = *(float *)(local_2b18 + 0xc);
+          fStack_30d8 = *(float *)(local_2b18 + 8);
+          uStack_30c0 = CONCAT44(uStack_2f14,uStack_2f18);
+          uStack_30b8 = uStack_2f10;
+          uStack_30b4 = uStack_2f0c;
+          fStack_30d0 = fStack_30d8;
+          fStack_30cc = fStack_30d4;
+          std_list_push_back(local_2b2c + 0x16,(undefined8 *)&fStack_30d8);
+          break;
+        case (CRefTime)0x67:
+          if ((((*(char *)((int)pvVar19 + 0xb4) != '\0') || (local_2b18[0x60] == (CRefTime)0x0)) &&
+              (local_2b18 != *(CRefTime **)((int)pvVar19 + 0xb8))) ||
+             (*(float *)(local_2b18 + 0x6c) != 0.0)) goto LAB_0053bc80;
+          lib_fn_4c8530((int)auStack_5f4);
+          pCVar13 = local_2b18;
+          Vec3i64_toFloatScaled(auStack_5f4,(longlong *)(local_2b18 + 0x10));
+          uStack_5e4 = 0x3f800000;
+          uStack_5e8 = 0x19;
+          std_list_push_back_428590(local_2b2c + 2,auStack_5f4);
+          CombatState_zeroInit((undefined1 *)&uStack_2e88);
+          uStack_2e80 = 30000;
+          fVar51 = calc_damage_value_b(pCVar13);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          fStack_2e84 = (float)local_2b20 * 4.0;
+          uStack_2e88 = CONCAT31(uStack_2e88._1_3_,6);
+          Combat_upsertBuffEntry(pCVar13,(char *)&uStack_2e88);
+          if (0 < (int)*(float *)(pCVar13 + 300)) {
+            *(float *)(pCVar13 + 300) = 0.0;
+          }
+          init_struct_fields_a((int)&fStack_3100);
+          pCVar13 = local_2b18;
+          uStack_30f0 = CONCAT44(fStack_2e84,uStack_2e88);
+          fStack_30fc = *(float *)(local_2b18 + 0xc);
+          fStack_3100 = *(float *)(local_2b18 + 8);
+          uStack_30e8 = CONCAT44(uStack_2e7c,uStack_2e80);
+          uStack_30e0 = uStack_2e78;
+          uStack_30dc = uStack_2e74;
+          fStack_30f8 = fStack_3100;
+          fStack_30f4 = fStack_30fc;
+          std_list_push_back(local_2b2c + 0x16,(undefined8 *)&fStack_3100);
+          break;
+        case (CRefTime)0x69:
+          if (local_2b18 != *(CRefTime **)((int)pvVar19 + 0xb8)) goto LAB_0053bc80;
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          pCVar13 = local_2b18;
+          if (((int)*(float *)(local_2b18 + 0x6c) <= iVar8) &&
+             (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff),
+             iVar8 < (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) {
+            iVar8 = *(int *)((int)pvVar19 + 0xb8);
+            pCVar13 = (CRefTime *)lib_fn_4e2320((void *)(iVar8 + 0x10),1);
+            lVar14 = CRefTime::Millisecs(pCVar13);
+            pCVar13 = (CRefTime *)lib_fn_4e2320((void *)(iVar8 + 0x10),0);
+            lVar16 = CRefTime::Millisecs(pCVar13);
+            iVar8 = lib_fn_4feec0(pvVar19,lVar16,lVar14);
+            pCVar13 = local_2b18;
+            if (iVar8 != 0) {
+              pvVar44 = (void *)(iVar8 + 0x14018);
+              local_2b24 = (CRefTime *)0x8;
+              do {
+                local_2b44 = (CRefTime *)0x8;
+                do {
+                  if (*(int *)((int)pvVar44 + 0x18) == 1) {
+                    pCVar13 = local_2b18 + 0x10;
+                    puVar22 = (undefined4 *)lib_fn_4e2320(pvVar44,0);
+                    pvVar19 = (void *)lib_fn_4e2320(pCVar13,0);
+                    std_pair_copy_ctor2(pvVar19,puVar22);
+                    puVar22 = (undefined4 *)lib_fn_4e2320(pvVar44,1);
+                    pvVar19 = (void *)lib_fn_4e2320(pCVar13,1);
+                    std_pair_copy_ctor2(pvVar19,puVar22);
+                    uVar12 = 0;
+                    pvVar19 = (void *)lib_fn_4e2320(pCVar13,2);
+                    lib_fn_4cde40(pvVar19,uVar12);
+                  }
+                  pvVar44 = (void *)((int)pvVar44 + 0x68);
+                  local_2b44 = local_2b44 + -1;
+                } while (local_2b44 != (CRefTime *)0x0);
+                local_2b24 = local_2b24 + -1;
+                local_2b44 = (CRefTime *)0x0;
+                pCVar13 = local_2b18;
+                pvVar19 = local_2b1c;
+              } while (local_2b24 != (CRefTime *)0x0);
+            }
+          }
+          break;
+        case (CRefTime)0x6e:
+          if (*(char *)((int)pvVar19 + 0xb4) != '\0') goto code_r0x00537d0a;
+          iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          if (((((int)*(float *)(pCVar13 + 0x6c) < iVar8) &&
+               (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff),
+               iVar8 <= (int)((int)*(float *)(pCVar13 + 0x6c) + local_2b28))) &&
+              (uVar12 = std_map_find_value(pvVar19,(uint *)(pCVar13 + 0x11d0)), pvVar19 = local_2b1c,
+              uVar12 != 0)) &&
+             ((*(char *)(uVar12 + 0x1020) == '\x14' &&
+              ((float)(uint)*(byte *)(uVar12 + 0x1021) == *(float *)(pCVar13 + 100))))) {
+            lib_fn_4c8530((int)auStack_864);
+            Vec3i64_toFloatScaled(auStack_864,(longlong *)(pCVar13 + 0x10));
+            iVar8 = rand();
+            fStack_854 = ((float)iVar8 * 0.2) / 32767.0 + 0.9;
+            uStack_858 = 0x2c;
+            std_list_push_back_428590(local_2b2c + 2,auStack_864);
+            initStruct_0x47_zero((int)&fStack_bc4);
+            fStack_bc4 = *(float *)(local_2b18 + 8);
+            fStack_bc0 = *(float *)(local_2b18 + 0xc);
+            uStack_bbc = *(undefined4 *)(uVar12 + 8);
+            uStack_bb8 = *(undefined4 *)(uVar12 + 0xc);
+            uStack_bb4 = 0;
+            uStack_b7f = 6;
+            uStack_bb0 = 0;
+            Copy24Bytes(auStack_ba4,(undefined4 *)(pCVar13 + 0x10));
+            std_list_push_back_428400(local_2b2c,&fStack_bc4);
+            pCVar13 = local_2b18 + 0x1178;
+            local_2b68 = (CRefTime *)0x0;
+            deref_getFirst(pCVar13,&iStack_2c54);
+            piVar10 = (int *)World_getField0(pCVar13,&uStack_2e34);
+            bVar2 = std_iterator_notEqual(&iStack_2c54,piVar10);
+            if (bVar2) {
+              do {
+                pcVar29 = (char *)lib_fn_52eb90(&iStack_2c54);
+                if (*pcVar29 == '\a') {
+                  local_2b68 = *(CRefTime **)(pcVar29 + 4);
+                }
+                lib_fn_52ebf0(&iStack_2c54,&local_2b34);
+                piVar10 = (int *)World_getField0(pCVar13,&uStack_2e34);
+                bVar2 = std_iterator_notEqual(&iStack_2c54,piVar10);
+              } while (bVar2);
+            }
+            pCVar13 = local_2b18;
+            local_2b68 = (CRefTime *)((float)local_2b68 + 0.2);
+            *(uint *)(local_2b18 + 0x70) = (int)*(float *)(local_2b18 + 0x70) + 1;
+            *(float *)(local_2b18 + 0x74) = 0.0;
+            if (1.0 <= (float)local_2b68) {
+              local_2b18[0x60] = (CRefTime)0x5;
+              local_2b68 = (CRefTime *)0x3f800000;
+              lib_fn_522580(local_2b1c,*(uint *)(uVar12 + 8),*(undefined4 *)(uVar12 + 0xc),
+                           (int)local_2b18);
+            }
+            CombatState_zeroInit(acStack_2ea8);
+            acStack_2ea8[0] = '\a';
+            uStack_2ea0 = 5000;
+            pCStack_2ea4 = local_2b68;
+            fStack_2e98 = *(float *)(pCVar13 + 0x198);
+            fStack_2e94 = *(float *)(pCVar13 + 0x19c);
+            CombatBehavior_pushTargetPos(pCVar13,acStack_2ea8,(int)local_2b2c);
+            pvVar19 = local_2b1c;
+          }
+        }
+        if (*(char *)((int)pvVar19 + 0xb4) == '\0') {
+LAB_00537d16:
+          *(uint *)(pCVar13 + 0x74) = (int)*(float *)(pCVar13 + 0x74) + local_2b28;
+          if (4000 < (int)*(float *)(pCVar13 + 0x74)) {
+            fVar51 = Combat_computeAttackSpeed((int)pCVar13);
+            local_2b20 = (CRefTime *)(float)fVar51;
+            *(float *)(pCVar13 + 0x70) = 0.0;
+            fVar51 = Combat_computeAttackSpeed((int)pCVar13);
+            local_2b4c = (CRefTime *)(float)fVar51;
+            pCVar15 = pCVar13 + 0x139c;
+            *(int *)(pCVar13 + 0x6c) =
+                 (int)(((float)local_2b20 / (float)local_2b4c) *
+                      (float)(int)*(float *)(pCVar13 + 0x6c));
+            deref_getFirst(pCVar15,&local_2ca0);
+            piVar10 = (int *)World_getField0(pCVar15,&local_2d9c);
+            bVar2 = std_iterator_notEqual(&local_2ca0,piVar10);
+            if (bVar2) {
+              do {
+                puVar22 = (undefined4 *)getField_plus0x10(&local_2ca0);
+                cVar3 = stub_return_zero();
+                if (cVar3 != '\0') {
+                  iVar8 = get_ability_cast_duration(local_2b18,*puVar22,-1);
+                  puVar22[1] = iVar8;
+                }
+                RBTree_copyBeginThenInc(&local_2ca0,&local_3028);
+                piVar10 = (int *)World_getField0(pCVar15,&local_2d9c);
+                bVar2 = std_iterator_notEqual(&local_2ca0,piVar10);
+                pCVar13 = local_2b18;
+              } while (bVar2);
+            }
+          }
+        }
+        else {
+code_r0x00537d0a:
+          if (pCVar13 == *(CRefTime **)((int)pvVar19 + 0xb8)) goto LAB_00537d16;
+        }
+        pCVar15 = pCVar13 + 0x139c;
+        deref_getFirst(pCVar15,&local_2c70);
+        piVar10 = (int *)World_getField0(pCVar15,&local_2dfc);
+        bVar2 = std_iterator_notEqual(&local_2c70,piVar10);
+        if (bVar2) {
+          do {
+            iVar8 = getField_plus0x10(&local_2c70);
+            cVar3 = stub_return_zero();
+            if (cVar3 == '\0') {
+              piVar10 = (int *)(iVar8 + 4);
+              *piVar10 = *piVar10 - local_2b28;
+              if (*piVar10 < 0) {
+                *(undefined4 *)(iVar8 + 4) = 0;
+              }
+            }
+            RBTree_copyBeginThenInc(&local_2c70,&local_2fd0);
+            piVar10 = (int *)World_getField0(pCVar15,&local_2dfc);
+            bVar2 = std_iterator_notEqual(&local_2c70,piVar10);
+            pCVar13 = local_2b18;
+          } while (bVar2);
+        }
+        lib_fn_4c8280(local_2bfc);
+        pCVar13 = pCVar13 + 0x1178;
+        local_8 = CONCAT31(local_8._1_3_,0x16);
+        deref_getFirst(pCVar13,&local_2ba8);
+        piVar10 = (int *)World_getField0(pCVar13,&local_2cec);
+        bVar2 = std_iterator_notEqual(&local_2ba8,piVar10);
+        if (bVar2) {
+          do {
+            pcVar29 = (char *)lib_fn_52eb90(&local_2ba8);
+            *(uint *)(pcVar29 + 8) = *(int *)(pcVar29 + 8) - local_2b28;
+            iVar8 = *(int *)(pcVar29 + 8);
+            if (iVar8 < 1) {
+              lib_fn_4d6620(local_2bfc,&local_2ba8);
+            }
+            else if (*pcVar29 == '\x01') {
+              if (0 < (int)*(float *)(local_2b18 + 300)) {
+                *(float *)(local_2b18 + 300) = 0.0;
+              }
+            }
+            else if (((*pcVar29 == '\x04') && (*(char *)((int)local_2b1c + 0xb4) == '\0')) &&
+                    (iVar8 / 400 != (int)(local_2b28 + iVar8) / 400)) {
+              pvVar19 = (void *)std_map_find_value(local_2b1c,(uint *)(pcVar29 + 0x10));
+              uVar53 = 0;
+              iVar8 = 0;
+              cVar3 = '\x01';
+              puVar22 = local_2bec;
+              piVar10 = local_2b2c;
+              pfVar25 = (float *)Vec3_set(local_1704,0,0,0);
+              stl_fn_4cfd50(local_2b1c,(float)local_2b18,pvVar19,*(float *)(pcVar29 + 4),'\0','\0',
+                           0.0,local_2b18 + 0x1320,pfVar25,piVar10,puVar22,cVar3,iVar8,(int)uVar53,
+                           (char)(uVar53 >> 0x20));
+            }
+            lib_fn_52ebf0(&local_2ba8,&local_2b34);
+            pCVar13 = local_2b18 + 0x1178;
+            piVar10 = (int *)World_getField0(pCVar13,&local_2cec);
+            bVar2 = std_iterator_notEqual(&local_2ba8,piVar10);
+          } while (bVar2);
+        }
+        deref_getFirst(local_2bfc,&local_2c90);
+        piVar10 = (int *)World_getField0(local_2bfc,&local_2cf0);
+        bVar2 = std_iterator_notEqual(&local_2c90,piVar10);
+        if (bVar2) {
+          do {
+            puVar22 = (undefined4 *)lib_fn_52eb90(&local_2c90);
+            lib_fn_5305b0(pCVar13,&local_3058,(int *)*puVar22);
+            lib_fn_52ebf0(&local_2c90,&local_2b34);
+            piVar10 = (int *)World_getField0(local_2bfc,&local_2cf0);
+            bVar2 = std_iterator_notEqual(&local_2c90,piVar10);
+          } while (bVar2);
+        }
+        *(uint *)(local_2b18 + 300) = (int)*(float *)(local_2b18 + 300) - local_2b28;
+        if (0 < (int)*(float *)(local_2b18 + 300)) {
+          *(float *)(local_2b18 + 0x6c) = 0.0;
+          local_2b18[0x68] = (CRefTime)0x0;
+        }
+        pCVar13 = local_2b18;
+        if (local_2b18[0x60] == (CRefTime)0x6) {
+LAB_0053e357:
+          if (pCVar13[0x68] == (CRefTime)0x0) {
+            pCVar13 = pCVar13 + 0x11b4;
+            deref_getFirst(pCVar13,&local_2c3c);
+            piVar10 = (int *)World_getField0(pCVar13,&local_2cf4);
+            bVar2 = std_iterator_notEqual(&local_2c3c,piVar10);
+            pCVar15 = local_2b18;
+            if (bVar2) {
+              do {
+                puVar9 = (uint *)getField_plus0x10(&local_2c3c);
+                piVar10 = (int *)World_getField0(pCVar15 + 0x11ac,&local_2fd8);
+                pvVar19 = (void *)std_map_lower_bound_yx(pCVar15 + 0x11ac,&local_2fa0,puVar9);
+                bVar2 = compare_int_eq(pvVar19,piVar10);
+                if ((bVar2) &&
+                   (pvVar19 = (void *)std_map_find_value(local_2b1c,puVar9), pvVar19 != (void *)0x0)) {
+                  creature_spawn_projectile(pvVar19,(int)local_2b2c);
+                  initStruct_0x47_zero((int)&local_c0c);
+                  local_bfc = 0;
+                  local_c0c = *(float *)(local_2b18 + 8);
+                  local_c08 = *(float *)(local_2b18 + 0xc);
+                  local_c04 = *(undefined4 *)((int)pvVar19 + 8);
+                  local_c00 = *(undefined4 *)((int)pvVar19 + 0xc);
+                  local_bc7 = 4;
+                  local_bf8 = 0;
+                  Copy24Bytes(local_bec,(undefined4 *)((int)pvVar19 + 0x10));
+                  std_list_push_back_428400(local_2b2c,&local_c0c);
+                }
+                RBTree_copyBeginThenInc(&local_2c3c,&local_2fa4);
+                pCVar13 = local_2b18 + 0x11b4;
+                piVar10 = (int *)World_getField0(pCVar13,&local_2cf4);
+                bVar2 = std_iterator_notEqual(&local_2c3c,piVar10);
+              } while (bVar2);
+            }
+            std_map_clear((int *)(local_2b18 + 0x11ac));
+            std_map_clear((int *)pCVar13);
+            pCVar13 = local_2b18;
+          }
+        }
+        else if ((-1 < (int)*(float *)(local_2b18 + 0x6c)) || (local_2b18[0x68] == (CRefTime)0x0)) {
+          if (*(float *)(local_2b18 + 0x6c) == 0.0) {
+            CVar6 = local_2b18[0x68];
+            local_2b20 = (CRefTime *)(uint)(byte)CVar6;
+            piVar10 = std_map_operator_int(local_2b18 + 0x139c,(int *)&local_2b20);
+            iVar8 = get_ability_cast_duration(local_2b18,(CRefTime *)(uint)(byte)CVar6,-1);
+            *piVar10 = iVar8;
+          }
+          pCVar13 = local_2b18;
+          *(uint *)(local_2b18 + 0x6c) = (int)*(float *)(local_2b18 + 0x6c) + local_2b28;
+          if (((local_2b18[0x68] == (CRefTime)0x36) &&
+              (iVar8 = Combat_getAbilityCooldown(local_2b18,0xffffffff), iVar8 < (int)*(float *)(pCVar13 + 0x6c))
+              ) && (iVar8 = Combat_getWindupAndRecovery((int)pCVar13), (int)*(float *)(pCVar13 + 0x6c) < iVar8)) {
+            iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+            pCVar13 = local_2b18;
+            iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            if ((int)*(float *)(pCVar13 + 0x6c) < iVar8 + iVar17) {
+              puVar22 = (undefined4 *)getElemPtr4(pCVar13 + 0x34,2);
+              *puVar22 = 0xc2700000;
+            }
+          }
+          goto LAB_0053e357;
+        }
+        uVar20 = Combat_isSpiritChanneling((int)pCVar13);
+        CVar6 = pCVar13[0x68];
+        if ((char)uVar20 == '\0') {
+          if ((((((CVar6 != (CRefTime)0x18) && (CVar6 != (CRefTime)0x19)) &&
+                (CVar6 != (CRefTime)0x1b)) &&
+               ((CVar6 != (CRefTime)0x3b && (CVar6 != (CRefTime)0x3f)))) &&
+              (CVar6 != (CRefTime)0x40)) && (CVar6 != (CRefTime)0x8)) {
+            fVar24 = *(float *)(pCVar13 + 0x170) - local_2b8c * 5e-05;
+            goto LAB_0053e567;
+          }
+        }
+        else if ((CVar6 != (CRefTime)0x1c) &&
+                ((((CVar6 != (CRefTime)0x5f && (CVar6 != (CRefTime)0x25)) &&
+                  (((CVar6 != (CRefTime)0x2e &&
+                    (((CVar6 != (CRefTime)0x2d && (CVar6 != (CRefTime)0x1f)) &&
+                     (CVar6 != (CRefTime)0x21)))) &&
+                   ((CVar6 != (CRefTime)0x2b && (CVar6 != (CRefTime)0x22)))))) ||
+                 (iVar8 = Combat_getWindupAndRecovery((int)pCVar13), iVar8 <= (int)*(float *)(pCVar13 + 0x6c))))) {
+          fVar24 = local_2b8c * 0.0001 + *(float *)(pCVar13 + 0x170);
+LAB_0053e567:
+          *(float *)(pCVar13 + 0x170) = fVar24;
+        }
+        if (*(float *)(pCVar13 + 0x170) <= 0.0 && *(float *)(pCVar13 + 0x170) != 0.0) {
+          *(float *)(pCVar13 + 0x170) = 0.0;
+        }
+        if (1.0 < *(float *)(pCVar13 + 0x170)) {
+          *(float *)(pCVar13 + 0x170) = 1.0;
+        }
+        cVar3 = check_ability_state((int)pCVar13);
+        if (cVar3 == '\0') {
+          *(float *)(pCVar13 + 0x174) = local_2b8c / 2000.0 + *(float *)(pCVar13 + 0x174);
+        }
+        else if (0.0 < *(float *)(pCVar13 + 0x174)) {
+          if ((pCVar13[0x990] == (CRefTime)0x3) && (pCVar13[0x991] == (CRefTime)0xd)) {
+            fVar24 = local_2b8c / 1200.0;
+          }
+          else {
+            fVar24 = local_2b8c / 600.0;
+          }
+          fVar24 = *(float *)(pCVar13 + 0x174) - fVar24;
+          *(float *)(pCVar13 + 0x174) = fVar24;
+          if (fVar24 < 0.0) {
+            *(float *)(pCVar13 + 0x174) = 0.0;
+          }
+        }
+        if (1.0 < *(float *)(pCVar13 + 0x174)) {
+          *(float *)(pCVar13 + 0x174) = 1.0;
+        }
+        if (pCVar13[0x68] != (CRefTime)0x0) {
+          set_flag_bits_0x114(pCVar13 + 0x10,0x10,'\0');
+        }
+        fVar51 = vec3_length_sq((float *)(pCVar13 + 0x40));
+        local_2b20 = (CRefTime *)(float)fVar51;
+        if (0.0 < (float)local_2b20) {
+          set_flag_bits_0x114(pCVar13 + 0x10,0x400,'\0');
+        }
+        if ((pCVar13[0x68] == (CRefTime)0x53) || (pCVar13[0x68] == (CRefTime)0x54)) {
+          fVar51 = vec3_length_sq((float *)(pCVar13 + 0x40));
+          local_2b20 = (CRefTime *)(float)fVar51;
+          if (0.0 < (float)local_2b20) {
+            pCVar13[0x68] = (CRefTime)0x0;
+          }
+        }
+        if ((((*(char *)((int)local_2b1c + 0xb4) == '\0') && (pCVar13[0x60] != (CRefTime)0x0)) ||
+            (pCVar13 == *(CRefTime **)((int)local_2b1c + 0xb8))) &&
+           ((pCVar13[0x68] == (CRefTime)0x50 || (pCVar13[0x68] == (CRefTime)0x51)))) {
+          local_2b20 = *(CRefTime **)(pCVar13 + 0x6c);
+          pCVar15 = pCVar13 + 0x1e8;
+          iVar17 = (int)local_2b20 - local_2b28;
+          iVar8 = get_effect_duration_a((char *)pCVar15);
+          pCVar13 = local_2b18;
+          if ((iVar17 < iVar8) && ((int)local_2b20 / 200 != iVar17 / 200)) {
+            iVar8 = get_effect_duration_a((char *)pCVar15);
+            pCVar38 = local_2b18;
+            local_2b24 = (CRefTime *)(200.0 / (float)iVar8);
+            if (local_2b18[0x60] != (CRefTime)0x0) {
+              local_2b24 = (CRefTime *)((float)local_2b24 * 0.5);
+            }
+            fVar51 = calc_heal_value((char *)pCVar15);
+            local_2b20 = (CRefTime *)(float)fVar51;
+            local_2b44 = (CRefTime *)((float)local_2b20 * (float)local_2b24);
+            if (0.0 < (float)local_2b44) {
+              initStruct_0x47_zero((int)&local_50c);
+              Copy24Bytes(local_4ec,(undefined4 *)(pCVar38 + 0x10));
+              local_504 = *(float *)(pCVar38 + 8);
+              local_4fc = (uint)local_2b44 ^ 0x80000000;
+              local_500 = *(float *)(pCVar38 + 0xc);
+              local_50c = 0xffffffff;
+              local_508 = 0xffffffff;
+              local_4f8 = 0;
+              std_list_push_back_428400(local_2b2c,&local_50c);
+              *(float *)(pCVar38 + 0x16c) = (float)local_2b44 + *(float *)(pCVar38 + 0x16c);
+              fVar51 = Combat_computeMaxHealth((int)pCVar38);
+              local_2b20 = (CRefTime *)(float)fVar51;
+              if ((float)local_2b20 < *(float *)(pCVar38 + 0x16c)) {
+                fVar51 = Combat_computeMaxHealth((int)pCVar38);
+                *(float *)(pCVar38 + 0x16c) = (float)fVar51;
+              }
+            }
+            fVar51 = calc_value_ranged((char *)pCVar15);
+            local_2b20 = (CRefTime *)(float)fVar51;
+            fVar51 = std_powf(2.0);
+            local_2b4c = (CRefTime *)(float)fVar51;
+            fVar52 = ((float)local_2b20 / (float)local_2b4c) * (float)local_2b24;
+            fVar24 = fVar52 + *(float *)(pCVar38 + 0x13c);
+            *(float *)(pCVar38 + 0x13c) = fVar24;
+            if (0.0 <= fVar24) {
+              if (fVar24 - fVar52 < 0.0) {
+                lib_fn_4c8530((int)local_1f0);
+                local_1e4 = 0x2f;
+                Vec3i64_toFloatScaled(local_1f0,(longlong *)(pCVar38 + 0x10));
+                std_list_push_back_428590(local_2b2c + 2,local_1f0);
+              }
+              *(float *)(pCVar38 + 0x13c) = 0.0;
+            }
+            pCVar13 = local_2b18;
+            if ((int)*(float *)(pCVar38 + 0x6c) / 400 !=
+                (int)((int)*(float *)(pCVar38 + 0x6c) - local_2b28) / 400) {
+              lib_fn_4c8530((int)local_5ac);
+              pCVar13 = local_2b18;
+              Vec3i64_toFloatScaled(local_5ac,(longlong *)(local_2b18 + 0x10));
+              local_59c = 0x3f800000;
+              local_5a0 = 0x2c;
+              std_list_push_back_428590(local_2b2c + 2,local_5ac);
+            }
+          }
+        }
+        lib_fn_4c8280(local_2ce0);
+        pCVar15 = pCVar13 + 0x13a4;
+        local_8 = CONCAT31(local_8._1_3_,0x17);
+        deref_getFirst(pCVar15,&local_2b80);
+        piVar10 = (int *)World_getField0(pCVar15,&local_2cfc);
+        bVar2 = std_iterator_notEqual(&local_2b80,piVar10);
+        if (bVar2) {
+          local_2b20 = (CRefTime *)(local_2b8c * 0.00025);
+          do {
+            puVar9 = (uint *)getField_plus0x10(&local_2b80);
+            local_2b4c = (CRefTime *)((float)puVar9[2] - (float)local_2b20);
+            puVar9[2] = (uint)local_2b4c;
+            uVar12 = std_map_find_value(local_2b1c,puVar9);
+            if (uVar12 != 0) {
+              if ((0.0 < *(float *)(uVar12 + 0x16c)) && ((float)local_2b4c < 0.01)) {
+                puVar9[2] = 0x3c23d70a;
+              }
+              if (((float)puVar9[2] <= 0.0) ||
+                 ((*puVar9 != 0 || puVar9[1] != 0 && (*(float *)(uVar12 + 0x16c) <= 0.0)))) {
+                lib_fn_4d6620(local_2ce0,&local_2b80);
+              }
+            }
+            RBTree_copyBeginThenInc(&local_2b80,&local_2fb4);
+            piVar10 = (int *)World_getField0(pCVar15,&local_2cfc);
+            bVar2 = std_iterator_notEqual(&local_2b80,piVar10);
+            pCVar13 = local_2b18;
+          } while (bVar2);
+        }
+        deref_getFirst(local_2ce0,&local_2c50);
+        piVar10 = (int *)World_getField0(local_2ce0,&local_2d04);
+        bVar2 = std_iterator_notEqual(&local_2c50,piVar10);
+        if (bVar2) {
+          do {
+            puVar22 = (undefined4 *)lib_fn_52eb90(&local_2c50);
+            RBTree_eraseNode_plain(pCVar15,&local_2fbc,(int *)*puVar22);
+            lib_fn_52ebf0(&local_2c50,&local_2b34);
+            piVar10 = (int *)World_getField0(local_2ce0,&local_2d04);
+            bVar2 = std_iterator_notEqual(&local_2c50,piVar10);
+          } while (bVar2);
+        }
+        lib_fn_4c8280(local_2cd0);
+        pCVar15 = pCVar13 + 0x13ac;
+        local_8 = CONCAT31(local_8._1_3_,0x18);
+        deref_getFirst(pCVar15,&local_2b84);
+        piVar10 = (int *)World_getField0(pCVar15,&local_2de0);
+        bVar2 = std_iterator_notEqual(&local_2b84,piVar10);
+        if (bVar2) {
+          local_2d0c = 0.0;
+          do {
+            puVar9 = (uint *)getField_plus0x10((int *)&local_2b84);
+            lib_fn_52e710((float *)(puVar9 + 2),&local_2d0c,local_2b28,0.001);
+            uVar12 = std_map_find_value(local_2b1c,puVar9);
+            if ((uVar12 == 0) || (*(float *)(uVar12 + 0x16c) <= 0.0)) {
+              lib_fn_4d6620(local_2cd0,&local_2b84);
+            }
+            RBTree_copyBeginThenInc(&local_2b84,&local_2fc4);
+            piVar10 = (int *)World_getField0(pCVar15,&local_2de0);
+            bVar2 = std_iterator_notEqual(&local_2b84,piVar10);
+            pCVar13 = local_2b18;
+          } while (bVar2);
+        }
+        deref_getFirst(local_2cd0,&local_2c88);
+        piVar10 = (int *)World_getField0(local_2cd0,&local_2de8);
+        bVar2 = std_iterator_notEqual(&local_2c88,piVar10);
+        if (bVar2) {
+          do {
+            puVar22 = (undefined4 *)lib_fn_52eb90(&local_2c88);
+            RBTree_eraseNode_plain(pCVar15,&local_2fcc,(int *)*puVar22);
+            lib_fn_52ebf0(&local_2c88,&local_2b34);
+            piVar10 = (int *)World_getField0(local_2cd0,&local_2de8);
+            bVar2 = std_iterator_notEqual(&local_2c88,piVar10);
+          } while (bVar2);
+        }
+        pvVar19 = local_2b1c;
+        if ((((*(char *)((int)local_2b1c + 0xb4) == '\0') && (pCVar13[0x60] == (CRefTime)0x1)) &&
+            (0.0 < *(float *)(pCVar13 + 0x16c))) &&
+           (bVar2 = lib_fn_530540((int)(pCVar13 + 0x13a4)), bVar2)) {
+          fVar51 = Combat_computeMaxHealth((int)pCVar13);
+          *(float *)(pCVar13 + 0x16c) = (float)fVar51;
+        }
+        local_2b2d = '\x01';
+        lib_fn_4e1520(local_20,local_2ba4,(float *)(pCVar13 + 0x40));
+        if (0 < (int)*(float *)(pCVar13 + 300)) {
+          puVar22 = Vec3_set(local_141c,0,0,0);
+          Vec3_copy(local_20,puVar22);
+        }
+        if (((((byte)pCVar13[0x124] & 1) == 0) && (((byte)pCVar13[0x5c] & 0x10) != 0)) &&
+           (pfVar25 = (float *)getElemPtr4(local_20,2), 0.0 < *pfVar25)) {
+          *pfVar25 = 0.0;
+        }
+        local_2b34 = (Creature *)identityReturn(local_20);
+        std_pair_copy_ctor2(local_a8,(undefined4 *)local_2b34);
+        local_2b7c = 0.0;
+        fVar51 = vec2_length_sq(local_a8);
+        local_2b20 = (CRefTime *)(float)fVar51;
+        if (0.01 < (float)local_2b20) {
+          puVar22 = (undefined4 *)identityReturn(pCVar13 + 0x34);
+          std_pair_copy_ctor2(local_98,puVar22);
+          fVar51 = vec2_length_sq(local_98);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          if (0.01 < (float)local_2b20) {
+            vec2_normalize(local_a8);
+            vec2_normalize(local_98);
+            pfVar25 = (float *)getElemPtr4(local_98,1);
+            pfVar30 = (float *)getElemPtr4(local_a8,0);
+            local_2b20 = (CRefTime *)(*pfVar25 * *pfVar30);
+            pfVar25 = (float *)getElemPtr4(local_98,0);
+            pfVar30 = (float *)getElemPtr4(local_a8,1);
+            fVar52 = (float)local_2b20 - *pfVar25 * *pfVar30;
+            fVar24 = -1.0;
+            if ((fVar52 < -1.0) || (fVar24 = 1.0, 1.0 < fVar52)) {
+              fVar52 = fVar24;
+            }
+            fVar51 = std_asinf(fVar52);
+            local_2b20 = (CRefTime *)(float)fVar51;
+            local_2b7c = ((float)local_2b20 / 3.1415927) * 180.0 * 0.5;
+            pCVar13 = local_2b18;
+          }
+        }
+        local_2bb4 = pCVar13 + 0x80;
+        local_2b50 = (CRefTime *)getElemPtr4(local_2bb4,0);
+        if (2.0 < *(float *)local_2b50) {
+          local_2b7c = (2.0 / *(float *)local_2b50) * local_2b7c;
+        }
+        cVar3 = check_falling_state((int)pCVar13);
+        if (cVar3 == '\0') {
+          local_2b68 = pCVar13 + 0x28;
+          local_2b44 = (CRefTime *)getElemPtr4(local_2b68,1);
+          fVar24 = 0.005;
+        }
+        else {
+          local_2b7c = local_2b7c * 40.0;
+          if (local_2b7c <= 90.0) {
+            if (local_2b7c < -90.0) {
+              local_2b7c = -90.0;
+            }
+          }
+          else {
+            local_2b7c = 90.0;
+          }
+          local_2b68 = pCVar13 + 0x28;
+          local_2b44 = (CRefTime *)getElemPtr4(local_2b68,1);
+          fVar24 = 0.001;
+        }
+        lib_fn_52e710((float *)local_2b44,&local_2b7c,local_2b28,fVar24);
+        local_2b40 = pCVar13 + 0x34;
+        local_2b60 = (CRefTime *)identityReturn(local_2b40);
+        std_pair_copy_ctor2(local_dec,(undefined4 *)local_2b60);
+        local_2b64 = (CRefTime *)0x40c00000;
+        iVar8 = Combat_isRangedOrSpecialOpcode((int)pCVar13);
+        if (((char)iVar8 != '\0') || ((*(ushort *)(pCVar13 + 0x7e) & 0x200) != 0)) {
+          local_2b64 = (CRefTime *)0x41000000;
+        }
+        if (pCVar13[0x60] == (CRefTime)0x5) {
+          local_2b64 = (CRefTime *)0x41400000;
+        }
+        if (pCVar13[0x68] == (CRefTime)0x6b) {
+          if (((byte)pCVar13[0x5c] & 2) != 0) {
+            fVar51 = formula_scaled_a((int)*(float *)(pCVar13 + 0x114c));
+LAB_0053f086:
+            local_2b20 = (CRefTime *)(float)fVar51;
+            local_2b64 = (CRefTime *)((float)local_2b20 * (float)local_2b64);
+          }
+        }
+        else if (((byte)pCVar13[0x5c] & 2) != 0) {
+          fVar51 = formula_curve_d((int)*(float *)(pCVar13 + 0x1148));
+          goto LAB_0053f086;
+        }
+        if (pCVar13 == *(CRefTime **)((int)pvVar19 + 0xb8)) {
+          if (((pCVar13[0x68] == (CRefTime)0x6b) && (((uint)*(float *)(pCVar13 + 0x5c) & 1) != 0))
+             && (((uint)*(float *)(pCVar13 + 0x5c) & 2) == 0)) {
+            pCVar13[0x68] = (CRefTime)0x0;
+          }
+          if ((pCVar13 == *(CRefTime **)((int)pvVar19 + 0xb8)) && (pCVar13[0x68] == (CRefTime)0x6a))
+          {
+            pCVar13 = pCVar13 + 0x11c8;
+            uVar12 = std_map_find_value(pvVar19,(uint *)pCVar13);
+            if ((uVar12 == 0) ||
+               (uVar12 = std_map_find_value(pvVar19,(uint *)pCVar13), *(float *)(uVar12 + 0x16c) < 0.0)) {
+LAB_0053f18c:
+              bVar2 = local_2b18 == *(CRefTime **)((int)pvVar19 + 0xb8);
+            }
+            else {
+              uVar12 = std_map_find_value(pvVar19,(uint *)pCVar13);
+              uVar12 = is_ranged_ability_id(*(int *)(uVar12 + 100));
+              if ((char)uVar12 == '\0') goto LAB_0053f18c;
+              fVar51 = formula_curve_c((int)*(float *)(local_2b18 + 0x113c));
+              local_2b20 = (CRefTime *)(float)fVar51;
+              if ((float)local_2b20 == 0.0) {
+                local_2b18[0x68] = (CRefTime)0x0;
+                uVar12 = std_map_find_value(pvVar19,(uint *)pCVar13);
+                bVar2 = uVar12 == 0;
+              }
+              else {
+                local_2b64 = (CRefTime *)((float)local_2b20 * (float)local_2b64);
+                uVar12 = std_map_find_value(pvVar19,(uint *)pCVar13);
+                bVar2 = uVar12 == 0;
+              }
+            }
+            pCVar13 = local_2b18;
+            if (bVar2) {
+              local_2b18[0x68] = (CRefTime)0x0;
+            }
+            fVar51 = vec3_length_sq((float *)(*(int *)((int)pvVar19 + 0xb8) + 0x40));
+            local_2b20 = (CRefTime *)(float)fVar51;
+            if (0.0 < (float)local_2b20) {
+              *(float *)(pCVar13 + 0x1198) = *(float *)(pCVar13 + 0x1198) - local_2ba4 * 0.002;
+            }
+            if (*(float *)(pCVar13 + 0x1198) <= 0.0) {
+              *(float *)(pCVar13 + 0x1198) = 0.0;
+              pCVar13[0x68] = (CRefTime)0x0;
+            }
+            if (((byte)pCVar13[0x124] & 1) != 0) {
+              pCVar13[0x68] = (CRefTime)0x0;
+            }
+          }
+        }
+        if ((pCVar13 == *(CRefTime **)((int)pvVar19 + 0xb8)) &&
+           ((*(byte *)((int)pvVar19 + 0x84) & 1) != 0)) {
+          local_2b64 = (CRefTime *)0x41a00000;
+        }
+        if (((byte)pCVar13[0x124] & 0x10) != 0) {
+          fVar51 = formula_scaled_b((int)*(float *)(pCVar13 + 0x1144));
+          local_2b20 = (CRefTime *)(float)fVar51;
+          if ((float)local_2b20 <= 0.0) {
+            *(ushort *)(pCVar13 + 0x124) = *(ushort *)(pCVar13 + 0x124) & 0xffef;
+          }
+          else if (((byte)pCVar13[0x5c] & 1) == 0) {
+            local_2b64 = (CRefTime *)((float)local_2b20 * (float)local_2b64);
+          }
+        }
+        if (((byte)pCVar13[0x124] & 1) != 0) {
+          fVar51 = vec3_length_sq((float *)(pCVar13 + 0x40));
+          local_2b20 = (CRefTime *)(float)fVar51;
+          if (0.0 < (float)local_2b20) {
+            fVar51 = formula_curve_b((int)*(float *)(pCVar13 + 0x1140));
+            local_2b20 = (CRefTime *)(float)fVar51;
+            if ((float)local_2b20 <= 0.0) {
+              *(ushort *)(pCVar13 + 0x124) = *(ushort *)(pCVar13 + 0x124) & 0xfffe;
+            }
+            else if (((((byte)pCVar13[0x124] & 0x10) == 0) &&
+                     (((uint)*(float *)(pCVar13 + 0x5c) & 4) != 0)) &&
+                    (((uint)*(float *)(pCVar13 + 0x5c) & 1) == 0)) {
+              fVar24 = *(float *)(pCVar13 + 0x1194) -
+                       (1.0 - (float)local_2b20) * 0.0005 * local_2b8c;
+              *(float *)(pCVar13 + 0x1194) = fVar24;
+              if (fVar24 < 0.0) {
+                *(float *)(pCVar13 + 0x1194) = 0.0;
+              }
+              if (*(float *)(pCVar13 + 0x1194) <= 0.01 && *(float *)(pCVar13 + 0x1194) != 0.01) {
+                *(ushort *)(pCVar13 + 0x124) = *(ushort *)(pCVar13 + 0x124) & 0xfffe;
+              }
+            }
+          }
+        }
+        if (pCVar13[0x68] == (CRefTime)0x4f) {
+          fVar51 = Combat_getResistFactor((int)pCVar13,0x4f,-1);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          local_2b64 = (CRefTime *)(((float)local_2b20 * 0.4 + 0.5) * (float)local_2b64);
+          iVar8 = getFieldAtFixedOffset((int)pvVar19);
+          fVar51 = std_powf(((float)iVar8 * 2.0) / 8.64e+07 - 1.0);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          fVar51 = std_powf(1.0 - (float)local_2b20);
+          local_2b4c = (CRefTime *)(float)fVar51;
+          pCVar13 = pCVar13 + 0x10;
+          local_2b24 = pCVar13;
+          fVar51 = lib_fn_4d5c80(pvVar19,(uint *)pCVar13);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          local_2b58 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
+          deref_getFirst(&local_2bf4,&local_2c80);
+          piVar10 = (int *)World_getField0(&local_2bf4,&local_2e08);
+          bVar2 = std_iterator_notEqual(&local_2c80,piVar10);
+          if (bVar2) {
+            do {
+              piVar10 = (int *)getField_plus0x10(&local_2c80);
+              iVar8 = *piVar10;
+              deref_getFirst((void *)(iVar8 + 4),&local_2c38);
+              piVar21 = (int *)World_getField0((void *)(iVar8 + 4),&local_2df0);
+              bVar2 = std_iterator_notEqual(&local_2c38,piVar21);
+              if (bVar2) {
+                do {
+                  iVar8 = lib_fn_52eb90(&local_2c38);
+                  if ((*(byte *)(iVar8 + 0x38) & 1) != 0) {
+                    puVar9 = Vec3i64_subtract((void *)(iVar8 + 8),local_21b8,(uint *)local_2b24);
+                    pfVar25 = Vec3i64_toFloatScaled(local_18f0,(longlong *)puVar9);
+                    fVar51 = vec3_length_sq(pfVar25);
+                    local_2b20 = (CRefTime *)(float)fVar51;
+                    if ((float)local_2b20 < 256.0) {
+                      fVar24 = 1.0 - (float)local_2b20 * 0.00390625;
+                      local_2b58 = (CRefTime *)(fVar24 * fVar24 * 0.5 + (float)local_2b58);
+                    }
+                  }
+                  lib_fn_52ebf0(&local_2c38,&local_2b78);
+                  piVar21 = (int *)World_getField0((void *)(*piVar10 + 4),&local_2df0);
+                  bVar2 = std_iterator_notEqual(&local_2c38,piVar21);
+                } while (bVar2);
+              }
+              iVar8 = *piVar10;
+              World_getField0((void *)(iVar8 + 0xc),&local_2c40);
+              piVar21 = (int *)lib_fn_4d3de0((void *)(iVar8 + 0xc),&local_2df8);
+              bVar2 = std_iterator_notEqual(&local_2c40,piVar21);
+              if (bVar2) {
+                do {
+                  piVar21 = (int *)lib_fn_4ce1f0(&local_2c40);
+                  if (*piVar21 == 0x32) {
+                    puVar9 = Vec3i64_subtract(piVar21 + 2,local_2458,(uint *)local_2b24);
+                    pfVar25 = Vec3i64_toFloatScaled(local_1434,(longlong *)puVar9);
+                    fVar51 = vec3_length_sq(pfVar25);
+                    local_2b20 = (CRefTime *)(float)fVar51;
+                    if ((float)local_2b20 < 256.0) {
+                      fVar24 = 1.0 - (float)local_2b20 * 0.00390625;
+                      local_2b58 = (CRefTime *)(fVar24 * fVar24 * 0.5 + (float)local_2b58);
+                    }
+                  }
+                  lib_fn_4ce200(&local_2c40,(int *)&local_2b78);
+                  piVar21 = (int *)lib_fn_4d3de0((void *)(*piVar10 + 0xc),&local_2df8);
+                  bVar2 = std_iterator_notEqual(&local_2c40,piVar21);
+                } while (bVar2);
+              }
+              iVar8 = *piVar10;
+              World_getField0((void *)(iVar8 + 0x30),&local_2c78);
+              piVar21 = (int *)lib_fn_4d3de0((void *)(iVar8 + 0x30),&local_2e00);
+              bVar2 = std_iterator_notEqual(&local_2c78,piVar21);
+              if (bVar2) {
+                do {
+                  pcVar29 = (char *)lib_fn_4ce1f0(&local_2c78);
+                  if (*pcVar29 == '\x12') {
+                    puVar9 = Vec3i64_subtract(pcVar29 + 0x118,local_21e8,(uint *)local_2b24);
+                    pfVar25 = Vec3i64_toFloatScaled(local_171c,(longlong *)puVar9);
+                    fVar51 = vec3_length_sq(pfVar25);
+                    local_2b20 = (CRefTime *)(float)fVar51;
+                    if ((float)local_2b20 < 256.0) {
+                      fVar24 = 1.0 - (float)local_2b20 * 0.00390625;
+                      local_2b58 = (CRefTime *)(fVar24 * fVar24 * 0.5 + (float)local_2b58);
+                    }
+                  }
+                  std_vector_back_slot(&local_2c78,(int *)&local_2b78);
+                  piVar21 = (int *)lib_fn_4d3de0((void *)(*piVar10 + 0x30),&local_2e00);
+                  bVar2 = std_iterator_notEqual(&local_2c78,piVar21);
+                } while (bVar2);
+              }
+              RBTree_copyBeginThenInc(&local_2c80,&local_2fd4);
+              piVar10 = (int *)World_getField0(&local_2bf4,&local_2e08);
+              bVar2 = std_iterator_notEqual(&local_2c80,piVar10);
+              pCVar13 = local_2b24;
+              pvVar19 = local_2b1c;
+            } while (bVar2);
+          }
+          if (1.0 < (float)local_2b58) {
+            local_2b58 = (CRefTime *)0x3f800000;
+          }
+          deref_getFirst((void *)((int)pvVar19 + 4),&local_2c44);
+          piVar10 = (int *)World_getField0((void *)((int)pvVar19 + 4),&local_2e10);
+          bVar2 = std_iterator_notEqual(&local_2c44,piVar10);
+          puVar22 = local_2b70;
+          if (bVar2) {
+            do {
+              iVar8 = getField_plus0x10(&local_2c44);
+              iVar8 = *(int *)(iVar8 + 8);
+              if ((iVar8 != 0) && ((*(ushort *)(iVar8 + 0x124) & 0x200) != 0)) {
+                puVar9 = Vec3i64_subtract((void *)(iVar8 + 0x10),local_25a8,(uint *)pCVar13);
+                pfVar25 = Vec3i64_toFloatScaled(local_144c,(longlong *)puVar9);
+                fVar51 = vec3_length_sq(pfVar25);
+                local_2b20 = (CRefTime *)(float)fVar51;
+                if ((float)local_2b20 < 100.0) {
+                  fVar24 = 1.0 - (float)local_2b20 / 100.0;
+                  local_2b58 = (CRefTime *)(fVar24 * fVar24 + (float)local_2b58);
+                }
+              }
+              RBTree_copyBeginThenInc(&local_2c44,&local_2fdc);
+              piVar10 = (int *)World_getField0(puVar22,&local_2e10);
+              bVar2 = std_iterator_notEqual(&local_2c44,piVar10);
+              pvVar19 = local_2b1c;
+            } while (bVar2);
+          }
+          pCVar13 = local_2b18;
+          fVar51 = Combat_getResistFactor((int)local_2b18,0x4f,-1);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          local_2b94 = (CRefTime *)(1.0 - (0.9 - (float)local_2b20 * 0.5) * (float)local_2b58);
+          fVar51 = Combat_getResistFactor((int)pCVar13,0x4f,-1);
+          local_2b20 = (CRefTime *)(0.5 - (float)fVar51 * 0.5);
+          fVar51 = vec3_length((float *)(pCVar13 + 0x34));
+          local_2b4c = (CRefTime *)(float)fVar51;
+          fVar24 = ((float)local_2b94 - (float)local_2b20 * (float)local_2b4c) * local_2b8c * 0.0005
+                   + *(float *)(pCVar13 + 0x1190);
+          *(float *)(pCVar13 + 0x1190) = fVar24;
+          if (fVar24 < 0.0) {
+            *(float *)(pCVar13 + 0x1190) = 0.0;
+          }
+          fVar24 = *(float *)(pCVar13 + 0x1190);
+LAB_0053fa21:
+          if (1.0 < fVar24) {
+            *(float *)(pCVar13 + 0x1190) = 1.0;
+          }
+        }
+        else {
+          if ((*(ushort *)(pCVar13 + 0x124) & 0x400) != 0) {
+            fVar51 = Combat_getResistFactor((int)pCVar13,99,-1);
+            local_2b20 = (CRefTime *)(float)fVar51;
+            fVar24 = ((float)local_2b20 * 0.0005 + 1e-05) * local_2b8c +
+                     *(float *)(pCVar13 + 0x1190);
+            *(float *)(pCVar13 + 0x1190) = fVar24;
+            goto LAB_0053fa21;
+          }
+          fVar24 = *(float *)(pCVar13 + 0x1190) - local_2b8c * 0.0005;
+          *(float *)(pCVar13 + 0x1190) = fVar24;
+          if (fVar24 < 0.0) {
+            *(float *)(pCVar13 + 0x1190) = 0.0;
+          }
+        }
+        puVar22 = list_find_by_id_byte(pCVar13,3);
+        if (puVar22 != (undefined4 *)0x0) {
+          *(float *)(pCVar13 + 0x1190) = 1.0;
+        }
+        fVar24 = local_2b8c * 0.00025 * *(float *)(pCVar13 + 0x1190) + *(float *)(pCVar13 + 0x170);
+        *(float *)(pCVar13 + 0x170) = fVar24;
+        if (1.0 < fVar24) {
+          *(float *)(pCVar13 + 0x170) = 1.0;
+        }
+        uVar1 = *(ushort *)(pCVar13 + 0x124);
+        if (((uVar1 & 0x10) == 0) || (((byte)pCVar13[0x5c] & 1) != 0)) {
+          if (((uVar1 & 1) == 0) ||
+             ((((uVar1 & 0x10) != 0 || (((uint)*(float *)(pCVar13 + 0x5c) & 4) == 0)) ||
+              (((uint)*(float *)(pCVar13 + 0x5c) & 1) != 0)))) {
+            fVar24 = local_2b8c * 0.0001 + *(float *)(pCVar13 + 0x1194);
+            goto LAB_0053fb19;
+          }
+        }
+        else if ((uVar1 & 0x40) != 0) {
+          fVar24 = *(float *)(pCVar13 + 0x1194) - local_2b8c * 0.0002;
+LAB_0053fb19:
+          *(float *)(pCVar13 + 0x1194) = fVar24;
+        }
+        if (*(float *)(pCVar13 + 0x1194) <= 0.0 && *(float *)(pCVar13 + 0x1194) != 0.0) {
+          *(float *)(pCVar13 + 0x1194) = 0.0;
+        }
+        if (1.0 < *(float *)(pCVar13 + 0x1194)) {
+          *(float *)(pCVar13 + 0x1194) = 1.0;
+        }
+        uVar1 = *(ushort *)(pCVar13 + 0x124);
+        if ((((uVar1 & 0x40) != 0) && (((uVar1 & 1) == 0 || (((byte)pCVar13[0x5c] & 4) == 0)))) &&
+           (((uVar1 & 0x10) == 0 || (((byte)pCVar13[0x5c] & 1) != 0)))) {
+          local_2b64 = (CRefTime *)((float)local_2b64 * 2.0);
+        }
+        puVar22 = list_find_by_id_byte(pCVar13,0xc);
+        if (puVar22 != (undefined4 *)0x0) {
+          fVar51 = Combat_getResistFactor((int)pCVar13,100,-1);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          local_2b64 = (CRefTime *)(((float)local_2b20 + 1.0) * (float)local_2b64);
+        }
+        if (pCVar13[0x68] == (CRefTime)0x30) {
+LAB_0053fc10:
+          local_2b64 = (CRefTime *)0x42200000;
+        }
+        else {
+          if (pCVar13[0x68] == (CRefTime)0x36) {
+            iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+            iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+            pCVar13 = local_2b18;
+            if ((int)*(float *)(local_2b18 + 0x6c) < iVar8 + iVar17) goto LAB_0053fc10;
+          }
+          if (((pCVar13[0x68] == (CRefTime)0x32) || (pCVar13[0x68] == (CRefTime)0x60)) &&
+             ((int)*(float *)(pCVar13 + 0x6c) < 500)) goto LAB_0053fc10;
+        }
+        CVar6 = pCVar13[0x68];
+        local_2c94 = local_2c94 & 0xffffff00;
+        if ((CVar6 == (CRefTime)0x30) ||
+           ((((((((CVar6 == (CRefTime)0x3a || (CVar6 == (CRefTime)0x41)) ||
+                 (CVar6 == (CRefTime)0x42)) ||
+                ((CVar6 == (CRefTime)0x43 || (CVar6 == (CRefTime)0xc)))) ||
+               ((CVar6 == (CRefTime)0x10 || ((CVar6 == (CRefTime)0x3 || (CVar6 == (CRefTime)0x3e))))
+               )) || ((CVar6 == (CRefTime)0xb ||
+                      (((((CVar6 == (CRefTime)0x4 || (CVar6 == (CRefTime)0x1)) ||
+                         (CVar6 == (CRefTime)0x9)) ||
+                        ((CVar6 == (CRefTime)0x2 || (CVar6 == (CRefTime)0x6)))) ||
+                       (((CVar6 == (CRefTime)0x7 ||
+                         ((CVar6 == (CRefTime)0xe || (CVar6 == (CRefTime)0xd)))) ||
+                        (CVar6 == (CRefTime)0xf)))))))) ||
+             ((((CVar6 == (CRefTime)0x14 || (CVar6 == (CRefTime)0x13)) || (CVar6 == (CRefTime)0x12))
+              || (((CVar6 == (CRefTime)0x11 || (CVar6 == (CRefTime)0x5)) || (CVar6 == (CRefTime)0xa)
+                  ))))) && ((int)*(float *)(pCVar13 + 0x6c) < 200)))) {
+          bVar2 = true;
+        }
+        else {
+          bVar2 = false;
+        }
+        if (((pCVar13 == *(CRefTime **)((int)pvVar19 + 0xb8)) ||
+            (*(char *)((int)pvVar19 + 0xb4) == '\0')) && (bVar2)) {
+          deref_getFirst(local_2b70,&local_2c8c);
+          piVar10 = (int *)World_getField0(local_2b70,&local_2e18);
+          bVar2 = std_iterator_notEqual(&local_2c8c,piVar10);
+          if (bVar2) {
+            do {
+              iVar8 = getField_plus0x10(&local_2c8c);
+              piVar10 = (int *)(iVar8 + 8);
+              pCVar15 = (CRefTime *)*piVar10;
+              if ((((pCVar15 != (CRefTime *)0x0) && (pCVar15 != pCVar13)) &&
+                  (0.0 < *(float *)(pCVar15 + 0x16c))) &&
+                 (uVar20 = lib_fn_4d18c0((int)pCVar13,(int)pCVar15), (char)uVar20 != '\0')) {
+                iVar8 = *piVar10;
+                getElemPtr4((void *)(iVar8 + 0x80),0);
+                puVar9 = local_3610;
+                puVar18 = Vec3i64_subtract(local_2b18 + 0x10,local_2218,(uint *)(iVar8 + 0x10));
+                ppVar31 = (pair<unsigned___int64,unsigned___int64> *)identityReturn(puVar18);
+                ppVar31 = std::pair<unsigned___int64,unsigned___int64>::
+                          operator=<std::pair<unsigned___int64,unsigned___int64>,0>
+                                    (local_1bd0,ppVar31);
+                puVar9 = computeLengthSquared_16_16(ppVar31,puVar9);
+                uVar20 = lib_fn_4dade0(puVar9);
+                pCVar13 = local_2b18;
+                if ((char)uVar20 != '\0') {
+                  pvVar19 = (void *)lib_fn_4e2320(local_2b18 + 0x10,2);
+                  plVar32 = (longlong *)int64_sub(pvVar19,local_3620,pvVar19);
+                  fVar51 = fixedpoint16_to_float(plVar32);
+                  fVar51 = std_fabsf((float)fVar51);
+                  local_2b4c = (CRefTime *)(float)fVar51;
+                  pfVar25 = (float *)getElemPtr4((void *)(*piVar10 + 0x80),2);
+                  local_2b20 = (CRefTime *)(*pfVar25 * 0.5);
+                  pfVar25 = (float *)getElemPtr4(pCVar13 + 0x80,2);
+                  local_2c94 = local_2c94 & 0xff;
+                  if ((float)local_2b4c < (float)local_2b20 + *pfVar25 + 1.0) {
+                    local_2c94 = 1;
+                  }
+                }
+              }
+              RBTree_copyBeginThenInc(&local_2c8c,&local_2fe4);
+              piVar10 = (int *)World_getField0(local_2b70,&local_2e18);
+              bVar2 = std_iterator_notEqual(&local_2c8c,piVar10);
+            } while (bVar2);
+            cVar3 = (char)local_2c94;
+            if (cVar3 == '\0') goto LAB_0053feb1;
+LAB_0053febe:
+            if (pCVar13[0x68] == (CRefTime)0x30) {
+              *(float *)(pCVar13 + 0x13b4) = 0.0;
+              *(float *)(pCVar13 + 0x170) = 1.0;
+              pCVar13[0x68] = (CRefTime)0x0;
+              *(float *)(pCVar13 + 0x6c) = 0.0;
+              if (pCVar13[0xaa8] == (CRefTime)0x3) {
+                if (pCVar13[0xaa9] == (CRefTime)0x5) {
+                  pCVar13[0x68] = (CRefTime)0x5;
+                }
+                else {
+                  CVar6 = (CRefTime)0x14;
+                  if (pCVar13[0xaa9] == (CRefTime)0x3) {
+                    CVar6 = (CRefTime)0x11;
+                  }
+                  pCVar13[0x68] = CVar6;
+                }
+              }
+            }
+            if (pCVar13[0x68] == (CRefTime)0x2f) {
+              *(float *)(pCVar13 + 0x13b4) = 0.0;
+              pCVar13[0x68] = (CRefTime)0x36;
+            }
+            pvVar19 = local_2b1c;
+            if (cVar3 != '\0') goto LAB_0053ffaa;
+          }
+          else {
+            cVar3 = (char)local_2c94;
+LAB_0053feb1:
+            if (500 < (int)*(float *)(pCVar13 + 0x6c)) goto LAB_0053febe;
+          }
+          Matrix4_setIdentity(local_1ca0);
+          pfVar25 = (float *)getElemPtr4(pCVar13 + 0x28,2);
+          matrix_rotate_columns(local_1ca0,*pfVar25);
+          pfVar25 = (float *)Vec3_set(local_1a10,0,(float)local_2b64 * 2.0,0);
+          pfVar25 = (float *)lib_fn_4dde00(local_1ca0,local_1464,pfVar25);
+          vec3_add_inplace(local_20,pfVar25);
+          pvVar19 = local_2b1c;
+        }
+LAB_0053ffaa:
+        if (pCVar13[0x68] == (CRefTime)0x51) {
+          iVar8 = get_effect_duration_a((char *)(pCVar13 + 0x1e8));
+          if (iVar8 < (int)*(float *)(pCVar13 + 0x6c)) {
+            pCVar13[0x68] = (CRefTime)0x53;
+          }
+          else {
+            local_2b64 = (CRefTime *)0x0;
+          }
+        }
+        if ((*(float *)(pCVar13 + 0x128) != 0.0) &&
+           (((pCVar13[0x68] != (CRefTime)0x32 && (pCVar13[0x68] != (CRefTime)0x60)) ||
+            (iVar8 = Combat_getWindupAndRecovery((int)pCVar13), iVar8 < (int)*(float *)(pCVar13 + 0x6c))))) {
+          if ((pCVar13[0x140] == (CRefTime)0x4) && (pCVar13[0x141] == (CRefTime)0x1)) {
+            CVar6 = pCVar13[0x68];
+            if (((CVar6 != (CRefTime)0x5) && (CVar6 != (CRefTime)0x14)) && (CVar6 != (CRefTime)0x11)
+               ) {
+              pCVar13[0x68] = (CRefTime)0x0;
+            }
+          }
+          else {
+            pCVar13[0x68] = (CRefTime)0x0;
+            *(float *)(pCVar13 + 0x144) = 0.0;
+          }
+        }
+        CVar6 = pCVar13[0x68];
+        local_2b88 = (CRefTime *)((uint)local_2b88 & 0xffffff00);
+        if ((((CVar6 == (CRefTime)0x44) || (CVar6 == (CRefTime)0x5d)) || (CVar6 == (CRefTime)0x45))
+           && (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), (int)*(float *)(pCVar13 + 0x6c) <= iVar8))
+        {
+          local_2b64 = (CRefTime *)0x0;
+        }
+        CVar6 = pCVar13[0x68];
+        if ((((CVar6 == (CRefTime)0x44) || (CVar6 == (CRefTime)0x5d)) || (CVar6 == (CRefTime)0x45))
+           && (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), iVar8 < (int)*(float *)(pCVar13 + 0x6c))) {
+          iVar8 = Combat_getAbilityRecovery(pCVar13,0xffffffff);
+          iVar17 = Combat_getAbilityCooldown(local_2b18,0xffffffff);
+          pCVar13 = local_2b18;
+          if ((int)*(float *)(local_2b18 + 0x6c) <
+              iVar17 + ((int)((iVar8 * 3 >> 0x1f & 3U) + iVar8 * 3) >> 2)) {
+            Matrix4_setIdentity(local_1ce0);
+            pfVar25 = (float *)getElemPtr4(pCVar13 + 0x28,2);
+            matrix_rotate_columns(local_1ce0,*pfVar25);
+            pfVar25 = (float *)Vec3_set(local_1734,0,0x3f800000,0);
+            pfVar25 = (float *)lib_fn_4dde00(local_1ce0,local_147c,pfVar25);
+            puVar22 = (undefined4 *)lib_fn_4e1520(local_1914,20.0,pfVar25);
+            Vec3_copy(local_20,puVar22);
+            local_2b64 = (CRefTime *)0x42480000;
+            local_2b88 = (CRefTime *)CONCAT31(local_2b88._1_3_,1);
+          }
+        }
+        if ((pCVar13[0x68] == (CRefTime)0x4d) &&
+           (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), iVar8 < (int)*(float *)(pCVar13 + 0x6c))) {
+          iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+          iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+          pCVar13 = local_2b18;
+          if ((int)*(float *)(local_2b18 + 0x6c) < iVar8 + iVar17) {
+            Matrix4_setIdentity(local_1d60);
+            pfVar25 = (float *)getElemPtr4(local_2b68,2);
+            matrix_rotate_columns(local_1d60,*pfVar25);
+            pfVar25 = (float *)Vec3_set(local_1494,0xbf800000,0,0);
+            pfVar25 = (float *)lib_fn_4dde00(local_1d60,local_174c,pfVar25);
+            puVar22 = (undefined4 *)lib_fn_4e1520(local_14ac,20.0,pfVar25);
+            Vec3_copy(local_20,puVar22);
+            local_2b64 = (CRefTime *)0x42700000;
+            local_2b88 = (CRefTime *)CONCAT31(local_2b88._1_3_,1);
+            pCVar13 = local_2b18;
+          }
+        }
+        if ((pCVar13[0x68] == (CRefTime)0x4e) &&
+           (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), iVar8 < (int)*(float *)(pCVar13 + 0x6c))) {
+          iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+          iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+          pCVar13 = local_2b18;
+          if ((int)*(float *)(local_2b18 + 0x6c) < iVar8 + iVar17) {
+            Matrix4_setIdentity(local_1de0);
+            pfVar25 = (float *)getElemPtr4(local_2b68,2);
+            matrix_rotate_columns(local_1de0,*pfVar25);
+            pfVar25 = (float *)Vec3_set(local_1aa0,0x3f800000,0,0);
+            pfVar25 = (float *)lib_fn_4dde00(local_1de0,local_14c4,pfVar25);
+            puVar22 = (undefined4 *)lib_fn_4e1520(local_1764,20.0,pfVar25);
+            Vec3_copy(local_20,puVar22);
+            local_2b64 = (CRefTime *)0x42700000;
+            local_2b88 = (CRefTime *)CONCAT31(local_2b88._1_3_,1);
+            pCVar13 = local_2b18;
+          }
+        }
+        if ((pCVar13[0x68] == (CRefTime)0x4c) &&
+           (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), iVar8 < (int)*(float *)(pCVar13 + 0x6c))) {
+          iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+          iVar17 = Combat_getAbilityRecovery(local_2b18,0xffffffff);
+          pCVar13 = local_2b18;
+          if ((int)*(float *)(local_2b18 + 0x6c) < iVar8 + iVar17) {
+            Matrix4_setIdentity(local_1da0);
+            pfVar25 = (float *)getElemPtr4(local_2b68,2);
+            matrix_rotate_columns(local_1da0,*pfVar25);
+            pfVar25 = (float *)Vec3_set(local_14dc,0,0x3f800000,0);
+            pfVar25 = (float *)lib_fn_4dde00(local_1da0,local_1938,pfVar25);
+            puVar22 = (undefined4 *)lib_fn_4e1520(local_14f4,20.0,pfVar25);
+            Vec3_copy(local_20,puVar22);
+            local_2b64 = (CRefTime *)0x42700000;
+            local_2b88 = (CRefTime *)CONCAT31(local_2b88._1_3_,1);
+            pCVar13 = local_2b18;
+          }
+        }
+        if ((pCVar13[0x68] == (CRefTime)0x47) &&
+           (iVar8 = Combat_getWindupAndRecovery((int)pCVar13), (int)*(float *)(pCVar13 + 0x6c) < iVar8)) {
+          local_2b64 = (CRefTime *)0x0;
+          local_2b88 = (CRefTime *)CONCAT31(local_2b88._1_3_,1);
+        }
+        if ((pCVar13[0x68] == (CRefTime)0x48) &&
+           (iVar8 = Combat_getWindupAndRecovery((int)pCVar13), (int)*(float *)(pCVar13 + 0x6c) < iVar8)) {
+          pfVar25 = (float *)getElemPtr4(pCVar13 + 0x28,2);
+          local_2b88 = (CRefTime *)CONCAT31(local_2b88._1_3_,1);
+          *pfVar25 = local_2ba4 * 720.0 + *pfVar25;
+          local_2b64 = (CRefTime *)0x41400000;
+        }
+        CVar6 = pCVar13[0x68];
+        if ((((CVar6 == (CRefTime)0x44) || (CVar6 == (CRefTime)0x5d)) || (CVar6 == (CRefTime)0x45))
+           && (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), iVar8 < (int)*(float *)(pCVar13 + 0x6c))) {
+          iVar8 = Combat_getWindupAndRecovery((int)pCVar13);
+          local_2b88 = (CRefTime *)((uint)local_2b88 & 0xff);
+          if ((int)*(float *)(pCVar13 + 0x6c) < iVar8) {
+            local_2b88 = (CRefTime *)0x1;
+          }
+        }
+        if (pCVar13[0x60] == (CRefTime)0x4) {
+          local_2b64 = (CRefTime *)0x41f00000;
+        }
+        if (((pCVar13[0x68] == (CRefTime)0x39) || (pCVar13[0x68] == (CRefTime)0x4a)) &&
+           ((iVar8 = Combat_getWindupAndRecovery((int)pCVar13), (int)*(float *)(pCVar13 + 0x6c) < iVar8 &&
+            ((iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), iVar8 <= (int)*(float *)(pCVar13 + 0x6c) &&
+             (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), iVar8 <= (int)*(float *)(pCVar13 + 0x6c)))))
+           )) {
+          local_2b64 = (CRefTime *)0x3dcccccd;
+          local_2b88 = (CRefTime *)CONCAT31(local_2b88._1_3_,1);
+        }
+        if (pCVar13[0x68] == (CRefTime)0x24) {
+          fVar51 = Combat_computeAttackSpeed((int)pCVar13);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          *(float *)(pCVar13 + 0x144) =
+               (float)local_2b20 * local_2b8c * 0.0005 + *(float *)(pCVar13 + 0x144);
+        }
+        CVar6 = pCVar13[0x68];
+        if (((((((CVar6 == (CRefTime)0x18) || (CVar6 == (CRefTime)0x19)) ||
+               (CVar6 == (CRefTime)0x1b)) || ((CVar6 == (CRefTime)0x8 || (CVar6 == (CRefTime)0x3b)))
+              ) || (CVar6 == (CRefTime)0x3f)) || (CVar6 == (CRefTime)0x40)) &&
+           (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), iVar8 <= (int)*(float *)(pCVar13 + 0x6c))) {
+          fVar51 = Combat_computeAttackSpeed((int)pCVar13);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          local_2b24 = (CRefTime *)((float)local_2b20 * local_2b8c * 0.00075);
+          if ((pCVar13[0x140] == (CRefTime)0x2) && (pCVar13[0x141] == (CRefTime)0x0)) {
+            local_2b20 = (CRefTime *)(float)(int)*(float *)(pCVar13 + 0x70);
+            iVar8 = Combat_getStaminaRegenRate((int)pCVar13);
+            if ((float)local_2b20 / (float)iVar8 <= 4.0) {
+              local_2b20 = (CRefTime *)(float)(int)*(float *)(pCVar13 + 0x70);
+              iVar8 = Combat_getStaminaRegenRate((int)pCVar13);
+              fVar24 = (float)local_2b20 / (float)iVar8;
+            }
+            else {
+              fVar24 = 4.0;
+            }
+            local_2b24 = (CRefTime *)((fVar24 + 1.0) * (float)local_2b24);
+          }
+          puVar22 = list_find_by_id_byte(pCVar13,2);
+          pCVar15 = local_2b24;
+          if (puVar22 != (undefined4 *)0x0) {
+            fVar51 = Combat_getResistFactor((int)pCVar13,0x66,-1);
+            local_2b20 = (CRefTime *)(float)fVar51;
+            pCVar15 = (CRefTime *)(((float)local_2b20 * 9.0 + 1.0) * (float)local_2b24);
+          }
+          *(float *)(pCVar13 + 0x144) = (float)pCVar15 + *(float *)(pCVar13 + 0x144);
+          puVar22 = list_find_by_id_byte(pCVar13,10);
+          if (puVar22 != (undefined4 *)0x0) {
+            *(float *)(pCVar13 + 0x144) = *(float *)(pCVar13 + 0x170);
+          }
+        }
+        if (*(float *)(pCVar13 + 0x170) < *(float *)(pCVar13 + 0x144)) {
+          *(float *)(pCVar13 + 0x144) = *(float *)(pCVar13 + 0x170);
+        }
+        if (*(float *)(pCVar13 + 0x134) != 0.0) {
+          local_2b64 = (CRefTime *)((float)local_2b64 * 0.5);
+        }
+        if (*(float *)(pCVar13 + 0x138) != 0.0) {
+          local_2b64 = (CRefTime *)((float)local_2b64 * 1.5);
+        }
+        if (((((byte)pCVar13[0x124] & 4) != 0) && (*(float *)(pCVar13 + 0x128) == 0.0)) &&
+           (((pCVar13[0x68] != (CRefTime)0x32 && (pCVar13[0x68] != (CRefTime)0x60)) ||
+            (1000 < (int)*(float *)(pCVar13 + 0x6c))))) {
+          puVar22 = (undefined4 *)identityReturn(pCVar13 + 0x160);
+          pfVar25 = (float *)std_pair_copy_ctor2(local_ec4,(undefined4 *)local_2b60);
+          pfVar30 = (float *)std_pair_copy_ctor2(local_e44,puVar22);
+          fVar51 = vec2_dot(pfVar30,pfVar25);
+          local_2b20 = (CRefTime *)(float)fVar51;
+          if ((float)local_2b20 < 0.0) {
+            std_pair_copy_ctor2(local_88,puVar22);
+            std_pair_copy_ctor2(local_264,(undefined4 *)local_2b60);
+            vec2_normalize(local_88);
+            vec2_normalize(local_264);
+            fVar51 = vec2_dot(local_88,local_264);
+            local_2b20 = (CRefTime *)(float)fVar51;
+            local_2b64 = (CRefTime *)(((float)local_2b20 * 0.5 + 1.0) * (float)local_2b64);
+          }
+        }
+        vec3_add_inplace(local_2b40,local_20);
+        pfVar25 = (float *)std_pair_copy_ctor2(local_e94,(undefined4 *)local_2b60);
+        fVar51 = vec2_length_sq(pfVar25);
+        local_2b20 = (CRefTime *)(float)fVar51;
+        if ((float)local_2b64 * (float)local_2b64 < (float)local_2b20) {
+          std_pair_copy_ctor2(local_90,(undefined4 *)local_2b60);
+          vec2_normalize(local_90);
+          vec2_scale(local_90,(float)local_2b64);
+          puVar22 = (undefined4 *)getElemPtr4(local_90,0);
+          puVar33 = (undefined4 *)getElemPtr4(local_2b40,0);
+          *puVar33 = *puVar22;
+          puVar22 = (undefined4 *)getElemPtr4(local_90,1);
+          puVar33 = (undefined4 *)getElemPtr4(local_2b40,1);
+          *puVar33 = *puVar22;
+        }
+        pCVar13 = local_2b18;
+        if ((((*(ushort *)(local_2b18 + 0x124) & 1) == 0) ||
+            ((*(ushort *)(local_2b18 + 0x124) & 0x10) != 0)) || (((byte)local_2b18[0x5c] & 4) == 0))
+        {
+          if ((((byte)local_2b18[0x7e] & 2) == 0) || (0 < (int)*(float *)(local_2b18 + 300))) {
+            cVar3 = check_falling_state((int)local_2b18);
+            if (cVar3 == '\0') {
+              local_2bb8 = (float *)getElemPtr4(pCVar13 + 0x34,2);
+              if (0.0 <= *local_2bb8) {
+                plVar32 = (longlong *)lib_fn_4e2320(pCVar13 + 0x10,2);
+                fVar51 = fixedpoint16_to_float(plVar32);
+                *(float *)(pCVar13 + 0x13bc) = (float)fVar51;
+              }
+              *local_2bb8 = *local_2bb8 - local_2ba4 * 30.0;
+              goto LAB_00540a07;
+            }
+          }
+          local_2bb8 = (float *)getElemPtr4(pCVar13 + 0x34,2);
+          *local_2bb8 = *local_2bb8 - local_2ba4 * 0.1 * 30.0;
+LAB_0054099d:
+          plVar32 = (longlong *)lib_fn_4e2320(pCVar13 + 0x10,2);
+          fVar51 = fixedpoint16_to_float(plVar32);
+          *(float *)(pCVar13 + 0x13bc) = (float)fVar51;
+        }
+        else {
+          fVar24 = 0.0025;
+          uVar12 = local_2b28;
+          puVar34 = (undefined8 *)Vec3_set(local_177c,0,0,0);
+          lib_fn_52e7c0((float *)(pCVar13 + 0x34),puVar34,uVar12,fVar24);
+          local_2bb8 = (float *)getElemPtr4(pCVar13 + 0x34,2);
+          if (-10.0 < *local_2bb8) goto LAB_0054099d;
+        }
+LAB_00540a07:
+        if ((pCVar13 == *(CRefTime **)((int)pvVar19 + 0xb8)) && (((byte)pCVar13[0x124] & 0x10) != 0)
+           ) {
+          fVar24 = *(float *)(pCVar13 + 0x5c);
+          if (((uint)fVar24 & 2) == 0) {
+            if (((uint)fVar24 & 1) == 0) {
+              if (((uint)fVar24 & 4) != 0) {
+                fVar51 = vec3_length_sq((float *)(pCVar13 + 0x34));
+                local_2b20 = (CRefTime *)(float)fVar51;
+                if (64.0 < (float)local_2b20) {
+                  fVar51 = vec3_dot((float *)(pCVar13 + 0x11a0),(float *)(pCVar13 + 0x34));
+                  local_2b20 = (CRefTime *)(float)fVar51;
+                  if ((float)local_2b20 < -4.0) {
+                    fVar24 = (float)get_cast_time((int)pCVar13);
+                    *(float *)(pCVar13 + 300) = fVar24;
+                    set_flag_bits_0x114(pCVar13 + 0x10,0x10,'\0');
+                    lib_fn_4c8530((int)local_5c4);
+                    Vec3i64_toFloatScaled(local_5c4,(longlong *)(pCVar13 + 0x10));
+                    local_5b4 = 0x3f800000;
+                    local_5b8 = 0x17;
+                    std_list_push_back_428590(local_2b2c + 2,local_5c4);
+                    pCVar13 = local_2b18;
+                  }
+                }
+              }
+              if ((((byte)pCVar13[0x124] & 0x40) != 0) && (*local_2bb8 < 0.0)) {
+                *local_2bb8 = local_2ba4 * 30.0 + *local_2bb8;
+              }
+              pfVar25 = lib_fn_4d9720(local_150c);
+              pfVar25 = (float *)lib_fn_4e1520(local_1a34,local_2ba4,pfVar25);
+              vec3_add_inplace(pCVar13 + 0x34,pfVar25);
+            }
+            else {
+              fVar51 = std_fabsf(*(float *)local_2b44);
+              local_2b20 = (CRefTime *)(float)fVar51;
+              if (40.0 < (float)local_2b20) {
+                fVar24 = (float)get_cast_time((int)pCVar13);
+                *(float *)(pCVar13 + 300) = fVar24;
+                set_flag_bits_0x114(pCVar13 + 0x10,0x10,'\0');
+                lib_fn_4c8530((int)local_8f4);
+                Vec3i64_toFloatScaled(local_8f4,(longlong *)(pCVar13 + 0x10));
+                local_8e4 = 0x3f800000;
+                local_8e8 = 0x17;
+                std_list_push_back_428590(local_2b2c + 2,local_8f4);
+                pCVar13 = local_2b18;
+              }
+            }
+          }
+          else {
+            set_flag_bits_0x114(pCVar13 + 0x10,0x10,'\0');
+          }
+        }
+        if (0 < (int)*(float *)(pCVar13 + 300)) {
+          set_flag_bits_0x114(pCVar13 + 0x10,0x10,'\0');
+          set_flag_bits_0x114(pCVar13 + 0x10,1,'\0');
+          *(float *)(local_2b18 + 0x144) = 0.0;
+          pCVar13 = local_2b18;
+        }
+        if ((pCVar13[0x68] != (CRefTime)0x0) &&
+           (iVar8 = Combat_getWindupAndRecovery((int)pCVar13), (int)*(float *)(pCVar13 + 0x6c) < iVar8)) {
+          set_flag_bits_0x114(pCVar13 + 0x10,0x10,'\0');
+          set_flag_bits_0x114(pCVar13 + 0x10,1,'\0');
+          pCVar13 = local_2b18;
+        }
+        local_2b78 = pCVar13 + 0x4c;
+        pfVar25 = (float *)vec3_add(pCVar13 + 0x34,local_1524,(float *)local_2b78);
+        puVar22 = (undefined4 *)lib_fn_4e1520(local_1794,local_2ba4,pfVar25);
+        Vec3_copy(local_20,puVar22);
+        if (((pCVar13[0x60] != (CRefTime)0x6) && (pCVar13[0x68] != (CRefTime)0x53)) &&
+           (pCVar13[0x68] != (CRefTime)0x54)) {
+          deref_getFirst((void *)((int)pvVar19 + 4),&local_2c9c);
+          piVar10 = (int *)World_getField0((void *)((int)pvVar19 + 4),&local_2e20);
+          bVar2 = std_iterator_notEqual(&local_2c9c,piVar10);
+          if (bVar2) {
+            do {
+              iVar8 = getField_plus0x10(&local_2c9c);
+              pCVar15 = local_2b18;
+              piVar10 = (int *)(iVar8 + 8);
+              pCVar13 = (CRefTime *)*piVar10;
+              if ((((pCVar13 != (CRefTime *)0x0) && (pCVar13 != local_2b18)) &&
+                  ((local_2b18[0x60] != (CRefTime)0x0 ||
+                   ((pCVar13[0x60] == (CRefTime)0x1 || (pCVar13[0x60] == (CRefTime)0x6)))))) &&
+                 (0.0 < *(float *)(pCVar13 + 0x16c))) {
+                Vec3_copy(local_1c0,(undefined4 *)(pCVar13 + 0x80));
+                if (*(char *)(*piVar10 + 0x60) != '\x06') {
+                  piVar21 = vec3_store(local_153c,1,1,0);
+                  lib_fn_4c64b0(local_978,piVar21);
+                  vec3_add_inplace(local_1c0,local_978);
+                }
+                local_2b24 = (CRefTime *)getElemPtr4(local_1c0,0);
+                pCVar15 = pCVar15 + 0x10;
+                local_2b40 = (CRefTime *)lib_fn_4e2320(pCVar15,0);
+                piVar21 = local_3680;
+                pvVar19 = (void *)lib_fn_4e2320((void *)(*piVar10 + 0x10),0);
+                puVar9 = (uint *)int64_sub_timecall(pvVar19,piVar21);
+                pvVar19 = (void *)int64_add_timecall(local_2b40,local_3690);
+                uVar12 = std_pair_lessequal(pvVar19,puVar9);
+                if ((char)uVar12 != '\0') {
+                  piVar21 = local_36a0;
+                  pvVar19 = (void *)lib_fn_4e2320((void *)(*piVar10 + 0x10),0);
+                  puVar9 = (uint *)int64_add_timecall(pvVar19,piVar21);
+                  pvVar19 = (void *)int64_sub_timecall(local_2b40,local_36b0);
+                  uVar12 = std_pair_less(pvVar19,puVar9);
+                  if ((char)uVar12 != '\0') {
+                    local_2b24 = (CRefTime *)getElemPtr4(local_1c0,1);
+                    local_2b40 = (CRefTime *)getElemPtr4(local_2bb4,1);
+                    local_2b54 = (CRefTime *)lib_fn_4e2320(pCVar15,1);
+                    piVar21 = local_36c0;
+                    pvVar19 = (void *)lib_fn_4e2320((void *)(*piVar10 + 0x10),1);
+                    puVar9 = (uint *)int64_sub_timecall(pvVar19,piVar21);
+                    pvVar19 = (void *)int64_add_timecall(local_2b54,local_36d0);
+                    uVar12 = std_pair_lessequal(pvVar19,puVar9);
+                    if ((char)uVar12 != '\0') {
+                      piVar21 = local_3740;
+                      pvVar19 = (void *)lib_fn_4e2320((void *)(*piVar10 + 0x10),1);
+                      puVar9 = (uint *)int64_add_timecall(pvVar19,piVar21);
+                      pvVar19 = (void *)int64_sub_timecall(local_2b54,local_3750);
+                      uVar12 = std_pair_less(pvVar19,puVar9);
+                      if ((char)uVar12 != '\0') {
+                        local_2b24 = (CRefTime *)getElemPtr4(local_1c0,2);
+                        local_2b40 = (CRefTime *)getElemPtr4(local_2bb4,2);
+                        local_2b54 = (CRefTime *)lib_fn_4e2320(pCVar15,2);
+                        piVar21 = local_31e8;
+                        pvVar19 = (void *)lib_fn_4e2320((void *)(*piVar10 + 0x10),2);
+                        puVar9 = (uint *)int64_sub_timecall(pvVar19,piVar21);
+                        pvVar19 = (void *)int64_add_timecall(local_2b54,local_35b8);
+                        uVar12 = std_pair_lessequal(pvVar19,puVar9);
+                        if ((char)uVar12 != '\0') {
+                          piVar21 = local_3458;
+                          pvVar19 = (void *)lib_fn_4e2320((void *)(*piVar10 + 0x10),2);
+                          puVar9 = (uint *)int64_add_timecall(pvVar19,piVar21);
+                          pvVar19 = (void *)int64_sub_timecall(local_2b54,local_31b0);
+                          uVar12 = std_pair_less(pvVar19,puVar9);
+                          if ((char)uVar12 != '\0') {
+                            puVar9 = Vec3i64_subtract(pCVar15,local_1df8,(uint *)(*piVar10 + 0x10));
+                            Vec3i64_toFloatScaled(local_154,(longlong *)puVar9);
+                            puVar22 = (undefined4 *)getElemPtr4(local_154,2);
+                            *puVar22 = 0;
+                            fVar51 = vec3_length_sq(local_154);
+                            local_2b20 = (CRefTime *)(float)fVar51;
+                            if (0.0 < (float)local_2b20) {
+                              vec3_normalize(local_154);
+                              if (0 < (int)*(float *)(local_2b18 + 300)) {
+                                vec3_scale(local_154,0.1);
+                              }
+                              pfVar25 = local_154;
+                              pfVar30 = (float *)getElemPtr4((void *)(*piVar10 + 0x80),0);
+                              pfVar25 = (float *)lib_fn_4e1520(local_195c,
+                                                              (local_2ba4 * 5.0 * *pfVar30) /
+                                                              *(float *)local_2b50,pfVar25);
+                              vec3_add_inplace(local_20,pfVar25);
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+              RBTree_copyBeginThenInc(&local_2c9c,&local_2c20);
+              piVar10 = (int *)World_getField0(local_2b70,&local_2e20);
+              bVar2 = std_iterator_notEqual(&local_2c9c,piVar10);
+              pCVar13 = local_2b18;
+              pvVar19 = local_2b1c;
+            } while (bVar2);
+          }
+        }
+        fVar51 = vec3_length(local_20);
+        local_2b20 = (CRefTime *)(int)((float)fVar51 + 1.0);
+        vec3_scale(local_20,1.0 / (float)(int)local_2b20);
+        local_2b64 = pCVar13 + 0x10;
+        local_2bb0 = local_2bb0 & 0xffffff00;
+        Copy24Bytes(local_1b30,(undefined4 *)local_2b64);
+        local_2bc9 = '\0';
+        local_2b98 = (CRefTime *)((uint)local_2b98 & 0xffffff00);
+        if (((*(char *)((int)pvVar19 + 0xb4) == '\0') ||
+            (pCVar13 == *(CRefTime **)((int)pvVar19 + 0xb8))) && (pCVar13[0x60] != (CRefTime)0x6)) {
+          lib_fn_5308b0(pvVar19,(int)pCVar13);
+        }
+        local_2b4c = (CRefTime *)0x0;
+        if (0 < (int)local_2b20) {
+          local_2e28 = (undefined4 *)getElemPtr4(local_2dc,0);
+          local_2b54 = (CRefTime *)getElemPtr4(local_2f4,0);
+          do {
+            lib_fn_4cde40(local_2db0,0);
+            local_2b58 = (CRefTime *)0x0;
+            do {
+              local_2bbc = (CRefTime *)getElemPtr4(local_20,(int)local_2b58);
+              int64_assign_timecall(&local_3064);
+              pCVar13 = local_2b64;
+              local_2b94 = (CRefTime *)lib_fn_4e2320(local_2b64,(int)local_2b58);
+              int64_add(local_2b94,(uint *)&local_3064);
+              local_2b35 = 0;
+              lib_fn_4e1520(local_1554,0.5,(float *)local_2bb4);
+              Vec3i64_randomize((int)local_19bc);
+              puVar9 = Vec3i64_subtract(pCVar13,local_2248,local_19bc);
+              Vec3i64_toBlockCoords(local_2dc,puVar9);
+              lib_fn_4e1520(local_17ac,0.5,(float *)local_2bb4);
+              Vec3i64_randomize((int)local_19e0);
+              puVar9 = Vec3i64_add(pCVar13,local_2698,local_19e0);
+              Vec3i64_toBlockCoords(local_2f4,puVar9);
+              pCVar13 = (CRefTime *)*local_2e28;
+              local_2b24 = pCVar13;
+              if ((int)pCVar13 <= (int)*(float *)local_2b54) {
+                puVar9 = (uint *)getElemPtr4(local_2dc,1);
+                local_2b74 = puVar9;
+                pCVar15 = (CRefTime *)getElemPtr4(local_2f4,1);
+                pCVar38 = local_2b54;
+                local_2b40 = pCVar15;
+                do {
+                  uVar12 = *puVar9;
+                  if ((int)uVar12 <= (int)*(float *)pCVar15) {
+                    pCVar35 = (CRefTime *)getElemPtr4(local_2dc,2);
+                    local_2bc0 = pCVar35;
+                    pCVar49 = (CRefTime *)getElemPtr4(local_2f4,2);
+                    pCVar48 = local_2b40;
+                    local_2b9c = pCVar49;
+                    do {
+                      iVar8 = *(int *)pCVar35;
+                      if (iVar8 <= (int)*(float *)pCVar49) {
+                        do {
+                          puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b24,uVar12,iVar8,0);
+                          uVar20 = check_type_low5_active((int)puVar36);
+                          if ((char)uVar20 == '\0') {
+                            if ((*(ushort *)(local_2b18 + 0x7e) & 0x100) != 0) {
+                              puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b24,uVar12,iVar8,0);
+                              bVar7 = get_low5bits_byte3((int)puVar36);
+                              if (CONCAT31(extraout_var_00,bVar7) != 2) goto LAB_00541472;
+                            }
+                          }
+                          else {
+LAB_00541472:
+                            local_2b35 = 1;
+                          }
+                          iVar8 = iVar8 + 1;
+                        } while (iVar8 <= (int)*(float *)local_2b9c);
+                        pCVar49 = local_2b9c;
+                        pCVar48 = local_2b40;
+                        if (local_2b35 != 0) {
+                          if ((local_2b58 != (CRefTime *)0x2) ||
+                             (pvVar19 = local_2b1c, (char)local_2bb0 != '\0')) goto LAB_00541f04;
+                          goto LAB_005414ee;
+                        }
+                      }
+                      uVar12 = uVar12 + 1;
+                      pCVar15 = local_2b40;
+                      pCVar38 = local_2b54;
+                      pCVar13 = local_2b24;
+                      pCVar35 = local_2bc0;
+                    } while ((int)uVar12 <= (int)*(float *)pCVar48);
+                  }
+                  pCVar13 = pCVar13 + 1;
+                  puVar9 = local_2b74;
+                  pvVar19 = local_2b1c;
+                  local_2b24 = pCVar13;
+                } while ((int)pCVar13 <= (int)*(float *)pCVar38);
+              }
+LAB_005414ee:
+              local_2b40 = (CRefTime *)lib_fn_4e2320(local_2b64,0);
+              lVar14 = CRefTime::Millisecs(local_2b40);
+              iVar8 = (int)((lVar14 >> 0x1f & 7U) + lVar14) >> 3;
+              local_2bc0 = (CRefTime *)lib_fn_4e2320(local_2b64,1);
+              lVar14 = CRefTime::Millisecs(local_2bc0);
+              local_2b24 = (CRefTime *)(iVar8 + -1);
+              piVar10 = (int *)(iVar8 + 1);
+              iVar8 = (int)(lVar14 + (lVar14 >> 0x1f & 7U)) >> 3;
+              local_2be4 = piVar10;
+              if ((int)piVar10 < (int)local_2b24) {
+                if (local_2b35 == 0) goto LAB_00541a70;
+LAB_00541f18:
+                pvVar19 = local_2b1c;
+                pCVar15 = local_2bb4;
+                if (local_2b58 == (CRefTime *)0x2) {
+                  pCVar13 = local_2b64;
+                  if ((*(int *)((int)local_2b1c + 0xb8) != 0) &&
+                     (*local_2bb8 <= -2.0 && *local_2bb8 != -2.0)) {
+                    lib_fn_4c8530((int)local_474);
+                    local_468 = 0x20;
+                    iVar8 = rand();
+                    pCVar13 = local_2b64;
+                    local_464 = ((float)iVar8 * 0.2) / 32767.0 + 1.0;
+                    Vec3i64_toFloatScaled(local_474,(longlong *)local_2b64);
+                    local_460 = 0x3f000000;
+                    std_list_push_back_428590(local_2b2c + 2,local_474);
+                  }
+                  if ((((byte)local_2b18[0x5c] & 2) == 0) &&
+                     (*local_2bb8 <= -5.0 && *local_2bb8 != -5.0)) {
+                    puVar9 = (uint *)lib_fn_4e2320(pCVar13,2);
+                    puVar18 = (uint *)lib_fn_4f7a30(local_3428,*(float *)(local_2b18 + 0x13bc),puVar9
+                                                  );
+                    uVar20 = fixedpoint_greater_call(puVar18);
+                    if (((char)uVar20 != '\0') &&
+                       (local_2b18 == *(CRefTime **)((int)pvVar19 + 0xb8))) {
+                      puVar27 = &local_3688;
+                      Combat_computeMaxHealth((int)local_2b18);
+                      puVar58 = &local_3438;
+                      piVar10 = local_35c8;
+                      uVar12 = 1;
+                      puVar41 = &local_3448;
+                      lib_fn_4f7a30(local_3738,*(float *)(local_2b18 + 0x13bc),puVar9);
+                      puVar41 = lib_fn_4ce310(puVar41);
+                      int64_sub_shifted(puVar41,piVar10,uVar12);
+                      lib_fn_52ebb0(puVar58);
+                      puVar27 = lib_fn_52ebb0(puVar27);
+                      fVar51 = fixedpoint16_to_float((longlong *)puVar27);
+                      local_2b9c = (CRefTime *)(float)fVar51;
+                      *(float *)(local_2b18 + 0x16c) =
+                           *(float *)(local_2b18 + 0x16c) - (float)local_2b9c;
+                      fVar24 = *(float *)(local_2b18 + 300);
+                      iVar8 = get_cast_time((int)local_2b18);
+                      if ((int)fVar24 <= iVar8) {
+                        fVar24 = (float)get_cast_time((int)local_2b18);
+                      }
+                      *(float *)(local_2b18 + 300) = fVar24;
+                      pCVar13 = local_2b18 + 0x10;
+                      set_flag_bits_0x114(pCVar13,1,'\0');
+                      lib_fn_4c8530((int)local_1b4);
+                      Vec3i64_toFloatScaled(local_1b4,(longlong *)pCVar13);
+                      local_1a4 = 1.0;
+                      local_1a8 = 0x17;
+                      std_list_push_back_428590(local_2b2c + 2,local_1b4);
+                      pCVar13 = local_2b18;
+                      if (*(float *)(local_2b18 + 0x16c) <= 0.0 &&
+                          *(float *)(local_2b18 + 0x16c) != 0.0) {
+                        *(float *)(local_2b18 + 0x16c) = 0.0;
+                      }
+                      initStruct_0x47_zero((int)&local_7bc);
+                      local_7b4 = *(float *)(pCVar13 + 8);
+                      local_7b0 = *(float *)(pCVar13 + 0xc);
+                      local_7bc = 0;
+                      local_7ac = local_2b9c;
+                      Copy24Bytes(local_79c,(undefined4 *)(pCVar13 + 0x10));
+                      local_7a8 = 0;
+                      std_list_push_back_428400(local_2b2c,(undefined4 *)&local_7bc);
+                    }
+                  }
+                  getElemPtr4(local_20,2);
+                  int64_assign_timecall(&local_3004);
+                  plVar32 = (longlong *)lib_fn_4e2320(local_2b64,2);
+                  int64_sub2(plVar32,(uint *)&local_3004);
+                  *local_2bb8 = 0.0;
+                  puVar22 = (undefined4 *)getElemPtr4(local_2b78,2);
+                  *puVar22 = 0;
+                  fVar51 = fixedpoint16_to_float(plVar32);
+                  *(float *)(local_2b18 + 0x13bc) = (float)fVar51;
+                  pCVar13 = local_2b18;
+                }
+                else {
+                  pCVar13 = local_2b18;
+                  if ((local_2b2d == '\0') || ((*(ushort *)(local_2b18 + 0x7e) & 0x100) != 0)) {
+LAB_005429f1:
+                    int64_assign_timecall(&local_3010);
+                    int64_sub2(local_2b94,(uint *)&local_3010);
+                  }
+                  else {
+                    local_2b35 = 0;
+                    lib_fn_4e1520(local_11a0,0.5,(float *)local_2bb4);
+                    Vec3i64_randomize((int)local_1a4c);
+                    Vec3_set(local_11b8,0,0,0x3f8147ae);
+                    Vec3i64_randomize((int)local_1a70);
+                    puVar9 = local_1a4c;
+                    puVar18 = local_1e40;
+                    puVar26 = Vec3i64_add(local_2b64,local_1e70,local_1a70);
+                    puVar9 = Vec3i64_subtract(puVar26,puVar18,puVar9);
+                    Vec3i64_toBlockCoords(local_2e8,puVar9);
+                    lib_fn_4e1520(local_11d0,0.5,(float *)pCVar15);
+                    Vec3i64_randomize((int)local_1a94);
+                    Vec3_set(local_11e8,0,0,0x3f8147ae);
+                    Vec3i64_randomize((int)local_1ab8);
+                    puVar9 = local_1a94;
+                    puVar18 = local_1ea0;
+                    puVar26 = Vec3i64_add(local_2b64,local_1ed0,local_1ab8);
+                    puVar9 = Vec3i64_add(puVar26,puVar18,puVar9);
+                    Vec3i64_toBlockCoords(local_354,puVar9);
+                    puVar22 = (undefined4 *)getElemPtr4(local_2e8,0);
+                    pCVar13 = (CRefTime *)*puVar22;
+                    local_2b40 = pCVar13;
+                    local_2b9c = (CRefTime *)getElemPtr4(local_354,0);
+                    if ((int)pCVar13 <= (int)*(float *)local_2b9c) {
+                      puVar9 = (uint *)getElemPtr4(local_2e8,1);
+                      local_2bdc = puVar9;
+                      pCVar15 = (CRefTime *)getElemPtr4(local_354,1);
+                      pCVar38 = local_2b9c;
+                      local_2b24 = pCVar15;
+                      do {
+                        uVar12 = *puVar9;
+                        if ((int)uVar12 <= (int)*(float *)pCVar15) {
+                          piVar10 = (int *)getElemPtr4(local_2e8,2);
+                          local_2be4 = piVar10;
+                          pCVar49 = (CRefTime *)getElemPtr4(local_354,2);
+                          pCVar48 = local_2b24;
+                          local_2ba0 = pCVar49;
+                          do {
+                            iVar8 = *piVar10;
+                            if (iVar8 <= (int)*(float *)pCVar49) {
+                              do {
+                                puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b40,uVar12,iVar8,0);
+                                uVar20 = check_type_low5_active((int)puVar36);
+                                pCVar13 = local_2b18;
+                                pvVar19 = local_2b1c;
+                                if ((char)uVar20 != '\0') goto LAB_005429f1;
+                                iVar8 = iVar8 + 1;
+                                pCVar49 = local_2ba0;
+                                pCVar48 = local_2b24;
+                              } while (iVar8 <= (int)*(float *)local_2ba0);
+                            }
+                            uVar12 = uVar12 + 1;
+                            pCVar15 = local_2b24;
+                            pCVar38 = local_2b9c;
+                            pCVar13 = local_2b40;
+                            piVar10 = local_2be4;
+                          } while ((int)uVar12 <= (int)*(float *)pCVar48);
+                        }
+                        pCVar13 = pCVar13 + 1;
+                        puVar9 = local_2bdc;
+                        local_2b40 = pCVar13;
+                      } while ((int)pCVar13 <= (int)*(float *)pCVar38);
+                    }
+                    pvVar19 = local_2b1c;
+                    deref_getFirst((void *)((int)local_2b1c + 0xc),&local_2c00);
+                    piVar10 = (int *)World_getField0((void *)((int)pvVar19 + 0xc),&local_2e40);
+                    bVar2 = std_iterator_notEqual(&local_2c00,piVar10);
+                    if (bVar2) {
+                      do {
+                        pCVar13 = local_2b18;
+                        if (local_2b35 != 0) goto LAB_005429f1;
+                        iVar8 = getField_plus0x10(&local_2c00);
+                        pCVar15 = (CRefTime *)(iVar8 + 8);
+                        local_2bc0 = pCVar15;
+                        puVar9 = Vec3i64_subtract(local_2b64,local_1f00,(uint *)(*(int *)pCVar15 + 0x80)
+                                             );
+                        pfVar25 = Vec3i64_toFloatScaled(local_1200,(longlong *)puVar9);
+                        fVar51 = vec3_length_sq(pfVar25);
+                        local_2ba0 = (CRefTime *)(float)fVar51;
+                        pCVar13 = local_2b18;
+                        if ((((float)local_2ba0 <= 4096.0) && (iVar8 = *(int *)pCVar15, iVar8 != 0))
+                           && (pCVar15 = (CRefTime *)
+                                         std_vector_int_at((void *)((int)pvVar19 + 0x1c),0xa03),
+                              pCVar13 = local_2b18, pvVar19 = local_2b1c, local_2ba0 = pCVar15,
+                              pCVar15 != (CRefTime *)0x0)) {
+                          Matrix4_setIdentity(local_1064);
+                          iVar17 = get_field_0x4c((int)pCVar15);
+                          fVar24 = (float)iVar17 * 0.5;
+                          iVar17 = get_field_0x48((int)pCVar15);
+                          fVar52 = (float)iVar17 * 0.5;
+                          iVar17 = get_field_0x44((int)pCVar15);
+                          mat4_translate(local_1064,(float)iVar17 * 0.5,fVar52,fVar24);
+                          matrix_rotate_columns(local_1064,-*(float *)(iVar8 + 0x98));
+                          puVar9 = Vec3i64_subtract(local_2b64,local_1f30,(uint *)(iVar8 + 0x80));
+                          Vec3i64_toFloatScaled(local_294,(longlong *)puVar9);
+                          mat4_translate_vec(local_1064,local_294);
+                          pCVar13 = local_2bb4;
+                          pfVar30 = (float *)lib_fn_4e1520(local_1218,0.5,(float *)local_2bb4);
+                          pfVar25 = local_1230;
+                          pfVar37 = (float *)Vec3_set(local_1248,0,0,0x3f8147ae);
+                          pfVar37 = mat4_transform_point(local_1064,local_1260,pfVar37);
+                          vec3_sub(pfVar37,pfVar25,pfVar30);
+                          Vec3i64_randomize((int)local_1adc);
+                          Vec3i64_toBlockCoords(local_300,local_1adc);
+                          pfVar30 = (float *)lib_fn_4e1520(local_1278,0.5,(float *)pCVar13);
+                          pfVar25 = local_1290;
+                          pfVar37 = (float *)Vec3_set(local_12a8,0,0,0x3f8147ae);
+                          pfVar37 = mat4_transform_point(local_1064,local_12c0,pfVar37);
+                          vec3_add(pfVar37,pfVar25,pfVar30);
+                          Vec3i64_randomize((int)local_1b0c);
+                          Vec3i64_toBlockCoords(local_330,local_1b0c);
+                          puVar22 = (undefined4 *)getElemPtr4(local_300,0);
+                          pCVar15 = (CRefTime *)*puVar22;
+                          local_2b40 = pCVar15;
+                          local_2b9c = (CRefTime *)getElemPtr4(local_330,0);
+                          pCVar13 = local_2b18;
+                          pvVar19 = local_2b1c;
+                          if ((int)pCVar15 <= (int)*(float *)local_2b9c) {
+                            piVar10 = (int *)getElemPtr4(local_300,1);
+                            local_2cc8 = piVar10;
+                            pCVar38 = (CRefTime *)getElemPtr4(local_330,1);
+                            pCVar49 = local_2b9c;
+                            local_2b24 = pCVar38;
+                            do {
+                              iVar8 = *piVar10;
+                              if (iVar8 <= (int)*(float *)pCVar38) {
+                                puVar9 = (uint *)getElemPtr4(local_300,2);
+                                local_2bdc = puVar9;
+                                piVar10 = (int *)getElemPtr4(local_330,2);
+                                pCVar13 = local_2b24;
+                                local_2be4 = piVar10;
+                                do {
+                                  uVar12 = *puVar9;
+                                  if ((int)uVar12 <= *piVar10) {
+                                    do {
+                                      puVar39 = set_3_bytes(local_2e90,0,0,0);
+                                      puVar40 = game_voxelColorAt(local_2ba0,(int)local_2b40,iVar8,uVar12
+                                                            );
+                                      cVar3 = compare_3_bytes_ne(puVar40,(int)puVar39);
+                                      pCVar13 = local_2b18;
+                                      if (cVar3 != '\0') {
+                                        local_2b35 = 1;
+                                        lib_fn_530690((void *)(*(int *)local_2bc0 + 0x78),local_d4,
+                                                     (uint *)(local_2b18 + 8));
+                                        pvVar19 = local_2b1c;
+                                        goto LAB_00542886;
+                                      }
+                                      uVar12 = uVar12 + 1;
+                                      piVar10 = local_2be4;
+                                      pCVar13 = local_2b24;
+                                    } while ((int)uVar12 <= *local_2be4);
+                                  }
+                                  iVar8 = iVar8 + 1;
+                                  pCVar38 = local_2b24;
+                                  pCVar49 = local_2b9c;
+                                  pCVar15 = local_2b40;
+                                  puVar9 = local_2bdc;
+                                } while (iVar8 <= (int)*(float *)pCVar13);
+                              }
+                              pCVar15 = pCVar15 + 1;
+                              pCVar13 = local_2b18;
+                              pvVar19 = local_2b1c;
+                              piVar10 = local_2cc8;
+                              local_2b40 = pCVar15;
+                            } while ((int)pCVar15 <= (int)*(float *)pCVar49);
+                          }
+                        }
+LAB_00542886:
+                        RBTree_copyBeginThenInc(&local_2c00,&local_2c48);
+                        piVar10 = (int *)World_getField0((void *)((int)pvVar19 + 0xc),&local_2e40);
+                        bVar2 = std_iterator_notEqual(&local_2c00,piVar10);
+                      } while (bVar2);
+                      if (local_2b35 != 0) goto LAB_005429f1;
+                    }
+                    puVar22 = (undefined4 *)lib_fn_4e2320(local_2b64,2);
+                    int64_sub2(puVar22,local_2db0);
+                    local_2da4 = *puVar22;
+                    local_2da0 = puVar22[1];
+                    pfVar25 = (float *)getElemPtr4(local_2bb4,2);
+                    local_2ba0 = (CRefTime *)(*pfVar25 * 0.5);
+                    int64_sub_timecall(&local_2da4,(int *)local_3048);
+                    piVar10 = local_35d8;
+                    piVar21 = local_3468;
+                    uVar53 = fixedpoint_to_int_floor(local_3048);
+                    piVar23 = lib_fn_4cde40(local_3698,(uint)uVar53);
+                    pvVar44 = (void *)int64_add_timecall(piVar23,piVar21);
+                    puVar33 = (undefined4 *)lib_fn_4ce290(pvVar44,piVar10);
+                    std_pair_copy_ctor2(puVar22,puVar33);
+                    puVar9 = (uint *)int64_sub_timecall(&local_2da4,local_3478);
+                    plVar32 = (longlong *)int64_sub(puVar22,local_35e8,puVar9);
+                    fVar51 = fixedpoint16_to_float(plVar32);
+                    *(float *)(local_2b18 + 0x1180) = (float)fVar51;
+                    int64_add(puVar22,local_2db0);
+                    pCVar13 = local_2b18;
+                  }
+                }
+              }
+              else {
+                local_2ba0 = (CRefTime *)(iVar8 + -1);
+                puVar9 = (uint *)(iVar8 + 1);
+                local_2bdc = puVar9;
+                do {
+                  pCVar13 = local_2ba0;
+                  if ((int)puVar9 < (int)local_2ba0) {
+                    local_2b9c = local_2ba0;
+                    if (local_2b35 != 0) goto LAB_00541f18;
+                  }
+                  else {
+                    do {
+                      local_2b9c = pCVar13;
+                      piVar10 = (int *)World_getVoxelField(pvVar19,(uint)local_2b24,(uint)pCVar13,0);
+                      local_2cc8 = piVar10;
+                      if (piVar10 != (int *)0x0) {
+                        deref_getFirst(piVar10,&local_2ca8);
+                        piVar10 = (int *)World_getField0(piVar10,&local_2e30);
+                        bVar2 = std_iterator_notEqual(&local_2ca8,piVar10);
+                        if (bVar2) {
+                          do {
+                            puVar9 = (uint *)lib_fn_52eb90(&local_2ca8);
+                            pCVar13 = local_2b18;
+                            iVar8 = *(int *)*puVar9;
+                            if (((iVar8 != 7) && (iVar8 != 6)) && (iVar8 != 9)) {
+                              piVar10 = (int *)World_getField0(local_2b18 + 0x1468,&local_2ffc);
+                              pvVar19 = (void *)lib_fn_4db1b0(pCVar13 + 0x1468,&local_3008,puVar9);
+                              bVar2 = std_iterator_notEqual(pvVar19,piVar10);
+                              if (!bVar2) {
+                                piVar10 = (int *)*puVar9;
+                                iVar8 = *piVar10;
+                                if (((((iVar8 != 1) && (iVar8 != 8)) && (iVar8 != 2)) &&
+                                    ((iVar8 != 3 && (iVar8 != 5)))) || ((char)piVar10[0xc] != '\0'))
+                                {
+                                  Vec3_copy(local_148,piVar10 + 9);
+                                  uVar12 = *(uint *)(*puVar9 + 0x20) & 0x80000001;
+                                  bVar2 = uVar12 == 0;
+                                  if ((int)uVar12 < 0) {
+                                    bVar2 = (uVar12 - 1 | 0xfffffffe) == 0xffffffff;
+                                  }
+                                  if (!bVar2) {
+                                    puVar22 = (undefined4 *)getElemPtr4(local_148,1);
+                                    puVar33 = (undefined4 *)getElemPtr4(local_148,0);
+                                    lib_fn_4c8170(puVar33,puVar22);
+                                  }
+                                  puVar27 = &local_3440;
+                                  puVar18 = (uint *)lib_fn_4e2320((void *)(*puVar9 + 8),
+                                                                 (int)local_2b58);
+                                  int64_sub(local_2b94,local_33a8,puVar18);
+                                  puVar27 = lib_fn_52ebb0(puVar27);
+                                  uVar20 = lib_fn_52ec80((uint *)puVar27);
+                                  if ((char)uVar20 == '\0') {
+                                    getElemPtr4(local_148,0);
+                                    piVar10 = local_3668;
+                                    pvVar19 = (void *)lib_fn_4e2320((void *)(*puVar9 + 8),0);
+                                    puVar18 = (uint *)int64_sub_timecall(pvVar19,piVar10);
+                                    pvVar19 = (void *)int64_add_timecall(local_2b40,local_33b8);
+                                    uVar12 = std_pair_lessequal(pvVar19,puVar18);
+                                    if ((char)uVar12 != '\0') {
+                                      piVar10 = local_3718;
+                                      pvVar19 = (void *)lib_fn_4e2320((void *)(*puVar9 + 8),0);
+                                      puVar18 = (uint *)int64_add_timecall(pvVar19,piVar10);
+                                      pvVar19 = (void *)int64_sub_timecall(local_2b40,local_33d8);
+                                      uVar12 = std_pair_less(pvVar19,puVar18);
+                                      if ((char)uVar12 != '\0') {
+                                        getElemPtr4(local_148,1);
+                                        local_2b74 = (uint *)getElemPtr4(local_2bb4,1);
+                                        piVar10 = local_3598;
+                                        pvVar19 = (void *)lib_fn_4e2320((void *)(*puVar9 + 8),1);
+                                        puVar18 = (uint *)int64_sub_timecall(pvVar19,piVar10);
+                                        pvVar19 = (void *)int64_add_timecall(local_2bc0,local_33e8);
+                                        uVar12 = std_pair_lessequal(pvVar19,puVar18);
+                                        if ((char)uVar12 != '\0') {
+                                          piVar10 = local_3678;
+                                          pvVar19 = (void *)lib_fn_4e2320((void *)(*puVar9 + 8),1);
+                                          puVar18 = (uint *)int64_add_timecall(pvVar19,piVar10);
+                                          pvVar19 = (void *)int64_sub_timecall(local_2bc0,local_33f8);
+                                          uVar12 = std_pair_less(pvVar19,puVar18);
+                                          if ((char)uVar12 != '\0') {
+                                            getElemPtr4(local_2bb4,2);
+                                            local_2b74 = (uint *)lib_fn_4e2320(local_2b64,2);
+                                            puVar18 = (uint *)lib_fn_4e2320((void *)(*puVar9 + 8),2);
+                                            pvVar19 = (void *)int64_add_timecall(local_2b74,local_35a8);
+                                            uVar12 = std_pair_lessequal(pvVar19,puVar18);
+                                            if ((char)uVar12 != '\0') {
+                                              getElemPtr4(local_148,2);
+                                              piVar10 = local_3408;
+                                              pvVar19 = (void *)lib_fn_4e2320((void *)(*puVar9 + 8),2
+                                                                            );
+                                              puVar9 = (uint *)int64_add_timecall(pvVar19,piVar10);
+                                              pvVar19 = (void *)int64_sub_timecall(local_2b74,local_36e8);
+                                              uVar12 = std_pair_less(pvVar19,puVar9);
+                                              if ((char)uVar12 != '\0') {
+                                                if ((local_2b58 == (CRefTime *)0x2) &&
+                                                   (local_2bb0 = local_2bb0 & 0xff,
+                                                   *local_2bb8 <= 0.0 && *local_2bb8 != 0.0)) {
+                                                  local_2bb0 = 1;
+                                                }
+                                                local_2bc9 = '\x01';
+                                                local_2b2d = '\0';
+                                                goto LAB_00541f18;
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                            lib_fn_52ebf0(&local_2ca8,&local_2b74);
+                            piVar10 = (int *)World_getField0(local_2cc8,&local_2e30);
+                            bVar2 = std_iterator_notEqual(&local_2ca8,piVar10);
+                            pCVar13 = local_2b9c;
+                          } while (bVar2);
+                        }
+                      }
+                      if (local_2b35 != 0) goto LAB_00541f18;
+                      local_2b9c = pCVar13 + 1;
+                      puVar9 = local_2bdc;
+                      piVar10 = local_2be4;
+                      pCVar13 = local_2b9c;
+                      pvVar19 = local_2b1c;
+                    } while ((int)local_2b9c <= (int)local_2bdc);
+                  }
+                  local_2b24 = local_2b24 + 1;
+                  pvVar19 = local_2b1c;
+                } while ((int)local_2b24 <= (int)piVar10);
+LAB_00541a70:
+                pvVar19 = local_2b1c;
+                deref_getFirst((void *)((int)local_2b1c + 0xc),&local_2c04);
+                piVar10 = (int *)World_getField0((void *)((int)pvVar19 + 0xc),&local_2e38);
+                bVar2 = std_iterator_notEqual(&local_2c04,piVar10);
+                pCVar13 = local_2b18;
+                if (bVar2) {
+                  do {
+                    iVar8 = getField_plus0x10((int *)&local_2c04);
+                    pCVar13 = (CRefTime *)(iVar8 + 8);
+                    local_2bc0 = pCVar13;
+                    puVar9 = Vec3i64_subtract(local_2b64,local_2278,(uint *)(*(int *)pCVar13 + 0x80));
+                    pfVar25 = Vec3i64_toFloatScaled(local_156c,(longlong *)puVar9);
+                    fVar51 = vec3_length_sq(pfVar25);
+                    local_2ba0 = (CRefTime *)(float)fVar51;
+                    if ((((float)local_2ba0 <= 4096.0) && (iVar8 = *(int *)pCVar13, iVar8 != 0)) &&
+                       (pCVar13 = (CRefTime *)std_vector_int_at((void *)((int)local_2b1c + 0x1c),0xa03),
+                       local_2b9c = pCVar13, pCVar13 != (CRefTime *)0x0)) {
+                      Matrix4_setIdentity(local_10a4);
+                      iVar17 = get_field_0x4c((int)pCVar13);
+                      fVar24 = (float)iVar17 * 0.5;
+                      iVar17 = get_field_0x48((int)pCVar13);
+                      fVar52 = (float)iVar17 * 0.5;
+                      iVar17 = get_field_0x44((int)pCVar13);
+                      mat4_translate(local_10a4,(float)iVar17 * 0.5,fVar52,fVar24);
+                      matrix_rotate_columns(local_10a4,-*(float *)(iVar8 + 0x98));
+                      puVar9 = Vec3i64_subtract(local_2b64,local_1e10,(uint *)(iVar8 + 0x80));
+                      Vec3i64_toFloatScaled(local_99c,(longlong *)puVar9);
+                      mat4_translate_vec(local_10a4,local_99c);
+                      pCVar13 = local_2bb4;
+                      pfVar30 = (float *)lib_fn_4e1520(local_10ec,0.5,(float *)local_2bb4);
+                      pfVar25 = local_10f8;
+                      pfVar37 = (float *)Vec3_set(local_1110,0,0,0);
+                      pfVar37 = mat4_transform_point(local_10a4,local_1128,pfVar37);
+                      vec3_sub(pfVar37,pfVar25,pfVar30);
+                      Vec3i64_randomize((int)local_1a04);
+                      Vec3i64_toBlockCoords(local_2d0,local_1a04);
+                      pfVar30 = (float *)lib_fn_4e1520(local_1140,0.5,(float *)pCVar13);
+                      pfVar25 = local_1158;
+                      pfVar37 = (float *)Vec3_set(local_10e0,0,0,0);
+                      pfVar37 = mat4_transform_point(local_10a4,local_1188,pfVar37);
+                      vec3_add(pfVar37,pfVar25,pfVar30);
+                      Vec3i64_randomize((int)local_1a28);
+                      Vec3i64_toBlockCoords(local_378,local_1a28);
+                      puVar22 = (undefined4 *)getElemPtr4(local_2d0,0);
+                      pCVar13 = (CRefTime *)*puVar22;
+                      local_2b40 = pCVar13;
+                      local_2b74 = (uint *)getElemPtr4(local_378,0);
+                      if ((int)pCVar13 <= (int)*local_2b74) {
+                        puVar18 = (uint *)getElemPtr4(local_2d0,1);
+                        local_2bdc = puVar18;
+                        pCVar15 = (CRefTime *)getElemPtr4(local_378,1);
+                        puVar9 = local_2b74;
+                        local_2b24 = pCVar15;
+                        do {
+                          uVar12 = *puVar18;
+                          if ((int)uVar12 <= (int)*(float *)pCVar15) {
+                            piVar10 = (int *)getElemPtr4(local_2d0,2);
+                            local_2be4 = piVar10;
+                            pCVar38 = (CRefTime *)getElemPtr4(local_378,2);
+                            pCVar49 = local_2b24;
+                            local_2ba0 = pCVar38;
+                            do {
+                              iVar8 = *piVar10;
+                              if (iVar8 <= (int)*(float *)pCVar38) {
+                                do {
+                                  puVar39 = set_3_bytes(local_2e8c,0,0,0);
+                                  puVar40 = game_voxelColorAt(local_2b9c,(int)local_2b40,uVar12,iVar8);
+                                  cVar3 = compare_3_bytes_ne(puVar40,(int)puVar39);
+                                  if (cVar3 != '\0') {
+                                    local_2b98 = (CRefTime *)((uint)local_2b98 & 0xff);
+                                    if (local_2b58 == (CRefTime *)0x2) {
+                                      local_2b98 = (CRefTime *)0x1;
+                                    }
+                                    local_2b35 = 1;
+                                    get_field_0x4c((int)local_2b9c);
+                                    piVar10 = local_3418;
+                                    pvVar19 = (void *)lib_fn_4e2320((void *)(*(int *)local_2bc0 +
+                                                                           0x80),2);
+                                    puVar22 = (undefined4 *)int64_sub_timecall(pvVar19,piVar10);
+                                    std_pair_copy_ctor2(local_2db0,puVar22);
+                                    lib_fn_530690((void *)(*(int *)local_2bc0 + 0x78),local_3078,
+                                                 (uint *)(local_2b18 + 8));
+                                  }
+                                  iVar8 = iVar8 + 1;
+                                  pCVar38 = local_2ba0;
+                                  pCVar49 = local_2b24;
+                                } while (iVar8 <= (int)*(float *)local_2ba0);
+                              }
+                              uVar12 = uVar12 + 1;
+                              pCVar15 = local_2b24;
+                              puVar9 = local_2b74;
+                              pCVar13 = local_2b40;
+                              piVar10 = local_2be4;
+                            } while ((int)uVar12 <= (int)*(float *)pCVar49);
+                          }
+                          pCVar13 = pCVar13 + 1;
+                          puVar18 = local_2bdc;
+                          local_2b40 = pCVar13;
+                        } while ((int)pCVar13 <= (int)*puVar9);
+                      }
+                    }
+                    RBTree_copyBeginThenInc(&local_2c04,&local_2ce4);
+                    piVar10 = (int *)World_getField0((void *)((int)local_2b1c + 0xc),&local_2e38);
+                    bVar2 = std_iterator_notEqual(&local_2c04,piVar10);
+                  } while (bVar2);
+LAB_00541f04:
+                  pCVar13 = local_2b18;
+                  pvVar19 = local_2b1c;
+                  if (local_2b35 != 0) goto LAB_00541f18;
+                }
+              }
+              local_2b58 = local_2b58 + 1;
+            } while ((int)local_2b58 < 3);
+            local_2b4c = local_2b4c + 1;
+          } while ((int)local_2b4c < (int)local_2b20);
+        }
+        local_2be4 = (int *)((uint)*(float *)(pCVar13 + 0x5c) >> 1 & 0xffffff01);
+        local_2b35 = (byte)pCVar13[0x5c] & 1;
+        local_2bdc = (uint *)((uint)*(float *)(pCVar13 + 0x5c) >> 2 & 0xffffff01);
+        Vec3_copy(local_120,(undefined4 *)(pCVar13 + 0x11a0));
+        *(float *)(pCVar13 + 0x5c) = 0.0;
+        *(uint *)(pCVar13 + 0x145c) = (int)*(float *)(pCVar13 + 0x145c) + local_2b28;
+        if ((int)*(float *)(pCVar13 + 300) < 1) {
+          pfVar25 = (float *)std_pair_copy_ctor2(local_e7c,(undefined4 *)local_2b60);
+          fVar51 = vec2_length_sq(pfVar25);
+          local_2b78 = (CRefTime *)(float)fVar51;
+          if (16.0 < (float)local_2b78) {
+            fVar51 = vec3_length_sq((float *)(pCVar13 + 0x40));
+            local_2b78 = (CRefTime *)(float)fVar51;
+            if (16.0 < (float)local_2b78) {
+              puVar9 = Vec3i64_subtract(local_1b30,local_1f60,(uint *)(pCVar13 + 0x10));
+              pfVar25 = Vec3i64_toFloatScaled(local_12d8,(longlong *)puVar9);
+              fVar51 = vec3_length_sq(pfVar25);
+              local_2ba0 = (CRefTime *)(float)fVar51;
+              fVar51 = vec3_length_sq(local_20);
+              local_2b78 = (CRefTime *)(float)fVar51;
+              if ((float)local_2ba0 < (float)local_2b78 * 0.01) {
+                *(uint *)(pCVar13 + 0x5c) = (uint)*(float *)(pCVar13 + 0x5c) | 0x20;
+              }
+            }
+          }
+        }
+        pCVar15 = local_2bb4;
+        if (local_2bc9 != '\0') {
+          *(uint *)(pCVar13 + 0x5c) = (uint)*(float *)(pCVar13 + 0x5c) | 0x40;
+        }
+        lib_fn_4e1520(local_12f0,0.5,(float *)local_2bb4);
+        Vec3i64_randomize((int)local_1af4);
+        puVar9 = Vec3i64_subtract(pCVar13 + 0x10,local_1f90,local_1af4);
+        Vec3i64_toBlockCoords(local_38,puVar9);
+        lib_fn_4e1520(local_1308,0.5,(float *)pCVar15);
+        Vec3i64_randomize((int)local_9b4);
+        puVar9 = Vec3i64_add(pCVar13 + 0x10,local_1fc0,local_9b4);
+        Vec3i64_toBlockCoords(local_2c,puVar9);
+        local_2b24 = (CRefTime *)getElemPtr4(local_38,0);
+        pCVar13 = *(CRefTime **)local_2b24;
+        local_2b40 = pCVar13;
+        local_2b74 = (uint *)getElemPtr4(local_2c,0);
+        if ((int)pCVar13 <= (int)*local_2b74) {
+          pCVar38 = (CRefTime *)getElemPtr4(local_38,1);
+          local_2ba0 = pCVar38;
+          pCVar15 = (CRefTime *)getElemPtr4(local_2c,1);
+          local_2b4c = pCVar15;
+          do {
+            fVar24 = *(float *)pCVar38;
+            if ((int)fVar24 <= *(int *)pCVar15) {
+              pCVar49 = (CRefTime *)getElemPtr4(local_38,2);
+              local_2b78 = pCVar49;
+              pCVar38 = (CRefTime *)getElemPtr4(local_2c,2);
+              local_2b20 = pCVar38;
+              do {
+                fVar52 = *(float *)pCVar49;
+                if ((int)fVar52 <= *(int *)pCVar38) {
+                  do {
+                    puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b40,(uint)fVar24,(int)fVar52,0);
+                    bVar7 = get_low5bits_byte3((int)puVar36);
+                    pCVar38 = local_2b20;
+                    if (CONCAT31(extraout_var_01,bVar7) != 2) {
+                      *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 0x10;
+                      break;
+                    }
+                    fVar52 = (float)((int)fVar52 + 1);
+                  } while ((int)fVar52 <= *(int *)local_2b20);
+                }
+                pCVar15 = local_2b4c;
+                pCVar13 = local_2b40;
+              } while ((((byte)local_2b18[0x5c] & 0x10) == 0) &&
+                      (fVar24 = (float)((int)fVar24 + 1), pCVar49 = local_2b78,
+                      (int)fVar24 <= *(int *)local_2b4c));
+            }
+          } while ((((byte)local_2b18[0x5c] & 0x10) == 0) &&
+                  (pCVar13 = (CRefTime *)((int)pCVar13 + 1), pCVar38 = local_2ba0,
+                  local_2b40 = pCVar13, (int)pCVar13 <= (int)*local_2b74));
+        }
+        puVar9 = local_2b74;
+        local_2be0 = local_2be0 & 0xffffff00;
+        pCVar15 = local_2bb4;
+        pCVar13 = local_2b18;
+        if (local_2b18[0x60] != (CRefTime)0x6) {
+          local_2b4c = (CRefTime *)getElemPtr4(local_38,2);
+          local_2b58 = *(CRefTime **)local_2b4c;
+          local_2b40 = *(CRefTime **)local_2b24;
+          if ((int)local_2b40 <= (int)*puVar9) {
+            pCVar15 = (CRefTime *)getElemPtr4(local_38,1);
+            local_2ba0 = pCVar15;
+            pCVar13 = (CRefTime *)getElemPtr4(local_2c,1);
+            puVar9 = local_2b74;
+            local_2b20 = pCVar13;
+            do {
+              pCVar38 = *(CRefTime **)pCVar15;
+              local_2b54 = pCVar38;
+              if ((int)pCVar38 <= *(int *)pCVar13) {
+                pCVar49 = (CRefTime *)getElemPtr4(local_2c,2);
+                pCVar13 = local_2b20;
+                pCVar48 = local_2b4c;
+                local_2b78 = pCVar49;
+                do {
+                  pCVar15 = *(CRefTime **)pCVar48;
+                  pCVar35 = pCVar15;
+                  if ((int)pCVar15 <= (int)*(float *)pCVar49) {
+                    do {
+                      pCVar35 = pCVar35 + 1;
+                      puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b40,(uint)local_2b54,
+                                             (int)pCVar15,0);
+                      bVar7 = get_low5bits_byte3((int)puVar36);
+                      if (CONCAT31(extraout_var_02,bVar7) == 2) {
+                        if ((int)local_2b58 < (int)pCVar35) {
+                          local_2b58 = pCVar35;
+                        }
+                        local_2be0 = CONCAT31(local_2be0._1_3_,1);
+                        *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 2;
+                      }
+                      pCVar15 = pCVar15 + 1;
+                      pCVar49 = local_2b78;
+                      pCVar13 = local_2b20;
+                      pCVar48 = local_2b4c;
+                      pCVar38 = local_2b54;
+                    } while ((int)pCVar15 <= (int)*(float *)local_2b78);
+                  }
+                  pCVar38 = pCVar38 + 1;
+                  puVar9 = local_2b74;
+                  pCVar15 = local_2ba0;
+                  local_2b54 = pCVar38;
+                } while ((int)pCVar38 <= *(int *)pCVar13);
+              }
+              local_2b40 = (CRefTime *)((int)local_2b40 + 1);
+            } while ((int)local_2b40 <= (int)*puVar9);
+          }
+          pCVar13 = local_2b18;
+          pCVar15 = local_2b58;
+          if (((byte)local_2b18[0x5c] & 2) == 0) {
+            pCVar15 = local_2b18 + 0x80;
+          }
+          else {
+            puVar9 = (uint *)lib_fn_4e2320(local_2b18 + 0x10,2);
+            piVar10 = local_31c0;
+            piVar21 = lib_fn_4cde40(local_31d0,(uint)pCVar15);
+            plVar32 = (longlong *)int64_sub(piVar21,piVar10,puVar9);
+            fVar51 = fixedpoint16_to_float(plVar32);
+            local_2b78 = (CRefTime *)(float)fVar51;
+            pfVar25 = (float *)getElemPtr4(pCVar13 + 0x80,2);
+            fVar52 = (float)local_2b78 / (*pfVar25 * 0.5);
+            fVar24 = 0.0;
+            if (0.0 < fVar52) {
+              if (1.0 <= fVar52) {
+                fVar24 = 1.0;
+              }
+              else {
+                fVar24 = fVar52 + 1.0;
+              }
+              if (pCVar13[0x68] == (CRefTime)0x6b) {
+                fVar24 = fVar52 + 1.0;
+              }
+            }
+            *local_2bb8 = local_2ba4 * 30.0 * fVar24 + *local_2bb8;
+            pCVar15 = pCVar13 + 0x80;
+          }
+        }
+        local_2b40 = (CRefTime *)0x3ba3d70a;
+        fVar51 = vec3_length_sq((float *)(pCVar13 + 0x40));
+        local_2b78 = (CRefTime *)(float)fVar51;
+        if (0.0 < (float)local_2b78) {
+          local_2b40 = (CRefTime *)0x3b23d70a;
+        }
+        if (((byte)pCVar13[0x5c] & 2) == 0) {
+          piVar10 = local_3380;
+          getElemPtr4(pCVar15,2);
+          piVar21 = local_3430;
+          pvVar19 = (void *)lib_fn_4e2320(local_2b64,2);
+          pvVar19 = (void *)int64_sub_timecall(pvVar19,piVar21);
+          puVar9 = (uint *)int64_sub_timecall(pvVar19,piVar10);
+          uVar53 = fixedpoint_to_int_floor(puVar9);
+          local_2b20 = (CRefTime *)uVar53;
+          uVar12 = *(uint *)local_2b24;
+          pCVar13 = local_2b18;
+          if ((int)uVar12 <= (int)*local_2b74) {
+            pCVar38 = (CRefTime *)getElemPtr4(local_38,1);
+            local_2ba0 = pCVar38;
+            pCVar15 = (CRefTime *)getElemPtr4(local_2c,1);
+            local_2b78 = pCVar15;
+            do {
+              fVar24 = *(float *)pCVar38;
+              if ((int)fVar24 <= *(int *)pCVar15) {
+                do {
+                  puVar36 = World_getBlockAt(local_2b1c,uVar12,(uint)fVar24,(int)local_2b20,0);
+                  uVar20 = check_type_low5_active((int)puVar36);
+                  if ((char)uVar20 != '\0') {
+                    *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 1;
+                  }
+                  puVar36 = World_getBlockAt(local_2b1c,uVar12,(uint)fVar24,(int)local_2b20,0);
+                  bVar7 = get_low5bits_byte3((int)puVar36);
+                  local_2be0 = local_2be0 & 0xff;
+                  if (CONCAT31(extraout_var_03,bVar7) == 3) {
+                    local_2be0 = 1;
+                  }
+                  fVar24 = (float)((int)fVar24 + 1);
+                  pCVar15 = local_2b78;
+                } while ((int)fVar24 <= *(int *)local_2b78);
+              }
+              pCVar13 = local_2b18;
+            } while ((((byte)local_2b18[0x5c] & 1) == 0) &&
+                    (uVar12 = uVar12 + 1, pCVar38 = local_2ba0, (int)uVar12 <= (int)*local_2b74));
+          }
+        }
+        if (((char)local_2be0 != '\0') &&
+           ((((pCVar13[0x60] == (CRefTime)0x5 &&
+              (uVar12 = std_map_find_value(local_2b1c,(uint *)(pCVar13 + 0x198)), uVar12 != 0)) &&
+             (*(float *)(uVar12 + 0x1198) < 1.0)) &&
+            (fVar24 = local_2ba4 * 0.05 + *(float *)(uVar12 + 0x1198),
+            *(float *)(uVar12 + 0x1198) = fVar24, 1.0 < fVar24)))) {
+          *(undefined4 *)(uVar12 + 0x1198) = 0x3f800000;
+        }
+        if ((local_2b35 != 0) && (local_2b2d != '\0')) {
+          pfVar25 = (float *)std_pair_copy_ctor2(local_df4,(undefined4 *)local_2b34);
+          fVar51 = vec2_length_sq(pfVar25);
+          local_2b34 = (Creature *)(float)fVar51;
+          if ((0.0 < (float)local_2b34) &&
+             ((((byte)pCVar13[0x5c] & 3) == 0 &&
+              (pfVar25 = (float *)getElemPtr4(local_20,2), *pfVar25 <= 0.0)))) {
+            local_2b78 = (CRefTime *)getElemPtr4(pCVar13 + 0x80,2);
+            local_2b34 = (Creature *)lib_fn_4e2320(pCVar13 + 0x10,2);
+            piVar10 = local_3450;
+            pvVar19 = (void *)int64_sub_timecall(local_2b34,local_3460);
+            puVar9 = (uint *)int64_sub_timecall(pvVar19,piVar10);
+            uVar53 = fixedpoint_to_int_floor(puVar9);
+            local_2b20 = (CRefTime *)uVar53;
+            uVar12 = *(uint *)local_2b24;
+            if ((int)uVar12 <= (int)*local_2b74) {
+              pCVar15 = (CRefTime *)getElemPtr4(local_38,1);
+              local_2ba0 = pCVar15;
+              pCVar13 = (CRefTime *)getElemPtr4(local_2c,1);
+              local_2b4c = pCVar13;
+              do {
+                fVar24 = *(float *)pCVar15;
+                if ((int)fVar24 <= *(int *)pCVar13) {
+                  do {
+                    puVar36 = World_getBlockAt(local_2b1c,uVar12,(uint)fVar24,(int)local_2b20,0);
+                    uVar20 = check_type_low5_active((int)puVar36);
+                    pCVar42 = local_2b34;
+                    if ((char)uVar20 != '\0') {
+                      *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 1;
+                      int64_sub_timecall(local_2b34,(int *)local_2dcc);
+                      piVar10 = local_3470;
+                      piVar21 = local_3480;
+                      piVar23 = lib_fn_4cde40(local_3490,(uint)local_2b20);
+                      pvVar19 = (void *)int64_add_timecall(piVar23,piVar21);
+                      puVar22 = (undefined4 *)int64_add_timecall(pvVar19,piVar10);
+                      std_pair_copy_ctor2(pCVar42,puVar22);
+                      plVar32 = (longlong *)int64_sub(pCVar42,local_34a0,local_2dcc);
+                      fVar51 = fixedpoint16_to_float(plVar32);
+                      *(float *)(local_2b18 + 0x1180) = (float)fVar51;
+                      pCVar13 = local_2b4c;
+                      break;
+                    }
+                    fVar24 = (float)((int)fVar24 + 1);
+                    pCVar13 = local_2b4c;
+                  } while ((int)fVar24 <= *(int *)local_2b4c);
+                }
+              } while ((((byte)local_2b18[0x5c] & 1) == 0) &&
+                      (uVar12 = uVar12 + 1, pCVar15 = local_2ba0, (int)uVar12 <= (int)*local_2b74));
+            }
+          }
+        }
+        pCVar13 = local_2b18;
+        if (((char)local_2bb0 != '\0') || ((char)local_2b98 != '\0')) {
+          *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 1;
+        }
+        if ((local_2b18[0x68] == (CRefTime)0x6b) && (((byte)local_2b18[0x5c] & 2) != 0)) {
+          local_2b34 = (Creature *)((float)local_2b40 * 0.1);
+          pfVar25 = &local_2e48;
+          local_2e48 = 0.0;
+          uVar12 = local_2b28;
+          pCVar42 = local_2b34;
+          pfVar30 = (float *)getElemPtr4(local_2b18 + 0x34,0);
+          lib_fn_52e710(pfVar30,pfVar25,uVar12,(float)pCVar42);
+          pfVar25 = &local_2e2c;
+          local_2e2c = 0.0;
+          uVar12 = local_2b28;
+          pCVar42 = local_2b34;
+          pfVar30 = (float *)getElemPtr4(pCVar13 + 0x34,1);
+          lib_fn_52e710(pfVar30,pfVar25,uVar12,(float)pCVar42);
+          local_2e04 = 0.0;
+          lib_fn_52e710(local_2bb8,&local_2e04,local_2b28,(float)local_2b40);
+        }
+        uVar12 = local_2b28;
+        if ((((byte)pCVar13[0x5c] & 1) != 0) && (pCVar13[0x68] != (CRefTime)0x30)) {
+          if (pCVar13[0x68] == (CRefTime)0x36) {
+            iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff);
+            iVar17 = Combat_getAbilityRecovery(pCVar13,0xffffffff);
+            uVar12 = local_2b28;
+            if ((int)*(float *)(pCVar13 + 0x6c) <= iVar8 + iVar17) goto LAB_0054350d;
+          }
+          CVar6 = pCVar13[0x68];
+          if (((((CVar6 != (CRefTime)0x6) && (CVar6 != (CRefTime)0x7)) && (CVar6 != (CRefTime)0x14))
+              && (((CVar6 != (CRefTime)0x13 && (CVar6 != (CRefTime)0x12)) &&
+                  ((CVar6 != (CRefTime)0x11 && (CVar6 != (CRefTime)0xa)))))) ||
+             (iVar8 = Combat_getAbilityCooldown(pCVar13,0xffffffff), uVar12 = local_2b28,
+             iVar8 <= (int)*(float *)(pCVar13 + 0x6c))) {
+            uVar12 = local_2b28;
+            uVar59 = local_2b28;
+            pCVar15 = local_2b40;
+            puVar34 = (undefined8 *)Vec3_set(local_1320,0,0,0);
+            lib_fn_52e7c0((float *)(pCVar13 + 0x34),puVar34,uVar59,(float)pCVar15);
+          }
+        }
+LAB_0054350d:
+        if (((((byte)pCVar13[0x5c] & 3) != 0) || (((byte)pCVar13[0x124] & 0x10) != 0)) ||
+           (bVar2 = lib_fn_530540((int)(pCVar13 + 0x1460)), !bVar2)) {
+          pCVar15 = local_2b40;
+          puVar34 = (undefined8 *)Vec3_set(local_1338,0,0,0);
+          lib_fn_52e7c0((float *)(pCVar13 + 0x4c),puVar34,uVar12,(float)pCVar15);
+        }
+        Matrix4_setIdentity(local_1c60);
+        local_2b40 = (CRefTime *)getElemPtr4(pCVar13 + 0x28,2);
+        matrix_rotate_columns(local_1c60,*(float *)local_2b40);
+        pfVar25 = (float *)Vec3_set(local_1350,0,0x3f800000,0);
+        lib_fn_4dde00(local_1c60,local_5c,pfVar25);
+        puVar22 = Vec3_set(local_1368,0,0,0);
+        Vec3_copy(pCVar13 + 0x11a0,puVar22);
+        pCVar15 = (CRefTime *)getElemPtr4(pCVar13 + 0x80,1);
+        local_2b54 = pCVar15;
+        if (pCVar13[0x60] == (CRefTime)0x0) {
+          pCVar13 = (CRefTime *)lib_fn_4e2320(pCVar13 + 0x10,1);
+          piVar10 = local_34c0;
+          piVar21 = local_34d0;
+          local_2b58 = pCVar13;
+        }
+        else {
+          local_2b58 = (CRefTime *)lib_fn_4e2320(pCVar13 + 0x10,1);
+          piVar10 = local_34f0;
+          piVar21 = local_3570;
+          pCVar13 = (CRefTime *)
+                    int64_sub_shifted(local_2b58,local_3580,(int)(*(float *)pCVar15 * 0.5 + 0.5));
+        }
+        pvVar19 = (void *)int64_sub_timecall(pCVar13,piVar21);
+        pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,piVar10);
+        local_2b20 = (CRefTime *)CRefTime::Millisecs(pCVar13);
+        uVar12 = *(uint *)local_2b24;
+        if ((int)uVar12 <= (int)*local_2b74) {
+          pCVar13 = (CRefTime *)getElemPtr4(local_38,2);
+          local_2b78 = pCVar13;
+          pCVar42 = (Creature *)getElemPtr4(local_2c,2);
+          local_2b34 = pCVar42;
+          do {
+            iVar8 = *(int *)pCVar13;
+            if (iVar8 <= *(int *)pCVar42) {
+              do {
+                puVar36 = World_getBlockAt(local_2b1c,uVar12,(uint)local_2b20,iVar8,0);
+                uVar20 = check_type_low5_active((int)puVar36);
+                if ((char)uVar20 != '\0') {
+                  *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 4;
+                  puVar22 = (undefined4 *)getElemPtr4(local_2b18 + 0x11a0,1);
+                  *puVar22 = 0x3f800000;
+                  goto LAB_00543767;
+                }
+                iVar8 = iVar8 + 1;
+                pCVar42 = local_2b34;
+              } while (iVar8 <= *(int *)local_2b34);
+            }
+            uVar12 = uVar12 + 1;
+            pCVar13 = local_2b78;
+          } while ((int)uVar12 <= (int)*local_2b74);
+        }
+LAB_00543767:
+        puVar9 = local_2b74;
+        if (local_2b18[0x60] == (CRefTime)0x0) {
+          piVar10 = local_3590;
+          piVar21 = local_35a0;
+          pCVar13 = local_2b58;
+        }
+        else {
+          piVar10 = local_35b0;
+          piVar21 = local_35c0;
+          pCVar13 = (CRefTime *)
+                    int64_add_shifted(local_2b58,local_35d0,(int)(*(float *)local_2b54 * 0.5 + 0.5));
+        }
+        pvVar19 = (void *)int64_add_timecall(pCVar13,piVar21);
+        pCVar13 = (CRefTime *)int64_add_timecall(pvVar19,piVar10);
+        local_2b20 = (CRefTime *)CRefTime::Millisecs(pCVar13);
+        uVar12 = *(uint *)local_2b24;
+        if ((int)uVar12 <= (int)*puVar9) {
+          pCVar13 = (CRefTime *)getElemPtr4(local_38,2);
+          local_2b78 = pCVar13;
+          pCVar42 = (Creature *)getElemPtr4(local_2c,2);
+          puVar9 = local_2b74;
+          local_2b34 = pCVar42;
+          do {
+            iVar8 = *(int *)pCVar13;
+            if (iVar8 <= *(int *)pCVar42) {
+              do {
+                puVar36 = World_getBlockAt(local_2b1c,uVar12,(uint)local_2b20,iVar8,0);
+                uVar20 = check_type_low5_active((int)puVar36);
+                if ((char)uVar20 != '\0') {
+                  *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 4;
+                  puVar22 = (undefined4 *)getElemPtr4(local_2b18 + 0x11a0,1);
+                  *puVar22 = 0xbf800000;
+                  goto LAB_005438b1;
+                }
+                iVar8 = iVar8 + 1;
+                pCVar42 = local_2b34;
+                puVar9 = local_2b74;
+              } while (iVar8 <= *(int *)local_2b34);
+            }
+            uVar12 = uVar12 + 1;
+            pCVar13 = local_2b78;
+          } while ((int)uVar12 <= (int)*puVar9);
+        }
+LAB_005438b1:
+        if (local_2b18[0x60] == (CRefTime)0x0) {
+          puVar9 = (uint *)lib_fn_4e2320(local_2b64,0);
+          piVar10 = local_35e0;
+          piVar21 = local_35f0;
+          local_2b74 = puVar9;
+        }
+        else {
+          local_2b74 = (uint *)lib_fn_4e2320(local_2b64,0);
+          piVar10 = local_3600;
+          piVar21 = local_3630;
+          puVar9 = (uint *)int64_sub_shifted(local_2b74,local_3640,
+                                        (int)(*(float *)local_2b50 * 0.5 + 0.5));
+        }
+        pvVar19 = (void *)int64_sub_timecall(puVar9,piVar21);
+        pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,piVar10);
+        local_2b20 = (CRefTime *)CRefTime::Millisecs(pCVar13);
+        pCVar13 = (CRefTime *)getElemPtr4(local_38,1);
+        fVar24 = *(float *)pCVar13;
+        local_2b4c = pCVar13;
+        local_2b24 = (CRefTime *)getElemPtr4(local_2c,1);
+        if ((int)fVar24 <= (int)*(float *)local_2b24) {
+          pCVar38 = (CRefTime *)getElemPtr4(local_38,2);
+          local_2b78 = pCVar38;
+          pCVar42 = (Creature *)getElemPtr4(local_2c,2);
+          pCVar15 = local_2b24;
+          local_2b34 = pCVar42;
+          do {
+            iVar8 = *(int *)pCVar38;
+            if (iVar8 <= *(int *)pCVar42) {
+              do {
+                puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b20,(uint)fVar24,iVar8,0);
+                uVar20 = check_type_low5_active((int)puVar36);
+                if ((char)uVar20 != '\0') {
+                  *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 4;
+                  puVar22 = (undefined4 *)getElemPtr4(local_2b18 + 0x11a0,0);
+                  *puVar22 = 0x3f800000;
+                  pCVar13 = local_2b4c;
+                  goto LAB_00543a31;
+                }
+                iVar8 = iVar8 + 1;
+                pCVar42 = local_2b34;
+                pCVar15 = local_2b24;
+              } while (iVar8 <= *(int *)local_2b34);
+            }
+            fVar24 = (float)((int)fVar24 + 1);
+            pCVar38 = local_2b78;
+            pCVar13 = local_2b4c;
+          } while ((int)fVar24 <= (int)*(float *)pCVar15);
+        }
+LAB_00543a31:
+        if (local_2b18[0x60] == (CRefTime)0x0) {
+          piVar10 = local_3670;
+          piVar21 = local_36e0;
+          puVar9 = local_2b74;
+        }
+        else {
+          piVar10 = local_3700;
+          piVar21 = local_3720;
+          puVar9 = (uint *)int64_add_shifted(local_2b74,local_3730,
+                                        (int)(*(float *)local_2b50 * 0.5 + 0.5));
+        }
+        pvVar19 = (void *)int64_add_timecall(puVar9,piVar21);
+        pCVar15 = (CRefTime *)int64_add_timecall(pvVar19,piVar10);
+        local_2b20 = (CRefTime *)CRefTime::Millisecs(pCVar15);
+        fVar24 = *(float *)pCVar13;
+        pCVar13 = local_2b18;
+        if ((int)fVar24 <= (int)*(float *)local_2b24) {
+          pCVar38 = (CRefTime *)getElemPtr4(local_38,2);
+          local_2b78 = pCVar38;
+          pCVar42 = (Creature *)getElemPtr4(local_2c,2);
+          pCVar15 = local_2b24;
+          local_2b34 = pCVar42;
+          do {
+            iVar8 = *(int *)pCVar38;
+            if (iVar8 <= *(int *)pCVar42) {
+              do {
+                puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b20,(uint)fVar24,iVar8,0);
+                uVar20 = check_type_low5_active((int)puVar36);
+                pCVar13 = local_2b18;
+                if ((char)uVar20 != '\0') {
+                  *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 4;
+                  puVar22 = (undefined4 *)getElemPtr4(local_2b18 + 0x11a0,0);
+                  *puVar22 = 0xbf800000;
+                  goto LAB_00543b83;
+                }
+                iVar8 = iVar8 + 1;
+                pCVar42 = local_2b34;
+                pCVar15 = local_2b24;
+              } while (iVar8 <= *(int *)local_2b34);
+            }
+            fVar24 = (float)((int)fVar24 + 1);
+            pCVar38 = local_2b78;
+            pCVar13 = local_2b18;
+          } while ((int)fVar24 <= (int)*(float *)pCVar15);
+        }
+LAB_00543b83:
+        if (((byte)pCVar13[0x5c] & 4) == 0) {
+          pfVar25 = (float *)Vec3_set(local_1380,0x3f333333,0x3f333333,0);
+          fVar51 = vec3_dot(local_5c,pfVar25);
+          local_2b34 = (Creature *)(float)fVar51;
+          if ((float)local_2b34 <= 0.1) {
+            if (pCVar13[0x60] == (CRefTime)0x0) {
+              piVar10 = local_31b8;
+              pvVar19 = (void *)int64_sub_timecall(local_2b74,local_3618);
+              pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,piVar10);
+              local_2b4c = (CRefTime *)CRefTime::Millisecs(pCVar13);
+              piVar10 = local_3278;
+              piVar21 = local_34e8;
+              pCVar13 = local_2b58;
+            }
+            else {
+              piVar10 = local_3288;
+              piVar21 = local_36b8;
+              pvVar19 = (void *)int64_sub_shifted(local_2b74,local_3298,
+                                             (int)(*(float *)local_2b50 * 0.5 + 0.5));
+              pvVar19 = (void *)int64_sub_timecall(pvVar19,piVar21);
+              pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,piVar10);
+              local_2b4c = (CRefTime *)CRefTime::Millisecs(pCVar13);
+              piVar10 = local_34f8;
+              piVar21 = local_32a8;
+              pCVar13 = (CRefTime *)
+                        int64_sub_shifted(local_2b58,local_3628,(int)(*(float *)local_2b54 * 0.5 + 0.5));
+            }
+            pvVar19 = (void *)int64_sub_timecall(pCVar13,piVar21);
+            pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,piVar10);
+            local_2b20 = (CRefTime *)CRefTime::Millisecs(pCVar13);
+            piVar10 = (int *)getElemPtr4(local_38,2);
+            iVar8 = *piVar10;
+            piVar10 = (int *)getElemPtr4(local_2c,2);
+            pCVar13 = local_2b18;
+            if (iVar8 <= *piVar10) {
+              do {
+                puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b4c,(uint)local_2b20,iVar8,0);
+                uVar20 = check_type_low5_active((int)puVar36);
+                pCVar13 = local_2b18;
+                if ((char)uVar20 != '\0') {
+                  *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 4;
+                  puVar22 = (undefined4 *)getElemPtr4(local_2b18 + 0x11a0,0);
+                  *puVar22 = 0x3f800000;
+                  puVar22 = (undefined4 *)getElemPtr4(pCVar13 + 0x11a0,1);
+                  *puVar22 = 0x3f800000;
+                  break;
+                }
+                iVar8 = iVar8 + 1;
+              } while (iVar8 <= *piVar10);
+            }
+          }
+          if (((byte)pCVar13[0x5c] & 4) == 0) {
+            pfVar25 = (float *)Vec3_set(local_1398,0xbf333333,0x3f333333,0);
+            fVar51 = vec3_dot(local_5c,pfVar25);
+            local_2b34 = (Creature *)(float)fVar51;
+            if ((float)local_2b34 <= 0.1) {
+              if (pCVar13[0x60] == (CRefTime)0x0) {
+                piVar10 = local_32b8;
+                pvVar19 = (void *)int64_add_timecall(local_2b74,local_3508);
+                pCVar13 = (CRefTime *)int64_add_timecall(pvVar19,piVar10);
+                local_2b4c = (CRefTime *)CRefTime::Millisecs(pCVar13);
+                piVar10 = local_32c8;
+                piVar21 = local_3708;
+                pCVar13 = local_2b58;
+              }
+              else {
+                piVar10 = local_32d8;
+                piVar21 = local_3518;
+                pvVar19 = (void *)int64_add_shifted(local_2b74,local_32e8,
+                                               (int)(*(float *)local_2b50 * 0.5 + 0.5));
+                pvVar19 = (void *)int64_add_timecall(pvVar19,piVar21);
+                pCVar13 = (CRefTime *)int64_add_timecall(pvVar19,piVar10);
+                local_2b4c = (CRefTime *)CRefTime::Millisecs(pCVar13);
+                piVar10 = local_3638;
+                piVar21 = local_32f8;
+                pCVar13 = (CRefTime *)
+                          int64_sub_shifted(local_2b58,local_3528,(int)(*(float *)local_2b54 * 0.5 + 0.5)
+                                      );
+              }
+              pvVar19 = (void *)int64_sub_timecall(pCVar13,piVar21);
+              pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,piVar10);
+              local_2b20 = (CRefTime *)CRefTime::Millisecs(pCVar13);
+              piVar10 = (int *)getElemPtr4(local_38,2);
+              iVar8 = *piVar10;
+              piVar10 = (int *)getElemPtr4(local_2c,2);
+              pCVar13 = local_2b18;
+              if (iVar8 <= *piVar10) {
+                do {
+                  puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b4c,(uint)local_2b20,iVar8,0);
+                  uVar20 = check_type_low5_active((int)puVar36);
+                  pCVar13 = local_2b18;
+                  if ((char)uVar20 != '\0') {
+                    *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 4;
+                    puVar22 = (undefined4 *)getElemPtr4(local_2b18 + 0x11a0,0);
+                    *puVar22 = 0xbf800000;
+                    puVar22 = (undefined4 *)getElemPtr4(pCVar13 + 0x11a0,1);
+                    *puVar22 = 0x3f800000;
+                    break;
+                  }
+                  iVar8 = iVar8 + 1;
+                } while (iVar8 <= *piVar10);
+              }
+            }
+            if (((byte)pCVar13[0x5c] & 4) == 0) {
+              pfVar25 = (float *)Vec3_set(local_13b0,0x3f333333,0xbf333333,0);
+              fVar51 = vec3_dot(local_5c,pfVar25);
+              local_2b34 = (Creature *)(float)fVar51;
+              if ((float)local_2b34 <= 0.1) {
+                if (pCVar13[0x60] == (CRefTime)0x0) {
+                  piVar10 = local_3308;
+                  pvVar19 = (void *)int64_sub_timecall(local_2b74,local_36c8);
+                  pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,piVar10);
+                  local_2b4c = (CRefTime *)CRefTime::Millisecs(pCVar13);
+                  piVar10 = local_3318;
+                  piVar21 = local_3538;
+                  pCVar13 = local_2b58;
+                }
+                else {
+                  piVar10 = local_3328;
+                  piVar21 = local_3648;
+                  pvVar19 = (void *)int64_sub_shifted(local_2b74,local_3338,
+                                                 (int)(*(float *)local_2b50 * 0.5 + 0.5));
+                  pvVar19 = (void *)int64_sub_timecall(pvVar19,piVar21);
+                  pCVar13 = (CRefTime *)int64_sub_timecall(pvVar19,piVar10);
+                  local_2b4c = (CRefTime *)CRefTime::Millisecs(pCVar13);
+                  piVar10 = local_3548;
+                  piVar21 = local_3348;
+                  pCVar13 = (CRefTime *)
+                            int64_add_shifted(local_2b58,local_3748,
+                                         (int)(*(float *)local_2b54 * 0.5 + 0.5));
+                }
+                pvVar19 = (void *)int64_add_timecall(pCVar13,piVar21);
+                pCVar13 = (CRefTime *)int64_add_timecall(pvVar19,piVar10);
+                local_2b20 = (CRefTime *)CRefTime::Millisecs(pCVar13);
+                piVar10 = (int *)getElemPtr4(local_38,2);
+                iVar8 = *piVar10;
+                piVar10 = (int *)getElemPtr4(local_2c,2);
+                pCVar13 = local_2b18;
+                if (iVar8 <= *piVar10) {
+                  do {
+                    puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b4c,(uint)local_2b20,iVar8,0);
+                    uVar20 = check_type_low5_active((int)puVar36);
+                    pCVar13 = local_2b18;
+                    if ((char)uVar20 != '\0') {
+                      *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 4;
+                      puVar22 = (undefined4 *)getElemPtr4(local_2b18 + 0x11a0,0);
+                      *puVar22 = 0x3f800000;
+                      puVar22 = (undefined4 *)getElemPtr4(pCVar13 + 0x11a0,1);
+                      *puVar22 = 0xbf800000;
+                      break;
+                    }
+                    iVar8 = iVar8 + 1;
+                  } while (iVar8 <= *piVar10);
+                }
+              }
+              if (((byte)pCVar13[0x5c] & 4) == 0) {
+                pfVar25 = (float *)Vec3_set(local_13c8,0xbf333333,0xbf333333,0);
+                fVar51 = vec3_dot(local_5c,pfVar25);
+                local_2b34 = (Creature *)(float)fVar51;
+                if ((float)local_2b34 <= 0.1) {
+                  if (pCVar13[0x60] == (CRefTime)0x0) {
+                    piVar10 = local_3358;
+                    pvVar19 = (void *)int64_add_timecall(local_2b74,local_3558);
+                    pCVar13 = (CRefTime *)int64_add_timecall(pvVar19,piVar10);
+                    local_2b4c = (CRefTime *)CRefTime::Millisecs(pCVar13);
+                    piVar10 = local_3368;
+                    piVar21 = local_3658;
+                    pCVar13 = local_2b58;
+                  }
+                  else {
+                    piVar10 = local_3378;
+                    piVar21 = local_3568;
+                    pvVar19 = (void *)int64_add_shifted(local_2b74,local_3388,
+                                                   (int)(*(float *)local_2b50 * 0.5 + 0.5));
+                    pvVar19 = (void *)int64_add_timecall(pvVar19,piVar21);
+                    pCVar13 = (CRefTime *)int64_add_timecall(pvVar19,piVar10);
+                    local_2b4c = (CRefTime *)CRefTime::Millisecs(pCVar13);
+                    piVar10 = local_36d8;
+                    piVar21 = local_3398;
+                    pCVar13 = (CRefTime *)
+                              int64_add_shifted(local_2b58,local_3578,
+                                           (int)(*(float *)local_2b54 * 0.5 + 0.5));
+                  }
+                  pvVar19 = (void *)int64_add_timecall(pCVar13,piVar21);
+                  pCVar13 = (CRefTime *)int64_add_timecall(pvVar19,piVar10);
+                  local_2b20 = (CRefTime *)CRefTime::Millisecs(pCVar13);
+                  piVar10 = (int *)getElemPtr4(local_38,2);
+                  iVar8 = *piVar10;
+                  piVar10 = (int *)getElemPtr4(local_2c,2);
+                  pCVar13 = local_2b18;
+                  if (iVar8 <= *piVar10) {
+                    do {
+                      puVar36 = World_getBlockAt(local_2b1c,(uint)local_2b4c,(uint)local_2b20,iVar8,0);
+                      uVar20 = check_type_low5_active((int)puVar36);
+                      pCVar13 = local_2b18;
+                      if ((char)uVar20 != '\0') {
+                        *(uint *)(local_2b18 + 0x5c) = (uint)*(float *)(local_2b18 + 0x5c) | 4;
+                        puVar22 = (undefined4 *)getElemPtr4(local_2b18 + 0x11a0,0);
+                        *puVar22 = 0xbf800000;
+                        puVar22 = (undefined4 *)getElemPtr4(pCVar13 + 0x11a0,1);
+                        *puVar22 = 0xbf800000;
+                        break;
+                      }
+                      iVar8 = iVar8 + 1;
+                    } while (iVar8 <= *piVar10);
+                  }
+                }
+              }
+            }
+          }
+        }
+        uVar12 = local_2b28;
+        if ((((byte)pCVar13[0x5c] & 2) == 0) || (pCVar13[0x68] == (CRefTime)0x6b)) {
+          pfVar25 = &local_2d94;
+          fVar24 = 0.01;
+          local_2d94 = 0.0;
+          pfVar30 = (float *)getElemPtr4(pCVar13 + 0x28,0);
+          lib_fn_52e710(pfVar30,pfVar25,uVar12,fVar24);
+        }
+        else {
+          fVar24 = 0.005;
+          uVar59 = local_2b28;
+          puVar34 = (undefined8 *)Vec3_set(local_13e0,0,0,0);
+          lib_fn_52e7c0((float *)(pCVar13 + 0x34),puVar34,uVar59,fVar24);
+          if ((pCVar13[0x60] != (CRefTime)0x6) && (((byte)pCVar13[0x7e] & 1) == 0)) {
+            pfVar25 = &local_2cf8;
+            fVar24 = 0.01;
+            local_2cf8 = -60.0;
+            pfVar30 = (float *)getElemPtr4(pCVar13 + 0x28,0);
+            lib_fn_52e710(pfVar30,pfVar25,uVar12,fVar24);
+          }
+          if (((char)local_2be4 == '\0') && (*local_2bb8 <= -3.0 && *local_2bb8 != -3.0)) {
+            lib_fn_4c8510((int)local_96c);
+            Copy24Bytes(local_96c,(undefined4 *)(pCVar13 + 0x10));
+            local_938 = 0x3ecccccd;
+            ppVar31 = (pair<unsigned___int64,unsigned___int64> *)
+                      store_4_dwords(local_1b80,0x3e4ccccd,0x3f333333,0x3f800000,0x3f800000);
+            std::pair<unsigned___int64,unsigned___int64>::
+            operator=<std::pair<unsigned___int64,unsigned___int64>,0>(local_948,ppVar31);
+            puVar22 = Vec3_set(local_13f8,0,0,0x41200000);
+            Vec3_copy(local_954,puVar22);
+            local_934 = 0xf;
+            std_list_push_back_428540(local_2b2c + 4,local_96c);
+            lib_fn_4c8530((int)local_80);
+            local_74 = 0x1f;
+            iVar8 = rand();
+            local_70 = (float)iVar8 / 32767.0 + 0.9;
+            Vec3i64_toFloatScaled(local_80,(longlong *)(pCVar13 + 0x10));
+            local_6c = 0x3f800000;
+            std_list_push_back_428590(local_2b2c + 2,local_80);
+          }
+        }
+        pvVar19 = local_2b1c;
+        if (pCVar13 == *(CRefTime **)((int)local_2b1c + 0xb8)) {
+          fVar51 = vec3_dot(local_5c,local_120);
+          local_2b34 = (Creature *)(float)fVar51;
+          if (((((float)local_2b34 <= 0.0) && ((*(ushort *)(pCVar13 + 0x124) & 1) != 0)) &&
+              ((*(ushort *)(pCVar13 + 0x124) & 0x10) == 0)) &&
+             (((char)local_2bdc != '\0' && (((byte)pCVar13[0x5c] & 4) == 0)))) {
+            puVar22 = (undefined4 *)identityReturn(pCVar13 + 0x40);
+            pfVar25 = (float *)std_pair_copy_ctor2(local_e9c,puVar22);
+            fVar51 = vec2_length_sq(pfVar25);
+            local_2b34 = (Creature *)(float)fVar51;
+            if (0.0 < (float)local_2b34) {
+              puVar22 = (undefined4 *)lib_fn_4e1520(local_1410,-5.0,local_120);
+              Vec3_copy(pCVar13 + 0x34,puVar22);
+            }
+          }
+        }
+        if (*(float *)(pCVar13 + 100) == 1.41531e-43) {
+          if ((pCVar13[0x68] == (CRefTime)0x33) && ((int)*(float *)(pCVar13 + 0x6c) < 1000)) {
+            local_2d14 = (void *)0x42700000;
+            ppvVar43 = &local_2d14;
+          }
+          else {
+            local_2cbc = (void *)0x0;
+            ppvVar43 = &local_2cbc;
+          }
+          fVar24 = 0.01;
+          uVar12 = local_2b28;
+          pfVar25 = (float *)getElemPtr4(pCVar13 + 0x28,0);
+          lib_fn_52e710(pfVar25,(float *)ppvVar43,uVar12,fVar24);
+        }
+        uVar12 = std_map_find_value(pvVar19,(uint *)(pCVar13 + 0x11c0));
+        pCVar15 = local_2b18;
+        if (uVar12 == 0) {
+LAB_005447ac:
+          local_2b20 = *(CRefTime **)(local_2b18 + 0x5c);
+          uVar12 = (uint)local_2b20 & 1;
+          if ((((uVar12 == 0) && (((byte)local_2b18[0x7e] & 2) == 0)) &&
+              ((((byte)local_2b18[0x124] & 1) == 0 || (((uint)local_2b20 & 4) == 0)))) &&
+             (((uint)local_2b20 & 2) == 0)) {
+LAB_00544d53:
+            if (((uVar12 != 0) || (((uint)local_2b20 & 2) != 0)) ||
+               ((((byte)pCVar15[0x124] & 1) != 0 && (((uint)local_2b20 & 4) != 0))))
+            goto LAB_00544dc8;
+            *(float *)(pCVar15 + 0x118c) = 0.0;
+            fVar51 = std_sqrtf(0.8 / *(float *)local_2b50);
+            local_2b34 = (Creature *)(float)fVar51;
+            fVar24 = (float)local_2b34 * local_2ba4;
+          }
+          else {
+            fVar51 = vec3_length_sq((float *)(local_2b18 + 0x34));
+            local_2b34 = (Creature *)(float)fVar51;
+            if (((float)local_2b34 <= 0.5) || (pCVar15[0x68] == (CRefTime)0x6b)) goto LAB_00544d53;
+            if ((((byte)pCVar15[0x124] & 1) == 0) || (((byte)pCVar15[0x5c] & 4) == 0)) {
+              local_2b78 = *(CRefTime **)(pCVar15 + 0x118c);
+              pfVar25 = (float *)std_pair_copy_ctor2(local_ebc,(undefined4 *)local_2b60);
+              fVar51 = vec2_length(pfVar25);
+              local_2b24 = (CRefTime *)(float)fVar51;
+              if (((byte)pCVar15[0x5c] & 1) == 0) {
+                fVar51 = std_sqrtf(0.8 / *(float *)local_2b50);
+                local_2b34 = (Creature *)(float)fVar51;
+                *(float *)(pCVar15 + 0x118c) =
+                     (float)local_2b34 * local_2b8c * 0.002 * (float)local_2b24 * 1.5 +
+                     *(float *)(pCVar15 + 0x118c);
+                *(float *)(pCVar15 + 0x1188) = *(float *)(pCVar15 + 0x1188) + local_2ba4;
+                goto LAB_00544dc8;
+              }
+              if (((pCVar15[0x68] == (CRefTime)0x30) ||
+                  ((pCVar15[0x68] == (CRefTime)0x36 &&
+                   (iVar8 = Combat_getWindupAndRecovery((int)pCVar15), (int)*(float *)(pCVar15 + 0x6c) < iVar8))))
+                 || (((CVar6 = pCVar15[0x68], CVar6 == (CRefTime)0x6 ||
+                      (((((CVar6 == (CRefTime)0x7 || (CVar6 == (CRefTime)0x14)) ||
+                         (CVar6 == (CRefTime)0x13)) ||
+                        ((CVar6 == (CRefTime)0x12 || (CVar6 == (CRefTime)0x11)))) ||
+                       (CVar6 == (CRefTime)0xa)))) &&
+                     (iVar8 = Combat_getAbilityCooldown(pCVar15,0xffffffff),
+                     (int)*(float *)(pCVar15 + 0x6c) < iVar8)))) {
+                fVar51 = std_sqrtf(0.8 / *(float *)local_2b50);
+                fVar24 = local_2b8c * 0.000100000005 * (float)local_2b24 * 1.5;
+LAB_00544b21:
+                local_2b34 = (Creature *)(float)fVar51;
+                fVar24 = (float)local_2b34 * fVar24;
+              }
+              else {
+                fVar51 = std_sqrtf(0.8 / *(float *)local_2b50);
+                fVar24 = (float)local_2b24 * local_2ba4 * 1.5;
+                if (pCVar15[0x68] != (CRefTime)0x4f) goto LAB_00544b21;
+                local_2b34 = (Creature *)(float)fVar51;
+                fVar24 = (float)local_2b34 * fVar24 * 2.0;
+              }
+              pvVar19 = local_2b1c;
+              *(float *)(pCVar15 + 0x118c) = fVar24 + *(float *)(pCVar15 + 0x118c);
+              *(float *)(pCVar15 + 0x1188) = *(float *)(pCVar15 + 0x1188) + local_2ba4;
+              if (((*(int *)((int)local_2b1c + 0xb8) != 0) && (*(float *)(pCVar15 + 0x128) == 0.0))
+                 && ((((byte)pCVar15[0x5c] & 2) == 0 &&
+                     ((5.0 < (float)local_2b24 &&
+                      ((int)((float)local_2b78 / 3.1415927) <
+                       (int)(*(float *)(pCVar15 + 0x118c) / 3.1415927))))))) {
+                lib_fn_4c8530((int)local_fc);
+                piVar10 = local_3588;
+                getElemPtr4(pCVar15 + 0x80,2);
+                piVar21 = local_33c8;
+                pvVar44 = (void *)lib_fn_4e2320(pCVar15 + 0x10,2);
+                pvVar44 = (void *)int64_sub_timecall(pvVar44,piVar21);
+                puVar9 = (uint *)int64_sub_timecall(pvVar44,piVar10);
+                iVar8 = World_getBlockFloat(pvVar19,*local_2b74,local_2b74[1],(uint)*(float *)local_2b58,
+                                     (uint)*(float *)(local_2b58 + 4),*puVar9,puVar9[1],0);
+                bVar7 = get_low5bits_byte3(iVar8);
+                if (CONCAT31(extraout_var_04,bVar7) == 3) {
+                  iVar8 = rand();
+                  local_ec = 1.0;
+                  local_f0 = iVar8 % 3 + 0x21;
+                }
+                else {
+                  local_f0 = 0x20;
+                  iVar8 = rand();
+                  local_ec = ((float)iVar8 * 0.2) / 32767.0 + 1.0;
+                }
+                Vec3i64_toFloatScaled(local_fc,(longlong *)(pCVar15 + 0x10));
+                local_e8 = 0x3f800000;
+                std_list_push_back_428590(local_2b2c + 2,local_fc);
+              }
+              goto LAB_00544dc8;
+            }
+            fVar51 = std_sqrtf(0.8 / *(float *)local_2b50);
+            local_2b78 = (CRefTime *)(float)fVar51;
+            fVar51 = vec3_length((float *)(pCVar15 + 0x34));
+            local_2b34 = (Creature *)(float)fVar51;
+            fVar24 = local_2ba4 * 0.2;
+            *(float *)(pCVar15 + 0x118c) =
+                 (float)local_2b78 * (float)local_2b34 * local_2ba4 * 6.0 +
+                 *(float *)(pCVar15 + 0x118c);
+          }
+          *(float *)(pCVar15 + 0x1188) = fVar24 + *(float *)(pCVar15 + 0x1188);
+        }
+        else {
+          if (*(float *)(uVar12 + 0x16c) <= 0.0) {
+            *(float *)(pCVar13 + 0x11c0) = 0.0;
+            *(float *)(pCVar13 + 0x11c4) = 0.0;
+            goto LAB_005447ac;
+          }
+          if (local_2b18[0x60] == (CRefTime)0x5) goto LAB_005447ac;
+          Vec3_set(local_1428,0,0,1.5 - *(float *)(uVar12 + 0x1180));
+          Vec3i64_randomize((int)local_48c);
+          puVar9 = Vec3i64_add((void *)(uVar12 + 0x10),local_1ff0,local_48c);
+          Copy24Bytes(pCVar15 + 0x10,puVar9);
+          puVar22 = Vec3_set(local_1440,0,0,0);
+          Vec3_copy(pCVar15 + 0x34,puVar22);
+          pfVar25 = (float *)Vec3_set(local_1458,0x41a00000,0,0);
+          puVar22 = (undefined4 *)vec3_add((void *)(uVar12 + 0x28),local_1470,pfVar25);
+          Vec3_copy(pCVar15 + 0x28,puVar22);
+          puVar22 = Vec3_set(local_1488,0,0,0);
+          Vec3_copy(pCVar15 + 0x40,puVar22);
+          *(float *)(pCVar15 + 0x1188) = *(float *)(uVar12 + 0x1188) * 0.5;
+          *(float *)(pCVar15 + 0x118c) = *(float *)(uVar12 + 0x118c);
+        }
+LAB_00544dc8:
+        uVar12 = local_2b28;
+        if ((pCVar15[0xf08] != (CRefTime)0x17) || (pCVar15[0xf09] != (CRefTime)0x0)) {
+          *(ushort *)(pCVar15 + 0x124) = *(ushort *)(pCVar15 + 0x124) & 0xffef;
+        }
+        if (pCVar15[0xdf0] != (CRefTime)0x18) {
+          *(ushort *)(pCVar15 + 0x124) = *(ushort *)(pCVar15 + 0x124) & 0xfdff;
+        }
+        if (1.0 < *(float *)(pCVar15 + 0x1188)) {
+          *(float *)(pCVar15 + 0x1188) = 1.0;
+        }
+        local_2cc4 = 0.0;
+        fVar24 = local_2b8c;
+        lib_fn_52e710((float *)(pCVar15 + 0x1188),&local_2cc4,local_2b28,0.005);
+        pCVar13 = pCVar15 + 0x1180;
+        if (0.0 < *(float *)pCVar13 || *(float *)pCVar13 == 0.0) {
+          local_2ca4 = (Creature *)0x0;
+          fVar52 = 0.02;
+          ppCVar45 = &local_2ca4;
+        }
+        else {
+          local_2cc0 = (Creature *)0x0;
+          fVar52 = 0.01;
+          ppCVar45 = &local_2cc0;
+        }
+        lib_fn_52e710((float *)pCVar13,(float *)ppCVar45,uVar12,fVar52);
+        local_2c1c = (Creature *)0x0;
+        lib_fn_52e710((float *)(pCVar15 + 0x1184),(float *)&local_2c1c,uVar12,0.0075);
+        if ((((*(ushort *)(pCVar15 + 0x124) & 1) == 0) || (((byte)pCVar15[0x5c] & 4) == 0)) ||
+           ((*(ushort *)(pCVar15 + 0x124) & 0x10) != 0)) {
+          pCVar15 = pCVar15 + 0x58;
+          fVar51 = lib_fn_548b20(fVar24 * -0.01);
+          pCVar38 = local_2b18;
+          pCVar13 = local_2b60;
+          local_2b34 = (Creature *)(float)fVar51;
+          *(float *)pCVar15 = (float)local_2b34 * *(float *)pCVar15;
+          if ((((byte)local_2b18[0x124] & 4) == 0) || (0 < (int)*(float *)(local_2b18 + 300))) {
+            if (*(float *)(local_2b18 + 0x128) == 0.0) {
+              pfVar25 = (float *)std_pair_copy_ctor2(local_e5c,(undefined4 *)local_2b60);
+              fVar51 = vec2_length_sq(pfVar25);
+              local_2b34 = (Creature *)(float)fVar51;
+              if (0.02 < (float)local_2b34) {
+                fVar51 = vec3_dot((float *)(pCVar38 + 0x34),(float *)(pCVar38 + 0x40));
+                local_2b34 = (Creature *)(float)fVar51;
+                if ((0.0 < (float)local_2b34) && ((char)local_2b88 == '\0')) {
+                  std_pair_copy_ctor2(local_128,(undefined4 *)pCVar13);
+                  vec2_normalize(local_128);
+                  pfVar25 = (float *)getElemPtr4(local_128,1);
+                  if (1.0 < *pfVar25) {
+                    *pfVar25 = 1.0;
+                  }
+                  if (*pfVar25 <= -1.0 && *pfVar25 != -1.0) {
+                    *pfVar25 = -1.0;
+                  }
+                  pfVar30 = (float *)getElemPtr4(local_128,0);
+                  if (*pfVar30 <= 0.0) {
+                    fVar51 = lib_fn_548b00(*pfVar25);
+                    local_2b34 = (Creature *)(float)fVar51;
+                    pCVar42 = local_2b34;
+                  }
+                  else {
+                    fVar51 = lib_fn_548b00(*pfVar25);
+                    local_2b34 = (Creature *)(float)fVar51;
+                    pCVar42 = (Creature *)-(float)local_2b34;
+                  }
+                  *(float *)local_2b40 = ((float)pCVar42 / 3.1415927) * 180.0;
+                  pCVar38 = local_2b18;
+                }
+              }
+            }
+          }
+          else {
+            puVar22 = (undefined4 *)identityReturn(local_2b18 + 0x138c);
+            std_pair_copy_ctor2(local_a0,puVar22);
+            fVar51 = vec2_length_sq(local_a0);
+            local_2b34 = (Creature *)(float)fVar51;
+            if ((0.0 < (float)local_2b34) && ((char)local_2b88 == '\0')) {
+              vec2_normalize(local_a0);
+              pfVar25 = (float *)getElemPtr4(local_a0,1);
+              if (1.0 < *pfVar25) {
+                *pfVar25 = 1.0;
+              }
+              if (*pfVar25 <= -1.0 && *pfVar25 != -1.0) {
+                *pfVar25 = -1.0;
+              }
+              pfVar30 = (float *)getElemPtr4(local_a0,0);
+              fVar24 = 1.0;
+              if (*pfVar30 <= 0.0) {
+                fVar51 = lib_fn_548b00(*pfVar25);
+                local_2b34 = (Creature *)(float)fVar51;
+                pCVar42 = local_2b34;
+              }
+              else {
+                fVar51 = lib_fn_548b00(*pfVar25);
+                local_2b34 = (Creature *)(float)fVar51;
+                pCVar42 = (Creature *)-(float)local_2b34;
+              }
+              pCVar13 = local_2b40;
+              fVar51 = lib_fn_5306d0(*(float *)local_2b40,((float)pCVar42 / 3.1415927) * 180.0,fVar24
+                                   );
+              local_2b34 = (Creature *)(float)fVar51;
+              lib_fn_52e710((float *)pCVar13,(float *)&local_2b34,local_2b28,0.1);
+              pCVar38 = local_2b18;
+            }
+            Vec3_copy(local_2b8,(undefined4 *)(pCVar38 + 0x138c));
+            fVar51 = vec3_length_sq(local_2b8);
+            local_2b34 = (Creature *)(float)fVar51;
+            if (0.0 < (float)local_2b34) {
+              vec3_normalize(local_2b8);
+              fVar24 = 1.0;
+              pfVar25 = (float *)getElemPtr4(local_2b8,2);
+              fVar51 = std_asinf(*pfVar25);
+              local_2b34 = (Creature *)(float)fVar51;
+              fVar51 = lib_fn_5306d0(*(float *)pCVar15,((float)local_2b34 / 3.1415927) * 180.0,fVar24
+                                   );
+              local_2b34 = (Creature *)(float)fVar51;
+              lib_fn_52e710((float *)pCVar15,(float *)&local_2b34,local_2b28,0.005);
+            }
+          }
+        }
+        else {
+          local_2bd0 = (Creature *)0x42340000;
+          lib_fn_52e710((float *)(pCVar15 + 0x58),(float *)&local_2bd0,uVar12,0.005);
+          lib_fn_52ec30(pCVar15 + 0x11a0,local_324);
+          vec3_normalize(local_324);
+          pfVar25 = (float *)getElemPtr4(local_324,1);
+          if (1.0 < *pfVar25) {
+            *pfVar25 = 1.0;
+          }
+          if (*pfVar25 <= -1.0 && *pfVar25 != -1.0) {
+            *pfVar25 = -1.0;
+          }
+          pfVar30 = (float *)getElemPtr4(local_324,0);
+          fVar24 = 1.0;
+          if (*pfVar30 <= 0.0) {
+            fVar51 = lib_fn_548b00(*pfVar25);
+            local_2b34 = (Creature *)(float)fVar51;
+            pCVar42 = local_2b34;
+          }
+          else {
+            fVar51 = lib_fn_548b00(*pfVar25);
+            local_2b34 = (Creature *)(float)fVar51;
+            pCVar42 = (Creature *)-(float)local_2b34;
+          }
+          pCVar13 = local_2b40;
+          fVar51 = lib_fn_5306d0(*(float *)local_2b40,((float)pCVar42 / 3.1415927) * 180.0,fVar24);
+          local_2b34 = (Creature *)(float)fVar51;
+          lib_fn_52e710((float *)pCVar13,(float *)&local_2b34,local_2b28,0.005);
+          pCVar38 = local_2b18;
+        }
+        pvVar19 = local_2b1c;
+        if (((*(int *)((int)local_2b1c + 0xb8) != 0) && (500 < (int)*(float *)(pCVar38 + 0x128))) &&
+           ((int)((int)*(float *)(pCVar38 + 0x128) - local_2b28) < 0x1f5)) {
+          lib_fn_4c8530((int)local_1d8);
+          Vec3i64_toFloatScaled(local_1d8,(longlong *)(pCVar38 + 0x10));
+          local_1c8 = 1.0;
+          local_1cc = 0x1a;
+          std_list_push_back_428590(local_2b2c + 2,local_1d8);
+        }
+        pvVar44 = local_2b1c;
+        *(float *)(pCVar38 + 0x1318) = *(float *)(pCVar38 + 0x128);
+        if (*(float *)(pCVar38 + 0x128) != 0.0) {
+          *(uint *)(pCVar38 + 0x128) = (int)*(float *)(pCVar38 + 0x128) - local_2b28;
+        }
+        if ((int)*(float *)(pCVar38 + 0x128) < 0) {
+          *(float *)(pCVar38 + 0x128) = 0.0;
+        }
+        if ((*(char *)((int)pvVar19 + 0xb4) == '\0') &&
+           (pCVar13 = pCVar38 + 0x1d30, pvVar19 = pvVar44,
+           *(float *)(pCVar38 + 0x1d30) != 0.0 || *(float *)(pCVar38 + 0x1d34) != 0.0)) {
+          piVar10 = (int *)World_getField0((void *)((int)local_2b1c + 0xc),&local_3024);
+          this = (void *)std_map_lower_bound_yx((void *)((int)pvVar44 + 0xc),&local_3034,(uint *)pCVar13);
+          bVar2 = std_iterator_notEqual(this,piVar10);
+          pCVar38 = local_2b18;
+          if (bVar2) {
+            iVar8 = std_vector_int_at((void *)((int)pvVar44 + 0x1c),0xa03);
+            Matrix4_setIdentity(local_f04);
+            puVar9 = RBTree_findOrInsert((void *)((int)local_2b1c + 0xc),(uint *)pCVar13);
+            matrix_rotate_columns(local_f04,*(float *)(*puVar9 + 0x98));
+            iVar17 = get_field_0x4c(iVar8);
+            fVar24 = (float)iVar17 * -0.5;
+            iVar17 = get_field_0x48(iVar8);
+            fVar52 = (float)iVar17 * -0.5;
+            iVar17 = get_field_0x44(iVar8);
+            mat4_translate(local_f04,(float)iVar17 * -0.5,fVar52,fVar24);
+            local_2b34 = (Creature *)0x0;
+            piVar10 = std_map_operator((void *)(iVar8 + 0x28),(int *)&local_2b34);
+            bVar2 = lib_fn_530540((int)piVar10);
+            if (!bVar2) {
+              pfVar25 = (float *)getElemPtr4(local_2bb4,2);
+              Vec3_set(local_14a0,0,0,*pfVar25 * 0.5 + 0.001);
+              Vec3i64_randomize((int)local_4a4);
+              local_2b34 = (Creature *)0x0;
+              piVar10 = std_map_operator((void *)(iVar8 + 0x28),(int *)&local_2b34);
+              piVar10 = (int *)lib_fn_530680(piVar10);
+              lib_fn_4c64b0(local_2a0,piVar10);
+              mat4_transform_point(local_f04,local_10c8,local_2a0);
+              Vec3i64_randomize((int)local_45c);
+              puVar26 = RBTree_findOrInsert((void *)((int)local_2b1c + 0xc),(uint *)pCVar13);
+              puVar9 = local_4a4;
+              puVar18 = local_19c;
+              puVar26 = Vec3i64_add((void *)(*puVar26 + 0x80),local_2020,local_45c);
+              Vec3i64_add(puVar26,puVar18,puVar9);
+              pCVar15 = local_2b64;
+              puVar9 = Vec3i64_subtract(local_2b64,local_2050,local_19c);
+              pfVar25 = Vec3i64_toFloatScaled(local_14b8,(longlong *)puVar9);
+              fVar51 = vec3_length_sq(pfVar25);
+              local_2b34 = (Creature *)(float)fVar51;
+              if (1.0 < (float)local_2b34) {
+                Copy24Bytes(pCVar15,local_19c);
+              }
+            }
+            pvVar19 = local_2b1c;
+            puVar9 = RBTree_findOrInsert((void *)((int)local_2b1c + 0xc),(uint *)pCVar13);
+            *(float *)local_2b40 = *(float *)(*puVar9 + 0x98);
+            pCVar38 = local_2b18;
+          }
+        }
+        if (pCVar38[0x60] == (CRefTime)0x5) {
+          pCVar13 = pCVar38 + 0x198;
+          uVar12 = std_map_find_value(pvVar19,(uint *)pCVar13);
+          pCVar38 = local_2b18;
+          if ((uVar12 == 0) ||
+             (uVar12 = std_map_find_value(pvVar19,(uint *)pCVar13), pCVar38 = local_2b18,
+             *(char *)(uVar12 + 0x68) != 'j')) goto LAB_00545940;
+          pCVar13 = (CRefTime *)std_map_find_value(pvVar19,(uint *)pCVar13);
+          local_2b24 = pCVar13;
+          pfVar25 = (float *)getElemPtr4(local_2bb4,2);
+          pfVar30 = (float *)getElemPtr4(pCVar13 + 0x80,2);
+          Vec3_set(local_14d0,0,0,(*pfVar25 * 0.5 - *pfVar30 * 0.5) + 0.01);
+          Vec3i64_randomize((int)local_36c);
+          puVar9 = Vec3i64_add(local_2b24 + 0x1350,local_2080,local_36c);
+          Copy24Bytes(local_2b18 + 0x1350,puVar9);
+          Vec3_copy(local_2b18 + 0x1374,(undefined4 *)(local_2b24 + 0x1374));
+          Vec3_set(local_14e8,0,0,(*pfVar25 * 0.5 - *pfVar30 * 0.5) + 0.01);
+          Vec3i64_randomize((int)local_348);
+          pCVar13 = local_2b24;
+          puVar9 = Vec3i64_add(local_2b24 + 0x10,local_20b0,local_348);
+          Copy24Bytes(local_2b64,puVar9);
+          Vec3_copy(local_2b68,(undefined4 *)(pCVar13 + 0x28));
+          pCVar38 = local_2b18;
+          *(float *)(local_2b18 + 0x1180) = *(float *)(pCVar13 + 0x1180);
+          *(float *)(local_2b18 + 0x1188) = *(float *)(pCVar13 + 0x1188);
+          *(float *)(local_2b18 + 0x118c) = *(float *)(pCVar13 + 0x118c);
+          puVar22 = Vec3_set(local_1500,0,0,0);
+          Vec3_copy(pCVar38 + 0x34,puVar22);
+          pCVar15 = (CRefTime *)Vec3_set(local_1518,0,0,0);
+          pCVar13 = pCVar38 + 0x40;
+LAB_00545b0e:
+          Vec3_copy(pCVar13,(undefined4 *)pCVar15);
+        }
+        else {
+LAB_00545940:
+          if ((int)*(float *)(pCVar38 + 0x1398) < 1) {
+            Copy24Bytes(pCVar38 + 0x1350,(undefined4 *)(pCVar38 + 0x10));
+            pCVar15 = pCVar38 + 0x28;
+            pCVar13 = pCVar38 + 0x1374;
+            goto LAB_00545b0e;
+          }
+          iVar8 = 0x3c75c28f;
+          local_2b5c = (undefined4 *)0x0;
+          local_2b90 = (void *)0x3f800000;
+          uVar12 = local_2b28;
+          lib_fn_52e710((float *)&local_2b5c,(float *)&local_2b90,local_2b28,0.015);
+          pCVar38 = pCVar38 + 0x1350;
+          int64_assign_timecall((ulonglong *)&stack0xffffc89c);
+          puVar22 = local_20e0;
+          puVar9 = Vec3i64_subtract(local_2b64,local_2110,(uint *)pCVar38);
+          puVar9 = Vec3i64_copyAndScale(puVar9,puVar22,uVar12,iVar8);
+          int64x3_add(pCVar38,puVar9);
+          puVar18 = (uint *)lib_fn_4e2320(pCVar38,2);
+          puVar27 = &local_3650;
+          piVar10 = local_3660;
+          puVar9 = puVar18;
+          pvVar19 = (void *)lib_fn_4e2320(local_2b64,2);
+          int64_sub(pvVar19,piVar10,puVar9);
+          puVar27 = lib_fn_52ebb0(puVar27);
+          int64_add(puVar18,(uint *)puVar27);
+          pCVar13 = local_2b18 + 0x1374;
+          pfVar25 = (float *)getElemPtr4(pCVar13,0);
+          puVar22 = local_2b5c;
+          pfVar30 = (float *)getElemPtr4(local_2b68,0);
+          fVar51 = lib_fn_5306d0(*pfVar25,*pfVar30,(float)puVar22);
+          *pfVar25 = (float)fVar51;
+          pfVar25 = (float *)getElemPtr4(pCVar13,1);
+          fVar51 = lib_fn_5306d0(*pfVar25,*(float *)local_2b44,(float)local_2b5c);
+          *pfVar25 = (float)fVar51;
+          pfVar25 = (float *)getElemPtr4(pCVar13,2);
+          fVar51 = lib_fn_5306d0(*pfVar25,*(float *)local_2b40,(float)local_2b5c);
+          *pfVar25 = (float)fVar51;
+          *(float *)(local_2b18 + 0x1180) = 0.0;
+          pCVar38 = local_2b18;
+        }
+        local_2b3c = (CRefTime *)0x0;
+        local_2b48 = (Creature *)0x3f800000;
+        lib_fn_52e710((float *)&local_2b3c,(float *)&local_2b48,local_2b28,0.025);
+        pfVar25 = local_1530;
+        pCVar38 = pCVar38 + 0x138c;
+        in_stack_ffffc894 = local_1548;
+        pCVar15 = local_2b18 + 0x160;
+        in_stack_ffffc88c = 0x545b8100000000;
+        pCVar13 = local_2b3c;
+        pvVar19 = (void *)vec3_sub(pCVar15,(float *)in_stack_ffffc894,(float *)pCVar38);
+        pfVar25 = (float *)vec3_scale_to(pvVar19,pfVar25,(float)pCVar13);
+        vec3_add_inplace(pCVar38,pfVar25);
+        if (((local_2b18[0x68] == (CRefTime)0x0) || (*(float *)(local_2b18 + 0x6c) == 0.0)) ||
+           (iVar8 = Combat_getWindupAndRecovery((int)local_2b18), iVar8 < (int)*(float *)(local_2b18 + 0x6c))) {
+          Vec3_copy(pCVar38,(undefined4 *)pCVar15);
+        }
+        std_list_Tidy(local_2cd0);
+        std_list_Tidy(local_2ce0);
+        local_8._0_1_ = 5;
+        std_list_Tidy(local_2bfc);
+      }
+LAB_00545be1:
+      RBTree_copyBeginThenInc(&local_2b6c,&local_2bc4);
+      piVar10 = (int *)World_getField0(local_2b70,&local_2d38);
+      bVar2 = std_iterator_notEqual(&local_2b6c,piVar10);
+      pvVar19 = local_2b1c;
+    } while (bVar2);
+  }
+  pvVar19 = (void *)((int)local_2b1c + 0xc);
+  local_2cbc = pvVar19;
+  deref_getFirst(pvVar19,&local_2b44);
+  piVar10 = (int *)World_getField0(pvVar19,&local_2d40);
+  bVar2 = std_iterator_notEqual(&local_2b44,piVar10);
+  if (bVar2) {
+    do {
+      RBTree_copyBeginThenInc(&local_2b44,&local_2bc4);
+      piVar10 = (int *)World_getField0(pvVar19,&local_2d40);
+      bVar2 = std_iterator_notEqual(&local_2b44,piVar10);
+    } while (bVar2);
+  }
+  deref_getFirst(pvVar19,&local_2bb0);
+  piVar10 = (int *)World_getField0(pvVar19,&local_2d58);
+  bVar2 = std_iterator_notEqual(&local_2bb0,piVar10);
+  if (bVar2) {
+    do {
+      iVar8 = getField_plus0x10((int *)&local_2bb0);
+      piVar10 = (int *)(iVar8 + 8);
+      if (*piVar10 != 0) {
+        Copy24Bytes(local_19c,(undefined4 *)(*piVar10 + 0x80));
+        iVar8 = *piVar10;
+        local_2b44 = *(CRefTime **)(iVar8 + 0x98);
+        if (*(char *)((int)local_2b1c + 0xb4) != '\0') goto LAB_005463ff;
+        cVar3 = *(char *)(iVar8 + 0x70);
+        if (cVar3 == '\x01') {
+          puVar9 = Vec3i64_subtract((void *)(iVar8 + 0x38),local_2140,(uint *)(iVar8 + 0x10));
+          Vec3i64_toFloatScaled(local_44,(longlong *)puVar9);
+          fVar51 = vec3_length_sq(local_44);
+          local_2b48 = (Creature *)(float)fVar51;
+          if (0.001 <= (float)local_2b48) {
+            if (100.0 < (float)local_2b48) {
+              vec3_normalize(local_44);
+              vec3_scale(local_44,10.0);
+            }
+            pfVar25 = local_44;
+LAB_00545db4:
+            Vec3_copy((void *)(*piVar10 + 0x28),pfVar25);
+          }
+          else {
+            puVar22 = Vec3_set(local_1560,0,0,0);
+            Vec3_copy((void *)(*piVar10 + 0x28),puVar22);
+            *(undefined1 *)(*piVar10 + 0x70) = 2;
+          }
+LAB_00545dbf:
+          pfVar25 = (float *)(*piVar10 + 0x34);
+          fVar51 = lib_fn_5306d0(*pfVar25,*(float *)(*piVar10 + 0x50),1.0);
+          fVar24 = 0.005;
+LAB_005463e3:
+          local_2b48 = (Creature *)(float)fVar51;
+          lib_fn_52e710(pfVar25,(float *)&local_2b48,local_2b28,fVar24);
+        }
+        else {
+          if (cVar3 == '\0') {
+            local_2b90 = (void *)((-*(float *)(iVar8 + 0x50) * 3.1415927) / 180.0);
+            uVar20 = 0x41a00000;
+            fVar51 = std_cosf((float)local_2b90);
+            local_2b48 = (Creature *)(float)fVar51;
+            fVar24 = (float)local_2b48 * -50.0;
+            fVar51 = std_sinf((float)local_2b90);
+            local_2b48 = (Creature *)(float)fVar51;
+            Vec3_set(local_1578,(float)local_2b48 * -50.0,fVar24,uVar20);
+            Vec3i64_randomize((int)local_348);
+            puVar9 = (uint *)(*piVar10 + 0x10);
+            puVar18 = local_2170;
+            puVar26 = Vec3i64_add((void *)(*piVar10 + 0x38),local_21a0,local_348);
+            puVar9 = Vec3i64_subtract(puVar26,puVar18,puVar9);
+            Vec3i64_toFloatScaled(local_5c,(longlong *)puVar9);
+            fVar51 = vec3_length_sq(local_5c);
+            local_2b48 = (Creature *)(float)fVar51;
+            if (0.001 <= (float)local_2b48) {
+              vec3_normalize(local_5c);
+              vec3_scale(local_5c,10.0);
+              pfVar25 = local_5c;
+              goto LAB_00545db4;
+            }
+            puVar22 = Vec3_set(local_1590,0,0,0);
+            Vec3_copy((void *)(*piVar10 + 0x28),puVar22);
+            *(undefined1 *)(*piVar10 + 0x70) = 1;
+            goto LAB_00545dbf;
+          }
+          if (cVar3 == '\x02') {
+            local_2b90 = (void *)((-*(float *)(iVar8 + 0x50) * 3.1415927) / 180.0);
+            uVar20 = 0x41a00000;
+            fVar51 = std_cosf((float)local_2b90);
+            local_2b48 = (Creature *)(float)fVar51;
+            fVar24 = (float)local_2b48 * 50.0;
+            fVar51 = std_sinf((float)local_2b90);
+            local_2b48 = (Creature *)(float)fVar51;
+            Vec3_set(local_15a8,(float)local_2b48 * 50.0,fVar24,uVar20);
+            Vec3i64_randomize((int)local_36c);
+            puVar9 = (uint *)(*piVar10 + 0x10);
+            puVar18 = local_21d0;
+            puVar26 = Vec3i64_add((void *)(*piVar10 + 0x38),local_2200,local_36c);
+            puVar9 = Vec3i64_subtract(puVar26,puVar18,puVar9);
+            Vec3i64_toFloatScaled(&local_d8,(longlong *)puVar9);
+            fVar51 = vec3_length_sq(&local_d8);
+            local_2b48 = (Creature *)(float)fVar51;
+            if (0.001 <= (float)local_2b48) {
+              vec3_normalize(&local_d8);
+              vec3_scale(&local_d8,10.0);
+              pfVar25 = &local_d8;
+              goto LAB_00545db4;
+            }
+            puVar22 = Vec3_set(local_15c0,0,0,0);
+            Vec3_copy((void *)(*piVar10 + 0x28),puVar22);
+            *(undefined1 *)(*piVar10 + 0x70) = 3;
+            goto LAB_00545dbf;
+          }
+          if (cVar3 == '\x03') {
+            puVar9 = Vec3i64_subtract((void *)(iVar8 + 0x58),local_2230,(uint *)(iVar8 + 0x10));
+            Vec3i64_toFloatScaled(local_50,(longlong *)puVar9);
+            local_2cc0 = (Creature *)getElemPtr4(local_50,2);
+            *(undefined4 *)local_2cc0 = 0;
+            fVar51 = vec3_length_sq(local_50);
+            local_2b48 = (Creature *)(float)fVar51;
+            if (0.001 <= (float)local_2b48) {
+              if (900.0 < (float)local_2b48) {
+                vec3_normalize(local_50);
+                vec3_scale(local_50,30.0);
+              }
+              uVar12 = local_2b28;
+              fVar24 = 0.001;
+              uVar59 = local_2b28;
+              pfVar25 = (float *)getElemPtr4(local_50,0);
+              pfVar30 = (float *)getElemPtr4((void *)(*piVar10 + 0x28),0);
+              lib_fn_52e710(pfVar30,pfVar25,uVar59,fVar24);
+              fVar24 = 0.001;
+              pfVar25 = (float *)getElemPtr4(local_50,1);
+              pfVar30 = (float *)getElemPtr4((void *)(*piVar10 + 0x28),1);
+              lib_fn_52e710(pfVar30,pfVar25,uVar12,fVar24);
+            }
+            else {
+              puVar22 = Vec3_set(local_15d8,0,0,0);
+              Vec3_copy((void *)(*piVar10 + 0x28),puVar22);
+              *(undefined1 *)(*piVar10 + 0x70) = 0;
+            }
+            pvVar19 = (void *)(*piVar10 + 0x10);
+            iVar8 = 0;
+            local_2b90 = pvVar19;
+            pCVar13 = (CRefTime *)lib_fn_4e2320(pvVar19,1);
+            uVar12 = CRefTime::Millisecs(pCVar13);
+            pCVar13 = (CRefTime *)lib_fn_4e2320(pvVar19,0);
+            uVar59 = CRefTime::Millisecs(pCVar13);
+            local_2b48 = (Creature *)Chunk_getColumnAt(local_2b1c,uVar59,uVar12,iVar8);
+            iVar8 = 0;
+            if (local_2b48 != (Creature *)0x0) {
+              iVar8 = get_field_0x10((int)local_2b48);
+              iVar17 = get_field_0x1c((int)local_2b48);
+              iVar8 = iVar8 + iVar17;
+              if (iVar8 < 0) {
+                iVar8 = 0;
+              }
+            }
+            local_2b48 = (Creature *)lib_fn_4e2320(local_2b90,2);
+            iVar17 = fixedpoint_greater(local_2b48,iVar8 + 100);
+            if ((char)iVar17 == '\0') {
+              iVar8 = fixedpoint_less(local_2b48,iVar8 + 0x96);
+              if ((char)iVar8 == '\0') {
+                local_2ca4 = (Creature *)0x0;
+                ppCVar45 = &local_2ca4;
+              }
+              else {
+                local_2c1c = (Creature *)0xc1200000;
+                ppCVar45 = &local_2c1c;
+              }
+            }
+            else {
+              local_2bd0 = (Creature *)0x41200000;
+              ppCVar45 = &local_2bd0;
+            }
+            fVar24 = 0.001;
+            uVar12 = local_2b28;
+            pfVar25 = (float *)getElemPtr4((void *)(*piVar10 + 0x28),2);
+            lib_fn_52e710(pfVar25,(float *)ppCVar45,uVar12,fVar24);
+            Vec3_copy(local_50,(undefined4 *)(*piVar10 + 0x28));
+            *(undefined4 *)local_2cc0 = 0;
+            fVar51 = vec3_length_sq(local_50);
+            local_2b48 = (Creature *)(float)fVar51;
+            if ((float)local_2b48 <= 0.0) goto LAB_005463ff;
+            vec3_normalize(local_50);
+            local_2b3c = (CRefTime *)getElemPtr4(local_50,1);
+            if (1.0 < *(float *)local_2b3c) {
+              *(float *)local_2b3c = 1.0;
+            }
+            if (*(float *)local_2b3c <= -1.0 && *(float *)local_2b3c != -1.0) {
+              *(float *)local_2b3c = -1.0;
+            }
+            pfVar30 = (float *)getElemPtr4(local_50,0);
+            pfVar25 = (float *)(*piVar10 + 0x34);
+            fVar24 = 1.0;
+            if (*pfVar30 <= 0.0) {
+              fVar51 = lib_fn_548b00(*(float *)local_2b3c);
+              local_2b48 = (Creature *)(float)fVar51;
+              pCVar42 = local_2b48;
+            }
+            else {
+              fVar51 = lib_fn_548b00(*(float *)local_2b3c);
+              local_2b48 = (Creature *)(float)fVar51;
+              pCVar42 = (Creature *)-(float)local_2b48;
+            }
+            fVar51 = lib_fn_5306d0(*pfVar25,((float)pCVar42 / 3.1415927) * 180.0,fVar24);
+            fVar24 = 0.001;
+            goto LAB_005463e3;
+          }
+        }
+LAB_005463ff:
+        lib_fn_4e1520(local_15f0,local_2ba4,(float *)(*piVar10 + 0x28));
+        Vec3i64_randomize((int)local_45c);
+        int64x3_add((void *)(*piVar10 + 0x10),local_45c);
+        iVar17 = 0x3c23d70a;
+        local_2b20 = (CRefTime *)0x0;
+        local_2cc4 = 1.0;
+        uVar12 = local_2b28;
+        lib_fn_52e710((float *)&local_2b20,&local_2cc4,local_2b28,0.01);
+        iVar8 = *piVar10;
+        int64_assign_timecall((ulonglong *)&stack0xffffc89c);
+        puVar22 = local_2260;
+        puVar9 = Vec3i64_subtract((void *)(iVar8 + 0x10),local_2290,(uint *)(iVar8 + 0x80));
+        puVar9 = Vec3i64_copyAndScale(puVar9,puVar22,uVar12,iVar17);
+        int64x3_add((void *)(*piVar10 + 0x80),puVar9);
+        pfVar25 = (float *)(*piVar10 + 0x98);
+        fVar51 = lib_fn_5306d0(*pfVar25,*(float *)(*piVar10 + 0x34),1.0);
+        local_2b48 = (Creature *)(float)fVar51;
+        in_stack_ffffc88c = 0x54650c00000000;
+        lib_fn_52e710(pfVar25,(float *)&local_2b48,local_2b28,0.01);
+        lib_fn_4c8280(local_2bfc);
+        iVar8 = *piVar10;
+        local_8 = CONCAT31(local_8._1_3_,0x19);
+        deref_getFirst((void *)(iVar8 + 0x78),&local_2b24);
+        piVar21 = (int *)World_getField0((void *)(iVar8 + 0x78),&local_2d48);
+        bVar2 = std_iterator_notEqual(&local_2b24,piVar21);
+        if (bVar2) {
+          do {
+            puVar9 = (uint *)getField_plus0x10((int *)&local_2b24);
+            pvVar19 = (void *)std_map_find_value(local_2b1c,puVar9);
+            local_2b90 = pvVar19;
+            if (pvVar19 == (void *)0x0) {
+LAB_0054670d:
+              lib_fn_4d6620(local_2bfc,&local_2b24);
+            }
+            else {
+              puVar9 = Vec3i64_subtract((void *)((int)pvVar19 + 0x10),local_22c0,
+                                    (uint *)(*piVar10 + 0x10));
+              pfVar25 = Vec3i64_toFloatScaled(local_1608,(longlong *)puVar9);
+              fVar51 = vec3_length_sq(pfVar25);
+              local_2b48 = (Creature *)(float)fVar51;
+              if (4096.0 < (float)local_2b48) goto LAB_0054670d;
+              Matrix4_setIdentity(local_f04);
+              matrix_rotate_columns(local_f04,*(float *)(*piVar10 + 0x98) - (float)local_2b44);
+              puVar9 = Vec3i64_subtract((void *)((int)pvVar19 + 0x1350),local_22f0,local_19c);
+              Vec3i64_toFloatScaled(local_2a0,(longlong *)puVar9);
+              mat4_transform_point(local_f04,local_1620,local_2a0);
+              Vec3i64_randomize((int)local_4a4);
+              puVar9 = Vec3i64_add((void *)(*piVar10 + 0x80),local_2320,local_4a4);
+              Copy24Bytes((void *)((int)pvVar19 + 0x1350),puVar9);
+              pfVar25 = (float *)getElemPtr4((void *)((int)pvVar19 + 0x1374),2);
+              *pfVar25 = (*(float *)(*piVar10 + 0x98) - (float)local_2b44) + *pfVar25;
+              puVar9 = Vec3i64_subtract((void *)((int)pvVar19 + 0x10),local_2350,local_19c);
+              Vec3i64_toFloatScaled(local_294,(longlong *)puVar9);
+              mat4_transform_point(local_f04,local_10d4,local_294);
+              Vec3i64_randomize((int)local_48c);
+              puVar9 = Vec3i64_add((void *)(*piVar10 + 0x80),local_2380,local_48c);
+              Copy24Bytes((void *)((int)pvVar19 + 0x10),puVar9);
+              pfVar25 = (float *)getElemPtr4((void *)((int)pvVar19 + 0x28),2);
+              *pfVar25 = (*(float *)(*piVar10 + 0x98) - (float)local_2b44) + *pfVar25;
+            }
+            RBTree_copyBeginThenInc(&local_2b24,&local_2c48);
+            piVar21 = (int *)World_getField0((void *)(*piVar10 + 0x78),&local_2d48);
+            bVar2 = std_iterator_notEqual(&local_2b24,piVar21);
+          } while (bVar2);
+        }
+        deref_getFirst(local_2bfc,&local_2b6c);
+        piVar21 = (int *)World_getField0(local_2bfc,&local_2d50);
+        bVar2 = std_iterator_notEqual(&local_2b6c,piVar21);
+        if (bVar2) {
+          do {
+            puVar22 = (undefined4 *)lib_fn_52eb90((int *)&local_2b6c);
+            RBTree_eraseNode_plain((void *)(*piVar10 + 0x78),&local_2ce4,(int *)*puVar22);
+            lib_fn_52ebf0(&local_2b6c,&local_2bc4);
+            piVar21 = (int *)World_getField0(local_2bfc,&local_2d50);
+            bVar2 = std_iterator_notEqual(&local_2b6c,piVar21);
+          } while (bVar2);
+        }
+        local_8._0_1_ = 5;
+        std_list_Tidy(local_2bfc);
+        pvVar19 = local_2cbc;
+      }
+      RBTree_copyBeginThenInc(&local_2bb0,&local_2c20);
+      piVar10 = (int *)World_getField0(pvVar19,&local_2d58);
+      bVar2 = std_iterator_notEqual(&local_2bb0,piVar10);
+    } while (bVar2);
+  }
+  lib_fn_4c8280(&local_2c24);
+  pvVar19 = (void *)((int)local_2b1c + 0x14);
+  local_8 = CONCAT31(local_8._1_3_,0x1a);
+  deref_getFirst(pvVar19,&local_2b54);
+  piVar10 = (int *)World_getField0(pvVar19,&local_2d70);
+  bVar2 = std_iterator_notEqual(&local_2b54,piVar10);
+joined_r0x00546872:
+  if (!bVar2) {
+    deref_getFirst(&local_2c24,&local_2b6c);
+    piVar10 = (int *)World_getField0(&local_2c24,&local_2d80);
+    bVar2 = std_iterator_notEqual(&local_2b6c,piVar10);
+    if (bVar2) {
+      do {
+        puVar22 = (undefined4 *)lib_fn_52eb90((int *)&local_2b6c);
+        lib_fn_5305b0(pvVar19,&local_2bc4,(int *)*puVar22);
+        lib_fn_52ebf0(&local_2b6c,&local_2c48);
+        piVar10 = (int *)World_getField0(&local_2c24,&local_2d80);
+        bVar2 = std_iterator_notEqual(&local_2b6c,piVar10);
+      } while (bVar2);
+    }
+    local_8 = CONCAT31(local_8._1_3_,5);
+    std_list_Tidy(&local_2c24);
+    deref_getFirst(local_2b70,&local_2b6c);
+    piVar10 = (int *)World_getField0(local_2b70,&local_2d88);
+    bVar2 = std_iterator_notEqual(&local_2b6c,piVar10);
+    if (bVar2) {
+      do {
+        iVar17 = getField_plus0x10((int *)&local_2b6c);
+        iVar8 = *(int *)(iVar17 + 8);
+        if (iVar8 != 0) {
+          puVar9 = (uint *)(iVar8 + 0x11d0);
+          uVar12 = std_map_find_value(local_2b1c,puVar9);
+          if ((uVar12 != 0) &&
+             (uVar12 = std_map_find_value(local_2b1c,puVar9), *(float *)(uVar12 + 0x16c) <= 0.0)) {
+            *puVar9 = 0;
+            *(undefined4 *)(iVar8 + 0x11d4) = 0;
+          }
+          pCVar13 = *(CRefTime **)(iVar17 + 8);
+          local_2b98 = pCVar13;
+          if (pCVar13[0x60] == (CRefTime)0x5) {
+            pCVar15 = pCVar13 + 0x198;
+            uVar12 = std_map_find_value(local_2b1c,(uint *)pCVar15);
+            if ((uVar12 != 0) &&
+               (uVar12 = std_map_find_value(local_2b1c,(uint *)pCVar15), *(char *)(uVar12 + 0x68) == 'j'))
+            {
+              pCVar15 = (CRefTime *)std_map_find_value(local_2b1c,(uint *)pCVar15);
+              local_2b44 = pCVar15;
+              pfVar25 = (float *)getElemPtr4(pCVar13 + 0x80,2);
+              pfVar30 = (float *)getElemPtr4(pCVar15 + 0x80,2);
+              Vec3_set(local_1758,0,0,(*pfVar25 * 0.5 - *pfVar30 * 0.5) + 0.01);
+              Vec3i64_randomize((int)local_348);
+              puVar9 = Vec3i64_add(local_2b44 + 0x1350,local_2560,local_348);
+              Copy24Bytes(local_2b98 + 0x1350,puVar9);
+              Vec3_copy(local_2b98 + 0x1374,(undefined4 *)(local_2b44 + 0x1374));
+              Vec3_set(local_1770,0,0,(*pfVar25 * 0.5 - *pfVar30 * 0.5) + 0.01);
+              Vec3i64_randomize((int)local_36c);
+              pCVar15 = local_2b44;
+              puVar9 = Vec3i64_add(local_2b44 + 0x10,local_2590,local_36c);
+              pCVar13 = local_2b98;
+              Copy24Bytes(local_2b98 + 0x10,puVar9);
+              Vec3_copy(pCVar13 + 0x28,(undefined4 *)(pCVar15 + 0x28));
+              *(float *)(pCVar13 + 0x1180) = *(float *)(pCVar15 + 0x1180);
+              *(float *)(pCVar13 + 0x1188) = *(float *)(pCVar15 + 0x1188);
+              *(float *)(pCVar13 + 0x118c) = *(float *)(pCVar15 + 0x118c);
+              puVar22 = Vec3_set(local_1788,0,0,0);
+              Vec3_copy(pCVar13 + 0x34,puVar22);
+              puVar22 = Vec3_set(local_17a0,0,0,0);
+              Vec3_copy(pCVar13 + 0x40,puVar22);
+            }
+          }
+        }
+        RBTree_copyBeginThenInc(&local_2b6c,&local_2bc4);
+        piVar10 = (int *)World_getField0(local_2b70,&local_2d88);
+        bVar2 = std_iterator_notEqual(&local_2b6c,piVar10);
+      } while (bVar2);
+    }
+    deref_getFirst(local_2bec,&local_2b6c);
+    piVar10 = (int *)World_getField0(local_2bec,&local_2d90);
+    bVar2 = std_iterator_notEqual(&local_2b6c,piVar10);
+    piVar10 = local_2b2c;
+    if (bVar2) {
+      do {
+        piVar21 = (int *)getField_plus0x10((int *)&local_2b6c);
+        *(undefined1 *)(*piVar21 + 0x75) = 1;
+        puVar22 = Zone_extractChunkList(local_e8c,*piVar21);
+        local_8._0_1_ = 0x1b;
+        std_list_push_back_428450(piVar10 + 10,puVar22);
+        local_8 = CONCAT31(local_8._1_3_,5);
+        std_list_Tidy_at_8((int)local_e8c);
+        RBTree_copyBeginThenInc(&local_2b6c,&local_2bc4);
+        piVar21 = (int *)World_getField0(local_2bec,&local_2d90);
+        bVar2 = std_iterator_notEqual(&local_2b6c,piVar21);
+      } while (bVar2);
+    }
+    piVar21 = local_2b2c;
+    piVar10 = local_2b2c + 0xc;
+    deref_getFirst(piVar10,&local_2b6c);
+    piVar23 = (int *)World_getField0(piVar10,&local_2d98);
+    bVar2 = std_iterator_notEqual(&local_2b6c,piVar23);
+    if (bVar2) {
+      do {
+        pvVar19 = (void *)lib_fn_52eb90((int *)&local_2b6c);
+        puVar9 = (uint *)getElemPtr4(pvVar19,1);
+        uVar12 = *puVar9;
+        puVar9 = (uint *)getElemPtr4(pvVar19,0);
+        iVar8 = Region_getChunkCell(local_2b1c,*puVar9,uVar12);
+        if (iVar8 != 0) {
+          *(undefined1 *)(iVar8 + 0x76) = 1;
+        }
+        lib_fn_52ebf0(&local_2b6c,&local_2bc4);
+        piVar21 = (int *)World_getField0(piVar10,&local_2d98);
+        bVar2 = std_iterator_notEqual(&local_2b6c,piVar21);
+        piVar21 = local_2b2c;
+      } while (bVar2);
+    }
+    deref_getFirst(local_2cd8,&local_2b6c);
+    piVar10 = (int *)World_getField0(local_2cd8,&local_2db8);
+    bVar2 = std_iterator_notEqual(&local_2b6c,piVar10);
+    if (bVar2) {
+      do {
+        piVar10 = (int *)getField_plus0x10((int *)&local_2b6c);
+        puVar22 = lib_fn_52e950(local_e54,*piVar10);
+        local_8._0_1_ = 0x1c;
+        lib_fn_5307f0(piVar21 + 0xe,puVar22);
+        local_8 = CONCAT31(local_8._1_3_,5);
+        std_list_Tidy_at_8((int)local_e54);
+        RBTree_copyBeginThenInc(&local_2b6c,&local_2bc4);
+        piVar10 = (int *)World_getField0(local_2cd8,&local_2db8);
+        bVar2 = std_iterator_notEqual(&local_2b6c,piVar10);
+      } while (bVar2);
+    }
+    piVar21 = local_2b2c + 6;
+    deref_getFirst(piVar21,&local_2b24);
+    piVar10 = (int *)World_getField0(piVar21,&local_2dc0);
+    bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+    if (bVar2) {
+      do {
+        pvVar19 = (void *)lib_fn_52eb90((int *)&local_2b24);
+        piVar10 = (int *)getElemPtr4(pvVar19,1);
+        uVar12 = (int)(*piVar10 + (*piVar10 >> 0x1f & 0xffU)) >> 8;
+        piVar10 = (int *)getElemPtr4(pvVar19,0);
+        iVar8 = Region_getChunkCell(local_2b1c,(int)(*piVar10 + (*piVar10 >> 0x1f & 0xffU)) >> 8,uVar12);
+        if (iVar8 != 0) {
+          puVar22 = (undefined4 *)lib_fn_52eb90((int *)&local_2b24);
+          std_vector_push_back((void *)(iVar8 + 0x68),puVar22);
+        }
+        lib_fn_52ebf0(&local_2b24,&local_2bc4);
+        piVar10 = (int *)World_getField0(piVar21,&local_2dc0);
+        bVar2 = std_iterator_notEqual(&local_2b24,piVar10);
+      } while (bVar2);
+    }
+    lib_fn_4f7710(local_2cd8);
+    lib_fn_4f7710(local_2bec);
+    lib_fn_4f7710(&local_2bf4);
+    std_list_Tidy(&local_2bd8);
+    ExceptionList = local_10;
+    __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
+    return;
+  }
+  puVar9 = (uint *)lib_fn_52eb90((int *)&local_2b54);
+  if (puVar9[0x18] != 1) {
+    if (puVar9[0x18] != 2) {
+      pfVar25 = (float *)getElemPtr4(puVar9 + 0xf,2);
+      *pfVar25 = *pfVar25 - local_2ba4 * 30.0 * 0.25;
+      goto LAB_00546a5d;
+    }
+    uVar12 = 0x5468ae;
+    puVar18 = puVar9;
+    pvVar19 = (void *)std_map_find_value(local_2b1c,puVar9);
+    uVar20 = (undefined4)(in_stack_ffffc88c >> 0x20);
+    local_2b90 = pvVar19;
+    if ((pvVar19 != (void *)0x0) && (uVar59 = puVar9[0x1a], (int)uVar59 < 0x4b1)) {
+      if ((int)uVar59 < 0x44d) {
+        if ((int)uVar59 < 0x321) {
+          Vec3i64_randomize((int)local_348);
+          pfVar25 = local_1680;
+          fVar52 = 0.05;
+          fVar24 = 5.0;
+          puVar18 = puVar9 + 6;
+          puVar26 = local_24a0;
+          uVar12 = local_2b28;
+          puVar28 = Vec3i64_add((void *)((int)pvVar19 + 0x10),local_24d0,local_348);
+          puVar18 = Vec3i64_subtract(puVar28,puVar26,puVar18);
+          pfVar30 = Vec3i64_toFloatScaled(local_1698,(longlong *)puVar18);
+          puVar34 = (undefined8 *)vec3_scale_to(pfVar30,pfVar25,fVar24);
+          in_stack_ffffc88c = 0x546a2a00000000;
+          lib_fn_52e7c0((float *)(puVar9 + 0xf),puVar34,uVar12,fVar52);
+        }
+        else {
+          pfVar25 = local_1650;
+          fVar24 = 10.0;
+          in_stack_ffffc88c = 0x54699500000000;
+          puVar18 = Vec3i64_subtract((void *)((int)pvVar19 + 0x10),local_2470,puVar9 + 6);
+          pfVar30 = Vec3i64_toFloatScaled(local_1668,(longlong *)puVar18);
+          puVar22 = (undefined4 *)vec3_scale_to(pfVar30,pfVar25,fVar24);
+          Vec3_copy(puVar9 + 0xf,puVar22);
+        }
+      }
+      else {
+        local_2b48 = (Creature *)((float)(int)(uVar59 - 0x44c) / 100.0);
+        puVar26 = puVar9 + 6;
+        iVar8 = 0x546906;
+        int64_assign_timecall((ulonglong *)&stack0xffffc89c);
+        puVar22 = local_23b0;
+        int64_assign_timecall((ulonglong *)&stack0xffffc890);
+        in_stack_ffffc88c = CONCAT44(uVar20,local_23e0);
+        puVar28 = Vec3i64_subtract((void *)((int)local_2b90 + 0x10),local_2410,puVar26);
+        puVar33 = Vec3i64_copyAndScale(puVar28,(undefined4 *)in_stack_ffffc88c,
+                               (uint)(in_stack_ffffc88c >> 0x20),iVar8);
+        puVar18 = Vec3i64_copyAndScale(puVar33,puVar22,uVar12,(int)puVar18);
+        puVar18 = Vec3i64_add(puVar26,local_2440,puVar18);
+        Copy24Bytes(puVar26,puVar18);
+      }
+      goto LAB_00546a5d;
+    }
+    goto LAB_00546b28;
+  }
+LAB_00546a5d:
+  lib_fn_4e1520(local_120,local_2ba4,(float *)(puVar9 + 0xf));
+  pvVar19 = local_2b1c;
+  puVar9[0x1a] = puVar9[0x1a] + local_2b28;
+  if ((puVar9[0x18] != 2) && (5000 < (int)puVar9[0x1a])) {
+    if ((puVar9[0x18] != 3) && (uVar12 = std_map_find_value(local_2b1c,puVar9), uVar12 != 0)) {
+      uVar12 = std_map_find_value(pvVar19,puVar9);
+      fVar51 = Combat_computeAttackSpeed(uVar12);
+      local_2b48 = (Creature *)(float)fVar51;
+      uVar12 = std_map_find_value(pvVar19,puVar9);
+      *(undefined4 *)(uVar12 + 0x70) = 0;
+      uVar12 = std_map_find_value(pvVar19,puVar9);
+      uVar59 = std_map_find_value(local_2b1c,puVar9);
+      fVar51 = Combat_computeAttackSpeed(uVar59);
+      local_2b90 = (void *)(float)fVar51;
+      *(int *)(uVar12 + 0x6c) =
+           (int)(((float)local_2b48 / (float)local_2b90) * (float)*(int *)(uVar12 + 0x6c));
+    }
+    goto LAB_00546b28;
+  }
+  local_2b50 = (CRefTime *)0x0;
+  uVar12 = std_map_find_value(local_2b1c,puVar9);
+  if (uVar12 != 0) {
+    local_2b50 = (CRefTime *)std_map_find_value(local_2b1c,puVar9);
+  }
+  fVar51 = vec3_length(local_120);
+  local_2b48 = (Creature *)(float)fVar51;
+  local_2c0c = (uint)((float)local_2b48 * 2.0 + 1.0);
+  lib_fn_4f7a70(local_120,local_44,(float)(int)local_2c0c);
+  Vec3_copy(local_b4,puVar9 + 0xf);
+  fVar51 = vec3_length_sq(local_b4);
+  local_2b48 = (Creature *)(float)fVar51;
+  if (0.0 < (float)local_2b48) {
+    vec3_normalize(local_b4);
+  }
+  vec3_scale(local_b4,(float)puVar9[0x15] * 5.0);
+  local_2b48 = (Creature *)((float)puVar9[0x15] * 3.0);
+  pfVar25 = (float *)getElemPtr4(local_b4,2);
+  *pfVar25 = (float)local_2b48;
+  local_2b88 = (CRefTime *)std_map_find_value(local_2b1c,puVar9);
+  local_2c08 = 0;
+  if (0 < (int)local_2c0c) {
+    do {
+      pCVar13 = local_2b88;
+      local_2b5c = (undefined4 *)((uint)local_2b5c & 0xffffff00);
+      local_2b68 = (CRefTime *)((uint)local_2b68 & 0xffffff00);
+      deref_getFirst(local_2b70,&local_2bb0);
+      piVar10 = (int *)World_getField0(local_2b70,&local_2d60);
+      bVar2 = std_iterator_notEqual(&local_2bb0,piVar10);
+      if (bVar2) {
+        do {
+          iVar8 = getField_plus0x10((int *)&local_2bb0);
+          local_2b58 = *(CRefTime **)(iVar8 + 8);
+          if (((local_2b58 != (CRefTime *)0x0) && (0.0 < *(float *)(local_2b58 + 0x16c))) &&
+             ((((puVar9[0x18] == 3 && ((char)puVar9[0x19] == '\x02')) ||
+               (pCVar13 == (CRefTime *)0x0)) ||
+              (((local_2b58 != pCVar13 &&
+                (uVar20 = lib_fn_4d18c0((int)pCVar13,(int)local_2b58), (char)uVar20 != '\0')) &&
+               ((*(float *)(local_2b58 + 8) != *(float *)(pCVar13 + 0x11c0) ||
+                (*(float *)(local_2b58 + 0xc) != *(float *)(pCVar13 + 0x11c4))))))))) {
+            local_2b3c = local_2b58 + 0x80;
+            local_2b20 = (CRefTime *)getElemPtr4(local_2b3c,0);
+            local_2b6c = local_2b58 + 0x10;
+            local_2b4c = (CRefTime *)lib_fn_4e2320(local_2b6c,0);
+            local_2b94 = (CRefTime *)lib_fn_4e2320(puVar9 + 6,0);
+            puVar18 = (uint *)int64_sub_timecall(local_2b4c,local_36f0);
+            pvVar19 = (void *)int64_add_timecall(local_2b94,local_3710);
+            uVar12 = std_pair_lessequal(pvVar19,puVar18);
+            if ((char)uVar12 != '\0') {
+              local_2bbc = (CRefTime *)getElemPtr4(local_2b3c,1);
+              local_2b9c = (CRefTime *)lib_fn_4e2320(local_2b6c,1);
+              local_2bc0 = (CRefTime *)lib_fn_4e2320(puVar9 + 6,1);
+              puVar18 = (uint *)int64_sub_timecall(local_2b9c,local_3488);
+              pvVar19 = (void *)int64_add_timecall(local_2bc0,local_31c8);
+              uVar12 = std_pair_lessequal(pvVar19,puVar18);
+              if ((char)uVar12 != '\0') {
+                local_2b3c = (CRefTime *)getElemPtr4(local_2b3c,2);
+                local_2b98 = (CRefTime *)lib_fn_4e2320(local_2b6c,2);
+                local_2bac = (int *)lib_fn_4e2320(puVar9 + 6,2);
+                puVar18 = (uint *)int64_sub_timecall(local_2b98,local_36f8);
+                pvVar19 = (void *)int64_add_timecall(local_2bac,local_31d8);
+                uVar12 = std_pair_lessequal(pvVar19,puVar18);
+                if ((char)uVar12 != '\0') {
+                  puVar18 = (uint *)int64_add_timecall(local_2b4c,local_3498);
+                  pvVar19 = (void *)int64_sub_timecall(local_2b94,local_31a8);
+                  uVar12 = std_pair_less(pvVar19,puVar18);
+                  if ((char)uVar12 != '\0') {
+                    puVar18 = (uint *)int64_add_timecall(local_2b9c,local_35f8);
+                    pvVar19 = (void *)int64_sub_timecall(local_2bc0,local_31f8);
+                    uVar12 = std_pair_less(pvVar19,puVar18);
+                    if ((char)uVar12 != '\0') {
+                      puVar18 = (uint *)int64_add_timecall(local_2b98,local_34a8);
+                      pvVar19 = (void *)int64_sub_timecall(local_2bac,local_3208);
+                      uVar12 = std_pair_less(pvVar19,puVar18);
+                      if ((char)uVar12 != '\0') {
+                        in_stack_ffffc88c = 0x5476f700000000;
+                        cVar3 = Creature_moveToward(puVar9 + 6,(uint *)local_2b6c,'\x01',200.0);
+                        pCVar15 = local_2b88;
+                        if (cVar3 != '\0') {
+                          if (*(float *)(local_2b58 + 0x128) != 0.0) {
+                            if (pCVar13 != (CRefTime *)0x0) {
+                              lib_fn_530690(pCVar13 + 0x11b4,local_d4,(uint *)(local_2b58 + 8));
+                            }
+                            goto LAB_00547c9b;
+                          }
+                          uVar12 = puVar9[0x18];
+                          if (((uVar12 == 0) && ((char)puVar9[0x17] == '\0')) ||
+                             ((((uVar12 == 1 || (uVar12 == 4)) && ((char)puVar9[0x17] == '\0')) ||
+                              ((uVar12 == 3 &&
+                               (uVar12 = puVar9[0x18], pCVar13 = local_2b88,
+                               (int)puVar9[0x1a] / 1000 != (int)(puVar9[0x1a] - local_2b28) / 1000))
+                              )))) {
+LAB_005477df:
+                            if ((uVar12 != 3) &&
+                               (local_2b5c = (undefined4 *)((uint)local_2b5c & 0xff), uVar12 != 2))
+                            {
+                              local_2b5c = (undefined4 *)0x1;
+                            }
+                            if (((((char)puVar9[0x17] == '\0') && (uVar12 != 3)) && (uVar12 != 1))
+                               && ((uVar12 != 4 && (local_2b88 != (CRefTime *)0x0)))) {
+                              iVar8 = rand();
+                              local_2b3c = (CRefTime *)
+                                           ((1.0 - ((float)iVar8 * 2.0) / 32767.0) * 0.05 + 0.1);
+                              if (puVar9[0x18] == 2) {
+                                local_2b3c = (CRefTime *)((float)local_2b3c * 0.2);
+                              }
+                              iVar8 = Combat_getWindupAndRecovery((int)pCVar15);
+                              local_2b3c = (CRefTime *)(((float)iVar8 / 300.0) * (float)local_2b3c);
+                              uVar12 = rand();
+                              uVar12 = uVar12 & 0x80000007;
+                              bVar2 = uVar12 == 0;
+                              if ((int)uVar12 < 0) {
+                                bVar2 = (uVar12 - 1 | 0xfffffff8) == 0xffffffff;
+                              }
+                              pCVar13 = local_2b3c;
+                              if (bVar2) {
+                                pCVar13 = (CRefTime *)((float)local_2b3c * 2.0);
+                              }
+                              if (((*(char *)((int)local_2b1c + 0xb4) == '\0') ||
+                                  (pCVar15 == *(CRefTime **)((int)local_2b1c + 0xb8))) &&
+                                 (fVar24 = *(float *)(pCVar15 + 0x170),
+                                 *(float *)(pCVar15 + 0x170) = fVar24 + (float)pCVar13,
+                                 1.0 < fVar24 + (float)pCVar13)) {
+                                *(float *)(pCVar15 + 0x170) = 1.0;
+                              }
+                            }
+                            bVar2 = false;
+                            local_2b44 = (CRefTime *)((uint)local_2b44 & 0xffffff00);
+                            if (pCVar15 != (CRefTime *)0x0) {
+                              bVar2 = check_proc_chance((int)pCVar15);
+                              local_2b44 = (CRefTime *)CONCAT31(local_2b44._1_3_,bVar2);
+                            }
+                            local_2b7c = (float)puVar9[0x12];
+                            if (bVar2 != false) {
+                              local_2b7c = local_2b7c * 2.0;
+                            }
+                            if ((local_2b50 != (CRefTime *)0x0) &&
+                               ((((local_2b50 == *(CRefTime **)((int)local_2b1c + 0xb8) ||
+                                  ((*(char *)((int)local_2b1c + 0xb4) == '\0' &&
+                                   (local_2b50[0x60] != (CRefTime)0x0)))) &&
+                                 (bVar2 = roll_probability(local_2b50,0.15), bVar2)) &&
+                                ((((char)puVar9[0x17] == '\0' &&
+                                  (local_2b50[0x140] == (CRefTime)0x2)) &&
+                                 (local_2b50[0x141] == (CRefTime)0x1)))))) {
+                              CombatState_zeroInit(&local_2f68);
+                              local_2f68 = '\n';
+                              local_2f60 = 30000;
+                              Combat_upsertBuffEntry(local_2b50,&local_2f68);
+                              init_struct_fields_a((int)&local_244);
+                              local_234 = CONCAT71(uStack_2f67,local_2f68);
+                              local_244 = *(float *)(local_2b50 + 8);
+                              local_240 = *(float *)(local_2b50 + 0xc);
+                              local_22c = CONCAT44(uStack_2f5c,local_2f60);
+                              local_224 = local_2f58;
+                              local_23c = local_244;
+                              local_238 = local_240;
+                              std_list_push_back(local_2b2c + 0x16,(undefined8 *)&local_244);
+                              lib_fn_4c8530((int)local_1f0);
+                              local_1e4 = 0x2f;
+                              Vec3i64_toFloatScaled(local_1f0,(longlong *)(local_2b50 + 0x10));
+                              std_list_push_back_428590(local_2b2c + 2,local_1f0);
+                            }
+                            if (local_2b7c < 0.0) {
+                              local_2b7c = 0.0;
+                            }
+                            if ((char)puVar9[0x19] == '\x02') {
+                              if (((local_2b50 == (CRefTime *)0x0) ||
+                                  (uVar20 = CombatBehavior_areHostile((int)local_2b50,(int)local_2b58),
+                                  (char)uVar20 != '\0')) || (local_2b58[0x60] == (CRefTime)0x6)) {
+                                if ((char)puVar9[0x19] != '\x02') goto LAB_00547be8;
+                              }
+                              else {
+                                initStruct_0x47_zero((int)&local_a2c);
+                                Copy24Bytes(local_a0c,(undefined4 *)local_2b6c);
+                                local_a1c = -local_2b7c;
+                                if (local_2b50[0x60] == (CRefTime)0x1) {
+                                  local_a1c = local_a1c * 0.5;
+                                }
+                                local_a18 = local_2b44._0_1_;
+                                local_a2c = *puVar9;
+                                local_a28 = puVar9[1];
+                                local_a24 = *(float *)(local_2b58 + 8);
+                                local_a20 = *(float *)(local_2b58 + 0xc);
+                                std_list_push_back_428400(local_2b2c,&local_a2c);
+                                if ((*(char *)((int)local_2b1c + 0xb4) == '\0') ||
+                                   ((local_2b50 == *(CRefTime **)((int)local_2b1c + 0xb8) &&
+                                    (local_2b58 == *(CRefTime **)((int)local_2b1c + 0xb8))))) {
+                                  lib_fn_4cea80(local_2b1c,&local_a2c,local_2b2c,local_2bec);
+                                }
+                              }
+                            }
+                            else {
+LAB_00547be8:
+                              cVar3 = '\x01';
+                              iVar8 = lib_fn_52eb90((int *)&local_2b54);
+                              in_stack_ffffc88c = CONCAT44(local_2bec,local_2b2c);
+                              cVar3 = stl_fn_4cfd50(local_2b1c,(float)local_2b58,pCVar15,local_2b7c,
+                                                   (char)local_2b44,(char)puVar9[0x17],
+                                                   (float)puVar9[0x15],puVar9 + 6,local_b4,
+                                                   local_2b2c,local_2bec,puVar9[0x18] == 1,0,iVar8,
+                                                   cVar3);
+                              local_2b68 = (CRefTime *)((uint)local_2b68 & 0xff);
+                              if (cVar3 != '\0') {
+                                local_2b68 = (CRefTime *)0x1;
+                              }
+                            }
+                            pCVar13 = pCVar15;
+                            if ((int)*(float *)(local_2b58 + 0x134) < (int)puVar9[0x1b]) {
+                              *(uint *)(local_2b58 + 0x134) = puVar9[0x1b];
+                            }
+                          }
+                          else if ((300 < (int)puVar9[0x1a]) &&
+                                  ((uVar12 == 2 &&
+                                   ((int)puVar9[0x1a] / 100 !=
+                                    (int)(puVar9[0x1a] - local_2b28) / 100)))) {
+                            uVar12 = puVar9[0x18];
+                            goto LAB_005477df;
+                          }
+                          uVar12 = puVar9[0x18];
+                          if (((uVar12 == 0) || (uVar12 == 1)) || (uVar12 == 4)) {
+                            local_2b5c = (undefined4 *)CONCAT31(local_2b5c._1_3_,1);
+                            break;
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            if ((char)local_2b5c != '\0') break;
+          }
+LAB_00547c9b:
+          RBTree_copyBeginThenInc(&local_2bb0,&local_2c48);
+          piVar10 = (int *)World_getField0(local_2b70,&local_2d60);
+          bVar2 = std_iterator_notEqual(&local_2bb0,piVar10);
+        } while (bVar2);
+      }
+      if (puVar9[0x18] != 3) {
+        if ((puVar9[0x18] == 2) &&
+           ((int)puVar9[0x1a] / 200 != (int)(puVar9[0x1a] - local_2b28) / 200)) {
+          lib_fn_4c8530((int)local_1d8);
+          Vec3i64_toFloatScaled(local_1d8,(longlong *)(puVar9 + 6));
+          iVar8 = rand();
+          local_1c8 = ((float)iVar8 * 0.25) / 32767.0 + 1.0;
+          local_1cc = 0xf;
+          std_list_push_back_428590(local_2b2c + 2,local_1d8);
+        }
+        Vec3i64_randomize((int)local_36c);
+        puVar18 = puVar9 + 6;
+        int64x3_add(puVar18,local_36c);
+        uVar12 = puVar9[0x13];
+        Vec3_set(local_16b0,uVar12,uVar12,uVar12);
+        Vec3i64_randomize((int)local_45c);
+        Vec3i64_subtract(puVar18,local_2500,local_45c);
+        uVar12 = puVar9[0x13];
+        Vec3_set(local_16c8,uVar12,uVar12,uVar12);
+        Vec3i64_randomize((int)local_4a4);
+        Vec3i64_add(puVar18,local_2530,local_4a4);
+        local_2b35 = 0;
+        local_2b3c = (CRefTime *)lib_fn_4e2320(puVar18,2);
+        local_2b20 = (CRefTime *)lib_fn_4e2320(puVar18,1);
+        local_2b48 = (Creature *)lib_fn_4e2320(puVar18,0);
+        in_stack_ffffc88c = CONCAT44(*(float *)local_2b20,*(uint *)(local_2b48 + 4));
+        iVar8 = World_getBlockFloat(local_2b1c,*(uint *)local_2b48,*(uint *)(local_2b48 + 4),
+                             (uint)*(float *)local_2b20,(uint)*(float *)(local_2b20 + 4),
+                             (uint)*(float *)local_2b3c,(uint)*(float *)(local_2b3c + 4),0);
+        uVar20 = check_type_low5_active(iVar8);
+        if ((char)uVar20 == '\0') {
+          fVar51 = vec3_length((float *)(puVar9 + 0xf));
+          pCVar42 = (Creature *)((float)fVar51 * local_2ba4);
+          uVar53 = 0x100000000;
+          pfVar25 = local_1710;
+          local_2b48 = pCVar42;
+          pfVar30 = vec3_normalize_to(puVar9 + 0xf,local_1728);
+          pfVar25 = lib_fn_52ec30(pfVar30,pfVar25);
+          in_stack_ffffc88c = CONCAT44(puVar18,0x548058);
+          fVar51 = (float10)Creature_stepAlongPath(local_2b1c,puVar18,pfVar25,(float)pCVar42,(char)uVar53,
+                                         (char)(uVar53 >> 0x20));
+          local_2b90 = (void *)(float)fVar51;
+          if ((float)local_2b90 < (float)local_2b48) {
+            local_2b35 = 1;
+            Vec3i64_randomize((int)local_9b4);
+            int64x3_sub(puVar18,local_9b4);
+          }
+        }
+        else {
+          Vec3i64_randomize((int)local_48c);
+          int64x3_sub(puVar18,local_48c);
+          local_2b35 = 1;
+          if (puVar9[0x18] == 0) {
+            lib_fn_4c8510((int)local_96c);
+            pfVar25 = local_2c4;
+            fVar24 = 255.0;
+            pbVar46 = (byte *)World_getBlockFloat(local_2b1c,*(uint *)local_2b48,*(uint *)(local_2b48 + 4),
+                                           (uint)*(float *)local_2b20,
+                                           (uint)*(float *)(local_2b20 + 4),
+                                           (uint)*(float *)local_2b3c,
+                                           (uint)*(float *)(local_2b3c + 4),0);
+            pfVar30 = lib_fn_4c6470(local_16e0,pbVar46);
+            lib_fn_4f7a70(pfVar30,pfVar25,fVar24);
+            uVar62 = 0x3f800000;
+            puVar22 = (undefined4 *)getElemPtr4(local_2c4,2);
+            uVar20 = *puVar22;
+            puVar22 = (undefined4 *)getElemPtr4(local_2c4,1);
+            uVar56 = *puVar22;
+            puVar22 = (undefined4 *)getElemPtr4(local_2c4,0);
+            in_stack_ffffc88c = 0x547f8700000000;
+            ppVar31 = (pair<unsigned___int64,unsigned___int64> *)
+                      store_4_dwords(local_1ba0,*puVar22,uVar56,uVar20,uVar62);
+            std::pair<unsigned___int64,unsigned___int64>::
+            operator=<std::pair<unsigned___int64,unsigned___int64>,0>(local_948,ppVar31);
+            local_934 = 4;
+            local_938 = 0x3dcccccd;
+            puVar22 = Vec3_set(local_16f8,0,0,0x41200000);
+            Vec3_copy(local_954,puVar22);
+            Copy24Bytes(local_96c,puVar18);
+            std_list_push_back_428540(local_2b2c + 4,local_96c);
+          }
+        }
+        pCVar13 = local_2b88;
+        cVar3 = (char)local_2b5c;
+        if (((cVar3 == '\0') && (local_2b35 != 0)) &&
+           ((puVar9[0x18] != 3 && (local_2b88 != (CRefTime *)0x0)))) {
+          fVar51 = Combat_computeAttackSpeed((int)local_2b88);
+          local_2b48 = (Creature *)(float)fVar51;
+          *(float *)(pCVar13 + 0x70) = 0.0;
+          fVar51 = Combat_computeAttackSpeed((int)pCVar13);
+          local_2b90 = (void *)(float)fVar51;
+          *(int *)(pCVar13 + 0x6c) =
+               (int)(((float)local_2b48 / (float)local_2b90) *
+                    (float)(int)*(float *)(pCVar13 + 0x6c));
+          cVar3 = (char)local_2b5c;
+        }
+        if (puVar9[0x18] == 2) {
+          if (((char)local_2b68 != '\0') && (pCVar13 != (CRefTime *)0x0)) {
+            *(int *)(pCVar13 + 0x70) = (int)*(float *)(pCVar13 + 0x70) + 1;
+            rbtree_inorder_walk((int)pCVar13);
+            *(float *)(pCVar13 + 0x74) = 0.0;
+          }
+          if (local_2b35 != 0) {
+            if (puVar9[0x18] != 2) {
+              lib_fn_4c8530((int)local_1b4);
+              Vec3i64_toFloatScaled(local_1b4,(longlong *)(puVar9 + 6));
+              iVar8 = rand();
+              local_1a4 = ((float)iVar8 * 0.4) / 32767.0 + 1.0;
+              local_1a8 = 0x13;
+              std_list_push_back_428590(local_2b2c + 2,local_1b4);
+              goto LAB_00546b28;
+            }
+            puVar22 = Vec3_set(local_1740,0,0,0);
+            Vec3_copy(puVar9 + 0xf,puVar22);
+          }
+        }
+        else if ((cVar3 != '\0') || (local_2b35 != 0)) {
+          if ((puVar9[0x18] != 1) && ((char)puVar9[0x17] == '\0')) goto LAB_005488d0;
+          if (cVar3 == '\0') {
+            lib_fn_4c8530((int)local_80);
+            Vec3i64_toFloatScaled(local_80,(longlong *)(puVar9 + 6));
+            iVar8 = rand();
+            local_70 = ((float)iVar8 * 0.4) / 32767.0 + 1.0;
+            if (puVar9[0x18] == 1) {
+              local_74 = 0x27;
+              if ((char)puVar9[0x19] == '\x02') {
+                local_74 = 0x2a;
+              }
+            }
+            else {
+              local_74 = 0x14;
+            }
+            std_list_push_back_428590(local_2b2c + 2,local_80);
+          }
+          local_2c00 = CONCAT31(local_2c00._1_3_,(char)puVar9[0x17]);
+          deref_getFirst(local_2b70,&local_2be0);
+          piVar10 = (int *)World_getField0(local_2b70,&local_2d68);
+          bVar2 = std_iterator_notEqual(&local_2be0,piVar10);
+          if (!bVar2) goto LAB_005488d0;
+          local_2b4c = (CRefTime *)lib_fn_4e2320(puVar9 + 6,0);
+          local_2bbc = (CRefTime *)lib_fn_4e2320(puVar9 + 6,1);
+          local_2b9c = (CRefTime *)lib_fn_4e2320(puVar9 + 6,2);
+          goto LAB_00548313;
+        }
+      }
+      local_2c08 = local_2c08 + 1;
+    } while (local_2c08 < (int)local_2c0c);
+  }
+  goto LAB_00546b3a;
+code_r0x00535a7c:
+  lib_fn_52ebf0(&local_2b84,&local_2b48);
+  piVar21 = (int *)World_getField0(&local_2bd8,&local_2d64);
+  bVar2 = std_iterator_notEqual(&local_2b84,piVar21);
+  if (!bVar2) goto LAB_005361f3;
+  goto LAB_00535a24;
+LAB_00548313:
+  do {
+    iVar8 = getField_plus0x10((int *)&local_2be0);
+    local_2b6c = *(CRefTime **)(iVar8 + 8);
+    if (local_2b6c != (CRefTime *)0x0) {
+      if ((((local_2b50 != (CRefTime *)0x0) && (*(char *)((int)local_2b1c + 0xb4) == '\0')) &&
+          (local_2b50[0x60] == (CRefTime)0x0)) &&
+         (local_2b50 != *(CRefTime **)((int)local_2b1c + 0xb8))) break;
+      if ((pCVar13 == (CRefTime *)0x0) ||
+         ((((local_2b6c != pCVar13 &&
+            (uVar20 = lib_fn_4d18c0((int)pCVar13,(int)local_2b6c), (char)uVar20 != '\0')) &&
+           ((*(float *)(local_2b6c + 8) != *(float *)(pCVar13 + 0x11c0) ||
+            (*(float *)(local_2b6c + 0xc) != *(float *)(pCVar13 + 0x11c4))))) &&
+          (0.0 < *(float *)(local_2b6c + 0x16c))))) {
+        local_2b3c = local_2b6c + 0x80;
+        local_2b20 = (CRefTime *)getElemPtr4(local_2b3c,0);
+        local_2b98 = local_2b6c + 0x10;
+        local_2b48 = (Creature *)lib_fn_4e2320(local_2b98,0);
+        puVar18 = (uint *)int64_sub_timecall(local_2b48,local_36a8);
+        pvVar19 = (void *)int64_add_timecall(local_2b4c,local_3218);
+        uVar12 = std_pair_lessequal(pvVar19,puVar18);
+        if ((char)uVar12 != '\0') {
+          local_2b94 = (CRefTime *)getElemPtr4(local_2b3c,1);
+          local_2b90 = (void *)lib_fn_4e2320(local_2b98,1);
+          puVar18 = (uint *)int64_sub_timecall(local_2b90,local_34b8);
+          pvVar19 = (void *)int64_add_timecall(local_2bbc,local_3228);
+          uVar12 = std_pair_lessequal(pvVar19,puVar18);
+          if ((char)uVar12 != '\0') {
+            local_2b3c = (CRefTime *)getElemPtr4(local_2b3c,2);
+            local_2bd0 = (Creature *)lib_fn_4e2320(local_2b98,2);
+            puVar18 = (uint *)int64_sub_timecall(local_2bd0,local_3608);
+            pvVar19 = (void *)int64_add_timecall(local_2b9c,local_3238);
+            uVar12 = std_pair_lessequal(pvVar19,puVar18);
+            if ((char)uVar12 != '\0') {
+              puVar18 = (uint *)int64_add_timecall(local_2b48,local_34c8);
+              pvVar19 = (void *)int64_sub_timecall(local_2b4c,local_3248);
+              uVar12 = std_pair_less(pvVar19,puVar18);
+              if ((char)uVar12 != '\0') {
+                puVar18 = (uint *)int64_add_timecall(local_2b90,local_3728);
+                pvVar19 = (void *)int64_sub_timecall(local_2bbc,local_3258);
+                uVar12 = std_pair_less(pvVar19,puVar18);
+                if ((char)uVar12 != '\0') {
+                  puVar18 = (uint *)int64_add_timecall(local_2bd0,local_34d8);
+                  pvVar19 = (void *)int64_sub_timecall(local_2b9c,local_3268);
+                  uVar12 = std_pair_less(pvVar19,puVar18);
+                  if ((char)uVar12 != '\0') {
+                    in_stack_ffffc88c = 0x54863700000000;
+                    cVar3 = Creature_moveToward(puVar9 + 6,(uint *)local_2b98,'\x01',200.0);
+                    if (cVar3 != '\0') {
+                      if ((*(float *)(local_2b6c + 0x128) == 0.0) || (pCVar13 == (CRefTime *)0x0)) {
+                        pCVar42 = (Creature *)(extraout_ECX & 0xffffff00);
+                        local_2c04 = local_2c04 & 0xffffff00;
+                        local_2b48 = pCVar42;
+                        if (local_2b50 != (CRefTime *)0x0) {
+                          bVar2 = check_proc_chance((int)local_2b50);
+                          pCVar42 = (Creature *)((uint)local_2b48 & 0xff);
+                          if (bVar2) {
+                            pCVar42 = (Creature *)0x1;
+                          }
+                          local_2c04 = CONCAT31(local_2c04._1_3_,(char)pCVar42);
+                        }
+                        local_2b3c = (CRefTime *)puVar9[0x12];
+                        if ((char)pCVar42 != '\0') {
+                          local_2b3c = (CRefTime *)((float)local_2b3c * 2.0);
+                        }
+                        if (((local_2b50 != (CRefTime *)0x0) &&
+                            (((local_2b50 == *(CRefTime **)((int)local_2b1c + 0xb8) ||
+                              ((*(char *)((int)local_2b1c + 0xb4) == '\0' &&
+                               (local_2b50[0x60] != (CRefTime)0x0)))) &&
+                             (bVar2 = roll_probability(local_2b50,0.25), bVar2)))) &&
+                           ((((char)local_2c00 == '\0' && (puVar9[0x18] == 1)) &&
+                            ((char)puVar9[0x19] == '\x01')))) {
+                          CombatState_zeroInit(&local_2f80);
+                          local_2f80 = '\t';
+                          local_2f78 = 30000;
+                          Combat_upsertBuffEntry(local_2b50,&local_2f80);
+                          init_struct_fields_a((int)&local_2e70);
+                          local_2e60 = CONCAT71(uStack_2f7f,local_2f80);
+                          local_2e70 = *(float *)(local_2b50 + 8);
+                          local_2e6c = *(float *)(local_2b50 + 0xc);
+                          local_2e58 = CONCAT44(uStack_2f74,local_2f78);
+                          local_2e50 = local_2f70;
+                          local_2e68 = local_2e70;
+                          local_2e64 = local_2e6c;
+                          std_list_push_back(local_2b2c + 0x16,(undefined8 *)&local_2e70);
+                          lib_fn_4c8530((int)local_208);
+                          local_1fc = 0x2f;
+                          Vec3i64_toFloatScaled(local_208,(longlong *)(local_2b50 + 0x10));
+                          std_list_push_back_428590(local_2b2c + 2,local_208);
+                        }
+                        cVar3 = '\x01';
+                        iVar8 = lib_fn_52eb90((int *)&local_2b54);
+                        in_stack_ffffc88c = CONCAT44(local_2bec,local_2b2c);
+                        cVar3 = stl_fn_4cfd50(local_2b1c,(float)local_2b6c,pCVar13,(float)local_2b3c,
+                                             (char)local_2c04,(char)local_2c00,(float)puVar9[0x15],
+                                             puVar9 + 6,local_b4,local_2b2c,local_2bec,
+                                             puVar9[0x18] == 1,0,iVar8,cVar3);
+                        uVar4 = SUB41(local_2b68,0);
+                        if (cVar3 != '\0') {
+                          uVar4 = 1;
+                        }
+                        local_2b68 = (CRefTime *)CONCAT31(local_2b68._1_3_,uVar4);
+                      }
+                      else {
+                        lib_fn_530690(pCVar13 + 0x11b4,local_3078,(uint *)(local_2b6c + 8));
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    RBTree_copyBeginThenInc(&local_2be0,&local_2ce4);
+    piVar10 = (int *)World_getField0(local_2b70,&local_2d68);
+    bVar2 = std_iterator_notEqual(&local_2be0,piVar10);
+  } while (bVar2);
+LAB_005488d0:
+  if ((((char)local_2b68 != '\0') && (puVar9[0x18] != 3)) && (pCVar13 != (CRefTime *)0x0)) {
+    *(int *)(pCVar13 + 0x70) = (int)*(float *)(pCVar13 + 0x70) + 1;
+    rbtree_inorder_walk((int)pCVar13);
+    *(float *)(pCVar13 + 0x74) = 0.0;
+  }
+  if ((puVar9[0x18] == 1) && ((char)puVar9[0x19] == '\x02')) {
+    puVar9[0x18] = 3;
+    uVar12 = 3000;
+    if ((char)puVar9[0x17] != '\0') {
+      uVar12 = 0;
+    }
+    puVar9[0x1a] = uVar12;
+    puVar9[0x12] = (uint)((float)puVar9[0x12] * 0.05);
+    puVar9[0x13] = (uint)((float)puVar9[0x15] * 5.0 + 5.0);
+    puVar9[0x15] = 0;
+    *(undefined1 *)(puVar9 + 0x17) = 0;
+  }
+  else {
+LAB_00546b28:
+    lib_fn_4d6620(&local_2c24,&local_2b54);
+  }
+LAB_00546b3a:
+  lib_fn_52ebf0(&local_2b54,&local_2bc4);
+  pvVar19 = (void *)((int)local_2b1c + 0x14);
+  piVar10 = (int *)World_getField0(pvVar19,&local_2d70);
+  bVar2 = std_iterator_notEqual(&local_2b54,piVar10);
+  goto joined_r0x00546872;
+}
+
 
 
 /* Global::lib_fn_548b00 @ 00548b00 */
@@ -91688,6 +100255,7 @@ _Func_impl<std::_Callable_obj<<lambda_00ca7a589ff1e281ef3a7159f4e6a134>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0xc);
     if (param_1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -91711,6 +100279,7 @@ _Func_impl<std::_Callable_obj<<lambda_90aea85a8928b722e251ae835df30be1>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0x1c);
     if (param_1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -91889,7 +100458,7 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_0(void)
   local_8._0_1_ = 6;
   pbVar6 = ostream_writeCString((basic_ostream<char,std::char_traits<char>_> *)local_2bc,"server_");
   std::basic_ostream<char,std::char_traits<char>_>::operator<<(pbVar6,(int)puVar11);
-  piVar7 = lib_fn_4d8f70(local_2cc,local_54);
+  piVar7 = FUN_004d8f70(local_2cc,local_54);
   local_8._0_1_ = 7;
   basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_5
             (this_00,local_1f8,piVar7);
@@ -92053,7 +100622,7 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_0(void)
       lib_fn_4d3df0((int)this_00);
       Connection_ctor(local_494);
       local_8 = CONCAT31(local_8._1_3_,0x10);
-      lib_fn_5322d0(DVar8 - local_204,local_494,local_3ec);
+      GameController_updateSubsystems(DVar8 - local_204,local_494,local_3ec);
       local_204 = DVar8;
       std_list_operator_4281d0(this,local_474);
       game_buildItemDefinition(this,local_494);
@@ -92084,6 +100653,7 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_0(void)
             iStack_38 = iVar5;
             iVar5 = lib_fn_549300(piVar9,(undefined4 *)piVar9[1],(undefined4 *)&local_34);
             if (local_1ec == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             local_1ec = local_1ec + 1;
@@ -92127,6 +100697,7 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_0(void)
       this = local_1fc;
     } while( true );
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -93565,6 +102136,7 @@ void __fastcall __security_check_cookie(int param_1)
   if (param_1 == DAT_00583cc8) {
     return;
   }
+                    /* WARNING: Subroutine does not return */
   ___report_gsfailure();
 }
 
@@ -93577,6 +102149,7 @@ void _CxxThrowException(void *pExceptionObject,ThrowInfo *pThrowInfo)
 
 {
                     /* WARNING: Could not recover jumptable at 0x0054a8c8. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
   _CxxThrowException(pExceptionObject,pThrowInfo);
   return;
@@ -93605,40 +102178,6 @@ void __alloca_probe(void)
   }
   *puVar2 = unaff_retaddr;
   return;
-}
-
-
-
-
-/* Global::lib_fn_54a910 @ 0054a910 */
-
-ulonglong __fastcall lib_fn_54a910(undefined4 param_1,undefined4 param_2)
-
-{
-  ulonglong uVar1;
-  uint uVar2;
-  float fVar3;
-  float10 in_ST0;
-  uint uStack_20;
-  float fStack_1c;
-  
-  if (DAT_00584640 == 0) {
-    uVar1 = (ulonglong)ROUND(in_ST0);
-    uStack_20 = (uint)uVar1;
-    fStack_1c = (float)(uVar1 >> 0x20);
-    fVar3 = (float)in_ST0;
-    if ((uStack_20 != 0) || (fVar3 = fStack_1c, (uVar1 & 0x7fffffff00000000) != 0)) {
-      if ((int)fVar3 < 0) {
-        uVar1 = uVar1 + (0x80000000 < (uint)-(float)(in_ST0 - (float10)(longlong)uVar1));
-      }
-      else {
-        uVar2 = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float10)(longlong)uVar1));
-        uVar1 = CONCAT44((int)fStack_1c - (uint)(uStack_20 < uVar2),uStack_20 - uVar2);
-      }
-    }
-    return uVar1;
-  }
-  return CONCAT44(param_2,(int)in_ST0);
 }
 
 
@@ -93915,6 +102454,7 @@ void __cdecl ___raise_securityfailure(EXCEPTION_POINTERS *param_1)
 
 /* Global::___report_gsfailure @ 0054ab63 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* Library Function - Single Match
     ___report_gsfailure
    
@@ -94021,6 +102561,7 @@ void ___report_rangecheckfailure(void)
 
 /* Global::___report_securityfailure @ 0054ac68 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* Library Function - Single Match
     ___report_securityfailure
    
@@ -94591,6 +103132,7 @@ LAB_0054b321:
     }
     return DAT_00584620;
   }
+                    /* WARNING: Subroutine does not return */
   exit(DAT_00584620);
 }
 
@@ -94816,6 +103358,7 @@ void __cdecl terminate(void)
 
 {
                     /* WARNING: Could not recover jumptable at 0x0054b63e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
   terminate();
   return;
@@ -95054,6 +103597,7 @@ _invoke_watson(wchar_t *param_1,wchar_t *param_2,wchar_t *param_3,uint param_4,u
 
 {
                     /* WARNING: Could not recover jumptable at 0x0054b90a. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
   _invoke_watson(param_1,param_2,param_3,param_4,param_5);
   return;

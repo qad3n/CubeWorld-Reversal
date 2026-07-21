@@ -1,4 +1,4 @@
-// Speech (entity) — server. 30 functions. Bodies = Ghidra pseudo-C.
+// Speech (entity) — server. 29 functions. Bodies = Ghidra pseudo-C.
 #include "Speech.h"
 
 /* [AUDIT] proposed: Speech_scrambleBlob  (confidence: high)
@@ -72,36 +72,9 @@ uint __thiscall SpeechDb_createBlobsTable(void *this,int *filename)
 
 
 
-/* [AUDIT] proposed: SpeechDb_loadBlobToVector  (confidence: high)
- * purpose: Loads a blob by key via readBlobByKey then resizes dest vector and memcpy's the bytes
- * vars: this=db; filename=key; param_2=dest vector
- */
-/* Global::SpeechDb_loadBlobToVector @ 00413130 */
-
-undefined4 __thiscall SpeechDb_loadBlobToVector(void *this,undefined4 *key,undefined4 *out_vec)
-
-{
-  undefined4 uVar1;
-  void *pvVar2;
-  void *blob_ptr;
-  uint blob_len;
-  
-  uVar1 = SpeechDb_readBlobByKey(this,key,(uint *)&blob_ptr,&blob_len);
-  if ((char)uVar1 == '\0') {
-    return uVar1;
-  }
-  out_vec[3] = 0;
-  vector_resizeZero(out_vec,blob_len);
-  pvVar2 = memcpy((void *)*out_vec,blob_ptr,blob_len);
-  return CONCAT31((int3)((uint)pvVar2 >> 8),1);
-}
-
-
-
-
 /* [AUDIT] proposed: XmlDoc_ctorInit  (confidence: med)
  * purpose: Constructor: zeroes first two fields then calls pool init (XmlDoc_initPool)
- * vars: key[0]=pool head; key[1]=aux ptr
+ * vars: filename[0]=pool head; filename[1]=aux ptr
  */
 /* Global::XmlDoc_ctorInit @ 00416b60 */
 
@@ -606,6 +579,7 @@ void QuestTextNode_allocSentinel64(void)
   head = operator_new(0x40);
   if (head == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0041a03e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -1050,6 +1024,7 @@ LAB_0041b489:
           iVar10 = std_list_insertNode1(local_30,(undefined4 *)local_30[1],&local_3c);
           if (*(int *)(iVar7 + 0x3c) == 0x15555554) {
 LAB_0041b8eb:
+                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           *(int *)(iVar7 + 0x3c) = *(int *)(iVar7 + 0x3c) + 1;
@@ -1710,6 +1685,7 @@ void __fastcall cube::Speech::ctor_0(undefined4 *self)
                 if (local_1c != 0) {
                   iVar9 = std_list_Speech_makeStrNode(local_14c,(undefined4 *)local_14c[1],(int *)temp_str);
                   if (local_148 == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("list<T> too long");
                   }
                   local_148 = local_148 + 1;

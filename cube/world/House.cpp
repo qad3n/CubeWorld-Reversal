@@ -84,18 +84,23 @@ void cube::House::ctor_1(void)
   *in_ECX = vftable;
   operator_delete__((void *)in_ECX[0x1c]);
   if ((void *)in_ECX[0x15] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x15]);
   }
   if ((void *)in_ECX[0x12] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x12]);
   }
   if ((void *)in_ECX[0xf] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xf]);
   }
   if ((void *)in_ECX[0xc] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xc]);
   }
   if ((void *)in_ECX[9] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[9]);
   }
   return;
@@ -113,6 +118,7 @@ void cube::House::vfunc_0(byte flags)
   
   ctor_1();
   if ((flags & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

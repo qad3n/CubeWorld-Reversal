@@ -3,7 +3,6 @@
 #define CUBE_AUDIO_XAUDIO2ENGINE_H
 #include "../include/cube_types.h"
 
-void blob_deobfuscate(void);
 void cube::XAudio2Engine::ctor_0(void);
 void cube::XAudio2Engine::ctor_1(void);
 void cube::XAudio2Engine::Sound::vfunc_0(byte param_1);
@@ -13,6 +12,7 @@ uint riff_findChunkInFile(HANDLE param_1,int param_2,int *param_3,int *param_4);
 undefined4 riff_readFromMemory(int *param_1,void *param_2,size_t param_3,int param_4);
 uint riff_readFromFile(HANDLE param_1,LPVOID param_2,DWORD param_3,LONG param_4);
 void cube::XAudio2Engine::vfunc_0(void);
+undefined4 cube::XAudio2Engine::initialize(void);
 undefined4 cube::XAudio2Engine::vfunc_4(void);
 void cube::XAudio2Engine::vfunc_6(int *param_1,float param_2,undefined4 param_3,undefined4 param_4);
 void XAudio2_loadSound(char *param_1,undefined1 param_2);

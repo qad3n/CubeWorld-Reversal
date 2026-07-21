@@ -4,7 +4,7 @@ Best-effort analysis of functions automation could not name (still `FUN_`), from
 sub-agent audit: proposed name, purpose, confidence, key variables. Inline `[AUDIT]`
 comments with the same content are also written above each function in the .cpp files.
 
-**1359 functions analyzed** — confidence: high=758, med=482, low=119.
+**1369 functions analyzed** — confidence: high=767, med=483, low=119.
 
 ## audit (450)
 
@@ -461,7 +461,7 @@ comments with the same content are also written above each function in the .cpp 
 | 4c5a60 | `pagerWalSyncTruncate` | low | Finalize WAL/journal: write header, sync and truncate/zero the file per commit mode |
 | 4d4f90 | `WalkPathBehavior::checkPathClear` | low | Samples random AABB volume against voxel terrain to test walkability/collision along a box region |
 
-## crtstl (378)
+## crtstl (377)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -544,7 +544,6 @@ comments with the same content are also written above each function in the .cpp 
 | 415cd0 | `net_decode_field_struct0x10` | high | Decode 0x10-byte struct if dirty bit set |
 | 415d50 | `net_decode_field_struct0x2c` | high | Decode 0x2c-byte struct if dirty bit set (memcpy) |
 | 4168f0 | `WriteBuffer::appendRaw` | high | Grows serialize buffer then memcpy raw bytes, advances write cursor at +0xc |
-| 416a20 | `std::string::string(string&&)` | high | SSO(16) move-construct std::basic_string<char>, steals heap ptr, resets source |
 | 416c00 | `std::wstring::operator[]` | high | Returns &buf[i] for wstring honoring SSO/heap (cap>7), i*2 stride |
 | 416cb0 | `std::string::_Chassign` | high | Fill count chars with value at pos in std::string (SSO/heap deref + memset) |
 | 416d00 | `CharTraits_assignFill` | high | Fills param_2 UTF-16 chars = param_3 at offset param_1*2; follows SSO indirection when capacity>7 (traits::assign fill) |
@@ -584,6 +583,9 @@ comments with the same content are also written above each function in the .cpp 
 | 42f890 | `std::basic_filebuf<char>::open` | high | Opens file via _Fiopen and sets up codecvt for the filebuf |
 | 431020 | `std::map<int,T>::operator[]` | high | Finds key or inserts default node, returns mapped-value ref |
 | 469150 | `sqlite3_bind_blob` | high | bind BLOB to parameter (bindText enc0) |
+| 4fae90 | `World_rockGroundBaseColor` | high | Rock/ground base color helper (matches cw_color.rock_base) |
+| 518630 | `World_buildVoxelColumn` | high | Voxel column builder: terrain skin + water/rivers + feature/decoration passes |
+| 523d80 | `World_landMask` | high | Ridged land base gated by smoothstep(gate)*smoothstep(water_depth) + per-feature deforms |
 | 401020 | `copy_3_bytes` | med | Copy 3 bytes (e.g. RGB color triple) into object |
 | 401040 | `set_3_bytes` | med | Set 3 explicit byte fields (color/triple init) |
 | 4010b0 | `store_4_dwords` | med | Store 4 dwords (16-byte vector/quaternion init) |
@@ -627,7 +629,6 @@ comments with the same content are also written above each function in the .cpp 
 | 40a7f0 | `formula_scaled_b` | med | Game curve: (1-1/(x*0.1+1))*3+1.5, 0 if x<1 |
 | 40ef90 | `list_find_by_id_byte` | med | Search intrusive list at +0x1178 for node with matching byte id (game) |
 | 4103a0 | `rbtree_inorder_walk` | med | In-order traversal of rb-tree at +0x139c (empty body) |
-| 411090 | `formula_inverse` | med | Game curve: (1/(1-x)-1)*20+1 |
 | 4116f0 | `formula_curve_c` | med | Game curve: (1-1/(x*0.1+1))+1, 0 if x<1 |
 | 4120f0 | `formula_curve_d` | med | Game curve: (1-1/(x*0.1+1))*0.5+0.5 |
 | 412c50 | `delete_member_object` | med | Delete owned member object pointer and null it |
@@ -661,7 +662,6 @@ comments with the same content are also written above each function in the .cpp 
 | 41d680 | `std::vector<T0x148>::_Ucopy` | med | Uninitialized copy of Chunk(0x148) elements via _41d820 |
 | 41d6c0 | `std::vector<T0xc>::_Umove` | med | Move 12-byte elements (steal 3 ptrs, null source) |
 | 41d720 | `std::vector<T0x11c>::vector(copy)` | med | Copy-construct vector<T0x11c>: reserve then _Ucopy elements |
-| 41d800 | `RefCountedNode::init` | med | Init node: value=param, refcount(+4)=1, weak(+8)=0 |
 | 41d820 | `Chunk::copyAssign` | med | Copy Chunk(0x148): string(_413710) + block of dword fields 0x118..0x144 |
 | 41d8d0 | `VoxelColumn::init` | med | Init voxel/field struct: memset 0x100, capacity magic 0x3d924925, id=-1 |
 | 41d950 | `std::vector<T0x11c>::operator=` | med | Copy-assign vector<T0x11c>: reuse/realloc storage then _Ucopy/_Umove |
@@ -683,8 +683,6 @@ comments with the same content are also written above each function in the .cpp 
 | 41e960 | `std::vector<T0x148>::reserve` | med | Ensure capacity for n extra Chunk(0x148) elements |
 | 41ea10 | `std::vector<T0xc>::reserve` | med | Ensure capacity for n extra 12-byte elements |
 | 41eb20 | `std::vector<T0xc>::erase` | med | Erase 12-byte element range, shift tail, destroy freed elements |
-| 41ebc0 | `readCombatActionFromStream` | med | Deserialize 0x28 record from recv buffer: 5 ints,2 bytes,2 ints,int64 |
-| 41ed50 | `readHitFromStream` | med | Deserialize 0x14 record from recv buffer: 2 ints,int,byte,int64 |
 | 41ee20 | `World::deserializeZonePacket` | med | Read zone/chunk update packet: entity(0x118) list + hit(0x14) list into world |
 | 41f4d0 | `std::vector<T0x14>::push_back` | med | Append 20-byte element to vector (reserve if full), copies self-ref safely |
 | 41f5b0 | `std::vector<T0x148>::push_back` | med | Append Chunk(0x148) to vector (reserve if full) via _41d820 |
@@ -793,6 +791,7 @@ comments with the same content are also written above each function in the .cpp 
 | 4312e0 | `std::basic_string::append` | med | Appends buffer to string; throws string-too-long |
 | 431400 | `game_loadVoxelModelsFromDb` | med | Loads .cub voxel models (cubequest4/spiribit/egg1...) from data1.db at startup (game) |
 | 45f030 | `std::list<T>::_Insert` | med | Inserts a list node; throws list-too-long |
+| 5322d0 | `GameController_updateSubsystems` | med | Server build of cube 0x60c510 GameController_updateSubsystems: top-callee call-count profile matches exactly (242/154/152/111/103/89/76/69/67/61/56/56 + CRefTime::Millisecs x53). 60129 B; was misnamed lib_fn_5322d0 and misclassified lib/other (never-game-called blind spot; fixed via curated_override.tsv). Ghidra process:timeout in full export; recovered with 3600s + 512MB payload (383s); body in gap/server/extra_bodies.c. |
 | 401000 | `assign_two_qwords` | low | Store two 8-byte values (16-byte struct/pair init) |
 | 406260 | `vec_op_self_wrapper` | low | Wrapper invoking vec op with this as both operands |
 | 408230 | `creature_spawn_projectile` | low | Charge-up gauge then push projectile onto list (game) |
@@ -1149,7 +1148,7 @@ comments with the same content are also written above each function in the .cpp 
 | 4a0960 | `StrAccumInit_or_ctor` | low | Zero a 5-word object and set its vtable pointer &DAT_00569a48 |
 | 4d9b50 | `Path::allocNodeAssign` | low | Allocates node (FUN_004dae90), zeroes color word, stores single value at node+4 |
 
-## game_misc (106)
+## game_misc (104)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -1169,13 +1168,16 @@ comments with the same content are also written above each function in the .cpp 
 | 410f00 | `pow2Mul` | high | Helper: returns 2^a * 2^b (two pow calls, product) for stat scaling |
 | 410f90 | `pow2MulDiv` | high | Helper: returns 2^a * 2^b / 2^c for stat scaling |
 | 411740 | `Combat_upsertBuffEntry` | high | Updates existing buff of same type in list at 0x1178 or appends a new 0x20-byte node; guards list length |
+| 412710 | `ostream_writeCString` | high | std::operator<<(ostream&, const char*): pads/writes a C string honoring width/fill, sets state on error |
 | 412c40 | `string_dataPtr` | high | std::string data accessor: returns heap buffer *param_1 if capacity(>=0x10) else inline SSO buffer |
 | 413070 | `SpeechDb_readBlobByKey` | high | SELECT value FROM blobs WHERE key=?: binds key, steps, copies BLOB into out buffer |
+| 413130 | `SpeechDb_loadBlobToVector` | high | Loads a blob by key via readBlobByKey then resizes dest vector and memcpy's the bytes |
 | 413710 | `struct_copy0x118` | high | Copies a 0x118-byte record field-by-field (header + 0x20 array of 8-byte entries + tail) |
 | 413ce0 | `Combat_equipHealthBonus` | high | Computes a health/stat bonus from an equipment slot (rarity+type), scaled by 2^*5*factor; 0 if slot empty |
 | 416930 | `malloc_thunk` | high | Tail-jump thunk to malloc (jumptable via indirect jump) |
 | 416950 | `utf32_to_utf16` | high | Converts a UTF-32 buffer to UTF-16: counts units (surrogate pairs for >=0x10000), allocates, converts |
 | 4169c0 | `utf_convert_variant` | high | Counts output length (00417890) then allocates and converts a UTF buffer (variant encoding) |
+| 416a20 | `std::string::string(string&&)` | high | SSO(16) move-construct std::basic_string<char>, steals heap ptr, resets source |
 | 417070 | `encodeUtf16Codepoint` | high | Encodes one Unicode codepoint to UTF-16: direct if <0x10000 else surrogate pair; returns advanced ptr |
 | 417680 | `Transcode_dispatch` | high | Dispatches byte-buffer to UTF-16 conversion by encoding id: 1=UTF8,2/5=UTF32,3=UTF16BE,6=UTF16LE swap |
 | 417730 | `Utf16BE_byteSwapToNative` | high | Converts UTF-16BE buffer to native by byte-swapping each unit; allocates dest unless param_5 in-place |
@@ -1212,15 +1214,12 @@ comments with the same content are also written above each function in the .cpp 
 | 42f330 | `vec3b_reserveGrow` | high | Ensures vector<3byte> has room for param_1 more (1.5x growth); 'vector<T> too long'; calls 42f250 |
 | 45f080 | `vec_ptr_resize` | high | Resizes vector<void*> (4-byte elems) to param_1: shrink via memmove or grow+zero via 426eb0; std::vector::resize |
 | 4d1950 | `VoxelGrid::cellAt3D` | high | Bounds-checked accessor into 3D voxel grid returning 0xc-byte cell ptr; returns dummy on OOB |
-| 4d5d30 | `valueNoise2D` | high | 2D value/gradient noise with cosine interpolation and integer hash mixing; core terrain noise fn |
 | 4d8f90 | `VoxelGrid::remapCoords` | high | Applies chunk rotation/mirror (orientation in low 2 bits) to (x,y) grid coords; optional y-flip |
 | 4dd090 | `NavGraph::heuristicCost` | high | Weighted manhattan/diagonal distance heuristic from a 3-int delta vector (10/4 weights, x2) |
 | 4dd0f0 | `NavGraph::lookupNode` | high | Finds node for 3-int key (x,y,z) in map at this+0x140c; returns value ptr (node+7) or null |
 | 4dd1a0 | `NavGraph::addNode` | high | Inserts a graph node keyed by (x,y,z) into map(+0x140c) and open-set(+0x1414); updates best-open pointer |
 | 4febd0 | `World::findNearestFeatureCell` | high | Searches a 3x3-ish grid region for the nearest feature/object cell to a point; returns cell coords+ptr |
-| 522d80 | `World::terrainOffset2D` | high | Returns 2-component fractional terrain offset from two value-noise samples (scaled *3*256) |
 | 523380 | `pointSegmentDistanceSq` | high | Squared distance from point param_3 to segment [param_1,param_2] (2D), clamped to endpoints |
-| 52dee0 | `World::falloffSquared` | high | Returns (1-w)^2 clamped>=0 where w=objectFalloffWeight; smoothstep-like influence |
 | 405330 | `World_clearContainers` | med | Resets two rb-trees and a linked list plus calls FUN_004f8520; clears world/zone sub-structures |
 | 405f20 | `Column_getBlockChecked` | med | Bounds-checked access into block column array (this+0x18), returns element or sentinel default |
 | 405fd0 | `World_getBlockAt` | med | Looks up chunk then block by coords; returns block ptr or sentinel defaults on out-of-range |
@@ -1232,6 +1231,7 @@ comments with the same content are also written above each function in the .cpp 
 | 40fcf0 | `Combat_getStaminaRegenRate` | med | Returns stamina/regen amount = this+0x17c * factor (20/50/60/80) chosen by spirit/flag state |
 | 410010 | `Combat_selectNextAttackAnim` | med | Large decision tree selecting the next attack/animation id (char) from class, spirit, weapon state |
 | 410290 | `Combat_selectSpiritAttackId` | med | Returns an action/attack id chosen from spirit state, class and a parity of position bits |
+| 4128da | `ostream_writeCleanupHandler` | med | Exception-unwind/finally handler for ostream_writeCString: setstate, _Osfx, restore ExceptionList |
 | 416ef0 | `Pool_allocBlock` | med | Pool allocator: gets a node sized by param_1 (small vs >0x2000 large lists), links it, returns data ptr (+0x18) |
 | 416f80 | `Pool_allocElementNode` | med | Allocates a 0x20-byte node from pool (inline if room in current 0x8000 block else spill), zero-inits, tags with param_2 |
 | 417000 | `Pool_mallocAlignedBlock` | med | Requests a memory block (size+0x38) via PTR_FUN_00582198 malloc, aligns to 32 bytes, links into pool chain |
@@ -1245,8 +1245,6 @@ comments with the same content are also written above each function in the .cpp 
 | 41ab00 | `SpeechMap_insertEach` | med | Traverses a tree in order and calls findOrInsert per node (merge/copy map entries) |
 | 4267f0 | `buyNode120` | med | Allocates 0x78-byte list sentinel node, self-links if null args |
 | 4268b0 | `buyNode80` | med | Allocates 0x50-byte list node, self-links if null args |
-| 42e090 | `World_findNearestEntityInRegion` | med | Scans 0x4000-unit region grid cells around (x,y) for entities, picks nearest by distance (522cc0); spatial query |
-| 4d19f0 | `World::sampleNoiseAt` | med | Samples terrain/noise value at world coords via chunk lookup; returns 0 if chunk type!=1 |
 | 4d4d80 | `Creature::moveToward` | med | Computes normalized direction from param_1 to param_2, if within range param_4 calls step/move helper |
 | 4d5a80 | `World::sampleTerrainGradient` | med | Computes 2-component terrain gradient/flow from multiple value-noise samples at scaled world coords |
 | 4dafe0 | `NavGraph::reconstructPath` | med | Rebuilds a path list by walking predecessor map from goal to start, pushing waypoints; enforces list cap |
@@ -1255,42 +1253,48 @@ comments with the same content are also written above each function in the .cpp 
 | 4dab60 | `Object::construct6` | low | Trivial 6-field constructor: 3 scalar params + 3 ints from *param_4 |
 | 4dd2e0 | `NavGraph::expandNeighbors` | low | A* neighbor expansion: samples random offset, iterates object grid cells, adds reachable neighbor nodes |
 | 4dde90 | `NavGraph::findPath` | low | Main A*/pathfinding: pops best open node, expands neighbors, evaluates cost, builds path to goal |
-| 522840 | `World::computeSlopeShade` | low | Computes terrain slope/shading factor at (x,y) sampling neighbor heights via noise; uses point-seg distances |
-| 522cc0 | `World_siteDistanceSq` | low | Effectively empty stub; only runs stack-cookie check (cookie xors cancel) |
+| 522840 | `World_biomeBorderDistance` | low | Computes terrain slope/shading factor at (x,y) sampling neighbor heights via noise; uses point-seg distances |
 | 522e20 | `World::waterProximityInfluence` | low | Scans grid region for water/feature cells (type flag==1); accumulates smoothed proximity influence |
 | 52ef00 | `Creature::resolveSeparation` | low | Physics separation/collision resolution between two creatures; normalizes overlap and applies push along axis |
 
-## Speech (27)
+## World (34)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
-| 412f80 | `Speech_scrambleBlob` | high | Obfuscates a byte buffer: table-driven Fisher-Yates-style shuffle then bitwise-NOT each byte |
-| 413010 | `SpeechDb_createBlobsTable` | high | Opens sqlite DB (0467f50) and runs CREATE TABLE blobs(key TEXT PRIMARY KEY, value BLOB) |
-| 413130 | `SpeechDb_loadBlobToVector` | high | Loads a blob by key via readBlobByKey then resizes dest vector and memcpy's the bytes |
-| 417510 | `Xml_findAttributeByName` | high | Walks node's attribute list (root+0x1c, next at +0x10) comparing wide names (+4); returns matching node or 0 |
-| 4175c0 | `Xml_findChildByName` | high | Walks child element list (root+0x10, next at +0x18) comparing wide names (+8); returns matching node or 0 |
-| 4180a0 | `Xml_loadAndParse` | high | Top-level XML load: detect encoding, transcode to UTF-16 (FUN_00417680), parse (FUN_004189b0); sets status |
-| 4189b0 | `Xml_parseWithSetjmp` | high | Sets stack cookie and setjmp3 error boundary, invokes parser (FUN_00418410), returns {status,count} |
-| 41a090 | `SpeechTree_destroyRec` | high | Recursively destroys RB-tree/list nodes, freeing two wstrings per node (offsets 0x10 and 0x04) then node |
-| 41a180 | `SpeechMap_eraseRange` | high | Erases iterator range from a map/set, advancing via tree successor and calling erase-node per element |
-| 41b050 | `Speech_parseTextToNodes` | high | Parses dialogue text into a QuestTextNode tree, splitting on spaces and {} / [] markup markers |
-| 41cba0 | `identityReturn` | high | Returns its argument unchanged (thunk/identity) |
-| 428ef0 | `wistream_extractWord` | high | operator>>(wistream, wstring): skips to non-space, reads word chars until whitespace/EOF into string |
-| 416b60 | `XmlDoc_ctorInit` | med | Constructor: zeroes first two fields then calls pool init (FUN_004177e0) |
-| 416be0 | `Iterator_notEqual` | med | Compares two 8-byte handles (this[0..1] vs param_1[0..1]); returns true if any differ (operator!=) |
-| 416c30 | `Iterator_derefAndAdvance` | med | Copies current node handle to out then advances this[0] to next via node+0x18 (linked-list iterator ++) |
-| 417590 | `Xml_getFirstChildHandle` | med | Returns handle {value@node+0x10, node} for root's first item, else {0,0} |
-| 417640 | `Xml_getFirstTextValue` | med | Scans node children for first CDATA/text node (type 3 or 4) with value; returns its text or empty default |
-| 4177e0 | `XmlDoc_initPool` | med | Initializes XML document memory pool: frees prior, allocates aligned 0x8000 block, sets up ring links |
-| 417cc0 | `XmlDoc_freePool` | med | Frees XML document pool: releases aux buffer (param_1[1]) and walks/free block chain, clears head |
-| 418160 | `Xml_getNodeName` | med | Returns node tag/name pointer (this[0]+8) or empty-string default |
-| 41a030 | `QuestTextNode_allocSentinel64` | med | Allocates 0x40-byte node, self-links prev/parent/next pointers, sets +0xc=0x101 (list/tree sentinel head) |
-| 42c820 | `Speech_map_insertStringEntry` | med | Builds a Speech map entry (string key + list + strlist via 42b040/42b180) and inserts into map (42a260); dialogue add |
-| 4ce990 | `Speech::clear` | med | Resets/clears object: frees buffer if flag&1 set, zeroes 6 indirect pointer targets and length |
-| 416c20 | `compareResultToSign` | low | Returns 0 if *param_1 nonzero else -1; trivial predicate |
-| 417d30 | `Xml_getRootHandle` | low | Returns handle {0, this[0]}; produces {value=0, docRoot} |
-| 417e00 | `Xml_getRootValue` | low | Returns *(this[0]+0x10) (root value) or 0 if no doc |
-| 429060 | `wistream_extractWord_ehExit` | low | SEH/exception cleanup tail for extractWord: sets stream state and releases streambuf sentry |
+| 401060 | `Vec3_copy` | high | Copies 3 dwords (12 bytes) from param_1 into this; vec3/xyz copy assignment |
+| 401080 | `Vec3_set` | high | Stores 3 dword args into this+0/4/8; vec3 component setter |
+| 4010e0 | `String_ctorFromCStr` | high | std::string ctor from C string; computes strlen then calls assign helper |
+| 4013a0 | `String_destroy` | high | std::string clear/free; frees heap buf if capacity>0xf then resets to empty SSO |
+| 4013d0 | `getElemPtr4` | high | Returns this + param_1*4; index into dword array |
+| 402bc0 | `getField_plus0x10` | high | Returns *param_1 + 0x10 |
+| 421e30 | `pair_set2` | high | Stores two dwords into object (constructs a pair/2-field struct) |
+| 428070 | `deref_getFirst` | high | Writes **this (first element / head) into param_1 |
+| 42ff40 | `vec3b_resize` | high | Resizes vector<3byte> to param_1 elements (shrink erases, grow via 42f330); std::vector::resize; World |
+| 46b250 | `noop_return` | high | Empty function; likely alignment/relocation stub; misattributed World |
+| 4c8120 | `identity_return` | high | Return the argument unchanged (thunk) |
+| 4d5d30 | `valueNoise2D` | high | 2D value/gradient noise with cosine interpolation and integer hash mixing; core terrain noise fn |
+| 4d7870 | `World_featureTier` | high | Feature tier from distance-from-spawn-region (sqrt from map center 0x200) |
+| 4f8570 | `World_temperatureBlend` | high | Per-column temperature: weighted average over 3x3 warped site window |
+| 4f8b40 | `World_humidityBlend` | high | Per-column humidity: weighted average over 3x3 warped site window |
+| 50b870 | `World_generateRegionSite` | high | Region-site generator: srand(regX+0x108a+regZ*0x400+base*3); fills 0x1c-byte site record |
+| 50e080 | `World_generateRegionFeatures` | high | Per-region 8x8=64 feature-cell generator: srand(base+regZ*0x400+regX) then multi-pass placement |
+| 522290 | `World_featureCountRange` | high | Feature-count [min,max] range from site climate floats |
+| 522d80 | `World::terrainOffset2D` | high | Returns 2-component fractional terrain offset from two value-noise samples (scaled *3*256) |
+| 52c820 | `World::objectFalloffWeight` | high | Distance-based falloff/influence weight of an object over a point, branching on object type (0xb-0xe special) |
+| 52dee0 | `World::falloffSquared` | high | Returns (1-w)^2 clamped>=0 where w=objectFalloffWeight; smoothstep-like influence |
+| 530550 | `World::getField0` | high | Trivial getter: writes *this to *param_1 |
+| 411090 | `formula_inverse` | med | Game curve: (1/(1-x)-1)*20+1 |
+| 41d800 | `RefCountedNode::init` | med | Init node: value=param, refcount(+4)=1, weak(+8)=0 |
+| 41ebc0 | `readCombatActionFromStream` | med | Deserialize 0x28 record from recv buffer: 5 ints,2 bytes,2 ints,int64 |
+| 41ed50 | `readHitFromStream` | med | Deserialize 0x14 record from recv buffer: 2 ints,int,byte,int64 |
+| 42e090 | `World_findNearestEntityInRegion` | med | Scans 0x4000-unit region grid cells around (x,y) for entities, picks nearest by distance (522cc0); spatial query |
+| 42f9a0 | `World_loadVoxelModel` | med | Loads voxel/model: from file (filebuf/istream read dims+data) or from memory blob; then 430230; World asset load |
+| 430230 | `World_buildVoxelMesh` | med | Copies voxel RGB blob to buffer, then per-voxel scans 3 marker colors collecting Vec3i positions into 3 vectors (42feb0) |
+| 4d19f0 | `World_roadField` | med | Samples terrain/noise value at world coords via chunk lookup; returns 0 if chunk type!=1 |
+| 52cd50 | `World_riverClimateGate` | med | Computes terrain height/elevation at (x,y): base noise + slope + object/vegetation contributions |
+| 4f9b70 | `World_baseHeightField` | low | Multi-octave terrain/biome generator: sums value-noise layers, computes climate/height and blends region data |
+| 522cc0 | `World_siteDistanceSq` | low | Effectively empty stub; only runs stack-cookie check (cookie xors cancel) |
+| 52d990 | `World_waterDepthField` | low | Computes climate/lighting factor at (x,y) from noise, gradient cosine terms, and water proximity |
 
 ## CombatBehavior (26)
 
@@ -1323,6 +1327,37 @@ comments with the same content are also written above each function in the .cpp 
 | 4ce9f0 | `CombatBehavior::pushTargetPos` | med | Copies self+param coords into local struct and appends node to a list at param_3+0x58; enforces list length cap |
 | 4d6580 | `CombatBehavior::pushAlertMsg` | med | Appends a node (coords payload) to list at this[0], enforcing list size cap 0x7ffffe |
 
+## Speech (26)
+
+| addr | proposed name | conf | purpose |
+|---|---|---|---|
+| 412f80 | `Speech_scrambleBlob` | high | Obfuscates a byte buffer: table-driven Fisher-Yates-style shuffle then bitwise-NOT each byte |
+| 413010 | `SpeechDb_createBlobsTable` | high | Opens sqlite DB (0467f50) and runs CREATE TABLE blobs(key TEXT PRIMARY KEY, value BLOB) |
+| 417510 | `Xml_findAttributeByName` | high | Walks node's attribute list (root+0x1c, next at +0x10) comparing wide names (+4); returns matching node or 0 |
+| 4175c0 | `Xml_findChildByName` | high | Walks child element list (root+0x10, next at +0x18) comparing wide names (+8); returns matching node or 0 |
+| 4180a0 | `Xml_loadAndParse` | high | Top-level XML load: detect encoding, transcode to UTF-16 (FUN_00417680), parse (FUN_004189b0); sets status |
+| 4189b0 | `Xml_parseWithSetjmp` | high | Sets stack cookie and setjmp3 error boundary, invokes parser (FUN_00418410), returns {status,count} |
+| 41a090 | `SpeechTree_destroyRec` | high | Recursively destroys RB-tree/list nodes, freeing two wstrings per node (offsets 0x10 and 0x04) then node |
+| 41a180 | `SpeechMap_eraseRange` | high | Erases iterator range from a map/set, advancing via tree successor and calling erase-node per element |
+| 41b050 | `Speech_parseTextToNodes` | high | Parses dialogue text into a QuestTextNode tree, splitting on spaces and {} / [] markup markers |
+| 41cba0 | `identityReturn` | high | Returns its argument unchanged (thunk/identity) |
+| 428ef0 | `wistream_extractWord` | high | operator>>(wistream, wstring): skips to non-space, reads word chars until whitespace/EOF into string |
+| 416b60 | `XmlDoc_ctorInit` | med | Constructor: zeroes first two fields then calls pool init (FUN_004177e0) |
+| 416be0 | `Iterator_notEqual` | med | Compares two 8-byte handles (this[0..1] vs param_1[0..1]); returns true if any differ (operator!=) |
+| 416c30 | `Iterator_derefAndAdvance` | med | Copies current node handle to out then advances this[0] to next via node+0x18 (linked-list iterator ++) |
+| 417590 | `Xml_getFirstChildHandle` | med | Returns handle {value@node+0x10, node} for root's first item, else {0,0} |
+| 417640 | `Xml_getFirstTextValue` | med | Scans node children for first CDATA/text node (type 3 or 4) with value; returns its text or empty default |
+| 4177e0 | `XmlDoc_initPool` | med | Initializes XML document memory pool: frees prior, allocates aligned 0x8000 block, sets up ring links |
+| 417cc0 | `XmlDoc_freePool` | med | Frees XML document pool: releases aux buffer (param_1[1]) and walks/free block chain, clears head |
+| 418160 | `Xml_getNodeName` | med | Returns node tag/name pointer (this[0]+8) or empty-string default |
+| 41a030 | `QuestTextNode_allocSentinel64` | med | Allocates 0x40-byte node, self-links prev/parent/next pointers, sets +0xc=0x101 (list/tree sentinel head) |
+| 42c820 | `Speech_map_insertStringEntry` | med | Builds a Speech map entry (string key + list + strlist via 42b040/42b180) and inserts into map (42a260); dialogue add |
+| 4ce990 | `Speech::clear` | med | Resets/clears object: frees buffer if flag&1 set, zeroes 6 indirect pointer targets and length |
+| 416c20 | `compareResultToSign` | low | Returns 0 if *param_1 nonzero else -1; trivial predicate |
+| 417d30 | `Xml_getRootHandle` | low | Returns handle {0, this[0]}; produces {value=0, docRoot} |
+| 417e00 | `Xml_getRootValue` | low | Returns *(this[0]+0x10) (root value) or 0 if no doc |
+| 429060 | `wistream_extractWord_ehExit` | low | SEH/exception cleanup tail for extractWord: sets stream state and releases streambuf sentry |
+
 ## sqlite (22)
 
 | addr | proposed name | conf | purpose |
@@ -1349,29 +1384,6 @@ comments with the same content are also written above each function in the .cpp 
 | 46b9f0 | `sqlite3ExprBuildBinary` | low | build TK(0x4c) binary Expr from two operands, check tree depth |
 | 46c340 | `sqlite3BuildTableInfoBlock` | low | allocate/populate column+sort metadata block for a table ('out of memory') |
 | 46c6a0 | `btreePageComputeCellIdx` | low | lazily compute page->pCellIdx pointer (page+0x50) |
-
-## World (18)
-
-| addr | proposed name | conf | purpose |
-|---|---|---|---|
-| 401060 | `Vec3_copy` | high | Copies 3 dwords (12 bytes) from param_1 into this; vec3/xyz copy assignment |
-| 401080 | `Vec3_set` | high | Stores 3 dword args into this+0/4/8; vec3 component setter |
-| 4010e0 | `String_ctorFromCStr` | high | std::string ctor from C string; computes strlen then calls assign helper |
-| 4013a0 | `String_destroy` | high | std::string clear/free; frees heap buf if capacity>0xf then resets to empty SSO |
-| 4013d0 | `getElemPtr4` | high | Returns this + param_1*4; index into dword array |
-| 402bc0 | `getField_plus0x10` | high | Returns *param_1 + 0x10 |
-| 421e30 | `pair_set2` | high | Stores two dwords into object (constructs a pair/2-field struct) |
-| 428070 | `deref_getFirst` | high | Writes **this (first element / head) into param_1 |
-| 42ff40 | `vec3b_resize` | high | Resizes vector<3byte> to param_1 elements (shrink erases, grow via 42f330); std::vector::resize; World |
-| 46b250 | `noop_return` | high | Empty function; likely alignment/relocation stub; misattributed World |
-| 4c8120 | `identity_return` | high | Return the argument unchanged (thunk) |
-| 52c820 | `World::objectFalloffWeight` | high | Distance-based falloff/influence weight of an object over a point, branching on object type (0xb-0xe special) |
-| 530550 | `World::getField0` | high | Trivial getter: writes *this to *param_1 |
-| 42f9a0 | `World_loadVoxelModel` | med | Loads voxel/model: from file (filebuf/istream read dims+data) or from memory blob; then 430230; World asset load |
-| 430230 | `World_buildVoxelMesh` | med | Copies voxel RGB blob to buffer, then per-voxel scans 3 marker colors collecting Vec3i positions into 3 vectors (42feb0) |
-| 52cd50 | `World::sampleTerrainHeight` | med | Computes terrain height/elevation at (x,y): base noise + slope + object/vegetation contributions |
-| 4f9b70 | `World::generateBiomeSample` | low | Multi-octave terrain/biome generator: sums value-noise layers, computes climate/height and blends region data |
-| 52d990 | `World::computeClimateColor` | low | Computes climate/lighting factor at (x,y) from noise, gradient cosine terms, and water proximity |
 
 ## Connection (10)
 
@@ -1410,14 +1422,12 @@ comments with the same content are also written above each function in the .cpp 
 | 41b900 | `RandomBehavior_listEmplaceCopy` | med | Emplaces a list node then copies a RandomInteractionBehavior payload into it |
 | 41b970 | `RandomBehavior_copy` | med | Copies RandomInteractionBehavior: base copy via FUN_00413710 plus fields 0x118-0x12a |
 
-## Server (4)
+## Server (2)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
 | 401c00 | `String_erase` | high | std::string erase param_2 chars at pos param_1 via memmove; shrinks length |
-| 412710 | `ostream_writeCString` | high | std::operator<<(ostream&, const char*): pads/writes a C string honoring width/fill, sets state on error |
 | 401920 | `String_replaceRange` | med | std::string replace/assign substring of param_1 into this; handles self-assign and grow |
-| 4128da | `ostream_writeCleanupHandler` | med | Exception-unwind/finally handler for ostream_writeCString: setstate, _Osfx, restore ExceptionList |
 
 ## Spawn (2)
 

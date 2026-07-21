@@ -3,14 +3,10 @@
 #define CUBE_WORLD_WORLDINFO_H
 #include "../include/cube_types.h"
 
-void db_storeBlobVec(undefined4 param_1,int *param_2);
-undefined4 db_storeBlob(undefined4 *param_1,undefined4 param_2,undefined4 param_3);
-void WorldInfo_mapInsertUnique(int *param_1);
 undefined4 * WorldInfo_mapLowerBound(int *param_1);
 void cube::WorldInfo::ctor_1(void);
 void cube::WorldInfo::ctor_0(void);
 void cube::WorldInfo::vfunc_0(byte param_1);
-void WorldInfo_clearUnderLock(void);
 void WorldGrid_freeCellPtr(int param_1,int param_2);
 void WorldGrid_destroyCellObject(int param_1,int param_2);
 void WorldGrid_destroyBlockObjectAt(uint param_1,uint param_2);
@@ -23,6 +19,5 @@ int WorldInfo_vectorElementAt(int param_1,char param_2);
 uint WorldInfo_vectorAppend(void);
 float10 WorldInfo_sampleTerrainHeight(uint param_1,float param_2);
 void WorldInfo_rotateAndPlace(uint param_1,uint param_2);
-void WorldInfo_move_string(undefined4 *param_1);
 
 #endif

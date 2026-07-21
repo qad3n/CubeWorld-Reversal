@@ -58,8 +58,10 @@ void cube::ZoneTile::ctor_0(void)
   *(undefined4 *)(self[8] + 4) = self[8];
   self[9] = 0;
   if (pvVar2 != (void *)self[8]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[8]);
 }
 
@@ -75,6 +77,7 @@ void cube::ZoneTile::vfunc_0(byte flags)
   
   ctor_0();
   if ((flags & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

@@ -93,6 +93,7 @@ void plasma::Widget::MemberFunctionConnection<cube::OptionsWidget>::ctor_0
   ExceptionList = &local_10;
   slot = (undefined4 *)rbtree_findOrInsert_intKey(&param_1);
   if ((void *)*slot != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*slot);
   }
   connection = operator_new(0x18);
@@ -124,8 +125,10 @@ void plasma::Widget::MemberFunctionConnection<cube::OptionsWidget>::ctor_0
     childList[1] = (int)childList;
     local_18 = 0;
     if (childNode != childList) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(childNode);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(childList);
   }
   ExceptionList = local_10;
@@ -167,6 +170,7 @@ void cube::OptionsWidget::ctor_0
   local_8 = 0;
   plasma::NamedObject::ctor_4(param_1,param_2,local_2c);
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   *self = vftable;
@@ -192,6 +196,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4570,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -208,6 +213,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d45b0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -224,6 +230,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,UiCarousel_selectPrev,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -240,6 +247,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,UiCarousel_selectNext,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -256,6 +264,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4430,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -272,6 +281,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4450,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -288,6 +298,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4690,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -304,6 +315,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d46b0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -320,6 +332,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4da0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -336,6 +349,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4dc0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -352,6 +366,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4610,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -368,6 +383,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4630,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -384,6 +400,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d44d0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -400,6 +417,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d44f0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -416,6 +434,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4490,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -432,6 +451,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d44b0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -445,6 +465,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d45d0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -458,6 +479,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d45d0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -471,6 +493,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4530,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -484,6 +507,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4550,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -497,6 +521,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d45f0,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree_v2(param_2);
@@ -510,6 +535,7 @@ void cube::OptionsWidget::ctor_0
   OptionsWidget_dispatchEvent(local_2c,2,self,&LAB_004d4600,0,1);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   widget = Node_clone_subtree(param_2);
@@ -524,6 +550,7 @@ void cube::OptionsWidget::ctor_0
   Node_select_glyph_by_name(local_2c);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   Widget_measureContentEntry(0x42dc0000,0x41700000,1);
@@ -532,6 +559,7 @@ void cube::OptionsWidget::ctor_0
   Node_select_glyph_by_name(local_2c);
   local_8._0_1_ = 3;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   Widget_measureContentEntry(0x42dc0000,0x41700000,1);
@@ -540,6 +568,7 @@ void cube::OptionsWidget::ctor_0
   Node_select_glyph_by_name(local_44);
   local_8 = CONCAT31(local_8._1_3_,3);
   if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   plasma::Widget::MemberFunctionConnection<cube::OptionsWidget>::ctor_0

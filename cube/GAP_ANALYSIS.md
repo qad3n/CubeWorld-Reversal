@@ -4,7 +4,7 @@ Best-effort analysis of functions automation could not name (still `FUN_`), from
 sub-agent audit: proposed name, purpose, confidence, key variables. Inline `[AUDIT]`
 comments with the same content are also written above each function in the .cpp files.
 
-**3390 functions analyzed** — confidence: high=1536, med=1175, low=679.
+**3393 functions analyzed** — confidence: high=1539, med=1175, low=679.
 
 ## audit (1121)
 
@@ -1132,7 +1132,7 @@ comments with the same content are also written above each function in the .cpp 
 | 6cf9e0 | `vorbis_validate_packet_crc` | low | Vorbis: validate/consume a packet field, signal error via bit-skip on mismatch |
 | 6d0300 | `vorbis_init_pcm_struct` | low | Vorbis: zero a 2-word (undefined8[2]) pcm/output descriptor |
 
-## other (835)
+## other (785)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -1142,17 +1142,9 @@ comments with the same content are also written above each function in the .cpp 
 | 40d800 | `uivm_pop_operand` | high | Pops top operand off VM stack: destroys via FUN_004034c0, operator_delete, decrements +0x30 |
 | 40ef20 | `std::basic_ostream<wchar_t>::_Osfx_unwind` | high | ostream sentry cleanup: _Osfx if not uncaught, tie flush |
 | 427a80 | `zeroVec3Array` | high | Zeroes param_2 vec3 (12-byte) elements starting at param_1 |
-| 427ab0 | `copyVec2Array` | high | Copies array of 8-byte (vec2/2-dword) elements [param_1,param_2) to param_3 |
-| 427af0 | `copyVec4Array2` | high | Copies array of 16-byte elements [param_1,param_2) to param_3 (null-dst tolerant) |
 | 428a60 | `vectorGrowCap8` | high | std::vector _Grow capacity calc for 8-byte elements (1.5x, cap 0x1fffffff) |
-| 428ac0 | `vectorReserve8` | high | std::vector reallocate to param_1 capacity, 8-byte elements: new/copy/free |
-| 428ba0 | `vectorReserve16` | high | std::vector reallocate to param_1 capacity, 16-byte elements: new/copy/free |
-| 428c80 | `vectorReserveCheck8` | high | std::vector reserve growth guard for 8-byte elements, throws _Xlength_error if too long |
-| 428d00 | `vectorReserveCheck16` | high | std::vector reserve growth guard for 16-byte elements, throws _Xlength_error if too long |
-| 42bd20 | `std::vector::push_back_16` | high | push_back one 16-byte element, reserve if full |
 | 42c8d0 | `int64::less` | high | Signed compare *param_1 < *param_2 (two int64), returns bool |
 | 439510 | `std::wstring::_Tidy_dtor_unwind` | high | free wstring buffer during unwind |
-| 43a3f0 | `std::map<u16,T>::lower_bound` | high | rbtree lower_bound by ushort key at node+0xe |
 | 43c380 | `std::map::dtor` | high | destroy map: erase-all range then free head |
 | 43c3b0 | `std::map::dtor_variant` | high | destroy map via _Erase range then free head |
 | 44a8c0 | `copyAssign_0x148Fields` | high | Copy 0x148-struct fields (+0x118..+0x144) from param_1 to ecx, first via 0040ee70 |
@@ -1174,28 +1166,19 @@ comments with the same content are also written above each function in the .cpp 
 | 452e30 | `std::_Tree<int>::_Insert_node` | high | Links new node into red-black tree and rebalances via left/right rotations & recolor (RB fixup) |
 | 453670 | `std::_Tree<__int64>::insert` | high | map/set insert, 64-bit key variant (2nd instantiation); same logic as 453420 |
 | 453c90 | `std::_Tree<__int64>::_Insert_hint` | high | Insert-with-hint, 64-bit key (2nd instantiation) |
-| 454d60 | `std::_Insertion_sort<0x10>` | high | Insertion sort, 16-byte elements, int key at +4 |
 | 454e30 | `insertionSort_0xc_float` | high | Insertion sort of 0xc elements keyed by float at +4 |
 | 454ef0 | `makeHeap_0x128` | high | build_heap over 0x128 elements via sift 00451940 |
-| 454fe0 | `std::_Make_heap<0x10>` | high | Build max-heap over 16-byte elements (int key), _Adjust_heap FUN_00451a60 |
 | 455070 | `makeHeap_0xc_float` | high | build_heap over 0xc elements keyed by float +4 |
 | 4551b0 | `sort3_0x128` | high | Median-of-3 ordering of three 0x128 elements by byte+short*6 key, swap via 00458c10 |
-| 455270 | `std::_Med3<0x10>` | high | Median-of-3 for 16-byte elements, int key |
 | 455340 | `sort3_0xc_float` | high | Median-of-3 ordering of three 0xc elements by float+4, in-place swap |
 | 4553c0 | `medianOf9_0x128` | high | Ninther (median-of-medians) pivot selection for 0x128 introsort via 004551b0 |
-| 455470 | `std::_Guess_median<0x10>` | high | Median-of-medians pivot selection, 16-byte elements |
 | 455510 | `medianOf9_0xc` | high | Ninther pivot selection for 0xc introsort via 00455340 |
 | 4556b0 | `moveBackward_0x128` | high | Move-backward copy of 0x128 range via 0042c5e0/00468050 |
-| 455710 | `std::_Move_backward<0x10>` | high | Move-backward range of 16-byte elements |
 | 455760 | `popHeap_sift_0x128` | high | pop_heap: move top to back then sift 00451940 for 0x128 elements |
 | 455860 | `pushHeap_siftUp_0x128` | high | push_heap sift-up for 0x128 elements keyed by byte+short*6 |
-| 455940 | `std::_Push_heap<0x10>` | high | Sift-up 16-byte element into heap, int key |
 | 4559c0 | `rotate_0x10` | high | std::rotate of 0x10-byte elements using gcd-cycle algorithm |
 | 455ac0 | `rotate_0x148` | high | std::rotate of 0x148 elements via gcd-cycle with 0044a8c0/0044b3b0 temp |
-| 455d80 | `std::_Sort<0x10>` | high | Introsort for 16-byte elements, int key |
-| 456010 | `std::_Sort_heap<0x10>` | high | Heapsort finalize for 16-byte elements (via _Adjust_heap) |
 | 456160 | `quicksortPartition_0x128` | high | Hoare-style partition for 0x128 introsort keyed byte+short*6, swaps via 00458c10 |
-| 4563d0 | `std::_Unguarded_partition<0x10>` | high | Hoare partition, 16-byte elements, int key |
 | 456710 | `quicksortPartition_0xc` | high | Hoare partition for 0xc introsort keyed by float+4 |
 | 456ae0 | `string_destroyRange_0x18` | high | Destroy std::string range stride 0x18 (reset SSO + 0040f680), SEH |
 | 456d30 | `std::_Destroy_range<0x78>` | high | Destroy count of 0x78-byte elements (dtor FUN_00466590) |
@@ -1235,14 +1218,8 @@ comments with the same content are also written above each function in the .cpp 
 | 4aaeb0 | `partition_16_key8` | high | Quicksort 3-way partition of 16-byte elements keyed float+8 |
 | 4ab190 | `partition_48_key2c` | high | Quicksort 3-way partition of 48-byte elements keyed float+0x2c; SEH cookie |
 | 4abb10 | `swap_48` | high | Swaps two 48-byte (11-dword) elements |
-| 4c8ae0 | `WinMain` | high | Entry: RegisterClass/CreateWindow 'Cube World', init D3D/audio/input, run loop |
 | 4c9550 | `_fseeki64_wrapper` | high | Guarded wrapper around CRT _fseeki64 (returns -1 on NULL file) |
-| 4ce460 | `std_use_facet_ctype_char` | high | std::use_facet<ctype<char>>: fetch ctype facet from locale, throws bad_cast if absent |
-| 4ce6e0 | `Options_loadFromCfg` | high | Load game settings from options.cfg: parse key/value lines (fullscreen,resolutionX/Y,volumes,language...) |
 | 4cef80 | `Options_saveToCfg` | high | Save game settings to options.cfg via ofstream (fullscreen,resolution,volumes,cameraSpeed,language...) |
-| 4d6f10 | `utf16_appendCodepoint` | high | Write one Unicode codepoint as UTF-16 (surrogate pair if >=0x10000), return advanced ptr |
-| 4d96f0 | `xml_decodeEntityRef` | high | Decode an '&...;' XML entity reference (named/numeric) to UTF-16 into output |
-| 4d9c50 | `std_Tree_insert_rebalance` | high | std::map/set red-black tree insert fixup (rotations/recoloring); _Xlength_error on overflow |
 | 4e0080 | `QuestText_allocNode_2str` | high | Allocates a QuestText node (FUN_00630a40) and initializes two embedded strings from param |
 | 51ca20 | `sqlite3_likeFunc` | high | SQL LIKE/GLOB scalar function: validate ESCAPE, run patternCompare; sets 'pattern too complex'/'ESCAPE' errors |
 | 51cbf0 | `winShmMap` | high | Win32 VFS xShmMap: map/grow shared-memory region via CreateFileMappingW/MapViewOfFile |
@@ -1341,19 +1318,14 @@ comments with the same content are also written above each function in the .cpp 
 | 402f80 | `uivm_pop_int` | med | UI expr VM: pop top operand, return its int value |
 | 402fd0 | `uivm_pop_float` | med | UI expr VM: pop top operand, return its float value |
 | 403030 | `uivm_push_int` | med | UI expr VM: allocate 12-byte operand entry and push int result |
-| 4040d0 | `std_container_assign_range` | med | MSVC STL: vector/string assign from [param_1,param_1[1]) via memmove/grow |
 | 405470 | `std_fill_n_bytes` | med | __thiscall: reserve n via FUN_0064e310 then memset buffer with byte *param_2 (vector<char>/string fill assign) |
 | 40b730 | `uivm_op_named_push` | med | Builds temp std::string, calls FUN_0040c280/FUN_0040bff0, pushes param_2; stack cookie |
 | 40bac0 | `std_list_push_back` | med | std::list push_back: allocates node via FUN_00583cb0, checks 'list<T> too long' length guard, links tail |
 | 40bef0 | `uivm_sum_scaled` | med | Sums global int array of length DAT_00765008 (unrolled) and returns global_scale * sum |
-| 411be0 | `math::mat3_transform_point2d` | med | 2D projective transform of point by 3x3-ish matrix (game math) |
 | 412810 | `math::vec4_scale` | med | scale 4-float vector by scalar in place (game math) |
 | 42c680 | `mem_equal_24` | med | compare 3 consecutive 8-byte pairs for equality (game) |
-| 439110 | `math::round_to_tenth` | med | round float to one decimal, recursive for negatives (game util) |
-| 439fc0 | `std::wstring::erase_iter` | med | erase from iterator: compute offset then erase 1 |
 | 43e630 | `container_clear` | med | clear container by destroying range then reset (game/std) |
 | 4490f0 | `math::mat4_copy_transpose` | med | copy 16-float matrix and reorder to columns (game math) |
-| 451a60 | `heap::sift_down_16` | med | binary-heap sift-down over 0x10-byte elements (game) |
 | 4555c0 | `std::_Uninitialized_move<0x78>` | med | Move/copy-construct range of 0x78-byte elements (0x1e dwords each) to raw storage |
 | 457ae0 | `std::list<T>::insert(pos,first,last)` | med | list insert-range wrapper (helper FUN_00453ff0) |
 | 457b80 | `std::list<T>::insert(pos,first,last)` | med | list insert-range wrapper (helper FUN_004540c0) |
@@ -1378,16 +1350,12 @@ comments with the same content are also written above each function in the .cpp 
 | 466b40 | `string_tidy@unwind` | med | SEH unwind funclet: _Tidy two std::string members (reset SSO, free buffers) |
 | 466b90 | `vector_dtor_free@unwind` | med | SEH unwind funclet: destroy vector elements (FUN_00452600) then operator delete |
 | 467ab0 | `dtor_free@unwind` | med | SEH unwind funclet: dtor FUN_0046f990 then delete member at +8 |
-| 467af0 | `tree_dtor_free@unwind` | med | SEH unwind funclet: destroy tree (FUN_004777f0) then delete member at +8 |
 | 467b40 | `dtor_free@unwind` | med | SEH unwind funclet: dtor FUN_0046f990 then operator delete(*this) |
-| 46dcb0 | `identity/getter thunk` | med | Trivial function returning its argument unchanged (identity/accessor thunk) |
 | 46e430 | `std::vector<T120>::_Reallocate` | med | Reallocate 120-byte-element vector, move+free |
 | 46e610 | `std::vector<T24>::_Reallocate` | med | Reallocate 24-byte-element vector, move+destroy old |
 | 46e880 | `std::vector<T120>::_Reserve_grow` | med | Ensure capacity for +n 120-byte elems, return element ptr |
-| 46f450 | `GameController::acquire_render_locks` | med | EnterCriticalSection on three engine critical sections |
 | 46f8b0 | `std::list<std::string>::clear` | med | Clear list freeing embedded string in each node |
 | 46f9f0 | `std::list<std::string>::clear` | med | Clear list, free embedded string at node+0x40 |
-| 477280 | `GameController::release_render_locks` | med | LeaveCriticalSection on three engine critical sections |
 | 486950 | `std::vector<T24>::insert` | med | Insert 24-byte element at position, grow+construct |
 | 486b60 | `net::send_all` | med | Loop ws2_32 send() until whole buffer transmitted (winsock) |
 | 4870c0 | `std::wstring::resize_shrink` | med | Truncate wstring to length, null-terminate (or grow-fill) |
@@ -1395,7 +1363,6 @@ comments with the same content are also written above each function in the .cpp 
 | 4874a0 | `math::round_to_hundredths` | med | Round float to 2 decimals, recursing on negatives (game math) |
 | 4aa0d0 | `move_backward_48` | med | Backward block-move of 48-byte elements (partition rotate helper for FUN_004a9520) |
 | 4c83f0 | `CubeWndProc` | med | Win32 window procedure: routes input/quit/close messages |
-| 4c8720 | `App::init_direct3d` | med | Create Direct3D9 device, D3D9Engine and CubeShader (game) |
 | 4cb290 | `std::basic_filebuf<char>::~basic_filebuf` | med | Destroy filebuf: base dtor, set vtable, ios_base dtor |
 | 4cbde0 | `net::Connection::read_delta_i8` | med | If dirty bit set, read byte field from received buffer (game net) |
 | 4cbe50 | `net::Connection::recv_delta_i8` | med | If dirty bit set, recv 1 byte via ws2_32 recv (game net) |
@@ -1423,18 +1390,11 @@ comments with the same content are also written above each function in the .cpp 
 | 4ccf20 | `EntityState_recvField_size0x2C` | med | recv() 0x2C-byte entity field from socket if dirty-bit set |
 | 4ccfa0 | `EntityState_deserializeFromBuffer` | med | Master: deserialize full entity/creature state from packet buffer, walking all fields by offset |
 | 4cd3e0 | `EntityState_recvFromSocket` | med | Master: receive full entity/creature state field-by-field from socket |
-| 4ce2a0 | `std__operator>>_istream_string` | med | std::operator>>(basic_istream&, basic_string&): extract whitespace-delimited token |
 | 4d7be0 | `xml_skipToTag_plain` | med | Advance wide cursor over whitespace to next '<' or NUL, terminate token |
 | 4d7c30 | `xml_parseText_entityDecode` | med | Scan text run to '<', decoding '&' entity refs (FUN_004d96f0), compact result |
 | 4d7dc0 | `xml_parseText_newlineNorm` | med | Scan text run to '<' normalizing CRLF/CR to LF (no entity decode) |
-| 4d8510 | `xml_skipElement` | med | Recursively skip an element and its nested markup to matching '>' |
-| 4d85c0 | `xml_skipCDATA` | med | Skip a CDATA/marked section '<![...]]>' (recursive nesting) |
-| 4d8630 | `xml_skipQuotedOrPIComment` | med | Skip a quoted string, processing instruction '<?..?>' or comment '<!--..-->' |
 | 4d8750 | `xml_parseAttrValue_plain` | med | Scan attribute value up to closing quote, CRLF-normalized, no entity decode |
 | 4d8810 | `xml_parseAttrValue_entityDecode` | med | Scan attribute value to closing quote, decoding '&' entities |
-| 4da050 | `std_map_insert_unique` | med | std::map lower_bound + insert-unique using wide-string comparator (FUN_00428db0) |
-| 4da2f0 | `std_Tree_destroy_subtree` | med | Post-order traverse+destroy a red-black tree subtree, releasing each node |
-| 4da770 | `cube_QuestTextNode_destroyTree` | med | Recursively destroy QuestTextNode tree: free child maps and node lists |
 | 4e3c70 | `std_Tree_erase` | med | std::map/set erase node with red-black rebalance; 'invalid map/set<T> iterator' check |
 | 4ec0d0 | `std_list_clear_free` | med | Clear list: reset sentinel links and operator delete nodes |
 | 51c760 | `sqlite3_value_bytes` | med | sqlite3 value byte length: coerce Mem to text (FUN_0056bce0) then return length (n or n+u) |
@@ -1771,25 +1731,19 @@ comments with the same content are also written above each function in the .cpp 
 | 42ba60 | `CharCreation::cycle_prev_0x18c` | low | decrement field 0x18c wrap 7, refresh (game) |
 | 42bab0 | `CharCreation::cycle_next_0x18c` | low | increment field 0x18c wrap 8, refresh (game) |
 | 42bd90 | `CharCreation::reset_defaults` | low | reset char-customization state fields to defaults (game) |
-| 42c080 | `CharCreation::refresh_model` | low | rebuild displayed character model from customization state (game) |
 | 43ec90 | `lookup_float_by_id` | low | switch mapping id to float constant (game data table) |
 | 444860 | `Ability::get_cooldown` | low | switch mapping ability id to cooldown/duration float (game) |
 | 446950 | `set_vec3_offset_by_id` | low | switch setting vec3 constant by id (game data) |
 | 446e80 | `Creature::compute_stat_pow` | low | compute stat using pow() over modifier list (game) |
-| 447e10 | `Input::init_keybindings` | low | create D3D input params and register default key actions (game) |
 | 459660 | `T::T()` | low | Default-ctor of struct: init fields to -1 / default floats (0x3f000000 etc) |
-| 459b10 | `T::T(const T&)` | low | Copy-ctor invoking 13 std::string copies (array of 13 strings, stride 0x118) |
 | 465b60 | `T::T()` | low | Default-ctor: init header fields then memset 0x100-byte buffer to 0 |
-| 466050 | `T::T(const T&)` | low | Copy-ctor of large game struct (~0x458 dwords) with embedded strings/arrays (Entity-like) |
 | 46eb80 | `GameController::set_field_1b4` | low | Store param into object field +0x1b4 (game object setter) |
 | 46f390 | `GameController::set_camera_transform` | low | Copy 6 float/double transform fields into obj+0x170 and apply |
-| 4772b0 | `GameController::start_game_mode` | low | Init/reset gameplay state and mode-specific tutorial hints (game) |
 | 4814f0 | `GameController::cycle_active_tab` | low | Advance active UI tab selection among widget group (game) |
 | 4815c0 | `GameController::on_tab_selected` | low | If arg matches active tab id, invoke handler (game UI) |
 | 4815e0 | `GameController::create_edit_textbox` | low | Create 'edit' text input widget in UI (game) |
 | 481d30 | `GameController::delete_selected_world_saves` | low | DeleteFile Save\world_/Save\map_ for selected slot (game) |
 | 481fe0 | `GameController::show_rename_dialog` | low | Build 'edit' widgets for world rename UI (game) |
-| 4821a0 | `GameController::enter_edit_mode` | low | Enter world-edit mode, spawn editor Creature/camera (game) |
 | 483e70 | `GameController::load_or_new_character` | low | Load selected character save or reset to defaults (game) |
 | 484170 | `GameController::reset_editor_camera` | low | Reset editor camera/target vectors to defaults (game) |
 | 484230 | `GameController::toggle_sp_mp_worlds` | low | Toggle singleplayer/multiplayer world list label (game) |
@@ -1803,9 +1757,6 @@ comments with the same content are also written above each function in the .cpp 
 | 4c5bb0 | `GameController::set_slider_from_mouse` | low | Map mouse X to slider value in active tab (game UI) |
 | 4c60f0 | `GameController::decrement_tab_value` | low | Decrement value of active tab entry if above zero (game UI) |
 | 4c7ed0 | `Creature::roll_random_stat` | low | Roll random stat in range using rand() (game) |
-| 4c85f0 | `App::render_frame` | low | Per-frame tick: update timing, handle resize, Present (game) |
-| 4c8940 | `App::reset_device` | low | Reset/resize D3D device and swap chain on resolution change (game) |
-| 4ce3f9 | `std__operator>>_istream_string_unwind` | low | Exception-unwind continuation of istream>>string (resets gcount, setstate, releases sentry) |
 | 4ce6c0 | `std_istream_sentry_unwind_thunk` | low | Exception cleanup thunk: invoke streambuf vtable[+8] (sync) on unwind for istream ops |
 | 4d4650 | `OptionsMenu_applyAndClearSelection` | low | Apply options (FUN_0046f390) then reset a selection index in the active UI list |
 | 4d4cb0 | `UiCarousel_selectPrev` | low | Decrement (clamp>=0) circular option index and update selected value pair from list |
@@ -1816,7 +1767,6 @@ comments with the same content are also written above each function in the .cpp 
 | 4d90d0 | `xml_scanAttrValue_variant3` | low | Attribute-value scanner variant with entity decode (jump-table target) |
 | 4d91d0 | `xml_scanAttrValue_variant4` | low | Attribute-value scanner variant (jump-table target) |
 | 4d9340 | `xml_scanAttrValue_variant5` | low | Attribute-value scanner variant with entity decode (jump-table target) |
-| 4d94e0 | `xml_appendDecodedChar` | low | Append one decoded character to entity-decode output buffer |
 | 4e29a0 | `node_erase_and_free` | low | Erase a node then operator delete (FUN_004e3840) |
 | 4e29d0 | `node_erase_and_free_v2` | low | Erase a node then operator delete (FUN_004e3bb0) |
 | 4e2a70 | `object_dtor` | low | Destroy object and operator delete |
@@ -1972,513 +1922,7 @@ comments with the same content are also written above each function in the .cpp 
 | 659fe0 | `makeTextureRefWrapper` | low | Wraps FUN_00425390(1,param_3) result via FUN_0040eaf0; returns param_1 unchanged (constructs a resource handle). |
 | 692de0 | `T1_Build_CharString_Table` | low | FreeType/Type1: assemble a Type1 subrs/charstrings buffer (0x180/0x380 markers), open as 'type1' |
 
-## GameController (501)
-
-| addr | proposed name | conf | purpose |
-|---|---|---|---|
-| 403350 | `string_assignCStr` | high | std::string::assign(const char*): strlen then assign bytes via FUN_0040c280 |
-| 4033b0 | `string_defaultInit` | high | std::string default construct: SSO empty (cap=0xf,len=0,null) |
-| 403eb0 | `string_dtor` | high | std::string destructor: frees heap buffer if cap>0xf, resets to empty SSO |
-| 4043f0 | `filebuf_dtor` | high | std::basic_filebuf<char> destructor: base dtor, sets vtable, ios_base dtor |
-| 405060 | `string_move` | high | MSVC std::string _Move helper: transfers buffer/len/cap to in_ECX, clears source |
-| 4054f0 | `string_grow` | high | std::string _Grow/reallocate: computes new capacity (1.5x), allocs, copies, frees old |
-| 407d50 | `string_resize` | high | std::string::resize/_Grow(bool): grows or truncates, returns len!=0 |
-| 40c0a0 | `string_assignSubstr` | high | std::string assign(str,pos,len): validates pos, copies substring, self-assign fast path |
-| 40c1c0 | `string_assignFill` | high | std::string assign(count,char): grows and fills or sets single char |
-| 40c4c0 | `filebuf_close` | high | std::basic_filebuf::close: flushes (405cc0), fclose, re-inits streambuf, returns this-or-null |
-| 40c520 | `string_compare` | high | std::string::compare(pos,len,ptr,ptrlen): bounded memcmp, returns <0/0/>0 |
-| 40cb00 | `string_erase` | high | std::string::erase(pos,count): memmove tail and shrink, or truncate |
-| 40cba0 | `fabs_f` | high | Returns absolute value of float param_1 |
-| 40d9d0 | `vectorInt_resize` | high | std::vector<int>::resize: shrinks (memmove) or grows zero-filling to param_1 elements |
-| 40e420 | `cosf_f` | high | Returns cosf(param_1) via libm_sse2_cos_precise |
-| 40ea50 | `setPair_b` | high | Stores 2 dwords into object (assign vec2/pair) |
-| 40ea70 | `setColor3b` | high | Stores 3 bytes into object (RGB color set) |
-| 40ea90 | `setVec3` | high | Stores 3 dwords into object (assign vec3) |
-| 40eac0 | `setVec4` | high | Stores 4 dwords into object (assign vec4/quaternion) |
-| 40ef50 | `arrayElem0x11c` | high | Returns &array[param_1] with stride 0x11c (indexes 0x11c-sized structs) |
-| 40f0d0 | `repeatCall` | high | Invokes code* param_4 exactly param_3+1 times |
-| 40f8e0 | `getField_0x3c` | high | Returns dword at object offset 0x3c |
-| 411320 | `getField_0x34` | high | Returns dword at object offset 0x34 |
-| 411400 | `getField_0x148` | high | Returns dword at object offset 0x148 |
-| 411ab0 | `count_0x11c` | high | Returns element count of a 0x11c-stride vector: (end-begin)/0x11c |
-| 411c70 | `getField_0x38` | high | Returns dword at object offset 0x38 |
-| 411cf0 | `getField_0x40` | high | Returns dword at object offset 0x40 |
-| 411d10 | `powf_f` | high | Returns powf(param_1,..) via libm_sse2_pow_precise |
-| 411df0 | `vec2_copy` | high | Copies 2 dwords from param_1 into object (vec2 copy) |
-| 411e30 | `vec3_copy` | high | Copies 3 dwords from param_1 into object (vec3 copy) |
-| 412080 | `int_toFixed16` | high | Sign-extends param_1<<16 into 64-bit value at object (int to 16.16 fixed-point) |
-| 4120a0 | `addInt` | high | Returns param_1 + object dword |
-| 4120b0 | `arrayElem_stride8` | high | Returns base + param_1*8 (8-byte-stride element ptr) |
-| 4120c0 | `vectorU32_at` | high | Bounds-checked std::vector<u32> element read, returns 0 if out of range |
-| 4120f0 | `fixed16ToFloat` | high | Converts 16.16 fixed-point (int64) at object to float (*1/65536) |
-| 412120 | `vec4_mulComponent` | high | Component-wise multiply: param_1 = param_2 * this (vec4) |
-| 4121c0 | `vec3_sub` | high | param_1 = this - param_2 (vec3 subtract) |
-| 412200 | `int64_sub` | high | 64-bit subtract: param_1 = this(u64) - param_2(u64) |
-| 412220 | `int64_subFn` | high | 64-bit subtract of FUN_0068d946() result from this(u64) |
-| 412260 | `int64_negate` | high | 64-bit negate of this into param_1 |
-| 412280 | `vec3_add` | high | param_1 = param_2 + this (vec3 add) |
-| 4122c0 | `int64_add` | high | 64-bit add: param_1 = param_2(u64) + this(u64), with carry |
-| 4122e0 | `int64_addFn` | high | 64-bit add of FUN_0068d946() result to this(u64) |
-| 412350 | `vec3_dot` | high | Returns 3D dot product of this and param_1 |
-| 412390 | `vec3_cross` | high | param_1 = this x param_2 (vec3 cross product) |
-| 412400 | `mat4_mulLeft` | high | 4x4 matrix multiply in place: this = param_1 * this (column ops) |
-| 412780 | `vec3_scaleInPlace` | high | Scales this vec3 in place by scalar param_1 |
-| 4127c0 | `vec4_mulInPlace` | high | Component-wise multiplies this vec4 in place by param_1 |
-| 412850 | `vec3_addInPlace` | high | Adds param_1 to this vec3 in place |
-| 412890 | `vec3_subInPlace` | high | Subtracts param_1 from this vec3 in place |
-| 4128d0 | `mat_elemPtr` | high | Returns element ptr: base + (param_1 + param_2*4)*4 (matrix cell address) |
-| 423ee0 | `vec2_length` | high | Returns sqrt(x^2+y^2) (2D vector length) |
-| 423f20 | `vec3_length` | high | Returns sqrt(x^2+y^2+z^2) (3D vector length) |
-| 4240f0 | `vec3_normalize` | high | Normalizes this vec3 in place (divide by length) |
-| 424170 | `mat4_rotateAxisAngle_v` | high | Wrapper: rotates matrix by axis vec3 (param_2) and angle via FUN_004241b0 |
-| 4241b0 | `mat4_rotateAxisAngle` | high | Builds Rodrigues rotation matrix from angle(param_1) and axis(param_2..4), multiplies into this |
-| 4243d0 | `mat4_rotateX` | high | Rotates this 4x4 matrix about X axis by param_1 degrees |
-| 4244f0 | `mat4_rotateY` | high | Rotates this 4x4 matrix about Y axis by param_1 degrees |
-| 424610 | `mat4_rotateZ` | high | Rotates this 4x4 matrix about Z axis by param_1 degrees |
-| 424730 | `mat4_scaleAxes` | high | Scales matrix rows by param_1/param_2/param_3 (skips 1.0 axes) |
-| 424810 | `getField_0x44` | high | Returns dword at object offset 0x44 |
-| 424820 | `getField_0x48` | high | Returns dword at object offset 0x48 |
-| 424830 | `vec2_lengthSq` | high | Returns squared length of this vec2 |
-| 424860 | `vec3_lengthSq` | high | Returns squared length of this vec3 |
-| 4248a0 | `mat4_transformPoint` | high | Transforms point param_2 by this 4x4 matrix with perspective divide into param_1 |
-| 424990 | `mat4_translateVec` | high | Translates this matrix by vec3 param_1 (accumulate into last column) |
-| 424a60 | `mat4_translate` | high | Translates this matrix by (param_1,param_2,param_3) |
-| 424b50 | `sinf_f` | high | Returns sinf(param_1) via libm_sse2_sin_precise |
-| 424b70 | `sqrtf_f` | high | Returns sqrtf(param_1) via libm_sse2_sqrt_precise |
-| 4252f0 | `vec3_scaleOut` | high | param_1 = this * scalar param_2 (vec3) |
-| 427870 | `vec3_normalizeOut` | high | Normalizes this vec3 into output param_1 |
-| 427910 | `mat4_perspective` | high | Builds perspective projection matrix from fov(param_1),aspect(param_2),near(param_3),far(param_4) |
-| 4279e0 | `getField_0x110` | high | Returns dword at object offset 0x110 |
-| 4279f0 | `getField_0x10c` | high | Returns dword at object offset 0x10c |
-| 4288b0 | `storeVec2At` | high | Stores vec2 param_1 into 8-byte-stride array at index +0x20, returns element end ptr |
-| 4288e0 | `storeVec4At` | high | Stores vec4 param_1 into 16-byte-stride array at index +0x20, returns element ptr |
-| 428920 | `copy3bytes` | high | Copies 3 bytes from param_1 into object |
-| 428940 | `color3_differs` | high | Returns 1 if first 3 bytes at object differ from bytes at param_1 (color inequality) |
-| 428970 | `arrayElem_stride4` | high | Returns base + param_1*4 (dword-stride element ptr) |
-| 428980 | `arrayElem_stride16` | high | Returns *in_ECX + param_1*0x10 (16-byte-stride element ptr) |
-| 4289e0 | `vec4_addInPlace` | high | Adds param_1 to this vec4 in place |
-| 428d80 | `loadFirstElem_0x2c` | high | Reads *(*(+0x2c)) into param_1 (first element of a list/vector member) |
-| 428da0 | `getField_0x2c` | high | Returns ptr/dword at object offset 0x2c into param_1 |
-| 42b800 | `memberPtr_0xc` | high | Returns object base + 0xc (address of member at offset 0xc) |
-| 42c500 | `vec3::set` | high | Sets three dwords ECX[0..2] from params (assign 3-component vector) |
-| 42c6d0 | `getFirstDword` | high | Returns *ECX (first member/pointer) |
-| 42c980 | `vec3i64::add` | high | Adds param_1 (three int64) into ECX in place (carry chains) |
-| 42c9b0 | `int64::add` | high | Adds single int64 param_1 into ECX in place |
-| 42c9d0 | `vec3i64::sub` | high | Subtracts param_1 (three int64) from ECX in place (borrow chains) |
-| 42ca00 | `int64::sub` | high | Subtracts single int64 param_1 from ECX in place |
-| 42f030 | `map::getRoot` | high | Writes *(ECX+4) (tree head/end) to *param_1 |
-| 42f100 | `int64::toIntFloor` | high | Converts single 16.16 fixed int64 to int with floor (/0x10000, adjust negative) |
-| 42f140 | `counter::decrementClamp` | high | Decrements *ECX; if <1 clamps to 0 and clears short at ECX+4 |
-| 42f160 | `flags::setOrClear114` | high | Sets (param_2!=0) or clears bits param_1 in ushort at ECX+0x114 |
-| 42f430 | `buffer::freeAt0x11c` | high | operator_delete of heap buffer at ECX+0x11c (destructor fragment) |
-| 42f470 | `color::copy4` | high | Copies 4 bytes param_1->ECX (RGBA/color or 4-byte field copy) |
-| 42f640 | `getTileCell32` | high | World coords->tile: validates <0x1fffff, resolves chunk via 00434d10, returns ptr into 32x32 grid at +0xac (8-byte) |
-| 4347a0 | `world::getChunkCell256` | high | World coords->256-grid cell: validates <0x1000000 >>8, resolves chunk 00434d10, returns ptr at +0xa8 (32-byte) |
-| 4348b0 | `getDword0x10` | high | Returns *(ECX+0x10) |
-| 434a80 | `getDword0x28` | high | Returns *(ECX+0x28) |
-| 434a90 | `region::getCell1024` | high | Bounds-checked (0..0x400) 2D access into region array at ECX+0xbc (1024x1024, 4-byte) |
-| 434b70 | `getDword0x1c` | high | Returns *(ECX+0x1c) |
-| 434c10 | `getBlockType5bits` | high | Returns byte at ECX+3 & 0x1f (block/type low bits) |
-| 439600 | `list::allocNode32` | high | operator_new(0x20) self-linked list node sentinel; _Xbad_alloc on failure |
-| 43a490 | `getDword0xe8` | high | Returns *(ECX+0xe8) |
-| 43a4a0 | `textBuffer::clampScroll` | high | Clamps scroll start (+0x188) and length (+0x18c) into [0, count(+0x178)] |
-| 43abc0 | `int64::subFixed16` | high | Writes ECX_int64 minus (param_2<<16) into param_1 (subtract integer as 16.16 fixed) |
-| 43abf0 | `int64::addFixed16` | high | Writes ECX_int64 plus (param_2<<16) into param_1 (add integer as 16.16 fixed) |
-| 43b480 | `block::isSolidType` | high | Returns 1 if (type&0x1f) is nonzero and not 2 (solid block test) |
-| 43b610 | `vec6::set` | high | Sets 6 dwords ECX[0..5] from params (assign two int64 vec3 / 6-field struct) |
-| 43ca60 | `curve::level05` | high | Returns 1 - 1/((n-1)*0.05+1) level-scaling curve |
-| 43e550 | `ability::matchesId0x19` | high | Returns true unless ability id 0x19 whose value (param+4) mismatches computed (+0x1164 %100) |
-| 443f10 | `list::findByTypeByte` | high | Linear-searches intrusive list at +0x1178 for node whose byte at +2 == param_1; returns payload or null |
-| 444230 | `weapon::isSpecialRune` | high | Returns 1 if weapon rune byte +0xaa9==3-class and subtype in set |
-| 444820 | `weapon::isSpecialRunePtr` | high | Same test as 00444230 but on ptr arg (*ECX==3 and subtype in set) |
-| 444d60 | `xp::getNextLevelCost` | high | Returns XP-to-next-level: (1-1/((lvl-1)*0.05+1))*1000+50 |
-| 4460a0 | `list::pushBack` | high | Appends node (00451c70) to list at ECX, size++, throws if len==0x5555554 |
-| 447270 | `Player::resetPhysics` | high | Zeroes physics/transform member block (+0x24..+0x14c) |
-| 447b00 | `xp::applyLevelUps` | high | While XP(+0x194) >= next-level cost, level up (+0x190), recompute regen 00444db0 |
-| 44b770 | `allocNode_0x120` | high | Allocates 0x120 node (map/tree), self-links if params null |
-| 44d620 | `stream_readBytes` | high | Stream read: memcpy param_2 bytes from buffer *ecx at cursor [3], advance cursor |
-| 450dc0 | `releaseTwoRefPtrs` | high | Releases up to two ref-counted pointers at ecx[4] via vtable+0x10 (Release) |
-| 450e70 | `spawnWorkerThread` | high | Allocates 0x18 arg block, calls virtual to fill it, launches _beginthread(FUN_00450e00) |
-| 450f60 | `fixedToIntVec3` | high | Divide 3 int64 components by 0x10000 (16.16 fixed to int) via __alldiv |
-| 4511e0 | `floatToIntVec3` | high | Truncate 3 floats to ints |
-| 451440 | `memEqual_0040c520` | high | Returns memcmp(field+0x10, param_2 buffer, len)==0 (byte-string equality) |
-| 4514e0 | `wideMemCompare_ne` | high | Compare via 00428db0 (wide/ci memcmp); returns !=0 |
-| 451510 | `vec3_scale` | high | Multiply vec3 param_3 by scalar param_2 into param_1 |
-| 4515f0 | `string_ctorAppend` | high | std::string ctor: init SSO, reserve len(param_3)+existing via 00407d50, append range (0046ef60/0046f050) |
-| 457460 | `GameController_lerpVec3` | high | Linear-interpolate vec3 param_1 toward param_2 by factor t from 004ac150 |
-| 457e00 | `pair_assign_byteDword` | high | Assign pair: byte from param_2 + dword from param_3 |
-| 458b90 | `storeShort` | high | Store short param_2 at *param_1 |
-| 458bd0 | `strcpy16` | high | strcpy_s(dst,0x10,src) wrapper |
-| 458bf0 | `swapDword` | high | Swap two dwords |
-| 458ce0 | `storeDword` | high | Store dword: *ecx = param |
-| 458d20 | `storeRGBA` | high | Store 4 bytes (RGBA/quad) into *ecx |
-| 458de0 | `noop` | high | Empty function (no-op stub) |
-| 459530 | `Struct_reset_with256buf` | high | Zero-init struct incl memset 0x100 buffer at +10, set flags and 0xffffffff sentinels |
-| 459800 | `Struct_copy_acBytes` | high | Copy large struct up to offset 0xa8 (mixed dword/word fields) |
-| 459a90 | `Struct_reset_4Dwords` | high | Zero first 4 dwords; class GameController likely misattrib |
-| 465bb0 | `Struct_reset_10Dwords` | high | Zero 9 dwords plus word at +5 |
-| 465de0 | `Struct_init_defaults_off2b` | high | Zero fields, set +0x2b=1.0f, +0x2d=4000, then FUN_00423e70 |
-| 4664b0 | `Struct_init_off4_defaults` | high | Set +4=-100.0f, +0x4c=7, +0x48=0, +0x38=0, +0x50=1000 (string cap + defaults) |
-| 466880 | `Struct_ctor_allocListHeads` | high | Constructor allocating ~13 list/container sentinel nodes into slots 0..0x18 (SEH guarded) |
-| 467f30 | `Object_dtor_composite` | high | Destructor: FUN_00661680 then clear vector member at +0x4c |
-| 467fe0 | `String_freeIfNotSelf` | high | Free string param_1 via FUN_0040f680 if not self |
-| 4685e0 | `Object_copyAssign_off118_vec` | high | Copy-assign: FUN_0042c5e0 base, field +0x118, vector at +0x11c via FUN_00468050 |
-| 468620 | `Struct_copy_10Dwords_bytes` | high | Copy ~0xa dwords plus bytes at +5/+0x15 |
-| 468670 | `Struct_copy_skipIdx1_11` | high | Copy dwords 0,2..0x11 skipping index 1, byte at 0xc |
-| 468840 | `operator_eq_2ints` | high | Compare two consecutive ints for equality (memcmp-style over 2 dwords) |
-| 468870 | `operator_eq_3ints` | high | Compare three consecutive ints for equality (vec3-int key ==) |
-| 4688a0 | `operator_ne_2ints` | high | Compare two ints, inverted result (operator!= over 2 dwords) |
-| 4688d0 | `operator_ne_int` | high | Return *this != *param_1 (single int inequality) |
-| 468c80 | `iterator_prev_0xc` | high | Return *this - 0xc |
-| 468c90 | `iterator_at_0x10` | high | Return *this + 0x10 |
-| 468d50 | `iterator_postInc_2` | high | Return current then advance *this by 2 |
-| 468d70 | `iterator_deref_advance` | high | Copy *this to out then FUN_005c3ea0 (advance/next) |
-| 468d90 | `iterator_postInc_4` | high | Return current then advance *this by 4 |
-| 468db0 | `iterator_postInc_0xc` | high | Return current then advance *this by 0xc |
-| 468dd0 | `iterator_postDec_0xc` | high | Return current then decrement *this by 0xc |
-| 468df0 | `vec2_sub` | high | param_1 = *this - param_2 over 2 floats |
-| 468e70 | `Struct_copy6_thenReset` | high | Copy 6 dwords to out then FUN_0042c900(-0x10000,-1) |
-| 468f20 | `vec2_add` | high | param_1 = param_2 + *this over 2 floats |
-| 468f50 | `vec4_add` | high | param_1 = param_2 + *this over 4 floats |
-| 469000 | `vec2i_divScalar` | high | param_1 = *this / param_2 over 2 ints |
-| 46d220 | `vec3_mulInPlace` | high | *this *= param_1 component-wise over 3 floats |
-| 46f430 | `iterator_backMinus4` | high | Return *(this+4)-4 (back element / end-1) |
-| 46f440 | `deref_frontValue` | high | Copy *(*this) into param_1 (front element value) |
-| 471910 | `getter_field80015c` | high | Return dword at +0x80015c |
-| 477220 | `isZero_off10` | high | Return *(this+0x10)==0 |
-| 477230 | `isZero_off4` | high | Return *(this+4)==0 |
-| 4787f0 | `getter_field800164` | high | Return dword at +0x800164 |
-| 47b450 | `getSelectedSlotCoords` | high | Return selected inventory (bag,slot) into param_1, or (-1,-1) if none valid |
-| 47b550 | `getSelectedItemPtr` | high | Return ptr to selected inventory item entry, or 0 |
-| 47b5f0 | `getter_off4c` | high | Return dword at +0x4c |
-| 47f1c0 | `getter_byte3c4` | high | Return byte at +0x3c4 |
-| 47f3b0 | `getter_flagBit0_f4` | high | Return bit0 of dword at +0xf4 |
-| 47f9f0 | `isInteractableTileType` | high | True if tile type byte in {1,10,11,12,13,21} |
-| 47fa10 | `hasActiveWorldChunk` | high | Return true if chunk data ptr (via +0x3c/+0x94/+0x68) nonzero |
-| 47fa30 | `getItemTypeCategory` | high | Switch mapping item-type byte to category 0..3 |
-| 480d90 | `getVelocityX` | high | Return float (+0xd4)-(+0xdc) |
-| 480db0 | `getVelocityY` | high | Return float (+0xd8)-(+0xe0) |
-| 480dd0 | `getPositionXY` | high | Copy floats +0xd4,+0xd8 to param_1 |
-| 480df0 | `getPtr_off94` | high | Return this+0x94 |
-| 484320 | `playSoundAtPlayer` | high | Wrapper: play sound param_1 at player pos (+0x140) via FUN_00484350 |
-| 487490 | `GameController_getField_b4` | high | Trivial getter: returns *(this+0xb4) |
-| 487da0 | `GameController_getVoxelColumn8` | high | Bounds-checks x,y<0x2000, indexes chunk (FUN_00434a90, coords>>6) then column with 0x68 stride at +0x14018 |
-| 487e60 | `GameController_getPair_18c_190` | high | Copies two dwords from +0x18c and +0x190 into out param |
-| 487e80 | `GameController_set_1ec` | high | Trivial setter: *(this+0x1ec)=param |
-| 487e90 | `GameController_set_b8` | high | Trivial setter: *(this+0xb8)=param |
-| 487f70 | `vec2_lengthSquared_int` | high | Returns x*x + y*y from int pair at *this,this[1] |
-| 487fe0 | `GameController_getSub_8000f0` | high | Returns this+0x8000f0 (address of a large embedded subobject) |
-| 488030 | `GameController_interactSpecialObject` | high | 'There is nothing special.': finds special entity, sets quest/dialog state and a wchar message; interaction handler |
-| 4882e0 | `GameController_interactNpc` | high | 'innkeeper': NPC/quest interaction; resolves target entity by world coords, opens trade/dialog UI |
-| 4889e0 | `GameController_updateSelectedEntity` | high | Updates selected/targeted entity from screen pick (FUN_00477d90); dispatches by type 0x140 to open UIs |
-| 488b80 | `GameController_get_8000bc` | high | Trivial getter: returns *(this+0x8000bc) |
-| 488b90 | `GameController_asType2Object` | high | Returns param if object type (+0x48)==2 else 0 (safe cast/filter) |
-| 488bb0 | `GameController_asType3Object` | high | Returns param if object type (+0x48)==3 else 0 |
-| 488d60 | `mat4_transformPointProjective` | high | Transforms a 3D point by a 4x4 matrix with perspective divide (1/w) |
-| 488e50 | `mat3_transformVector` | high | Transforms a 3D vector by the 3x3 rotation part of a matrix (no translation) |
-| 49d650 | `GameController_buildCharacterList` | high | Builds CharacterPreviewWidget grid from saved characters; lays out widgets, pushes to selection list |
-| 4a14c0 | `GameController_loadInventoryItems` | high | Iterates DB item list (FUN_0059cff0), classifies by type into 6 vectors, sorts and installs (FUN_004a19d0); frees temps |
-| 4a19d0 | `GameController_computeCraftPrices` | high | For category param_1, computes average craft cost per recipe from ingredient lists and stores into 12-byte vector |
-| 4a1e50 | `GameController_equipStarterGear` | high | Char-class switch(1-4): assigns starter equipment ids into slot arrays and appends 4 items to a list |
-| 4a2300 | `GameController_rebuildCraftState` | high | Rebuilds crafting/recipe UI state; if flag copies recipe vector nodes (FUN_00486700), else pulls from selected entity |
-| 4a2780 | `GameController_handleObjectAction` | high | Consumes a pending object action (count at *param): plays effect / sets cursor state by sub-type 5 |
-| 4a2870 | `GameController_voxelAt3D` | high | Returns pointer to 3-byte voxel at (x,y,z) in a volume with dims at +0x44/48/4c, data at +0x30; else dummy |
-| 4a6ad0 | `GameController_getField16` | high | Bounds-checks x,y<0x10000, indexes chunk (FUN_00434a90, >>6) then 16-byte cell at +0x18 |
-| 4a8ef0 | `vec3_floatToByte3` | high | Converts 3 floats at param_1 to 3 bytes at this (truncating cast) |
-| 4a8f20 | `int_notEqual` | high | Returns *param_1 != *param_2 (bool) |
-| 4a8f40 | `vec4_scale` | high | Multiplies 4-component vector param_3 by scalar param_2 into param_1 |
-| 4aba20 | `float_lerp_smooth` | high | Linear interpolates *param_1 toward *param_2 by factor from FUN_004ac150 |
-| 4abc00 | `pair_zeroInit` | high | Zero-inits two dwords (*this=0, this[1]=0) |
-| 4abc30 | `iter_prev_4` | high | Returns *this - 4 (previous 4-byte iterator) |
-| 4abc40 | `iter_postinc_188` | high | Post-increment: returns old *this, advances by 0x188 |
-| 4abc60 | `iter_postinc_10` | high | Post-increment: returns old *this, advances by 0x10 |
-| 4abc80 | `iter_postinc_30` | high | Post-increment: returns old *this, advances by 0x30 |
-| 4abca0 | `iter_postdec_4` | high | Post-decrement: returns old *this, moves back by 4 |
-| 4ac150 | `iterated_lerp_toward1` | high | Applies x += (1-x)*t param_1 times (unrolled by 8); exponential approach used as blend factor |
-| 4c0ec0 | `GameController_getFlag30_bit0` | high | Returns *(this+0x30) & 1 (a boolean flag) |
-| 4c0ed0 | `GameController_isTimerZero_1cc` | high | Returns 1 if float at +0x1cc == 0.0 else 0 |
-| 4c0ef0 | `perlinNoise2D_cosInterp` | high | 2D value/Perlin noise with hashed lattice and cosine interpolation; returns float in ~[0,1] |
-| 4c6140 | `InventoryWidget_rebuildItemList` | high | Rebuilds inventory item widgets: filters equipped items, lays out per-item widgets with callbacks |
-| 4c6350 | `InventoryWidget_updateScroll` | high | Computes visible-row/scroll state for the item grid based on panel geometry |
-| 4c64c0 | `InventoryWidget_drawScrollbar` | high | Draws inventory scrollbar/thumb via FUN_0062bb20 scaled to row count and viewport |
-| 4c6610 | `InventoryWidget_handleSlotHover` | high | Handles slot hover/selection: on click sets selected slot (FUN_00484320 0x55) and highlights hovered cell |
-| 4c6b80 | `GameController_itemCooldown` | high | Returns cooldown 10000 (or 3000 if subtype 1) for type-1 items, else 0 |
-| 4c6cc0 | `GameController_avgEquippedColor` | high | Averages material colors (FUN_004c7250) of equipped items with material>=0x80; SEH cookie |
-| 4c71c0 | `item_glowColor` | high | Returns emissive/glow RGB for special item types (0xb/0x12), else black |
-| 4c7250 | `material_toColor` | high | Maps a material/type id to an RGBA tint (large switch), modulating base color param_3; case 0x80+ glow |
-| 4c76a0 | `item_rarityScaled` | high | Returns item rarity/quality int: FUN_0043ca60(level)*100+1 |
-| 4c7be0 | `item_hasSpecialAbility` | high | Returns 1 if item has a special ability (subtype +0xd in {1,0xb,0xc,0x16}) else 0 |
-| 4d4de0 | `GameController_pickSpawnPoint` | high | Copies spawn coords from param, finds matching spawn index in list, then picks a random spawn position |
-| 4dd5e0 | `GameController_clearListLocked_3c` | high | Under lock (FUN_00601cb0/e90) applies FUN_004544d0 to list at +0x3c then clears/frees it |
-| 4dd640 | `GameController_clearListLocked_44` | high | Under lock applies FUN_00453ff0 to list at +0x44 then clears/frees it |
-| 4dd6a0 | `GameController_clearListLocked_34` | high | Under lock applies FUN_004540c0 to list at +0x34 then clears/frees it |
-| 4ec400 | `GameController::item_icon_id` | high | Large switch mapping item type/subtype/material to sprite/icon resource ID, with fallback cached array lookups |
-| 4ee230 | `GameController::load_game_assets` | high | Loads core game data files (data1.db, cubequest4.cub, spiribit.cub, egg1.cub, body/head/glove .cub) into sprites/DB |
-| 58ce20 | `GameController_ClearSelection` | high | Game: resets the controller's selection index to -1 and clears the active-binding flag |
-| 58ce40 | `GameController_ToggleSelection` | high | Game: sets selection index to +0x2ac, or -1 if it already equals that value (toggle) |
-| 598840 | `World::findObjectById` | high | RB-tree/map find by int key against tree root at world+0x800154; returns node value field [5] or 0 |
-| 5988a0 | `World::areEntitiesHostile` | high | Hostility test between two entities via faction byte +0x60 and aggro flag +0x124; 6=passive short-circuits |
-| 59fb90 | `World::getChunkEntity` | high | Returns pointer to entity index param_1[2] in a chunk's vector (0x148 elems) if in range, else 0 |
-| 5a0910 | `resolveVectorElementByHandle` | high | Look up container via FUN_00434d10(key0,key1), bounds-check index param_1[2], return element ptr (stride 0x188) or 0 |
-| 5a0ed0 | `NameGen::initFirstNameTables` | high | One-time lazy init of NPC first-name/syllable wstring vectors (Wolf/Lugo/Liku...) guarded by DAT_0076b9e8 bits; _atexit cleanup |
-| 5a6a70 | `vec3ToFixed64` | high | Convert int[3] to 16.16 fixed-point int64[3] (val<<16 low word, sign-extended high) |
-| 5c3d60 | `GameController::chunkMap2i_at` | high | map<vec2i,T> operator[]: cache-check nearest node vs 2D key, else insert via FUN_00639be0/FUN_005c0630 |
-| 601cb0 | `enter_critical_section` | high | Enters a critical section (external:00000018); trivial lock wrapper |
-| 601e90 | `leave_critical_section` | high | Leaves a critical section (external:00000019); trivial unlock wrapper |
-| 6089c0 | `copy_two_words` | high | Copies two 16-bit fields from param_2 to param_1, returns param_1 |
-| 630a10 | `object_alloc` | high | Allocates an object via operator_new; shared factory |
-| 632870 | `Node::dtor_release_children` | high | Node destructor: SEH-guarded, releases each child (FUN_006504e0) then frees child-list nodes |
-| 633d70 | `Node::find_child_by_name_recursive` | high | DFS a node tree comparing name via FUN_00428db0(memcmp); returns first matching node or 0 |
-| 635700 | `Node::propagate_resolved_value` | high | Recursively set node +0x44 from parent/slot then recurse children (resolve inherited value) |
-| 6364f0 | `Node::any_child_active` | high | Recursively return 1 if this node or any active child has slot flag +0x2c set |
-| 636870 | `Node::remove_child_from_list` | high | Remove child (matching param_1) from node's std::list at +0x2c and clear its parent link (+0x28) |
-| 636990 | `Node::set_shape_slot` | high | Set attribute/shape slot at +0x34: release old (refcount==1 -> FUN_006507c0) and retain new |
-| 639be0 | `Node::make_vec3_node` | high | Allocate list node (FUN_006819e0), zero header, copy 3-float vector from param_1 |
-| 64eae0 | `Registry::push_node_locked_0x94` | high | Under CS, append list node to list at +0x94 (GameController variant) |
-| 64ef70 | `Node::traverse_invoke_callback` | high | Recursively invoke callback param_2 on nodes that are visible/enabled (flags at +200), descend children |
-| 6502e0 | `TextShape::new_instance` | high | Factory: operator_new(0x21c) + plasma::TextShape::ctor_0 |
-| 6507c0 | `ShapeNode::unregister_and_release` | high | Under CS, unlink shape node from registry list at +0x74 and release |
-| 6508f0 | `Widget::unregister_and_release` | high | Clear focus/hover/capture refs then under CS unlink widget from list at +0x7c and release |
-| 650ae0 | `GameController::hittest_if_no_capture` | high | If no captured widget (+200==0), run hit-test at cursor position (+0xd4) |
-| 6531e0 | `GameController::get_tooltip_widget` | high | Return current tooltip/popup widget pointer at +0xcc |
-| 657c00 | `ScrollButton::read_field` | high | Deserialize one ScrollButton field by opcode 0x11/0x12/0x13 into +0x238/+0x23c/+0x248 |
-| 657ee0 | `ScrollSlider::read_field` | high | Deserialize one ScrollSlider field by opcode 0x14/0x15 into +0x238(bool)/+0x250 |
-| 658530 | `istream::read_string` | high | Read length-prefixed char std::string from istream (alloc temp buffer, copy, free) |
-| 658c40 | `Texture::load_from_file_freeimage` | high | Load an image file via FreeImage (format sniff by extension), convert BGRA->RGBA and upload to texture (vtbl 8) |
-| 658fa0 | `Texture::load_from_memory_freeimage` | high | Load image from memory buffer via FreeImage_LoadFromMemory, convert BGRA->RGBA and upload to texture |
-| 662fb0 | `Widget::setAspectFitEnabled` | high | Simple setter storing a flag/value at offset 0x24c |
-| 664ba0 | `list::pushFrontNode` | high | Inserts a new node at the head of a std::list, incrementing size and guarding the 0x15555554 length limit |
-| 67d9e0 | `setField240` | high | Stores param_1 into the object field at offset 0x240 |
-| 683070 | `Button::deserializeProperties` | high | Parses serialized Button object properties from istream, reads "Button.type" int into obj+0x22c, delegates rest to Widget parser |
-| 683270 | `Display::deserializeProperties` | high | Deserializes Display scene node from istream: name/wname/visibility/clipping/colors/blurRadius/flags fields |
-| 683750 | `deserializeWidgetOnlyObject_0064f200` | high | Loads an object (via factory FUN_0064f200) reading only shared Widget properties per token from istream |
-| 683870 | `GenericShape::deserializeProperties` | high | Deserializes GenericShape from istream: name/wname/source/wsource/position/size fields via factory FUN_0064f280 |
-| 683de0 | `deserializeWidgetOnlyObject_0064f300` | high | Loads an object (factory FUN_0064f300) reading only shared Widget properties per token from istream |
-| 683f00 | `Node::deserializeProperties` | high | Deserializes scene-graph Node (name/wname/shape/transformation/display/widget/child/flags/variable); builds child list, links |
-| 684770 | `Button::deserializeProperties_0065` | high | Parses Button object props from istream (factory FUN_006500d0): reads "Button.type" into +0x22c, else Widget parser |
-| 684970 | `ScrollButton::deserializeProperties` | high | Deserializes ScrollButton: "ScrollButton.direction"->+0x238, "Button.type"->+0x22c, else Widget props |
-| 684c30 | `ScrollSlider::deserializeProperties` | high | Deserializes ScrollSlider: "ScrollSlider.direction"->+0x238, "Button.type"->+0x22c, else Widget props |
-| 684ef0 | `SmoothMeshShape::deserializeProperties` | high | Deserializes SmoothMeshShape mesh (name/faces/vertex flags/params/positions/texcoords/colors/stroke/extrusion arrays) |
-| 685b10 | `TextShape::deserializeProperties` | high | Deserializes TextShape: name/wname/string/frame/sequence/colors/flags/pixelSize/strokeRadius/spacing |
-| 686820 | `Texture::deserializeProperties` | high | Deserializes Texture: name/wname/id/pixelFormat/filters/wrap/width/height/pixels/compressedPixels |
-| 686ff0 | `Transformation::deserializeProperties` | high | Deserializes Transformation node: name/wname/translation/rotation/pivot/deformation via factory FUN_00650360 |
-| 687440 | `deserializeWidgetOnlyObject_006503e0` | high | Loads an object (factory FUN_006503e0) reading only shared Widget properties per token from istream |
-| 687560 | `Widget::readProperty` | high | Parses one shared Widget property token (name/wname/caption/bind pos/size/matrix/alignment/flags) into widget struct |
-| 687ad0 | `Widget::applyBindMatrix` | high | Copies two 16-word (4x4) matrices from src into widget at +0xa8 and +0xe8, then calls FUN_0058c440 (mark dirty) |
-| 688180 | `StreamReader::readTaggedBlockAppend` | high | Reads a length int from istream, computes end offset via tellg, appends new list node (checks list-too-long) |
-| 688220 | `StreamReader::readToken` | high | Reads a length-prefixed token/string from istream into param_1 (std::string), handling ref-back dedup table |
-| 688490 | `StreamReader::endBlockCheckPos` | high | Verifies current istream tellg matches expected block end; if so pops/frees the tail list node, returns success byte |
-| 688510 | `StreamReader::readString` | high | Reads length-prefixed narrow string from istream into std::string param_1 (empty string shortcut for len 0) |
-| 6886f0 | `StreamReader::skipBlock` | high | Reads a length int then seekg's the istream forward past that block (skip unknown/unhandled property) |
-| 40ee70 | `entityState_copy` | med | Copies a 0x118-byte record (header fields + 0x20-entry array of 8-byte structs); item/equipment copy |
-| 40ef70 | `ptrAt_0x4c_0x20x8` | med | Returns +0x4c + count(+0x20)*8: end pointer of an 8-byte-stride array |
-| 411a90 | `setFlagAtSlot` | med | Writes bool(param_1) into array at +0x94 indexed by +0x68 (per-slot flag) |
-| 411ad0 | `u16_ostrstream_str` | med | u16string variant of ostrstream::str(): builds u16string from strstreambuf area honoring frozen flag |
-| 411bc0 | `u16_ostrstream_str_wrap` | med | Wrapper returning result after FUN_00411ad0 |
-| 4128f0 | `Creature_drawModel` | med | Massive character/creature model+animation render: composes bone transforms, matrix math, draws parts |
-| 423f70 | `computeYawFromDir` | med | Computes an angle blend using cos/sin/asin of two angle params scaled by param_3 |
-| 42c580 | `int64::setFromGen` | med | Sets single int64 field ECX[0] to value returned by 0068d946 |
-| 42c5e0 | `Item::copyStruct` | med | Byte-copies a ~0x118-byte item struct (header + 0x20 entries of 8 bytes + trailer at 0x114) |
-| 42c6c0 | `getPtrPlus8` | med | Returns *ECX + 8 (address of embedded subobject) |
-| 42c860 | `int64::ltFixed16` | med | Compares (param_1<<16 sign-extended) against ECX int64; returns bool in low byte |
-| 42f000 | `map::valueAtOr0` | med | Lower-bounds key via 00477d90; returns *(node+0x18) or 0 if end |
-| 42f360 | `state::initA` | med | Zero-inits state block incl memset 0x100 buffer at +0x14 and extra dwords (+0x8a..+0x92) |
-| 42f3e0 | `state::initB` | med | Zero-inits state block: fields + memset 0x100 buffer at +0x14 |
-| 42f4a0 | `Item::equals` | med | Compares two 0x118-byte item structs field-by-field incl 0x20-entry loop and sub-item compare 00428940 |
-| 42f590 | `computeCellOffset` | med | Returns *(ECX+0x20)*0x40 + *(ECX+0x4c) (linear index/byte offset) |
-| 434870 | `block::isPassableType` | med | Tests block type byte *ECX against blocked-type set; returns 1 if none match (passable) |
-| 434ad0 | `mat::scaleColumns` | med | Scales matrix rows 0-3 by param_1 and rows 4-7 by param_2 (skip if factor==1.0) |
-| 434b80 | `mat::translateByCols` | med | Adds col0*p1 + col1*p2 into translation column (mat[0xc..0xf]) of 4x4 float matrix |
-| 439210 | `colorMap::allocNode` | med | Allocates RB node (004395c0), inits key/color fields (+0x1c=7,+0x18=0, RGB from param_3+0x18) |
-| 439300 | `list::insertNodeAt` | med | Allocates node, splices into intrusive list before param_3 (prev/next fixup) |
-| 43a010 | `textInput::insertChar` | med | Appends/inserts char into text buffer if len<0x1f: adjust scroll, build substring 0043a270, bump position |
-| 43a500 | `text::layoutWordWrap` | med | Word-wraps a wstring into a line list: splits on space/CR/LF, measures words via 0065e720 against width, builds nodes |
-| 43ac20 | `vec3i64::dotFixed` | med | 3-component 16.16 fixed dot product of param_2 and ECX (three __allmul, /0x10000, summed) |
-| 43c0a0 | `struct::initSmallWithBuf` | med | Zero-inits smaller struct with memset 0x100 buffer at +6 |
-| 43c3e0 | `container::destroy` | med | Destroys container via 0067eb10 then operator_delete(*ECX) (RB/map destructor) |
-| 43caa0 | `combat::getAttackWindup` | med | Returns attack windup/cooldown frames per weapon type (big switch), scaled by attack-speed & material |
-| 43d1a0 | `combat::getAttackTiming` | med | Two-stage switch computing attack windup and recovery frames per weapon type, scaled by speed |
-| 43df60 | `equipment::getActiveElement` | med | Builds list of active element/rune from equipment slots (+0xaa8,+0x990) per weapon type; returns list |
-| 43e190 | `stat::calcSpellPower` | med | Computes spell/magic power: base 2^ terms plus rune bonuses from slots (+0x990,+0xaa8) |
-| 43e350 | `combat::isReadyToStrike` | med | Returns 1 if attack timer elapsed (0043d1a0) for eligible weapon type and cast timer <=0 |
-| 43e420 | `combat::rollBlockSuccess` | med | Rolls level-scaled chance vs rand and shield-type check 004c6f20; returns bool |
-| 43e4a0 | `quest::checkItemThreshold` | med | Sums matching item counts across bag/equipment (0042f4a0 compares) and tests against threshold for ability id |
-| 43e6a0 | `ability::getManaCost` | med | Returns ability mana/spirit cost in units per ability id (switch), scaled by level factor 0043ed60 |
-| 43ed60 | `ability::getPowerFactor` | med | Returns ability power factor 1-1/(rank*0.1+1); resolves rank from +0x1138 table or level if unset |
-| 43f7c0 | `creature::generateAppearance` | med | Generates NPC/creature appearance (color, model, size) from seed/type param_3 via rand and big per-race switch |
-| 444760 | `weapon::isMeleeType` | med | Returns 1 for weapon/ability type ids in melee set (switch), else 0 |
-| 444ae0 | `ability::getResourceCost` | med | Returns resource cost fraction per ability id; buff-list scan for '\t' gives 0.3 default |
-| 444cb0 | `shield::getBlockDuration` | med | Returns block/parry duration frames by shield rune type, scaled by attack speed |
-| 445020 | `combat::selectAttackAnim` | med | Decision tree selecting next attack/ability animation id from weapon+rune+form state |
-| 446af0 | `statusList::upsert` | med | Upserts status/element entry in list (+0x1178): replace matching type byte, else push_back 00451d00 |
-| 447110 | `Player::resetCombatState` | med | Resets combat/transform members and buffers (subset of 00446330) then FUN_0042ef10 |
-| 447700 | `combat::getEffectiveHaste` | med | Computes attack-speed multiplier: base + shield fraction + element buff 004478b0 + rage-form scaling |
-| 4478b0 | `stat::calcHasteBonus` | med | Sums element/rune haste bonuses across many equipment slots (004c7c00) ×0.1 |
-| 447d50 | `render::bindNodeTransformB` | med | Render glue: uploads uniforms via device vtable (0x15c,0x170,0x1ac) using field +0x10 |
-| 447d90 | `render::bindNodeTransformC` | med | Render glue: uploads uniforms via device vtable using field +0xc |
-| 447dd0 | `render::bindNodeTransformD` | med | Render glue: uploads uniforms via device vtable using field +0x14 |
-| 448010 | `render::setVec3Uniform70` | med | Uploads param vec3 (w=0) to shader constant (vtable 0x178) at register +0x70 |
-| 448070 | `render::setUniform34` | med | Uploads param to shader constant (vtable 0x178) at register +0x34 |
-| 448090 | `render::setFogUniform64` | med | Uploads scalar (param-80)/-30 as vec4 to shader constant reg +0x64 (fog/height factor) |
-| 448100 | `render::setInvUniform60` | med | If param>0 uploads vec4(1/param,0,0,0) to shader constant reg +0x60 |
-| 448170 | `render::setLightDirUniform` | med | Uploads 3 constants then normalizes vec3 (sqrt) light direction into shader (vtable 0x178) |
-| 4482a0 | `render::uploadModelViewMatrices` | med | Multiplies mat4s (model*param2, *param3) and uploads world/view matrices to shader constants (vtable 0x178) |
-| 449040 | `render::setThreeUniforms` | med | Uploads three params to shader constant registers +0x4c,+0x50,+0x54 (vtable 0x1b4) |
-| 449090 | `render::setVec3Uniform48` | med | Uploads vec4(param,0,0,0) to shader constant (vtable 0x178) at register +0x48 |
-| 44a690 | `swapElem_0x11c` | med | Swaps two 0x11c objects using 280-byte temp; ecx is likely GameController-owned but this is a value swap |
-| 44a7e0 | `ctor_ObjWithListMap` | med | Constructor: zero header, alloc list sentinel (0044b740) and map/list node (0044b770), init capacity fields |
-| 44aff0 | `copyCtor_ObjWithVec` | med | Copy-construct object: vector<0xc> copy (0044ad30), copy dword +0xc, string +0x10, ints +0x128/+300 |
-| 44b040 | `copyCtor_EntityLike` | med | Field-by-field copy-constructor of large (~0x460+) struct incl strings, sub-array 0x118, tail bytes |
-| 450960 | `GameController_getHoveredTilePtr` | med | Returns pointer to hovered/targeted map tile if type byte==0x0e, else null; indexes region grid |
-| 450b70 | `GameController_isHoveredTileType0e` | med | Returns 1 if hovered tile (00450960) exists and its type byte==0x0e |
-| 450f40 | `bytesToUint2` | med | Load byte then dword into two uints |
-| 4513f0 | `adjustorThunkCall` | med | Adjusts this-pointer by vtable offset then invokes function pointer param_2[0] |
-| 452600 | `dtor_freePtrRange_0x128` | med | Destroy range stride 0x128 (0x4a dwords): free owned pointer at +0x11c each |
-| 457930 | `GameController_collectTextShapes` | med | Recursively walk shape tree; RTTI-cast plasma::Shape->plasma::TextShape and push matches into list |
-| 457ec0 | `stream_writeString` | med | Serialize a std::string to stream: reserve (005870c0), memcpy chars, flush (0040d910) |
-| 4686e0 | `Object_copyCtor_withSubobjects` | med | Copy-ctor: copy scalars, sub-list at +5 via FUN_004571d0, tree at +7 via FUN_0043c920, string at +10 |
-| 468ca0 | `fixedMul_16_16` | med | Fixed-point multiply: ftol64(x) * param_3 pair then /0x10000 (16.16 math) |
-| 468eb0 | `fixed_sub_scaled_64` | med | param_1(int64) = param_2<<16 - param_3(int64) |
-| 469060 | `int64_divScalar_double` | med | param_1 = ftol64((double)*this / param_2) |
-| 46eb90 | `tree_setVisibilityFlagRecursive` | med | Recursively set/clear bit 2 of flags at +200 across child tree at +0x2c |
-| 4719f0 | `GameController_disconnect` | med | Network disconnect: close socket/threads, print 'Disconnected.', add chat line, clear player list |
-| 477e10 | `findNearestEntityInGrid` | med | Scan 3x3 chunk grid around world pos, return nearest entity by FUN_005eeee0 distance |
-| 47ae10 | `collectFilledInventorySlots` | med | Build vector of (bag,slot) pairs for inventory items above player level, class GameController |
-| 47b1b0 | `getEquipmentSlotPtr` | med | Return equipment slot base offset by matching equip type via FUN_006294c0 chain |
-| 47b340 | `getTargetedItemName` | med | Return name string ptr of currently targeted/selected inventory item, else null |
-| 47b3e0 | `getInteractTargetName` | med | Return name string of interaction target entity, else null |
-| 486a20 | `GameController_saveKeyedString` | med | If param_2, looks up value via FUN_004498d0 and serializes a keyed std::string (FUN_00658fa0) else default path |
-| 487ea0 | `GameController_emitFormattedString` | med | Builds a std::string from a source string (FUN_00424da0) and passes to FUN_00636a00; SEH+cookie |
-| 4c12f0 | `vec3_rotateTowardAngle` | med | Computes angle between two 3D vectors (acos of normalized dot) and applies rotation about their cross |
-| 4c76e0 | `item_valueByType` | med | Item value int by weapon type (2x/1.5x/1x/100x mults) via FUN_00445f60 |
-| 4c7c00 | `item_computeStat_variant3` | med | Per-item float stat for tool/weapon types with rng and subtype 0xc bonus |
-| 4c7f60 | `item_weaponDamage` | med | Computes weapon damage for type-3 items: base scaled 2x/4x/8x by subtype |
-| 4df760 | `GameController_terrainStateChanged` | med | Detects if terrain/interaction state changed vs world (compares 11 ints and byte flag); reads geometry |
-| 4df880 | `GameController_questStateChanged` | med | Like 004df760 plus a quest-progress score threshold check (FUN_004df9c0) gating an update |
-| 4df9c0 | `GameController_computeQuestScore` | med | Sums a weighted quest-progress score over 11 counters plus a class-change bonus |
-| 4e4a20 | `GameController::build_quest_text` | med | Builds quest/speech text: constructs two maps (via 0046d520/00630a10), invokes substitute_placeholders |
-| 4e5320 | `GameController::show_region_name` | med | Formats world region/zone display name ('Lands of', 'Ocean') from chunk coords; picks singular form if area small |
-| 4e5590 | `GameController::format_region_singular` | med | Builds localized region name string ('singular') from region record fields (+0x18..+0x20) |
-| 4e5c10 | `GameController::show_object_name` | med | Looks up object at coords (>>8) then formats its display name via format_object_singular_name |
-| 4e6530 | `GameController::speech_text_fits` | med | Returns whether measured speech text height <= available height field at +0x16c |
-| 4e6550 | `GameController::measure_speech_height` | med | Computes total speech text pixel height: sums line-node counts in list[+0x170] times lineHeight(+0x1d4) |
-| 4e6df0 | `GameController::draw_mesh` | med | D3D9 draw glue: sets stream source, indices and DrawIndexedPrimitive via device vtable for object at +0x58 |
-| 4e71d0 | `GameController::match_transparent_color` | med | Tests whether 3-byte color at param_1 matches palette DAT_0076b340 or its axis-variants |
-| 4ec370 | `GameController::class_icon_id` | med | Maps a small profession/class index to its item/icon string ID via switch (0x354,0x351...) |
-| 51be60 | `GameController::item_name_string_id` | med | Switch mapping item category/material/rarity to localized name string ID |
-| 59aa60 | `World::getObjectName` | med | Map find by int key at world+0x800104; on hit constructs a string(+5) into param_1, else throws via 0040eb60 |
-| 59cff0 | `GameController::playItemActionSound` | med | Selects and queues sound/effect events via 005a0d80 based on item category *param_1 and subtype param_1[1] |
-| 5a03d0 | `World::findNearestSpawnPoint` | med | Gathers candidate spawn/teleport points from neighboring chunk cells into a list, then selects the nearest |
-| 5a35d0 | `World::raycastVoxels` | med | March a ray (fixed-pt >>16) through voxel chunks up to distance param_3, sampling block solidity vs param_4, capped 500 steps |
-| 5a5240 | `WorldMap::lookupTileValue` | med | Map lower_bound by (x,y) key vs end at +0x800124; build result struct {0,0,7} from found node +0x18, else raise via FUN_0040eb60 |
-| 5a5cb0 | `collectSolidBlocksInBox` | med | Loop region/block grid over box (bounds param1-4, >>8 chunk, >>6&0x3f block), gather solid entities (byte&0x1f) into temp list, process, free |
-| 5a9da0 | `PathMap::findInOpenSet` | med | Builds temp coord key, lower_bound in open-set map at +0x140c, compares key; returns matching node |
-| 5c4800 | `GameController::sampleTemperatureGrid` | med | Scans 0x400-stride POI/settlement grid near (x,y), finds nearest and distance-weighted value; climate/temperature sample |
-| 5c4dd0 | `GameController::sampleHumidityGrid` | med | Scans 0x400-stride POI grid near (x,y) for nearest, distance-weighted; second climate channel (humidity) |
-| 5eefa0 | `World_getColumnDataAt2` | med | Returns pointer to per-column float data at (param_2,param_3); sibling of FUN_005ee540 |
-| 5f0720 | `World_getRegionCellPtr2` | med | Region cell pointer/value helper (sibling of FUN_005ef040) for FUN_0059d640 |
-| 5f51e0 | `GameController_buildDecalMesh` | med | Allocates+inits a mesh/particle buffer (memset, FUN_004c7830, FUN_0040ee70); paired with FUN_005f8ad0 |
-| 5f8ad0 | `GameController_buildDecalMesh2` | med | Allocates+inits mesh/particle buffer (memset, FUN_004c7830, FUN_0040ee70); sibling of FUN_005f51e0 |
-| 5fa4c0 | `GameController_entityDistanceSq` | med | Returns squared distance to an entity via FUN_005f8e10 (vfunc_10) |
-| 5fc160 | `GameController_tryLockAndProcess` | med | Scoped lock (EnterCriticalSection ext:18/19) wrapping FUN_00602440 work |
-| 5fc1b0 | `GameController_processNetworkTick` | med | Large locked update (vfunc_11): message/entity processing under critical section |
-| 601cc0 | `locked_pair_update` | med | Under lock, runs FUN_005eeee0/FUN_005eefa0 (fixed-point compute) pair |
-| 608f20 | `object_release` | med | Releases/decrefs an object via FUN_0046d550 (vfunc-shared) |
-| 60c510 | `GameController_updateSubsystems` | med | Per-frame subsystem update (vfunc_10): drives many system updates incl. exp decay (FUN_00622d40) |
-| 622d40 | `exp_decay_factor` | med | Returns an exponential factor (libm_exp) from param_1; smoothing/decay helper |
-| 6294c0 | `GameController_updateWidgetLayout` | med | Triggers widget layout pass via FUN_00629300 |
-| 62dc20 | `GameController_setWidgetBounds` | med | Sets widget bounds via FUN_0062d7f0 (cookie-guarded) |
-| 62dcd0 | `GameController_setWidgetBounds2` | med | Sets widget bounds via FUN_0062d7f0 (variant) |
-| 630220 | `string_appendGrow` | med | Appends to a string/vector with growth (external:91, FUN_00583cb0) |
-| 630be0 | `Widget_setPositionFloat` | med | Sets a float position/bound and stores via FUN_00583cb0 vector (external:91) |
-| 631460 | `AdaptionWidget_rebuildLayoutRecursive` | med | Recursively rebuilds widget layout (self-call, FUN_0062baf0 layout, FUN_00630be0 pos) |
-| 635550 | `Node::find_child_name_by_string` | med | DFS node tree by name string, returning associated name std::string of first match |
-| 636950 | `Node::detach_from_parent` | med | Detach node: remove from parent list and, if param given, remove+release the passed node |
-| 636a00 | `Node::pick_link_by_name` | med | Recursively find node whose name matches param_1; on hit-test success (FUN_004514e0) activate link target and notify (FUN_00467f60) |
-| 6393e0 | `Registry::foreach_node_locked` | med | Under critical section, in-order traverse RB-tree at +0x10 invoking FUN_0065b2a0 on entries with +0x28!=0 |
-| 64ac00 | `GameController::update_render_targets` | med | Refresh render-target textures (FUN_00659ef0) and push camera/light matrices+params into render passes at +0xc10/c14/c18 |
-| 64f4e0 | `NamedObject::create_with_defaults` | med | Create NamedObject with default ContinuousAttribute/DiscreteAttribute if args null; optional register (SEH) |
-| 650980 | `Widget::render_pass` | med | Full widget render: begin (vtbl 0x4c), layout, draw subtree (632910), end (vtbl 0x50); returns result |
-| 6526b0 | `GameController::notify_all_widgets` | med | Recursively update widgets (635700) then iterate widget list at +0x7c invoking vtbl 0x1c and registry callback |
-| 652a70 | `GameController::on_button2_down` | med | Handle secondary button press: clear tooltip, dispatch press callback variants |
-| 652b60 | `GameController::on_button2_up` | med | Handle secondary button release: dispatch release callback |
-| 657a00 | `ScrollButton::deserialize` | med | Deserialize plasma::ScrollButton from istream (fields via 657c00) |
-| 657ce0 | `ScrollSlider::deserialize` | med | Deserialize plasma::ScrollSlider from istream (fields via 657ee0) |
-| 659320 | `ContinuousAttributeVec3::deserialize` | med | Deserialize plasma::ContinuousAttribute<Vec3> from istream (opcodes 1=name,2/3/5/6=keyframes) |
-| 659740 | `NamedObject::deserialize` | med | Deserialize plasma::NamedObject base from istream (common fields via 659940) |
-| 659940 | `Widget::deserialize_common_field` | med | Deserialize one common widget field by opcode (name, pos, size, color, matrix, flags, texture) |
-| 659e80 | `istream_skipRecordByLength` | med | Reads a length int from istream then seekg's forward past that many bytes (skips a sized block). |
-| 65b2a0 | `GameController::rebuildEntityLists` | med | Under critical section, walks two entity maps (+0x68,+0x70), frees per-entity sub-lists/objects and rebuilds id lists; 'list<T> too long'. |
-| 6612d0 | `Image::reallocFromFields` | med | Thin wrapper re-invoking setPixelData using the object's own width, height and current pixel buffer |
-| 687b10 | `hashString_FNV` | med | Computes FNV-like 64-bit rolling hash (mult 0x1f) over std::string bytes; returns hi:lo pair |
-| 688030 | `StreamReaderCtx::init` | med | Initializes a deserialization reader context: sets list head, stores istream ptr at +8, zeroes fields, allocates helper |
-| 6880c0 | `decodeScrambledBuffer` | med | In-place decodes/unscrambles a byte buffer of length param_2 using key table param_3 (modular index subtraction) |
-| 40f4f0 | `computeLevelDiffBonus` | low | Game logic: gets target entity (40f570), reads its level vs a table value, accumulates pow(2,..)-scaled amount |
-| 434c20 | `node::applyDamageColorFlash` | low | If model node present, scales its color vec4 by ratio of two health values (0062f600/0062d50); render tint |
-| 4392d0 | `list::makeNode` | low | Allocates list node 00439600 then inits payload via 0040eaf0 unless error (-8) |
-| 43ab30 | `text::drawColoredString` | low | Packs 3 RGB floats*255 into a color then forwards to text layout 0043a500 |
-| 43b4a0 | `vec3i64::selfDotFixed` | low | Calls dot 0043ac20 with self, returns result pointer (length-squared fixed) |
-| 43b660 | `state::initFields10` | low | Zeroes fields +0x10,+0x14,+0x18,+0x20,+0x24 (init sub-state) |
-| 444590 | `combat::canBlockNow` | low | Returns 1 if not attacking and weapon/shield state permits block |
-| 444650 | `physics::isLandingHard` | low | Returns 1 if airborne-landing conditions met (flag +0x124&0x10, vel +0x3c<0, grounded) |
-| 444a90 | `quest::hasActiveItemReq` | low | Returns 1 if quest object (+0x1d28) has an item matching 0042f4a0 in its bag list |
-| 4460f0 | `creature::getScaleVec4` | low | Writes a scale vec4: crouch/mount case (0.8,0,0.5,1) via flag, else all 1.0 |
-| 450920 | `GameController_getSelectedCount` | low | Returns 0/1/half of 004c76e0 based on 00450960 pointer validity |
-| 450a00 | `GameController_isInFrontRange` | low | Range check of a position (006294d0) vs camera dist thresholds 30.0 (006294d0/00627ce0/00627d50) |
-| 450ab0 | `GameController_isNearTargetTile` | low | If tile 00450960 valid, checks its distance within camera near-thresholds |
-| 451420 | `storeShortViaAdjust` | low | Store short at *(base+vtbl[+4]+0x40) |
-| 4573d0 | `GameController_interpTimeSum` | low | Interpolates via 004ac150 then sums two int64 (0068d946) into *param_1 |
-| 4574f0 | `GameController_popbackAndFormat` | low | Builds two strings, calls 00457600, then pops back element (0xc) from vector at ecx+0x30, returns dword |
-| 457600 | `GameController_writeTwoStrings` | low | If field>=0 emits two serialized strings (00457ec0) via 004042e0/0040da70 |
-| 46ebe0 | `GameController_addItemToInventory` | low | Add item/coin to inventory counters; coins at +0x4a/0x4b, else find/grow item slot vector |
-| 46f620 | `GameController_reloadServerList` | low | Enter CS, set server name string, rebuild remote-player list from tree, notify + cleanup temp list |
-| 4709c0 | `GameController_onItemPickup` | low | Item pickup: check carry limit ('You can't carry more'), consume drops, add to inventory, rng affix, play SFX |
-| 470d80 | `voxelRaycast_modelPick` | low | Traverse model voxel grid along projected ray to pick a solid voxel (matrix param_2, FUN_004e71d0 solidity) |
-| 471920 | `GameController_modifyBlockAtWorld` | low | At world (x,y) resolve chunk FUN_00434d10, find column entry, adjust block height via FUN_0044e700 |
-| 471b60 | `renderEntityLabelBillboard` | low | Render 3D text/label glyphs for entity: transform each char quad by matrix, FUN_004c7250 draw |
-| 471d50 | `drawOrientedModelOrTrail` | low | Build orientation matrix from direction vec (sqrt/sin/cos) and render model/segment with many transforms |
-| 47b010 | `getHoveredWorldItem` | low | Return ptr to item under cursor by projecting item world pos to screen vs mouse box (120px) |
-| 47f3c0 | `testAABBvsFrustum_fixed` | low | Fixed-point AABB (param_1,param_2) vs 6 frustum planes at +0x1000fa4 intersection test |
-| 47f760 | `testSphereVsFrustum_fixed` | low | Fixed-point sphere (center param_1, radius param_3) vs 6 frustum planes test |
-| 47fae0 | `spawnItemAffixDrops` | low | Generate item affix/enchant list entries by rarity buckets (mod 5) via FUN_00449b70 list insert |
-| 480e00 | `lookupNestedStringMap` | low | Two-level string-map lookup (FUN_004e3790 hash, FUN_00428db0 cmp) with lazy-init default entry |
-| 484350 | `playHitSoundAtPos` | low | Play weapon-hit SFX (hit.wav/blade1.wav/...) at world pos param_2, dist-attenuated volume |
-| 4a6b50 | `GameController_renderCreature` | low | Large creature/model render: builds bone transforms with sin/cos, camera dist, animation; many float stack locals |
-| 4bbd80 | `GameController_spawnRibbonEffect` | low | Spawns a swirling ribbon/particle strip: builds per-segment rotated transforms with sin/cos and pushes vertices |
-| 4bc760 | `GameController_spawnRibbonEffect2` | low | Variant ribbon/trail effect emitter with extra twist param_9; trig-built transforms per segment |
-| 4bd160 | `GameController_spawnEffectMesh` | low | Emits an animated effect mesh (sin/cos/sqrt transforms), similar to particle spawners |
-| 4be760 | `GameController_renderDroppedItem` | low | Renders a dropped item/block billboard: fetches block color (FUN_0042f7e0), builds transform, submits quad |
-| 4c6f20 | `item_classifyRecursive` | low | Recursively walks an item/effect tree, classifying nodes by type (2/3/4-7) and subtype at +0xd |
-| 4dc8e0 | `GameController_copyEntityState` | low | Deep-copies entity/world state: multiple list clones and field copies (FUN_004dc4e0/5b0/680) |
-| 588250 | `GameController_MatchInputBinding` | low | Game: scans input/action bindings against the current key/button event, storing or firing a matched binding |
-| 59d640 | `Terrain::computeBiomeColor` | low | Computes terrain/vegetation RGBA (param_7) by blending many constants against temperature/humidity/height noise |
-| 5a0bf0 | `GameController::updateHeldObjectOnMove` | low | Map-lookup two keys (param_1,param_1+8) vs end(+4); update held-object (+0xb8) counters +0x194, copy to +0x1024/0x1030 |
-| 5a7eb0 | `Creature::findPathToTarget` | low | A* pathfinding: seeds start from pos+RNG offset, distance-tests goal (0x1458 radius), builds open/closed sets and node list |
-| 5eeee0 | `fixedpoint_vec_subtract` | low | Computes 16.16 fixed-point per-axis difference into param_1 from param_2..param_5 inputs |
-| 602440 | `hash_or_index_compute` | low | Computes an index/hash from param_1/param_2 (no callees); used by lock wrapper |
-| 6091a0 | `get_int_stub` | low | Returns an int (trivial getter) |
-| 60a9f0 | `store_object_ref` | low | Stores an object reference/pointer into param_1 |
-| 60aa50 | `get_int_stub_b` | low | Returns an int (trivial getter) |
-| 62f630 | `GameController_getWidgetSize` | low | Gets widget size via FUN_0062b510 (cookie-guarded) |
-| 62f660 | `GameController_getWidgetSize2` | low | Gets widget size via FUN_0062b510 (variant) |
-| 62f720 | `get_widget_child` | low | Returns a child/field pointer (no callees) |
-| 6303d0 | `object_buildWithRefcount` | low | Builds object with refcount (FUN_0046d550) via FUN_00630220 |
-| 630ae0 | `compute_pair_field` | low | Computes/writes a pair field from param_2 into param_1 (no callees) |
-| 636560 | `Node::hit_test_point_recursive` | low | Recursive pick/hit-test: transform cursor point into node space, test bounds & children, honor visibility flags |
-| 6504e0 | `Node::destroy_and_unregister` | low | Full node teardown: detach from focus/capture, recursively destroy children, unregister attribute/shape/font nodes from CS lists, free (big) |
-| 6527f0 | `GameController::on_mouse_down` | low | Handle mouse-press: pick widget under cursor, set capture/focus, dispatch enter/press callbacks (big) |
-| 652940 | `GameController::on_mouse_up` | low | Handle mouse-release: dispatch release/click callbacks, update captured widget |
-| 652c10 | `GameController::set_hover_widget` | low | Update hovered/entered widget (+0xd4/c4), dispatch leave/enter callbacks to old/new widget hierarchies (big) |
-| 653360 | `GameController::position_popup` | low | Position a popup/tooltip near cursor, clamped to screen extents (+0x10c/+0x110), toggling its clip flag |
-| 653770 | `GameController::load_widget_file` | low | Open a widget resource file by extension (.CUB etc), log 'read', deserialize into widget via 6555d0 or model loader (big) |
-| 6555d0 | `GameController::deserialize_widget_tree` | low | Deserialize a full widget/scene tree root from istream: creates attribute maps, dispatches per-type readers, builds hierarchy (huge) |
-| 657f80 | `SmoothMeshShape::deserialize_v2` | low | Deserialize plasma::SmoothMeshShape (name, vertex buffer, transforms, sub-attributes) from istream (big switch) |
-| 658630 | `TextShape::deserialize` | low | Deserialize plasma::TextShape (font, text string, matrix) from istream chunk stream (big) |
-| 659fb0 | `Font::advancePenX` | low | Adds param_1 to accumulator at +0xe8, stores it at +0xe4, clears +0x10, then calls FUN_006372a0. |
-| 6816c0 | `SceneLoader::ctor` | low | Constructs loader/deserialization context: default-inits eight string fields (0x20..0x58), stores params, builds a pair-vector |
-| 681c70 | `PlasmaGraphics::loadDisplay` | low | Main scene/display deserializer: validates "PlasmaGraphics" magic, throws plasma::Exception on mismatch, dispatches Shape/Widget types |
-
-## game_misc (495)
+## game_misc (567)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -2491,22 +1935,28 @@ comments with the same content are also written above each function in the .cpp 
 | 40c280 | `string_assignPtrLen` | high | std::string assign(ptr,len): overlapping-range fast path or realloc+memcpy |
 | 40c380 | `string_data` | high | std::string c_str/data: returns heap ptr if cap>0xf else inline buffer |
 | 40c590 | `memcmp_traits` | high | char_traits memcmp: 4-byte-unrolled byte compare, returns -1/0/1 |
+| 40d9d0 | `vectorInt_resize` | high | std::vector<int>::resize: shrinks (memmove) or grows zero-filling to param_1 elements |
 | 40e440 | `wostream_insertNarrow` | high | operator<<(wostream, const char*): widens each char via ctype, applies field width padding |
-| 40e6f0 | `wostream_insertWide` | high | operator<<(wostream, const wchar_t*): writes wide string with field-width padding via sputn/sputc |
 | 40e940 | `useFacet_ctypeW` | high | std::use_facet<ctype<wchar_t>>: locates/registers ctype facet in locale, throws bad_cast on failure |
 | 40ea30 | `setPair_a` | high | Stores 2 dwords into object (assign vec2/pair) |
 | 40ee40 | `setColor4b` | high | Copies 3 bytes from param_1 and sets 4th byte to param_2 (RGBA set) |
 | 40ef80 | `vec2_scale` | high | Scales 2-component float vector in place by param_1 |
-| 411d40 | `array_lerp` | high | Interpolates array: param_1[i] += (param_2[i]-param_1[i])*param_4 for param_3 elements (unrolled) |
+| 40f8c0 | `std::wstring::operator_delete_wrapper` | high | deallocate wstring buffer via operator delete |
+| 411d10 | `powf_f` | high | Returns powf(param_1,..) via libm_sse2_pow_precise |
 | 411e10 | `copy16bytes` | high | Copies two 8-byte values into object (16-byte/2x double copy) |
-| 412170 | `vec4_scale` | high | Scales this vec4 by scalar param_2 into param_1 |
 | 412320 | `vec2_dot` | high | Returns 2D dot product of this and param_1 |
 | 423e70 | `mat4_identity` | high | Sets object to 4x4 identity matrix |
+| 423ee0 | `vec2_length` | high | Returns sqrt(x^2+y^2) (2D vector length) |
 | 424090 | `vec2_normalize` | high | Normalizes this vec2 in place (divide by length) |
 | 424b30 | `asinf_f` | high | Returns asinf(param_1) via libm_sse2_asin_precise |
 | 424f30 | `mat4_mulRight` | high | 4x4 matrix multiply: param_1 = param_1 * param_2 (copies this then multiplies) |
 | 427a30 | `copyVec4Array` | high | Copies array of 16-byte (vec4/4-dword) elements [param_1,param_2) to param_3 |
+| 427ab0 | `copyVec2Array` | high | Copies array of 8-byte (vec2/2-dword) elements [param_1,param_2) to param_3 |
+| 427af0 | `copyVec4Array2` | high | Copies array of 16-byte elements [param_1,param_2) to param_3 (null-dst tolerant) |
+| 428c80 | `vectorReserveCheck8` | high | std::vector reserve growth guard for 8-byte elements, throws _Xlength_error if too long |
+| 428d00 | `vectorReserveCheck16` | high | std::vector reserve growth guard for 16-byte elements, throws _Xlength_error if too long |
 | 42b7a0 | `vectorErase8` | high | std::vector erase of 8-byte elements: shifts tail down [param_2,param_3) and adjusts end |
+| 42bd20 | `std::vector::push_back_16` | high | push_back one 16-byte element, reserve if full |
 | 42c4a0 | `vec3i64::toFloat` | high | Converts three int64 fixed-point coords to float via ×1/65536 (1.5258789e-05) |
 | 42c5b0 | `vec6::copy` | high | Copies 6 dwords param_1->ECX (3x int64 / 192-bit vector copy) |
 | 42c7a0 | `vec3i64::copySub` | high | Copies 6 dwords then subtracts param_2 as three int64 (borrow chains) |
@@ -2520,23 +1970,34 @@ comments with the same content are also written above each function in the .cpp 
 | 43e2c0 | `curve::diminishingx3p1` | high | Returns (1-1/(n*0.1+1))*3+1, 0 if n<1 |
 | 43e660 | `curve::diminishingN1` | high | Returns 1 - 1/((n+1)*0.1+1) curve |
 | 43f770 | `curve::diminishingx3p15` | high | Returns (1-1/(n*0.1+1))*3+1.5, 0 if n<1 |
+| 444230 | `weapon::isSpecialRune` | high | Returns 1 if weapon rune byte +0xaa9==3-class and subtype in set |
 | 445f60 | `math::pow2Mul` | high | Returns 2^a * 2^b (two libm pow calls, product) |
 | 445ff0 | `math::pow2Div` | high | Returns (2^a * 2^b) / 2^c (three pow calls) |
-| 4462f0 | `curve::inverse20p1` | high | Returns (1/(1-x)-1)*20+1 |
 | 446aa0 | `curve::diminishingP1` | high | Returns (1-1/(n*0.1+1))+1, 0 if n<1 |
 | 4476a0 | `curve::diminishingHalf` | high | Returns (1-1/(n*0.1+1))*0.5+0.5, 0.5 if n<1 |
-| 4497a0 | `handle::isOpen` | high | Returns *(ECX+4) != 0 (resource/db handle open test) |
-| 449810 | `db::loadBlobByKey` | high | SQLite 'SELECT value FROM blobs WHERE key=?': binds key, steps, allocates+copies blob to out |
-| 44a8a0 | `refcount_initTo1` | high | Init small handle: *ecx=param, [1]=1, [2]=0 (refcount/control-block style) |
+| 4496a0 | `blob::deobfuscate` | high | Deobfuscates a byte buffer: table-driven (006ffa68) shuffle/unswap then bitwise-complement each byte |
 | 44a970 | `reset_0x148Struct` | high | Reset/init a 0x148 struct: set [8]=1, zero header, memset 0x100 buffer, magic 0x3d924925 |
 | 44af00 | `dtor_13Strings_0x118` | high | Destructs 13 sub-objects at stride 0x118 via 0042c5e0 (array of string-bearing structs) |
 | 44b7b0 | `allocNode_0x48_copyHead` | high | Allocates 0x48 node, copies *ecx into 3 link slots |
 | 44be30 | `isNonNegativeFlag` | high | Returns ~(byte[ecx+3]>>7)&1 (sign bit test / is-red or is-positive) |
 | 450f00 | `bytesToVec3Float` | high | Convert 3 bytes to 3 floats (color/normal decode) |
+| 451210 | `std::operator>>(wistream,wstring)` | high | extract wstring from wistream skipping via ctype (_Ipfx,getloc) |
+| 451380 | `std::operator>>_wstring_unwind` | high | exception cleanup epilog for wstring extraction |
 | 451470 | `strEqual_cstr` | high | strlen(param_2) then memcmp vs field+0x10; returns ==0 |
+| 451dd0 | `std::map::insert_val_wstr` | high | insert map entry, copy pair + wstring value (_Assign FUN_0040f680) |
 | 452650 | `dtor_stringRange_0x18` | high | Destroy std::string range stride 0x18: free SSO-overflow buffers |
+| 454190 | `std::list<T>::_Insert_range` | high | Copy-append node range into list; length_error guard |
+| 454d60 | `std::_Insertion_sort<0x10>` | high | Insertion sort, 16-byte elements, int key at +4 |
+| 454fe0 | `std::_Make_heap<0x10>` | high | Build max-heap over 16-byte elements (int key), _Adjust_heap FUN_00451a60 |
+| 455270 | `std::_Med3<0x10>` | high | Median-of-3 for 16-byte elements, int key |
+| 455470 | `std::_Guess_median<0x10>` | high | Median-of-medians pivot selection, 16-byte elements |
+| 455710 | `std::_Move_backward<0x10>` | high | Move-backward range of 16-byte elements |
+| 455940 | `std::_Push_heap<0x10>` | high | Sift-up 16-byte element into heap, int key |
+| 456e90 | `std::_Copy<0x10>` | high | Copy-assign 16-byte elements from list-node payloads into array |
 | 456fb0 | `moveStringRange_0x18` | high | Move-construct std::string range stride 0x18 (steal buffer or memmove SSO) |
 | 457ea0 | `pair_assign_2dword` | high | Assign pair of 2 dwords (param_2, param_3) |
+| 459530 | `Struct_reset_with256buf` | high | Zero-init struct incl memset 0x100 buffer at +10, set flags and 0xffffffff sentinels |
+| 459800 | `Struct_copy_acBytes` | high | Copy large struct up to offset 0xa8 (mixed dword/word fields) |
 | 459a30 | `Struct_reset_off14to46` | high | Zero fields from offset 0x14 through 0x46 |
 | 459ab0 | `Struct_copy_skipIdx1` | high | Copy dwords 0,2..0xe (skips index 1) |
 | 465c70 | `Struct_reset_0dDwords` | high | Zero ~0xd dwords plus word at +9 |
@@ -2546,27 +2007,35 @@ comments with the same content are also written above each function in the .cpp 
 | 466590 | `Struct_reset_1cDwords_flag` | high | Zero ~0x1b dwords and set byte +0x1c=1 |
 | 468790 | `Struct_copy_1cDwords_b` | high | Copy ~0x1d dwords (skips index 3 and 0x15) plus byte |
 | 4688f0 | `predicate_notFUN_2f4a0` | high | Return logical NOT of FUN_0042f4a0 result |
+| 468f20 | `vec2_add` | high | param_1 = param_2 + *this over 2 floats |
 | 469020 | `vec3_divScalar` | high | param_1 = *this / param_2 over 3 floats |
 | 46d370 | `Container_dtor_at78` | high | Destroy container at +0x78 via FUN_0067eb10 then delete |
 | 46ef20 | `array_alloc_stride18` | high | Allocate array of stride 0x18 elements; throws on overflow/oom |
 | 46f990 | `listNode_free_ownsString` | high | Reset list head then free node that owns an SSO string at +8 |
 | 46fa90 | `ios_setstateFailIfZero` | high | If FUN_0040c4c0 returns 0, set failbit(2) on basic_ios (STL glue) |
-| 47faa0 | `getChunkCellAt` | high | Return chunk cell dword at (param_1,param_2) if within 0x400 grid, else 0 |
+| 486830 | `ChunkBuffer_vector_insert_8` | high | Inserts one 8-byte element into a ChunkBuffer vector, copying 8 bytes field-by-field; grows via FUN_0046e8f0 |
+| 486ba0 | `WorldInfo_clearUnderLock` | high | Enters critical section at +0x250, destroys several intrusive lists (call vfunc(1)) and buffers, then leaves lock |
 | 487f80 | `fixed16_vec_lengthSquared` | high | Computes fixed-point 16.16 squared length of a 2-component 64-bit vector via allmul/alldiv by 0x10000 |
-| 4a23d0 | `GameController_buildWorldList` | high | 'online_': builds WorldPreviewWidget grid from save/online world list, filtering by 'online_' prefix |
 | 4c14f0 | `acosf_wrap` | high | Wrapper returning acos(param_1) as float |
 | 4cb080 | `move_range_3` | high | Copies/moves a range of 3-byte elements |
 | 4cb490 | `AdaptionWidget_vector_resize_3` | high | Resizes a 3-byte-element vector (AdaptionWidget); grow via reserve+vfunc_6 or shrink+move |
 | 4cc7d0 | `int3_notEqual` | high | Compares two 3-int (12-byte) records for inequality (memcmp-like) |
+| 4ce460 | `std_use_facet_ctype_char` | high | std::use_facet<ctype<char>>: fetch ctype facet from locale, throws bad_cast if absent |
+| 4d6f10 | `utf16_appendCodepoint` | high | Write one Unicode codepoint as UTF-16 (surrogate pair if >=0x10000), return advanced ptr |
+| 4d72a0 | `utf8_to_utf16_alloc` | high | Count UTF-16 units for UTF-8 input, allocate, decode UTF-8 to UTF-16 |
+| 4d7400 | `utf32le_to_utf16_write` | high | Convert UTF-32LE codepoints to UTF-16 into caller buffer (surrogate expansion) |
+| 4d7460 | `utf32be_to_utf16_write` | high | Convert byte-swapped UTF-32BE codepoints to UTF-16 into caller buffer |
+| 4d74f0 | `utf8_countCodepoints` | high | Count Unicode codepoints in a UTF-8 buffer (1..4 byte sequences, word-at-a-time ASCII fast path) |
+| 4d75f0 | `utf8_to_utf16_write` | high | Decode UTF-8 buffer to UTF-16 into caller buffer (handles 1-4 byte seqs, surrogates) |
+| 4d78a0 | `xml_detectEncoding` | high | Detect text encoding from BOM/'<?xml' heuristic, return encoding id (1..6) |
+| 4d96f0 | `xml_decodeEntityRef` | high | Decode an '&...;' XML entity reference (named/numeric) to UTF-16 into output |
 | 4d9a40 | `QuestText_cloneNode` | high | Clones a QuestText map node (FUN_004da730) and copies its string value; SEH-guarded |
+| 4d9c50 | `std_Tree_insert_rebalance` | high | std::map/set red-black tree insert fixup (rotations/recoloring); _Xlength_error on overflow |
+| 4d9e50 | `std_Tree_insert_rebalance_v2` | high | std::map/set RB-tree insert fixup for a second value type; _Xlength_error guard |
 | 4dc8b0 | `struct_copy3_andCall` | high | Copies 3 dwords from param into this and calls FUN_00468670(param_2) |
-| 4e03c0 | `QuestText_copyTree_b` | high | Copies a QuestText red-black tree (nodes via FUN_004e0440), fixing leftmost/rightmost |
 | 4e0940 | `QuestText_insertRebalance` | high | QuestText red-black tree insert rebalance (rotations/recolor); cap 0x4924922 |
-| 4e3790 | `map::lower_bound_string` | high | RB-tree search by string key comparing via FUN_00428db0; returns nearest node (lower_bound) |
 | 4e4350 | `QuestText::substitute_placeholders` | high | Recursively substitutes dialogue placeholders ($creature/$name/$item/$object/$zone/$stress/$number) via lookup maps |
 | 4e7290 | `VoxelModel::load_from_file_or_buffer` | high | Loads .cub voxel model: reads dims from istream (param_2==0) or decompressed buffer, then FUN_004e7650 |
-| 4e7650 | `VoxelModel::set_data` | high | Copies voxel color data into model, scans for axis-marker voxels (RGB axes) as anchors, then builds mesh |
-| 4e7870 | `VoxelModel::build_mesh` | high | Builds render mesh from voxel grid: generates per-face quads with ambient occlusion, colors and normals into vertex buffers |
 | 4ebb40 | `map::insert_rebalance` | high | Inserts a new node into map/set at given parent then performs red-black insert fixup; 'map/set<T> too long' |
 | 587f30 | `Vec3_IntToFloat` | high | Game: converts a 3-component integer vector to a 3-component float vector |
 | 58d6c0 | `Vec2_DoubleToInt` | high | Game: converts a 2-element double array to two ints stored at in_ECX |
@@ -2578,7 +2047,6 @@ comments with the same content are also written above each function in the .cpp 
 | 598930 | `VoxelChunk::cellAt` | high | Returns pointer to voxel cell at (x,y,z) in chunk grid (12-byte cells) after clamping/bounds check |
 | 59c480 | `World::enterCriticalSection` | high | Enters the world/global critical section at in_ECX+0x8000d8 |
 | 59f070 | `Terrain::getBlockPacked` | high | Fetches block at param_2 via 0058e7d0 and copies its 4-byte + 1-byte fields into param_1 |
-| 59fe70 | `Terrain::sampleBlockAt_fwd` | high | Thin wrapper forwarding first two fields of param_2 to FUN_005a64b0 |
 | 59ff50 | `getField14` | high | Trivial getter returning the dword at in_ECX+0x14 |
 | 5a5a10 | `Structure::getWidthByRotation` | high | Return dimension at +0x68 or +0x64 selected by rotation-parity bit0 of flags (+4) |
 | 5a5a30 | `Structure::getHeightByRotation` | high | Return dimension at +0x64 or +0x68 (opposite selection of 5a5a10) by rotation-parity bit of flags (+4) |
@@ -2586,7 +2054,6 @@ comments with the same content are also written above each function in the .cpp 
 | 5a5b10 | `vec2_lengthSquared` | high | Return squared magnitude x*x+y*y of a 2D double vector at in_ECX |
 | 5a5b40 | `transformCoordsByRotation` | high | Transform (x,y) in place by rotation code (flags+4 &3, cases 1-3: swap/mirror) plus flip flag (+8), using dims +0x64/+0x68 |
 | 5a6a00 | `moveConstruct9Field` | high | Move-construct: zero dest, steal 3-ptr buffer from source (nulling src[0..2]), copy remaining fields src[3..8] |
-| 5a6b60 | `allocObjectWithVec3` | high | Allocate object via FUN_0043c8e0 and store vec3 (param_3[0..2]) at +8/+0xc/+0x10 |
 | 5a6c30 | `allocNodeMovePayload` | high | Allocate RB-tree node (FUN_005a7b90), init color(+0xc)=0, move-construct payload via FUN_005a6a00 |
 | 5a78a0 | `lexicographicalLess` | high | Lexicographic less-than of two int ranges [p1,p2) vs [p3,p4); returns 1 if first<second (vector<int> key compare) |
 | 5a7a40 | `initStruct6Fields` | high | Initialize 6-field struct: three scalar params into in_ECX[0..2], vec3 from param_4[0..2] into in_ECX[3..5] |
@@ -2600,6 +2067,7 @@ comments with the same content are also written above each function in the .cpp 
 | 5c39e0 | `ctor_obj0x140` | high | Default-constructs 0x140-byte object: zeroes header, memset(+6,0,0x100), sets [0x47]/[0x48]=-1 |
 | 5c3a90 | `ctor_zero6i` | high | Default ctor zeroing 24-byte (6-int) struct |
 | 5c3b70 | `ctor_from_two_vec3` | high | Constructs 24-byte struct from two 3-int vectors (param_1->[0..2], param_2->[3..5]) |
+| 5c3bb0 | `Region_ctor` | high | Region constructor: zero-inits ~0x60-byte struct, sets flag [9]=1 |
 | 5c3c70 | `dtor_free_two_buffers` | high | Destructor freeing two heap buffers via operator_delete (in_ECX[3] then in_ECX[0]); container teardown |
 | 5c3de0 | `map3i_at` | high | map<vec3i,T> operator[]: cache-check node vs 3D key at [0x10/0x14/0x18], else insert node |
 | 5c3e80 | `array24_at` | high | Element accessor: returns base + index*0x18 into array of 24-byte elements |
@@ -2609,20 +2077,23 @@ comments with the same content are also written above each function in the .cpp 
 | 5c8310 | `getTemperatureAt` | high | Returns temperature at coord: cache lookup FUN_004347a0 (field+4) else compute via FUN_005c4800 |
 | 5c8350 | `getHumidityAt` | high | Returns humidity at coord: cache lookup FUN_004347a0 (field+8) else compute via FUN_005c4dd0 |
 | 5cb550 | `World_fillVoxelBox` | high | Triple nested loop filling a param_4-sized box of voxels with value 0x46 via FUN_0044e7a0 |
-| 5ee4b0 | `assign_two_dwords` | high | Copies two 32-bit fields from param_2 to param_1 (POD pair assignment) |
 | 5f7400 | `dtor_geometryBuffer` | high | Destructor: clears geometry vector (FUN_0063dc90) and frees storage (operator_delete) |
 | 5f7820 | `dtor_listBuffer` | high | Destructor: clears list (FUN_0066add0) and frees (operator_delete) |
 | 5fa3c0 | `swap_two_int_ptrs` | high | Copies/swaps two int fields between param_1 and param_2 |
 | 5fa440 | `copy_two_int_ptrs` | high | Copies two int fields from param_2 to param_1 |
 | 601ea0 | `leave_critical_section_b` | high | Leaves a critical section (external:00000019); shared unlock wrapper |
+| 6089c0 | `copy_two_words` | high | Copies two 16-bit fields from param_2 to param_1, returns param_1 |
 | 608d40 | `vec3_copy` | high | Copies a 3-field record from param_2/param_3 into param_1 |
 | 630a40 | `tree_nodeAlloc` | high | Allocates a tree/list node via operator_new (external:90) |
 | 630b60 | `tree_destroyRecursive` | high | Recursively destroys tree nodes (self-call + operator_delete); std::_Tree teardown |
 | 6326a0 | `Node::is_ancestor_chain` | high | Walk parent chain via +0x28 checking if a given node appears; returns 1 if found |
+| 636810 | `AdaptionWidget::apply_to_attributes` | high | Invoke FUN_00664c10 on each populated attribute slot (+0x34/38/3c) then recurse children |
 | 6368e0 | `Node::set_font_slot` | high | Set attribute/font slot at +0x3c: release old (refcount==1 -> FUN_00650460) and retain new |
 | 636b70 | `Node::set_style_slot` | high | Set attribute slot at +0x38: release old (refcount==1 -> FUN_00650890) and retain new |
 | 636c40 | `Node::clear_layout_flag_2d` | high | Recursively clear layout flags (+0x2d on slots, +0x134 on adaption) when node dirty bit set |
 | 636ef0 | `Node::set_adaption_slot` | high | Set/clear adaption slot +0x40: if param!=0 assign (FUN_0062de20) else null it |
+| 636f10 | `AdaptionWidget::apply_attributes_v2` | high | Invoke FUN_00664cc0 on populated attribute slots then recurse active children |
+| 64aec0 | `WorldInfo::move_string` | high | Move-construct one std::string (SSO-aware) from param_1 into this+4, resetting source |
 | 64af30 | `NamedValue::move_two_strings` | high | Move-construct two std::strings (name+value pair) from param_1, resetting sources |
 | 64b000 | `NamedValue::move_construct_pair` | high | Move-construct pair of std::strings from two separate source strings |
 | 64bec0 | `NamedValue::assign_pair_free` | high | Move-assign string pair (64b000+64af30) freeing temporaries (SEH cookie) |
@@ -2645,7 +2116,6 @@ comments with the same content are also written above each function in the .cpp 
 | 6501e0 | `ScrollSlider::new_instance` | high | Factory: operator_new(0x254) + plasma::ScrollSlider::ctor_0 |
 | 650360 | `ContinuousAttributeVec3::new_instance` | high | Factory: operator_new(0x234) + plasma::ContinuousAttribute<Vector<3,float>>::ctor_1 |
 | 650460 | `FontNode::unregister_and_release` | high | Under CS, unlink font node from registry list at +0x8c and release (vtbl[0]) |
-| 6504c0 | `Object::release_if_nonnull` | high | Call virtual release/destructor (vtbl[0]) on object if pointer non-null |
 | 650890 | `StyleNode::unregister_and_release` | high | Under CS, unlink node from registry list at +0x84 and release |
 | 6509f0 | `Widget::pop_render_layer` | high | End current render/draw layer: call vtbl 0x68, save top sub-widget, decrement frame index |
 | 650a20 | `istream::read_chunk_header` | high | Read 4-byte size then tellg; compute chunk end position (128-bit pos) returned via param_1 |
@@ -2655,17 +2125,17 @@ comments with the same content are also written above each function in the .cpp 
 | 6626b0 | `Spline::resetTime` | high | Resets the spline's current time to zero |
 | 663150 | `vector::destroyStringRange` | high | Destroys a range of string elements (0x18 stride), releasing each element's buffer |
 | 664bf0 | `list::sumFieldAcrossNodes` | high | Walks a std::list summing an integer field (payload+8) across all nodes |
+| 664cc0 | `Widget::resetAnimations` | high | Clears the dirty flag and iterates the controller list resetting each animation's time to zero |
 | 67bd00 | `Widget::setByteField380` | high | Stores a byte parameter into the object field at offset 0x380 |
 | 67bd40 | `thunk_vector_int_assign` | high | Thin wrapper that forwards to the vector<int> assign/copy routine FUN_0067a7b0 |
 | 681220 | `istream::readValue` | high | Reads sizeof-value bytes from the object's istream (at +8) into a stack temporary and returns it |
 | 681240 | `istream::readFloat` | high | Reads a float from the object's istream (at +8) and returns it |
 | 402e80 | `vectorString_popBack` | med | Destroys and pops last std::string element of a vector (dtor + shrink end by 0xc) |
 | 4034c0 | `vectorString_copyElem` | med | Copy-constructs a std::string element into slot after reserving (FUN_0064e310) |
+| 4040d0 | `std_container_assign_range` | med | MSVC STL: vector/string assign from [param_1,param_1[1]) via memmove/grow |
 | 405cc0 | `filebuf_endWrite` | med | std::basic_filebuf flush: codecvt::unshift then fwrite remaining bytes to FILE* |
 | 40d910 | `vectorPOD_insertAt` | med | std::vector insert of one 0xc-byte element at position, growing (FUN_0063ddc0) if at capacity |
 | 40da70 | `dispatch_callbackChain` | med | Walks a jump/offset table invoking registered code* handlers, accumulating return offsets |
-| 40e030 | `ostrstream_str` | med | std::ostrstream::str(): builds std::string from strstreambuf get/put area honoring frozen flags |
-| 40e140 | `ostrstream_str_wrap` | med | Wrapper returning result object after FUN_0040e030 (ostrstream::str) |
 | 40f570 | `getTargetEntity` | med | Returns current target/interactable entity ptr after type checks (types 3-9) and a flag guard |
 | 42c460 | `vec3i64::setFromGen` | med | Sets three consecutive int64 fields to 64-bit value from 0068d946 (init 3D fixed-point coord vector) |
 | 42c6e0 | `vec6::copyAndScale` | med | Copies 6 dwords to out then scales in place via 0042c900 (fixed-point vec3 scale) |
@@ -2673,17 +2143,19 @@ comments with the same content are also written above each function in the .cpp 
 | 42c890 | `int64::ltGen` | med | Returns ECX_int64 < value from 0068d946 (signed 64-bit compare) |
 | 42ef10 | `GameController::clearContainers` | med | Resets three intrusive containers (trees at +0x140c/+0x1414, list at +0x1460) then FUN_0067e480 |
 | 42f5a0 | `int64::subGen` | med | Writes ECX_int64 minus value from 0068d946 into param_1 (int64) |
-| 42f730 | `array::atChecked4` | med | Bounds-checked 4-byte element access; returns global fallback (0076afc8/d0) on OOB |
 | 42f7e0 | `world::getColumnData` | med | Resolves chunk via 004347a0 then column at height param_3; returns voxel/column ptr or fallback |
 | 42f860 | `world::getColumnAtFixedPos` | med | Floors three 16.16 fixed coords via __alldiv then calls getColumnData 0042f7e0 |
+| 439110 | `math::round_to_tenth` | med | round float to one decimal, recursive for negatives (game util) |
+| 439fc0 | `std::wstring::erase_iter` | med | erase from iterator: compute offset then erase 1 |
 | 43acb0 | `int64::gtFixed16` | med | Compares ECX int64 vs (param_1<<16); returns bool low byte |
 | 43b640 | `listHead::initWithNode` | med | Zeroes 2 dwords then allocates head node via 0043c8e0 (init empty intrusive list) |
+| 43bc00 | `Spawn::initNameArrays` | med | Zero-inits Spawn struct with ~14 repeated 0x100 memset blocks + string-slot headers (NPC name/attr arrays) |
 | 43c020 | `struct::initWithBuf` | med | Zero-inits struct: fields + memset 0x100 buffer at +9 (SSO string member init) |
+| 43c100 | `Creature::init` | med | Zero-inits large Creature struct with float defaults (0x43fa0000,0x42c80000,1.0 scales); calls 0043bc00 sub-init |
 | 43c9c0 | `item::materialCategory` | med | Maps material/type id to category code (6/7/8) or -1 default via switch |
-| 43cff0 | `stat::calcArmor` | med | Computes armor/defense: base ×2^rand terms plus per-slot element bonuses (0x530/0x648/0x760/0x878) |
 | 43dc60 | `stat::calcWeaponDamage` | med | Computes weapon damage: base 2^ terms, iterate element list or flag bonuses, ×multiplier by weapon type |
 | 43e5a0 | `ability::isUsable` | med | Checks ability usable: cooldown, resource cost (00444ae0), and target lookup (0043f720); returns bool |
-| 43ea40 | `stat::calcManaRegen` | med | Computes mana/spirit regen: base 2^ terms /0.1 plus per-slot rune bonuses (0x530..0xcd8) |
+| 43f7c0 | `creature::generateAppearance` | med | Generates NPC/creature appearance (color, model, size) from seed/type param_3 via rand and big per-race switch |
 | 443f40 | `drop::getCountRange1` | med | Outputs (min,max) count for ability/drop id via switch (defaults 1,1) |
 | 444020 | `drop::getValueRange` | med | Outputs (min,max) value/price range per item type id via large switch |
 | 4441a0 | `combat::rollHitChance` | med | Rolls rand vs param_1 probability, scaled down by weapon rune type (+0xaa8/+0xaa9) |
@@ -2695,50 +2167,85 @@ comments with the same content are also written above each function in the .cpp 
 | 444ff0 | `combat::getComboWindow` | med | Returns combo/timing window (0x5dc, reduced by rage +0x1a8 if in special form) |
 | 4452a0 | `combat::selectAttackVariant` | med | Returns attack variant id from weapon rune/form and hand flag (+0x141) |
 | 445410 | `combat::advanceAttackTimer` | med | Advances attack timer by per-weapon cost; on threshold selects next anim 00445020 and resets |
-| 446330 | `Player::resetFull` | med | Full player/controller reset: destroys/reinits all containers, timers, transforms, buffers |
-| 4465c0 | `Player::resetState` | med | Resets player physics/stat members and memsets large regions (+0x2f0 0xe38, +0x1128) |
-| 4467a0 | `stat::calcSpirit` | med | Computes spirit/magic stat: base 2^ terms + per-slot rune bonuses (004c7af0) |
 | 446bb0 | `projectile::getMuzzlePosition` | med | Computes projectile spawn world pos: rotate offset by yaw (cos/sin), add random jitter, add entity pos int64 |
 | 447310 | `combat::getReloadFrames` | med | Returns reload/recovery frames per weapon type (switch), scaled by attack speed |
 | 447d10 | `render::bindNodeTransformA` | med | D3D9/GL render glue: uploads 3 uniforms via device vtable (0x15c,0x170,0x1ac) from node fields |
-| 447fb0 | `render::setVec3Uniform5c` | med | Uploads vec4(param,0,0,0) to shader constant (device vtable 0x1b4) at register +0x5c |
-| 448280 | `render::setUniform30` | med | Uploads param to shader constant (vtable 0x178) at register +0x30 |
 | 448f10 | `render::uploadBoneMatrices` | med | Uploads 10-float array then transposed bone/skinning matrix to shader constants (vtable 0x178) |
-| 448fe0 | `render::setVec3Uniform58` | med | Uploads vec4(param,0,0,0) to shader constant (vtable 0x1b4) at register +0x58 |
-| 449150 | `ostream::writePadded` | med | std::operator<<(ostream,char*): writes C-string with width/fill/adjustfield handling; SEH-guarded |
 | 449400 | `handle::freeMember4` | med | Frees resource at +4 via 00520620 (sqlite/handle finalize) and nulls it |
 | 4497b0 | `db::openBlobStore` | med | Opens SQLite db (00525590), creates 'blobs(key TEXT PRIMARY KEY, value BLOB)' table |
-| 4498d0 | `db::getBlobInto` | med | Loads blob via 00449810 then grows out vector 005870c0 and memcpy into param_2 buffer |
 | 449ba0 | `WorldInfo_allocMapNodeCopyKey` | med | Allocs RB-tree node via 0044b7b0, zeroes color, copies 6 dwords of key from param_1+0x20 to node+0x30 |
+| 44b460 | `WorldInfo_mapInsertUnique` | med | WorldInfo: find (0044b880) then insert region/world entry keyed by int+string into map (00449fe0) |
 | 44cdb0 | `deserializeRegionChunk` | med | Deserializes region stream: reads counts, 0x118 structs into vec, 0x14/0x148 records; validates ids |
 | 44e700 | `sparseArray_setAt` | med | Set element at signed index into growable 4-byte array (0040c50), grows via 00450c50 |
+| 450960 | `GameController_getHoveredTilePtr` | med | Returns pointer to hovered/targeted map tile if type byte==0x0e, else null; indexes region grid |
 | 450c50 | `sparseArray_resize` | med | Reallocate/resize the 4-byte-element sparse index array to param_1, copying/offsetting entries |
 | 4517d0 | `string_assign` | med | Assign string: build via 0046f170 then free temp (0040eaf0) |
+| 451a60 | `heap::sift_down_16` | med | binary-heap sift-down over 0x10-byte elements (game) |
+| 452260 | `node_ctor_2strings` | med | Construct node via 00630a40, then copy two strings (0040eaf0) at param+0 and +0x18 |
 | 457e20 | `string_assignSwapTmp` | med | Assign string via temp local (0040c0a0 + 0064aec0) then free overflow |
-| 466650 | `setQuadFaceFromNormal` | med | Pack float[4] color to RGBA at +4, map int[3] normal param_2 to face index 0-5 at +3 |
 | 468cf0 | `ftol64_ofFloat` | med | Convert (float)*this to int64 via FUN_0068d946 |
 | 468e20 | `vec3_negateSwapYZ` | med | Copy vec3, negate x/y/z and swap y/z channels |
 | 46d1f0 | `less_stringKey_map` | med | RB-tree comparator: node string key < param_1 key via FUN_00428db0 |
+| 46dcb0 | `identity/getter thunk` | med | Trivial function returning its argument unchanged (identity/accessor thunk) |
+| 46e250 | `std::vector<T16>::_Reallocate` | med | Reallocate 16-byte-element vector to new capacity, move+free |
+| 46f450 | `GameController::acquire_render_locks` | med | EnterCriticalSection on three engine critical sections |
 | 46fac0 | `findNearestEntityDistSq` | med | Iterate players tree, compute min squared distance to entities of type 5, cap 25 |
+| 477280 | `GameController::release_render_locks` | med | LeaveCriticalSection on three engine critical sections |
+| 4777f0 | `Zone_rbtree_eraseRange` | med | Erase RB-tree node range [param_2,param_3); clear whole tree if full range; class Zone |
 | 47f030 | `hasNearbyAllyEntity` | med | Iterate players tree; true if same-faction entity within range^2=16, else scan all |
 | 4c69b0 | `GameState_addOrUpdateHitEntry` | med | Adds or updates an 8-byte (id3+val) hit/damage record at +0x14; capacity 0x10 or 0x20 by type |
 | 4c6a90 | `item_computeBlockValue` | med | Computes a scaled item/block stat (float) gated by item type 4-7 and subtype at +0xd |
 | 4c6ba0 | `item_computeStat_regen` | med | Computes a per-item stat (float) for weapon/tool types using FUN_00445ff0 and level/rng modifiers |
-| 4c6e10 | `item_computeValue` | med | Item base value: type-1 items scaled 200x or 100x by subtype via FUN_00445f60 |
-| 4c70b0 | `item_computeStat_armor` | med | Computes armor/defense-like stat (x5 * mults) for block/tool item types |
 | 4c79b0 | `GameState_removeHitEntry` | med | Removes an 8-byte hit/damage record matching key3, compacting the array; SEH cookie |
 | 4c7a90 | `item_computeStat_ranged` | med | Returns stat*1.5 for type-1 subtype 4/6 items else 0 |
 | 4c7af0 | `item_computeStat_variant2` | med | Per-item float stat for types 4-7 with subtype (+0xd) multipliers |
 | 4c7e80 | `item_rerollStackCount` | med | Rerolls item stack/durability count within a level-derived range using rand(); updates +0x10 |
+| 4cb5d0 | `net::Connection::write_delta_i8` | med | If byte field changed, push to change-list and set dirty bitflag (game net) |
+| 4cb670 | `net::Connection::write_delta_i16` | med | If short field changed, queue delta and set dirty bit (game net) |
+| 4cb710 | `net::Connection::write_delta_i32` | med | If int field changed, queue delta and set dirty bit (game net) |
+| 4cb7b0 | `net::Connection::write_delta_f32` | med | If float field changed, queue delta and set dirty bit (game net) |
+| 4cb850 | `net::Connection::write_delta_vec5f` | med | If 5-float(0x14) field changed, queue delta+dirty bit (game net) |
+| 4cb930 | `net::Connection::write_delta_struct_ac` | med | If 0xac struct changed (cmp FUN_004cc840), queue delta (game net) |
+| 4cb9d0 | `net::Connection::write_delta_struct_e38` | med | If 0xe38 struct changed (cmp FUN_004ccaa0), queue delta (game net) |
+| 4cba70 | `net::Connection::write_delta_creature` | med | If 0x118 Creature struct changed, queue delta (game net) |
+| 4cbb10 | `net::Connection::write_delta_vec3i` | med | If 12-byte(3-int) field changed, queue delta+dirty bit (game net) |
+| 4cbbc0 | `net::Connection::write_delta_vec3f` | med | If 12-byte(3-float) field changed, queue delta+dirty (game net) |
+| 4cbc80 | `net::Connection::write_delta_vec6i` | med | If 24-byte(6-int) field changed, queue delta+dirty (game net) |
+| 4cbd40 | `net::Connection::write_delta_i64` | med | If 8-byte(2-int) field changed, queue delta+dirty bit (game net) |
+| 4cc800 | `std_compare_float3_ne` | med | Return 1 if any of 3 consecutive floats differ between two arrays (vec3 inequality helper) |
+| 4cc840 | `EntityAppearance_compareEqual` | med | Field-by-field equality compare of two ~0xA4-byte entity appearance/equipment structs |
+| 4ccaa0 | `compareEqual_array13` | med | Equality compare of array of 13 elements (0x118 stride) via element comparator FUN_0042f4a0 |
+| 4ccc30 | `std_list_push_serializeField_string` | med | Append serialized std::string field node (0x10) to output chunk list if changed |
+| 4cccf0 | `std_list_push_serializeField_0x2C` | med | Append serialized 0x2C-byte field node to output chunk list if changed vs baseline |
+| 4ce2a0 | `std__operator>>_istream_string` | med | std::operator>>(basic_istream&, basic_string&): extract whitespace-delimited token |
+| 4d6c20 | `xml_malloc_thunk` | med | Allocation thunk: tail-jump to CRT malloc for parser buffers |
+| 4d6c40 | `utf32le_to_utf16_alloc` | med | Count UTF-16 units for a UTF-32LE buffer, allocate output, convert (surrogate expansion) |
+| 4d6cb0 | `utf32be_to_utf16_alloc` | med | Count/alloc/convert a byte-swapped UTF-32BE buffer to UTF-16 |
+| 4d6d90 | `xml_memoryPool_allocateBlock` | med | Allocate block from pool arena (>0x2000 gets own arena), link into free/used list |
+| 4d6e20 | `xml_node_allocate` | med | Allocate and zero a 0x20-byte XML node from pool, tag pointer with type bits |
+| 4d6ea0 | `xml_memoryPool_allocateArena` | med | Allocate a new pool arena (size+0x38), 0x20-align, link into arena chain |
+| 4d6f60 | `xml_attribute_allocate` | med | Allocate a 0x14-byte XML attribute node from pool and link into element's attribute list |
+| 4d6fe0 | `xml_node_appendChild` | med | Allocate child node and append to parent element's child list |
+| 4d7190 | `xml_transcode_dispatch` | med | Dispatch input decode by encoding id (1=UTF8,2/3=UTF16,5/6=UTF32) to proper converter |
+| 4d7240 | `utf16_byteswapCopy` | med | Copy UTF-16 buffer swapping byte order of each unit (endianness normalize) |
+| 4d73a0 | `utf16_countUnits_fromUtf32be` | med | Count UTF-16 code units needed to represent a UTF-32BE buffer |
+| 4d79f0 | `utf16_copy_passthrough` | med | UTF-16 input passthrough: reference in-place or memcpy to owned buffer, set length |
+| 4d7a60 | `xml_selectAttrValueScanner` | med | Select attribute-value scanner function by encoding/flags bits (jump table of 8) |
+| 4d7ce0 | `xml_parseText_entityAndNewlineNorm` | med | Scan text run decoding entities and normalizing CRLF/CR to LF |
+| 4d7e70 | `xml_parseNodeTree` | med | Core recursive XML parser: elements, attributes, PIs, comments, CDATA into node tree |
+| 4d8510 | `xml_skipElement` | med | Recursively skip an element and its nested markup to matching '>' |
+| 4d85c0 | `xml_skipCDATA` | med | Skip a CDATA/marked section '<![...]]>' (recursive nesting) |
+| 4d8630 | `xml_skipQuotedOrPIComment` | med | Skip a quoted string, processing instruction '<?..?>' or comment '<!--..-->' |
+| 4d8900 | `xml_parseBang_commentCData_doctype` | med | Parse '<!' construct: comment, CDATA[..], or DOCTYPE (optionally into node) |
+| 4d8c70 | `xml_parsePI_or_xmlDecl` | med | Parse '<?' processing instruction / xml declaration, optionally build PI node |
+| 4d9ae0 | `std_Tree_buynode` | med | Allocate+init a red-black tree node (via FUN_004da730), set color, construct value |
+| 4da1a0 | `std_map_insert_unique_v2` | med | std::map insert-unique (second value type) using wide-string comparator |
+| 4da2f0 | `std_Tree_destroy_subtree` | med | Post-order traverse+destroy a red-black tree subtree, releasing each node |
 | 4dc820 | `GameController_snapshotEntityLists` | med | Snapshots two dwords + two lists from an entity into this struct (copies list via FUN_004dc470) |
-| 4e1790 | `Container::ctor_default` | med | Default-constructs container: null head/tail, allocates sentinel via FUN_00630a10, then initializes rest |
+| 4e2df0 | `World::map_find_or_insert_int` | med | RB-tree lower_bound by int key *param_1; if absent builds 7-cap string value and inserts new node |
 | 4e2f00 | `map::insert_string_key` | med | Finds string key via FUN_004e3790; if not present constructs QuestText node and inserts into map |
-| 4e3060 | `map::insert_string_key2` | med | Variant of insert_string_key using FUN_0040f680 to build key; inserts node if absent |
-| 4e5a20 | `format_object_singular_name` | med | Formats singular localized name for creature/object from record ('singular'); handles name-vs-generic |
-| 4e6bd0 | `color_equals3` | med | Compares 3 consecutive bytes (RGB triple) at in_ECX against in_ECX[param_1]; returns 1 if equal |
+| 4e5590 | `GameController::format_region_singular` | med | Builds localized region name string ('singular') from region record fields (+0x18..+0x20) |
 | 4e6c00 | `vec3_divide_scalar` | med | Divides an int[3] vector (in_ECX) by scalar param_2 into param_1 |
-| 4e75c0 | `VoxelModel::allocate` | med | Sets voxel dimensions (+0x44/0x48/0x4c) and allocates zeroed w*h*d*3 color buffer at +0x30 |
-| 4eb8d0 | `VoxelModel::compute_ao` | med | Computes ambient-occlusion ratio for a voxel corner by sampling neighboring filled voxels along a direction |
 | 4eba80 | `map::alloc_node_swap` | med | Allocates a map node (FUN_006819e0), zeroes key, moves in string/data payload from param_1 |
 | 4ebd50 | `map::insert_with_hint` | med | Inserts value into map using hint iterator param_2, choosing correct position then rebalance |
 | 4ebf80 | `map::insert_unique` | med | Locates insert point via lower_bound and inserts unique key, reporting whether inserted |
@@ -2758,8 +2265,6 @@ comments with the same content are also written above each function in the .cpp 
 | 5a58e0 | `Entity::onStateChangeEmitEffect` | med | If bool state (+0xc byte) differs from param_3: reset timer +0xd, pick effect id (0x33-0x36) by type *param_1, append event to list at param_2 |
 | 5a5bc0 | `terrainNoiseDensityAt` | med | Perlin-noise (FUN_004c0ef0) sampled at world pos scaled 0.008 + origin (+0x8001f4/f8), *1.2 clamped 0..1, plus secondary noise |
 | 5a6270 | `randomizeVec3` | med | Fill float[3] with RNG-derived (FUN_0068d946) values through trig FUN_004c0ef0: [0],[1]=2*f, [2]=f+0.5; random direction/offset |
-| 5a64b0 | `WorldMap::lookupTileValue2` | med | Map lower_bound by (x,y) vs end at +0x80012c; return value struct {0,0,7} from node +0x18 or raise error; twin of 5a5240 |
-| 5a6550 | `NameGen::generateRegionName` | med | Lazily init syllable tables (reon/mala/rion...) guarded by DAT_0076dbb8, then build random region/place name indexing tables at +0x80028c/+0x800290 |
 | 5a7a70 | `PathNodeMap::insertOrUpdate` | med | Insert/update coord-keyed node in A* RB-tree (open/closed set) with exception cleanup; compares via FUN_005a78a0 |
 | 5a7b90 | `PathNode::allocFromKey` | med | operator_new(0x34) node; std::_Xbad_alloc on fail; inits first 3 dwords from key *in_ECX; RB-tree node allocator |
 | 5a7c90 | `Pathfinding::reconstructPath` | med | Walks parent-chain building std::list<coord> of path steps; _Xlength_error("list<T> too long"); uses FUN_005a9da0 lookups |
@@ -2808,11 +2313,11 @@ comments with the same content are also written above each function in the .cpp 
 | 5f6e20 | `World_serializeCellData` | med | Reads/writes cell data (FUN_00639cf0, FUN_0058ea10) with vector cleanup (external:12e) |
 | 5f7a60 | `World_buildParticleBatch` | med | Builds a particle/decal batch: memset + FUN_004c7830/FUN_0040ee70 + emit via FUN_005f6d50 |
 | 5f8750 | `Item_generateStats` | med | Generates item stats/attributes using pow (libm_pow) scaling; called by drop-table apply |
-| 5f8e10 | `vec3_distanceSquared` | med | Computes squared distance (float10) between two position vectors; shared helper (label 'itembox') |
 | 5f9620 | `vec3_store4` | med | Stores/returns a vec3+scalar record into param_1 from indices |
 | 5f9bc0 | `vec3_computeNoiseOffset` | med | Computes a noise-based vec3 offset into param_1 (FUN_004c0ef0) |
 | 5f9e50 | `vec2_store` | med | Stores/returns a vec2 record into param_1 |
 | 5fa170 | `vec3_store4_b` | med | Stores/returns a vec3+scalar into param_1 (sibling of FUN_005f9620) |
+| 5fa4c0 | `GameController_entityDistanceSq` | med | Returns squared distance to an entity via FUN_005f8e10 (vfunc_10) |
 | 5fa9e0 | `octree_recursiveTraverse` | med | Recursive spatial partition traversal dispatching to leaf/split helpers |
 | 605950 | `vec3_lerp` | med | Interpolates/writes a vec3 into param_1 from param_2 by factor param_4 |
 | 608c80 | `tree_cloneRecursive` | med | Recursively clones a tree, allocating nodes via FUN_00608a60 |
@@ -2824,18 +2329,19 @@ comments with the same content are also written above each function in the .cpp 
 | 6291d0 | `Widget_measure` | med | Measures widget bounds via FUN_0062de60 (cookie-guarded) |
 | 6294d0 | `Widget_computeBoundsFloat` | med | Computes/applies float bounds via FUN_0062d7f0 |
 | 62a650 | `Widget_setScroll` | med | Sets widget scroll/position via FUN_006295a0 |
+| 62de60 | `AdaptionWidget_getBoundsRect` | med | Returns pointer to widget bounds rect (float* to x,y,...); heavily shared |
 | 62f600 | `Widget_measureGuarded` | med | Cookie-guarded measure via FUN_0062de60; widely shared vfunc target |
 | 62f8f0 | `tree_cloneSubtree` | med | Recursively clones a subtree (self-call, FUN_0062f750 node alloc) |
 | 6326d0 | `Node::clone_subtree` | med | Recursively deep-copy a scene/widget node incl attribute slots and child list, rebuilding std::map at +0xe8 |
 | 633c90 | `Node::get_first_child_id` | med | Wrapper: fetch a value from node via FUN_00630ae0 then read pair into out param |
 | 633dd0 | `Node::collect_matching_children` | med | Recursively append name-matching child nodes into a std::list (guards 'list<T> too long') |
-| 634940 | `Node::get_first_material_name` | med | Recursively find first child whose material/state==3 and copy its name std::string into out |
 | 634a70 | `Node::transform_pair_to_screen` | med | Transform two 2D points through node matrix, compute min/max screen rect (calls FUN_00634dd0) |
 | 635fe0 | `Node::detach_or_remove_child` | med | If child==0 release node else find child in list and detach its transform (FUN_00635760) |
 | 636040 | `Node::clone_subtree_v2` | med | Recursive deep clone of node subtree (variant of 6326d0) rebuilding attribute map at +0xe8 |
 | 636190 | `Node::frustum_visibility_test` | med | Transform node AABB by matrices and test against viewport extents (+0x10c/+0x110); frustum cull |
 | 637120 | `Node::detach_all_slots_recursive` | med | Recursively detach shape/style/font slots (refcount>1) and descend non-hidden children |
 | 639800 | `FontCache::find_or_create_scalable` | med | Under CS, split path, find/create plasma::ScalableFont in RB-tree at +0x10 keyed by filename |
+| 639b30 | `AdaptionWidget::draw_text_locked` | med | Under CS, begin/end render state (vtbl 0x40/0x44) and draw text run via FUN_0065bc70 |
 | 641180 | `StaticMeshShape::build_from_buffers` | med | Release old GPU buffers (vfunc_6) and construct plasma::StaticMeshShape from vertex/index/normal buffers |
 | 64bf40 | `Attribute::deserialize_int_keyframes` | med | Read tagged chunks from istream into an int/index attribute; opcode1=keyframe,2=default,3=nested |
 | 64c150 | `Attribute::deserialize_keyframes_v2` | med | istream chunk-reader variant loading attribute keyframes (default ctor FUN_0042bea0) |
@@ -2881,7 +2387,6 @@ comments with the same content are also written above each function in the .cpp 
 | 680d80 | `Attribute::readVec3` | med | Deserializes an Attribute reading 0xc-byte (vec3) records into vector[0x13], stride 0xc per frame |
 | 680fd0 | `Attribute::readVec4` | med | Deserializes an Attribute reading 0x10-byte (vec4/quat) records into vector[0x13], stride 0x10 per frame |
 | 682a80 | `Attribute::readSequence` | med | Deserializes an animation "Attribute.sequence": reads name/wname and per-key frame/time/smoothness, inserting sorted keyframes |
-| 68d910 | `float_to_uint64_round_guarded` | med | Converts float10 ST0 to rounded unsigned 64-bit; if DAT_0076e2a0 set uses simple truncation |
 | 68d946 | `float_to_uint64_round` | med | Converts float10 ST0 to rounded unsigned 64-bit integer with banker's-style correction |
 | 402ed0 | `signal_dispatchArg` | low | Builds a 1-element arg vector and dispatches a registered callback/handler, then cleans up |
 | 40d010 | `filebuf_openInstantiate` | low | Opens filebuf (basic_filebuf::ctor_3) and constructs an abstr::Method0<Machine,int>, returns success byte |
@@ -2892,11 +2397,22 @@ comments with the same content are also written above each function in the .cpp 
 | 43e310 | `creature::isSpecialForm` | low | Tests creature form byte +0x60 and subtype +0x64 against set; returns bool |
 | 444520 | `creature::hasFireAffinity` | low | Returns 1 if in fire/element state (+0x140,+0x64,+0xaa9 checks) |
 | 444610 | `creature::hasWaterAffinity` | low | Returns 1 if water/element state active (+0x140==3 or type 0x75/0x56 or rune 0xa-0xc) |
-| 44931a | `ostream::writeEpilogue` | low | Exception-path epilogue for 00449150: setstate, _Osfx, release streambuf sentry |
-| 449b70 | `list::makeNodeWrapper` | low | Creates list node via 0044b770 then inits payload 0040ee70 unless error (-8) |
+| 445f10 | `stat::diminishing_returns_pct` | low | compute diminishing-returns percentage from field 400 (game) |
+| 447e10 | `Input::init_keybindings` | low | create D3D input params and register default key actions (game) |
+| 449420 | `obj::init_and_load_a` | low | init object then load stream (game wrapper over decode) |
 | 44a7c0 | `clearTwoFields` | low | Zeroes fields at ecx+0xc and ecx+0x10 |
+| 450ab0 | `GameController_isNearTargetTile` | low | If tile 00450960 valid, checks its distance within camera near-thresholds |
+| 459b10 | `T::T(const T&)` | low | Copy-ctor invoking 13 std::string copies (array of 13 strings, stride 0x118) |
+| 466050 | `T::T(const T&)` | low | Copy-ctor of large game struct (~0x458 dwords) with embedded strings/arrays (Entity-like) |
 | 4758c0 | `drawBillboardModelRotated` | low | Draw sprite/voxel model billboarded with Euler rotation param_3 and mode param_5 char |
 | 476660 | `drawModelAtProjectedPos` | low | Project screen pos to world and render model param_5 with orientation and perspective scale |
+| 4778b0 | `Zone_rbtree_eraseNode` | low | Red-black tree single-node erase with rebalance/recolor then free 2 strings and delete |
+| 4c78c0 | `Item::compute_value` | low | Compute item gold value from type/rarity/level (game) |
+| 4ce3f9 | `std__operator>>_istream_string_unwind` | low | Exception-unwind continuation of istream>>string (resets gcount, setstate, releases sentry) |
+| 4d94e0 | `xml_appendDecodedChar` | low | Append one decoded character to entity-decode output buffer |
+| 4d9520 | `xml_scanCDATA_withEntities` | low | Scan CDATA-style value applying entity decode (helper for '<!' parser) |
+| 4d9600 | `xml_scanComment_withEntities` | low | Scan comment-style value applying entity decode (helper) |
+| 4e31e0 | `map_string_operation` | low | Map/string operation with stack buffer and __security_check_cookie |
 | 583cb0 | `IntMap_SetScalar` | low | Game/STL: inserts a key via map helper (FUN_0046d550) and stores a scalar value at node+8 |
 | 58d8b0 | `MapNode_CreateXY` | low | Game/STL: allocates a map node (FUN_00594720), stores a 2-dword key and initializes payload |
 | 58d930 | `MapNode_CreateB` | low | Game/STL: allocates a map node and copies two dword fields (+0x18,+0x1c) from param_1 |
@@ -2951,9 +2467,8 @@ comments with the same content are also written above each function in the .cpp 
 | 626e10 | `codec_decodeInit` | low | Initializes packet decode (FUN_00625c00/00624a70/00625130/00624f80) |
 | 626f90 | `codec_setupHeaders` | low | Sets up codec headers (memcpy/memset, FUN_00624c70, FUN_00625a60) |
 | 627120 | `codec_decodeStreamEntry` | low | Drives stream decode (FUN_00626e10 init + FUN_00626f90 headers + FUN_00625a60) |
-| 62baf0 | `Widget_layoutChildren` | low | Lays out children via FUN_0062bb90 + FUN_006295a0 |
+| 62b400 | `AdaptionWidget_onContentResized` | low | Notifies/handles content resize (no callees); shared vfunc target |
 | 62bb20 | `Widget_layoutChildrenGuarded` | low | Cookie-guarded child layout (FUN_0062bb90 + FUN_006295a0) |
-| 62c570 | `Widget_measureContentEntry` | low | Entry to content measure via FUN_0062bb90 |
 | 62ddc0 | `Widget_updateCaption` | low | Updates caption via FUN_0062b920 + FUN_0040f680 |
 | 62de20 | `get_widget_field` | low | Returns a widget field (no callees) |
 | 62f2d0 | `Widget_applyBoundsAndRefresh` | low | Applies bounds (FUN_0062d7f0) and refreshes via FUN_006504c0 |
@@ -2977,6 +2492,570 @@ comments with the same content are also written above each function in the .cpp 
 | 6621e0 | `Anim::removeEntryByKey` | low | Finds a named entry, erases its map subrange, then iterates its vector calling removeTrackReferences before freeing the vector |
 | 662300 | `Spline::evaluateAtTime` | low | Evaluates a cubic-Bezier keyframe spline at a time value, handling 0/1/n control points, looping and callback dispatch |
 | 6637a0 | `vector::insertN` | low | Inserts param_3 copies of an element into a vector<T> (T=0x18 struct with string), reallocating/growing with the three-case MSVC insert |
+| 664c10 | `Widget::triggerTracksByName` | low | Frees a temp key string, iterates a list of tracks and for each matching name plays its keyframes, marking a dirty flag |
+
+## GameController (558)
+
+| addr | proposed name | conf | purpose |
+|---|---|---|---|
+| 403350 | `string_assignCStr` | high | std::string::assign(const char*): strlen then assign bytes via FUN_0040c280 |
+| 4033b0 | `string_defaultInit` | high | std::string default construct: SSO empty (cap=0xf,len=0,null) |
+| 403eb0 | `string_dtor` | high | std::string destructor: frees heap buffer if cap>0xf, resets to empty SSO |
+| 4043f0 | `filebuf_dtor` | high | std::basic_filebuf<char> destructor: base dtor, sets vtable, ios_base dtor |
+| 405060 | `string_move` | high | MSVC std::string _Move helper: transfers buffer/len/cap to in_ECX, clears source |
+| 4054f0 | `string_grow` | high | std::string _Grow/reallocate: computes new capacity (1.5x), allocs, copies, frees old |
+| 407d50 | `string_resize` | high | std::string::resize/_Grow(bool): grows or truncates, returns len!=0 |
+| 40c0a0 | `string_assignSubstr` | high | std::string assign(str,pos,len): validates pos, copies substring, self-assign fast path |
+| 40c1c0 | `string_assignFill` | high | std::string assign(count,char): grows and fills or sets single char |
+| 40c4c0 | `filebuf_close` | high | std::basic_filebuf::close: flushes (405cc0), fclose, re-inits streambuf, returns this-or-null |
+| 40c520 | `string_compare` | high | std::string::compare(pos,len,ptr,ptrlen): bounded memcmp, returns <0/0/>0 |
+| 40cb00 | `string_erase` | high | std::string::erase(pos,count): memmove tail and shrink, or truncate |
+| 40cba0 | `fabs_f` | high | Returns absolute value of float param_1 |
+| 40e420 | `cosf_f` | high | Returns cosf(param_1) via libm_sse2_cos_precise |
+| 40e6f0 | `wostream_insertWide` | high | operator<<(wostream, const wchar_t*): writes wide string with field-width padding via sputn/sputc |
+| 40ea50 | `setPair_b` | high | Stores 2 dwords into object (assign vec2/pair) |
+| 40ea70 | `setColor3b` | high | Stores 3 bytes into object (RGB color set) |
+| 40ea90 | `setVec3` | high | Stores 3 dwords into object (assign vec3) |
+| 40eac0 | `setVec4` | high | Stores 4 dwords into object (assign vec4/quaternion) |
+| 40ef50 | `arrayElem0x11c` | high | Returns &array[param_1] with stride 0x11c (indexes 0x11c-sized structs) |
+| 40f0d0 | `repeatCall` | high | Invokes code* param_4 exactly param_3+1 times |
+| 40f8a0 | `std::char_traits<wchar_t>::assign` | high | copy single wchar element |
+| 40f8e0 | `getField_0x3c` | high | Returns dword at object offset 0x3c |
+| 411320 | `getField_0x34` | high | Returns dword at object offset 0x34 |
+| 411400 | `getField_0x148` | high | Returns dword at object offset 0x148 |
+| 411ab0 | `count_0x11c` | high | Returns element count of a 0x11c-stride vector: (end-begin)/0x11c |
+| 411c70 | `getField_0x38` | high | Returns dword at object offset 0x38 |
+| 411cf0 | `getField_0x40` | high | Returns dword at object offset 0x40 |
+| 411d40 | `array_lerp` | high | Interpolates array: param_1[i] += (param_2[i]-param_1[i])*param_4 for param_3 elements (unrolled) |
+| 411df0 | `vec2_copy` | high | Copies 2 dwords from param_1 into object (vec2 copy) |
+| 411e30 | `vec3_copy` | high | Copies 3 dwords from param_1 into object (vec3 copy) |
+| 412080 | `int_toFixed16` | high | Sign-extends param_1<<16 into 64-bit value at object (int to 16.16 fixed-point) |
+| 4120a0 | `addInt` | high | Returns param_1 + object dword |
+| 4120b0 | `arrayElem_stride8` | high | Returns base + param_1*8 (8-byte-stride element ptr) |
+| 4120c0 | `vectorU32_at` | high | Bounds-checked std::vector<u32> element read, returns 0 if out of range |
+| 4120f0 | `fixed16ToFloat` | high | Converts 16.16 fixed-point (int64) at object to float (*1/65536) |
+| 412120 | `vec4_mulComponent` | high | Component-wise multiply: param_1 = param_2 * this (vec4) |
+| 412170 | `vec4_scale` | high | Scales this vec4 by scalar param_2 into param_1 |
+| 4121c0 | `vec3_sub` | high | param_1 = this - param_2 (vec3 subtract) |
+| 412200 | `int64_sub` | high | 64-bit subtract: param_1 = this(u64) - param_2(u64) |
+| 412220 | `int64_subFn` | high | 64-bit subtract of FUN_0068d946() result from this(u64) |
+| 412260 | `int64_negate` | high | 64-bit negate of this into param_1 |
+| 412280 | `vec3_add` | high | param_1 = param_2 + this (vec3 add) |
+| 4122c0 | `int64_add` | high | 64-bit add: param_1 = param_2(u64) + this(u64), with carry |
+| 4122e0 | `int64_addFn` | high | 64-bit add of FUN_0068d946() result to this(u64) |
+| 412350 | `vec3_dot` | high | Returns 3D dot product of this and param_1 |
+| 412390 | `vec3_cross` | high | param_1 = this x param_2 (vec3 cross product) |
+| 412400 | `mat4_mulLeft` | high | 4x4 matrix multiply in place: this = param_1 * this (column ops) |
+| 412780 | `vec3_scaleInPlace` | high | Scales this vec3 in place by scalar param_1 |
+| 4127c0 | `vec4_mulInPlace` | high | Component-wise multiplies this vec4 in place by param_1 |
+| 412850 | `vec3_addInPlace` | high | Adds param_1 to this vec3 in place |
+| 412890 | `vec3_subInPlace` | high | Subtracts param_1 from this vec3 in place |
+| 4128d0 | `mat_elemPtr` | high | Returns element ptr: base + (param_1 + param_2*4)*4 (matrix cell address) |
+| 423f20 | `vec3_length` | high | Returns sqrt(x^2+y^2+z^2) (3D vector length) |
+| 4240f0 | `vec3_normalize` | high | Normalizes this vec3 in place (divide by length) |
+| 424170 | `mat4_rotateAxisAngle_v` | high | Wrapper: rotates matrix by axis vec3 (param_2) and angle via FUN_004241b0 |
+| 4241b0 | `mat4_rotateAxisAngle` | high | Builds Rodrigues rotation matrix from angle(param_1) and axis(param_2..4), multiplies into this |
+| 4243d0 | `mat4_rotateX` | high | Rotates this 4x4 matrix about X axis by param_1 degrees |
+| 4244f0 | `mat4_rotateY` | high | Rotates this 4x4 matrix about Y axis by param_1 degrees |
+| 424610 | `mat4_rotateZ` | high | Rotates this 4x4 matrix about Z axis by param_1 degrees |
+| 424730 | `mat4_scaleAxes` | high | Scales matrix rows by param_1/param_2/param_3 (skips 1.0 axes) |
+| 424810 | `getField_0x44` | high | Returns dword at object offset 0x44 |
+| 424820 | `getField_0x48` | high | Returns dword at object offset 0x48 |
+| 424830 | `vec2_lengthSq` | high | Returns squared length of this vec2 |
+| 424860 | `vec3_lengthSq` | high | Returns squared length of this vec3 |
+| 4248a0 | `mat4_transformPoint` | high | Transforms point param_2 by this 4x4 matrix with perspective divide into param_1 |
+| 424990 | `mat4_translateVec` | high | Translates this matrix by vec3 param_1 (accumulate into last column) |
+| 424a60 | `mat4_translate` | high | Translates this matrix by (param_1,param_2,param_3) |
+| 424b50 | `sinf_f` | high | Returns sinf(param_1) via libm_sse2_sin_precise |
+| 424b70 | `sqrtf_f` | high | Returns sqrtf(param_1) via libm_sse2_sqrt_precise |
+| 4252f0 | `vec3_scaleOut` | high | param_1 = this * scalar param_2 (vec3) |
+| 427870 | `vec3_normalizeOut` | high | Normalizes this vec3 into output param_1 |
+| 427910 | `mat4_perspective` | high | Builds perspective projection matrix from fov(param_1),aspect(param_2),near(param_3),far(param_4) |
+| 4279e0 | `getField_0x110` | high | Returns dword at object offset 0x110 |
+| 4279f0 | `getField_0x10c` | high | Returns dword at object offset 0x10c |
+| 4288b0 | `storeVec2At` | high | Stores vec2 param_1 into 8-byte-stride array at index +0x20, returns element end ptr |
+| 4288e0 | `storeVec4At` | high | Stores vec4 param_1 into 16-byte-stride array at index +0x20, returns element ptr |
+| 428920 | `copy3bytes` | high | Copies 3 bytes from param_1 into object |
+| 428940 | `color3_differs` | high | Returns 1 if first 3 bytes at object differ from bytes at param_1 (color inequality) |
+| 428970 | `arrayElem_stride4` | high | Returns base + param_1*4 (dword-stride element ptr) |
+| 428980 | `arrayElem_stride16` | high | Returns *in_ECX + param_1*0x10 (16-byte-stride element ptr) |
+| 4289e0 | `vec4_addInPlace` | high | Adds param_1 to this vec4 in place |
+| 428d80 | `loadFirstElem_0x2c` | high | Reads *(*(+0x2c)) into param_1 (first element of a list/vector member) |
+| 428da0 | `getField_0x2c` | high | Returns ptr/dword at object offset 0x2c into param_1 |
+| 42b800 | `memberPtr_0xc` | high | Returns object base + 0xc (address of member at offset 0xc) |
+| 42c500 | `vec3::set` | high | Sets three dwords ECX[0..2] from params (assign 3-component vector) |
+| 42c6d0 | `getFirstDword` | high | Returns *ECX (first member/pointer) |
+| 42c980 | `vec3i64::add` | high | Adds param_1 (three int64) into ECX in place (carry chains) |
+| 42c9b0 | `int64::add` | high | Adds single int64 param_1 into ECX in place |
+| 42c9d0 | `vec3i64::sub` | high | Subtracts param_1 (three int64) from ECX in place (borrow chains) |
+| 42ca00 | `int64::sub` | high | Subtracts single int64 param_1 from ECX in place |
+| 42f030 | `map::getRoot` | high | Writes *(ECX+4) (tree head/end) to *param_1 |
+| 42f100 | `int64::toIntFloor` | high | Converts single 16.16 fixed int64 to int with floor (/0x10000, adjust negative) |
+| 42f140 | `counter::decrementClamp` | high | Decrements *ECX; if <1 clamps to 0 and clears short at ECX+4 |
+| 42f160 | `flags::setOrClear114` | high | Sets (param_2!=0) or clears bits param_1 in ushort at ECX+0x114 |
+| 42f430 | `buffer::freeAt0x11c` | high | operator_delete of heap buffer at ECX+0x11c (destructor fragment) |
+| 42f470 | `color::copy4` | high | Copies 4 bytes param_1->ECX (RGBA/color or 4-byte field copy) |
+| 42f640 | `getTileCell32` | high | World coords->tile: validates <0x1fffff, resolves chunk via 00434d10, returns ptr into 32x32 grid at +0xac (8-byte) |
+| 4347a0 | `world::getChunkCell256` | high | World coords->256-grid cell: validates <0x1000000 >>8, resolves chunk 00434d10, returns ptr at +0xa8 (32-byte) |
+| 4348b0 | `getDword0x10` | high | Returns *(ECX+0x10) |
+| 434a80 | `getDword0x28` | high | Returns *(ECX+0x28) |
+| 434a90 | `region::getCell1024` | high | Bounds-checked (0..0x400) 2D access into region array at ECX+0xbc (1024x1024, 4-byte) |
+| 434b70 | `getDword0x1c` | high | Returns *(ECX+0x1c) |
+| 434c10 | `getBlockType5bits` | high | Returns byte at ECX+3 & 0x1f (block/type low bits) |
+| 439600 | `list::allocNode32` | high | operator_new(0x20) self-linked list node sentinel; _Xbad_alloc on failure |
+| 43a3f0 | `std::map<u16,T>::lower_bound` | high | rbtree lower_bound by ushort key at node+0xe |
+| 43a490 | `getDword0xe8` | high | Returns *(ECX+0xe8) |
+| 43a4a0 | `textBuffer::clampScroll` | high | Clamps scroll start (+0x188) and length (+0x18c) into [0, count(+0x178)] |
+| 43abc0 | `int64::subFixed16` | high | Writes ECX_int64 minus (param_2<<16) into param_1 (subtract integer as 16.16 fixed) |
+| 43abf0 | `int64::addFixed16` | high | Writes ECX_int64 plus (param_2<<16) into param_1 (add integer as 16.16 fixed) |
+| 43b480 | `block::isSolidType` | high | Returns 1 if (type&0x1f) is nonzero and not 2 (solid block test) |
+| 43b610 | `vec6::set` | high | Sets 6 dwords ECX[0..5] from params (assign two int64 vec3 / 6-field struct) |
+| 43ca60 | `curve::level05` | high | Returns 1 - 1/((n-1)*0.05+1) level-scaling curve |
+| 43e550 | `ability::matchesId0x19` | high | Returns true unless ability id 0x19 whose value (param+4) mismatches computed (+0x1164 %100) |
+| 443f10 | `list::findByTypeByte` | high | Linear-searches intrusive list at +0x1178 for node whose byte at +2 == param_1; returns payload or null |
+| 444820 | `weapon::isSpecialRunePtr` | high | Same test as 00444230 but on ptr arg (*ECX==3 and subtype in set) |
+| 444d60 | `xp::getNextLevelCost` | high | Returns XP-to-next-level: (1-1/((lvl-1)*0.05+1))*1000+50 |
+| 4460a0 | `list::pushBack` | high | Appends node (00451c70) to list at ECX, size++, throws if len==0x5555554 |
+| 4462f0 | `curve::inverse20p1` | high | Returns (1/(1-x)-1)*20+1 |
+| 447270 | `Player::resetPhysics` | high | Zeroes physics/transform member block (+0x24..+0x14c) |
+| 447b00 | `xp::applyLevelUps` | high | While XP(+0x194) >= next-level cost, level up (+0x190), recompute regen 00444db0 |
+| 4497a0 | `handle::isOpen` | high | Returns *(ECX+4) != 0 (resource/db handle open test) |
+| 449810 | `db::loadBlobByKey` | high | SQLite 'SELECT value FROM blobs WHERE key=?': binds key, steps, allocates+copies blob to out |
+| 4499f0 | `db::storeBlob` | high | SQLite upsert blob: SELECT existence then UPDATE or INSERT (prepared stmts); logs 'DATABASE WRITE ERROR' |
+| 44a8a0 | `refcount_initTo1` | high | Init small handle: *ecx=param, [1]=1, [2]=0 (refcount/control-block style) |
+| 44b770 | `allocNode_0x120` | high | Allocates 0x120 node (map/tree), self-links if params null |
+| 44d620 | `stream_readBytes` | high | Stream read: memcpy param_2 bytes from buffer *ecx at cursor [3], advance cursor |
+| 44e8d0 | `buffer::append_bytes` | high | append param_2 bytes to growable output buffer via memcpy |
+| 450dc0 | `releaseTwoRefPtrs` | high | Releases up to two ref-counted pointers at ecx[4] via vtable+0x10 (Release) |
+| 450e70 | `spawnWorkerThread` | high | Allocates 0x18 arg block, calls virtual to fill it, launches _beginthread(FUN_00450e00) |
+| 450f60 | `fixedToIntVec3` | high | Divide 3 int64 components by 0x10000 (16.16 fixed to int) via __alldiv |
+| 4511e0 | `floatToIntVec3` | high | Truncate 3 floats to ints |
+| 451440 | `memEqual_0040c520` | high | Returns memcmp(field+0x10, param_2 buffer, len)==0 (byte-string equality) |
+| 4514e0 | `wideMemCompare_ne` | high | Compare via 00428db0 (wide/ci memcmp); returns !=0 |
+| 451510 | `vec3_scale` | high | Multiply vec3 param_3 by scalar param_2 into param_1 |
+| 4515f0 | `string_ctorAppend` | high | std::string ctor: init SSO, reserve len(param_3)+existing via 00407d50, append range (0046ef60/0046f050) |
+| 457460 | `GameController_lerpVec3` | high | Linear-interpolate vec3 param_1 toward param_2 by factor t from 004ac150 |
+| 457e00 | `pair_assign_byteDword` | high | Assign pair: byte from param_2 + dword from param_3 |
+| 458b90 | `storeShort` | high | Store short param_2 at *param_1 |
+| 458bd0 | `strcpy16` | high | strcpy_s(dst,0x10,src) wrapper |
+| 458bf0 | `swapDword` | high | Swap two dwords |
+| 458ce0 | `storeDword` | high | Store dword: *ecx = param |
+| 458d20 | `storeRGBA` | high | Store 4 bytes (RGBA/quad) into *ecx |
+| 458de0 | `noop` | high | Empty function (no-op stub) |
+| 459a90 | `Struct_reset_4Dwords` | high | Zero first 4 dwords; class GameController likely misattrib |
+| 459c40 | `ctor_0` | high | cube::GameController::ctor_0 (48075 B, giant ctor). Ghidra process:timeout at 120s in full export; recovered clean via GhidraDecompileList.java 3600s window (114s). Body in gap/cube/extra_bodies.c, merged by reconstruct2. |
+| 465bb0 | `Struct_reset_10Dwords` | high | Zero 9 dwords plus word at +5 |
+| 465de0 | `Struct_init_defaults_off2b` | high | Zero fields, set +0x2b=1.0f, +0x2d=4000, then FUN_00423e70 |
+| 4664b0 | `Struct_init_off4_defaults` | high | Set +4=-100.0f, +0x4c=7, +0x48=0, +0x38=0, +0x50=1000 (string cap + defaults) |
+| 466880 | `Struct_ctor_allocListHeads` | high | Constructor allocating ~13 list/container sentinel nodes into slots 0..0x18 (SEH guarded) |
+| 467f30 | `Object_dtor_composite` | high | Destructor: FUN_00661680 then clear vector member at +0x4c |
+| 467fe0 | `String_freeIfNotSelf` | high | Free string param_1 via FUN_0040f680 if not self |
+| 4685e0 | `Object_copyAssign_off118_vec` | high | Copy-assign: FUN_0042c5e0 base, field +0x118, vector at +0x11c via FUN_00468050 |
+| 468620 | `Struct_copy_10Dwords_bytes` | high | Copy ~0xa dwords plus bytes at +5/+0x15 |
+| 468670 | `Struct_copy_skipIdx1_11` | high | Copy dwords 0,2..0x11 skipping index 1, byte at 0xc |
+| 468840 | `operator_eq_2ints` | high | Compare two consecutive ints for equality (memcmp-style over 2 dwords) |
+| 468870 | `operator_eq_3ints` | high | Compare three consecutive ints for equality (vec3-int key ==) |
+| 4688a0 | `operator_ne_2ints` | high | Compare two ints, inverted result (operator!= over 2 dwords) |
+| 4688d0 | `operator_ne_int` | high | Return *this != *param_1 (single int inequality) |
+| 468c80 | `iterator_prev_0xc` | high | Return *this - 0xc |
+| 468c90 | `iterator_at_0x10` | high | Return *this + 0x10 |
+| 468d50 | `iterator_postInc_2` | high | Return current then advance *this by 2 |
+| 468d70 | `iterator_deref_advance` | high | Copy *this to out then FUN_005c3ea0 (advance/next) |
+| 468d90 | `iterator_postInc_4` | high | Return current then advance *this by 4 |
+| 468db0 | `iterator_postInc_0xc` | high | Return current then advance *this by 0xc |
+| 468dd0 | `iterator_postDec_0xc` | high | Return current then decrement *this by 0xc |
+| 468df0 | `vec2_sub` | high | param_1 = *this - param_2 over 2 floats |
+| 468e70 | `Struct_copy6_thenReset` | high | Copy 6 dwords to out then FUN_0042c900(-0x10000,-1) |
+| 468f50 | `vec4_add` | high | param_1 = param_2 + *this over 4 floats |
+| 469000 | `vec2i_divScalar` | high | param_1 = *this / param_2 over 2 ints |
+| 46d220 | `vec3_mulInPlace` | high | *this *= param_1 component-wise over 3 floats |
+| 46d4e0 | `std::_Tree<>::_Buyheadnode` | high | operator new 0x1180 head sentinel node; self-link and mark nil |
+| 46f430 | `iterator_backMinus4` | high | Return *(this+4)-4 (back element / end-1) |
+| 46f440 | `deref_frontValue` | high | Copy *(*this) into param_1 (front element value) |
+| 471910 | `getter_field80015c` | high | Return dword at +0x80015c |
+| 477220 | `isZero_off10` | high | Return *(this+0x10)==0 |
+| 477230 | `isZero_off4` | high | Return *(this+4)==0 |
+| 4787f0 | `getter_field800164` | high | Return dword at +0x800164 |
+| 47b450 | `getSelectedSlotCoords` | high | Return selected inventory (bag,slot) into param_1, or (-1,-1) if none valid |
+| 47b550 | `getSelectedItemPtr` | high | Return ptr to selected inventory item entry, or 0 |
+| 47b5f0 | `getter_off4c` | high | Return dword at +0x4c |
+| 47f1c0 | `getter_byte3c4` | high | Return byte at +0x3c4 |
+| 47f3b0 | `getter_flagBit0_f4` | high | Return bit0 of dword at +0xf4 |
+| 47f9f0 | `isInteractableTileType` | high | True if tile type byte in {1,10,11,12,13,21} |
+| 47fa10 | `hasActiveWorldChunk` | high | Return true if chunk data ptr (via +0x3c/+0x94/+0x68) nonzero |
+| 47fa30 | `getItemTypeCategory` | high | Switch mapping item-type byte to category 0..3 |
+| 47faa0 | `getChunkCellAt` | high | Return chunk cell dword at (param_1,param_2) if within 0x400 grid, else 0 |
+| 480d90 | `getVelocityX` | high | Return float (+0xd4)-(+0xdc) |
+| 480db0 | `getVelocityY` | high | Return float (+0xd8)-(+0xe0) |
+| 480dd0 | `getPositionXY` | high | Copy floats +0xd4,+0xd8 to param_1 |
+| 480df0 | `getPtr_off94` | high | Return this+0x94 |
+| 484320 | `playSoundAtPlayer` | high | Wrapper: play sound param_1 at player pos (+0x140) via FUN_00484350 |
+| 4861f0 | `std::list<T>::push_back` | high | Append node (elem via FUN_00451dd0), ++size |
+| 4865b0 | `std::list<T>::push_back` | high | Append node (elem via FUN_004521c0), ++size |
+| 487490 | `GameController_getField_b4` | high | Trivial getter: returns *(this+0xb4) |
+| 487da0 | `GameController_getVoxelColumn8` | high | Bounds-checks x,y<0x2000, indexes chunk (FUN_00434a90, coords>>6) then column with 0x68 stride at +0x14018 |
+| 487e60 | `GameController_getPair_18c_190` | high | Copies two dwords from +0x18c and +0x190 into out param |
+| 487e80 | `GameController_set_1ec` | high | Trivial setter: *(this+0x1ec)=param |
+| 487e90 | `GameController_set_b8` | high | Trivial setter: *(this+0xb8)=param |
+| 487f70 | `vec2_lengthSquared_int` | high | Returns x*x + y*y from int pair at *this,this[1] |
+| 487fe0 | `GameController_getSub_8000f0` | high | Returns this+0x8000f0 (address of a large embedded subobject) |
+| 488030 | `GameController_interactSpecialObject` | high | 'There is nothing special.': finds special entity, sets quest/dialog state and a wchar message; interaction handler |
+| 4882e0 | `GameController_interactNpc` | high | 'innkeeper': NPC/quest interaction; resolves target entity by world coords, opens trade/dialog UI |
+| 4889e0 | `GameController_updateSelectedEntity` | high | Updates selected/targeted entity from screen pick (FUN_00477d90); dispatches by type 0x140 to open UIs |
+| 488b80 | `GameController_get_8000bc` | high | Trivial getter: returns *(this+0x8000bc) |
+| 488b90 | `GameController_asType2Object` | high | Returns param if object type (+0x48)==2 else 0 (safe cast/filter) |
+| 488bb0 | `GameController_asType3Object` | high | Returns param if object type (+0x48)==3 else 0 |
+| 488d60 | `mat4_transformPointProjective` | high | Transforms a 3D point by a 4x4 matrix with perspective divide (1/w) |
+| 488e50 | `mat3_transformVector` | high | Transforms a 3D vector by the 3x3 rotation part of a matrix (no translation) |
+| 488ee0 | `vfunc_10` | high | cube::GameController::vfunc_10 per-frame update path (77332 B, largest func). Full-export failure was 120s timeout; retry hit decompiler payload cap; recovered with 3600s + 512MB payload. Body in extra_bodies.c. |
+| 49d650 | `GameController_buildCharacterList` | high | Builds CharacterPreviewWidget grid from saved characters; lays out widgets, pushes to selection list |
+| 4a14c0 | `GameController_loadInventoryItems` | high | Iterates DB item list (FUN_0059cff0), classifies by type into 6 vectors, sorts and installs (FUN_004a19d0); frees temps |
+| 4a19d0 | `GameController_computeCraftPrices` | high | For category param_1, computes average craft cost per recipe from ingredient lists and stores into 12-byte vector |
+| 4a1e50 | `GameController_equipStarterGear` | high | Char-class switch(1-4): assigns starter equipment ids into slot arrays and appends 4 items to a list |
+| 4a2300 | `GameController_rebuildCraftState` | high | Rebuilds crafting/recipe UI state; if flag copies recipe vector nodes (FUN_00486700), else pulls from selected entity |
+| 4a23d0 | `GameController_buildWorldList` | high | 'online_': builds WorldPreviewWidget grid from save/online world list, filtering by 'online_' prefix |
+| 4a2780 | `GameController_handleObjectAction` | high | Consumes a pending object action (count at *param): plays effect / sets cursor state by sub-type 5 |
+| 4a2870 | `GameController_voxelAt3D` | high | Returns pointer to 3-byte voxel at (x,y,z) in a volume with dims at +0x44/48/4c, data at +0x30; else dummy |
+| 4a6ad0 | `GameController_getField16` | high | Bounds-checks x,y<0x10000, indexes chunk (FUN_00434a90, >>6) then 16-byte cell at +0x18 |
+| 4a8ef0 | `vec3_floatToByte3` | high | Converts 3 floats at param_1 to 3 bytes at this (truncating cast) |
+| 4a8f20 | `int_notEqual` | high | Returns *param_1 != *param_2 (bool) |
+| 4a8f40 | `vec4_scale` | high | Multiplies 4-component vector param_3 by scalar param_2 into param_1 |
+| 4aba20 | `float_lerp_smooth` | high | Linear interpolates *param_1 toward *param_2 by factor from FUN_004ac150 |
+| 4abc00 | `pair_zeroInit` | high | Zero-inits two dwords (*this=0, this[1]=0) |
+| 4abc30 | `iter_prev_4` | high | Returns *this - 4 (previous 4-byte iterator) |
+| 4abc40 | `iter_postinc_188` | high | Post-increment: returns old *this, advances by 0x188 |
+| 4abc60 | `iter_postinc_10` | high | Post-increment: returns old *this, advances by 0x10 |
+| 4abc80 | `iter_postinc_30` | high | Post-increment: returns old *this, advances by 0x30 |
+| 4abca0 | `iter_postdec_4` | high | Post-decrement: returns old *this, moves back by 4 |
+| 4ac150 | `iterated_lerp_toward1` | high | Applies x += (1-x)*t param_1 times (unrolled by 8); exponential approach used as blend factor |
+| 4ac260 | `vfunc_11` | high | cube::GameController::vfunc_11 (59248 B). Same recovery route: 3600s + 512MB payload (135s). Body in extra_bodies.c. |
+| 4c0ec0 | `GameController_getFlag30_bit0` | high | Returns *(this+0x30) & 1 (a boolean flag) |
+| 4c0ed0 | `GameController_isTimerZero_1cc` | high | Returns 1 if float at +0x1cc == 0.0 else 0 |
+| 4c0ef0 | `perlinNoise2D_cosInterp` | high | 2D value/Perlin noise with hashed lattice and cosine interpolation; returns float in ~[0,1] |
+| 4c6140 | `InventoryWidget_rebuildItemList` | high | Rebuilds inventory item widgets: filters equipped items, lays out per-item widgets with callbacks |
+| 4c6350 | `InventoryWidget_updateScroll` | high | Computes visible-row/scroll state for the item grid based on panel geometry |
+| 4c64c0 | `InventoryWidget_drawScrollbar` | high | Draws inventory scrollbar/thumb via FUN_0062bb20 scaled to row count and viewport |
+| 4c6610 | `InventoryWidget_handleSlotHover` | high | Handles slot hover/selection: on click sets selected slot (FUN_00484320 0x55) and highlights hovered cell |
+| 4c6b80 | `GameController_itemCooldown` | high | Returns cooldown 10000 (or 3000 if subtype 1) for type-1 items, else 0 |
+| 4c6cc0 | `GameController_avgEquippedColor` | high | Averages material colors (FUN_004c7250) of equipped items with material>=0x80; SEH cookie |
+| 4c71c0 | `item_glowColor` | high | Returns emissive/glow RGB for special item types (0xb/0x12), else black |
+| 4c7250 | `material_toColor` | high | Maps a material/type id to an RGBA tint (large switch), modulating base color param_3; case 0x80+ glow |
+| 4c76a0 | `item_rarityScaled` | high | Returns item rarity/quality int: FUN_0043ca60(level)*100+1 |
+| 4c7be0 | `item_hasSpecialAbility` | high | Returns 1 if item has a special ability (subtype +0xd in {1,0xb,0xc,0x16}) else 0 |
+| 4d4de0 | `GameController_pickSpawnPoint` | high | Copies spawn coords from param, finds matching spawn index in list, then picks a random spawn position |
+| 4dd5e0 | `GameController_clearListLocked_3c` | high | Under lock (FUN_00601cb0/e90) applies FUN_004544d0 to list at +0x3c then clears/frees it |
+| 4dd640 | `GameController_clearListLocked_44` | high | Under lock applies FUN_00453ff0 to list at +0x44 then clears/frees it |
+| 4dd6a0 | `GameController_clearListLocked_34` | high | Under lock applies FUN_004540c0 to list at +0x34 then clears/frees it |
+| 4e3790 | `map::lower_bound_string` | high | RB-tree search by string key comparing via FUN_00428db0; returns nearest node (lower_bound) |
+| 4e7650 | `VoxelModel::set_data` | high | Copies voxel color data into model, scans for axis-marker voxels (RGB axes) as anchors, then builds mesh |
+| 4e7870 | `VoxelModel::build_mesh` | high | Builds render mesh from voxel grid: generates per-face quads with ambient occlusion, colors and normals into vertex buffers |
+| 4ec400 | `GameController::item_icon_id` | high | Large switch mapping item type/subtype/material to sprite/icon resource ID, with fallback cached array lookups |
+| 4ee230 | `GameController::load_game_assets` | high | Loads core game data files (data1.db, cubequest4.cub, spiribit.cub, egg1.cub, body/head/glove .cub) into sprites/DB |
+| 58ce20 | `GameController_ClearSelection` | high | Game: resets the controller's selection index to -1 and clears the active-binding flag |
+| 58ce40 | `GameController_ToggleSelection` | high | Game: sets selection index to +0x2ac, or -1 if it already equals that value (toggle) |
+| 598840 | `World::findObjectById` | high | RB-tree/map find by int key against tree root at world+0x800154; returns node value field [5] or 0 |
+| 5988a0 | `World::areEntitiesHostile` | high | Hostility test between two entities via faction byte +0x60 and aggro flag +0x124; 6=passive short-circuits |
+| 59fb90 | `World::getChunkEntity` | high | Returns pointer to entity index param_1[2] in a chunk's vector (0x148 elems) if in range, else 0 |
+| 5a0910 | `resolveVectorElementByHandle` | high | Look up container via FUN_00434d10(key0,key1), bounds-check index param_1[2], return element ptr (stride 0x188) or 0 |
+| 5a0ed0 | `NameGen::initFirstNameTables` | high | One-time lazy init of NPC first-name/syllable wstring vectors (Wolf/Lugo/Liku...) guarded by DAT_0076b9e8 bits; _atexit cleanup |
+| 5a6a70 | `vec3ToFixed64` | high | Convert int[3] to 16.16 fixed-point int64[3] (val<<16 low word, sign-extended high) |
+| 5a6b60 | `allocObjectWithVec3` | high | Allocate object via FUN_0043c8e0 and store vec3 (param_3[0..2]) at +8/+0xc/+0x10 |
+| 5c3d60 | `GameController::chunkMap2i_at` | high | map<vec2i,T> operator[]: cache-check nearest node vs 2D key, else insert via FUN_00639be0/FUN_005c0630 |
+| 5ee4b0 | `assign_two_dwords` | high | Copies two 32-bit fields from param_2 to param_1 (POD pair assignment) |
+| 601cb0 | `enter_critical_section` | high | Enters a critical section (external:00000018); trivial lock wrapper |
+| 601e90 | `leave_critical_section` | high | Leaves a critical section (external:00000019); trivial unlock wrapper |
+| 630a10 | `object_alloc` | high | Allocates an object via operator_new; shared factory |
+| 632870 | `Node::dtor_release_children` | high | Node destructor: SEH-guarded, releases each child (FUN_006504e0) then frees child-list nodes |
+| 633d70 | `Node::find_child_by_name_recursive` | high | DFS a node tree comparing name via FUN_00428db0(memcmp); returns first matching node or 0 |
+| 635700 | `Node::propagate_resolved_value` | high | Recursively set node +0x44 from parent/slot then recurse children (resolve inherited value) |
+| 6364f0 | `Node::any_child_active` | high | Recursively return 1 if this node or any active child has slot flag +0x2c set |
+| 636870 | `Node::remove_child_from_list` | high | Remove child (matching param_1) from node's std::list at +0x2c and clear its parent link (+0x28) |
+| 636990 | `Node::set_shape_slot` | high | Set attribute/shape slot at +0x34: release old (refcount==1 -> FUN_006507c0) and retain new |
+| 639be0 | `Node::make_vec3_node` | high | Allocate list node (FUN_006819e0), zero header, copy 3-float vector from param_1 |
+| 64eae0 | `Registry::push_node_locked_0x94` | high | Under CS, append list node to list at +0x94 (GameController variant) |
+| 64ef70 | `Node::traverse_invoke_callback` | high | Recursively invoke callback param_2 on nodes that are visible/enabled (flags at +200), descend children |
+| 6502e0 | `TextShape::new_instance` | high | Factory: operator_new(0x21c) + plasma::TextShape::ctor_0 |
+| 6507c0 | `ShapeNode::unregister_and_release` | high | Under CS, unlink shape node from registry list at +0x74 and release |
+| 6508f0 | `Widget::unregister_and_release` | high | Clear focus/hover/capture refs then under CS unlink widget from list at +0x7c and release |
+| 650ae0 | `GameController::hittest_if_no_capture` | high | If no captured widget (+200==0), run hit-test at cursor position (+0xd4) |
+| 6531e0 | `GameController::get_tooltip_widget` | high | Return current tooltip/popup widget pointer at +0xcc |
+| 657c00 | `ScrollButton::read_field` | high | Deserialize one ScrollButton field by opcode 0x11/0x12/0x13 into +0x238/+0x23c/+0x248 |
+| 657ee0 | `ScrollSlider::read_field` | high | Deserialize one ScrollSlider field by opcode 0x14/0x15 into +0x238(bool)/+0x250 |
+| 658530 | `istream::read_string` | high | Read length-prefixed char std::string from istream (alloc temp buffer, copy, free) |
+| 658c40 | `Texture::load_from_file_freeimage` | high | Load an image file via FreeImage (format sniff by extension), convert BGRA->RGBA and upload to texture (vtbl 8) |
+| 658fa0 | `Texture::load_from_memory_freeimage` | high | Load image from memory buffer via FreeImage_LoadFromMemory, convert BGRA->RGBA and upload to texture |
+| 662fb0 | `Widget::setAspectFitEnabled` | high | Simple setter storing a flag/value at offset 0x24c |
+| 664ba0 | `list::pushFrontNode` | high | Inserts a new node at the head of a std::list, incrementing size and guarding the 0x15555554 length limit |
+| 67d9e0 | `setField240` | high | Stores param_1 into the object field at offset 0x240 |
+| 683070 | `Button::deserializeProperties` | high | Parses serialized Button object properties from istream, reads "Button.type" int into obj+0x22c, delegates rest to Widget parser |
+| 683270 | `Display::deserializeProperties` | high | Deserializes Display scene node from istream: name/wname/visibility/clipping/colors/blurRadius/flags fields |
+| 683750 | `deserializeWidgetOnlyObject_0064f200` | high | Loads an object (via factory FUN_0064f200) reading only shared Widget properties per token from istream |
+| 683870 | `GenericShape::deserializeProperties` | high | Deserializes GenericShape from istream: name/wname/source/wsource/position/size fields via factory FUN_0064f280 |
+| 683de0 | `deserializeWidgetOnlyObject_0064f300` | high | Loads an object (factory FUN_0064f300) reading only shared Widget properties per token from istream |
+| 683f00 | `Node::deserializeProperties` | high | Deserializes scene-graph Node (name/wname/shape/transformation/display/widget/child/flags/variable); builds child list, links |
+| 684770 | `Button::deserializeProperties_0065` | high | Parses Button object props from istream (factory FUN_006500d0): reads "Button.type" into +0x22c, else Widget parser |
+| 684970 | `ScrollButton::deserializeProperties` | high | Deserializes ScrollButton: "ScrollButton.direction"->+0x238, "Button.type"->+0x22c, else Widget props |
+| 684c30 | `ScrollSlider::deserializeProperties` | high | Deserializes ScrollSlider: "ScrollSlider.direction"->+0x238, "Button.type"->+0x22c, else Widget props |
+| 684ef0 | `SmoothMeshShape::deserializeProperties` | high | Deserializes SmoothMeshShape mesh (name/faces/vertex flags/params/positions/texcoords/colors/stroke/extrusion arrays) |
+| 685b10 | `TextShape::deserializeProperties` | high | Deserializes TextShape: name/wname/string/frame/sequence/colors/flags/pixelSize/strokeRadius/spacing |
+| 686820 | `Texture::deserializeProperties` | high | Deserializes Texture: name/wname/id/pixelFormat/filters/wrap/width/height/pixels/compressedPixels |
+| 686ff0 | `Transformation::deserializeProperties` | high | Deserializes Transformation node: name/wname/translation/rotation/pivot/deformation via factory FUN_00650360 |
+| 687440 | `deserializeWidgetOnlyObject_006503e0` | high | Loads an object (factory FUN_006503e0) reading only shared Widget properties per token from istream |
+| 687560 | `Widget::readProperty` | high | Parses one shared Widget property token (name/wname/caption/bind pos/size/matrix/alignment/flags) into widget struct |
+| 687ad0 | `Widget::applyBindMatrix` | high | Copies two 16-word (4x4) matrices from src into widget at +0xa8 and +0xe8, then calls FUN_0058c440 (mark dirty) |
+| 688180 | `StreamReader::readTaggedBlockAppend` | high | Reads a length int from istream, computes end offset via tellg, appends new list node (checks list-too-long) |
+| 688220 | `StreamReader::readToken` | high | Reads a length-prefixed token/string from istream into param_1 (std::string), handling ref-back dedup table |
+| 688490 | `StreamReader::endBlockCheckPos` | high | Verifies current istream tellg matches expected block end; if so pops/frees the tail list node, returns success byte |
+| 688510 | `StreamReader::readString` | high | Reads length-prefixed narrow string from istream into std::string param_1 (empty string shortcut for len 0) |
+| 6886f0 | `StreamReader::skipBlock` | high | Reads a length int then seekg's the istream forward past that block (skip unknown/unhandled property) |
+| 40e030 | `ostrstream_str` | med | std::ostrstream::str(): builds std::string from strstreambuf get/put area honoring frozen flags |
+| 40e140 | `ostrstream_str_wrap` | med | Wrapper returning result object after FUN_0040e030 (ostrstream::str) |
+| 40ee70 | `entityState_copy` | med | Copies a 0x118-byte record (header fields + 0x20-entry array of 8-byte structs); item/equipment copy |
+| 40ef70 | `ptrAt_0x4c_0x20x8` | med | Returns +0x4c + count(+0x20)*8: end pointer of an 8-byte-stride array |
+| 411a90 | `setFlagAtSlot` | med | Writes bool(param_1) into array at +0x94 indexed by +0x68 (per-slot flag) |
+| 411ad0 | `u16_ostrstream_str` | med | u16string variant of ostrstream::str(): builds u16string from strstreambuf area honoring frozen flag |
+| 411bc0 | `u16_ostrstream_str_wrap` | med | Wrapper returning result after FUN_00411ad0 |
+| 4128f0 | `Creature_drawModel` | med | Massive character/creature model+animation render: composes bone transforms, matrix math, draws parts |
+| 423f70 | `computeYawFromDir` | med | Computes an angle blend using cos/sin/asin of two angle params scaled by param_3 |
+| 428990 | `math::vec4_sub` | med | subtract two 4-float vectors (game math) |
+| 42c580 | `int64::setFromGen` | med | Sets single int64 field ECX[0] to value returned by 0068d946 |
+| 42c5e0 | `Item::copyStruct` | med | Byte-copies a ~0x118-byte item struct (header + 0x20 entries of 8 bytes + trailer at 0x114) |
+| 42c6c0 | `getPtrPlus8` | med | Returns *ECX + 8 (address of embedded subobject) |
+| 42c860 | `int64::ltFixed16` | med | Compares (param_1<<16 sign-extended) against ECX int64; returns bool in low byte |
+| 42f000 | `map::valueAtOr0` | med | Lower-bounds key via 00477d90; returns *(node+0x18) or 0 if end |
+| 42f360 | `state::initA` | med | Zero-inits state block incl memset 0x100 buffer at +0x14 and extra dwords (+0x8a..+0x92) |
+| 42f3e0 | `state::initB` | med | Zero-inits state block: fields + memset 0x100 buffer at +0x14 |
+| 42f4a0 | `Item::equals` | med | Compares two 0x118-byte item structs field-by-field incl 0x20-entry loop and sub-item compare 00428940 |
+| 42f590 | `computeCellOffset` | med | Returns *(ECX+0x20)*0x40 + *(ECX+0x4c) (linear index/byte offset) |
+| 42f730 | `array::atChecked4` | med | Bounds-checked 4-byte element access; returns global fallback (0076afc8/d0) on OOB |
+| 434870 | `block::isPassableType` | med | Tests block type byte *ECX against blocked-type set; returns 1 if none match (passable) |
+| 434ad0 | `mat::scaleColumns` | med | Scales matrix rows 0-3 by param_1 and rows 4-7 by param_2 (skip if factor==1.0) |
+| 434b80 | `mat::translateByCols` | med | Adds col0*p1 + col1*p2 into translation column (mat[0xc..0xf]) of 4x4 float matrix |
+| 439210 | `colorMap::allocNode` | med | Allocates RB node (004395c0), inits key/color fields (+0x1c=7,+0x18=0, RGB from param_3+0x18) |
+| 439300 | `list::insertNodeAt` | med | Allocates node, splices into intrusive list before param_3 (prev/next fixup) |
+| 43a010 | `textInput::insertChar` | med | Appends/inserts char into text buffer if len<0x1f: adjust scroll, build substring 0043a270, bump position |
+| 43a500 | `text::layoutWordWrap` | med | Word-wraps a wstring into a line list: splits on space/CR/LF, measures words via 0065e720 against width, builds nodes |
+| 43ac20 | `vec3i64::dotFixed` | med | 3-component 16.16 fixed dot product of param_2 and ECX (three __allmul, /0x10000, summed) |
+| 43c0a0 | `struct::initSmallWithBuf` | med | Zero-inits smaller struct with memset 0x100 buffer at +6 |
+| 43c3e0 | `container::destroy` | med | Destroys container via 0067eb10 then operator_delete(*ECX) (RB/map destructor) |
+| 43caa0 | `combat::getAttackWindup` | med | Returns attack windup/cooldown frames per weapon type (big switch), scaled by attack-speed & material |
+| 43d1a0 | `combat::getAttackTiming` | med | Two-stage switch computing attack windup and recovery frames per weapon type, scaled by speed |
+| 43df60 | `equipment::getActiveElement` | med | Builds list of active element/rune from equipment slots (+0xaa8,+0x990) per weapon type; returns list |
+| 43e190 | `stat::calcSpellPower` | med | Computes spell/magic power: base 2^ terms plus rune bonuses from slots (+0x990,+0xaa8) |
+| 43e350 | `combat::isReadyToStrike` | med | Returns 1 if attack timer elapsed (0043d1a0) for eligible weapon type and cast timer <=0 |
+| 43e420 | `combat::rollBlockSuccess` | med | Rolls level-scaled chance vs rand and shield-type check 004c6f20; returns bool |
+| 43e4a0 | `quest::checkItemThreshold` | med | Sums matching item counts across bag/equipment (0042f4a0 compares) and tests against threshold for ability id |
+| 43e6a0 | `ability::getManaCost` | med | Returns ability mana/spirit cost in units per ability id (switch), scaled by level factor 0043ed60 |
+| 43ed60 | `ability::getPowerFactor` | med | Returns ability power factor 1-1/(rank*0.1+1); resolves rank from +0x1138 table or level if unset |
+| 444760 | `weapon::isMeleeType` | med | Returns 1 for weapon/ability type ids in melee set (switch), else 0 |
+| 444ae0 | `ability::getResourceCost` | med | Returns resource cost fraction per ability id; buff-list scan for '\t' gives 0.3 default |
+| 444cb0 | `shield::getBlockDuration` | med | Returns block/parry duration frames by shield rune type, scaled by attack speed |
+| 445020 | `combat::selectAttackAnim` | med | Decision tree selecting next attack/ability animation id from weapon+rune+form state |
+| 446af0 | `statusList::upsert` | med | Upserts status/element entry in list (+0x1178): replace matching type byte, else push_back 00451d00 |
+| 447110 | `Player::resetCombatState` | med | Resets combat/transform members and buffers (subset of 00446330) then FUN_0042ef10 |
+| 447700 | `combat::getEffectiveHaste` | med | Computes attack-speed multiplier: base + shield fraction + element buff 004478b0 + rage-form scaling |
+| 4478b0 | `stat::calcHasteBonus` | med | Sums element/rune haste bonuses across many equipment slots (004c7c00) ×0.1 |
+| 447d50 | `render::bindNodeTransformB` | med | Render glue: uploads uniforms via device vtable (0x15c,0x170,0x1ac) using field +0x10 |
+| 447d90 | `render::bindNodeTransformC` | med | Render glue: uploads uniforms via device vtable using field +0xc |
+| 447dd0 | `render::bindNodeTransformD` | med | Render glue: uploads uniforms via device vtable using field +0x14 |
+| 447fb0 | `render::setVec3Uniform5c` | med | Uploads vec4(param,0,0,0) to shader constant (device vtable 0x1b4) at register +0x5c |
+| 448010 | `render::setVec3Uniform70` | med | Uploads param vec3 (w=0) to shader constant (vtable 0x178) at register +0x70 |
+| 448070 | `render::setUniform34` | med | Uploads param to shader constant (vtable 0x178) at register +0x34 |
+| 448090 | `render::setFogUniform64` | med | Uploads scalar (param-80)/-30 as vec4 to shader constant reg +0x64 (fog/height factor) |
+| 448100 | `render::setInvUniform60` | med | If param>0 uploads vec4(1/param,0,0,0) to shader constant reg +0x60 |
+| 448170 | `render::setLightDirUniform` | med | Uploads 3 constants then normalizes vec3 (sqrt) light direction into shader (vtable 0x178) |
+| 448280 | `render::setUniform30` | med | Uploads param to shader constant (vtable 0x178) at register +0x30 |
+| 4482a0 | `render::uploadModelViewMatrices` | med | Multiplies mat4s (model*param2, *param3) and uploads world/view matrices to shader constants (vtable 0x178) |
+| 448fe0 | `render::setVec3Uniform58` | med | Uploads vec4(param,0,0,0) to shader constant (vtable 0x1b4) at register +0x58 |
+| 449040 | `render::setThreeUniforms` | med | Uploads three params to shader constant registers +0x4c,+0x50,+0x54 (vtable 0x1b4) |
+| 449090 | `render::setVec3Uniform48` | med | Uploads vec4(param,0,0,0) to shader constant (vtable 0x178) at register +0x48 |
+| 449150 | `ostream::writePadded` | med | std::operator<<(ostream,char*): writes C-string with width/fill/adjustfield handling; SEH-guarded |
+| 4498d0 | `db::getBlobInto` | med | Loads blob via 00449810 then grows out vector 005870c0 and memcpy into param_2 buffer |
+| 4499c0 | `db::storeBlobVec` | med | Computes [begin,end) range from param_2 vector and stores as blob via 004499f0 |
+| 44a690 | `swapElem_0x11c` | med | Swaps two 0x11c objects using 280-byte temp; ecx is likely GameController-owned but this is a value swap |
+| 44a7e0 | `ctor_ObjWithListMap` | med | Constructor: zero header, alloc list sentinel (0044b740) and map/list node (0044b770), init capacity fields |
+| 44aff0 | `copyCtor_ObjWithVec` | med | Copy-construct object: vector<0xc> copy (0044ad30), copy dword +0xc, string +0x10, ints +0x128/+300 |
+| 44b040 | `copyCtor_EntityLike` | med | Field-by-field copy-constructor of large (~0x460+) struct incl strings, sub-array 0x118, tail bytes |
+| 450b70 | `GameController_isHoveredTileType0e` | med | Returns 1 if hovered tile (00450960) exists and its type byte==0x0e |
+| 450f40 | `bytesToUint2` | med | Load byte then dword into two uints |
+| 4513f0 | `adjustorThunkCall` | med | Adjusts this-pointer by vtable offset then invokes function pointer param_2[0] |
+| 452600 | `dtor_freePtrRange_0x128` | med | Destroy range stride 0x128 (0x4a dwords): free owned pointer at +0x11c each |
+| 457930 | `GameController_collectTextShapes` | med | Recursively walk shape tree; RTTI-cast plasma::Shape->plasma::TextShape and push matches into list |
+| 457ec0 | `stream_writeString` | med | Serialize a std::string to stream: reserve (005870c0), memcpy chars, flush (0040d910) |
+| 458d40 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head sentinel (FUN_0044b740) then copy-assign range |
+| 459070 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head then _Insert_range FUN_00454190 |
+| 465fd0 | `T::T()` | med | Class ctor: allocate map head (FUN_0046d520) + secondary member (FUN_00630a10) |
+| 466650 | `setQuadFaceFromNormal` | med | Pack float[4] color to RGBA at +4, map int[3] normal param_2 to face index 0-5 at +3 |
+| 467af0 | `tree_dtor_free@unwind` | med | SEH unwind funclet: destroy tree (FUN_004777f0) then delete member at +8 |
+| 4686e0 | `Object_copyCtor_withSubobjects` | med | Copy-ctor: copy scalars, sub-list at +5 via FUN_004571d0, tree at +7 via FUN_0043c920, string at +10 |
+| 468ca0 | `fixedMul_16_16` | med | Fixed-point multiply: ftol64(x) * param_3 pair then /0x10000 (16.16 math) |
+| 468eb0 | `fixed_sub_scaled_64` | med | param_1(int64) = param_2<<16 - param_3(int64) |
+| 469060 | `int64_divScalar_double` | med | param_1 = ftol64((double)*this / param_2) |
+| 46eb90 | `tree_setVisibilityFlagRecursive` | med | Recursively set/clear bit 2 of flags at +200 across child tree at +0x2c |
+| 4719f0 | `GameController_disconnect` | med | Network disconnect: close socket/threads, print 'Disconnected.', add chat line, clear player list |
+| 477e10 | `findNearestEntityInGrid` | med | Scan 3x3 chunk grid around world pos, return nearest entity by FUN_005eeee0 distance |
+| 47ae10 | `collectFilledInventorySlots` | med | Build vector of (bag,slot) pairs for inventory items above player level, class GameController |
+| 47b1b0 | `getEquipmentSlotPtr` | med | Return equipment slot base offset by matching equip type via FUN_006294c0 chain |
+| 47b340 | `getTargetedItemName` | med | Return name string ptr of currently targeted/selected inventory item, else null |
+| 47b3e0 | `getInteractTargetName` | med | Return name string of interaction target entity, else null |
+| 486a20 | `GameController_saveKeyedString` | med | If param_2, looks up value via FUN_004498d0 and serializes a keyed std::string (FUN_00658fa0) else default path |
+| 487ea0 | `GameController_emitFormattedString` | med | Builds a std::string from a source string (FUN_00424da0) and passes to FUN_00636a00; SEH+cookie |
+| 4c12f0 | `vec3_rotateTowardAngle` | med | Computes angle between two 3D vectors (acos of normalized dot) and applies rotation about their cross |
+| 4c6e10 | `item_computeValue` | med | Item base value: type-1 items scaled 200x or 100x by subtype via FUN_00445f60 |
+| 4c70b0 | `item_computeStat_armor` | med | Computes armor/defense-like stat (x5 * mults) for block/tool item types |
+| 4c76e0 | `item_valueByType` | med | Item value int by weapon type (2x/1.5x/1x/100x mults) via FUN_00445f60 |
+| 4c7c00 | `item_computeStat_variant3` | med | Per-item float stat for tool/weapon types with rng and subtype 0xc bonus |
+| 4c7f60 | `item_weaponDamage` | med | Computes weapon damage for type-3 items: base scaled 2x/4x/8x by subtype |
+| 4df760 | `GameController_terrainStateChanged` | med | Detects if terrain/interaction state changed vs world (compares 11 ints and byte flag); reads geometry |
+| 4df880 | `GameController_questStateChanged` | med | Like 004df760 plus a quest-progress score threshold check (FUN_004df9c0) gating an update |
+| 4df9c0 | `GameController_computeQuestScore` | med | Sums a weighted quest-progress score over 11 counters plus a class-change bonus |
+| 4e1790 | `Container::ctor_default` | med | Default-constructs container: null head/tail, allocates sentinel via FUN_00630a10, then initializes rest |
+| 4e4a20 | `GameController::build_quest_text` | med | Builds quest/speech text: constructs two maps (via 0046d520/00630a10), invokes substitute_placeholders |
+| 4e5320 | `GameController::show_region_name` | med | Formats world region/zone display name ('Lands of', 'Ocean') from chunk coords; picks singular form if area small |
+| 4e5c10 | `GameController::show_object_name` | med | Looks up object at coords (>>8) then formats its display name via format_object_singular_name |
+| 4e6530 | `GameController::speech_text_fits` | med | Returns whether measured speech text height <= available height field at +0x16c |
+| 4e6550 | `GameController::measure_speech_height` | med | Computes total speech text pixel height: sums line-node counts in list[+0x170] times lineHeight(+0x1d4) |
+| 4e6bd0 | `color_equals3` | med | Compares 3 consecutive bytes (RGB triple) at in_ECX against in_ECX[param_1]; returns 1 if equal |
+| 4e6df0 | `GameController::draw_mesh` | med | D3D9 draw glue: sets stream source, indices and DrawIndexedPrimitive via device vtable for object at +0x58 |
+| 4e71d0 | `GameController::match_transparent_color` | med | Tests whether 3-byte color at param_1 matches palette DAT_0076b340 or its axis-variants |
+| 4e75c0 | `VoxelModel::allocate` | med | Sets voxel dimensions (+0x44/0x48/0x4c) and allocates zeroed w*h*d*3 color buffer at +0x30 |
+| 4eb8d0 | `VoxelModel::compute_ao` | med | Computes ambient-occlusion ratio for a voxel corner by sampling neighboring filled voxels along a direction |
+| 4ec370 | `GameController::class_icon_id` | med | Maps a small profession/class index to its item/icon string ID via switch (0x354,0x351...) |
+| 51be60 | `GameController::item_name_string_id` | med | Switch mapping item category/material/rarity to localized name string ID |
+| 59aa60 | `World::getObjectName` | med | Map find by int key at world+0x800104; on hit constructs a string(+5) into param_1, else throws via 0040eb60 |
+| 59cff0 | `GameController::playItemActionSound` | med | Selects and queues sound/effect events via 005a0d80 based on item category *param_1 and subtype param_1[1] |
+| 5a03d0 | `World::findNearestSpawnPoint` | med | Gathers candidate spawn/teleport points from neighboring chunk cells into a list, then selects the nearest |
+| 5a35d0 | `World::raycastVoxels` | med | March a ray (fixed-pt >>16) through voxel chunks up to distance param_3, sampling block solidity vs param_4, capped 500 steps |
+| 5a5240 | `WorldMap::lookupTileValue` | med | Map lower_bound by (x,y) key vs end at +0x800124; build result struct {0,0,7} from found node +0x18, else raise via FUN_0040eb60 |
+| 5a5cb0 | `collectSolidBlocksInBox` | med | Loop region/block grid over box (bounds param1-4, >>8 chunk, >>6&0x3f block), gather solid entities (byte&0x1f) into temp list, process, free |
+| 5a9da0 | `PathMap::findInOpenSet` | med | Builds temp coord key, lower_bound in open-set map at +0x140c, compares key; returns matching node |
+| 5c4800 | `GameController::sampleTemperatureGrid` | med | Scans 0x400-stride POI/settlement grid near (x,y), finds nearest and distance-weighted value; climate/temperature sample |
+| 5c4dd0 | `GameController::sampleHumidityGrid` | med | Scans 0x400-stride POI grid near (x,y) for nearest, distance-weighted; second climate channel (humidity) |
+| 5eefa0 | `World_getColumnDataAt2` | med | Returns pointer to per-column float data at (param_2,param_3); sibling of FUN_005ee540 |
+| 5f0720 | `World_getRegionCellPtr2` | med | Region cell pointer/value helper (sibling of FUN_005ef040) for FUN_0059d640 |
+| 5f51e0 | `GameController_buildDecalMesh` | med | Allocates+inits a mesh/particle buffer (memset, FUN_004c7830, FUN_0040ee70); paired with FUN_005f8ad0 |
+| 5f8ad0 | `GameController_buildDecalMesh2` | med | Allocates+inits mesh/particle buffer (memset, FUN_004c7830, FUN_0040ee70); sibling of FUN_005f51e0 |
+| 5f8e10 | `vec3_distanceSquared` | med | Computes squared distance (float10) between two position vectors; shared helper (label 'itembox') |
+| 5fc160 | `GameController_tryLockAndProcess` | med | Scoped lock (EnterCriticalSection ext:18/19) wrapping FUN_00602440 work |
+| 5fc1b0 | `GameController_processNetworkTick` | med | Large locked update (vfunc_11): message/entity processing under critical section |
+| 601cc0 | `locked_pair_update` | med | Under lock, runs FUN_005eeee0/FUN_005eefa0 (fixed-point compute) pair |
+| 608f20 | `object_release` | med | Releases/decrefs an object via FUN_0046d550 (vfunc-shared) |
+| 60c510 | `GameController_updateSubsystems` | med | Per-frame subsystem update (vfunc_10 sibling): drives many system updates incl. exp decay (FUN_00622d40). 92208 B span, absent from ghidra_func_map.tsv (hence AUDIT.md failed=3 vs 4 stubs). Recovered with 3600s + 512MB payload (468s); body in extra_bodies.c. Server twin: 0x5322d0 (identical top-callee call profile). |
+| 622d40 | `exp_decay_factor` | med | Returns an exponential factor (libm_exp) from param_1; smoothing/decay helper |
+| 6294c0 | `GameController_updateWidgetLayout` | med | Triggers widget layout pass via FUN_00629300 |
+| 62dc20 | `GameController_setWidgetBounds` | med | Sets widget bounds via FUN_0062d7f0 (cookie-guarded) |
+| 62dcd0 | `GameController_setWidgetBounds2` | med | Sets widget bounds via FUN_0062d7f0 (variant) |
+| 630220 | `string_appendGrow` | med | Appends to a string/vector with growth (external:91, FUN_00583cb0) |
+| 630be0 | `Widget_setPositionFloat` | med | Sets a float position/bound and stores via FUN_00583cb0 vector (external:91) |
+| 631460 | `AdaptionWidget_rebuildLayoutRecursive` | med | Recursively rebuilds widget layout (self-call, FUN_0062baf0 layout, FUN_00630be0 pos) |
+| 634940 | `Node::get_first_material_name` | med | Recursively find first child whose material/state==3 and copy its name std::string into out |
+| 635550 | `Node::find_child_name_by_string` | med | DFS node tree by name string, returning associated name std::string of first match |
+| 636950 | `Node::detach_from_parent` | med | Detach node: remove from parent list and, if param given, remove+release the passed node |
+| 636a00 | `Node::pick_link_by_name` | med | Recursively find node whose name matches param_1; on hit-test success (FUN_004514e0) activate link target and notify (FUN_00467f60) |
+| 6393e0 | `Registry::foreach_node_locked` | med | Under critical section, in-order traverse RB-tree at +0x10 invoking FUN_0065b2a0 on entries with +0x28!=0 |
+| 64ac00 | `GameController::update_render_targets` | med | Refresh render-target textures (FUN_00659ef0) and push camera/light matrices+params into render passes at +0xc10/c14/c18 |
+| 64f4e0 | `NamedObject::create_with_defaults` | med | Create NamedObject with default ContinuousAttribute/DiscreteAttribute if args null; optional register (SEH) |
+| 650980 | `Widget::render_pass` | med | Full widget render: begin (vtbl 0x4c), layout, draw subtree (632910), end (vtbl 0x50); returns result |
+| 6526b0 | `GameController::notify_all_widgets` | med | Recursively update widgets (635700) then iterate widget list at +0x7c invoking vtbl 0x1c and registry callback |
+| 652a70 | `GameController::on_button2_down` | med | Handle secondary button press: clear tooltip, dispatch press callback variants |
+| 652b60 | `GameController::on_button2_up` | med | Handle secondary button release: dispatch release callback |
+| 657a00 | `ScrollButton::deserialize` | med | Deserialize plasma::ScrollButton from istream (fields via 657c00) |
+| 657ce0 | `ScrollSlider::deserialize` | med | Deserialize plasma::ScrollSlider from istream (fields via 657ee0) |
+| 659320 | `ContinuousAttributeVec3::deserialize` | med | Deserialize plasma::ContinuousAttribute<Vec3> from istream (opcodes 1=name,2/3/5/6=keyframes) |
+| 659740 | `NamedObject::deserialize` | med | Deserialize plasma::NamedObject base from istream (common fields via 659940) |
+| 659940 | `Widget::deserialize_common_field` | med | Deserialize one common widget field by opcode (name, pos, size, color, matrix, flags, texture) |
+| 659e80 | `istream_skipRecordByLength` | med | Reads a length int from istream then seekg's forward past that many bytes (skips a sized block). |
+| 65b2a0 | `GameController::rebuildEntityLists` | med | Under critical section, walks two entity maps (+0x68,+0x70), frees per-entity sub-lists/objects and rebuilds id lists; 'list<T> too long'. |
+| 6612d0 | `Image::reallocFromFields` | med | Thin wrapper re-invoking setPixelData using the object's own width, height and current pixel buffer |
+| 687b10 | `hashString_FNV` | med | Computes FNV-like 64-bit rolling hash (mult 0x1f) over std::string bytes; returns hi:lo pair |
+| 688030 | `StreamReaderCtx::init` | med | Initializes a deserialization reader context: sets list head, stores istream ptr at +8, zeroes fields, allocates helper |
+| 6880c0 | `decodeScrambledBuffer` | med | In-place decodes/unscrambles a byte buffer of length param_2 using key table param_3 (modular index subtraction) |
+| 68d910 | `float_to_uint64_round_guarded` | med | Converts float10 ST0 to rounded unsigned 64-bit; if DAT_0076e2a0 set uses simple truncation |
+| 40f4f0 | `computeLevelDiffBonus` | low | Game logic: gets target entity (40f570), reads its level vs a table value, accumulates pow(2,..)-scaled amount |
+| 411740 | `GameController::get_field_0x8006d0` | low | return dword at large struct offset (game accessor, not lib) |
+| 411750 | `GameController::get_field_ptr_0x800a1c` | low | return pointer to struct field (game accessor, not lib) |
+| 42c080 | `CharCreation::refresh_model` | low | rebuild displayed character model from customization state (game) |
+| 42f720 | `get_float_field_0x1000e78` | low | return float at large struct offset (game accessor) |
+| 4348d0 | `get_float_field_0xd4` | low | return float field 0xd4 (game accessor) |
+| 4348e0 | `get_float_field_0xd8` | low | return float field 0xd8 (game accessor) |
+| 434c20 | `node::applyDamageColorFlash` | low | If model node present, scales its color vec4 by ratio of two health values (0062f600/0062d50); render tint |
+| 4392d0 | `list::makeNode` | low | Allocates list node 00439600 then inits payload via 0040eaf0 unless error (-8) |
+| 43a0d0 | `NameInput::handle_key` | low | process keyboard char for name/text input field (game UI) |
+| 43ab30 | `text::drawColoredString` | low | Packs 3 RGB floats*255 into a color then forwards to text layout 0043a500 |
+| 43b4a0 | `vec3i64::selfDotFixed` | low | Calls dot 0043ac20 with self, returns result pointer (length-squared fixed) |
+| 43b660 | `state::initFields10` | low | Zeroes fields +0x10,+0x14,+0x18,+0x20,+0x24 (init sub-state) |
+| 444590 | `combat::canBlockNow` | low | Returns 1 if not attacking and weapon/shield state permits block |
+| 444650 | `physics::isLandingHard` | low | Returns 1 if airborne-landing conditions met (flag +0x124&0x10, vel +0x3c<0, grounded) |
+| 444a90 | `quest::hasActiveItemReq` | low | Returns 1 if quest object (+0x1d28) has an item matching 0042f4a0 in its bag list |
+| 4460f0 | `creature::getScaleVec4` | low | Writes a scale vec4: crouch/mount case (0.8,0,0.5,1) via flag, else all 1.0 |
+| 44931a | `ostream::writeEpilogue` | low | Exception-path epilogue for 00449150: setstate, _Osfx, release streambuf sentry |
+| 44cb50 | `deserialize_struct_0x28` | low | read struct fields from stream buffer (game reader) |
+| 44cce0 | `deserialize_struct_small` | low | read small struct fields from stream buffer (game reader) |
+| 44d790 | `GameWorld::serialize_state` | low | serialize world/entity state into growable byte buffer (game, big) |
+| 450920 | `GameController_getSelectedCount` | low | Returns 0/1/half of 004c76e0 based on 00450960 pointer validity |
+| 450a00 | `GameController_isInFrontRange` | low | Range check of a position (006294d0) vs camera dist thresholds 30.0 (006294d0/00627ce0/00627d50) |
+| 451420 | `storeShortViaAdjust` | low | Store short at *(base+vtbl[+4]+0x40) |
+| 4573d0 | `GameController_interpTimeSum` | low | Interpolates via 004ac150 then sums two int64 (0068d946) into *param_1 |
+| 4574f0 | `GameController_popbackAndFormat` | low | Builds two strings, calls 00457600, then pops back element (0xc) from vector at ecx+0x30, returns dword |
+| 457600 | `GameController_writeTwoStrings` | low | If field>=0 emits two serialized strings (00457ec0) via 004042e0/0040da70 |
+| 465ae0 | `T::T(const T&)` | low | Copy-ctor: base vector copy (FUN_004593e0) + string (FUN_0040ee70) + POD fields |
+| 465ef0 | `T::T(const T&)` | low | Class copy-ctor: string (FUN_00459070) + list member (FUN_00458d40) + string tail |
+| 46b740 | `WorkerThread::run` | low | GAME (mislabeled lib): vfunc_2 background worker thread body; allocs tree head, timeGetTime, io ordinals, big stack scratch |
+| 46ebe0 | `GameController_addItemToInventory` | low | Add item/coin to inventory counters; coins at +0x4a/0x4b, else find/grow item slot vector |
+| 46f620 | `GameController_reloadServerList` | low | Enter CS, set server name string, rebuild remote-player list from tree, notify + cleanup temp list |
+| 4709c0 | `GameController_onItemPickup` | low | Item pickup: check carry limit ('You can't carry more'), consume drops, add to inventory, rng affix, play SFX |
+| 470d80 | `voxelRaycast_modelPick` | low | Traverse model voxel grid along projected ray to pick a solid voxel (matrix param_2, FUN_004e71d0 solidity) |
+| 471920 | `GameController_modifyBlockAtWorld` | low | At world (x,y) resolve chunk FUN_00434d10, find column entry, adjust block height via FUN_0044e700 |
+| 471b60 | `renderEntityLabelBillboard` | low | Render 3D text/label glyphs for entity: transform each char quad by matrix, FUN_004c7250 draw |
+| 471d50 | `drawOrientedModelOrTrail` | low | Build orientation matrix from direction vec (sqrt/sin/cos) and render model/segment with many transforms |
+| 4772b0 | `GameController::start_game_mode` | low | Init/reset gameplay state and mode-specific tutorial hints (game) |
+| 47b010 | `getHoveredWorldItem` | low | Return ptr to item under cursor by projecting item world pos to screen vs mouse box (120px) |
+| 47f3c0 | `testAABBvsFrustum_fixed` | low | Fixed-point AABB (param_1,param_2) vs 6 frustum planes at +0x1000fa4 intersection test |
+| 47f760 | `testSphereVsFrustum_fixed` | low | Fixed-point sphere (center param_1, radius param_3) vs 6 frustum planes test |
+| 47fae0 | `spawnItemAffixDrops` | low | Generate item affix/enchant list entries by rarity buckets (mod 5) via FUN_00449b70 list insert |
+| 480e00 | `lookupNestedStringMap` | low | Two-level string-map lookup (FUN_004e3790 hash, FUN_00428db0 cmp) with lazy-init default entry |
+| 4821a0 | `GameController::enter_edit_mode` | low | Enter world-edit mode, spawn editor Creature/camera (game) |
+| 484350 | `playHitSoundAtPos` | low | Play weapon-hit SFX (hit.wav/blade1.wav/...) at world pos param_2, dist-attenuated volume |
+| 487e30 | `GameController::get_selected_char_ptr` | low | Return pointer to selected character entry if index valid (game) |
+| 4a6b50 | `GameController_renderCreature` | low | Large creature/model render: builds bone transforms with sin/cos, camera dist, animation; many float stack locals |
+| 4bbd80 | `GameController_spawnRibbonEffect` | low | Spawns a swirling ribbon/particle strip: builds per-segment rotated transforms with sin/cos and pushes vertices |
+| 4bc760 | `GameController_spawnRibbonEffect2` | low | Variant ribbon/trail effect emitter with extra twist param_9; trig-built transforms per segment |
+| 4bd160 | `GameController_spawnEffectMesh` | low | Emits an animated effect mesh (sin/cos/sqrt transforms), similar to particle spawners |
+| 4be760 | `GameController_renderDroppedItem` | low | Renders a dropped item/block billboard: fetches block color (FUN_0042f7e0), builds transform, submits quad |
+| 4c6f20 | `item_classifyRecursive` | low | Recursively walks an item/effect tree, classifying nodes by type (2/3/4-7) and subtype at +0xd |
+| 4c7660 | `Item::get_stack_or_grid_size` | low | Return 0x20 or 0x10 based on item type/subtype bytes (game) |
+| 4c7d20 | `Item::get_type_color` | low | Return RGBA color for item type/subtype (game) |
+| 4dc8e0 | `GameController_copyEntityState` | low | Deep-copies entity/world state: multiple list clones and field copies (FUN_004dc4e0/5b0/680) |
+| 4e2d90 | `container_operation` | low | Container operation combining insert/resize helpers |
+| 588250 | `GameController_MatchInputBinding` | low | Game: scans input/action bindings against the current key/button event, storing or firing a matched binding |
+| 59d640 | `Terrain::computeBiomeColor` | low | Computes terrain/vegetation RGBA (param_7) by blending many constants against temperature/humidity/height noise |
+| 5a0bf0 | `GameController::updateHeldObjectOnMove` | low | Map-lookup two keys (param_1,param_1+8) vs end(+4); update held-object (+0xb8) counters +0x194, copy to +0x1024/0x1030 |
+| 5a7eb0 | `Creature::findPathToTarget` | low | A* pathfinding: seeds start from pos+RNG offset, distance-tests goal (0x1458 radius), builds open/closed sets and node list |
+| 5eeee0 | `fixedpoint_vec_subtract` | low | Computes 16.16 fixed-point per-axis difference into param_1 from param_2..param_5 inputs |
+| 602440 | `hash_or_index_compute` | low | Computes an index/hash from param_1/param_2 (no callees); used by lock wrapper |
+| 6091a0 | `get_int_stub` | low | Returns an int (trivial getter) |
+| 60a9f0 | `store_object_ref` | low | Stores an object reference/pointer into param_1 |
+| 60aa50 | `get_int_stub_b` | low | Returns an int (trivial getter) |
+| 62baf0 | `Widget_layoutChildren` | low | Lays out children via FUN_0062bb90 + FUN_006295a0 |
+| 62c570 | `Widget_measureContentEntry` | low | Entry to content measure via FUN_0062bb90 |
+| 62f630 | `GameController_getWidgetSize` | low | Gets widget size via FUN_0062b510 (cookie-guarded) |
+| 62f660 | `GameController_getWidgetSize2` | low | Gets widget size via FUN_0062b510 (variant) |
+| 62f720 | `get_widget_child` | low | Returns a child/field pointer (no callees) |
+| 6303d0 | `object_buildWithRefcount` | low | Builds object with refcount (FUN_0046d550) via FUN_00630220 |
+| 630ae0 | `compute_pair_field` | low | Computes/writes a pair field from param_2 into param_1 (no callees) |
+| 636560 | `Node::hit_test_point_recursive` | low | Recursive pick/hit-test: transform cursor point into node space, test bounds & children, honor visibility flags |
+| 6504e0 | `Node::destroy_and_unregister` | low | Full node teardown: detach from focus/capture, recursively destroy children, unregister attribute/shape/font nodes from CS lists, free (big) |
+| 6527f0 | `GameController::on_mouse_down` | low | Handle mouse-press: pick widget under cursor, set capture/focus, dispatch enter/press callbacks (big) |
+| 652940 | `GameController::on_mouse_up` | low | Handle mouse-release: dispatch release/click callbacks, update captured widget |
+| 652c10 | `GameController::set_hover_widget` | low | Update hovered/entered widget (+0xd4/c4), dispatch leave/enter callbacks to old/new widget hierarchies (big) |
+| 653360 | `GameController::position_popup` | low | Position a popup/tooltip near cursor, clamped to screen extents (+0x10c/+0x110), toggling its clip flag |
+| 653770 | `GameController::load_widget_file` | low | Open a widget resource file by extension (.CUB etc), log 'read', deserialize into widget via 6555d0 or model loader (big) |
+| 6555d0 | `GameController::deserialize_widget_tree` | low | Deserialize a full widget/scene tree root from istream: creates attribute maps, dispatches per-type readers, builds hierarchy (huge) |
+| 657f80 | `SmoothMeshShape::deserialize_v2` | low | Deserialize plasma::SmoothMeshShape (name, vertex buffer, transforms, sub-attributes) from istream (big switch) |
+| 658630 | `TextShape::deserialize` | low | Deserialize plasma::TextShape (font, text string, matrix) from istream chunk stream (big) |
+| 659fb0 | `Font::advancePenX` | low | Adds param_1 to accumulator at +0xe8, stores it at +0xe4, clears +0x10, then calls FUN_006372a0. |
+| 6816c0 | `SceneLoader::ctor` | low | Constructs loader/deserialization context: default-inits eight string fields (0x20..0x58), stores params, builds a pair-vector |
+| 681c70 | `PlasmaGraphics::loadDisplay` | low | Main scene/display deserializer: validates "PlasmaGraphics" magic, throws plasma::Exception on mismatch, dispatches Shape/Widget types |
 
 ## sqlite (160)
 
@@ -3143,176 +3222,59 @@ comments with the same content are also written above each function in the .cpp 
 | 54cf70 | `sqlite3PagerVfs` | low | pager.c: return pager VFS pointer |
 | 54d210 | `sqlite3PagerSetBusyhandler` | low | pager.c: install busy handler wrapper |
 
-## crtstl (149)
+## crtstl (35)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
 | 40bfc0 | `std_allocate` | high | MSVC std::_Allocate: operator_new(n), throws std::_Xbad_alloc on failure |
 | 40d240 | `std_filebuf_open` | high | std::basic_filebuf<char>::open: _Fiopen, wires streambuf get/put ptrs, sets codecvt facet |
-| 40f4a0 | `std::wstring::_Tidy` | high | free heap wstring buffer if cap>7, reset to SSO |
 | 40f650 | `std::wstring::_Allocate` | high | allocate wchar_t buffer (n*2), _Xbad_alloc on fail |
-| 40f8a0 | `std::char_traits<wchar_t>::assign` | high | copy single wchar element |
-| 40f8c0 | `std::wstring::operator_delete_wrapper` | high | deallocate wstring buffer via operator delete |
 | 43b5e0 | `std::wstring::dtor_free` | high | delete heap buffer of wstring in catch handler |
 | 449720 | `db::delete_blob` | high | SQLite prepare/bind/step DELETE FROM blobs WHERE key=? |
 | 449920 | `db::update_blob_key` | high | SQLite UPDATE blobs SET key=? WHERE key=? |
 | 44b7f0 | `std::_Tree::_Freenode_str` | high | destroy rbtree node w/ string key then free node |
-| 44e8d0 | `buffer::append_bytes` | high | append param_2 bytes to growable output buffer via memcpy |
-| 451210 | `std::operator>>(wistream,wstring)` | high | extract wstring from wistream skipping via ctype (_Ipfx,getloc) |
-| 451380 | `std::operator>>_wstring_unwind` | high | exception cleanup epilog for wstring extraction |
-| 451dd0 | `std::map::insert_val_wstr` | high | insert map entry, copy pair + wstring value (_Assign FUN_0040f680) |
-| 454190 | `std::list<T>::_Insert_range` | high | Copy-append node range into list; length_error guard |
-| 456e90 | `std::_Copy<0x10>` | high | Copy-assign 16-byte elements from list-node payloads into array |
 | 457900 | `std::basic_string::_Tidy` | high | Free string heap buffer if >15 cap and reset to empty SSO state |
-| 46d4e0 | `std::_Tree<>::_Buyheadnode` | high | operator new 0x1180 head sentinel node; self-link and mark nil |
 | 46db10 | `Node_dtor_2strings` | high | Destructor: free two SSO strings (+0x28,+0x10) then delete node |
 | 46dc50 | `std::list<T>::_Tidy` | high | Clear list member at this+0x10: relink head, free nodes and head |
-| 46e780 | `std::vector<T16>::reserve` | high | Grow 16-byte-element vector capacity if below requested |
-| 4861f0 | `std::list<T>::push_back` | high | Append node (elem via FUN_00451dd0), ++size |
-| 4865b0 | `std::list<T>::push_back` | high | Append node (elem via FUN_004521c0), ++size |
-| 4d72a0 | `utf8_to_utf16_alloc` | high | Count UTF-16 units for UTF-8 input, allocate, decode UTF-8 to UTF-16 |
-| 4d7400 | `utf32le_to_utf16_write` | high | Convert UTF-32LE codepoints to UTF-16 into caller buffer (surrogate expansion) |
-| 4d7460 | `utf32be_to_utf16_write` | high | Convert byte-swapped UTF-32BE codepoints to UTF-16 into caller buffer |
-| 4d74f0 | `utf8_countCodepoints` | high | Count Unicode codepoints in a UTF-8 buffer (1..4 byte sequences, word-at-a-time ASCII fast path) |
-| 4d75f0 | `utf8_to_utf16_write` | high | Decode UTF-8 buffer to UTF-16 into caller buffer (handles 1-4 byte seqs, surrogates) |
-| 4d78a0 | `xml_detectEncoding` | high | Detect text encoding from BOM/'<?xml' heuristic, return encoding id (1..6) |
-| 4d9e50 | `std_Tree_insert_rebalance_v2` | high | std::map/set RB-tree insert fixup for a second value type; _Xlength_error guard |
 | 630a80 | `tree_nodeFree` | high | Frees a tree node (operator_delete); called from destructors/catch handlers |
 | 401ff0 | `std_ostream_insert_string` | med | MSVC STL: operator<<(ostream&,string) width/pad, streambuf sputn, sentry |
 | 4030e0 | `std_locale_getfacet` | med | MSVC STL: _Getfacet/use_facet<codecvt> lookup, throws bad_cast on miss |
 | 4044f0 | `std_filebuf_deleting_dtor` | med | MSVC STL: basic_filebuf<char> scalar deleting destructor |
 | 405810 | `std_string_deleting_dtor` | med | Destroys std::string (frees heap buf if cap>0xf, resets SSO fields) then operator_delete(this) |
-| 428990 | `math::vec4_sub` | med | subtract two 4-float vectors (game math) |
-| 452260 | `node_ctor_2strings` | med | Construct node via 00630a40, then copy two strings (0040eaf0) at param+0 and +0x18 |
 | 4578a0 | `std::_Tidy_deallocate@catch` | med | SEH cleanup funclet: operator delete of element buffer at +0x11c |
 | 4578e0 | `dtor_and_free@catch` | med | SEH cleanup funclet: run member dtor (FUN_0046f990) then operator delete |
-| 458d40 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head sentinel (FUN_0044b740) then copy-assign range |
-| 458df0 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head (node 0x30) then _Insert_range FUN_004544d0 |
-| 458f30 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head (node 0x78) then _Insert_range FUN_00453ff0 |
-| 458fd0 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head (node 0x50) then _Insert_range FUN_004540c0 |
-| 459070 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head then _Insert_range FUN_00454190 |
-| 465fd0 | `T::T()` | med | Class ctor: allocate map head (FUN_0046d520) + secondary member (FUN_00630a10) |
 | 46daf0 | `std::_Destroy_range@catch` | med | SEH cleanup: destroy vector<string> elements (FUN_00452650) |
-| 46e250 | `std::vector<T16>::_Reallocate` | med | Reallocate 16-byte-element vector to new capacity, move+free |
 | 46eac0 | `std::list<T>::_Unlink` | med | Unlink one list node from doubly-linked list, decrement size |
 | 46eaf0 | `std::list<T>::erase` | med | Unlink and operator_delete one list node |
 | 46eb20 | `std::list<std::string>::erase` | med | Unlink node, free embedded std::string, delete node |
-| 477d20 | `std::list<std::string>::_Erase_node` | med | Unlink node, free embedded string(+0x8), delete |
 | 486050 | `std::list<T>::pop_back` | med | Unlink and delete node before head (pop back) |
 | 4cb2c0 | `std::basic_filebuf<char>::`scalar deleting dtor'` | med | Filebuf dtor plus optional operator_delete of object |
-| 4cb5d0 | `net::Connection::write_delta_i8` | med | If byte field changed, push to change-list and set dirty bitflag (game net) |
-| 4cb670 | `net::Connection::write_delta_i16` | med | If short field changed, queue delta and set dirty bit (game net) |
-| 4cb710 | `net::Connection::write_delta_i32` | med | If int field changed, queue delta and set dirty bit (game net) |
-| 4cb7b0 | `net::Connection::write_delta_f32` | med | If float field changed, queue delta and set dirty bit (game net) |
-| 4cb850 | `net::Connection::write_delta_vec5f` | med | If 5-float(0x14) field changed, queue delta+dirty bit (game net) |
-| 4cb930 | `net::Connection::write_delta_struct_ac` | med | If 0xac struct changed (cmp FUN_004cc840), queue delta (game net) |
-| 4cb9d0 | `net::Connection::write_delta_struct_e38` | med | If 0xe38 struct changed (cmp FUN_004ccaa0), queue delta (game net) |
-| 4cba70 | `net::Connection::write_delta_creature` | med | If 0x118 Creature struct changed, queue delta (game net) |
-| 4cbb10 | `net::Connection::write_delta_vec3i` | med | If 12-byte(3-int) field changed, queue delta+dirty bit (game net) |
-| 4cbbc0 | `net::Connection::write_delta_vec3f` | med | If 12-byte(3-float) field changed, queue delta+dirty (game net) |
-| 4cbc80 | `net::Connection::write_delta_vec6i` | med | If 24-byte(6-int) field changed, queue delta+dirty (game net) |
-| 4cbd40 | `net::Connection::write_delta_i64` | med | If 8-byte(2-int) field changed, queue delta+dirty bit (game net) |
-| 4cc800 | `std_compare_float3_ne` | med | Return 1 if any of 3 consecutive floats differ between two arrays (vec3 inequality helper) |
-| 4cc840 | `EntityAppearance_compareEqual` | med | Field-by-field equality compare of two ~0xA4-byte entity appearance/equipment structs |
-| 4ccaa0 | `compareEqual_array13` | med | Equality compare of array of 13 elements (0x118 stride) via element comparator FUN_0042f4a0 |
-| 4ccc30 | `std_list_push_serializeField_string` | med | Append serialized std::string field node (0x10) to output chunk list if changed |
-| 4cccf0 | `std_list_push_serializeField_0x2C` | med | Append serialized 0x2C-byte field node to output chunk list if changed vs baseline |
-| 4cdaa0 | `EntityState_serializeToBuffer` | med | Master: serialize changed entity fields into a chunk list then flatten to output buffer |
-| 4d6c20 | `xml_malloc_thunk` | med | Allocation thunk: tail-jump to CRT malloc for parser buffers |
-| 4d6c40 | `utf32le_to_utf16_alloc` | med | Count UTF-16 units for a UTF-32LE buffer, allocate output, convert (surrogate expansion) |
-| 4d6cb0 | `utf32be_to_utf16_alloc` | med | Count/alloc/convert a byte-swapped UTF-32BE buffer to UTF-16 |
-| 4d6d10 | `xml_memoryPool_ctor` | med | Initialize parser memory pool object then allocate first arena (FUN_004d72f0) |
-| 4d6d90 | `xml_memoryPool_allocateBlock` | med | Allocate block from pool arena (>0x2000 gets own arena), link into free/used list |
-| 4d6e20 | `xml_node_allocate` | med | Allocate and zero a 0x20-byte XML node from pool, tag pointer with type bits |
-| 4d6ea0 | `xml_memoryPool_allocateArena` | med | Allocate a new pool arena (size+0x38), 0x20-align, link into arena chain |
-| 4d6f60 | `xml_attribute_allocate` | med | Allocate a 0x14-byte XML attribute node from pool and link into element's attribute list |
-| 4d6fe0 | `xml_node_appendChild` | med | Allocate child node and append to parent element's child list |
-| 4d7020 | `xml_node_findChildByName` | med | Search element's child list for a node whose name matches wide-string key |
-| 4d70d0 | `xml_node_findAttributeByName` | med | Search element's attribute list for attribute whose name matches wide-string key |
-| 4d7190 | `xml_transcode_dispatch` | med | Dispatch input decode by encoding id (1=UTF8,2/3=UTF16,5/6=UTF32) to proper converter |
-| 4d7240 | `utf16_byteswapCopy` | med | Copy UTF-16 buffer swapping byte order of each unit (endianness normalize) |
-| 4d72f0 | `xml_memoryPool_initArena` | med | Reset pool and allocate/link the initial 0x8000 arena |
-| 4d73a0 | `utf16_countUnits_fromUtf32be` | med | Count UTF-16 code units needed to represent a UTF-32BE buffer |
-| 4d77d0 | `xml_memoryPool_freeAll` | med | Free all pool arenas and buffers back to CRT free (PTR_free) |
-| 4d79f0 | `utf16_copy_passthrough` | med | UTF-16 input passthrough: reference in-place or memcpy to owned buffer, set length |
-| 4d7a60 | `xml_selectAttrValueScanner` | med | Select attribute-value scanner function by encoding/flags bits (jump table of 8) |
-| 4d7b00 | `xml_document_parseWithEncoding` | med | Parse XML document: detect encoding, transcode input, run node-tree parser |
-| 4d7ce0 | `xml_parseText_entityAndNewlineNorm` | med | Scan text run decoding entities and normalizing CRLF/CR to LF |
-| 4d7e70 | `xml_parseNodeTree` | med | Core recursive XML parser: elements, attributes, PIs, comments, CDATA into node tree |
-| 4d8410 | `xml_parse_setjmpWrapper` | med | setjmp3 error frame around node-tree parse; returns {errcode,offset} |
-| 4d8900 | `xml_parseBang_commentCData_doctype` | med | Parse '<!' construct: comment, CDATA[..], or DOCTYPE (optionally into node) |
-| 4d8c70 | `xml_parsePI_or_xmlDecl` | med | Parse '<?' processing instruction / xml declaration, optionally build PI node |
-| 4d9ae0 | `std_Tree_buynode` | med | Allocate+init a red-black tree node (via FUN_004da730), set color, construct value |
-| 4da1a0 | `std_map_insert_unique_v2` | med | std::map insert-unique (second value type) using wide-string comparator |
-| 4da800 | `QuestText_isPunctuation` | med | Return 1 if wide char is punctuation (. : - , ; ! ? / ( )) |
-| 4da850 | `cube_QuestText_parseTemplate` | med | Parse quest-text template string into QuestTextNode tree, splitting {..}/[..]/word tokens |
-| 4e16b0 | `std_list_resize_insert` | med | Resize/insert into list with element allocation (FUN_004e42c0 cleanup) |
-| 4e3480 | `node_alloc` | med | Allocate a container node (operator new) |
 | 4e34f0 | `node_free` | med | operator delete a container node |
 | 4e3530 | `node_release_free` | med | Release node payload (FUN_004e2a00) then operator delete |
 | 40217e | `std_ostream_insert_cleanup` | low | MSVC STL: SEH cleanup funclet for ostream insert (setstate/_Osfx) |
 | 402350 | `std_fputc_nofail` | low | MSVC CRT: fputc wrapper returning success bool (filebuf overflow) |
-| 411740 | `GameController::get_field_0x8006d0` | low | return dword at large struct offset (game accessor, not lib) |
-| 411750 | `GameController::get_field_ptr_0x800a1c` | low | return pointer to struct field (game accessor, not lib) |
-| 42f720 | `get_float_field_0x1000e78` | low | return float at large struct offset (game accessor) |
-| 4348d0 | `get_float_field_0xd4` | low | return float field 0xd4 (game accessor) |
-| 4348e0 | `get_float_field_0xd8` | low | return float field 0xd8 (game accessor) |
-| 43a0d0 | `NameInput::handle_key` | low | process keyboard char for name/text input field (game UI) |
-| 43e9e0 | `Creature::compute_scale_factor` | low | compute float scale from status-effect list (game) |
-| 445f10 | `stat::diminishing_returns_pct` | low | compute diminishing-returns percentage from field 400 (game) |
-| 446150 | `Equipment::sum_slot_values` | low | sum float contributions across equipment slots by type tag (game) |
-| 449420 | `obj::init_and_load_a` | low | init object then load stream (game wrapper over decode) |
 | 4494b0 | `obj::init_and_inflate` | low | init object then zlib-inflate stream into it (game wrapper) |
-| 44be40 | `GameWorld::deserialize_state` | low | deserialize world/entity state from packet buffer (game, big) |
-| 44cb50 | `deserialize_struct_0x28` | low | read struct fields from stream buffer (game reader) |
-| 44cce0 | `deserialize_struct_small` | low | read small struct fields from stream buffer (game reader) |
-| 44d790 | `GameWorld::serialize_state` | low | serialize world/entity state into growable byte buffer (game, big) |
 | 44e120 | `serialize_struct_0x28` | low | write struct fields to stream buffer (game writer) |
 | 44e280 | `serialize_struct_small` | low | write small struct fields to stream buffer (game writer) |
 | 44e340 | `serialize_struct_creatures` | low | serialize struct with creature/id vectors to buffer (game writer) |
-| 465ae0 | `T::T(const T&)` | low | Copy-ctor: base vector copy (FUN_004593e0) + string (FUN_0040ee70) + POD fields |
-| 465ef0 | `T::T(const T&)` | low | Class copy-ctor: string (FUN_00459070) + list member (FUN_00458d40) + string tail |
-| 4690a0 | `World::updateNearbyEntities` | low | GAME (mislabeled lib): spatial scan of chunk grid under lock, sort candidates, dispatch; timeGetTime/CriticalSection |
 | 469590 | `World::streamChunksAroundPlayer` | low | GAME (mislabeled lib): stream/load region chunks in radius around player under locks |
-| 469c10 | `World::updateActiveChunks` | low | GAME (mislabeled lib): large per-frame chunk/entity update (alloca, timeGetTime, sort) |
-| 46b740 | `WorkerThread::run` | low | GAME (mislabeled lib): vfunc_2 background worker thread body; allocs tree head, timeGetTime, io ordinals, big stack scratch |
-| 46f490 | `GameController::check_tile_walkable` | low | Grid adjacency/walkability test via FUN_00434d10 (game logic) |
 | 47f940 | `GameController::validate_selected_zone` | low | Check selected world/zone/region indices are valid (game) |
-| 487e30 | `GameController::get_selected_char_ptr` | low | Return pointer to selected character entry if index valid (game) |
 | 4a5710 | `GameController::load_skill_tooltip` | low | Load skill description/level text from resource1.dat (game UI) |
 | 4a62c0 | `GameController::load_specialization_text` | low | Load class specialization tooltip strings from resource1.dat |
-| 4c7660 | `Item::get_stack_or_grid_size` | low | Return 0x20 or 0x10 based on item type/subtype bytes (game) |
-| 4c78c0 | `Item::compute_value` | low | Compute item gold value from type/rarity/level (game) |
-| 4c7d20 | `Item::get_type_color` | low | Return RGBA color for item type/subtype (game) |
-| 4d6d40 | `xml_iterator_notEqual` | low | Compare two 8-byte iterator/cursor pairs for inequality |
-| 4d6d60 | `xml_iterator_isValid` | low | Return whether iterator/pointer is non-null (0 or -1) |
-| 4d6d70 | `xml_iterator_deref_advance` | low | Load current node into out and advance pool iterator to next (+0x18) |
-| 4d70a0 | `xml_node_firstChild` | low | Return first child node of element (or nulls) |
-| 4d7150 | `xml_document_firstElementNode` | low | Return first element/data node in document, else default sentinel PTR |
-| 4d7840 | `xml_node_ctor_setParent` | low | Init node: value=0, parent=current pool node |
-| 4d7860 | `xml_document_firstNode` | low | Return first node of document root (or null) |
-| 4d7bc0 | `xml_document_root` | low | Return document root node pointer, else default sentinel |
-| 4d9520 | `xml_scanCDATA_withEntities` | low | Scan CDATA-style value applying entity decode (helper for '<!' parser) |
-| 4d9600 | `xml_scanComment_withEntities` | low | Scan comment-style value applying entity decode (helper) |
-| 4e2d90 | `container_operation` | low | Container operation combining insert/resize helpers |
-| 4e31e0 | `map_string_operation` | low | Map/string operation with stack buffer and __security_check_cookie |
 
-## AdaptionWidget (35)
+## AdaptionWidget (28)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
 | 58c440 | `Matrix4_Invert` | high | Game/math: inverts a 4x4 float matrix via Gauss-Jordan elimination with partial pivoting (thiscall in_ECX) |
-| 636810 | `AdaptionWidget::apply_to_attributes` | high | Invoke FUN_00664c10 on each populated attribute slot (+0x34/38/3c) then recurse children |
 | 636be0 | `Node::clear_dirty_flag_2e` | high | Recursively clear byte flag +0x2e on populated attribute slots and descend children |
 | 636cb0 | `AdaptionWidget::relayout` | high | Clear dirty flags (636be0) then run recursive layout/adaption pass (636cd0) |
-| 636f10 | `AdaptionWidget::apply_attributes_v2` | high | Invoke FUN_00664cc0 on populated attribute slots then recurse active children |
 | 6371b0 | `AdaptionWidget::compute_local_transform` | high | Compute node world matrix (+0x88) from style matrix (+0x38 +0x1b0) and parent (+0x48), 4x4 copies |
 | 637260 | `AdaptionWidget::recompute_transforms_recursive` | high | Recursively call compute_local_transform (6371b0) over node subtree when visible |
 | 64ed40 | `Registry::push_node_locked_0x7c` | high | Under CS, append list node to AdaptionWidget list at +0x7c |
 | 64efe0 | `Widget::set_flags_word` | high | Store param_1 into flags dword at +200 |
 | 653620 | `Widget::dispatch_event_callback` | high | If widget enabled and has handler (+0x44), fetch registry callback (FUN_00468910) and invoke it |
 | 659cf0 | `AdaptionWidget::clear_hover` | high | Clear captured widget (+200=0) and notify hover change (FUN_00652c10 with +0xd4/d8) |
-| 664cc0 | `Widget::resetAnimations` | high | Clears the dirty flag and iterates the controller list resetting each animation's time to zero |
 | 6278a0 | `AdaptionWidget_clampScrollToContent` | med | Clamps scroll offset (local_10/local_c) to child content bounds, updates scrollbars, notifies (vfunc) |
 | 629300 | `AdaptionWidget_layoutRecursive` | med | Recursively lays out widget subtree (self-call); returns via cookie guard |
 | 6295a0 | `AdaptionWidget_applyScrollLayout` | med | Applies scroll offset param_1 and lays out children (FUN_0062b510 size, FUN_0062c5b0 bounds) |
@@ -3322,33 +3284,77 @@ comments with the same content are also written above each function in the .cpp 
 | 62c5b0 | `AdaptionWidget_computeBoundsUnion` | med | Computes union AABB of child bounds via FUN_0062cfd0 |
 | 62cfd0 | `AdaptionWidget_accumulateChildBounds` | med | Accumulates/expands bounds rect over children (min/max float ops) |
 | 62d7f0 | `AdaptionWidget_computeLayoutBounds` | med | Computes layout bounds via FUN_0062cfd0 accumulation |
-| 62de60 | `AdaptionWidget_getBoundsRect` | med | Returns pointer to widget bounds rect (float* to x,y,...); heavily shared |
 | 636cd0 | `AdaptionWidget::layout_recursive` | med | Recursive layout/adaption: resolve +0x44, recompute children (FUN_00664c60), local transform, descend |
 | 636f70 | `AdaptionWidget::compute_max_content_width` | med | Recursively compute max content width by querying attribute keyframe arrays (FUN_00661d90) across slots/children |
-| 639b30 | `AdaptionWidget::draw_text_locked` | med | Under CS, begin/end render state (vtbl 0x40/0x44) and draw text run via FUN_0065bc70 |
 | 661d90 | `AnimMap::findValueByKey` | med | Looks up a string key in a map and returns the value stored at node+0x28, or 0 when not found |
 | 662860 | `Widget::layoutAspectFit` | med | Aspect-fit layout: computes scale ratio between content and container dimensions then re-positions via setAlignmentOffset |
 | 662f00 | `Widget::applyAlignmentOffset` | med | Clamps an alignment factor to [0,1] and offsets the widget along the active axis by that fraction of the size delta |
 | 663eb0 | `Widget::destroyTailSlot` | med | Releases a string element unless it is the current tail slot of the vector |
 | 664c60 | `Widget::updateAnimations` | med | Iterates a list of animation controllers advancing each to param time; if any changed, fires a vtable notify callback |
-| 62b400 | `AdaptionWidget_onContentResized` | low | Notifies/handles content resize (no callees); shared vfunc target |
 | 62b430 | `AdaptionWidget_getScrollFlag` | low | Returns a scroll/state flag (no callees) |
 | 62ba50 | `Widget_measureChildrenRecursive` | low | Recursively measures child widgets (self-call, FUN_006371b0) |
 | 630970 | `get_widget_state` | low | Returns a widget state/int field (no callees) |
-| 664c10 | `Widget::triggerTracksByName` | low | Frees a temp key string, iterates a list of tracks and for each matching name plays its keyframes, marking a dirty flag |
 
-## WorldInfo (18)
+## Speech (23)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
-| 4499f0 | `db::storeBlob` | high | SQLite upsert blob: SELECT existence then UPDATE or INSERT (prepared stmts); logs 'DATABASE WRITE ERROR' |
-| 486ba0 | `WorldInfo_clearUnderLock` | high | Enters critical section at +0x250, destroys several intrusive lists (call vfunc(1)) and buffers, then leaves lock |
+| 4e03c0 | `QuestText_copyTree_b` | high | Copies a QuestText red-black tree (nodes via FUN_004e0440), fixing leftmost/rightmost |
+| 4e3900 | `Speech::map_erase_node` | high | Removes one map/set node with red-black rebalance and frees it; throws on invalid iterator |
+| 4e4000 | `Speech::map_erase_node_qt` | high | Erase single map node with RB rebalance, runs QuestText::ctor_2, frees string(+4/+9) and node |
+| 4d6d10 | `xml_memoryPool_ctor` | med | Initialize parser memory pool object then allocate first arena (FUN_004d72f0) |
+| 4d7020 | `xml_node_findChildByName` | med | Search element's child list for a node whose name matches wide-string key |
+| 4d70d0 | `xml_node_findAttributeByName` | med | Search element's attribute list for attribute whose name matches wide-string key |
+| 4d72f0 | `xml_memoryPool_initArena` | med | Reset pool and allocate/link the initial 0x8000 arena |
+| 4d77d0 | `xml_memoryPool_freeAll` | med | Free all pool arenas and buffers back to CRT free (PTR_free) |
+| 4d7b00 | `xml_document_parseWithEncoding` | med | Parse XML document: detect encoding, transcode input, run node-tree parser |
+| 4d8410 | `xml_parse_setjmpWrapper` | med | setjmp3 error frame around node-tree parse; returns {errcode,offset} |
+| 4e16b0 | `std_list_resize_insert` | med | Resize/insert into list with element allocation (FUN_004e42c0 cleanup) |
+| 4e3060 | `map::insert_string_key2` | med | Variant of insert_string_key using FUN_0040f680 to build key; inserts node if absent |
+| 4e3480 | `node_alloc` | med | Allocate a container node (operator new) |
+| 4e3840 | `Speech::map_erase_range` | med | Erases all nodes in [param_2,param_3); if whole tree clears to sentinel, else per-node erase |
+| 4e3f40 | `Speech::map_erase_range2` | med | Erase range variant using FUN_004e4000 node-erase with QuestText dtor |
+| 4d6d40 | `xml_iterator_notEqual` | low | Compare two 8-byte iterator/cursor pairs for inequality |
+| 4d6d60 | `xml_iterator_isValid` | low | Return whether iterator/pointer is non-null (0 or -1) |
+| 4d6d70 | `xml_iterator_deref_advance` | low | Load current node into out and advance pool iterator to next (+0x18) |
+| 4d70a0 | `xml_node_firstChild` | low | Return first child node of element (or nulls) |
+| 4d7150 | `xml_document_firstElementNode` | low | Return first element/data node in document, else default sentinel PTR |
+| 4d7840 | `xml_node_ctor_setParent` | low | Init node: value=0, parent=current pool node |
+| 4d7860 | `xml_document_firstNode` | low | Return first node of document root (or null) |
+| 4d7bc0 | `xml_document_root` | low | Return document root node pointer, else default sentinel |
+
+## World (20)
+
+| addr | proposed name | conf | purpose |
+|---|---|---|---|
+| 455d80 | `std::_Sort<0x10>` | high | Introsort for 16-byte elements, int key |
+| 456010 | `std::_Sort_heap<0x10>` | high | Heapsort finalize for 16-byte elements (via _Adjust_heap) |
+| 4563d0 | `std::_Unguarded_partition<0x10>` | high | Hoare partition, 16-byte elements, int key |
+| 46e780 | `std::vector<T16>::reserve` | high | Grow 16-byte-element vector capacity if below requested |
+| 58d6f0 | `Pair_CopyFromRefs` | high | Game: copies two dword values dereferenced from param_1/param_2 into a 2-field pair at in_ECX |
+| 58e9e0 | `Identity_ReturnArg` | high | Game: identity accessor returning its argument unchanged |
+| 59fe70 | `Terrain::sampleBlockAt_fwd` | high | Thin wrapper forwarding first two fields of param_2 to FUN_005a64b0 |
+| 458df0 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head (node 0x30) then _Insert_range FUN_004544d0 |
+| 458f30 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head (node 0x78) then _Insert_range FUN_00453ff0 |
+| 458fd0 | `std::list<T>::list(const&)` | med | list copy-ctor: buy head (node 0x50) then _Insert_range FUN_004540c0 |
+| 477d20 | `std::list<std::string>::_Erase_node` | med | Unlink node, free embedded string(+0x8), delete |
+| 4cdaa0 | `EntityState_serializeToBuffer` | med | Master: serialize changed entity fields into a chunk list then flatten to output buffer |
+| 4e5a20 | `format_object_singular_name` | med | Formats singular localized name for creature/object from record ('singular'); handles name-vs-generic |
+| 5a64b0 | `WorldMap::lookupTileValue2` | med | Map lower_bound by (x,y) vs end at +0x80012c; return value struct {0,0,7} from node +0x18 or raise error; twin of 5a5240 |
+| 5a6550 | `NameGen::generateRegionName` | med | Lazily init syllable tables (reon/mala/rion...) guarded by DAT_0076dbb8, then build random region/place name indexing tables at +0x80028c/+0x800290 |
+| 4690a0 | `World::updateNearbyEntities` | low | GAME (mislabeled lib): spatial scan of chunk grid under lock, sort candidates, dispatch; timeGetTime/CriticalSection |
+| 469c10 | `World::updateActiveChunks` | low | GAME (mislabeled lib): large per-frame chunk/entity update (alloca, timeGetTime, sort) |
+| 46f490 | `GameController::check_tile_walkable` | low | Grid adjacency/walkability test via FUN_00434d10 (game logic) |
+| 5943b0 | `World_MapInsertChunk` | low | Game/STL: inserts a chunk record into a World map keyed by (x,y), building the node and rebalancing (SEH) |
+| 5944c0 | `World_MapInsertKeyed` | low | Game/STL: inserts a keyed record into a World map using string/blob comparison (FUN_00428db0) |
+
+## WorldInfo (13)
+
+| addr | proposed name | conf | purpose |
+|---|---|---|---|
 | 5a4780 | `WorldGrid::freeCellPtr` | high | In 1024x1024 pointer grid (base +0x10002f), if cell non-null: lock two CS, null entry, operator_delete the object |
 | 5a4800 | `WorldGrid::destroyCellObject` | high | Grid cell (base +0x2f) removal: run cleanup ctor_17, lock CS, null entry, then virtual destructor call (**vt)(1) |
 | 5a4890 | `WorldGrid::destroyBlockObjectAt` | high | Two-level world grid: region idx (coord>>6) at +0xbc, block idx (coord&63) at +0x10018; null cell under locks, virtual-destroy object |
-| 64aec0 | `WorldInfo::move_string` | high | Move-construct one std::string (SSO-aware) from param_1 into this+4, resetting source |
-| 4499c0 | `db::storeBlobVec` | med | Computes [begin,end) range from param_2 vector and stores as blob via 004499f0 |
-| 44b460 | `WorldInfo_mapInsertUnique` | med | WorldInfo: find (0044b880) then insert region/world entry keyed by int+string into map (00449fe0) |
 | 44b880 | `WorldInfo_mapLowerBound` | med | RB-tree lower_bound by int+string key (memcmp 0040c590) returning candidate node |
 | 5e4850 | `WorldInfo_generateBiomeContent` | med | WorldInfo build entry (ctor-called): populates biome with spawns, terrain features and decorations |
 | 5f0ce0 | `WorldInfo_placeStructure` | med | Places a building/structure: allocates object, computes footprint, appends via vector grow + ctors |
@@ -3360,11 +3366,10 @@ comments with the same content are also written above each function in the .cpp 
 | 5f9340 | `WorldInfo_sampleTerrainHeight` | med | Returns terrain height/noise (float10) at coord with FUN_005eea60 nearest and FUN_00487da0 |
 | 5f9f70 | `WorldInfo_rotateAndPlace` | med | Computes a rotated position (cos/sin via FUN_0059fc90) and places/samples at it |
 
-## XAudio2Engine (12)
+## XAudio2Engine (11)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
-| 4496a0 | `blob::deobfuscate` | high | Deobfuscates a byte buffer: table-driven (006ffa68) shuffle/unswap then bitwise-complement each byte |
 | 623100 | `riff_findChunkInMemory` | high | Scans an in-memory RIFF/WAV buffer for a chunk id (param_2), returns data ptr/size |
 | 6231e0 | `riff_findChunkInFile` | high | Seeks a WAV file (SetFilePointer/ReadFile) for RIFF chunk param_2, returns offset/size |
 | 623340 | `riff_readFromMemory` | high | Copies param_3 bytes from in-memory RIFF stream at offset param_4 (memcpy, bounds-checked) |
@@ -3376,6 +3381,21 @@ comments with the same content are also written above each function in the .cpp 
 | 626de0 | `XAudio2_initDecodeState` | med | Initializes decode state via FUN_00626ab0 |
 | 6271b0 | `XAudio2_setupDecoder` | med | Decoder setup entry forwarding to FUN_00627120 |
 | 626a70 | `codec_readHeaderFields` | low | Reads/parses two header fields (no callees) |
+
+## QuestText (10)
+
+| addr | proposed name | conf | purpose |
+|---|---|---|---|
+| 4d9b10 | `QuestText_copyTree` | high | Copies a QuestText std::map red-black tree, then fixes leftmost/rightmost pointers |
+| 4d9b90 | `QuestText_copyTreeNode` | high | Recursively copies a red-black tree subtree (left/right) into destination map |
+| 4e0fe0 | `QuestText_insertHint_str` | high | QuestText std::map insert-with-hint for string key; compares and rebalances via FUN_004e0940 |
+| 4e1480 | `QuestText_insertUnique_str` | high | QuestText std::map insert-unique for string key; finds slot, checks duplicate, rebalances via FUN_004e0940 |
+| 4da050 | `std_map_insert_unique` | med | std::map lower_bound + insert-unique using wide-string comparator (FUN_00428db0) |
+| 4da770 | `cube_QuestTextNode_destroyTree` | med | Recursively destroy QuestTextNode tree: free child maps and node lists |
+| 4da800 | `QuestText_isPunctuation` | med | Return 1 if wide char is punctuation (. : - , ; ! ? / ( )) |
+| 4da850 | `cube_QuestText_parseTemplate` | med | Parse quest-text template string into QuestTextNode tree, splitting {..}/[..]/word tokens |
+| 4e1830 | `QuestText::member_ctor` | med | Constructs a QuestText container member: allocs sentinel via FUN_0046d520, then FUN_004d9b10 init |
+| 4e3550 | `QuestText::delete_node` | med | Destroys one QuestText tree node: runs dtor, frees string if cap>7, operator_delete node |
 
 ## ChatWidget (8)
 
@@ -3390,17 +3410,28 @@ comments with the same content are also written above each function in the .cpp 
 | 6606f0 | `TextRender::setTransform` | med | Builds a 16.16 fixed-point 2x2 transform from a matrix, computes sqrt scale, sets FT transform and caches transformed glyphs |
 | 660d50 | `TextRender::layoutAndWrap` | med | Walks a UTF-16 string measuring per-glyph advances/kerning, handles space/newline/CR word-wrap by inserting break chars |
 
-## ChunkBuffer (7)
+## Creature (7)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
-| 42c900 | `vec3i64::scaleFixed` | high | Scales three int64 members by (p1,p2) 64-bit then /0x10000 (16.16 fixed-point vec3 multiply) |
-| 486830 | `ChunkBuffer_vector_insert_8` | high | Inserts one 8-byte element into a ChunkBuffer vector, copying 8 bytes field-by-field; grows via FUN_0046e8f0 |
-| 59aaf0 | `VoxelColumn::at` | high | Bounds-checked indexed accessor into an array at in_ECX+0x18 (4-byte elems, count +0x1c); returns dummy on OOB |
-| 46eeb0 | `ChunkBuffer_pushQuadFaces` | med | Push 6 face/vertex indices (param_2, +1,+2,+2,+3) via FUN_0066add0 |
-| 59a0e0 | `VoxelChunk::propagateSunlight` | med | Flood light/AO pass over a voxel column region: seeds sky light 0xff then spreads to neighbor cells |
-| 4c1510 | `ChunkBuffer_sampleVoxelColorAO` | low | Samples smoothed voxel color+ambient-occlusion over a 3x3x3 neighborhood; tone-maps and blends base color |
-| 5c03f0 | `ChunkBuffer::loadAndNotify` | low | Calls FUN_00688b20(p1,p2); if result != -8 invokes FUN_00459ab0(p3); returns the code |
+| 43c8a0 | `list::allocNode0x134` | high | operator_new(0x134) self-linked node (Creature-sized list node); _Xbad_alloc on fail |
+| 411e50 | `Creature_init` | med | Zeroes a large Creature/entity struct (fields up to +0x223*4), sets base ptr at [0] |
+| 43c790 | `Creature::partialDtor` | med | Frees SSO string at +0x28 (cap>0xf) then RB-tree range 0043f040 at +0x1c, deletes buffer |
+| 446330 | `Player::resetFull` | med | Full player/controller reset: destroys/reinits all containers, timers, transforms, buffers |
+| 4465c0 | `Player::resetState` | med | Resets player physics/stat members and memsets large regions (+0x2f0 0xe38, +0x1128) |
+| 449b70 | `list::makeNodeWrapper` | low | Creates list node via 0044b770 then inits payload 0040ee70 unless error (-8) |
+| 44be40 | `GameWorld::deserialize_state` | low | deserialize world/entity state from packet buffer (game, big) |
+
+## Interface (6)
+
+| addr | proposed name | conf | purpose |
+|---|---|---|---|
+| 40f4a0 | `std::wstring::_Tidy` | high | free heap wstring buffer if cap>7, reset to SSO |
+| 43cff0 | `stat::calcArmor` | med | Computes armor/defense: base ×2^rand terms plus per-slot element bonuses (0x530/0x648/0x760/0x878) |
+| 43ea40 | `stat::calcManaRegen` | med | Computes mana/spirit regen: base 2^ terms /0.1 plus per-slot rune bonuses (0x530..0xcd8) |
+| 4467a0 | `stat::calcSpirit` | med | Computes spirit/magic stat: base 2^ terms + per-slot rune bonuses (004c7af0) |
+| 43e9e0 | `Creature::compute_scale_factor` | low | compute float scale from status-effect list (game) |
+| 446150 | `Equipment::sum_slot_values` | low | sum float contributions across equipment slots by type tag (game) |
 
 ## CharacterStyleWidget (6)
 
@@ -3424,52 +3455,35 @@ comments with the same content are also written above each function in the .cpp 
 | 5a0970 | `CombatController::acquireNearbyTargets` | med | Insert self into list then iterate entities; distance<8 (64.0=8^2) test, mark aggro/interest (0.5=0x3f000000) |
 | 42c520 | `struct::clearFields` | low | Zeroes fields at +0,+4,+8,+0x10,+0x14 (init small struct/state block) |
 
-## QuestText (6)
+## ChunkBuffer (6)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
-| 4d9b10 | `QuestText_copyTree` | high | Copies a QuestText std::map red-black tree, then fixes leftmost/rightmost pointers |
-| 4d9b90 | `QuestText_copyTreeNode` | high | Recursively copies a red-black tree subtree (left/right) into destination map |
-| 4e0fe0 | `QuestText_insertHint_str` | high | QuestText std::map insert-with-hint for string key; compares and rebalances via FUN_004e0940 |
-| 4e1480 | `QuestText_insertUnique_str` | high | QuestText std::map insert-unique for string key; finds slot, checks duplicate, rebalances via FUN_004e0940 |
-| 4e1830 | `QuestText::member_ctor` | med | Constructs a QuestText container member: allocs sentinel via FUN_0046d520, then FUN_004d9b10 init |
-| 4e3550 | `QuestText::delete_node` | med | Destroys one QuestText tree node: runs dtor, frees string if cap>7, operator_delete node |
+| 42c900 | `vec3i64::scaleFixed` | high | Scales three int64 members by (p1,p2) 64-bit then /0x10000 (16.16 fixed-point vec3 multiply) |
+| 59aaf0 | `VoxelColumn::at` | high | Bounds-checked indexed accessor into an array at in_ECX+0x18 (4-byte elems, count +0x1c); returns dummy on OOB |
+| 46eeb0 | `ChunkBuffer_pushQuadFaces` | med | Push 6 face/vertex indices (param_2, +1,+2,+2,+3) via FUN_0066add0 |
+| 59a0e0 | `VoxelChunk::propagateSunlight` | med | Flood light/AO pass over a voxel column region: seeds sky light 0xff then spreads to neighbor cells |
+| 4c1510 | `ChunkBuffer_sampleVoxelColorAO` | low | Samples smoothed voxel color+ambient-occlusion over a 3x3x3 neighborhood; tone-maps and blends base color |
+| 5c03f0 | `ChunkBuffer::loadAndNotify` | low | Calls FUN_00688b20(p1,p2); if result != -8 invokes FUN_00459ab0(p3); returns the code |
 
-## World (5)
-
-| addr | proposed name | conf | purpose |
-|---|---|---|---|
-| 58d6f0 | `Pair_CopyFromRefs` | high | Game: copies two dword values dereferenced from param_1/param_2 into a 2-field pair at in_ECX |
-| 58e9e0 | `Identity_ReturnArg` | high | Game: identity accessor returning its argument unchanged |
-| 4e2df0 | `World::map_find_or_insert_int` | med | RB-tree lower_bound by int key *param_1; if absent builds 7-cap string value and inserts new node |
-| 5943b0 | `World_MapInsertChunk` | low | Game/STL: inserts a chunk record into a World map keyed by (x,y), building the node and rebalancing (SEH) |
-| 5944c0 | `World_MapInsertKeyed` | low | Game/STL: inserts a keyed record into a World map using string/blob comparison (FUN_00428db0) |
-
-## Creature (4)
+## Global (5)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
-| 43c8a0 | `list::allocNode0x134` | high | operator_new(0x134) self-linked node (Creature-sized list node); _Xbad_alloc on fail |
-| 411e50 | `Creature_init` | med | Zeroes a large Creature/entity struct (fields up to +0x223*4), sets base ptr at [0] |
-| 43c100 | `Creature::init` | med | Zero-inits large Creature struct with float defaults (0x43fa0000,0x42c80000,1.0 scales); calls 0043bc00 sub-init |
-| 43c790 | `Creature::partialDtor` | med | Frees SSO string at +0x28 (cap>0xf) then RB-tree range 0043f040 at +0x1c, deletes buffer |
+| 4c8ae0 | `WinMain` | high | Entry: RegisterClass/CreateWindow 'Cube World', init D3D/audio/input, run loop |
+| 4ce6e0 | `Options_loadFromCfg` | high | Load game settings from options.cfg: parse key/value lines (fullscreen,resolutionX/Y,volumes,language...) |
+| 4c8720 | `App::init_direct3d` | med | Create Direct3D9 device, D3D9Engine and CubeShader (game) |
+| 4c85f0 | `App::render_frame` | low | Per-frame tick: update timing, handle resize, Present (game) |
+| 4c8940 | `App::reset_device` | low | Reset/resize D3D device and swap chain on resolution change (game) |
 
-## Speech (4)
-
-| addr | proposed name | conf | purpose |
-|---|---|---|---|
-| 4e3900 | `Speech::map_erase_node` | high | Removes one map/set node with red-black rebalance and frees it; throws on invalid iterator |
-| 4e4000 | `Speech::map_erase_node_qt` | high | Erase single map node with RB rebalance, runs QuestText::ctor_2, frees string(+4/+9) and node |
-| 4e3840 | `Speech::map_erase_range` | med | Erases all nodes in [param_2,param_3); if whole tree clears to sentinel, else per-node erase |
-| 4e3f40 | `Speech::map_erase_range2` | med | Erase range variant using FUN_004e4000 node-erase with QuestText dtor |
-
-## Zone (3)
+## SmoothMeshShape (4)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
-| 4777f0 | `Zone_rbtree_eraseRange` | med | Erase RB-tree node range [param_2,param_3); clear whole tree if full range; class Zone |
-| 58d970 | `Zone_DestroyObjectRange` | med | Game/STL: destroys a range of Zone objects (stride 0x188 bytes = 0x62 dwords), freeing nested container storage |
-| 4778b0 | `Zone_rbtree_eraseNode` | low | Red-black tree single-node erase with rebalance/recolor then free 2 strings and delete |
+| 428ac0 | `vectorReserve8` | high | std::vector reallocate to param_1 capacity, 8-byte elements: new/copy/free |
+| 428ba0 | `vectorReserve16` | high | std::vector reallocate to param_1 capacity, 16-byte elements: new/copy/free |
+| 6504c0 | `Object::release_if_nonnull` | high | Call virtual release/destructor (vtbl[0]) on object if pointer non-null |
+| 411be0 | `math::mat3_transform_point2d` | med | 2D projective transform of point by 3x3-ish matrix (game math) |
 
 ## SpeechWidget (3)
 
@@ -3478,13 +3492,6 @@ comments with the same content are also written above each function in the .cpp 
 | 4e5ec0 | `SpeechWidget::dtor` | high | SpeechWidget destructor (vfunc_0): frees text string at +0x1a8, sub-widget at +0x178, calls Widget base dtor |
 | 4e65a0 | `SpeechWidget::render_text` | high | Renders speech-bubble text with typewriter reveal: measures glyphs, advances counters, draws lines via FUN_0065bc70 |
 | 627c00 | `SpeechWidget_setBounds` | med | Sets widget bounds/anchors (offsets 0x48..0x54) from param_3/param_4 rects |
-
-## Spawn (2)
-
-| addr | proposed name | conf | purpose |
-|---|---|---|---|
-| 428750 | `Spawn_initDefaults` | med | Initializes a Spawn/creature-appearance struct with default color/scale/offset float constants |
-| 43bc00 | `Spawn::initNameArrays` | med | Zero-inits Spawn struct with ~14 repeated 0x100 memset blocks + string-slot headers (NPC name/attr arrays) |
 
 ## InventoryWidget (2)
 
@@ -3507,23 +3514,29 @@ comments with the same content are also written above each function in the .cpp 
 | 4e6f20 | `Sprite::map_erase_node` | high | Removes one sprite-map node with RB rebalance and frees embedded list(+5) and node |
 | 4e6e60 | `Sprite::map_erase_range` | med | Erases sprite map nodes in [param_2,param_3); clears whole tree or per-node via FUN_004e6f20 |
 
+## Spawn (1)
+
+| addr | proposed name | conf | purpose |
+|---|---|---|---|
+| 428750 | `Spawn_initDefaults` | med | Initializes a Spawn/creature-appearance struct with default color/scale/offset float constants |
+
 ## PreviewWidget (1)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
 | 4d5010 | `PreviewWidget_dtor` | high | Destructor: destroys intrusive list at +0x174 and frees its storage |
 
+## Zone (1)
+
+| addr | proposed name | conf | purpose |
+|---|---|---|---|
+| 58d970 | `Zone_DestroyObjectRange` | med | Game/STL: destroys a range of Zone objects (stride 0x188 bytes = 0x62 dwords), freeing nested container storage |
+
 ## RandomInteractionBehavior (1)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
 | 59ed30 | `RandomInteractionBehavior::pickObjectAt` | med | Scans a chunk's object list for one whose voxel cell at (param_1,2,3) is solid and AABB contains the point |
-
-## Region (1)
-
-| addr | proposed name | conf | purpose |
-|---|---|---|---|
-| 5c3bb0 | `Region_ctor` | high | Region constructor: zero-inits ~0x60-byte struct, sets flag [9]=1 |
 
 ## WorldMap (1)
 

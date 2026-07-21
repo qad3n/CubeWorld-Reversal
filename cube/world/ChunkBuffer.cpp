@@ -1,4 +1,4 @@
-// ChunkBuffer (world) — cube. 9 functions. Bodies = Ghidra pseudo-C.
+// ChunkBuffer (world) — cube. 8 functions. Bodies = Ghidra pseudo-C.
 #include "ChunkBuffer.h"
 
 /* [AUDIT] proposed: vec3i64::scaleFixed  (confidence: high)
@@ -50,6 +50,7 @@ void cube::ChunkBuffer::vfunc_0(byte flags)
     (**(code **)(*pMember + 8))(pMember);
   }
   if ((flags & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pThis);
   }
   return;
@@ -87,59 +88,9 @@ void ChunkBuffer_pushQuadFaces(undefined4 param_1,int baseIndex)
 
 
 
-/* [AUDIT] proposed: ChunkBuffer_vector_insert_8  (confidence: high)
- * purpose: Inserts one 8-byte element into a ChunkBuffer vector, copying 8 bytes field-by-field; grows via vector_reserve_stride8_b
- * vars: 8-byte elem copied as 4+4
- */
-/* Global::ChunkBuffer_vector_insert_8 @ 00486830 */
-
-void ChunkBuffer_vector_insert_8(undefined1 *pEntry)
-
-{
-  undefined1 *pEnd;
-  undefined1 *pBegin;
-  undefined1 *pSlot;
-  int *pThis;
-  
-  pEnd = (undefined1 *)pThis[1];
-  if ((pEntry < pEnd) && (pBegin = (undefined1 *)*pThis, pBegin <= pEntry)) {
-    if (pEnd == (undefined1 *)pThis[2]) {
-      vector_reserve_stride8_b(1);
-    }
-    pSlot = (undefined1 *)pThis[1];
-    pEnd = (undefined1 *)(*pThis + ((int)pEntry - (int)pBegin >> 3) * 8);
-    if (pSlot != (undefined1 *)0x0) {
-      *pSlot = *pEnd;
-      pSlot[1] = pEnd[1];
-      pSlot[2] = pEnd[2];
-      pSlot[3] = pEnd[3];
-      *(undefined4 *)(pSlot + 4) = *(undefined4 *)(pEnd + 4);
-      pThis[1] = pThis[1] + 8;
-      return;
-    }
-  }
-  else {
-    if (pEnd == (undefined1 *)pThis[2]) {
-      vector_reserve_stride8_b(1);
-    }
-    pEnd = (undefined1 *)pThis[1];
-    if (pEnd != (undefined1 *)0x0) {
-      *pEnd = *pEntry;
-      pEnd[1] = pEntry[1];
-      pEnd[2] = pEntry[2];
-      pEnd[3] = pEntry[3];
-      *(undefined4 *)(pEnd + 4) = *(undefined4 *)(pEntry + 4);
-    }
-  }
-  pThis[1] = pThis[1] + 8;
-  return;
-}
-
-
-
-
 /* cube::ChunkBuffer::ctor_0 @ 0049d910 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void cube::ChunkBuffer::ctor_0(undefined4 *pOut,int chunkPtr)
 
@@ -2079,6 +2030,7 @@ LAB_0049f443:
   *(undefined4 *)(iVar10 + 0x14) = 0;
   if (pvVar25 != (void *)*piVar16) {
     local_8c8 = uVar24;
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar25);
   }
   pvVar25 = (void *)0x0;
@@ -2113,6 +2065,7 @@ LAB_0049f443:
         iVar8 = IntMap_SetScalar(iVar2,*(undefined4 *)(iVar2 + 4),&local_8ec);
         if (*(int *)(iVar10 + 0x14) == 0x15555554) {
 LAB_004a0f10:
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         *(int *)(iVar10 + 0x14) = *(int *)(iVar10 + 0x14) + 1;
@@ -2138,8 +2091,10 @@ LAB_004a0f10:
   *local_8b0 = local_8b0;
   local_8b0[1] = local_8b0;
   if (puVar12 == local_8b0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_8b0);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(puVar12);
 }
 
@@ -2802,6 +2757,7 @@ LAB_0059a303:
  */
 /* Global::VoxelColumn_at @ 0059aaf0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * VoxelColumn_at(int index)
 

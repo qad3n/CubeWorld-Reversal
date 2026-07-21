@@ -1,4 +1,4 @@
-// other (_library) — server. 4029 functions. Bodies = Ghidra pseudo-C.
+// other (_library) — server. 4013 functions. Bodies = Ghidra pseudo-C.
 #include "other.h"
 
 /* [AUDIT] proposed: std_map_destroy  (confidence: high)
@@ -567,6 +567,7 @@ void thread_entry_trampoline(int *param_1)
   int *piVar1;
   
   if ((int *)param_1[4] == (int *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_function_call();
   }
   (**(code **)(*(int *)param_1[4] + 8))();
@@ -1818,6 +1819,7 @@ undefined4 * __fastcall std_Tree_Buynode_0x1180(undefined4 *param_1)
   
   puVar1 = operator_new(0x1180);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -4183,6 +4185,7 @@ undefined4 __cdecl sqlite3_global_config_set(undefined4 param_1)
  */
 /* Global::sqlite3_soft_heap_limit64 @ 00461320 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined8 __cdecl sqlite3_soft_heap_limit64(uint param_1,int param_2)
 
@@ -7046,6 +7049,7 @@ LAB_004650b9:
  */
 /* Global::sqlite3_mutex_try @ 00465100 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 __cdecl sqlite3_mutex_try(int param_1)
 
@@ -21000,6 +21004,7 @@ undefined4 __cdecl lib_fn_486ea0(int param_1)
  */
 /* Global::prng_nextByte @ 00487580 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void prng_nextByte(void)
 
@@ -36503,6 +36508,7 @@ void __thiscall lib_fn_4d65d0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_str_2(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xdd67c7) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -36525,6 +36531,7 @@ void __thiscall lib_fn_4d6620(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_list_insertNode1(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -37360,43 +37367,6 @@ joined_r0x004e1c74:
 
 
 
-/* Global::lib_fn_4f38a0 @ 004f38a0 */
-
-void __cdecl lib_fn_4f38a0(int param_1,int param_2,int param_3,float *param_4)
-
-{
-  float *pfVar1;
-  float fVar2;
-  int iVar3;
-  int iVar4;
-  
-  iVar3 = param_2;
-  while( true ) {
-    iVar4 = iVar3 * 2 + 2;
-    if (param_3 <= iVar4) break;
-    fVar2 = *(float *)(param_1 + -0xc + iVar4 * 0xc);
-    pfVar1 = (float *)(param_1 + iVar4 * 0xc);
-    if (*pfVar1 <= fVar2 && fVar2 != *pfVar1) {
-      iVar4 = iVar3 * 2 + 1;
-    }
-    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + iVar4 * 0xc);
-    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar4 * 0xc);
-    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar4 * 0xc);
-    iVar3 = iVar4;
-  }
-  if (iVar4 == param_3) {
-    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -0xc + param_3 * 0xc);
-    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -8 + param_3 * 0xc);
-    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -4 + param_3 * 0xc);
-    iVar3 = param_3 + -1;
-  }
-  lib_fn_4f5ac0(param_1,iVar3,param_2,param_4);
-  return;
-}
-
-
-
-
 /* Global::lib_fn_4f3940 @ 004f3940 */
 
 void __cdecl lib_fn_4f3940(int param_1,int param_2,int param_3,undefined4 *param_4)
@@ -37433,43 +37403,6 @@ void __cdecl lib_fn_4f3940(int param_1,int param_2,int param_3,undefined4 *param
     puVar1[2] = *(undefined4 *)(iVar4 + -4);
   }
   lib_fn_4f5b40(param_1,iVar5,param_2,param_4);
-  return;
-}
-
-
-
-
-/* Global::lib_fn_4f39e0 @ 004f39e0 */
-
-void __cdecl lib_fn_4f39e0(int param_1,int param_2,int param_3,float *param_4)
-
-{
-  float *pfVar1;
-  float fVar2;
-  int iVar3;
-  int iVar4;
-  
-  iVar3 = param_2;
-  while( true ) {
-    iVar4 = iVar3 * 2 + 2;
-    if (param_3 <= iVar4) break;
-    fVar2 = *(float *)(param_1 + iVar4 * 0xc);
-    pfVar1 = (float *)(param_1 + -0xc + iVar4 * 0xc);
-    if (*pfVar1 <= fVar2 && fVar2 != *pfVar1) {
-      iVar4 = iVar3 * 2 + 1;
-    }
-    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + iVar4 * 0xc);
-    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar4 * 0xc);
-    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar4 * 0xc);
-    iVar3 = iVar4;
-  }
-  if (iVar4 == param_3) {
-    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -0xc + param_3 * 0xc);
-    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -8 + param_3 * 0xc);
-    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -4 + param_3 * 0xc);
-    iVar3 = param_3 + -1;
-  }
-  lib_fn_4f5bc0(param_1,iVar3,param_2,param_4);
   return;
 }
 
@@ -37546,63 +37479,6 @@ void __cdecl lib_fn_4f3bf0(undefined4 *param_1,undefined4 *param_2)
 
 
 
-/* Global::lib_fn_4f4860 @ 004f4860 */
-
-void __cdecl lib_fn_4f4860(float *param_1,float *param_2)
-
-{
-  float *pfVar1;
-  float fVar2;
-  float fVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  float *pfVar6;
-  uint uVar7;
-  float *pfVar8;
-  
-  uVar7 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  pfVar6 = param_1;
-  if (param_1 != param_2) {
-    while (pfVar6 = pfVar6 + 3, pfVar6 != param_2) {
-      fVar2 = *pfVar6;
-      uVar5 = *(undefined8 *)(pfVar6 + 1);
-      uVar4 = *(undefined8 *)(pfVar6 + 1);
-      if (*param_1 <= fVar2) {
-        fVar3 = pfVar6[-3];
-        pfVar8 = pfVar6;
-        while (fVar2 < fVar3) {
-          *pfVar8 = fVar3;
-          pfVar8[1] = pfVar8[-2];
-          pfVar8[2] = pfVar8[-1];
-          fVar3 = pfVar8[-6];
-          pfVar8 = pfVar8 + -3;
-        }
-        *pfVar8 = fVar2;
-        *(undefined8 *)(pfVar8 + 1) = uVar5;
-      }
-      else {
-        if (param_1 != pfVar6) {
-          pfVar8 = pfVar6 + 4;
-          do {
-            pfVar8[-4] = pfVar8[-7];
-            pfVar8[-3] = pfVar8[-6];
-            pfVar8[-2] = pfVar8[-5];
-            pfVar1 = pfVar8 + -7;
-            pfVar8 = pfVar8 + -3;
-          } while (pfVar1 != param_1);
-        }
-        *param_1 = fVar2;
-        *(undefined8 *)(param_1 + 1) = uVar4;
-      }
-    }
-  }
-  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
 /* Global::lib_fn_4f4940 @ 004f4940 */
 
 void __cdecl lib_fn_4f4940(undefined8 *param_1,undefined8 *param_2)
@@ -37651,63 +37527,6 @@ void __cdecl lib_fn_4f4940(undefined8 *param_1,undefined8 *param_2)
       }
     }
   }
-  return;
-}
-
-
-
-
-/* Global::lib_fn_4f49d0 @ 004f49d0 */
-
-void __cdecl lib_fn_4f49d0(float *param_1,float *param_2)
-
-{
-  float *pfVar1;
-  float fVar2;
-  float fVar3;
-  undefined8 uVar4;
-  undefined8 uVar5;
-  float *pfVar6;
-  uint uVar7;
-  float *pfVar8;
-  
-  uVar7 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  pfVar6 = param_1;
-  if (param_1 != param_2) {
-    while (pfVar6 = pfVar6 + 3, pfVar6 != param_2) {
-      fVar2 = *pfVar6;
-      uVar5 = *(undefined8 *)(pfVar6 + 1);
-      uVar4 = *(undefined8 *)(pfVar6 + 1);
-      if (fVar2 < *param_1 || fVar2 == *param_1) {
-        fVar3 = pfVar6[-3];
-        pfVar8 = pfVar6;
-        while (fVar3 < fVar2) {
-          *pfVar8 = fVar3;
-          pfVar8[1] = pfVar8[-2];
-          pfVar8[2] = pfVar8[-1];
-          fVar3 = pfVar8[-6];
-          pfVar8 = pfVar8 + -3;
-        }
-        *pfVar8 = fVar2;
-        *(undefined8 *)(pfVar8 + 1) = uVar5;
-      }
-      else {
-        if (param_1 != pfVar6) {
-          pfVar8 = pfVar6 + 4;
-          do {
-            pfVar8[-4] = pfVar8[-7];
-            pfVar8[-3] = pfVar8[-6];
-            pfVar8[-2] = pfVar8[-5];
-            pfVar1 = pfVar8 + -7;
-            pfVar8 = pfVar8 + -3;
-          } while (pfVar1 != param_1);
-        }
-        *param_1 = fVar2;
-        *(undefined8 *)(param_1 + 1) = uVar4;
-      }
-    }
-  }
-  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
   return;
 }
 
@@ -37772,78 +37591,6 @@ void __cdecl lib_fn_4f4ab0(undefined8 *param_1,undefined8 *param_2)
 
 
 
-/* Global::lib_fn_4f4b50 @ 004f4b50 */
-
-void __cdecl lib_fn_4f4b50(int param_1,int param_2)
-
-{
-  undefined8 *puVar1;
-  float *pfVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  undefined8 uVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  int iVar12;
-  int iVar13;
-  
-  uVar7 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  iVar5 = (param_2 - param_1) / 0xc;
-  iVar12 = iVar5 / 2;
-  if (0 < iVar12) {
-    iVar10 = iVar12 * 2 + 2;
-    iVar8 = param_1 + iVar12 * 0xc + 8;
-    do {
-      puVar1 = (undefined8 *)(iVar8 + -0x10);
-      fVar3 = *(float *)(iVar8 + -0x14);
-      iVar8 = iVar8 + -0xc;
-      uVar6 = *puVar1;
-      iVar10 = iVar10 + -2;
-      iVar12 = iVar12 + -1;
-      iVar11 = iVar10;
-      iVar9 = iVar12;
-      while (iVar13 = iVar11, iVar13 < iVar5) {
-        fVar4 = *(float *)(param_1 + -0xc + iVar13 * 0xc);
-        pfVar2 = (float *)(param_1 + iVar13 * 0xc);
-        if (*pfVar2 <= fVar4 && fVar4 != *pfVar2) {
-          iVar13 = iVar13 + -1;
-        }
-        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + iVar13 * 0xc);
-        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar13 * 0xc);
-        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar13 * 0xc);
-        iVar9 = iVar13;
-        iVar11 = iVar13 * 2 + 2;
-      }
-      if (iVar13 == iVar5) {
-        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -0xc + iVar5 * 0xc);
-        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -8 + iVar5 * 0xc);
-        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -4 + iVar5 * 0xc);
-        iVar9 = iVar5 + -1;
-      }
-      while (iVar12 < iVar9) {
-        iVar11 = (iVar9 + -1) / 2;
-        fVar4 = *(float *)(param_1 + iVar11 * 0xc);
-        if (fVar3 <= fVar4) break;
-        *(float *)(param_1 + iVar9 * 0xc) = fVar4;
-        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar11 * 0xc);
-        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar11 * 0xc);
-        iVar9 = iVar11;
-      }
-      *(float *)(param_1 + iVar9 * 0xc) = fVar3;
-      *(undefined8 *)(param_1 + 4 + iVar9 * 0xc) = uVar6;
-    } while (0 < iVar12);
-  }
-  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
 /* Global::lib_fn_4f4cb0 @ 004f4cb0 */
 
 void __cdecl lib_fn_4f4cb0(int param_1,int param_2)
@@ -37901,78 +37648,6 @@ void __cdecl lib_fn_4f4cb0(int param_1,int param_2)
     } while (0 < iVar9);
   }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* Global::lib_fn_4f4dd0 @ 004f4dd0 */
-
-void __cdecl lib_fn_4f4dd0(int param_1,int param_2)
-
-{
-  undefined8 *puVar1;
-  float *pfVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  undefined8 uVar6;
-  uint uVar7;
-  int iVar8;
-  int iVar9;
-  int iVar10;
-  int iVar11;
-  int iVar12;
-  int iVar13;
-  
-  uVar7 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  iVar5 = (param_2 - param_1) / 0xc;
-  iVar12 = iVar5 / 2;
-  if (0 < iVar12) {
-    iVar10 = iVar12 * 2 + 2;
-    iVar8 = param_1 + iVar12 * 0xc + 8;
-    do {
-      puVar1 = (undefined8 *)(iVar8 + -0x10);
-      fVar3 = *(float *)(iVar8 + -0x14);
-      iVar8 = iVar8 + -0xc;
-      uVar6 = *puVar1;
-      iVar10 = iVar10 + -2;
-      iVar12 = iVar12 + -1;
-      iVar11 = iVar10;
-      iVar9 = iVar12;
-      while (iVar13 = iVar11, iVar13 < iVar5) {
-        fVar4 = *(float *)(param_1 + iVar13 * 0xc);
-        pfVar2 = (float *)(param_1 + -0xc + iVar13 * 0xc);
-        if (*pfVar2 <= fVar4 && fVar4 != *pfVar2) {
-          iVar13 = iVar13 + -1;
-        }
-        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + iVar13 * 0xc);
-        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar13 * 0xc);
-        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar13 * 0xc);
-        iVar9 = iVar13;
-        iVar11 = iVar13 * 2 + 2;
-      }
-      if (iVar13 == iVar5) {
-        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -0xc + iVar5 * 0xc);
-        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -8 + iVar5 * 0xc);
-        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -4 + iVar5 * 0xc);
-        iVar9 = iVar5 + -1;
-      }
-      while (iVar12 < iVar9) {
-        iVar11 = (iVar9 + -1) / 2;
-        fVar4 = *(float *)(param_1 + iVar11 * 0xc);
-        if (fVar4 <= fVar3) break;
-        *(float *)(param_1 + iVar9 * 0xc) = fVar4;
-        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar11 * 0xc);
-        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar11 * 0xc);
-        iVar9 = iVar11;
-      }
-      *(float *)(param_1 + iVar9 * 0xc) = fVar3;
-      *(undefined8 *)(param_1 + 4 + iVar9 * 0xc) = uVar6;
-    } while (0 < iVar12);
-  }
-  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
   return;
 }
 
@@ -38131,193 +37806,6 @@ void __cdecl lib_fn_4f50e0(undefined4 *param_1,undefined4 *param_2,undefined4 *p
 
 
 
-/* Global::lib_fn_4f5170 @ 004f5170 */
-
-void __cdecl lib_fn_4f5170(float *param_1,float *param_2,float *param_3)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  float *pfVar6;
-  float *pfVar7;
-  
-  fVar1 = *param_1;
-  iVar5 = ((int)param_3 - (int)param_1) / 0xc;
-  if (iVar5 < 0x29) {
-    fVar2 = *param_2;
-    if (fVar2 < fVar1) {
-      fVar3 = param_2[1];
-      fVar4 = param_2[2];
-      *param_2 = fVar1;
-      param_2[1] = param_1[1];
-      param_2[2] = param_1[2];
-      *param_1 = fVar2;
-      param_1[1] = fVar3;
-      param_1[2] = fVar4;
-    }
-    fVar1 = *param_3;
-    if (fVar1 < *param_2) {
-      fVar2 = param_3[1];
-      fVar3 = param_3[2];
-      *param_3 = *param_2;
-      param_3[1] = param_2[1];
-      param_3[2] = param_2[2];
-      *param_2 = fVar1;
-      param_2[1] = fVar2;
-      param_2[2] = fVar3;
-      fVar1 = *param_2;
-      if (fVar1 < *param_1) {
-        *param_2 = *param_1;
-        param_2[1] = param_1[1];
-        param_2[2] = param_1[2];
-        *param_1 = fVar1;
-        param_1[1] = fVar2;
-        param_1[2] = fVar3;
-      }
-    }
-  }
-  else {
-    iVar5 = iVar5 + 1;
-    iVar5 = (int)(iVar5 + (iVar5 >> 0x1f & 7U)) >> 3;
-    fVar2 = param_1[iVar5 * 3];
-    if (fVar2 < fVar1) {
-      fVar3 = param_1[iVar5 * 3 + 2];
-      fVar4 = param_1[iVar5 * 3 + 1];
-      param_1[iVar5 * 3] = fVar1;
-      param_1[iVar5 * 3 + 1] = param_1[1];
-      param_1[iVar5 * 3 + 2] = param_1[2];
-      *param_1 = fVar2;
-      param_1[2] = fVar3;
-      param_1[1] = fVar4;
-    }
-    fVar1 = param_1[iVar5 * 6];
-    if (fVar1 < param_1[iVar5 * 3]) {
-      fVar2 = param_1[iVar5 * 6 + 1];
-      fVar3 = param_1[iVar5 * 6 + 2];
-      param_1[iVar5 * 6] = param_1[iVar5 * 3];
-      param_1[iVar5 * 6 + 1] = param_1[iVar5 * 3 + 1];
-      param_1[iVar5 * 6 + 2] = param_1[iVar5 * 3 + 2];
-      param_1[iVar5 * 3] = fVar1;
-      param_1[iVar5 * 3 + 1] = fVar2;
-      param_1[iVar5 * 3 + 2] = fVar3;
-      fVar1 = param_1[iVar5 * 3];
-      if (fVar1 < *param_1) {
-        param_1[iVar5 * 3] = *param_1;
-        param_1[iVar5 * 3 + 1] = param_1[1];
-        param_1[iVar5 * 3 + 2] = param_1[2];
-        *param_1 = fVar1;
-        param_1[1] = fVar2;
-        param_1[2] = fVar3;
-      }
-    }
-    fVar1 = *param_2;
-    pfVar6 = param_2 + iVar5 * -3;
-    if (fVar1 < *pfVar6) {
-      fVar2 = param_2[1];
-      fVar3 = param_2[2];
-      *param_2 = *pfVar6;
-      param_2[1] = pfVar6[1];
-      param_2[2] = pfVar6[2];
-      *pfVar6 = fVar1;
-      pfVar6[1] = fVar2;
-      pfVar6[2] = fVar3;
-    }
-    fVar1 = param_2[iVar5 * 3];
-    if (fVar1 < *param_2) {
-      fVar2 = param_2[iVar5 * 3 + 1];
-      fVar3 = param_2[iVar5 * 3 + 2];
-      param_2[iVar5 * 3] = *param_2;
-      param_2[iVar5 * 3 + 1] = param_2[1];
-      param_2[iVar5 * 3 + 2] = param_2[2];
-      *param_2 = fVar1;
-      param_2[1] = fVar2;
-      param_2[2] = fVar3;
-      fVar1 = *param_2;
-      if (fVar1 < *pfVar6) {
-        *param_2 = *pfVar6;
-        param_2[1] = pfVar6[1];
-        param_2[2] = pfVar6[2];
-        *pfVar6 = fVar1;
-        pfVar6[1] = fVar2;
-        pfVar6[2] = fVar3;
-      }
-    }
-    pfVar7 = param_3 + iVar5 * -6;
-    pfVar6 = param_3 + iVar5 * -3;
-    fVar1 = *pfVar6;
-    if (fVar1 < *pfVar7) {
-      fVar2 = pfVar6[2];
-      fVar3 = pfVar6[1];
-      *pfVar6 = *pfVar7;
-      pfVar6[1] = pfVar7[1];
-      pfVar6[2] = pfVar7[2];
-      *pfVar7 = fVar1;
-      pfVar7[2] = fVar2;
-      pfVar7[1] = fVar3;
-    }
-    fVar1 = *param_3;
-    if (fVar1 < *pfVar6) {
-      fVar2 = param_3[1];
-      fVar3 = param_3[2];
-      *param_3 = *pfVar6;
-      param_3[1] = pfVar6[1];
-      param_3[2] = pfVar6[2];
-      *pfVar6 = fVar1;
-      pfVar6[1] = fVar2;
-      pfVar6[2] = fVar3;
-      fVar1 = *pfVar6;
-      if (fVar1 < *pfVar7) {
-        fVar2 = pfVar6[1];
-        *pfVar6 = *pfVar7;
-        pfVar6[1] = pfVar7[1];
-        pfVar6[2] = pfVar7[2];
-        *pfVar7 = fVar1;
-        pfVar7[1] = fVar2;
-        pfVar7[2] = fVar3;
-      }
-    }
-    fVar1 = *param_2;
-    if (fVar1 < param_1[iVar5 * 3]) {
-      fVar2 = param_2[1];
-      fVar3 = param_2[2];
-      *param_2 = param_1[iVar5 * 3];
-      param_2[1] = param_1[iVar5 * 3 + 1];
-      param_2[2] = param_1[iVar5 * 3 + 2];
-      param_1[iVar5 * 3] = fVar1;
-      param_1[iVar5 * 3 + 1] = fVar2;
-      param_1[iVar5 * 3 + 2] = fVar3;
-    }
-    fVar1 = *pfVar6;
-    if (fVar1 < *param_2) {
-      fVar2 = pfVar6[1];
-      fVar3 = pfVar6[2];
-      *pfVar6 = *param_2;
-      pfVar6[1] = param_2[1];
-      pfVar6[2] = param_2[2];
-      *param_2 = fVar1;
-      param_2[1] = fVar2;
-      param_2[2] = fVar3;
-      fVar1 = *param_2;
-      if (fVar1 < param_1[iVar5 * 3]) {
-        *param_2 = param_1[iVar5 * 3];
-        param_2[1] = param_1[iVar5 * 3 + 1];
-        param_2[2] = param_1[iVar5 * 3 + 2];
-        param_1[iVar5 * 3] = fVar1;
-        param_1[iVar5 * 3 + 1] = fVar2;
-        param_1[iVar5 * 3 + 2] = fVar3;
-        return;
-      }
-    }
-  }
-  return;
-}
-
-
-
-
 /* Global::lib_fn_4f5500 @ 004f5500 */
 
 void __cdecl lib_fn_4f5500(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
@@ -38342,193 +37830,6 @@ void __cdecl lib_fn_4f5500(undefined4 *param_1,undefined4 *param_2,undefined4 *p
 
 
 
-/* Global::lib_fn_4f55b0 @ 004f55b0 */
-
-void __cdecl lib_fn_4f55b0(float *param_1,float *param_2,float *param_3)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  float fVar4;
-  int iVar5;
-  float *pfVar6;
-  float *pfVar7;
-  
-  fVar1 = *param_1;
-  iVar5 = ((int)param_3 - (int)param_1) / 0xc;
-  if (iVar5 < 0x29) {
-    fVar2 = *param_2;
-    if (fVar1 < fVar2) {
-      fVar3 = param_2[1];
-      fVar4 = param_2[2];
-      *param_2 = fVar1;
-      param_2[1] = param_1[1];
-      param_2[2] = param_1[2];
-      *param_1 = fVar2;
-      param_1[1] = fVar3;
-      param_1[2] = fVar4;
-    }
-    fVar1 = *param_3;
-    if (*param_2 < fVar1) {
-      fVar2 = param_3[1];
-      fVar3 = param_3[2];
-      *param_3 = *param_2;
-      param_3[1] = param_2[1];
-      param_3[2] = param_2[2];
-      *param_2 = fVar1;
-      param_2[1] = fVar2;
-      param_2[2] = fVar3;
-      fVar1 = *param_2;
-      if (*param_1 < fVar1) {
-        *param_2 = *param_1;
-        param_2[1] = param_1[1];
-        param_2[2] = param_1[2];
-        *param_1 = fVar1;
-        param_1[1] = fVar2;
-        param_1[2] = fVar3;
-      }
-    }
-  }
-  else {
-    iVar5 = iVar5 + 1;
-    iVar5 = (int)(iVar5 + (iVar5 >> 0x1f & 7U)) >> 3;
-    fVar2 = param_1[iVar5 * 3];
-    if (fVar1 < fVar2) {
-      fVar3 = param_1[iVar5 * 3 + 2];
-      fVar4 = param_1[iVar5 * 3 + 1];
-      param_1[iVar5 * 3] = fVar1;
-      param_1[iVar5 * 3 + 1] = param_1[1];
-      param_1[iVar5 * 3 + 2] = param_1[2];
-      *param_1 = fVar2;
-      param_1[2] = fVar3;
-      param_1[1] = fVar4;
-    }
-    fVar1 = param_1[iVar5 * 6];
-    if (param_1[iVar5 * 3] < fVar1) {
-      fVar2 = param_1[iVar5 * 6 + 1];
-      fVar3 = param_1[iVar5 * 6 + 2];
-      param_1[iVar5 * 6] = param_1[iVar5 * 3];
-      param_1[iVar5 * 6 + 1] = param_1[iVar5 * 3 + 1];
-      param_1[iVar5 * 6 + 2] = param_1[iVar5 * 3 + 2];
-      param_1[iVar5 * 3] = fVar1;
-      param_1[iVar5 * 3 + 1] = fVar2;
-      param_1[iVar5 * 3 + 2] = fVar3;
-      fVar1 = param_1[iVar5 * 3];
-      if (*param_1 < fVar1) {
-        param_1[iVar5 * 3] = *param_1;
-        param_1[iVar5 * 3 + 1] = param_1[1];
-        param_1[iVar5 * 3 + 2] = param_1[2];
-        *param_1 = fVar1;
-        param_1[1] = fVar2;
-        param_1[2] = fVar3;
-      }
-    }
-    fVar1 = *param_2;
-    pfVar6 = param_2 + iVar5 * -3;
-    if (*pfVar6 < fVar1) {
-      fVar2 = param_2[1];
-      fVar3 = param_2[2];
-      *param_2 = *pfVar6;
-      param_2[1] = pfVar6[1];
-      param_2[2] = pfVar6[2];
-      *pfVar6 = fVar1;
-      pfVar6[1] = fVar2;
-      pfVar6[2] = fVar3;
-    }
-    fVar1 = param_2[iVar5 * 3];
-    if (*param_2 < fVar1) {
-      fVar2 = param_2[iVar5 * 3 + 1];
-      fVar3 = param_2[iVar5 * 3 + 2];
-      param_2[iVar5 * 3] = *param_2;
-      param_2[iVar5 * 3 + 1] = param_2[1];
-      param_2[iVar5 * 3 + 2] = param_2[2];
-      *param_2 = fVar1;
-      param_2[1] = fVar2;
-      param_2[2] = fVar3;
-      fVar1 = *param_2;
-      if (*pfVar6 < fVar1) {
-        *param_2 = *pfVar6;
-        param_2[1] = pfVar6[1];
-        param_2[2] = pfVar6[2];
-        *pfVar6 = fVar1;
-        pfVar6[1] = fVar2;
-        pfVar6[2] = fVar3;
-      }
-    }
-    pfVar7 = param_3 + iVar5 * -6;
-    pfVar6 = param_3 + iVar5 * -3;
-    fVar1 = *pfVar6;
-    if (*pfVar7 < fVar1) {
-      fVar2 = pfVar6[2];
-      fVar3 = pfVar6[1];
-      *pfVar6 = *pfVar7;
-      pfVar6[1] = pfVar7[1];
-      pfVar6[2] = pfVar7[2];
-      *pfVar7 = fVar1;
-      pfVar7[2] = fVar2;
-      pfVar7[1] = fVar3;
-    }
-    fVar1 = *param_3;
-    if (*pfVar6 < fVar1) {
-      fVar2 = param_3[1];
-      fVar3 = param_3[2];
-      *param_3 = *pfVar6;
-      param_3[1] = pfVar6[1];
-      param_3[2] = pfVar6[2];
-      *pfVar6 = fVar1;
-      pfVar6[1] = fVar2;
-      pfVar6[2] = fVar3;
-      fVar1 = *pfVar6;
-      if (*pfVar7 < fVar1) {
-        fVar2 = pfVar6[1];
-        *pfVar6 = *pfVar7;
-        pfVar6[1] = pfVar7[1];
-        pfVar6[2] = pfVar7[2];
-        *pfVar7 = fVar1;
-        pfVar7[1] = fVar2;
-        pfVar7[2] = fVar3;
-      }
-    }
-    fVar1 = *param_2;
-    if (param_1[iVar5 * 3] < fVar1) {
-      fVar2 = param_2[1];
-      fVar3 = param_2[2];
-      *param_2 = param_1[iVar5 * 3];
-      param_2[1] = param_1[iVar5 * 3 + 1];
-      param_2[2] = param_1[iVar5 * 3 + 2];
-      param_1[iVar5 * 3] = fVar1;
-      param_1[iVar5 * 3 + 1] = fVar2;
-      param_1[iVar5 * 3 + 2] = fVar3;
-    }
-    fVar1 = *pfVar6;
-    if (*param_2 < fVar1) {
-      fVar2 = pfVar6[1];
-      fVar3 = pfVar6[2];
-      *pfVar6 = *param_2;
-      pfVar6[1] = param_2[1];
-      pfVar6[2] = param_2[2];
-      *param_2 = fVar1;
-      param_2[1] = fVar2;
-      param_2[2] = fVar3;
-      fVar1 = *param_2;
-      if (param_1[iVar5 * 3] < fVar1) {
-        *param_2 = param_1[iVar5 * 3];
-        param_2[1] = param_1[iVar5 * 3 + 1];
-        param_2[2] = param_1[iVar5 * 3 + 2];
-        param_1[iVar5 * 3] = fVar1;
-        param_1[iVar5 * 3 + 1] = fVar2;
-        param_1[iVar5 * 3 + 2] = fVar3;
-        return;
-      }
-    }
-  }
-  return;
-}
-
-
-
-
 /* Global::lib_fn_4f5940 @ 004f5940 */
 
 void __cdecl lib_fn_4f5940(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
@@ -38547,32 +37848,6 @@ void __cdecl lib_fn_4f5940(undefined4 *param_1,undefined4 *param_2,undefined4 *p
     return;
   }
   lib_fn_4f50e0(param_1,param_2,param_3);
-  return;
-}
-
-
-
-
-/* Global::lib_fn_4f5ac0 @ 004f5ac0 */
-
-void __cdecl lib_fn_4f5ac0(int param_1,int param_2,int param_3,float *param_4)
-
-{
-  float fVar1;
-  int iVar2;
-  
-  while (param_3 < param_2) {
-    iVar2 = (param_2 + -1) / 2;
-    fVar1 = *(float *)(param_1 + iVar2 * 0xc);
-    if (*param_4 <= fVar1) break;
-    *(float *)(param_1 + param_2 * 0xc) = fVar1;
-    *(undefined4 *)(param_1 + 4 + param_2 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar2 * 0xc);
-    *(undefined4 *)(param_1 + 8 + param_2 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar2 * 0xc);
-    param_2 = iVar2;
-  }
-  *(float *)(param_1 + param_2 * 0xc) = *param_4;
-  *(float *)(param_1 + 4 + param_2 * 0xc) = param_4[1];
-  *(float *)(param_1 + 8 + param_2 * 0xc) = param_4[2];
   return;
 }
 
@@ -38608,32 +37883,6 @@ void __cdecl lib_fn_4f5b40(int param_1,int param_2,int param_3,undefined4 *param
 
 
 
-/* Global::lib_fn_4f5bc0 @ 004f5bc0 */
-
-void __cdecl lib_fn_4f5bc0(int param_1,int param_2,int param_3,float *param_4)
-
-{
-  float fVar1;
-  int iVar2;
-  
-  while (param_3 < param_2) {
-    iVar2 = (param_2 + -1) / 2;
-    fVar1 = *(float *)(param_1 + iVar2 * 0xc);
-    if (fVar1 < *param_4 || fVar1 == *param_4) break;
-    *(float *)(param_1 + param_2 * 0xc) = fVar1;
-    *(undefined4 *)(param_1 + 4 + param_2 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar2 * 0xc);
-    *(undefined4 *)(param_1 + 8 + param_2 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar2 * 0xc);
-    param_2 = iVar2;
-  }
-  *(float *)(param_1 + param_2 * 0xc) = *param_4;
-  *(float *)(param_1 + 4 + param_2 * 0xc) = param_4[1];
-  *(float *)(param_1 + 8 + param_2 * 0xc) = param_4[2];
-  return;
-}
-
-
-
-
 /* Global::lib_fn_4f5c40 @ 004f5c40 */
 
 void __cdecl lib_fn_4f5c40(int param_1,int param_2,int param_3,undefined4 *param_4)
@@ -38654,57 +37903,6 @@ void __cdecl lib_fn_4f5c40(int param_1,int param_2,int param_3,undefined4 *param
   *(undefined4 *)(param_1 + 4 + param_2 * 0xc) = param_4[1];
   *(undefined4 *)(param_1 + 8 + param_2 * 0xc) = param_4[2];
   return;
-}
-
-
-
-
-/* Global::lib_fn_4f5cc0 @ 004f5cc0 */
-
-void __cdecl lib_fn_4f5cc0(float *param_1,float *param_2,int param_3,undefined4 param_4)
-
-{
-  float *pfVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  float *pfVar4;
-  undefined4 local_c [2];
-  
-  iVar3 = (int)param_2 - (int)param_1;
-  do {
-    iVar3 = iVar3 / 0xc;
-    if (iVar3 < 0x21) {
-LAB_004f5d98:
-      if (1 < iVar3) {
-        lib_fn_4f4860(param_1,param_2);
-      }
-      return;
-    }
-    if (param_3 < 1) {
-      if (0x20 < iVar3) {
-        if (1 < ((int)param_2 - (int)param_1) / 0xc) {
-          lib_fn_4f4b50((int)param_1,(int)param_2);
-        }
-        lib_fn_4f61c0(param_1,(int)param_2);
-        return;
-      }
-      goto LAB_004f5d98;
-    }
-    puVar2 = (undefined4 *)lib_fn_4f64a0(local_c,param_1,param_2);
-    pfVar4 = (float *)*puVar2;
-    pfVar1 = (float *)puVar2[1];
-    param_3 = param_3 / 2 + (param_3 / 2) / 2;
-    if (((int)pfVar4 - (int)param_1) / 0xc < ((int)param_2 - (int)pfVar1) / 0xc) {
-      lib_fn_4f5cc0(param_1,pfVar4,param_3,param_4);
-      param_1 = pfVar1;
-      pfVar4 = param_2;
-    }
-    else {
-      lib_fn_4f5cc0(pfVar1,param_2,param_3,param_4);
-    }
-    iVar3 = (int)pfVar4 - (int)param_1;
-    param_2 = pfVar4;
-  } while( true );
 }
 
 
@@ -38755,57 +37953,6 @@ LAB_004f5ed8:
     }
     iVar3 = (int)piVar4 - (int)param_1;
     param_2 = piVar4;
-  } while( true );
-}
-
-
-
-
-/* Global::lib_fn_4f5f40 @ 004f5f40 */
-
-void __cdecl lib_fn_4f5f40(float *param_1,float *param_2,int param_3,undefined4 param_4)
-
-{
-  float *pfVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  float *pfVar4;
-  undefined4 local_c [2];
-  
-  iVar3 = (int)param_2 - (int)param_1;
-  do {
-    iVar3 = iVar3 / 0xc;
-    if (iVar3 < 0x21) {
-LAB_004f6018:
-      if (1 < iVar3) {
-        lib_fn_4f49d0(param_1,param_2);
-      }
-      return;
-    }
-    if (param_3 < 1) {
-      if (0x20 < iVar3) {
-        if (1 < ((int)param_2 - (int)param_1) / 0xc) {
-          lib_fn_4f4dd0((int)param_1,(int)param_2);
-        }
-        lib_fn_4f6330(param_1,(int)param_2);
-        return;
-      }
-      goto LAB_004f6018;
-    }
-    puVar2 = (undefined4 *)lib_fn_4f6a60(local_c,param_1,param_2);
-    pfVar4 = (float *)*puVar2;
-    pfVar1 = (float *)puVar2[1];
-    param_3 = param_3 / 2 + (param_3 / 2) / 2;
-    if (((int)pfVar4 - (int)param_1) / 0xc < ((int)param_2 - (int)pfVar1) / 0xc) {
-      lib_fn_4f5f40(param_1,pfVar4,param_3,param_4);
-      param_1 = pfVar1;
-      pfVar4 = param_2;
-    }
-    else {
-      lib_fn_4f5f40(pfVar1,param_2,param_3,param_4);
-    }
-    iVar3 = (int)pfVar4 - (int)param_1;
-    param_2 = pfVar4;
   } while( true );
 }
 
@@ -38863,38 +38010,6 @@ LAB_004f6158:
 
 
 
-/* Global::lib_fn_4f61c0 @ 004f61c0 */
-
-void __cdecl lib_fn_4f61c0(undefined4 *param_1,int param_2)
-
-{
-  undefined4 *puVar1;
-  float local_14;
-  undefined4 local_10;
-  undefined4 local_c;
-  uint local_8;
-  
-  local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  if (1 < (param_2 - (int)param_1) / 0xc) {
-    puVar1 = (undefined4 *)(param_2 + -8);
-    do {
-      local_10 = *puVar1;
-      local_14 = (float)puVar1[-1];
-      local_c = puVar1[1];
-      puVar1[-1] = *param_1;
-      *puVar1 = param_1[1];
-      puVar1[1] = param_1[2];
-      lib_fn_4f38a0((int)param_1,0,((-4 - (int)param_1) + (int)puVar1) / 0xc,&local_14);
-      puVar1 = puVar1 + -3;
-    } while (1 < ((8 - (int)param_1) + (int)puVar1) / 0xc);
-  }
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
 /* Global::lib_fn_4f6280 @ 004f6280 */
 
 void __cdecl lib_fn_4f6280(undefined4 *param_1,undefined4 *param_2)
@@ -38918,38 +38033,6 @@ void __cdecl lib_fn_4f6280(undefined4 *param_1,undefined4 *param_2)
     lib_fn_4f3940((int)param_1,0,(iVar1 + -0xc) / 0xc,(undefined4 *)&local_14);
     param_2 = puVar2;
     iVar1 = (int)puVar2 - (int)param_1;
-  }
-  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* Global::lib_fn_4f6330 @ 004f6330 */
-
-void __cdecl lib_fn_4f6330(undefined4 *param_1,int param_2)
-
-{
-  undefined4 *puVar1;
-  float local_14;
-  undefined4 local_10;
-  undefined4 local_c;
-  uint local_8;
-  
-  local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  if (1 < (param_2 - (int)param_1) / 0xc) {
-    puVar1 = (undefined4 *)(param_2 + -8);
-    do {
-      local_10 = *puVar1;
-      local_14 = (float)puVar1[-1];
-      local_c = puVar1[1];
-      puVar1[-1] = *param_1;
-      *puVar1 = param_1[1];
-      puVar1[1] = param_1[2];
-      lib_fn_4f39e0((int)param_1,0,((-4 - (int)param_1) + (int)puVar1) / 0xc,&local_14);
-      puVar1 = puVar1 + -3;
-    } while (1 < ((8 - (int)param_1) + (int)puVar1) / 0xc);
   }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
   return;
@@ -38984,173 +38067,6 @@ void __cdecl lib_fn_4f63f0(undefined4 *param_1,undefined4 *param_2)
   }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
   return;
-}
-
-
-
-
-/* Global::lib_fn_4f64a0 @ 004f64a0 */
-
-void __cdecl lib_fn_4f64a0(undefined4 *param_1,float *param_2,float *param_3)
-
-{
-  float fVar1;
-  float fVar2;
-  undefined8 uVar3;
-  float *pfVar4;
-  uint uVar5;
-  float *pfVar6;
-  float *pfVar7;
-  float *pfVar8;
-  float *pfVar9;
-  float *pfVar10;
-  float *local_64;
-  
-  uVar5 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  local_64 = param_2 + (((int)param_3 - (int)param_2) / 0x18) * 3;
-  lib_fn_4f5170(param_2,local_64,param_3 + -3);
-  pfVar6 = local_64 + 3;
-  for (; param_2 < local_64; local_64 = local_64 + -3) {
-    if ((local_64[-3] < *local_64) || (*local_64 < local_64[-3])) break;
-  }
-  pfVar4 = pfVar6;
-  pfVar9 = local_64;
-  if (pfVar6 < param_3) {
-    if (3 < ((int)param_3 + (0xb - (int)pfVar6)) / 0xc) {
-      fVar1 = *local_64;
-      do {
-        pfVar4 = pfVar6;
-        if ((*pfVar6 < fVar1) || (fVar1 < *pfVar6)) goto joined_r0x004f65d3;
-        if ((pfVar6[3] < fVar1) || (fVar1 < pfVar6[3])) {
-          pfVar6 = pfVar6 + 3;
-          pfVar4 = pfVar6;
-          goto joined_r0x004f65d3;
-        }
-        if ((pfVar6[6] < fVar1) || (fVar1 < pfVar6[6])) {
-          pfVar6 = pfVar6 + 6;
-          pfVar4 = pfVar6;
-          goto joined_r0x004f65d3;
-        }
-        if ((pfVar6[9] < fVar1) || (fVar1 < pfVar6[9])) {
-          pfVar6 = pfVar6 + 9;
-          pfVar4 = pfVar6;
-          goto joined_r0x004f65d3;
-        }
-        pfVar6 = pfVar6 + 0xc;
-      } while ((int)pfVar6 < (int)(param_3 + -9));
-    }
-    pfVar4 = pfVar6;
-    if (pfVar6 < param_3) {
-      do {
-        pfVar4 = pfVar6;
-        if ((*pfVar6 < *local_64) || (*local_64 < *pfVar6)) break;
-        pfVar6 = pfVar6 + 3;
-        pfVar4 = pfVar6;
-      } while (pfVar6 < param_3);
-    }
-  }
-joined_r0x004f65d3:
-  do {
-    if (param_3 <= pfVar4) {
-joined_r0x004f6629:
-      for (; param_2 < local_64; local_64 = local_64 + -3) {
-        fVar1 = local_64[-3];
-        pfVar7 = pfVar9;
-        if (*pfVar9 <= fVar1) {
-          if (*pfVar9 < fVar1) break;
-          fVar2 = pfVar9[-3];
-          pfVar7 = pfVar9 + -3;
-          uVar3 = *(undefined8 *)(pfVar9 + -2);
-          *pfVar7 = fVar1;
-          pfVar9[-2] = local_64[-2];
-          pfVar9[-1] = local_64[-1];
-          local_64[-3] = fVar2;
-          *(undefined8 *)(local_64 + -2) = uVar3;
-        }
-        pfVar9 = pfVar7;
-      }
-      if (local_64 == param_2) {
-        if (pfVar4 == param_3) {
-          *param_1 = pfVar9;
-          param_1[1] = pfVar6;
-          __security_check_cookie(uVar5 ^ (uint)&stack0xfffffffc);
-          return;
-        }
-        if (pfVar6 != pfVar4) {
-          fVar1 = *pfVar9;
-          uVar3 = *(undefined8 *)(pfVar9 + 1);
-          *pfVar9 = *pfVar6;
-          pfVar9[1] = pfVar6[1];
-          pfVar9[2] = pfVar6[2];
-          *pfVar6 = fVar1;
-          *(undefined8 *)(pfVar6 + 1) = uVar3;
-        }
-        fVar1 = *pfVar9;
-        uVar3 = *(undefined8 *)(pfVar9 + 1);
-        *pfVar9 = *pfVar4;
-        pfVar9[1] = pfVar4[1];
-        pfVar9[2] = pfVar4[2];
-        *pfVar4 = fVar1;
-        *(undefined8 *)(pfVar4 + 1) = uVar3;
-        pfVar6 = pfVar6 + 3;
-        pfVar4 = pfVar4 + 3;
-        pfVar9 = pfVar9 + 3;
-      }
-      else {
-        pfVar7 = local_64 + -3;
-        if (pfVar4 == param_3) {
-          pfVar10 = pfVar9 + -3;
-          if (pfVar7 != pfVar10) {
-            fVar1 = *pfVar7;
-            uVar3 = *(undefined8 *)(local_64 + -2);
-            *pfVar7 = *pfVar10;
-            local_64[-2] = pfVar9[-2];
-            local_64[-1] = pfVar9[-1];
-            *pfVar10 = fVar1;
-            *(undefined8 *)(pfVar9 + -2) = uVar3;
-          }
-          fVar1 = *pfVar10;
-          uVar3 = *(undefined8 *)(pfVar9 + -2);
-          pfVar8 = pfVar6 + -3;
-          *pfVar10 = *pfVar8;
-          pfVar9[-2] = pfVar6[-2];
-          pfVar9[-1] = pfVar6[-1];
-          *pfVar8 = fVar1;
-          *(undefined8 *)(pfVar6 + -2) = uVar3;
-          pfVar6 = pfVar8;
-          local_64 = pfVar7;
-          pfVar9 = pfVar10;
-        }
-        else {
-          fVar1 = *pfVar4;
-          uVar3 = *(undefined8 *)(pfVar4 + 1);
-          *pfVar4 = *pfVar7;
-          pfVar4[1] = local_64[-2];
-          pfVar4[2] = local_64[-1];
-          *pfVar7 = fVar1;
-          *(undefined8 *)(local_64 + -2) = uVar3;
-          pfVar4 = pfVar4 + 3;
-          local_64 = pfVar7;
-        }
-      }
-      goto joined_r0x004f65d3;
-    }
-    fVar1 = *pfVar4;
-    pfVar7 = pfVar6;
-    if (fVar1 <= *pfVar9) {
-      if (fVar1 < *pfVar9) goto joined_r0x004f6629;
-      pfVar7 = pfVar6 + 3;
-      fVar2 = *pfVar6;
-      uVar3 = *(undefined8 *)(pfVar6 + 1);
-      *pfVar6 = fVar1;
-      pfVar6[1] = pfVar4[1];
-      pfVar6[2] = pfVar4[2];
-      *pfVar4 = fVar2;
-      *(undefined8 *)(pfVar4 + 1) = uVar3;
-    }
-    pfVar6 = pfVar7;
-    pfVar4 = pfVar4 + 3;
-  } while( true );
 }
 
 
@@ -39307,173 +38223,6 @@ LAB_004f68d9:
     piVar4 = piVar4 + 3;
     local_24 = piVar4;
     piVar2 = piVar5;
-  } while( true );
-}
-
-
-
-
-/* Global::lib_fn_4f6a60 @ 004f6a60 */
-
-void __cdecl lib_fn_4f6a60(undefined4 *param_1,float *param_2,float *param_3)
-
-{
-  float fVar1;
-  float fVar2;
-  undefined8 uVar3;
-  float *pfVar4;
-  uint uVar5;
-  float *pfVar6;
-  float *pfVar7;
-  float *pfVar8;
-  float *pfVar9;
-  float *pfVar10;
-  float *local_64;
-  
-  uVar5 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  local_64 = param_2 + (((int)param_3 - (int)param_2) / 0x18) * 3;
-  lib_fn_4f55b0(param_2,local_64,param_3 + -3);
-  pfVar6 = local_64 + 3;
-  for (; param_2 < local_64; local_64 = local_64 + -3) {
-    if ((*local_64 < local_64[-3]) || (local_64[-3] < *local_64)) break;
-  }
-  pfVar4 = pfVar6;
-  pfVar9 = local_64;
-  if (pfVar6 < param_3) {
-    if (3 < ((int)param_3 + (0xb - (int)pfVar6)) / 0xc) {
-      fVar1 = *local_64;
-      do {
-        pfVar4 = pfVar6;
-        if ((fVar1 < *pfVar6) || (*pfVar6 < fVar1)) goto joined_r0x004f6b93;
-        if ((fVar1 < pfVar6[3]) || (pfVar6[3] < fVar1)) {
-          pfVar6 = pfVar6 + 3;
-          pfVar4 = pfVar6;
-          goto joined_r0x004f6b93;
-        }
-        if ((fVar1 < pfVar6[6]) || (pfVar6[6] < fVar1)) {
-          pfVar6 = pfVar6 + 6;
-          pfVar4 = pfVar6;
-          goto joined_r0x004f6b93;
-        }
-        if ((fVar1 < pfVar6[9]) || (pfVar6[9] < fVar1)) {
-          pfVar6 = pfVar6 + 9;
-          pfVar4 = pfVar6;
-          goto joined_r0x004f6b93;
-        }
-        pfVar6 = pfVar6 + 0xc;
-      } while ((int)pfVar6 < (int)(param_3 + -9));
-    }
-    pfVar4 = pfVar6;
-    if (pfVar6 < param_3) {
-      do {
-        pfVar4 = pfVar6;
-        if ((*local_64 < *pfVar6) || (*pfVar6 < *local_64)) break;
-        pfVar6 = pfVar6 + 3;
-        pfVar4 = pfVar6;
-      } while (pfVar6 < param_3);
-    }
-  }
-joined_r0x004f6b93:
-  do {
-    if (param_3 <= pfVar4) {
-joined_r0x004f6be9:
-      for (; param_2 < local_64; local_64 = local_64 + -3) {
-        fVar1 = local_64[-3];
-        pfVar7 = pfVar9;
-        if (fVar1 <= *pfVar9) {
-          if (fVar1 < *pfVar9) break;
-          fVar2 = pfVar9[-3];
-          pfVar7 = pfVar9 + -3;
-          uVar3 = *(undefined8 *)(pfVar9 + -2);
-          *pfVar7 = fVar1;
-          pfVar9[-2] = local_64[-2];
-          pfVar9[-1] = local_64[-1];
-          local_64[-3] = fVar2;
-          *(undefined8 *)(local_64 + -2) = uVar3;
-        }
-        pfVar9 = pfVar7;
-      }
-      if (local_64 == param_2) {
-        if (pfVar4 == param_3) {
-          *param_1 = pfVar9;
-          param_1[1] = pfVar6;
-          __security_check_cookie(uVar5 ^ (uint)&stack0xfffffffc);
-          return;
-        }
-        if (pfVar6 != pfVar4) {
-          fVar1 = *pfVar9;
-          uVar3 = *(undefined8 *)(pfVar9 + 1);
-          *pfVar9 = *pfVar6;
-          pfVar9[1] = pfVar6[1];
-          pfVar9[2] = pfVar6[2];
-          *pfVar6 = fVar1;
-          *(undefined8 *)(pfVar6 + 1) = uVar3;
-        }
-        fVar1 = *pfVar9;
-        uVar3 = *(undefined8 *)(pfVar9 + 1);
-        *pfVar9 = *pfVar4;
-        pfVar9[1] = pfVar4[1];
-        pfVar9[2] = pfVar4[2];
-        *pfVar4 = fVar1;
-        *(undefined8 *)(pfVar4 + 1) = uVar3;
-        pfVar6 = pfVar6 + 3;
-        pfVar4 = pfVar4 + 3;
-        pfVar9 = pfVar9 + 3;
-      }
-      else {
-        pfVar7 = local_64 + -3;
-        if (pfVar4 == param_3) {
-          pfVar10 = pfVar9 + -3;
-          if (pfVar7 != pfVar10) {
-            fVar1 = *pfVar7;
-            uVar3 = *(undefined8 *)(local_64 + -2);
-            *pfVar7 = *pfVar10;
-            local_64[-2] = pfVar9[-2];
-            local_64[-1] = pfVar9[-1];
-            *pfVar10 = fVar1;
-            *(undefined8 *)(pfVar9 + -2) = uVar3;
-          }
-          fVar1 = *pfVar10;
-          uVar3 = *(undefined8 *)(pfVar9 + -2);
-          pfVar8 = pfVar6 + -3;
-          *pfVar10 = *pfVar8;
-          pfVar9[-2] = pfVar6[-2];
-          pfVar9[-1] = pfVar6[-1];
-          *pfVar8 = fVar1;
-          *(undefined8 *)(pfVar6 + -2) = uVar3;
-          pfVar6 = pfVar8;
-          local_64 = pfVar7;
-          pfVar9 = pfVar10;
-        }
-        else {
-          fVar1 = *pfVar4;
-          uVar3 = *(undefined8 *)(pfVar4 + 1);
-          *pfVar4 = *pfVar7;
-          pfVar4[1] = local_64[-2];
-          pfVar4[2] = local_64[-1];
-          *pfVar7 = fVar1;
-          *(undefined8 *)(local_64 + -2) = uVar3;
-          pfVar4 = pfVar4 + 3;
-          local_64 = pfVar7;
-        }
-      }
-      goto joined_r0x004f6b93;
-    }
-    fVar1 = *pfVar4;
-    pfVar7 = pfVar6;
-    if (*pfVar9 <= fVar1) {
-      if (*pfVar9 < fVar1) goto joined_r0x004f6be9;
-      pfVar7 = pfVar6 + 3;
-      fVar2 = *pfVar6;
-      uVar3 = *(undefined8 *)(pfVar6 + 1);
-      *pfVar6 = fVar1;
-      pfVar6[1] = pfVar4[1];
-      pfVar6[2] = pfVar4[2];
-      *pfVar4 = fVar2;
-      *(undefined8 *)(pfVar4 + 1) = uVar3;
-    }
-    pfVar6 = pfVar7;
-    pfVar4 = pfVar4 + 3;
   } while( true );
 }
 
@@ -39804,6 +38553,7 @@ void __thiscall lib_fn_52eda0(void *this,uint param_1)
       puVar3 = operator_new(param_1 << 4);
       if (puVar3 != (undefined4 *)0x0) goto LAB_0052ee01;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0052ee01:
@@ -39838,6 +38588,7 @@ void __thiscall lib_fn_52ee80(void *this,uint param_1)
   }
   iVar2 = *(int *)((int)this + 4) - *(int *)this >> 4;
   if (0xfffffffU - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar3 = iVar2 + param_1;
@@ -40001,6 +38752,7 @@ undefined4 lib_fn_54b644(int *param_1)
   if (((*piVar1 == -0x1f928c9d) && (piVar1[4] == 3)) &&
      ((iVar2 = piVar1[5], iVar2 == 0x19930520 ||
       (((iVar2 == 0x19930521 || (iVar2 == 0x19930522)) || (iVar2 == 0x1994000)))))) {
+                    /* WARNING: Subroutine does not return */
     terminate();
   }
   return 0;
@@ -40067,6 +38819,7 @@ void lib_fn_54b8cb(void)
   if (eVar1 == 0) {
     return;
   }
+                    /* WARNING: Subroutine does not return */
   _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
 }
 
@@ -85754,6 +84507,7 @@ void Unwind_005567fe(void)
 
 /* Global::lib_fn_556890 @ 00556890 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556890(void)
 
@@ -85769,6 +84523,7 @@ void lib_fn_556890(void)
 
 /* Global::lib_fn_5568c0 @ 005568c0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5568c0(void)
 
@@ -85783,6 +84538,7 @@ void lib_fn_5568c0(void)
 
 /* Global::lib_fn_5568f0 @ 005568f0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5568f0(void)
 
@@ -85798,6 +84554,7 @@ void lib_fn_5568f0(void)
 
 /* Global::lib_fn_556920 @ 00556920 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556920(void)
 
@@ -85813,6 +84570,7 @@ void lib_fn_556920(void)
 
 /* Global::lib_fn_556950 @ 00556950 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556950(void)
 
@@ -85827,6 +84585,7 @@ void lib_fn_556950(void)
 
 /* Global::lib_fn_556980 @ 00556980 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556980(void)
 
@@ -85842,6 +84601,7 @@ void lib_fn_556980(void)
 
 /* Global::lib_fn_5569b0 @ 005569b0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5569b0(void)
 
@@ -85857,6 +84617,7 @@ void lib_fn_5569b0(void)
 
 /* Global::lib_fn_5569e0 @ 005569e0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5569e0(void)
 
@@ -85871,6 +84632,7 @@ void lib_fn_5569e0(void)
 
 /* Global::lib_fn_556a10 @ 00556a10 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556a10(void)
 
@@ -85886,6 +84648,7 @@ void lib_fn_556a10(void)
 
 /* Global::lib_fn_556a40 @ 00556a40 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556a40(void)
 
@@ -85901,6 +84664,7 @@ void lib_fn_556a40(void)
 
 /* Global::lib_fn_556a70 @ 00556a70 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556a70(void)
 
@@ -85915,6 +84679,7 @@ void lib_fn_556a70(void)
 
 /* Global::lib_fn_556aa0 @ 00556aa0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556aa0(void)
 
@@ -85930,6 +84695,7 @@ void lib_fn_556aa0(void)
 
 /* Global::lib_fn_556ad0 @ 00556ad0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556ad0(void)
 
@@ -85945,6 +84711,7 @@ void lib_fn_556ad0(void)
 
 /* Global::lib_fn_556b00 @ 00556b00 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556b00(void)
 
@@ -85959,6 +84726,7 @@ void lib_fn_556b00(void)
 
 /* Global::lib_fn_556b30 @ 00556b30 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556b30(void)
 
@@ -85974,6 +84742,7 @@ void lib_fn_556b30(void)
 
 /* Global::lib_fn_556b60 @ 00556b60 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556b60(void)
 
@@ -85989,6 +84758,7 @@ void lib_fn_556b60(void)
 
 /* Global::lib_fn_556b90 @ 00556b90 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556b90(void)
 
@@ -86003,6 +84773,7 @@ void lib_fn_556b90(void)
 
 /* Global::lib_fn_556bc0 @ 00556bc0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556bc0(void)
 
@@ -86018,6 +84789,7 @@ void lib_fn_556bc0(void)
 
 /* Global::lib_fn_556bf0 @ 00556bf0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556bf0(void)
 
@@ -86033,6 +84805,7 @@ void lib_fn_556bf0(void)
 
 /* Global::lib_fn_556c20 @ 00556c20 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556c20(void)
 
@@ -86047,6 +84820,7 @@ void lib_fn_556c20(void)
 
 /* Global::lib_fn_556c50 @ 00556c50 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556c50(void)
 
@@ -86062,6 +84836,7 @@ void lib_fn_556c50(void)
 
 /* Global::lib_fn_556c80 @ 00556c80 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556c80(void)
 
@@ -86077,6 +84852,7 @@ void lib_fn_556c80(void)
 
 /* Global::lib_fn_556cb0 @ 00556cb0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556cb0(void)
 
@@ -86091,6 +84867,7 @@ void lib_fn_556cb0(void)
 
 /* Global::lib_fn_556ce0 @ 00556ce0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556ce0(void)
 
@@ -86106,6 +84883,7 @@ void lib_fn_556ce0(void)
 
 /* Global::lib_fn_556d10 @ 00556d10 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556d10(void)
 
@@ -86121,6 +84899,7 @@ void lib_fn_556d10(void)
 
 /* Global::lib_fn_556d40 @ 00556d40 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556d40(void)
 
@@ -86135,6 +84914,7 @@ void lib_fn_556d40(void)
 
 /* Global::lib_fn_556d70 @ 00556d70 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556d70(void)
 
@@ -86150,6 +84930,7 @@ void lib_fn_556d70(void)
 
 /* Global::lib_fn_556da0 @ 00556da0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556da0(void)
 
@@ -86165,6 +84946,7 @@ void lib_fn_556da0(void)
 
 /* Global::lib_fn_556dd0 @ 00556dd0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556dd0(void)
 
@@ -86179,6 +84961,7 @@ void lib_fn_556dd0(void)
 
 /* Global::lib_fn_556e00 @ 00556e00 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556e00(void)
 
@@ -86194,6 +84977,7 @@ void lib_fn_556e00(void)
 
 /* Global::lib_fn_556e30 @ 00556e30 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556e30(void)
 
@@ -86209,6 +84993,7 @@ void lib_fn_556e30(void)
 
 /* Global::lib_fn_556e60 @ 00556e60 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556e60(void)
 
@@ -86223,6 +85008,7 @@ void lib_fn_556e60(void)
 
 /* Global::lib_fn_556e90 @ 00556e90 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556e90(void)
 
@@ -86238,6 +85024,7 @@ void lib_fn_556e90(void)
 
 /* Global::lib_fn_556ec0 @ 00556ec0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556ec0(void)
 
@@ -86253,6 +85040,7 @@ void lib_fn_556ec0(void)
 
 /* Global::lib_fn_556ef0 @ 00556ef0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556ef0(void)
 
@@ -86267,6 +85055,7 @@ void lib_fn_556ef0(void)
 
 /* Global::lib_fn_556f20 @ 00556f20 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556f20(void)
 
@@ -86282,6 +85071,7 @@ void lib_fn_556f20(void)
 
 /* Global::lib_fn_556f50 @ 00556f50 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556f50(void)
 
@@ -86297,6 +85087,7 @@ void lib_fn_556f50(void)
 
 /* Global::lib_fn_556f80 @ 00556f80 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556f80(void)
 
@@ -86311,6 +85102,7 @@ void lib_fn_556f80(void)
 
 /* Global::lib_fn_556fb0 @ 00556fb0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556fb0(void)
 
@@ -86326,6 +85118,7 @@ void lib_fn_556fb0(void)
 
 /* Global::lib_fn_556ff0 @ 00556ff0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_556ff0(void)
 
@@ -86341,6 +85134,7 @@ void lib_fn_556ff0(void)
 
 /* Global::lib_fn_557020 @ 00557020 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557020(void)
 
@@ -86355,6 +85149,7 @@ void lib_fn_557020(void)
 
 /* Global::lib_fn_557050 @ 00557050 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557050(void)
 
@@ -86370,6 +85165,7 @@ void lib_fn_557050(void)
 
 /* Global::lib_fn_557080 @ 00557080 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557080(void)
 
@@ -86385,6 +85181,7 @@ void lib_fn_557080(void)
 
 /* Global::lib_fn_5570b0 @ 005570b0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5570b0(void)
 
@@ -86399,6 +85196,7 @@ void lib_fn_5570b0(void)
 
 /* Global::lib_fn_5570e0 @ 005570e0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5570e0(void)
 
@@ -86414,6 +85212,7 @@ void lib_fn_5570e0(void)
 
 /* Global::lib_fn_557110 @ 00557110 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557110(void)
 
@@ -86429,6 +85228,7 @@ void lib_fn_557110(void)
 
 /* Global::lib_fn_557140 @ 00557140 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557140(void)
 
@@ -86443,6 +85243,7 @@ void lib_fn_557140(void)
 
 /* Global::lib_fn_557170 @ 00557170 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557170(void)
 
@@ -86458,6 +85259,7 @@ void lib_fn_557170(void)
 
 /* Global::lib_fn_5571a0 @ 005571a0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5571a0(void)
 
@@ -86473,6 +85275,7 @@ void lib_fn_5571a0(void)
 
 /* Global::lib_fn_5571d0 @ 005571d0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5571d0(void)
 
@@ -86487,6 +85290,7 @@ void lib_fn_5571d0(void)
 
 /* Global::lib_fn_557200 @ 00557200 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557200(void)
 
@@ -86502,6 +85306,7 @@ void lib_fn_557200(void)
 
 /* Global::lib_fn_557230 @ 00557230 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557230(void)
 
@@ -86517,6 +85322,7 @@ void lib_fn_557230(void)
 
 /* Global::lib_fn_557260 @ 00557260 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557260(void)
 
@@ -86531,6 +85337,7 @@ void lib_fn_557260(void)
 
 /* Global::lib_fn_557290 @ 00557290 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557290(void)
 
@@ -86546,6 +85353,7 @@ void lib_fn_557290(void)
 
 /* Global::lib_fn_5572c0 @ 005572c0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5572c0(void)
 
@@ -86561,6 +85369,7 @@ void lib_fn_5572c0(void)
 
 /* Global::lib_fn_5572f0 @ 005572f0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5572f0(void)
 
@@ -86575,6 +85384,7 @@ void lib_fn_5572f0(void)
 
 /* Global::lib_fn_557320 @ 00557320 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557320(void)
 
@@ -86590,6 +85400,7 @@ void lib_fn_557320(void)
 
 /* Global::lib_fn_557350 @ 00557350 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557350(void)
 
@@ -86605,6 +85416,7 @@ void lib_fn_557350(void)
 
 /* Global::lib_fn_557380 @ 00557380 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557380(void)
 
@@ -86619,6 +85431,7 @@ void lib_fn_557380(void)
 
 /* Global::lib_fn_5573b0 @ 005573b0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5573b0(void)
 
@@ -86634,6 +85447,7 @@ void lib_fn_5573b0(void)
 
 /* Global::lib_fn_5573e0 @ 005573e0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5573e0(void)
 
@@ -86649,6 +85463,7 @@ void lib_fn_5573e0(void)
 
 /* Global::lib_fn_557410 @ 00557410 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557410(void)
 
@@ -86663,6 +85478,7 @@ void lib_fn_557410(void)
 
 /* Global::lib_fn_557440 @ 00557440 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557440(void)
 
@@ -86692,6 +85508,7 @@ void lib_fn_557470(void)
 
 /* Global::lib_fn_5574a0 @ 005574a0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5574a0(void)
 
@@ -86706,6 +85523,7 @@ void lib_fn_5574a0(void)
 
 /* Global::lib_fn_5574d0 @ 005574d0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5574d0(void)
 
@@ -86721,6 +85539,7 @@ void lib_fn_5574d0(void)
 
 /* Global::lib_fn_557500 @ 00557500 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557500(void)
 
@@ -86736,6 +85555,7 @@ void lib_fn_557500(void)
 
 /* Global::lib_fn_557530 @ 00557530 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557530(void)
 
@@ -86750,6 +85570,7 @@ void lib_fn_557530(void)
 
 /* Global::lib_fn_557560 @ 00557560 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557560(void)
 
@@ -86765,6 +85586,7 @@ void lib_fn_557560(void)
 
 /* Global::lib_fn_557590 @ 00557590 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_557590(void)
 
@@ -86780,6 +85602,7 @@ void lib_fn_557590(void)
 
 /* Global::lib_fn_5575c0 @ 005575c0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5575c0(void)
 
@@ -86794,6 +85617,7 @@ void lib_fn_5575c0(void)
 
 /* Global::lib_fn_5575f0 @ 005575f0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_5575f0(void)
 

@@ -25,6 +25,7 @@ void cube::WorldPreviewWidget::ctor_0(undefined4 param_1,undefined4 param_2,unde
   local_8 = 0;
   plasma::NamedObject::ctor_4(param_1,param_2,local_28);
   if (7 < local_14) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_28[0]);
   }
   self[0x5a] = arg;

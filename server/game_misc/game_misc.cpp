@@ -1,4 +1,4 @@
-// game_misc (game_misc) — server. 108 functions. Bodies = Ghidra pseudo-C.
+// game_misc (game_misc) — server. 120 functions. Bodies = Ghidra pseudo-C.
 #include "game_misc.h"
 
 /* [AUDIT] proposed: String_reserveGrow  (confidence: high)
@@ -34,6 +34,7 @@ void __thiscall String_reserveGrow(void *this,uint new_capacity,size_t copy_len)
   local_8 = 0;
   new_buffer = (void *)0x0;
   if ((new_capacity + 1 != 0) && (new_buffer = operator_new(new_capacity + 1), new_buffer == (void *)0x0)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   if (copy_len != 0) {
@@ -98,6 +99,7 @@ int * __thiscall String_assign(void *this,int *src,uint len)
     }
   }
   if (len == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (*(uint *)((int)this + 0x14) < len) {
@@ -408,6 +410,7 @@ void __cdecl Vec3i64_toBlockCoords(int *dst,uint *src)
  */
 /* Global::Column_getBlockChecked @ 00405f20 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * __thiscall Column_getBlockChecked(void *this,int index)
 
@@ -1108,15 +1111,186 @@ void __thiscall Combat_upsertBuffEntry(void *this,char *buff)
     **(int **)(new_node + 4) = new_node;
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
 
 
 
+/* [AUDIT] proposed: ostream_writeCString  (confidence: high)
+ * purpose: std::operator<<(ostream&, const char*): pads/writes a C string honoring width/fill, sets state on error
+ * vars: buff=ostream; param_2=C string; ostream+0x20/0x24=width; +0x38=streambuf
+ */
+/* Global::ostream_writeCString @ 00412710 */
+
+basic_ostream<char,std::char_traits<char>_> *
+ostream_writeCString(basic_ostream<char,std::char_traits<char>_> *param_1,char *str)
+
+{
+  char cVar1;
+  uint uVar2;
+  bool bVar3;
+  uint uVar4;
+  int iVar5;
+  basic_ostream<char,std::char_traits<char>_> *pbVar6;
+  uint len;
+  char *pcVar8;
+  int extraout_ECX;
+  int extraout_ECX_00;
+  int vtoff;
+  int extraout_ECX_01;
+  bool bVar10;
+  __int64 _Var11;
+  int pad_lo;
+  int pad_hi;
+  void *local_10;
+  undefined1 *puStack_c;
+  undefined4 local_8;
+  
+  local_8 = 0xffffffff;
+  puStack_c = &LAB_0054bb20;
+  local_10 = ExceptionList;
+  uVar4 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  ExceptionList = &local_10;
+  bVar3 = false;
+  if (*str == '\0') {
+    len = 0;
+  }
+  else {
+    pcVar8 = str;
+    do {
+      cVar1 = *pcVar8;
+      pcVar8 = pcVar8 + 1;
+    } while (cVar1 != '\0');
+    len = (int)pcVar8 - (int)(str + 1);
+  }
+  vtoff = *(int *)(*(int *)param_1 + 4);
+  pad_hi = *(int *)(param_1 + vtoff + 0x24);
+  uVar2 = *(uint *)(param_1 + vtoff + 0x20);
+  if ((pad_hi < 0) ||
+     ((pad_hi < 1 && (((uVar2 == 0 || (pad_hi < 0)) || ((pad_hi < 1 && (uVar2 <= len)))))
+      ))) {
+    pad_hi = 0;
+    pad_lo = 0;
+  }
+  else {
+    pad_lo = uVar2 - len;
+    pad_hi = pad_hi - (uint)(uVar2 < len);
+  }
+  if (*(int **)(param_1 + vtoff + 0x38) != (int *)0x0) {
+    (**(code **)(**(int **)(param_1 + vtoff + 0x38) + 4))();
+  }
+  local_8 = 0;
+  if ((*(int *)(param_1 + *(int *)(*(int *)param_1 + 4) + 0xc) == 0) &&
+     (*(basic_ostream<char,std::char_traits<char>_> **)
+       (param_1 + *(int *)(*(int *)param_1 + 4) + 0x3c) !=
+      (basic_ostream<char,std::char_traits<char>_> *)0x0)) {
+    std::basic_ostream<char,std::char_traits<char>_>::flush
+              (*(basic_ostream<char,std::char_traits<char>_> **)
+                (param_1 + *(int *)(*(int *)param_1 + 4) + 0x3c));
+  }
+  vtoff = *(int *)(*(int *)param_1 + 4);
+  local_8 = 1;
+  if (*(int *)(param_1 + vtoff + 0xc) != 0) {
+    std::basic_ios<char,std::char_traits<char>_>::setstate
+              ((basic_ios<char,std::char_traits<char>_> *)(param_1 + *(int *)(*(int *)param_1 + 4)),
+               4,false);
+    local_8 = 0xffffffff;
+    bVar3 = std::uncaught_exception();
+    if (!bVar3) {
+      std::basic_ostream<char,std::char_traits<char>_>::_Osfx(param_1);
+    }
+    if (*(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) != (int *)0x0) {
+      (**(code **)(**(int **)(param_1 + *(int *)(*(int *)param_1 + 4) + 0x38) + 8))();
+    }
+    ExceptionList = local_10;
+    return param_1;
+  }
+  local_8 = 2;
+  if ((*(uint *)(param_1 + vtoff + 0x14) & 0x1c0) != 0x40) {
+    while( true ) {
+      if ((pad_hi < 0) || ((pad_hi < 1 && (pad_lo == 0)))) goto LAB_00412834;
+      iVar5 = std::basic_streambuf<char,std::char_traits<char>_>::sputc
+                        (*(basic_streambuf<char,std::char_traits<char>_> **)
+                          (param_1 + *(int *)(*(int *)param_1 + 4) + 0x38),
+                         (char)param_1[*(int *)(*(int *)param_1 + 4) + 0x40]);
+      vtoff = extraout_ECX;
+      if (iVar5 == -1) break;
+      bVar10 = pad_lo != 0;
+      pad_lo = pad_lo + -1;
+      pad_hi = pad_hi + -1 + (uint)bVar10;
+    }
+    bVar3 = true;
+LAB_00412834:
+    if (bVar3) goto LAB_004128a3;
+  }
+  _Var11 = std::basic_streambuf<char,std::char_traits<char>_>::sputn
+                     (*(basic_streambuf<char,std::char_traits<char>_> **)
+                       (param_1 + *(int *)(*(int *)param_1 + 4) + 0x38),str,
+                      (ulonglong)uVar4 << 0x20);
+  vtoff = extraout_ECX_00;
+  if (((uint)_Var11 == len) && ((int)((ulonglong)_Var11 >> 0x20) == 0)) {
+    while ((-1 < pad_hi &&
+           (((0 < pad_hi || (pad_lo != 0)) &&
+            (iVar5 = std::basic_streambuf<char,std::char_traits<char>_>::sputc
+                               (*(basic_streambuf<char,std::char_traits<char>_> **)
+                                 (param_1 + *(int *)(*(int *)param_1 + 4) + 0x38),
+                                (char)param_1[*(int *)(*(int *)param_1 + 4) + 0x40]),
+            vtoff = extraout_ECX_01, iVar5 != -1))))) {
+      bVar3 = pad_lo != 0;
+      pad_lo = pad_lo + -1;
+      pad_hi = pad_hi + -1 + (uint)bVar3;
+    }
+  }
+LAB_004128a3:
+  iVar5 = *(int *)(*(int *)param_1 + 4);
+  *(undefined4 *)(param_1 + iVar5 + 0x20) = 0;
+  *(undefined4 *)(param_1 + iVar5 + 0x24) = 0;
+  pbVar6 = (basic_ostream<char,std::char_traits<char>_> *)ostream_writeCleanupHandler(vtoff,(int *)param_1);
+  return pbVar6;
+}
+
+
+
+
+/* [AUDIT] proposed: ostream_writeCleanupHandler  (confidence: med)
+ * purpose: Exception-unwind/finally handler for ostream_writeCString: setstate, _Osfx, restore ExceptionList
+ * vars: uses unaff_EBP frame of caller; str=ostream vtbl
+ */
+/* Global::ostream_writeCleanupHandler @ 004128da */
+
+undefined4 __fastcall ostream_writeCleanupHandler(undefined4 param_1,int *param_2)
+
+{
+  basic_ostream<char,std::char_traits<char>_> *this;
+  bool bVar1;
+  int unaff_EBP;
+  int unaff_EDI;
+  
+  *(undefined4 *)(unaff_EBP + -4) = 1;
+  std::basic_ios<char,std::char_traits<char>_>::setstate
+            ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(*param_2 + 4) + (int)param_2),
+             unaff_EDI,false);
+  *(undefined4 *)(unaff_EBP + -4) = 0xffffffff;
+  bVar1 = std::uncaught_exception();
+  this = *(basic_ostream<char,std::char_traits<char>_> **)(unaff_EBP + -0x24);
+  if (!bVar1) {
+    std::basic_ostream<char,std::char_traits<char>_>::_Osfx(this);
+  }
+  if (*(int **)(this + *(int *)(*(int *)this + 4) + 0x38) != (int *)0x0) {
+    (**(code **)(**(int **)(this + *(int *)(*(int *)this + 4) + 0x38) + 8))();
+  }
+  ExceptionList = *(void **)(unaff_EBP + -0xc);
+  return *(undefined4 *)(unaff_EBP + 8);
+}
+
+
+
+
 /* [AUDIT] proposed: string_dataPtr  (confidence: high)
- * purpose: std::string data accessor: returns heap buffer *buff if capacity(>=0x10) else inline SSO buffer
- * vars: buff=string; [5]=capacity
+ * purpose: std::string data accessor: returns heap buffer *param_1 if capacity(>=0x10) else inline SSO buffer
+ * vars: param_1=string; [5]=capacity
  */
 /* Global::string_dataPtr @ 00412c40 */
 
@@ -1176,6 +1350,33 @@ uint __thiscall SpeechDb_readBlobByKey(void *this,undefined4 *key,uint *out_ptr,
     puVar3 = (undefined *)sqlite3_clear_bindings_46aa30((int *)out_ptr);
   } while (puVar3 == (undefined *)0x11);
   return (uint)puVar3 & 0xffffff00;
+}
+
+
+
+
+/* [AUDIT] proposed: SpeechDb_loadBlobToVector  (confidence: high)
+ * purpose: Loads a blob by key via readBlobByKey then resizes dest vector and memcpy's the bytes
+ * vars: this=db; key=key; out_ptr=dest vector
+ */
+/* Global::SpeechDb_loadBlobToVector @ 00413130 */
+
+undefined4 __thiscall SpeechDb_loadBlobToVector(void *this,undefined4 *key,undefined4 *out_vec)
+
+{
+  undefined4 uVar1;
+  void *pvVar2;
+  void *blob_ptr;
+  uint blob_len;
+  
+  uVar1 = SpeechDb_readBlobByKey(this,key,(uint *)&blob_ptr,&blob_len);
+  if ((char)uVar1 == '\0') {
+    return uVar1;
+  }
+  out_vec[3] = 0;
+  vector_resizeZero(out_vec,blob_len);
+  pvVar2 = memcpy((void *)*out_vec,blob_ptr,blob_len);
+  return CONCAT31((int3)((uint)pvVar2 >> 8),1);
 }
 
 
@@ -1353,9 +1554,41 @@ undefined4 __cdecl utf_convert_variant(undefined4 *out_buf,int *out_len,uint *sr
 
 
 
+/* [AUDIT] proposed: std::string::string(string&&)  (confidence: high)
+ * purpose: SSO(16) move-construct std::basic_string<char>, steals heap ptr, resets source
+ * vars: this=dst,out_buf=src str
+ */
+/* Global::std_string_string_string @ 00416a20 */
+
+undefined4 * __thiscall std_string_string_string(void *this,undefined4 *param_1)
+
+{
+  *(undefined4 *)((int)this + 0x14) = 0xf;
+  *(undefined4 *)((int)this + 0x10) = 0;
+  *(undefined1 *)this = 0;
+  if ((uint)param_1[5] < 0x10) {
+    if (param_1[4] + 1 != 0) {
+      memmove(this,param_1,param_1[4] + 1);
+    }
+  }
+  else {
+    *(undefined4 *)this = *param_1;
+    *param_1 = 0;
+  }
+  *(undefined4 *)((int)this + 0x10) = param_1[4];
+  *(undefined4 *)((int)this + 0x14) = param_1[5];
+  param_1[5] = 0xf;
+  param_1[4] = 0;
+  *(undefined1 *)param_1 = 0;
+  return this;
+}
+
+
+
+
 /* [AUDIT] proposed: Pool_allocBlock  (confidence: med)
- * purpose: Pool allocator: gets a node sized by out_buf (small vs >0x2000 large lists), links it, returns data ptr (+0x18)
- * vars: this+0/+4/+8=pool list heads; out_len=out node; returns node+0x18
+ * purpose: Pool allocator: gets a node sized by param_1 (small vs >0x2000 large lists), links it, returns data ptr (+0x18)
+ * vars: this+0/+4/+8=pool list heads; param_2=out node; returns node+0x18
  */
 /* Global::Pool_allocBlock @ 00416ef0 */
 
@@ -2237,6 +2470,7 @@ LAB_0041855c:
           local_8 = XmlPool_allocChildNode((uint)puVar6,this,2);
           if (local_8 == (uint *)0x0) {
 LAB_00418957:
+                    /* WARNING: Subroutine does not return */
             longjmp((int *)((int)this + 8),3);
           }
           local_8[2] = (uint)puVar11;
@@ -2280,6 +2514,7 @@ joined_r0x004188ab:
                 {
 LAB_0041862c:
                   *(ushort **)((int)this + 0x48) = puVar10;
+                    /* WARNING: Subroutine does not return */
                   longjmp((int *)((int)this + 8),0xb);
                 }
               }
@@ -2363,6 +2598,7 @@ LAB_00418720:
                 puVar8 = (ushort *)(*pcVar5)(puVar8 + 1,uVar4);
                 if (puVar8 == (ushort *)0x0) {
                   *(int *)((int)this + 0x48) = piVar7[2];
+                    /* WARNING: Subroutine does not return */
                   longjmp((int *)((int)this + 8),0xc);
                 }
                 if (*puVar8 < 0x80) {
@@ -2375,6 +2611,7 @@ LAB_00418720:
                 if (cVar3 < '\0') {
 LAB_0041892f:
                   *(ushort **)((int)this + 0x48) = puVar8;
+                    /* WARNING: Subroutine does not return */
                   longjmp((int *)((int)this + 8),0xc);
                 }
               }
@@ -2408,6 +2645,7 @@ LAB_0041892f:
           if (puVar10 == (ushort *)0x0) {
 LAB_0041867b:
             *(ushort **)((int)this + 0x48) = puVar8;
+                    /* WARNING: Subroutine does not return */
             longjmp((int *)((int)this + 8),0xe);
           }
           while( true ) {
@@ -2445,6 +2683,7 @@ LAB_0041867b:
             if ((ushort)end_char != 0x3e) {
 LAB_00418920:
               *(ushort **)((int)this + 0x48) = puVar8;
+                    /* WARNING: Subroutine does not return */
               longjmp((int *)((int)this + 8),0xd);
             }
           }
@@ -2464,9 +2703,11 @@ LAB_00418920:
           if (uVar9 != 0x21) {
             if ((*puVar11 == 0) && ((ushort)end_char == 0x3f)) {
               *(ushort **)((int)this + 0x48) = puVar11;
+                    /* WARNING: Subroutine does not return */
               longjmp((int *)((int)this + 8),6);
             }
             *(ushort **)((int)this + 0x48) = puVar11;
+                    /* WARNING: Subroutine does not return */
             longjmp((int *)((int)this + 8),5);
           }
           Xml_parseCommentOrCData(this,(int *)&text,puVar6,flags,end_char);
@@ -2503,6 +2744,7 @@ LAB_004184ce:
           else {
             puVar6 = XmlPool_allocChildNode((uint)puVar6,this,3);
             if (puVar6 == (uint *)0x0) {
+                    /* WARNING: Subroutine does not return */
               longjmp((int *)((int)this + 8),3);
             }
             puVar6[3] = (uint)puVar11;
@@ -2526,6 +2768,7 @@ LAB_004184ce:
 LAB_00418532:
     if (puVar6 != pool) {
       *(ushort **)((int)this + 0x48) = puVar8;
+                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),0xe);
     }
   }
@@ -2555,6 +2798,7 @@ void __thiscall Xml_skipDoctypeSubset(void *this,int *cursor,undefined4 end_char
         return;
       }
       *(int *)((int)this + 0x48) = *cursor;
+                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),9);
     }
     p = (short *)*cursor;
@@ -2605,6 +2849,7 @@ void __thiscall Xml_skipMarkedSection(void *this,int *cursor)
   do {
     if (ch == 0) {
       *(int *)((int)this + 0x48) = *cursor;
+                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),9);
     }
     p = (short *)*cursor;
@@ -2655,6 +2900,7 @@ void __thiscall Xml_skipQuotedOrComment(void *this,undefined4 *cursor)
       return;
     }
     *(short **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
     longjmp((int *)((int)this + 8),9);
   }
   if (quote == 0x3c) {
@@ -2687,10 +2933,12 @@ void __thiscall Xml_skipQuotedOrComment(void *this,undefined4 *cursor)
         return;
       }
       *(short **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),9);
     }
   }
   *(short **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
   longjmp((int *)((int)this + 8),9);
 }
 
@@ -2731,6 +2979,7 @@ void __thiscall Xml_parseCommentOrCData(void *this,int *cursor,uint *pool,uint f
         if ((flags & 4) != 0) {
           puVar4 = XmlPool_allocChildNode((uint)pool,this,4);
           if (puVar4 == (uint *)0x0) {
+                    /* WARNING: Subroutine does not return */
             longjmp((int *)((int)this + 8),3);
           }
           puVar4[3] = (uint)p;
@@ -2757,6 +3006,7 @@ void __thiscall Xml_parseCommentOrCData(void *this,int *cursor,uint *pool,uint f
             p = (ushort *)0x0;
           }
           *(ushort **)((int)this + 0x48) = puVar5;
+                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),8);
         }
         uVar1 = *p;
@@ -2773,6 +3023,7 @@ void __thiscall Xml_parseCommentOrCData(void *this,int *cursor,uint *pool,uint f
       }
 LAB_004191e7:
       *(ushort **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),8);
     }
     if (((((uVar1 == 0x44) && (*(short *)(iVar2 + 4) == 0x4f)) && (*(short *)(iVar2 + 6) == 0x43))
@@ -2785,6 +3036,7 @@ LAB_004191e7:
       }
       if ((*(short *)(iVar2 + 0xe) == 0) && (sVar6 == 0x45)) {
         *(ushort **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
         longjmp((int *)((int)this + 8),9);
       }
     }
@@ -2793,6 +3045,7 @@ LAB_004191e7:
       if (sVar6 == 0x5b) goto LAB_004191e7;
     }
     *(ushort **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
     longjmp((int *)((int)this + 8),5);
   }
   p = (ushort *)(iVar2 + 4);
@@ -2802,6 +3055,7 @@ LAB_004191e7:
     if (uVar3 != 0) {
       pool = XmlPool_allocChildNode((uint)pool,this,5);
       if (pool == (uint *)0x0) {
+                    /* WARNING: Subroutine does not return */
         longjmp((int *)((int)this + 8),3);
       }
       pool[3] = (uint)p;
@@ -2810,6 +3064,7 @@ LAB_004191e7:
       p = Xml_scanCommentContent(p,sVar6);
       if (p == (ushort *)0x0) {
         *(uint *)((int)this + 0x48) = pool[3];
+                    /* WARNING: Subroutine does not return */
         longjmp((int *)((int)this + 8),7);
       }
 LAB_004191b9:
@@ -2835,6 +3090,7 @@ LAB_004191b9:
   }
 LAB_004191d2:
   *(ushort **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
   longjmp((int *)((int)this + 8),7);
 LAB_0041912d:
   puVar5 = puVar5 + 1;
@@ -2889,6 +3145,7 @@ void __thiscall Xml_parseProcInstr(void *this,int *cursor,uint *pool,uint flags,
     }
     if (*p == 0) {
       *(ushort **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),6);
     }
     if (((((*name | 0x20) == 0x78) && ((*(ushort *)(iVar1 + 4) | 0x20) == 0x6d)) &&
@@ -2918,16 +3175,19 @@ void __thiscall Xml_parseProcInstr(void *this,int *cursor,uint *pool,uint flags,
       if (bVar2) {
         if (((byte)*puVar8 & 7) != 1) {
           *(ushort **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),6);
         }
         puVar7 = XmlPool_allocChildNode((uint)puVar8,this,7);
         if (puVar7 == (uint *)0x0) {
+                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),3);
         }
       }
       else {
         puVar7 = XmlPool_allocChildNode((uint)puVar8,this,6);
         if (puVar7 == (uint *)0x0) {
+                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),3);
         }
       }
@@ -2939,6 +3199,7 @@ void __thiscall Xml_parseProcInstr(void *this,int *cursor,uint *pool,uint flags,
         uVar5 = *p;
         if ((uVar5 != 0x3e) && ((uVar5 != 0 || (end_char != 0x3e)))) {
           *(ushort **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),6);
         }
         puVar8 = (undefined4 *)puVar7[1];
@@ -2988,11 +3249,13 @@ LAB_00419471:
           }
         }
         *(ushort **)((int)this + 0x48) = name;
+                    /* WARNING: Subroutine does not return */
         longjmp((int *)((int)this + 8),6);
       }
     }
   }
   *(ushort **)((int)this + 0x48) = p;
+                    /* WARNING: Subroutine does not return */
   longjmp((int *)((int)this + 8),6);
 }
 
@@ -3614,6 +3877,7 @@ void __thiscall vec12_reallocate(void *this,uint new_capacity)
       new_buffer = operator_new(new_capacity * 0xc);
       if (new_buffer != (undefined4 *)0x0) goto LAB_0041baef;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041baef:
@@ -3652,6 +3916,7 @@ void __thiscall vec12_reserveGrow(void *this,uint add_count)
   }
   size = (*(int *)((int)this + 4) - *(int *)this) / 0xc;
   if (0x15555555U - size < add_count) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   capacity = (*(int *)((int)this + 8) - *(int *)this) / 0xc;
@@ -3698,6 +3963,7 @@ void buyNode120(undefined4 *prev,undefined4 *next)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -3727,6 +3993,7 @@ void buyNode80(undefined4 *prev,undefined4 *next)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -3752,6 +4019,7 @@ void __thiscall vecInt_reallocate(void *this,uint new_capacity)
       _Dst = operator_new(new_capacity * 4);
       if (_Dst != (void *)0x0) goto LAB_00426d65;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00426d65:
@@ -3788,6 +4056,7 @@ void __thiscall vecInt_reserveGrow(void *this,uint add_count)
   }
   size = *(int *)((int)this + 4) - *(int *)this >> 2;
   if (0x3fffffffU - size < add_count) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   required = size + add_count;
@@ -3868,61 +4137,6 @@ void __fastcall Speech_mapNode_dtor(undefined4 *node)
   node[5] = 7;
   node[4] = 0;
   *(undefined2 *)node = 0;
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: World_findNearestEntityInRegion  (confidence: med)
- * purpose: Scans 0x4000-unit region grid cells around (x,y) for entities, picks nearest by distance (522cc0); spatial query
- * vars: iVar3..5 cell bounds; local_24 best, local_20 dist
- */
-/* Global::World_findNearestEntityInRegion @ 0042e090 */
-
-void __thiscall World_findNearestEntityInRegion(void *this,int x,int y)
-
-{
-  int cell_val;
-  int row;
-  int min_col;
-  int min_row;
-  int max_col;
-  int row_base;
-  float10 weight;
-  int best_cell;
-  int best_dist;
-  float local_10 [2];
-  uint security_cookie;
-  
-  security_cookie = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  min_col = (int)(x + -0x4000 + (x + -0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
-  min_row = (int)(y + -0x4000 + (y + -0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
-  max_col = (int)((x + 0x4000 >> 0x1f & 0x3fffU) + x + 0x4000) >> 0xe;
-  World_terrainOffset2D(local_10,x,y);
-  best_cell = 0;
-  best_dist = 0;
-  if (min_col <= max_col) {
-    row_base = min_col * 0x400 + 0x10002f;
-    row = min_row;
-    do {
-      for (; row <= (int)(y + 0x4000 + (y + 0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
-          row = row + 1) {
-        if ((((-1 < min_col) && (-1 < row)) && (row_base < 0x20002f)) &&
-           ((row < 0x400 && (cell_val = *(int *)((int)this + (row_base + row) * 4), cell_val != 0)))) {
-          weight = (float10)World_siteDistanceSq();
-          if ((best_cell == 0) || ((int)weight < best_dist)) {
-            best_cell = cell_val;
-            best_dist = (int)weight;
-          }
-        }
-      }
-      min_col = min_col + 1;
-      row_base = row_base + 0x400;
-      row = min_row;
-    } while (min_col <= max_col);
-  }
-  __security_check_cookie(security_cookie ^ (uint)&stack0xfffffffc);
   return;
 }
 
@@ -4011,6 +4225,7 @@ void __thiscall vec3b_reallocate(void *this,uint new_count)
       new_buf = operator_new(new_count * 3);
       if (new_buf != (undefined1 *)0x0) goto LAB_0042f2ac;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0042f2ac:
@@ -4049,6 +4264,7 @@ void __thiscall vec3b_reserveGrow(void *this,uint add_count)
   }
   cur_size = (*(int *)((int)this + 4) - *(int *)this) / 3;
   if (0x55555555U - cur_size < add_count) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   new_cap = (*(int *)((int)this + 8) - *(int *)this) / 3;
@@ -4128,6 +4344,7 @@ void __thiscall vec_ptr_resize(void *this,uint new_size)
  */
 /* Global::VoxelGrid_cellAt3D @ 004d1950 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * __thiscall VoxelGrid_cellAt3D(void *this,int x,int y,int z)
 
@@ -4155,41 +4372,9 @@ undefined * __thiscall VoxelGrid_cellAt3D(void *this,int x,int y,int z)
 
 
 
-/* [AUDIT] proposed: World::roadField  (confidence: med)
- * purpose: Samples terrain/noise value at world coords via chunk lookup; returns 0 if chunk type!=1
- * vars: y/3=fixed-point coords >>0xb=chunk idx; chunk[6]=type; World_falloffSquared=falloff
- */
-/* Global::World_roadField @ 004d19f0 */
-
-float10 __thiscall World_roadField(void *world,uint x,uint y)
-
-{
-  uint *chunk;
-  float10 result;
-  uint x_lo;
-  uint x_hi;
-  uint y_lo;
-  uint y_hi;
-  
-  chunk = (uint *)World_getTileAtCoords(world,(int)(x + ((int)x >> 0x1f & 0x7ffU)) >> 0xb,
-                                (int)(y + ((int)y >> 0x1f & 0x7ffU)) >> 0xb);
-  if ((chunk != (uint *)0x0) && (chunk[6] == 1)) {
-    y_hi = ((int)y >> 0x1f) << 0x10 | y >> 0x10;
-    y_lo = y << 0x10;
-    x_hi = ((int)x >> 0x1f) << 0x10 | x >> 0x10;
-    x_lo = x << 0x10;
-    result = World_falloffSquared(chunk,&x_lo,&y_lo);
-    return result;
-  }
-  return (float10)0;
-}
-
-
-
-
 /* [AUDIT] proposed: Creature::moveToward  (confidence: med)
- * purpose: Computes normalized direction from world to x, if within range param_4 calls step/move helper
- * vars: 1.5258789e-05=1/65536 fixed->float; y=flag; Creature_stepAlongPath=path step
+ * purpose: Computes normalized direction from x to y, if within range param_4 calls step/move helper
+ * vars: 1.5258789e-05=1/65536 fixed->float; z=flag; Creature_stepAlongPath=path step
  */
 /* Global::Creature_moveToward @ 004d4d80 */
 
@@ -4288,56 +4473,6 @@ double * __thiscall World_sampleTerrainGradient(void *this,double *out,int x,int
   out[1] = ((double)(float)fVar2 * 0.1 + (double)(float)fVar3) * 500.0 * 6.103515625e-05 +
                (double)y * 6.103515625e-05;
   return out;
-}
-
-
-
-
-/* [AUDIT] proposed: valueNoise2D  (confidence: high)
- * purpose: 2D value/gradient noise with cosine interpolation and integer hash mixing; core terrain noise fn
- * vars: out:2=x (double via CONCAT), y=y; 0x39 hash mult; cos smoothstep
- */
-/* Global::valueNoise2D @ 004d5d30 */
-
-float10 __cdecl valueNoise2D(undefined4 param_1,undefined4 param_2,double y)
-
-{
-  int iVar1;
-  uint hash10;
-  uint hash11;
-  uint hash00;
-  uint hash01;
-  double frac_x;
-  double cos_x;
-  double y_floor;
-  
-  y_floor = (double)(int)y;
-  frac_x = (double)(int)(double)CONCAT44(param_2,param_1);
-  iVar1 = (int)y_floor * 0x39;
-  hash00 = (int)frac_x + iVar1;
-  hash10 = iVar1 + (int)(frac_x + 1.0);
-  hash00 = hash00 ^ hash00 * 0x2000;
-  hash10 = hash10 ^ hash10 * 0x2000;
-  cos_x = ((double)CONCAT44(param_2,param_1) - frac_x) * 3.1415927;
-  iVar1 = (int)(y_floor + 1.0) * 0x39;
-  hash01 = (int)frac_x + iVar1;
-  hash11 = iVar1 + (int)(frac_x + 1.0);
-  hash01 = hash01 ^ hash01 * 0x2000;
-  hash11 = hash11 ^ hash11 * 0x2000;
-  libm_sse2_cos_precise();
-  frac_x = (1.0 - cos_x) * 0.5;
-  cos_x = (y - (double)(int)y) * 3.1415927;
-  libm_sse2_cos_precise();
-  cos_x = (1.0 - cos_x) * 0.5;
-  return (float10)(float)(((1.0 - (double)((hash00 * hash00 * 0xec4d + 0x131071f) * hash00 + 0xd208dd0d
-                                          & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - frac_x) +
-                          (1.0 - (double)((hash10 * hash10 * 0xec4d + 0x131071f) * hash10 + 0xd208dd0d
-                                         & 0x7fffffff) * 9.313225746154785e-10) * frac_x) *
-                          (1.0 - cos_x) +
-                         ((1.0 - (double)((hash01 * hash01 * 0xec4d + 0x131071f) * hash01 + 0xd208dd0d
-                                         & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - frac_x) +
-                         (1.0 - (double)((hash11 * hash11 * 0xec4d + 0x131071f) * hash11 + 0xd208dd0d &
-                                        0x7fffffff) * 9.313225746154785e-10) * frac_x) * cos_x);
 }
 
 
@@ -4867,6 +5002,63 @@ LAB_004d75c0:
 
 
 
+/* Global::FUN_004d8e60 @ 004d8e60 */
+
+void __thiscall FUN_004d8e60(void *this,void *param_1)
+
+{
+  uint uVar1;
+  uint uVar2;
+  void *local_20 [4];
+  undefined4 local_10;
+  uint local_c;
+  uint local_8;
+  
+  local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  if (((*(uint *)((int)this + 0x3c) & 2) == 0) &&
+     (uVar1 = **(uint **)((int)this + 0x20), uVar1 != 0)) {
+    uVar2 = *(uint *)((int)this + 0x38);
+    if (*(uint *)((int)this + 0x38) < uVar1) {
+      uVar2 = uVar1;
+    }
+    local_c = 0xf;
+    local_10 = 0;
+    local_20[0] = (void *)((uint)local_20[0]._1_3_ << 8);
+    String_assign(local_20,(int *)**(undefined4 **)((int)this + 0x10),
+                 uVar2 - (int)**(undefined4 **)((int)this + 0x10));
+    std_string_string_string(param_1,local_20);
+    if (0xf < local_c) {
+      operator_delete(local_20[0]);
+      __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+      return;
+    }
+  }
+  else {
+    if (((*(uint *)((int)this + 0x3c) & 4) == 0) && (**(int **)((int)this + 0x1c) != 0)) {
+      local_c = 0xf;
+      local_10 = 0;
+      local_20[0] = (void *)((uint)local_20[0]._1_3_ << 8);
+      String_assign(local_20,(int *)**(undefined4 **)((int)this + 0xc),
+                   (**(int **)((int)this + 0x2c) + **(int **)((int)this + 0x1c)) -
+                   (int)**(undefined4 **)((int)this + 0xc));
+    }
+    else {
+      local_c = 0xf;
+      local_10 = 0;
+      local_20[0] = (void *)((uint)local_20[0]._1_3_ << 8);
+    }
+    std_string_string_string(param_1,local_20);
+    if (0xf < local_c) {
+      operator_delete(local_20[0]);
+    }
+  }
+  __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: VoxelGrid::remapCoords  (confidence: high)
  * purpose: Applies chunk rotation/mirror (orientation in low 2 bits) to (x,y) grid coords; optional y-flip
  * vars: this+4 low2bits=orientation 0-3; +0x64/+0x68=w/h; +8=extra flip flag
@@ -5032,6 +5224,7 @@ LAB_004db0e5:
       puVar5 = cur_pos;
     } while( true );
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -7338,6 +7531,849 @@ LAB_004e0486:
 
 
 
+/* Global::FUN_004e1e50 @ 004e1e50 */
+
+undefined4 * __cdecl FUN_004e1e50(undefined4 *param_1,undefined4 *param_2,undefined4 *param_3)
+
+{
+  if (param_1 == param_2) {
+    return param_3;
+  }
+  do {
+    if (param_3 != (undefined4 *)0x0) {
+      *param_3 = *param_1;
+      param_3[1] = param_1[1];
+    }
+    param_1 = param_1 + 2;
+    param_3 = param_3 + 2;
+  } while (param_1 != param_2);
+  return param_3;
+}
+
+
+
+
+/* Global::FUN_004f38a0 @ 004f38a0 */
+
+void __cdecl FUN_004f38a0(int param_1,int param_2,int param_3,float *param_4)
+
+{
+  float *pfVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar3 = param_2;
+  while( true ) {
+    iVar4 = iVar3 * 2 + 2;
+    if (param_3 <= iVar4) break;
+    fVar2 = *(float *)(param_1 + -0xc + iVar4 * 0xc);
+    pfVar1 = (float *)(param_1 + iVar4 * 0xc);
+    if (*pfVar1 <= fVar2 && fVar2 != *pfVar1) {
+      iVar4 = iVar3 * 2 + 1;
+    }
+    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + iVar4 * 0xc);
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar4 * 0xc);
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar4 * 0xc);
+    iVar3 = iVar4;
+  }
+  if (iVar4 == param_3) {
+    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -0xc + param_3 * 0xc);
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -8 + param_3 * 0xc);
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -4 + param_3 * 0xc);
+    iVar3 = param_3 + -1;
+  }
+  FUN_004f5ac0(param_1,iVar3,param_2,param_4);
+  return;
+}
+
+
+
+
+/* Global::FUN_004f39e0 @ 004f39e0 */
+
+void __cdecl FUN_004f39e0(int param_1,int param_2,int param_3,float *param_4)
+
+{
+  float *pfVar1;
+  float fVar2;
+  int iVar3;
+  int iVar4;
+  
+  iVar3 = param_2;
+  while( true ) {
+    iVar4 = iVar3 * 2 + 2;
+    if (param_3 <= iVar4) break;
+    fVar2 = *(float *)(param_1 + iVar4 * 0xc);
+    pfVar1 = (float *)(param_1 + -0xc + iVar4 * 0xc);
+    if (*pfVar1 <= fVar2 && fVar2 != *pfVar1) {
+      iVar4 = iVar3 * 2 + 1;
+    }
+    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + iVar4 * 0xc);
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar4 * 0xc);
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar4 * 0xc);
+    iVar3 = iVar4;
+  }
+  if (iVar4 == param_3) {
+    *(undefined4 *)(param_1 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -0xc + param_3 * 0xc);
+    *(undefined4 *)(param_1 + 4 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -8 + param_3 * 0xc);
+    *(undefined4 *)(param_1 + 8 + iVar3 * 0xc) = *(undefined4 *)(param_1 + -4 + param_3 * 0xc);
+    iVar3 = param_3 + -1;
+  }
+  FUN_004f5bc0(param_1,iVar3,param_2,param_4);
+  return;
+}
+
+
+
+
+/* Global::FUN_004f4860 @ 004f4860 */
+
+void __cdecl FUN_004f4860(float *param_1,float *param_2)
+
+{
+  float *pfVar1;
+  float fVar2;
+  float fVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  float *pfVar6;
+  uint uVar7;
+  float *pfVar8;
+  
+  uVar7 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  pfVar6 = param_1;
+  if (param_1 != param_2) {
+    while (pfVar6 = pfVar6 + 3, pfVar6 != param_2) {
+      fVar2 = *pfVar6;
+      uVar5 = *(undefined8 *)(pfVar6 + 1);
+      uVar4 = *(undefined8 *)(pfVar6 + 1);
+      if (*param_1 <= fVar2) {
+        fVar3 = pfVar6[-3];
+        pfVar8 = pfVar6;
+        while (fVar2 < fVar3) {
+          *pfVar8 = fVar3;
+          pfVar8[1] = pfVar8[-2];
+          pfVar8[2] = pfVar8[-1];
+          fVar3 = pfVar8[-6];
+          pfVar8 = pfVar8 + -3;
+        }
+        *pfVar8 = fVar2;
+        *(undefined8 *)(pfVar8 + 1) = uVar5;
+      }
+      else {
+        if (param_1 != pfVar6) {
+          pfVar8 = pfVar6 + 4;
+          do {
+            pfVar8[-4] = pfVar8[-7];
+            pfVar8[-3] = pfVar8[-6];
+            pfVar8[-2] = pfVar8[-5];
+            pfVar1 = pfVar8 + -7;
+            pfVar8 = pfVar8 + -3;
+          } while (pfVar1 != param_1);
+        }
+        *param_1 = fVar2;
+        *(undefined8 *)(param_1 + 1) = uVar4;
+      }
+    }
+  }
+  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_004f49d0 @ 004f49d0 */
+
+void __cdecl FUN_004f49d0(float *param_1,float *param_2)
+
+{
+  float *pfVar1;
+  float fVar2;
+  float fVar3;
+  undefined8 uVar4;
+  undefined8 uVar5;
+  float *pfVar6;
+  uint uVar7;
+  float *pfVar8;
+  
+  uVar7 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  pfVar6 = param_1;
+  if (param_1 != param_2) {
+    while (pfVar6 = pfVar6 + 3, pfVar6 != param_2) {
+      fVar2 = *pfVar6;
+      uVar5 = *(undefined8 *)(pfVar6 + 1);
+      uVar4 = *(undefined8 *)(pfVar6 + 1);
+      if (fVar2 < *param_1 || fVar2 == *param_1) {
+        fVar3 = pfVar6[-3];
+        pfVar8 = pfVar6;
+        while (fVar3 < fVar2) {
+          *pfVar8 = fVar3;
+          pfVar8[1] = pfVar8[-2];
+          pfVar8[2] = pfVar8[-1];
+          fVar3 = pfVar8[-6];
+          pfVar8 = pfVar8 + -3;
+        }
+        *pfVar8 = fVar2;
+        *(undefined8 *)(pfVar8 + 1) = uVar5;
+      }
+      else {
+        if (param_1 != pfVar6) {
+          pfVar8 = pfVar6 + 4;
+          do {
+            pfVar8[-4] = pfVar8[-7];
+            pfVar8[-3] = pfVar8[-6];
+            pfVar8[-2] = pfVar8[-5];
+            pfVar1 = pfVar8 + -7;
+            pfVar8 = pfVar8 + -3;
+          } while (pfVar1 != param_1);
+        }
+        *param_1 = fVar2;
+        *(undefined8 *)(param_1 + 1) = uVar4;
+      }
+    }
+  }
+  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_004f4b50 @ 004f4b50 */
+
+void __cdecl FUN_004f4b50(int param_1,int param_2)
+
+{
+  undefined8 *puVar1;
+  float *pfVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  undefined8 uVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  
+  uVar7 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  iVar5 = (param_2 - param_1) / 0xc;
+  iVar12 = iVar5 / 2;
+  if (0 < iVar12) {
+    iVar10 = iVar12 * 2 + 2;
+    iVar8 = param_1 + iVar12 * 0xc + 8;
+    do {
+      puVar1 = (undefined8 *)(iVar8 + -0x10);
+      fVar3 = *(float *)(iVar8 + -0x14);
+      iVar8 = iVar8 + -0xc;
+      uVar6 = *puVar1;
+      iVar10 = iVar10 + -2;
+      iVar12 = iVar12 + -1;
+      iVar11 = iVar10;
+      iVar9 = iVar12;
+      while (iVar13 = iVar11, iVar13 < iVar5) {
+        fVar4 = *(float *)(param_1 + -0xc + iVar13 * 0xc);
+        pfVar2 = (float *)(param_1 + iVar13 * 0xc);
+        if (*pfVar2 <= fVar4 && fVar4 != *pfVar2) {
+          iVar13 = iVar13 + -1;
+        }
+        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + iVar13 * 0xc);
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar13 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar13 * 0xc);
+        iVar9 = iVar13;
+        iVar11 = iVar13 * 2 + 2;
+      }
+      if (iVar13 == iVar5) {
+        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -0xc + iVar5 * 0xc);
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -8 + iVar5 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -4 + iVar5 * 0xc);
+        iVar9 = iVar5 + -1;
+      }
+      while (iVar12 < iVar9) {
+        iVar11 = (iVar9 + -1) / 2;
+        fVar4 = *(float *)(param_1 + iVar11 * 0xc);
+        if (fVar3 <= fVar4) break;
+        *(float *)(param_1 + iVar9 * 0xc) = fVar4;
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar11 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar11 * 0xc);
+        iVar9 = iVar11;
+      }
+      *(float *)(param_1 + iVar9 * 0xc) = fVar3;
+      *(undefined8 *)(param_1 + 4 + iVar9 * 0xc) = uVar6;
+    } while (0 < iVar12);
+  }
+  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_004f4dd0 @ 004f4dd0 */
+
+void __cdecl FUN_004f4dd0(int param_1,int param_2)
+
+{
+  undefined8 *puVar1;
+  float *pfVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  undefined8 uVar6;
+  uint uVar7;
+  int iVar8;
+  int iVar9;
+  int iVar10;
+  int iVar11;
+  int iVar12;
+  int iVar13;
+  
+  uVar7 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  iVar5 = (param_2 - param_1) / 0xc;
+  iVar12 = iVar5 / 2;
+  if (0 < iVar12) {
+    iVar10 = iVar12 * 2 + 2;
+    iVar8 = param_1 + iVar12 * 0xc + 8;
+    do {
+      puVar1 = (undefined8 *)(iVar8 + -0x10);
+      fVar3 = *(float *)(iVar8 + -0x14);
+      iVar8 = iVar8 + -0xc;
+      uVar6 = *puVar1;
+      iVar10 = iVar10 + -2;
+      iVar12 = iVar12 + -1;
+      iVar11 = iVar10;
+      iVar9 = iVar12;
+      while (iVar13 = iVar11, iVar13 < iVar5) {
+        fVar4 = *(float *)(param_1 + iVar13 * 0xc);
+        pfVar2 = (float *)(param_1 + -0xc + iVar13 * 0xc);
+        if (*pfVar2 <= fVar4 && fVar4 != *pfVar2) {
+          iVar13 = iVar13 + -1;
+        }
+        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + iVar13 * 0xc);
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar13 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar13 * 0xc);
+        iVar9 = iVar13;
+        iVar11 = iVar13 * 2 + 2;
+      }
+      if (iVar13 == iVar5) {
+        *(undefined4 *)(param_1 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -0xc + iVar5 * 0xc);
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -8 + iVar5 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + -4 + iVar5 * 0xc);
+        iVar9 = iVar5 + -1;
+      }
+      while (iVar12 < iVar9) {
+        iVar11 = (iVar9 + -1) / 2;
+        fVar4 = *(float *)(param_1 + iVar11 * 0xc);
+        if (fVar4 <= fVar3) break;
+        *(float *)(param_1 + iVar9 * 0xc) = fVar4;
+        *(undefined4 *)(param_1 + 4 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar11 * 0xc);
+        *(undefined4 *)(param_1 + 8 + iVar9 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar11 * 0xc);
+        iVar9 = iVar11;
+      }
+      *(float *)(param_1 + iVar9 * 0xc) = fVar3;
+      *(undefined8 *)(param_1 + 4 + iVar9 * 0xc) = uVar6;
+    } while (0 < iVar12);
+  }
+  __security_check_cookie(uVar7 ^ (uint)&stack0xfffffffc);
+  return;
+}
+
+
+
+
+/* Global::FUN_004f5170 @ 004f5170 */
+
+void __cdecl FUN_004f5170(float *param_1,float *param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  float *pfVar6;
+  float *pfVar7;
+  
+  fVar1 = *param_1;
+  iVar5 = ((int)param_3 - (int)param_1) / 0xc;
+  if (iVar5 < 0x29) {
+    fVar2 = *param_2;
+    if (fVar2 < fVar1) {
+      fVar3 = param_2[1];
+      fVar4 = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = param_1[1];
+      param_2[2] = param_1[2];
+      *param_1 = fVar2;
+      param_1[1] = fVar3;
+      param_1[2] = fVar4;
+    }
+    fVar1 = *param_3;
+    if (fVar1 < *param_2) {
+      fVar2 = param_3[1];
+      fVar3 = param_3[2];
+      *param_3 = *param_2;
+      param_3[1] = param_2[1];
+      param_3[2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (fVar1 < *param_1) {
+        *param_2 = *param_1;
+        param_2[1] = param_1[1];
+        param_2[2] = param_1[2];
+        *param_1 = fVar1;
+        param_1[1] = fVar2;
+        param_1[2] = fVar3;
+      }
+    }
+  }
+  else {
+    iVar5 = iVar5 + 1;
+    iVar5 = (int)(iVar5 + (iVar5 >> 0x1f & 7U)) >> 3;
+    fVar2 = param_1[iVar5 * 3];
+    if (fVar2 < fVar1) {
+      fVar3 = param_1[iVar5 * 3 + 2];
+      fVar4 = param_1[iVar5 * 3 + 1];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = param_1[1];
+      param_1[iVar5 * 3 + 2] = param_1[2];
+      *param_1 = fVar2;
+      param_1[2] = fVar3;
+      param_1[1] = fVar4;
+    }
+    fVar1 = param_1[iVar5 * 6];
+    if (fVar1 < param_1[iVar5 * 3]) {
+      fVar2 = param_1[iVar5 * 6 + 1];
+      fVar3 = param_1[iVar5 * 6 + 2];
+      param_1[iVar5 * 6] = param_1[iVar5 * 3];
+      param_1[iVar5 * 6 + 1] = param_1[iVar5 * 3 + 1];
+      param_1[iVar5 * 6 + 2] = param_1[iVar5 * 3 + 2];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = fVar2;
+      param_1[iVar5 * 3 + 2] = fVar3;
+      fVar1 = param_1[iVar5 * 3];
+      if (fVar1 < *param_1) {
+        param_1[iVar5 * 3] = *param_1;
+        param_1[iVar5 * 3 + 1] = param_1[1];
+        param_1[iVar5 * 3 + 2] = param_1[2];
+        *param_1 = fVar1;
+        param_1[1] = fVar2;
+        param_1[2] = fVar3;
+      }
+    }
+    fVar1 = *param_2;
+    pfVar6 = param_2 + iVar5 * -3;
+    if (fVar1 < *pfVar6) {
+      fVar2 = param_2[1];
+      fVar3 = param_2[2];
+      *param_2 = *pfVar6;
+      param_2[1] = pfVar6[1];
+      param_2[2] = pfVar6[2];
+      *pfVar6 = fVar1;
+      pfVar6[1] = fVar2;
+      pfVar6[2] = fVar3;
+    }
+    fVar1 = param_2[iVar5 * 3];
+    if (fVar1 < *param_2) {
+      fVar2 = param_2[iVar5 * 3 + 1];
+      fVar3 = param_2[iVar5 * 3 + 2];
+      param_2[iVar5 * 3] = *param_2;
+      param_2[iVar5 * 3 + 1] = param_2[1];
+      param_2[iVar5 * 3 + 2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (fVar1 < *pfVar6) {
+        *param_2 = *pfVar6;
+        param_2[1] = pfVar6[1];
+        param_2[2] = pfVar6[2];
+        *pfVar6 = fVar1;
+        pfVar6[1] = fVar2;
+        pfVar6[2] = fVar3;
+      }
+    }
+    pfVar7 = param_3 + iVar5 * -6;
+    pfVar6 = param_3 + iVar5 * -3;
+    fVar1 = *pfVar6;
+    if (fVar1 < *pfVar7) {
+      fVar2 = pfVar6[2];
+      fVar3 = pfVar6[1];
+      *pfVar6 = *pfVar7;
+      pfVar6[1] = pfVar7[1];
+      pfVar6[2] = pfVar7[2];
+      *pfVar7 = fVar1;
+      pfVar7[2] = fVar2;
+      pfVar7[1] = fVar3;
+    }
+    fVar1 = *param_3;
+    if (fVar1 < *pfVar6) {
+      fVar2 = param_3[1];
+      fVar3 = param_3[2];
+      *param_3 = *pfVar6;
+      param_3[1] = pfVar6[1];
+      param_3[2] = pfVar6[2];
+      *pfVar6 = fVar1;
+      pfVar6[1] = fVar2;
+      pfVar6[2] = fVar3;
+      fVar1 = *pfVar6;
+      if (fVar1 < *pfVar7) {
+        fVar2 = pfVar6[1];
+        *pfVar6 = *pfVar7;
+        pfVar6[1] = pfVar7[1];
+        pfVar6[2] = pfVar7[2];
+        *pfVar7 = fVar1;
+        pfVar7[1] = fVar2;
+        pfVar7[2] = fVar3;
+      }
+    }
+    fVar1 = *param_2;
+    if (fVar1 < param_1[iVar5 * 3]) {
+      fVar2 = param_2[1];
+      fVar3 = param_2[2];
+      *param_2 = param_1[iVar5 * 3];
+      param_2[1] = param_1[iVar5 * 3 + 1];
+      param_2[2] = param_1[iVar5 * 3 + 2];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = fVar2;
+      param_1[iVar5 * 3 + 2] = fVar3;
+    }
+    fVar1 = *pfVar6;
+    if (fVar1 < *param_2) {
+      fVar2 = pfVar6[1];
+      fVar3 = pfVar6[2];
+      *pfVar6 = *param_2;
+      pfVar6[1] = param_2[1];
+      pfVar6[2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (fVar1 < param_1[iVar5 * 3]) {
+        *param_2 = param_1[iVar5 * 3];
+        param_2[1] = param_1[iVar5 * 3 + 1];
+        param_2[2] = param_1[iVar5 * 3 + 2];
+        param_1[iVar5 * 3] = fVar1;
+        param_1[iVar5 * 3 + 1] = fVar2;
+        param_1[iVar5 * 3 + 2] = fVar3;
+        return;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_004f55b0 @ 004f55b0 */
+
+void __cdecl FUN_004f55b0(float *param_1,float *param_2,float *param_3)
+
+{
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  int iVar5;
+  float *pfVar6;
+  float *pfVar7;
+  
+  fVar1 = *param_1;
+  iVar5 = ((int)param_3 - (int)param_1) / 0xc;
+  if (iVar5 < 0x29) {
+    fVar2 = *param_2;
+    if (fVar1 < fVar2) {
+      fVar3 = param_2[1];
+      fVar4 = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = param_1[1];
+      param_2[2] = param_1[2];
+      *param_1 = fVar2;
+      param_1[1] = fVar3;
+      param_1[2] = fVar4;
+    }
+    fVar1 = *param_3;
+    if (*param_2 < fVar1) {
+      fVar2 = param_3[1];
+      fVar3 = param_3[2];
+      *param_3 = *param_2;
+      param_3[1] = param_2[1];
+      param_3[2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (*param_1 < fVar1) {
+        *param_2 = *param_1;
+        param_2[1] = param_1[1];
+        param_2[2] = param_1[2];
+        *param_1 = fVar1;
+        param_1[1] = fVar2;
+        param_1[2] = fVar3;
+      }
+    }
+  }
+  else {
+    iVar5 = iVar5 + 1;
+    iVar5 = (int)(iVar5 + (iVar5 >> 0x1f & 7U)) >> 3;
+    fVar2 = param_1[iVar5 * 3];
+    if (fVar1 < fVar2) {
+      fVar3 = param_1[iVar5 * 3 + 2];
+      fVar4 = param_1[iVar5 * 3 + 1];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = param_1[1];
+      param_1[iVar5 * 3 + 2] = param_1[2];
+      *param_1 = fVar2;
+      param_1[2] = fVar3;
+      param_1[1] = fVar4;
+    }
+    fVar1 = param_1[iVar5 * 6];
+    if (param_1[iVar5 * 3] < fVar1) {
+      fVar2 = param_1[iVar5 * 6 + 1];
+      fVar3 = param_1[iVar5 * 6 + 2];
+      param_1[iVar5 * 6] = param_1[iVar5 * 3];
+      param_1[iVar5 * 6 + 1] = param_1[iVar5 * 3 + 1];
+      param_1[iVar5 * 6 + 2] = param_1[iVar5 * 3 + 2];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = fVar2;
+      param_1[iVar5 * 3 + 2] = fVar3;
+      fVar1 = param_1[iVar5 * 3];
+      if (*param_1 < fVar1) {
+        param_1[iVar5 * 3] = *param_1;
+        param_1[iVar5 * 3 + 1] = param_1[1];
+        param_1[iVar5 * 3 + 2] = param_1[2];
+        *param_1 = fVar1;
+        param_1[1] = fVar2;
+        param_1[2] = fVar3;
+      }
+    }
+    fVar1 = *param_2;
+    pfVar6 = param_2 + iVar5 * -3;
+    if (*pfVar6 < fVar1) {
+      fVar2 = param_2[1];
+      fVar3 = param_2[2];
+      *param_2 = *pfVar6;
+      param_2[1] = pfVar6[1];
+      param_2[2] = pfVar6[2];
+      *pfVar6 = fVar1;
+      pfVar6[1] = fVar2;
+      pfVar6[2] = fVar3;
+    }
+    fVar1 = param_2[iVar5 * 3];
+    if (*param_2 < fVar1) {
+      fVar2 = param_2[iVar5 * 3 + 1];
+      fVar3 = param_2[iVar5 * 3 + 2];
+      param_2[iVar5 * 3] = *param_2;
+      param_2[iVar5 * 3 + 1] = param_2[1];
+      param_2[iVar5 * 3 + 2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (*pfVar6 < fVar1) {
+        *param_2 = *pfVar6;
+        param_2[1] = pfVar6[1];
+        param_2[2] = pfVar6[2];
+        *pfVar6 = fVar1;
+        pfVar6[1] = fVar2;
+        pfVar6[2] = fVar3;
+      }
+    }
+    pfVar7 = param_3 + iVar5 * -6;
+    pfVar6 = param_3 + iVar5 * -3;
+    fVar1 = *pfVar6;
+    if (*pfVar7 < fVar1) {
+      fVar2 = pfVar6[2];
+      fVar3 = pfVar6[1];
+      *pfVar6 = *pfVar7;
+      pfVar6[1] = pfVar7[1];
+      pfVar6[2] = pfVar7[2];
+      *pfVar7 = fVar1;
+      pfVar7[2] = fVar2;
+      pfVar7[1] = fVar3;
+    }
+    fVar1 = *param_3;
+    if (*pfVar6 < fVar1) {
+      fVar2 = param_3[1];
+      fVar3 = param_3[2];
+      *param_3 = *pfVar6;
+      param_3[1] = pfVar6[1];
+      param_3[2] = pfVar6[2];
+      *pfVar6 = fVar1;
+      pfVar6[1] = fVar2;
+      pfVar6[2] = fVar3;
+      fVar1 = *pfVar6;
+      if (*pfVar7 < fVar1) {
+        fVar2 = pfVar6[1];
+        *pfVar6 = *pfVar7;
+        pfVar6[1] = pfVar7[1];
+        pfVar6[2] = pfVar7[2];
+        *pfVar7 = fVar1;
+        pfVar7[1] = fVar2;
+        pfVar7[2] = fVar3;
+      }
+    }
+    fVar1 = *param_2;
+    if (param_1[iVar5 * 3] < fVar1) {
+      fVar2 = param_2[1];
+      fVar3 = param_2[2];
+      *param_2 = param_1[iVar5 * 3];
+      param_2[1] = param_1[iVar5 * 3 + 1];
+      param_2[2] = param_1[iVar5 * 3 + 2];
+      param_1[iVar5 * 3] = fVar1;
+      param_1[iVar5 * 3 + 1] = fVar2;
+      param_1[iVar5 * 3 + 2] = fVar3;
+    }
+    fVar1 = *pfVar6;
+    if (*param_2 < fVar1) {
+      fVar2 = pfVar6[1];
+      fVar3 = pfVar6[2];
+      *pfVar6 = *param_2;
+      pfVar6[1] = param_2[1];
+      pfVar6[2] = param_2[2];
+      *param_2 = fVar1;
+      param_2[1] = fVar2;
+      param_2[2] = fVar3;
+      fVar1 = *param_2;
+      if (param_1[iVar5 * 3] < fVar1) {
+        *param_2 = param_1[iVar5 * 3];
+        param_2[1] = param_1[iVar5 * 3 + 1];
+        param_2[2] = param_1[iVar5 * 3 + 2];
+        param_1[iVar5 * 3] = fVar1;
+        param_1[iVar5 * 3 + 1] = fVar2;
+        param_1[iVar5 * 3 + 2] = fVar3;
+        return;
+      }
+    }
+  }
+  return;
+}
+
+
+
+
+/* Global::FUN_004f5ac0 @ 004f5ac0 */
+
+void __cdecl FUN_004f5ac0(int param_1,int param_2,int param_3,float *param_4)
+
+{
+  float fVar1;
+  int iVar2;
+  
+  while (param_3 < param_2) {
+    iVar2 = (param_2 + -1) / 2;
+    fVar1 = *(float *)(param_1 + iVar2 * 0xc);
+    if (*param_4 <= fVar1) break;
+    *(float *)(param_1 + param_2 * 0xc) = fVar1;
+    *(undefined4 *)(param_1 + 4 + param_2 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar2 * 0xc);
+    *(undefined4 *)(param_1 + 8 + param_2 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar2 * 0xc);
+    param_2 = iVar2;
+  }
+  *(float *)(param_1 + param_2 * 0xc) = *param_4;
+  *(float *)(param_1 + 4 + param_2 * 0xc) = param_4[1];
+  *(float *)(param_1 + 8 + param_2 * 0xc) = param_4[2];
+  return;
+}
+
+
+
+
+/* Global::FUN_004f5bc0 @ 004f5bc0 */
+
+void __cdecl FUN_004f5bc0(int param_1,int param_2,int param_3,float *param_4)
+
+{
+  float fVar1;
+  int iVar2;
+  
+  while (param_3 < param_2) {
+    iVar2 = (param_2 + -1) / 2;
+    fVar1 = *(float *)(param_1 + iVar2 * 0xc);
+    if (fVar1 < *param_4 || fVar1 == *param_4) break;
+    *(float *)(param_1 + param_2 * 0xc) = fVar1;
+    *(undefined4 *)(param_1 + 4 + param_2 * 0xc) = *(undefined4 *)(param_1 + 4 + iVar2 * 0xc);
+    *(undefined4 *)(param_1 + 8 + param_2 * 0xc) = *(undefined4 *)(param_1 + 8 + iVar2 * 0xc);
+    param_2 = iVar2;
+  }
+  *(float *)(param_1 + param_2 * 0xc) = *param_4;
+  *(float *)(param_1 + 4 + param_2 * 0xc) = param_4[1];
+  *(float *)(param_1 + 8 + param_2 * 0xc) = param_4[2];
+  return;
+}
+
+
+
+
+/* Global::FUN_004f71e0 @ 004f71e0 */
+
+undefined4 * __cdecl FUN_004f71e0(int param_1,int param_2,undefined4 *param_3)
+
+{
+  int iVar1;
+  
+  if (param_1 != param_2) {
+    iVar1 = param_1 - (int)param_3;
+    do {
+      if (param_3 != (undefined4 *)0x0) {
+        *param_3 = *(undefined4 *)(iVar1 + (int)param_3);
+        param_3[1] = *(undefined4 *)(iVar1 + 4 + (int)param_3);
+        param_3[2] = *(undefined4 *)(iVar1 + 8 + (int)param_3);
+      }
+      param_3 = param_3 + 3;
+    } while (iVar1 + (int)param_3 != param_2);
+    return param_3;
+  }
+  return param_3;
+}
+
+
+
+
+/* Global::FUN_004f8230 @ 004f8230 */
+
+void __thiscall FUN_004f8230(void *this,uint param_1)
+
+{
+  int iVar1;
+  uint uVar2;
+  uint uVar3;
+  
+  if (param_1 <= (uint)((*(int *)((int)this + 8) - *(int *)((int)this + 4)) / 0xc)) {
+    return;
+  }
+  iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0xc;
+  if (0x15555555U - iVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
+    std::_Xlength_error("vector<T> too long");
+  }
+  uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0xc;
+  uVar3 = iVar1 + param_1;
+  if (0x15555555 - (uVar2 >> 1) < uVar2) {
+    uVar2 = 0;
+    if (uVar3 != 0) {
+      uVar2 = uVar3;
+    }
+    FUN_004f7ef0(this,uVar2);
+    return;
+  }
+  uVar2 = uVar2 + (uVar2 >> 1);
+  if (uVar2 < uVar3) {
+    uVar2 = uVar3;
+  }
+  FUN_004f7ef0(this,uVar2);
+  return;
+}
+
+
+
+
 /* [AUDIT] proposed: World::findNearestFeatureCell  (confidence: high)
  * purpose: Searches a 3x3-ish grid region for the nearest feature/object cell to a point; returns cell coords+ptr
  * vars: this+grid stride 0x400; param_2/3=x/y; local_4c=best cell; local_48=best dist^2
@@ -7420,7 +8456,7 @@ void __thiscall World_findNearestFeatureCell(void *this,undefined8 *out_cell,int
 
 
 
-/* [AUDIT] proposed: World::biomeBorderDistance  (confidence: low)
+/* [AUDIT] proposed: World_biomeBorderDistance  (confidence: low)
  * purpose: Computes terrain slope/shading factor at (x,y) sampling neighbor heights via noise; uses point-seg distances
  * vars: this+0x8001fc..+0x800218=noise offsets; pointSegmentDistanceSq=seg dist; World_findNearestFeatureCell=nearest cell
  */
@@ -7536,45 +8572,6 @@ void __thiscall World_biomeBorderDistance(void *this,int x,int y)
   }
   __security_check_cookie(security_cookie ^ (uint)&stack0xfffffffc);
   return;
-}
-
-
-
-
-/* [AUDIT] proposed: World_siteDistanceSq  (confidence: low)
- * purpose: Effectively empty stub; only runs stack-cookie check (cookie xors cancel)
- * vars: no real work
- */
-/* Global::World_siteDistanceSq @ 00522cc0 */
-
-void World_siteDistanceSq(void)
-
-{
-  __security_check_cookie(DAT_00583cc8 ^ (uint)&stack0xfffffffc ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: World::terrainOffset2D  (confidence: high)
- * purpose: Returns 2-component fractional terrain offset from two value-noise samples (scaled *3*256)
- * vars: param_2/3=x/y; seeds 3423.0/23421.0
- */
-/* Global::World_terrainOffset2D @ 00522d80 */
-
-float * World_terrainOffset2D(float *out,int x,int y)
-
-{
-  float10 fVar1;
-  
-  fVar1 = valueNoise2D(SUB84((double)y * 0.0005,0),
-                       (int)((ulonglong)((double)y * 0.0005) >> 0x20),3423.0);
-  *out = (float)fVar1 * 3.0 * 256.0;
-  fVar1 = valueNoise2D(SUB84((double)x * 0.0005,0),
-                       (int)((ulonglong)((double)x * 0.0005) >> 0x20),23421.0);
-  out[1] = (float)fVar1 * 3.0 * 256.0;
-  return out;
 }
 
 
@@ -7769,32 +8766,9 @@ float10 __cdecl pointSegmentDistanceSq(double *seg_start,double *seg_end,double 
 
 
 
-/* [AUDIT] proposed: World::falloffSquared  (confidence: high)
- * purpose: Returns (1-w)^2 clamped>=0 where w=objectFalloffWeight; smoothstep-like influence
- * vars: wraps World_objectFalloffWeight
- */
-/* Global::World_falloffSquared @ 0052dee0 */
-
-float10 __thiscall World_falloffSquared(uint *feature,uint *pos_a,uint *pos_b)
-
-{
-  float10 fVar1;
-  float weight;
-  
-  fVar1 = World_objectFalloffWeight(feature,pos_a,pos_b);
-  weight = 1.0 - (float)fVar1;
-  if (weight <= 0.0) {
-    return (float10)0;
-  }
-  return (float10)(weight * weight);
-}
-
-
-
-
 /* [AUDIT] proposed: Creature::resolveSeparation  (confidence: low)
  * purpose: Physics separation/collision resolution between two creatures; normalizes overlap and applies push along axis
- * vars: pos_a/3=entity a/b state; param_4=radius; +0x88=creature size; heavy local math
+ * vars: seg_end/3=entity a/b state; param_4=radius; +0x88=creature size; heavy local math
  */
 /* Global::Creature_resolveSeparation @ 0052ef00 */
 

@@ -1,4 +1,4 @@
-// AdaptionWidget (ui) — cube. 58 functions. Bodies = Ghidra pseudo-C.
+// AdaptionWidget (ui) — cube. 51 functions. Bodies = Ghidra pseudo-C.
 #include "AdaptionWidget.h"
 
 /* cube::AdaptionWidget::ctor_0 @ 0040ecd0 */
@@ -32,6 +32,7 @@ void cube::AdaptionWidget::ctor_0
   plasma::NamedObject::ctor_4(param_1,param_2,nameBuf);
   trylevel = CONCAT31(trylevel._1_3_,2);
   if (7 < nameSize) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(nameBuf[0]);
   }
   self[0x58] = 0;
@@ -281,6 +282,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x41700000,0x41c80000,0x41400000,0x40400000,&local_244,
                &local_20c,&local_1fc,0,0xbf800000,1);
   if (7 < local_210) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_224[0]);
   }
   local_210 = 7;
@@ -288,6 +290,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_224[0] = (void *)((uint)local_224[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   local_1d8 = 7;
@@ -312,6 +315,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x41700000,0x41c80000,0x41400000,0,&local_244,&local_20c,
                &local_1fc,0,0xbf800000,1);
   if (7 < local_210) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_224[0]);
   }
   local_210 = 7;
@@ -319,6 +323,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_224[0] = (void *)((uint)local_224[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   local_1d8 = 7;
@@ -327,6 +332,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   u16string_assignPtrLen(&PTR_006fccac,0);
   trylevel._0_1_ = 8;
   if ((local_3fc & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*local_42c);
   }
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -344,6 +350,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   strstreambuf_init(puVar10,local_1dc,local_3fc);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   wostream_insertNarrow(local_440,"Adapt");
@@ -382,6 +389,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,(float)coinPtr / 3.0,fVar14,uVar21,uVar15,puVar16,puVar17,
                puVar10,uVar19,uVar20,uVar22);
   if (7 < local_210) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_224[0]);
   }
   local_210 = 7;
@@ -389,6 +397,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_224[0] = (void *)((uint)local_224[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   if (local_3a0 == 0) {
@@ -444,6 +453,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,(float)coinPtr / 3.0,fVar14,uVar21,uVar15,puVar16,puVar17,
                puVar10,uVar19,uVar20,uVar22);
   if (7 < local_248) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -451,6 +461,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   local_1d8 = 7;
@@ -459,6 +470,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   u16string_assignPtrLen(&PTR_006fccac,0);
   trylevel._0_1_ = 0xd;
   if ((local_3fc & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*local_42c);
   }
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -476,6 +488,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   strstreambuf_init(puVar10,local_1dc,local_3fc);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   wostream_insertNarrow(local_440,"Goodbye!");
@@ -514,6 +527,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,((float)coinPtr * 2.0) / 3.0,fVar14,uVar21,uVar15,puVar16,
                puVar17,puVar10,uVar19,uVar20,uVar22);
   if (7 < local_248) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -521,6 +535,7 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel = CONCAT31(trylevel._1_3_,3);
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   Widget_computeBoundsFloat(&local_23c);
@@ -583,6 +598,7 @@ LAB_00410902:
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,((float)coinPtr * 2.0) / 3.0,fVar14,uVar21,uVar15,puVar16,
                puVar17,puVar10,uVar19,uVar20,uVar22);
   if (7 < local_248) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -590,6 +606,7 @@ LAB_00410902:
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   fVar12 = (float10)security_cookie_guard_a();
@@ -602,6 +619,7 @@ LAB_00410902:
   u16string_assignPtrLen(&PTR_006fccac,0);
   trylevel._0_1_ = 0x12;
   if ((local_3fc & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*local_42c);
   }
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -619,6 +637,7 @@ LAB_00410902:
   strstreambuf_init(puVar10,local_1dc,local_3fc);
   trylevel = CONCAT31(trylevel._1_3_,3);
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   targetEntity = getTargetEntity();
@@ -664,6 +683,7 @@ LAB_00410902:
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x435c0000,(float)(int)fVar14,0x41200000,0x40200000,&local_1fc,
                &local_234,&local_21c,2,0xbf800000,1);
   if (7 < local_248) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -671,6 +691,7 @@ LAB_00410902:
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -692,6 +713,7 @@ LAB_00410902:
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x435c0000,(float)(int)fVar14,0x41200000,0,&local_1fc,
                &local_234,&local_21c,2,0xbf800000,1);
   if (7 < local_248) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -699,6 +721,7 @@ LAB_00410902:
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -711,6 +734,7 @@ LAB_00410902:
   strstreambuf_init(puVar10,local_1dc,local_3fc);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   wostream_insertNarrow(local_440,"COST:");
@@ -733,6 +757,7 @@ LAB_00410902:
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x41700000,(float)(int)fVar14,0x41200000,0x40000000,&local_1fc,
                &local_234,&local_21c,0,0xbf800000,1);
   if (7 < local_248) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -759,6 +784,7 @@ LAB_00410902:
     AdaptionWidget_draw_text_locked(local_274,uVar18,0,0,0x41700000,(float)(int)fVar14,0x41200000,0,&local_1e4,
                  &local_234,&local_21c,0,0xbf800000,1);
     if (7 < local_248) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_25c[0]);
     }
     local_248 = 7;
@@ -770,8 +796,10 @@ LAB_00410902:
       __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc);
       return;
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_274[0]);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(local_1ec);
 }
 
@@ -839,6 +867,7 @@ void cube::AdaptionWidget::vfunc_0_00428a30(byte deleteFlag)
   
   plasma::Widget::ctor_0();
   if ((deleteFlag & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;
@@ -1725,6 +1754,7 @@ void cube::AdaptionWidget::vfunc_41(char enabled)
     AdaptionWidget_apply_to_attributes(event_buf,0);
     local_8 = 0xffffffff;
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf[0]);
     }
     u16string_assignCStr(L"widget:disable");
@@ -1733,6 +1763,7 @@ void cube::AdaptionWidget::vfunc_41(char enabled)
     AdaptionWidget_relayout(uVar1);
     local_8 = 0xffffffff;
     if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf2[0]);
     }
     local_30 = 7;
@@ -1745,6 +1776,7 @@ void cube::AdaptionWidget::vfunc_41(char enabled)
     AdaptionWidget_apply_to_attributes(event_buf,0);
     local_8 = 0xffffffff;
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf[0]);
     }
     u16string_assignCStr(L"widget:enable");
@@ -1753,6 +1785,7 @@ void cube::AdaptionWidget::vfunc_41(char enabled)
     AdaptionWidget_relayout(uVar1);
     local_8 = 0xffffffff;
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf[0]);
     }
   }
@@ -2299,6 +2332,7 @@ void cube::AdaptionWidget::vfunc_7(void)
     AdaptionWidget_apply_to_attributes(event_buf,0);
     local_8 = 0xffffffff;
     if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf[0]);
     }
     u16string_assignCStr(L"widget:disable");
@@ -2307,6 +2341,7 @@ void cube::AdaptionWidget::vfunc_7(void)
     AdaptionWidget_relayout(uVar2);
     local_8 = 0xffffffff;
     if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf2[0]);
     }
     local_18 = 7;
@@ -2662,32 +2697,6 @@ LAB_0062b3cd:
 
 
 
-/* [AUDIT] proposed: AdaptionWidget_onContentResized  (confidence: low)
- * purpose: Notifies/handles content resize (no callees); shared vfunc target
- * vars: no args
- */
-/* Global::AdaptionWidget_onContentResized @ 0062b400 */
-
-undefined4 AdaptionWidget_onContentResized(void)
-
-{
-  int child;
-  int self;
-  
-  child = *(int *)(*(int *)(self + 0x148) + 0x28);
-  while( true ) {
-    if (child == 0) {
-      return 0;
-    }
-    if (*(int *)(child + 0x40) != 0) break;
-    child = *(int *)(child + 0x28);
-  }
-  return *(undefined4 *)(child + 0x40);
-}
-
-
-
-
 /* [AUDIT] proposed: AdaptionWidget_getScrollFlag  (confidence: low)
  * purpose: Returns a scroll/state flag (no callees)
  * vars: returns undefined4
@@ -2876,6 +2885,7 @@ void AdaptionWidget_setCaption(void)
   Node_collect_matching_children(&widget_list,name_buf);
   local_8 = (uint)local_8._1_3_ << 8;
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(name_buf[0]);
   }
   node = (int *)*widget_list;
@@ -2895,8 +2905,10 @@ void AdaptionWidget_setCaption(void)
   widget_list[1] = (int)widget_list;
   local_30 = 0;
   if (node == widget_list) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(widget_list);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(node);
 }
 
@@ -3513,111 +3525,6 @@ void AdaptionWidget_computeLayoutBounds(float *matrix)
 
 
 
-/* [AUDIT] proposed: AdaptionWidget_getBoundsRect  (confidence: med)
- * purpose: Returns pointer to widget bounds rect (float* to x,y,...); heavily shared
- * vars: returns float* rect; +4 = y
- */
-/* Global::AdaptionWidget_getBoundsRect @ 0062de60 */
-
-void AdaptionWidget_getBoundsRect(float *out_size)
-
-{
-  float fVar1;
-  float fVar2;
-  float fVar3;
-  int child;
-  float *pfVar5;
-  int self;
-  float fVar6;
-  float fVar7;
-  float fVar8;
-  float fVar9;
-  float fVar10;
-  float fVar11;
-  float fVar12;
-  float local_d0;
-  float local_cc;
-  undefined1 inv_matrix [64];
-  undefined1 matrix [64];
-  float local_48;
-  float local_44;
-  float local_38;
-  float local_34;
-  float local_28;
-  float local_24;
-  float local_18;
-  float local_14;
-  uint local_8;
-  
-  local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  fVar7 = *(float *)(self + 0x50);
-  fVar8 = *(float *)(self + 0x60);
-  fVar10 = *(float *)(self + 0x54);
-  fVar12 = (*(float *)(self + 0x78) + fVar7) - fVar8;
-  fVar9 = (*(float *)(self + 0x74) + fVar10) - *(float *)(self + 100);
-  fVar11 = (*(float *)(self + 0x7c) + fVar10) - *(float *)(self + 100);
-  fVar6 = (*(float *)(self + 0x70) + fVar7) - fVar8;
-  if (fVar12 < 0.0) {
-    fVar12 = 0.0;
-  }
-  if (fVar6 < fVar12) {
-    fVar6 = fVar12;
-  }
-  if (fVar11 < 0.0) {
-    fVar11 = 0.0;
-  }
-  if (fVar9 < fVar11) {
-    fVar9 = fVar11;
-  }
-  fVar10 = (fVar9 + *(float *)(self + 100)) - fVar10;
-  fVar7 = (fVar6 + fVar8) - fVar7;
-  mat4_identity();
-  child = *(int *)(*(int *)(self + 0x148) + 0x28);
-  do {
-    if (child == 0) {
-LAB_0062df31:
-      local_d0 = local_14;
-      local_cc = local_18;
-LAB_0062df4b:
-      pfVar5 = (float *)AdaptionWidget_computeBoundsUnion(matrix);
-      fVar8 = pfVar5[4];
-      fVar6 = pfVar5[1];
-      fVar9 = *pfVar5;
-      fVar11 = pfVar5[2];
-      fVar12 = pfVar5[6];
-      fVar1 = pfVar5[3];
-      fVar2 = pfVar5[7];
-      fVar3 = pfVar5[5];
-      *out_size = fVar7 * (local_48 * *pfVar5 + local_38 * pfVar5[1] + local_28 * pfVar5[2] +
-                         local_cc * pfVar5[3]) +
-                 fVar10 * (local_38 * pfVar5[5] + local_48 * pfVar5[4] + local_28 * pfVar5[6] +
-                          local_cc * pfVar5[7]);
-      out_size[1] = fVar7 * (local_44 * fVar9 + local_34 * fVar6 + local_24 * fVar11 +
-                           local_d0 * fVar1) +
-                   fVar10 * (local_34 * fVar3 + local_44 * fVar8 + local_24 * fVar12 +
-                            local_d0 * fVar2);
-      __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-      return;
-    }
-    if (*(int *)(child + 0x40) != 0) {
-      if (*(int *)(child + 0x40) != 0) {
-        pfVar5 = (float *)AdaptionWidget_computeBoundsUnion(inv_matrix);
-        fVar8 = 1.0 / (pfVar5[7] * 0.0 + pfVar5[3] * 0.0 + pfVar5[0xf]);
-        fVar6 = (pfVar5[4] * 0.0 + *pfVar5 * 0.0 + pfVar5[0xc]) * fVar8 * -1.0;
-        fVar8 = (pfVar5[5] * 0.0 + pfVar5[1] * 0.0 + pfVar5[0xd]) * fVar8 * -1.0;
-        local_cc = local_38 * fVar8 + local_48 * fVar6 + local_18;
-        local_d0 = local_34 * fVar8 + local_44 * fVar6 + local_14;
-        goto LAB_0062df4b;
-      }
-      goto LAB_0062df31;
-    }
-    child = *(int *)(child + 0x28);
-  } while( true );
-}
-
-
-
-
 /* cube::AdaptionWidget::vfunc_1_0062e180 @ 0062e180 */
 
 void cube::AdaptionWidget::vfunc_1_0062e180(float *out_point,float *in_point,int param_3)
@@ -4019,40 +3926,6 @@ int get_widget_state(int index)
 
 
 
-/* [AUDIT] proposed: AdaptionWidget::apply_to_attributes  (confidence: high)
- * purpose: Invoke Widget_triggerTracksByName on each populated attribute slot (+0x34/38/3c) then recurse children
- * vars: index/2 args forwarded; +0x2c children
- */
-/* Global::AdaptionWidget_apply_to_attributes @ 00636810 */
-
-void AdaptionWidget_apply_to_attributes(undefined4 param_1,undefined4 param_2)
-
-{
-  int self;
-  int *child;
-  
-  if (*(int *)(self + 0x34) != 0) {
-    Widget_triggerTracksByName(param_1,param_2);
-  }
-  if (*(int *)(self + 0x38) != 0) {
-    Widget_triggerTracksByName(param_1,param_2);
-  }
-  if (*(int *)(self + 0x3c) != 0) {
-    Widget_triggerTracksByName(param_1,param_2);
-  }
-  child = (int *)**(int **)(self + 0x2c);
-  if (child != *(int **)(self + 0x2c)) {
-    do {
-      AdaptionWidget_apply_to_attributes(param_1,param_2);
-      child = (int *)*child;
-    } while (child != (int *)*(int *)(self + 0x2c));
-  }
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: Node::clear_dirty_flag_2e  (confidence: high)
  * purpose: Recursively clear byte flag +0x2e on populated attribute slots and descend children
  * vars: +0x34/38/3c slot +0x2e; +0x2c children
@@ -4155,42 +4028,6 @@ void AdaptionWidget_layout_recursive(undefined4 event,undefined4 param_2,char fo
         child = (int *)*child;
       } while (child != (int *)*(int *)(self + 0x2c));
     }
-  }
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: AdaptionWidget::apply_attributes_v2  (confidence: high)
- * purpose: Invoke Widget_resetAnimations on populated attribute slots then recurse active children
- * vars: +0x34/38/3c slots; +0x2c children
- */
-/* Global::AdaptionWidget_apply_attributes_v2 @ 00636f10 */
-
-void AdaptionWidget_apply_attributes_v2(void)
-
-{
-  int self;
-  int *child;
-  
-  if (*(int *)(self + 0x34) != 0) {
-    Widget_resetAnimations();
-  }
-  if (*(int *)(self + 0x38) != 0) {
-    Widget_resetAnimations();
-  }
-  if (*(int *)(self + 0x3c) != 0) {
-    Widget_resetAnimations();
-  }
-  child = (int *)**(int **)(self + 0x2c);
-  if (child != *(int **)(self + 0x2c)) {
-    do {
-      if ((~(byte)(*(uint *)(child[2] + 200) >> 2) & 1) != 0) {
-        AdaptionWidget_apply_attributes_v2();
-      }
-      child = (int *)*child;
-    } while (child != (int *)*(int *)(self + 0x2c));
   }
   return;
 }
@@ -4372,36 +4209,6 @@ void AdaptionWidget_recompute_transforms_recursive(void)
 
 
 
-/* [AUDIT] proposed: AdaptionWidget::draw_text_locked  (confidence: med)
- * purpose: Under CS, begin/end render state (vtbl 0x40/0x44) and draw text run via Font_drawTextTransformed
- * vars: +0x24 CS; +4 render dev; many text params
- */
-/* Global::AdaptionWidget_draw_text_locked @ 00639b30 */
-
-void AdaptionWidget_draw_text_locked(undefined4 font_name,undefined4 param_2,undefined4 param_3,undefined4 param_4,
-                 undefined4 param_5,undefined4 param_6,undefined4 param_7,undefined4 param_8,
-                 undefined4 param_9,undefined4 param_10,undefined4 param_11,undefined4 param_12,
-                 undefined4 param_13,undefined4 param_14)
-
-{
-  int font;
-  int self;
-  
-  font = FontCache_find_or_create_scalable(font_name);
-  if (font != 0) {
-    EnterCriticalSection((LPCRITICAL_SECTION)(self + 0x24));
-    (**(code **)(**(int **)(self + 4) + 0x40))(0);
-    Font_drawTextTransformed(param_2,param_5,param_6,param_7,param_8,param_3,param_4,param_13,param_9,param_10,
-                 param_11,param_12,param_14);
-    (**(code **)(**(int **)(self + 4) + 0x44))(0);
-    LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x24));
-  }
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: Registry::push_node_locked_0x7c  (confidence: high)
  * purpose: Under CS, append list node to AdaptionWidget list at +0x7c
  * vars: +0x58 CS; +0x7c list
@@ -4419,6 +4226,7 @@ undefined4 * Registry_push_node_locked_0x7c(undefined4 *out)
   list = *(int *)(self + 0x7c);
   new_node = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&stack0x00000008);
   if (*(int *)(self + 0x80) == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x80) = *(int *)(self + 0x80) + 1;
@@ -4669,39 +4477,6 @@ void Widget_destroyTailSlot(int elem)
 
 
 
-/* [AUDIT] proposed: Widget::triggerTracksByName  (confidence: low)
- * purpose: Frees a temp key string, iterates a list of tracks and for each matching name plays its keyframes, marking a dirty flag
- * vars: self+0x24=list; +0x2c=dirty; uses 661d90/661df0
- */
-/* Global::Widget_triggerTracksByName @ 00664c10 */
-
-void Widget_triggerTracksByName(int key,undefined4 frame)
-
-{
-  int matched;
-  int self;
-  int *trackIter;
-  
-  if (self + 0x30 != key) {
-    u16string_replaceRange(key,0,0xffffffff);
-  }
-  trackIter = (int *)**(int **)(self + 0x24);
-  if (trackIter != *(int **)(self + 0x24)) {
-    do {
-      matched = AnimMap_findValueByKey(key);
-      if (matched != 0) {
-        Anim_playTrackByName(key,frame);
-        *(undefined1 *)(self + 0x2c) = 1;
-      }
-      trackIter = (int *)*trackIter;
-    } while (trackIter != (int *)*(int *)(self + 0x24));
-  }
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: Widget::updateAnimations  (confidence: med)
  * purpose: Iterates a list of animation controllers advancing each to param time; if any changed, fires a vtable notify callback
  * vars: self[9]=list head; per-node 662690; vtable+4=notify
@@ -4732,32 +4507,6 @@ char Widget_updateAnimations(undefined4 time)
     }
   }
   return anyChanged;
-}
-
-
-
-
-/* [AUDIT] proposed: Widget::resetAnimations  (confidence: high)
- * purpose: Clears the dirty flag and iterates the controller list resetting each animation's time to zero
- * vars: self+0x2c=dirty; +0x24=list; per-node 6626b0
- */
-/* Global::Widget_resetAnimations @ 00664cc0 */
-
-void Widget_resetAnimations(void)
-
-{
-  int self;
-  int *trackIter;
-  
-  *(undefined1 *)(self + 0x2c) = 0;
-  trackIter = (int *)**(int **)(self + 0x24);
-  if (trackIter != *(int **)(self + 0x24)) {
-    do {
-      Spline_resetTime();
-      trackIter = (int *)*trackIter;
-    } while (trackIter != (int *)*(int *)(self + 0x24));
-  }
-  return;
 }
 
 

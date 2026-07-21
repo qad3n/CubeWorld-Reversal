@@ -596,6 +596,7 @@ void __thiscall Creature_mapEraseNode_str(void *this,undefined4 *out_it,int *nod
   
   z = node;
   if (*(char *)((int)node + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&node);
@@ -830,6 +831,7 @@ void __thiscall Creature_mapEraseNode_vec(void *this,undefined4 *out_it,int *nod
   
   z = node;
   if (*(char *)((int)node + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&node);

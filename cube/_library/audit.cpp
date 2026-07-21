@@ -860,11 +860,13 @@ void RBTree_insertRebalance(undefined4 *param_1,char param_2,undefined4 *param_3
   
   if (0x5d1745b < (uint)in_ECX[1]) {
     if (0xf < (uint)param_5[9]) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)param_5[4]);
     }
     param_5[9] = 0xf;
     param_5[8] = 0;
     *(undefined1 *)(param_5 + 4) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -1274,11 +1276,13 @@ LAB_00402c55:
   iVar7 = string_compare(0,_param_2[8],pbVar10,*(int *)(param_3 + 0x10));
   if (-1 < iVar7) {
     if (0xf < *(uint *)((int)param_4 + 0x24)) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(*(void **)((int)param_4 + 0x10));
     }
     *(undefined4 *)((int)param_4 + 0x24) = 0xf;
     *(undefined4 *)((int)param_4 + 0x20) = 0;
     *(undefined1 *)((int)param_4 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_00402c8b:
@@ -1351,6 +1355,7 @@ void map_insertOrAssignStr(uint *param_1)
   iVar3 = RBTreeNode_createString(local_30);
   map_insertUnique(local_34,iVar1,iVar3 + 0x10,iVar3);
   if (0xf < local_1c) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_30[0]);
   }
 LAB_004042b5:
@@ -1408,6 +1413,7 @@ void map_findOrInsertEmpty(int param_1)
   iVar3 = RBTreeNode_createString(local_30);
   map_insertUnique(local_34,iVar1,iVar3 + 0x10,iVar3);
   if (0xf < local_1c) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_30[0]);
   }
 LAB_00404399:
@@ -1433,6 +1439,7 @@ undefined4 * RBTreeNode_alloc(void)
   
   puVar1 = operator_new(0x2c);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -1493,11 +1500,13 @@ void RBTree_eraseRecursive(void *param_1)
   }
   RBTree_eraseRecursive(*(undefined4 *)((int)param_1 + 8));
   if (0xf < *(uint *)((int)param_1 + 0x24)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x10));
   }
   *(undefined4 *)((int)param_1 + 0x24) = 0xf;
   *(undefined4 *)((int)param_1 + 0x20) = 0;
   *(undefined1 *)((int)param_1 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -1602,6 +1611,7 @@ void strstreambuf_tidy(void)
   int in_ECX;
   
   if ((*(byte *)(in_ECX + 0x3c) & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)**(undefined4 **)(in_ECX + 0xc));
   }
   **(undefined4 **)(in_ECX + 0xc) = 0;
@@ -1652,6 +1662,7 @@ LAB_0040c650:
     piVar3 = (int *)rbtree_findOrInsert_intKey(&param_1);
     if (*piVar3 != 0) {
       puVar2 = (undefined4 *)rbtree_findOrInsert_intKey(&param_1);
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar2);
     }
     piVar3 = (int *)rbtree_findOrInsert_intKey(&param_1);
@@ -1763,6 +1774,7 @@ void RBTree_eraseNode(undefined4 param_1,int *param_2)
   int *piVar6;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -1871,11 +1883,13 @@ LAB_0040ca50:
   }
 LAB_0040caae:
   if (0xf < (uint)param_2[9]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[4]);
   }
   param_2[9] = 0xf;
   param_2[8] = 0;
   *(undefined1 *)(param_2 + 4) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -2110,6 +2124,7 @@ void u16string_grow(uint param_1,int param_2)
   if ((uVar3 != 0) &&
      ((0x7fffffff < uVar3 || (local_18 = operator_new(uVar3 * 2), local_18 == (undefined4 *)0x0))))
   {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   if (param_2 != 0) {
@@ -2132,6 +2147,7 @@ void u16string_grow(uint param_1,int param_2)
     ExceptionList = local_10;
     return;
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -2176,6 +2192,7 @@ bool u16string_resize(uint param_1,char param_2)
   uint uVar2;
   
   if (0x7ffffffe < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   uVar1 = in_ECX[5];
@@ -2202,6 +2219,7 @@ bool u16string_resize(uint param_1,char param_2)
     if (uVar2 != 0) {
       memcpy(in_ECX,_Src,uVar2 * 2);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(_Src);
   }
   in_ECX[4] = uVar2;
@@ -2260,6 +2278,7 @@ void strstreambuf_init(void *param_1,uint param_2,undefined4 param_3)
         return;
       }
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   return;
@@ -2302,6 +2321,7 @@ void u16string_replaceRange(int *param_1,uint param_2,uint param_3)
   uint uVar1;
   
   if ((uint)param_1[4] < param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar1 = param_1[4] - param_2;
@@ -2311,6 +2331,7 @@ void u16string_replaceRange(int *param_1,uint param_2,uint param_3)
   if (in_ECX == param_1) {
     uVar1 = uVar1 + param_2;
     if ((uint)in_ECX[4] < uVar1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xout_of_range("invalid string position");
     }
     in_ECX[4] = uVar1;
@@ -2322,6 +2343,7 @@ void u16string_replaceRange(int *param_1,uint param_2,uint param_3)
     return;
   }
   if (0x7ffffffe < uVar1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if ((uint)in_ECX[5] < uVar1) {
@@ -2396,6 +2418,7 @@ void u16string_assignPtrLen(int *param_1,uint param_2)
     }
   }
   if (0x7ffffffe < param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if ((uint)in_ECX[5] < param_2) {
@@ -2449,6 +2472,7 @@ void u16string_erase(uint param_1,uint param_2)
   
   uVar1 = in_ECX[4];
   if (uVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   if (param_2 < uVar1 - param_1) {
@@ -2750,11 +2774,13 @@ void u16string_append(uint param_1,undefined4 param_2)
   
   iVar2 = in_ECX[4];
   if (-iVar2 - 1U <= param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_1 != 0) {
     uVar1 = iVar2 + param_1;
     if (0x7ffffffe < uVar1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if ((uint)in_ECX[5] < uVar1) {
@@ -2849,6 +2875,7 @@ uint u16string_compare(uint param_1,uint param_2,ushort *param_3,uint param_4)
   ushort *puVar2;
   
   if ((uint)in_ECX[4] < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar1 = in_ECX[4] - param_1;
@@ -3091,8 +3118,10 @@ void rbtree_destroyRec_buf(void *param_1)
   }
   rbtree_destroyRec_buf(*(undefined4 *)((int)param_1 + 8));
   if (*(void **)((int)param_1 + 0x10) != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x10));
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -3110,6 +3139,7 @@ void rbtree_destroyRec_simple(void *param_1)
 {
   if (*(char *)((int)param_1 + 0xd) == '\0') {
     rbtree_destroyRec_simple(*(undefined4 *)((int)param_1 + 8));
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   return;
@@ -3244,6 +3274,7 @@ void rbtree_allocNode24(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -3291,6 +3322,7 @@ void wstring_replace(undefined4 *param_1,undefined4 *param_2,uint param_3,uint p
   uVar2 = (uint)param_1;
   uVar1 = in_ECX[4];
   if ((uVar1 < param_1) || ((uint)param_2[4] < param_3)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar3 = param_2[4] - param_3;
@@ -3301,6 +3333,7 @@ void wstring_replace(undefined4 *param_1,undefined4 *param_2,uint param_3,uint p
     if (param_4 != 0) {
       uVar3 = uVar1 + param_4;
       if (0x7ffffffe < uVar3) {
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("string too long");
       }
       if ((uint)in_ECX[5] < uVar3) {
@@ -3358,6 +3391,7 @@ void wstring_replace(undefined4 *param_1,undefined4 *param_2,uint param_3,uint p
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("string too long");
 }
 
@@ -3399,6 +3433,7 @@ void rbtree_allocHead24(void)
   pvVar1 = operator_new(0x18);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0043c87e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -3431,11 +3466,13 @@ void rbtree_destroyRec_str(void *param_1)
   }
   rbtree_destroyRec_str(*(undefined4 *)((int)param_1 + 8));
   if (0xf < *(uint *)((int)param_1 + 0x28)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x14));
   }
   *(undefined4 *)((int)param_1 + 0x28) = 0xf;
   *(undefined4 *)((int)param_1 + 0x24) = 0;
   *(undefined1 *)((int)param_1 + 0x14) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -3471,6 +3508,7 @@ void rbtree_eraseNode(undefined4 param_1,int *param_2)
   int *piVar5;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -3575,6 +3613,7 @@ LAB_0043efc2:
     }
     *(undefined1 *)(piVar5 + 3) = 1;
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -3672,6 +3711,7 @@ void rbtree_eraseNode_str(undefined4 param_1,int *param_2)
   int *piVar6;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -3780,11 +3820,13 @@ LAB_0043f300:
   }
 LAB_0043f35e:
   if (0xf < (uint)param_2[10]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[5]);
   }
   param_2[10] = 0xf;
   param_2[9] = 0;
   *(undefined1 *)(param_2 + 5) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -3882,6 +3924,7 @@ void rbtree_eraseNode_buf(undefined4 param_1,int *param_2)
   int *piVar6;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -3990,8 +4033,10 @@ LAB_0043f670:
   }
 LAB_0043f6ce:
   if ((void *)param_2[4] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[4]);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -4288,11 +4333,13 @@ void rbtree_insertRebalance_0x148node(undefined4 *param_1,char param_2,undefined
   
   if (0x38e38e1 < (uint)in_ECX[1]) {
     if (0xf < (uint)param_5[10]) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)param_5[5]);
     }
     param_5[10] = 0xf;
     param_5[9] = 0;
     *(undefined1 *)(param_5 + 5) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -4668,8 +4715,10 @@ LAB_0044a2de:
     *(undefined4 *)((int)param_4 + 0x28) = 0xf;
     *(undefined4 *)((int)param_4 + 0x24) = 0;
     *(undefined1 *)((int)param_4 + 0x14) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)((int)param_4 + 0x14));
 }
 
@@ -4959,6 +5008,7 @@ void vector_assignFrom_0x11c(int *param_1)
         if ((uint)((in_ECX[2] - *in_ECX) / 0x11c) < uVar2) {
           if ((void *)*in_ECX != (void *)0x0) {
             param_1 = (int *)uVar2;
+                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*in_ECX);
           }
           piVar1 = param_1 + 1;
@@ -5034,6 +5084,7 @@ void vector_assignFrom_0x148(int *param_1)
         if ((uint)((in_ECX[2] - *in_ECX) / 0x148) < uVar2) {
           if ((void *)*in_ECX != (void *)0x0) {
             param_1 = (int *)uVar2;
+                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*in_ECX);
           }
           piVar1 = param_1 + 1;
@@ -5125,6 +5176,7 @@ int * vector_assignFrom_0xc(int *param_1)
             ExceptionList = &local_10;
             local_14 = (undefined1 *)&uStack_3c;
             std_vector_destroy_ptr_elems_stride3(iVar8,in_ECX[1],&local_15,param_1);
+                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*in_ECX);
           }
           ExceptionList = &local_10;
@@ -5223,6 +5275,7 @@ uint vector_buyAlloc_0x11c(uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0xe6c2b4 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x11c);
@@ -5233,6 +5286,7 @@ uint vector_buyAlloc_0x11c(uint param_1)
     in_ECX[2] = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -5259,6 +5313,7 @@ uint vector_buyAlloc_0x148(uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0xc7ce0c < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x148);
@@ -5269,6 +5324,7 @@ uint vector_buyAlloc_0x148(uint param_1)
     in_ECX[2] = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -5294,6 +5350,7 @@ undefined4 vector_buyAlloc_0xc(uint param_1)
     return 0;
   }
   if (0x15555555 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0xc);
@@ -5304,6 +5361,7 @@ undefined4 vector_buyAlloc_0xc(uint param_1)
     in_ECX[2] = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -5324,6 +5382,7 @@ void list_allocSentinel_0x48(void)
   pvVar1 = operator_new(0x48);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0044b74e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -5399,6 +5458,7 @@ void vector_reallocInsert_0x14(uint param_1)
       pvVar2 = operator_new(param_1 * 0x14);
       if (pvVar2 != (void *)0x0) goto LAB_0044b97f;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0044b97f:
@@ -5406,6 +5466,7 @@ LAB_0044b97f:
   vector_uninitCopy_0x14(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0x14;
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar2;
@@ -5445,6 +5506,7 @@ void vector_reallocInsert_0x11c(void *param_1)
       pvVar2 = operator_new((int)param_1 * 0x11c);
       if (pvVar2 != (void *)0x0) goto LAB_0044ba74;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0044ba74:
@@ -5452,6 +5514,7 @@ LAB_0044ba74:
   vector_uninitCopy_0x11c_ee70b(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (void *)*in_ECX;
   if (param_1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   in_ECX[2] = (void *)(uVar1 * 0x11c + (int)pvVar2);
@@ -5491,6 +5554,7 @@ void vector_reallocInsert_0x148(void *param_1)
       pvVar2 = operator_new((int)param_1 * 0x148);
       if (pvVar2 != (void *)0x0) goto LAB_0044bb74;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0044bb74:
@@ -5498,6 +5562,7 @@ LAB_0044bb74:
   vector_uninitCopy_0x148_a8c0(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (void *)*in_ECX;
   if (param_1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   in_ECX[2] = (void *)(uVar1 * 0x148 + (int)pvVar2);
@@ -5526,6 +5591,7 @@ void vector_reserveGrow_0x14(uint param_1)
     return;
   }
   if (0xcccccccU - (in_ECX[1] - *in_ECX) / 0x14 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0x14;
@@ -5559,6 +5625,7 @@ int vector_reserveGrow_0x11c(uint param_1)
   if ((uint)(iVar3 / 0x11c) < param_1) {
     iVar2 = (in_ECX[1] - *in_ECX) / 0x11c;
     if (0xe6c2b4U - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = std_vector_Calculate_growth_594840(iVar2 + param_1);
@@ -5586,6 +5653,7 @@ void vector_reserveGrow_0x148(uint param_1)
     return;
   }
   if (0xc7ce0cU - (in_ECX[1] - *in_ECX) / 0x148 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0x148;
@@ -5634,6 +5702,7 @@ void list_pushBack_0x48(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = list_makeNodeWrapper(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0xe38e37) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -6614,6 +6683,7 @@ void vector_insertRangeFromList_0x10(int param_1,int *param_2,int *param_3)
         iVar6 = iVar6 - *in_ECX >> 4;
         if (0xfffffffU - iVar6 < uVar7) {
           local_14 = (undefined1 *)&uStack_2c;
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_14 = (undefined1 *)&uStack_2c;
@@ -6624,6 +6694,7 @@ void vector_insertRangeFromList_0x10(int param_1,int *param_2,int *param_3)
             local_1c = operator_new(uVar4 << 4);
             if (local_1c != (void *)0x0) goto LAB_00452746;
           }
+                    /* WARNING: Subroutine does not return */
           std::_Xbad_alloc();
         }
 LAB_00452746:
@@ -6633,6 +6704,7 @@ LAB_00452746:
         list_copyNodesToVector_0x10(param_1,in_ECX[1],uVar5,&local_15,0,param_1);
         pvVar1 = (void *)*in_ECX;
         if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
           operator_delete(pvVar1);
         }
         in_ECX[2] = (int)(uVar4 * 0x10 + (int)local_1c);
@@ -6697,6 +6769,7 @@ void vector_insertRangeFromList_0x148(int param_1,int *param_2,int *param_3)
         iVar2 = (in_ECX[1] - *in_ECX) / 0x148;
         if (0xc7ce0cU - iVar2 < uVar5) {
           local_14 = (undefined1 *)&uStack_30;
+                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_14 = (undefined1 *)&uStack_30;
@@ -6707,6 +6780,7 @@ void vector_insertRangeFromList_0x148(int param_1,int *param_2,int *param_3)
         uVar4 = vector_destroyListRange_0x148(param_2,param_3,uVar4,&local_15,param_1);
         vector_uninitCopy_0x148_a8c0(param_1,in_ECX[1],uVar4,&local_15,0,param_1);
         if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
           operator_delete((void *)*in_ECX);
         }
         in_ECX[2] = iVar2 * 0x148 + iVar3;
@@ -6750,6 +6824,7 @@ void rbtree_insertRebalance_A(undefined4 *param_1,char param_2,undefined4 *param
   int *piVar6;
   
   if (0xaaaaaa8 < (uint)in_ECX[1]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -6916,6 +6991,7 @@ void rbtree_insertRebalance_mapset(undefined4 *param_1,char param_2,undefined4 *
   
   if (0x3fffffd < (uint)in_ECX[1]) {
     Node_dtor_2strings(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -7434,6 +7510,7 @@ void map_lowerBoundInsert_intKey(undefined4 *param_1,char param_2,int *param_3,v
     rbtree_iteratorIncrement();
   }
   if (*piVar2 <= _param_2[4]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_00453953:
@@ -7605,6 +7682,7 @@ LAB_00453bdc:
   }
   if (((int)param_3[1] < _param_2[5]) ||
      (((int)param_3[1] <= _param_2[5] && (*param_3 <= (uint)_param_2[4])))) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_00453c01:
@@ -7737,6 +7815,7 @@ void list_assignRange_00608a20(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -7774,6 +7853,7 @@ void list_assignRange_00451da0(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -7811,6 +7891,7 @@ void list_assignRange_00451ee0(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -7848,6 +7929,7 @@ void list_assignRange_004e0300(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -7885,6 +7967,7 @@ void list_assignRange_00452190(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -7922,6 +8005,7 @@ void list_assignRange_004cb5a0(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -7959,6 +8043,7 @@ void list_assignRange_00451c70(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -7996,6 +8081,7 @@ void list_assignRange_00451e80(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -8033,6 +8119,7 @@ void list_assignRange_00451f50(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -8070,6 +8157,7 @@ void list_assignRange_00451cc0(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -8107,6 +8195,7 @@ void list_assignRange_00451d40(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -8144,6 +8233,7 @@ void list_assignRange_00452060(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -8181,6 +8271,7 @@ void list_assignRange_004520d0(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -8218,6 +8309,7 @@ void list_assignRange_0058d860(int param_1,undefined4 *param_2,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -8289,6 +8381,7 @@ void introsort_insertionPass_0x128(byte *param_1,byte *param_2)
       }
       local_8 = 0xffffffff;
       if (local_20[0] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(local_20[0]);
       }
       pbVar8 = pbVar8 + 0x128;
@@ -8763,6 +8856,7 @@ LAB_00457174:
     iVar2 = *in_ECX;
     iVar4 = ChunkBuffer_loadAndNotify(iVar2,*(undefined4 *)(iVar2 + 4),param_1 + 2);
     if (in_ECX[1] == 0x38e38e2) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     in_ECX[1] = in_ECX[1] + 1;
@@ -8818,6 +8912,7 @@ LAB_00457258:
     iVar2 = *in_ECX;
     iVar4 = list_makeNodeWrapper(iVar2,*(undefined4 *)(iVar2 + 4),param_1 + 2);
     if (in_ECX[1] == 0xe38e37) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     in_ECX[1] = in_ECX[1] + 1;
@@ -8880,6 +8975,7 @@ LAB_00457348:
     iVar1 = *local_18;
     iVar2 = rbtree_allocNode_strVec(iVar1,*(undefined4 *)(iVar1 + 4),param_1 + 2);
     if (local_18[1] == 0x5555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     local_18[1] = local_18[1] + 1;
@@ -9454,7 +9550,6 @@ void Store_ftol64_result(void)
 
 
 
-/* FAILED ctor_0 @ 00459c40 : Exception while decompiling 00459c40: process: timeout
  */
 
 
@@ -9477,8 +9572,10 @@ void list_dtor_freeHeadAt8(void)
   *(int *)(*(int *)(in_ECX + 8) + 4) = *(int *)(in_ECX + 8);
   *(undefined4 *)(in_ECX + 0xc) = 0;
   if (pvVar2 != *(void **)(in_ECX + 8)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(in_ECX + 8));
 }
 
@@ -9504,8 +9601,10 @@ void list_dtor_freeHeadAt51a0(void)
   *(int *)(*(int *)(in_ECX + 0x51a0) + 4) = *(int *)(in_ECX + 0x51a0);
   *(undefined4 *)(in_ECX + 0x51a4) = 0;
   if (pvVar2 != *(void **)(in_ECX + 0x51a0)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(in_ECX + 0x51a0));
 }
 
@@ -9524,6 +9623,7 @@ void u16string_clear_off38(void)
   int in_ECX;
   
   if (7 < *(uint *)(in_ECX + 0x4c)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 0x38));
   }
   *(undefined4 *)(in_ECX + 0x4c) = 7;
@@ -9554,8 +9654,10 @@ void list_dtor_freeHeadAt60(void)
   *(int *)(*(int *)(in_ECX + 0x60) + 4) = *(int *)(in_ECX + 0x60);
   *(undefined4 *)(in_ECX + 100) = 0;
   if (pvVar2 != *(void **)(in_ECX + 0x60)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(in_ECX + 0x60));
 }
 
@@ -9613,6 +9715,7 @@ void u16string_moveClear(undefined4 *param_1)
   
   if (in_ECX != param_1) {
     if (7 < (uint)in_ECX[5]) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*in_ECX);
     }
     in_ECX[5] = 7;
@@ -9691,6 +9794,7 @@ void std_vector_copyAssign_stride11c(int *param_1)
         if ((uint)((in_ECX[2] - *in_ECX) / 0x11c) < uVar2) {
           if ((void *)*in_ECX != (void *)0x0) {
             param_1 = (int *)uVar2;
+                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*in_ECX);
           }
           piVar1 = param_1 + 1;
@@ -9771,6 +9875,7 @@ void std_vector_copyAssign_vecElem8(int *param_1)
           if (iVar3 != 0) {
             param_1 = (int *)uVar6;
             vector_destroyRange_strings(iVar3,in_ECX[1]);
+                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*in_ECX);
           }
           piVar1 = param_1 + 1;
@@ -9848,6 +9953,7 @@ void std_vector_copyAssign_elem8_b(int *param_1)
         if ((uint)(in_ECX[2] - (int)pvVar2 >> 3) < uVar8) {
           if (pvVar2 != (void *)0x0) {
             param_1 = (int *)uVar6;
+                    /* WARNING: Subroutine does not return */
             operator_delete(pvVar2);
           }
           piVar1 = param_1 + 1;
@@ -9926,6 +10032,7 @@ void std_vector_copyAssign_stride18(int *param_1)
           if (*in_ECX != 0) {
             param_1 = (int *)uVar3;
             dtor_stringRange_0x18(*in_ECX,in_ECX[1],(int)&param_1 + 3,uVar3);
+                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*in_ECX);
           }
           piVar1 = param_1 + 1;
@@ -10061,18 +10168,21 @@ void rbtree_eraseByStringKey(int param_1)
   iVar3 = node_ctor_2strings(local_44);
   map_insertHint_strKey(local_60,iVar1,iVar3 + 0x10,iVar3);
   if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c);
   }
   local_18 = 7;
   local_1c = 0;
   local_2c = (void *)((uint)local_2c & 0xffff0000);
   if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   local_30 = 7;
   local_34 = 0;
   local_44[0] = (void *)((uint)local_44[0] & 0xffff0000);
   if (7 < local_48) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_5c[0]);
   }
 LAB_00468aaa:
@@ -10259,6 +10369,7 @@ undefined4 std_vector_reserveAlloc_stride8(uint param_1)
     return 0;
   }
   if (0x1fffffff < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 8);
@@ -10269,6 +10380,7 @@ undefined4 std_vector_reserveAlloc_stride8(uint param_1)
     in_ECX[2] = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10289,6 +10401,7 @@ void rbtree_allocHeaderNode_1c(void)
   pvVar1 = operator_new(0x1c);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0046d4be. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -10321,6 +10434,7 @@ void rbtree_allocHeaderNode_28(void)
   pvVar1 = operator_new(0x28);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0046d52e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -10362,6 +10476,7 @@ void list_buyNode_0c(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10391,6 +10506,7 @@ void list_buyNode_18(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10420,6 +10536,7 @@ void list_buyNode_78(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10449,6 +10566,7 @@ void list_buyNode_28(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10478,6 +10596,7 @@ void list_buyNode_1c(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10507,6 +10626,7 @@ void list_buyNode_124(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10536,6 +10656,7 @@ void list_buyNode_128(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10565,6 +10686,7 @@ void list_buyNode_38(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10594,6 +10716,7 @@ void list_buyNode_40(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10623,6 +10746,7 @@ void list_buyNode_60(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10652,6 +10776,7 @@ void list_buyNode_c0(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10681,6 +10806,7 @@ void list_buyNode_50(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10710,6 +10836,7 @@ void list_buyNode_30(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10739,6 +10866,7 @@ void list_buyNode_68(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10768,6 +10896,7 @@ void list_buyNode_150(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10788,6 +10917,7 @@ undefined4 * rbtree_buyNode_copyKey20(void)
   
   puVar1 = operator_new(0x20);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -10817,6 +10947,7 @@ undefined4 * rbtree_buyNode_copyKey18(void)
   
   puVar1 = operator_new(0x18);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -10896,6 +11027,7 @@ void vector_destroyRange_strings(undefined4 *param_1,undefined4 *param_2)
 {
   if (param_1 != param_2) {
     listNode_free_ownsString();
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*param_1);
   }
   return;
@@ -10918,17 +11050,20 @@ void rbtree_destroyRecursive(void *param_1)
   }
   rbtree_destroyRecursive(*(undefined4 *)((int)param_1 + 8));
   if (7 < *(uint *)((int)param_1 + 0x3c)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x28));
   }
   *(undefined4 *)((int)param_1 + 0x3c) = 7;
   *(undefined4 *)((int)param_1 + 0x38) = 0;
   *(undefined2 *)((int)param_1 + 0x28) = 0;
   if (7 < *(uint *)((int)param_1 + 0x24)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x10));
   }
   *(undefined4 *)((int)param_1 + 0x24) = 7;
   *(undefined4 *)((int)param_1 + 0x20) = 0;
   *(undefined2 *)((int)param_1 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -11084,12 +11219,14 @@ void vector_insertN_stride4(int *param_1,undefined4 *param_2,void *param_3,undef
     if ((uint)(in_ECX[2] - (int)pvVar1 >> 2) < param_3) {
       iVar6 = (int)pvVar1 - *in_ECX >> 2;
       if (0x3fffffffU - iVar6 < param_3) {
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       uVar4 = vector_growCap_stride4(iVar6 + (int)param_3);
       param_3 = (void *)0x0;
       if ((uVar4 != 0) &&
          ((0x3fffffff < uVar4 || (param_3 = operator_new(uVar4 << 2), param_3 == (void *)0x0)))) {
+                    /* WARNING: Subroutine does not return */
         std::_Xbad_alloc();
       }
       iVar6 = (int)param_2 - *in_ECX >> 2;
@@ -11103,6 +11240,7 @@ void vector_insertN_stride4(int *param_1,undefined4 *param_2,void *param_3,undef
               in_ECX[1] - (int)param_2 & 0xfffffffc);
       pvVar1 = (void *)*in_ECX;
       if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(pvVar1);
       }
       *in_ECX = (int)param_3;
@@ -11179,6 +11317,7 @@ void vector_reallocInsert_stride128(uint param_1)
       pvVar2 = operator_new(param_1 * 0x128);
       if (pvVar2 != (void *)0x0) goto LAB_0046e1b1;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0046e1b1:
@@ -11186,6 +11325,7 @@ LAB_0046e1b1:
   vector_destroyRange_0x128_seh(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   if (*in_ECX != 0) {
     dtor_freePtrRange_0x128(*in_ECX,in_ECX[1],(int)&param_1 + 3,param_1);
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   in_ECX[2] = (int)(uVar1 * 0x128 + (int)pvVar2);
@@ -11234,6 +11374,7 @@ void vector_reallocInsert_strElem8(uint param_1)
       if (pvVar3 != (void *)0x0) goto LAB_0046e38b;
     }
     local_14 = (undefined1 *)puVar2;
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0046e38b:
@@ -11250,8 +11391,10 @@ LAB_0046e38b:
   }
   if (puVar1 != (undefined4 *)in_ECX[1]) {
     listNode_free_ownsString();
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*puVar1);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -11286,6 +11429,7 @@ void vector_reallocInsert_stride8(uint param_1)
       pvVar3 = operator_new(param_1 * 8);
       if (pvVar3 != (void *)0x0) goto LAB_0046e590;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0046e590:
@@ -11294,6 +11438,7 @@ LAB_0046e590:
   pvVar1 = (void *)*in_ECX;
   param_1 = in_ECX[1] - (int)pvVar1 >> 3;
   if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)((int)pvVar3 + uVar2 * 8);
@@ -11325,6 +11470,7 @@ int vector_resizeGrow_stride128(uint param_1)
   if ((uint)(iVar3 / 0x128) < param_1) {
     iVar2 = (in_ECX[1] - *in_ECX) / 0x128;
     if (0xdd67c8U - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = vector_growCap_stride128(iVar2 + param_1);
@@ -11352,6 +11498,7 @@ void vector_reserve_stride8(uint param_1)
     return;
   }
   if (0x1fffffffU - (in_ECX[1] - *in_ECX >> 3) < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 3;
@@ -11382,6 +11529,7 @@ void vector_reserve_stride8_b(uint param_1)
     return;
   }
   if (0x1fffffffU - (in_ECX[1] - *in_ECX >> 3) < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 3;
@@ -11414,8 +11562,10 @@ void vector_destroy_stringElems(void)
   }
   if (puVar1 != (undefined4 *)in_ECX[1]) {
     listNode_free_ownsString();
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*puVar1);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -11437,6 +11587,7 @@ void std_string_replace_char(undefined4 *param_1,uint param_2,uint param_3)
   int *piVar3;
   
   if ((uint)param_1[4] < param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar2 = param_1[4] - param_2;
@@ -11445,11 +11596,13 @@ void std_string_replace_char(undefined4 *param_1,uint param_2,uint param_3)
     param_3 = uVar2;
   }
   if (-iVar1 - 1U <= param_3) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_3 != 0) {
     uVar2 = iVar1 + param_3;
     if (uVar2 == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if ((uint)in_ECX[5] < uVar2) {
@@ -11527,11 +11680,13 @@ void std_string_append_char(int *param_1,uint param_2)
   }
   iVar2 = in_ECX[4];
   if (-iVar2 - 1U <= param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_2 != 0) {
     uVar1 = iVar2 + param_2;
     if (uVar1 == 0xffffffff) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if ((uint)in_ECX[5] < uVar1) {
@@ -11584,6 +11739,7 @@ void std_u16string_replace(undefined4 *param_1,uint param_2,uint param_3)
   int *piVar3;
   
   if ((uint)param_1[4] < param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar2 = param_1[4] - param_2;
@@ -11592,11 +11748,13 @@ void std_u16string_replace(undefined4 *param_1,uint param_2,uint param_3)
     param_3 = uVar2;
   }
   if (-iVar1 - 1U <= param_3) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_3 != 0) {
     uVar2 = iVar1 + param_3;
     if (0x7ffffffe < uVar2) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if ((uint)in_ECX[5] < uVar2) {
@@ -11675,11 +11833,13 @@ void std_u16string_append(int *param_1,uint param_2)
   }
   iVar2 = in_ECX[4];
   if (-iVar2 - 1U <= param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_2 != 0) {
     uVar1 = iVar2 + param_2;
     if (0x7ffffffe < uVar1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if ((uint)in_ECX[5] < uVar1) {
@@ -11736,6 +11896,7 @@ void list_clearSingleNode(void)
   *(int *)(*in_ECX + 4) = *in_ECX;
   in_ECX[1] = 0;
   if (pvVar2 != (void *)*in_ECX) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
   return;
@@ -11773,8 +11934,10 @@ void list_clearNestedList(void)
   *(int *)(*(int *)(iVar2 + 0x10) + 4) = *(int *)(iVar2 + 0x10);
   *(undefined4 *)(iVar2 + 0x14) = 0;
   if (pvVar4 != *(void **)(iVar2 + 0x10)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar4);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(iVar2 + 0x10));
 }
 
@@ -11796,6 +11959,7 @@ void list_eraseTail_stringNode(void)
   puVar1 = (undefined4 *)*in_ECX;
   if (puVar1 != (undefined4 *)in_ECX[1]) {
     listNode_free_ownsString();
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*puVar1);
   }
   in_ECX[1] = (int)puVar1;
@@ -11892,11 +12056,13 @@ int * list_eraseNode_front(int *param_1,int *param_2)
   *(int *)param_2[1] = *param_2;
   *(int *)(*param_2 + 4) = param_2[1];
   if (7 < (uint)param_2[9]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[4]);
   }
   param_2[9] = 7;
   param_2[8] = 0;
   *(undefined2 *)(param_2 + 4) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -11930,6 +12096,7 @@ undefined4 * list_eraseRange(undefined4 *param_1,int *param_2,int *param_3)
   } while (piVar1 == (int *)*in_ECX);
   *(int **)piVar1[1] = (int *)*piVar1;
   *(int *)(*piVar1 + 4) = piVar1[1];
+                    /* WARNING: Subroutine does not return */
   operator_delete(piVar1);
 }
 
@@ -11950,6 +12117,7 @@ void list_eraseNode(int *param_1,int *param_2)
   if (param_2 != (int *)*in_ECX) {
     *(int *)param_2[1] = *param_2;
     *(int *)(*param_2 + 4) = param_2[1];
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_2);
   }
   *param_1 = *param_2;
@@ -11977,11 +12145,13 @@ int * list_eraseNode_stringField(int *param_1,int *param_2)
   *(int *)param_2[1] = *param_2;
   *(int *)(*param_2 + 4) = param_2[1];
   if (7 < (uint)param_2[0x15]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[0x10]);
   }
   param_2[0x15] = 7;
   param_2[0x14] = 0;
   *(undefined2 *)(param_2 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -12091,6 +12261,7 @@ void list_clearFrontNode(void)
   if (piVar1 != (int *)*in_ECX) {
     *(int *)piVar1[1] = *piVar1;
     *(int *)(*piVar1 + 4) = piVar1[1];
+                    /* WARNING: Subroutine does not return */
     operator_delete(piVar1);
   }
   return;
@@ -12115,6 +12286,7 @@ void list_pushBack_via583cb0(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12142,6 +12314,7 @@ void list_pushBack_via451d70(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_4594c0(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0xd4c77a) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12169,6 +12342,7 @@ void list_pushBack_via451d00(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_3x64payload(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12196,6 +12370,7 @@ void list_pushBack_via451da0(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_4595b0(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x2222221) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12223,6 +12398,7 @@ void list_pushBack_via451e80(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_0x18payload(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x9249248) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12250,6 +12426,7 @@ void list_pushBack_via451ee0(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_4599a0(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x3333332) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12277,6 +12454,7 @@ void list_pushBack_via5c03f0(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = ChunkBuffer_loadAndNotify(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x38e38e2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12304,6 +12482,7 @@ void list_pushBack_via451f50(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_4591b0(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0xaaaaaa9) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12331,6 +12510,7 @@ void list_pushBack_via451ff0(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_12dword(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x4924923) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12358,6 +12538,7 @@ void list_pushBack_via451d40(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_465c00(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x3fffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12385,6 +12566,7 @@ void list_pushBack_via4520d0(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_00465e60(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x3333332) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12412,6 +12594,7 @@ void std_list_insert_node_32(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = Map_InsertVec6(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12439,6 +12622,7 @@ void std_list_insert_node_a(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_00466410(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x2762761) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12466,6 +12650,7 @@ void std_list_insert_node_b(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = rbtree_insertPairNode(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0xffffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12676,6 +12861,7 @@ void std_list_insert_node_c(undefined4 param_1)
   iVar1 = *(int *)*in_ECX;
   iVar2 = map_insertVal_00465ce0(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x1555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -12707,6 +12893,7 @@ void std_wstring_replace(uint param_1,uint param_2,int *param_3,uint param_4,uin
   
   uVar4 = in_ECX[4];
   if ((uVar4 < param_1) || ((uint)param_3[4] < param_4)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar6 = uVar4 - param_1;
@@ -12722,6 +12909,7 @@ void std_wstring_replace(uint param_1,uint param_2,int *param_3,uint param_4,uin
     uVar6 = (uVar4 - param_2) + param_5;
     if (uVar4 < uVar6) {
       if (0x7ffffffe < uVar6) {
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("string too long");
       }
       if ((uint)in_ECX[5] < uVar6) {
@@ -12872,6 +13060,7 @@ void std_wstring_replace(uint param_1,uint param_2,int *param_3,uint param_4,uin
     *(undefined2 *)((int)in_ECX + uVar6 * 2) = 0;
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("string too long");
 }
 
@@ -12907,6 +13096,7 @@ void std_list_resize(uint param_1)
       iVar2 = *in_ECX;
       iVar4 = Node_alloc_thenInit(iVar2,*(undefined4 *)(iVar2 + 4));
       if (in_ECX[1] == 0x1555554) {
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       in_ECX[1] = in_ECX[1] + 1;
@@ -12920,6 +13110,7 @@ void std_list_resize(uint param_1)
       if (piVar3 != (int *)*in_ECX) {
         *(int *)piVar3[1] = *piVar3;
         *(int *)(*piVar3 + 4) = piVar3[1];
+                    /* WARNING: Subroutine does not return */
         operator_delete(piVar3);
       }
       uVar1 = in_ECX[1];
@@ -14090,6 +14281,7 @@ LAB_004ab9c2:
     iVar2 = *in_ECX;
     iVar4 = IntMap_SetScalar(iVar2,*(undefined4 *)(iVar2 + 4),param_1 + 2);
     if (in_ECX[1] == 0x15555554) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     in_ECX[1] = in_ECX[1] + 1;
@@ -14210,6 +14402,7 @@ void std_vector_realloc_12(uint param_1)
       pvVar2 = operator_new(param_1 * 0xc);
       if (pvVar2 != (void *)0x0) goto LAB_004abd1f;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004abd1f:
@@ -14217,6 +14410,7 @@ LAB_004abd1f:
   std_Uninitialized_copy_0xc_v3(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0xc;
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar2;
@@ -14257,6 +14451,7 @@ void std_vector_realloc_16(uint param_1)
       pvVar3 = operator_new(param_1 << 4);
       if (pvVar3 != (void *)0x0) goto LAB_004abe11;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004abe11:
@@ -14264,6 +14459,7 @@ LAB_004abe11:
   uninitialized_copy_16(*in_ECX,in_ECX[1],pvVar3,(int)&param_1 + 3,0,param_1);
   pvVar1 = (void *)*in_ECX;
   if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)(uVar2 * 0x10 + (int)pvVar3);
@@ -14303,6 +14499,7 @@ void std_vector_realloc_48(uint param_1)
       pvVar2 = operator_new(param_1 * 0x30);
       if (pvVar2 != (void *)0x0) goto LAB_004abeef;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004abeef:
@@ -14310,6 +14507,7 @@ LAB_004abeef:
   uninitialized_copy_48(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0x30;
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   in_ECX[2] = (int)(uVar1 * 0x30 + (int)pvVar2);
@@ -14338,6 +14536,7 @@ void std_vector_reserve_12(uint param_1)
     return;
   }
   if (0x15555555U - (in_ECX[1] - *in_ECX) / 0xc < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0xc;
@@ -14368,6 +14567,7 @@ void std_vector_reserve_16(uint param_1)
     return;
   }
   if (0xfffffffU - (in_ECX[1] - *in_ECX >> 4) < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 4;
@@ -14398,6 +14598,7 @@ void std_vector_reserve_48(uint param_1)
     return;
   }
   if (0x5555555U - (in_ECX[1] - *in_ECX) / 0x30 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0x30;
@@ -14652,6 +14853,7 @@ void std_vector_realloc_280(void *param_1)
       pvVar2 = operator_new((int)param_1 * 0x118);
       if (pvVar2 != (void *)0x0) goto LAB_004c68a4;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004c68a4:
@@ -14659,6 +14861,7 @@ LAB_004c68a4:
   uninitialized_fill_copy_280(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (void *)*in_ECX;
   if (param_1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   in_ECX[2] = (void *)(uVar1 * 0x118 + (int)pvVar2);
@@ -14690,6 +14893,7 @@ int std_vector_reserveGrow_280(uint param_1)
   if ((uint)(iVar3 / 0x118) < param_1) {
     iVar2 = (in_ECX[1] - *in_ECX) / 0x118;
     if (0xea0ea0U - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = vector_growCapacity_280(iVar2 + param_1);
@@ -14776,6 +14980,7 @@ undefined4 * rbtree_allocNode_14(void)
   
   puVar1 = operator_new(0x14);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -14845,6 +15050,7 @@ void std_vector_realloc_3(uint param_1)
       pvVar2 = operator_new(param_1 * 3);
       if (pvVar2 != (void *)0x0) goto LAB_004cb36c;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004cb36c:
@@ -14852,6 +15058,7 @@ LAB_004cb36c:
   uninitialized_copy_3(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 3;
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   in_ECX[2] = (int)((int)pvVar2 + uVar1 * 3);
@@ -14880,6 +15087,7 @@ void std_vector_reserve_3(uint param_1)
     return;
   }
   if (0x55555555U - (in_ECX[1] - *in_ECX) / 3 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 3;
@@ -14939,6 +15147,7 @@ void rbtree_allocNode_10(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -15035,8 +15244,10 @@ void std_list_clear_4da480(void)
   *(int *)(*in_ECX + 4) = *in_ECX;
   in_ECX[1] = 0;
   if (pvVar2 != (void *)*in_ECX) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -15057,6 +15268,7 @@ undefined4 * rbtree_allocNode_28(void)
   
   puVar1 = operator_new(0x28);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -15146,6 +15358,7 @@ void list_appendRange_a(int param_1,undefined4 *param_2,undefined4 *param_3)
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -15183,6 +15396,7 @@ void list_appendRange_b(int param_1,undefined4 *param_2,undefined4 *param_3)
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -15220,6 +15434,7 @@ void list_appendRange_20(int param_1,int param_2,int param_3)
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = param_2 + 0x14;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -15257,6 +15472,7 @@ void list_appendRange_328(int param_1,int param_2,int param_3)
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = param_2 + 0x148;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -15279,6 +15495,7 @@ void std_list_insert_node_d(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_00468670(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x2aaaaa9) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -15484,11 +15701,13 @@ void rbtree_insertRebalance_int(undefined4 *param_1,char param_2,undefined4 *par
   
   if (0x5d1745b < (uint)in_ECX[1]) {
     if (7 < (uint)param_5[10]) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)param_5[5]);
     }
     param_5[10] = 7;
     param_5[9] = 0;
     *(undefined2 *)(param_5 + 5) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -15655,6 +15874,7 @@ void rbtree_insertRebalance_b(undefined4 *param_1,char param_2,undefined4 *param
   
   if (0x4924922 < (uint)in_ECX[1]) {
     unwind_delete_member();
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -16064,8 +16284,10 @@ void rbtree_insertUnique_int(undefined4 *param_1,char param_2,int *param_3,void 
       *(undefined4 *)((int)param_4 + 0x28) = 7;
       *(undefined4 *)((int)param_4 + 0x24) = 0;
       *(undefined2 *)((int)param_4 + 0x14) = 0;
+                    /* WARNING: Subroutine does not return */
       operator_delete(param_4);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_4 + 0x14));
   }
 LAB_004e1261:
@@ -16149,6 +16371,7 @@ void rbtree_insertUnique_str(undefined4 *param_1,undefined4 *param_2,undefined4 
   pvVar1 = param_4;
   if (-1 < iVar3) {
     unwind_delete_member();
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
 LAB_004e13ce:
@@ -16193,6 +16416,7 @@ void std_list_assign_range(int param_1,undefined4 *param_2,undefined4 *param_3)
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -16243,6 +16467,7 @@ void unwind_delete_member(void)
   int in_ECX;
   
   listNode_free_ownsString();
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(in_ECX + 0x20));
 }
 
@@ -16263,6 +16488,7 @@ undefined4 * rbtree_alloc_node(void)
   
   puVar1 = operator_new(0x38);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -16292,11 +16518,13 @@ void rbtree_destroy_recursive(void *param_1)
   }
   rbtree_destroy_recursive(*(undefined4 *)((int)param_1 + 8));
   if (7 < *(uint *)((int)param_1 + 0x28)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x14));
   }
   *(undefined4 *)((int)param_1 + 0x28) = 7;
   *(undefined4 *)((int)param_1 + 0x24) = 0;
   *(undefined2 *)((int)param_1 + 0x14) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -16330,11 +16558,13 @@ void rbtree_destroy_recursive_qt(void *param_1)
   cube::QuestText::ctor_2(uVar1);
   local_8 = 0xffffffff;
   if (7 < *(uint *)((int)param_1 + 0x24)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x10));
   }
   *(undefined4 *)((int)param_1 + 0x24) = 7;
   *(undefined4 *)((int)param_1 + 0x20) = 0;
   *(undefined2 *)((int)param_1 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -16413,8 +16643,10 @@ undefined4 * std_list_erase_range(undefined4 *param_1,int *param_2,int *param_3)
     piVar1[7] = 7;
     piVar1[6] = 0;
     *(undefined2 *)(piVar1 + 2) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(piVar1);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)piVar1[2]);
 }
 
@@ -16443,8 +16675,10 @@ void rbtree_destroy_recursive_list(int param_1)
   *(int *)(*(int *)(param_1 + 0x14) + 4) = *(int *)(param_1 + 0x14);
   *(undefined4 *)(param_1 + 0x18) = 0;
   if (pvVar2 != *(void **)(param_1 + 0x14)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(param_1 + 0x14));
 }
 
@@ -16496,12 +16730,14 @@ void vector_u16_reallocate(uint param_1)
       _Dst = operator_new(param_1 * 2);
       if (_Dst != (void *)0x0) goto LAB_004e6d31;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004e6d31:
   memmove(_Dst,(void *)*in_ECX,in_ECX[1] - (int)*in_ECX & 0xfffffffe);
   pvVar1 = (void *)*in_ECX;
   if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)((int)_Dst + param_1 * 2);
@@ -16529,6 +16765,7 @@ void vector_u16_grow_to(uint param_1)
     return;
   }
   if (0x7fffffffU - (in_ECX[1] - *in_ECX >> 1) < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 1;
@@ -20132,6 +20369,7 @@ LAB_0053d565:
  */
 /* Global::sqlite3_mem_malloc @ 0053dcf0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 uint sqlite3_mem_malloc(int param_1,int *param_2)
 
@@ -22200,6 +22438,7 @@ int pager_write_dirty_to_wal(int *param_1,int param_2)
  */
 /* Global::pcache1_alloc @ 00543f40 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 * pcache1_alloc(int param_1)
 
@@ -26057,6 +26296,7 @@ void sqlite3_MallocAlarm(undefined4 param_1)
  */
 /* Global::sqlite3_PcacheBufferSetup @ 0055daf0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void sqlite3_PcacheBufferSetup(void)
 
@@ -26148,6 +26388,7 @@ void sqlite3_StrAccumInitStatic(undefined8 *param_1)
  */
 /* Global::sqlite3_MutexInit @ 0055e380 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void sqlite3_MutexInit(void)
 
@@ -28966,6 +29207,7 @@ void sqlite3_ScratchFree(undefined4 *param_1)
  */
 /* Global::sqlite3_ScratchMalloc @ 005653d0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 * sqlite3_ScratchMalloc(int param_1)
 
@@ -32662,6 +32904,7 @@ int sqlite3_WalUndo(int param_1,code *param_2,undefined4 param_3)
  */
 /* Global::sqlite3_Config @ 00579aa0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4
 sqlite3_Config(undefined4 param_1,undefined8 *param_2,undefined4 param_3,undefined4 param_4)
@@ -32783,6 +33026,7 @@ switchD_00579adc_caseD_e:
  */
 /* Global::sqlite3_Initialize @ 00579f80 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int sqlite3_Initialize(void)
 
@@ -32889,6 +33133,7 @@ LAB_0057a142:
  */
 /* Global::sqlite3_PcacheInitialize @ 0057a220 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 sqlite3_PcacheInitialize(void)
 
@@ -35347,6 +35592,7 @@ void Vector_Reallocate(uint param_1)
   
   _Dst = (void *)0x0;
   if ((param_1 != 0) && (_Dst = operator_new(param_1), _Dst == (void *)0x0)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   memmove(_Dst,(void *)*in_ECX,in_ECX[1] - (int)*in_ECX);
@@ -35357,6 +35603,7 @@ void Vector_Reallocate(uint param_1)
     in_ECX[1] = (int)_Dst + (in_ECX[1] - (int)pvVar1);
     return;
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar1);
 }
 
@@ -35379,6 +35626,7 @@ void Vector_Reserve(uint param_1)
     return;
   }
   if ((*in_ECX - in_ECX[1]) - 1U < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX;
@@ -35515,6 +35763,7 @@ undefined4 Vector_AllocCapacity18(uint param_1)
     return 0;
   }
   if (0xaaaaaaa < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x18);
@@ -35525,6 +35774,7 @@ undefined4 Vector_AllocCapacity18(uint param_1)
     in_ECX[2] = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -35621,11 +35871,13 @@ void RBTree_InsertRebalance(undefined4 *param_1,char param_2,undefined4 *param_3
   
   if (0x5555553 < (uint)in_ECX[1]) {
     if (7 < (uint)param_5[0xb]) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)param_5[6]);
     }
     param_5[0xb] = 7;
     param_5[10] = 0;
     *(undefined2 *)(param_5 + 6) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -35792,11 +36044,13 @@ void RBTree_InsertRebalanceB(undefined4 *param_1,char param_2,undefined4 *param_
   
   if (0x5d1745b < (uint)in_ECX[1]) {
     if (7 < (uint)param_5[9]) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)param_5[4]);
     }
     param_5[9] = 7;
     param_5[8] = 0;
     *(undefined2 *)(param_5 + 4) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -35963,11 +36217,13 @@ void RBTree_InsertRebalanceC(undefined4 *param_1,char param_2,undefined4 *param_
   
   if (0x5555553 < (uint)in_ECX[1]) {
     if (7 < (uint)param_5[9]) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)param_5[4]);
     }
     param_5[9] = 7;
     param_5[8] = 0;
     *(undefined2 *)(param_5 + 4) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -36392,8 +36648,10 @@ LAB_0058e561:
       *(undefined4 *)((int)param_4 + 0x2c) = 7;
       *(undefined4 *)((int)param_4 + 0x28) = 0;
       *(undefined2 *)((int)param_4 + 0x18) = 0;
+                    /* WARNING: Subroutine does not return */
       operator_delete(param_4);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_4 + 0x18));
   }
 LAB_0058e582:
@@ -36478,8 +36736,10 @@ void RBTree_InsertUniqueKeyed(undefined4 *param_1,undefined4 *param_2,undefined4
       *(undefined4 *)((int)param_4 + 0x24) = 7;
       *(undefined4 *)((int)param_4 + 0x20) = 0;
       *(undefined2 *)((int)param_4 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
       operator_delete(param_4);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_4 + 0x10));
   }
 LAB_0058e6fe:
@@ -36578,6 +36838,7 @@ void std_string_FreeMember(void)
   undefined4 *in_ECX;
   
   if (7 < (uint)in_ECX[5]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   in_ECX[5] = 7;
@@ -36603,6 +36864,7 @@ void Map_AllocSentinelNode(void)
   pvVar1 = operator_new(0x30);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x005946fe. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -36635,6 +36897,7 @@ undefined4 * MapNode_Alloc30(void)
   
   puVar1 = operator_new(0x30);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -36742,6 +37005,7 @@ void std_vector_Reallocate_grow_11c(void *param_1)
       pvVar2 = operator_new((int)param_1 * 0x11c);
       if (pvVar2 != (void *)0x0) goto LAB_00594934;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00594934:
@@ -36749,6 +37013,7 @@ LAB_00594934:
   vector_uninitCopy_0x11c_guarded(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (void *)*in_ECX;
   if (param_1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   in_ECX[2] = (void *)(uVar1 * 0x11c + (int)pvVar2);
@@ -36788,6 +37053,7 @@ void std_vector_Reallocate_grow_188(uint param_1)
       pvVar2 = operator_new(param_1 * 0x188);
       if (pvVar2 != (void *)0x0) goto LAB_00594a31;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00594a31:
@@ -36795,6 +37061,7 @@ LAB_00594a31:
   Array_CopyStructs188(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   if (*in_ECX != 0) {
     Zone_DestroyObjectRange(*in_ECX,in_ECX[1],(int)&param_1 + 3,param_1);
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   in_ECX[2] = (int)(uVar1 * 0x188 + (int)pvVar2);
@@ -36826,6 +37093,7 @@ int std_vector_Emplace_reallocate_11c(uint param_1)
   if ((uint)(iVar3 / 0x11c) < param_1) {
     iVar2 = (in_ECX[1] - *in_ECX) / 0x11c;
     if (0xe6c2b4U - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = std_vector_Calculate_growth_594840(iVar2 + param_1);
@@ -36853,6 +37121,7 @@ void std_vector_Reserve_grow_188(uint param_1)
     return;
   }
   if (0xa72f05U - (in_ECX[1] - *in_ECX) / 0x188 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0x188;
@@ -37633,8 +37902,10 @@ void rbTree_insertFixup(undefined4 *param_1,char param_2,undefined4 *param_3,und
   
   if (0x4ec4ec2 < (uint)in_ECX[1]) {
     if ((void *)param_5[4] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)param_5[4]);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -37800,6 +38071,7 @@ void rbTree_insertFixup_setKey(undefined4 *param_1,char param_2,undefined4 *para
   int *piVar7;
   
   if (0x9249247 < (uint)in_ECX[1]) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   piVar3 = (int *)rbTree_cloneNodeVariant(param_4);
@@ -38149,8 +38421,10 @@ LAB_005a75b7:
   cVar3 = lexicographicalLess(_param_2[4],_param_2[5],*param_3,param_3[1]);
   if (cVar3 == '\0') {
     if (*(void **)((int)param_4 + 0x10) != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(*(void **)((int)param_4 + 0x10));
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_005a7637:
@@ -38515,6 +38789,7 @@ void std_vector_reallocate(uint param_1)
       pvVar2 = operator_new(param_1 * 0x18);
       if (pvVar2 != (void *)0x0) goto LAB_005adebf;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_005adebf:
@@ -38522,6 +38797,7 @@ LAB_005adebf:
   std_uninitializedCopy_T24(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0x18;
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar2;
@@ -38550,6 +38826,7 @@ void std_vector_reserveGrow(uint param_1)
     return;
   }
   if (0xaaaaaaaU - (in_ECX[1] - *in_ECX) / 0x18 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0x18;
@@ -38617,9 +38894,11 @@ void std_destroyRange_T24(undefined4 *param_1,undefined4 *param_2)
     puVar2 = param_1 + 3;
     do {
       if ((void *)*puVar2 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar2);
       }
       if ((void *)puVar2[-3] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)puVar2[-3]);
       }
       puVar1 = puVar2 + 3;
@@ -39227,6 +39506,7 @@ void std_vector_destructor(void)
   
   if (*in_ECX != 0) {
     std_destroyRange_T24(*in_ECX,in_ECX[1],&local_5);
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   return;
@@ -39309,6 +39589,7 @@ void std_vector_Reallocate_grow(uint param_1)
       pvVar2 = operator_new(param_1 * 0x1c);
       if (pvVar2 != (void *)0x0) goto LAB_005aeef5;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_005aeef5:
@@ -39316,6 +39597,7 @@ LAB_005aeef5:
   std_uninitializedCopy_T28_guarded(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0x1c;
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar2;
@@ -39356,6 +39638,7 @@ void std_vector_Reallocate_grow_5aef90(uint param_1)
       pvVar3 = operator_new(param_1 << 5);
       if (pvVar3 != (void *)0x0) goto LAB_005aeff1;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_005aeff1:
@@ -39363,6 +39646,7 @@ LAB_005aeff1:
   std_uninitializedCopy_T32(*in_ECX,in_ECX[1],pvVar3,(int)&param_1 + 3,0,param_1);
   pvVar1 = (void *)*in_ECX;
   if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)(uVar2 * 0x20 + (int)pvVar3);
@@ -39394,6 +39678,7 @@ int std_vector_Reserve_grow_5af070(uint param_1)
   if ((uint)(iVar3 / 0x1c) < param_1) {
     iVar2 = (in_ECX[1] - *in_ECX) / 0x1c;
     if (0x9249249U - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = std_vector_Calculate_growth_5aee40(iVar2 + param_1);
@@ -39421,6 +39706,7 @@ void std_vector_Reserve_grow_5af0e0(uint param_1)
     return;
   }
   if (0x7ffffffU - (in_ECX[1] - *in_ECX >> 5) < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 5;
@@ -39636,6 +39922,7 @@ void rbtree_insert_rebalance_3key(undefined4 *param_1,char param_2,undefined4 *p
   int *piVar6;
   
   if (0x7fffffd < (uint)in_ECX[1]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -40063,6 +40350,7 @@ LAB_005c0bb2:
     rbtree_iteratorIncrement();
   }
   if ((*piVar4 <= _param_2[4]) && ((*piVar4 < _param_2[4] || (piVar4[1] <= _param_2[5])))) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_005c0bd1:
@@ -40158,6 +40446,7 @@ LAB_005c0d3b:
      ((iVar3 < iVar2 ||
       ((piVar4[1] <= _param_2[5] &&
        (((iVar3 < iVar2 || (piVar4[1] < _param_2[5])) || (piVar4[2] <= _param_2[6])))))))) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_005c0d5a:
@@ -41133,6 +41422,7 @@ void std_vector_reallocate_stride0x140(uint param_1)
       pvVar2 = operator_new(param_1 * 0x140);
       if (pvVar2 != (void *)0x0) goto LAB_005c409f;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_005c409f:
@@ -41140,6 +41430,7 @@ LAB_005c409f:
   std_uninitialized_copy_stride0x140(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0x140;
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   in_ECX[2] = (int)(uVar1 * 0x140 + (int)pvVar2);
@@ -41180,6 +41471,7 @@ void std_vector_reallocate_stride0x18(uint param_1)
       pvVar3 = operator_new(param_1 * 0x18);
       if (pvVar3 != (void *)0x0) goto LAB_005c418f;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_005c418f:
@@ -41188,6 +41480,7 @@ LAB_005c418f:
   iVar1 = *in_ECX;
   if (*in_ECX != 0) {
     std_destroyRange_T24(*in_ECX,in_ECX[1],(int)&param_1 + 3,param_1);
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar3;
@@ -41216,6 +41509,7 @@ void std_vector_reserve_grow_stride0x140(uint param_1)
     return;
   }
   if (0xccccccU - (in_ECX[1] - *in_ECX) / 0x140 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0x140;
@@ -41246,6 +41540,7 @@ void std_vector_reserve_grow_stride0x18(uint param_1)
     return;
   }
   if (0xaaaaaaaU - (in_ECX[1] - *in_ECX) / 0x18 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0x18;
@@ -41675,6 +41970,7 @@ void unwind_free_object(void)
   undefined4 *in_ECX;
   
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   return;
@@ -41711,6 +42007,7 @@ void vector_reallocate(uint param_1)
       pvVar3 = operator_new(param_1 * 8);
       if (pvVar3 != (void *)0x0) goto LAB_005fbb90;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_005fbb90:
@@ -41719,6 +42016,7 @@ LAB_005fbb90:
   pvVar1 = (void *)*in_ECX;
   param_1 = in_ECX[1] - (int)pvVar1 >> 3;
   if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)((int)pvVar3 + uVar2 * 8);
@@ -41747,6 +42045,7 @@ void vector_reserveGrow(uint param_1)
     return;
   }
   if (0x1fffffffU - (in_ECX[1] - *in_ECX >> 3) < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 3;
@@ -41777,6 +42076,7 @@ void list_pushBack_601eb0(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = allocObjectWithVec3(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0xccccccb) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -42004,6 +42304,7 @@ void map_insertVec4(int param_1,int param_2,int param_3)
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = param_2 + 0x10;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -42047,6 +42348,7 @@ void list_buildAndFree(int *param_1)
       if (uVar6 < uVar5) {
         if ((uint)(in_ECX[2] - (int)pvVar1 >> 5) < uVar5) {
           if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(pvVar1);
           }
           cVar3 = buffer_allocate(param_1[1] - *param_1 >> 5);
@@ -42093,6 +42395,7 @@ void map_insertViaSub(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertNodeSEH(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0xaaaaaa9) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -42499,6 +42802,7 @@ void map_insertRebalance(undefined4 *param_1,char param_2,undefined4 *param_3,un
   
   if (0x3fffffd < (uint)in_ECX[1]) {
     tree_nodeFree(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -42664,6 +42968,7 @@ void map_insertUnique_62fbc0(undefined4 *param_1,char param_2,undefined4 *param_
   int *piVar7;
   
   if (0xcccccca < (uint)in_ECX[1]) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   piVar3 = (int *)rbtree_insertValueNode(param_4);
@@ -43117,11 +43422,13 @@ void std_list_clear_nodes(void)
     return;
   }
   if (0xf < *(uint *)((int)pvVar2 + 0x1c)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)pvVar2 + 8));
   }
   *(undefined4 *)((int)pvVar2 + 0x1c) = 0xf;
   *(undefined4 *)((int)pvVar2 + 0x18) = 0;
   *(undefined1 *)((int)pvVar2 + 8) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar2);
 }
 
@@ -43159,8 +43466,10 @@ undefined4 * std_list_erase_range_633ce0(undefined4 *param_1,int *param_2,int *p
     piVar1[7] = 0xf;
     piVar1[6] = 0;
     *(undefined1 *)(piVar1 + 2) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(piVar1);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)piVar1[2]);
 }
 
@@ -43284,6 +43593,7 @@ LAB_00636e26:
   }
   iVar6 = tree_findOrInsert(piVar1,piVar1[1],param_1);
   if (*(int *)(in_ECX + 0xe4) == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(in_ECX + 0xe4) = *(int *)(in_ECX + 0xe4) + 1;
@@ -43416,6 +43726,7 @@ void std_list_alloc_sentinel_0x34(void)
   pvVar1 = operator_new(0x34);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x006391ee. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -43675,6 +43986,7 @@ void std_vector_destroy_ptr_elems_stride3(undefined4 *param_1,undefined4 *param_
     if ((void *)*param_1 != (void *)0x0) break;
     param_1 = param_1 + 3;
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*param_1);
 }
 
@@ -43700,6 +44012,7 @@ void std_map_rb_insert_rebalance_vec2(undefined4 *param_1,char param_2,undefined
   int *piVar6;
   
   if (0x9249247 < (uint)in_ECX[1]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -44115,6 +44428,7 @@ LAB_0063a422:
   }
   if ((*puVar4 <= (uint)_param_2[4]) &&
      ((*puVar4 < (uint)_param_2[4] || (puVar4[1] <= (uint)_param_2[5])))) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_0063a441:
@@ -44183,6 +44497,7 @@ void std_set_insert_at_pos_uint(undefined4 *param_1,char param_2,uint *param_3,v
     rbtree_iteratorIncrement();
   }
   if (*puVar2 <= (uint)_param_2[4]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_0063a573:
@@ -44253,6 +44568,7 @@ undefined4 * std_vector_move_assign_stride3(undefined4 *param_1,undefined4 *para
   do {
     if (param_3 != param_1) {
       if ((void *)*param_3 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*param_3);
       }
       *param_3 = *param_1;
@@ -44644,6 +44960,7 @@ int * std_vector_assign_range_stride0xc(int *param_1)
             ExceptionList = &local_10;
             local_14 = (undefined1 *)&uStack_3c;
             std_vector_destroy_ptr_elems_stride3(iVar8,in_ECX[1],&local_15,param_1);
+                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*in_ECX);
           }
           ExceptionList = &local_10;
@@ -44749,6 +45066,7 @@ uint std_vector_allocate_stride0x10(uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0xfffffff < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x10);
@@ -44759,6 +45077,7 @@ uint std_vector_allocate_stride0x10(uint param_1)
     in_ECX[2] = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -44784,12 +45103,14 @@ void std_vector_grow_realloc_stride4(uint param_1)
       _Dst = operator_new(param_1 * 4);
       if (_Dst != (void *)0x0) goto LAB_0063da55;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0063da55:
   memmove(_Dst,(void *)*in_ECX,in_ECX[1] - (int)*in_ECX & 0xfffffffc);
   pvVar1 = (void *)*in_ECX;
   if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)((int)_Dst + param_1 * 4);
@@ -44828,6 +45149,7 @@ void std_vector_grow_realloc_stride0x34(void *param_1)
       pvVar2 = operator_new((int)param_1 * 0x34);
       if (pvVar2 != (void *)0x0) goto LAB_0063db01;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0063db01:
@@ -44835,6 +45157,7 @@ LAB_0063db01:
   std_uninitialized_copy_records_0xd_v2(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (void *)*in_ECX;
   if (param_1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   in_ECX[2] = (void *)(uVar1 * 0x34 + (int)pvVar2);
@@ -44875,6 +45198,7 @@ void std_vector_grow_realloc_stride0xc(uint param_1)
       pvVar3 = operator_new(param_1 * 0xc);
       if (pvVar3 != (void *)0x0) goto LAB_0063dbef;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0063dbef:
@@ -44883,6 +45207,7 @@ LAB_0063dbef:
   iVar1 = *in_ECX;
   if (*in_ECX != 0) {
     std_vector_destroy_ptr_elems_stride3(*in_ECX,in_ECX[1],(int)&param_1 + 3,param_1);
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar3;
@@ -44911,6 +45236,7 @@ void std_vector_reserve_stride4(uint param_1)
     return;
   }
   if (0x3fffffffU - (in_ECX[1] - *in_ECX >> 2) < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 2;
@@ -44941,6 +45267,7 @@ void std_vector_reserve_stride0x34(uint param_1)
     return;
   }
   if (0x4ec4ec4U - (in_ECX[1] - *in_ECX) / 0x34 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0x34;
@@ -44971,6 +45298,7 @@ void std_vector_reserve_stride0xc(uint param_1)
     return;
   }
   if (0x15555555U - (in_ECX[1] - *in_ECX) / 0xc < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0xc;
@@ -45002,6 +45330,7 @@ void * std_allocator_allocate_stride0xc(uint param_1)
   if ((param_1 < 0x15555556) && (pvVar1 = operator_new(param_1 * 0xc), pvVar1 != (void *)0x0)) {
     return pvVar1;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -45315,11 +45644,13 @@ void std_map_rb_insert_rebalance_int(undefined4 *param_1,char param_2,undefined4
   
   if (0x5d1745b < (uint)in_ECX[1]) {
     if (0xf < (uint)param_5[10]) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)param_5[5]);
     }
     param_5[10] = 0xf;
     param_5[9] = 0;
     *(undefined1 *)(param_5 + 5) = 0;
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -45627,8 +45958,10 @@ void std_map_insert_at_pos_int(undefined4 *param_1,char param_2,int *param_3,voi
       *(undefined4 *)((int)param_4 + 0x28) = 0xf;
       *(undefined4 *)((int)param_4 + 0x24) = 0;
       *(undefined1 *)((int)param_4 + 0x14) = 0;
+                    /* WARNING: Subroutine does not return */
       operator_delete(param_4);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_4 + 0x14));
   }
 LAB_0064bc31:
@@ -45818,12 +46151,14 @@ void std_map_ensure_key(int *param_1)
     iVar2 = std_list_make_node_worldinfo(&local_30);
     std_map_insert_unique_hint_int(local_4c,puVar5,iVar2 + 0x10,iVar2);
     if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_18 = 0xf;
     local_1c = 0;
     local_2c[0] = (void *)((uint)local_2c[0] & 0xffffff00);
     if (0xf < local_34) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_48[0]);
     }
   }
@@ -45902,12 +46237,14 @@ void std_map_ensure_key_v2(int *param_1)
     iVar2 = std_list_make_node_worldinfo(&local_30);
     std_map_insert_unique_hint_int(local_4c,puVar5,iVar2 + 0x10,iVar2);
     if (0xf < local_18) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_18 = 0xf;
     local_1c = 0;
     local_2c[0] = (void *)((uint)local_2c[0] & 0xffffff00);
     if (0xf < local_34) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_48[0]);
     }
   }
@@ -45942,6 +46279,7 @@ uint std_vector_allocate(uint param_1)
   }
   pvVar1 = operator_new(param_1);
   if (pvVar1 == (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *in_ECX = pvVar1;
@@ -45967,6 +46305,7 @@ void std_list_alloc_sentinel_0x2c(void)
   pvVar1 = operator_new(0x2c);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0064e37e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -46008,6 +46347,7 @@ void std_list_alloc_sentinel_0x44(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -46084,6 +46424,7 @@ void std_vector_insert_n_stride0x10(int *param_1,int param_2,uint param_3,undefi
       iVar6 = iVar6 - iVar1 >> 4;
       if (0xfffffffU - iVar6 < param_3) {
         local_14 = (undefined1 *)&uStack_4c;
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_14 = (undefined1 *)&uStack_4c;
@@ -46091,6 +46432,7 @@ void std_vector_insert_n_stride0x10(int *param_1,int param_2,uint param_3,undefi
       local_38 = (void *)0x0;
       if ((uVar4 != 0) &&
          ((0xfffffff < uVar4 || (local_38 = operator_new(uVar4 << 4), local_38 == (void *)0x0)))) {
+                    /* WARNING: Subroutine does not return */
         std::_Xbad_alloc();
       }
       iVar6 = param_2 - *in_ECX >> 4;
@@ -46101,6 +46443,7 @@ void std_vector_insert_n_stride0x10(int *param_1,int param_2,uint param_3,undefi
                    param_1);
       pvVar2 = (void *)*in_ECX;
       if (pvVar2 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(pvVar2);
       }
       in_ECX[2] = (int)(uVar4 * 0x10 + (int)local_38);
@@ -46158,6 +46501,7 @@ void std_list_append_node_pair(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = std_list_make_node_copy_pair_v2(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x4924923) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -46185,6 +46529,7 @@ void std_list_append_node_worldinfo(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = std_list_make_node_copy_pair(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x3c3c3c2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -46313,6 +46658,7 @@ void Widget_deserialize_children_tree(basic_istream<char,std::char_traits<char>_
           local_68 = Container_resetAndInsert(uVar7);
           local_8 = 0xffffffff;
           if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_2c[0]);
           }
           local_18 = 7;
@@ -46416,6 +46762,7 @@ void Widget_deserialize_children_tree(basic_istream<char,std::char_traits<char>_
     local_8 = CONCAT31(local_8._1_3_,2);
     local_68 = Container_resetAndInsert(uVar7);
     if (7 < local_48) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -46427,6 +46774,7 @@ void Widget_deserialize_children_tree(basic_istream<char,std::char_traits<char>_
     local_34 = 0;
     local_44[0] = (void *)((uint)local_44[0] & 0xffffff00);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(local_44[0]);
 }
 
@@ -46474,6 +46822,7 @@ void istream_read_wstring(undefined4 param_1,basic_istream<char,std::char_traits
   operator_delete__(pcVar2);
   u16string_moveConstruct(local_20);
   if (7 < local_c) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_20[0]);
   }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -46692,8 +47041,10 @@ void RBTree_insertNodeRebalance(undefined4 *param_1,char param_2,undefined4 *par
   
   if (0x6666664 < (uint)in_ECX[1]) {
     if ((void *)param_5[6] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
       operator_delete((void *)param_5[6]);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -47029,8 +47380,10 @@ LAB_0065a74e:
        (((iVar3 < iVar2 || (piVar4[1] < param_2[5])) ||
         (cVar5 = lexicographicalLess(param_2[6],param_2[7],piVar4[2],piVar4[3]), cVar5 == '\0')))))))) {
     if (*(void **)((int)param_4 + 0x18) == (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(param_4);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_4 + 0x18));
   }
 LAB_0065a774:
@@ -47146,6 +47499,7 @@ int * std_map_insertOrAssignMoveVal(int *param_1)
   std_map_insertWithHint(&param_1,piVar5,iVar6 + 0x10,iVar6);
   piVar5 = param_1;
   if (local_20 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
 LAB_0065ad5d:
@@ -47175,6 +47529,7 @@ undefined4 std_vector_allocateN(uint param_1)
     return 0;
   }
   if (0x3fffffff < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 4);
@@ -47185,6 +47540,7 @@ undefined4 std_vector_allocateN(uint param_1)
     in_ECX[2] = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -47205,6 +47561,7 @@ void RBTree_allocSentinelNode(void)
   pvVar1 = operator_new(0x20);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0065ae8e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -47436,8 +47793,10 @@ void RBTree_destroyRecursive(void *param_1)
   }
   RBTree_destroyRecursive(*(undefined4 *)((int)param_1 + 8));
   if (*(void **)((int)param_1 + 0x18) != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x18));
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -47531,8 +47890,10 @@ void std_list_clearNodes(void)
     return;
   }
   if (*(void **)((int)pvVar2 + 0x10) != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)pvVar2 + 0x10));
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar2);
 }
 
@@ -47647,6 +48008,7 @@ void Font_layoutAndDrawGlyphs(undefined4 *param_1,float param_2,float param_3,un
     iVar11 = *(int *)(iVar10 + 0x144);
     iVar5 = map_insertVec4Node(iVar11,*(undefined4 *)(iVar11 + 4),iVar10 + 0x15c);
     if (*(int *)(iVar10 + 0x148) == 0xaaaaaa9) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(iVar10 + 0x148) = *(int *)(iVar10 + 0x148) + 1;
@@ -47656,6 +48018,7 @@ void Font_layoutAndDrawGlyphs(undefined4 *param_1,float param_2,float param_3,un
     iVar11 = *(int *)(iVar10 + 0x14c);
     iVar5 = map_insertVec4Node(iVar11,*(undefined4 *)(iVar11 + 4),iVar10 + 0x16c);
     if (*(int *)(iVar10 + 0x150) == 0xaaaaaa9) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(iVar10 + 0x150) = *(int *)(iVar10 + 0x150) + 1;
@@ -47665,6 +48028,7 @@ void Font_layoutAndDrawGlyphs(undefined4 *param_1,float param_2,float param_3,un
     iVar11 = *(int *)(iVar10 + 0x154);
     iVar5 = map_insertVec4Node(iVar11,*(undefined4 *)(iVar11 + 4),iVar10 + 0x17c);
     if (*(int *)(iVar10 + 0x158) == 0xaaaaaa9) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(iVar10 + 0x158) = *(int *)(iVar10 + 0x158) + 1;
@@ -47986,6 +48350,7 @@ LAB_0065ceb3:
       if (piVar17 != *(int **)(iVar3 + 0x144)) {
         *(int *)piVar17[1] = *piVar17;
         *(int *)(*piVar17 + 4) = piVar17[1];
+                    /* WARNING: Subroutine does not return */
         operator_delete(piVar17);
       }
     }
@@ -48000,6 +48365,7 @@ LAB_0065ceb3:
       if (piVar17 != *(int **)(iVar3 + 0x14c)) {
         *(int *)piVar17[1] = *piVar17;
         *(int *)(*piVar17 + 4) = piVar17[1];
+                    /* WARNING: Subroutine does not return */
         operator_delete(piVar17);
       }
     }
@@ -48014,6 +48380,7 @@ LAB_0065ceb3:
       if (piVar17 != *(int **)(iVar3 + 0x154)) {
         *(int *)piVar17[1] = *piVar17;
         *(int *)(*piVar17 + 4) = piVar17[1];
+                    /* WARNING: Subroutine does not return */
         operator_delete(piVar17);
       }
     }
@@ -48116,6 +48483,7 @@ void RBTree_eraseNodeRebalance(undefined4 param_1,int *param_2)
   int *piVar6;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -48224,8 +48592,10 @@ LAB_0065d320:
   }
 LAB_0065d37e:
   if ((void *)param_2[6] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[6]);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -48462,16 +48832,19 @@ void Font_rasterizeGlyphBitmap(int *param_1,ushort param_2,char param_3)
           fVar13 = (float)(**(code **)(**(int **)(local_58 + 4) + 8))
                                     (iVar3,iVar11,local_88,(int)&local_78 + 4,uVar7,1);
           if (7 < local_18) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_2c[0]);
           }
           local_18 = 7;
           local_1c = 0;
           local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
           if (7 < local_30) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_44);
           }
           local_8 = 0xffffffff;
           if (local_88 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_88);
           }
         }
@@ -48756,17 +49129,20 @@ void Font_rasterizeGlyph3D(undefined4 *param_1,ushort param_2,char param_3)
           local_e4 = (float)(**(code **)(**(int **)(local_c4 + 4) + 8))
                                       (fVar19,iVar7,local_b8,&local_34,uVar9,1);
           if (7 < uStack_94) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_a8[0]);
           }
           uStack_94 = 7;
           uStack_98 = 0;
           local_a8[0] = (void *)((uint)local_a8[0] & 0xffff0000);
           if (7 < uStack_38) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(local_4c);
           }
           local_c = 0xffffffff;
           fVar16 = fVar19;
           if (pvVar5 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
             operator_delete(pvVar5);
           }
         }
@@ -48981,8 +49357,10 @@ void std_map_lowerBoundInsertHint(undefined4 *param_1,undefined4 *param_2,undefi
       *(undefined4 *)((int)param_4 + 0x24) = 7;
       *(undefined4 *)((int)param_4 + 0x20) = 0;
       *(undefined2 *)((int)param_4 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
       operator_delete(param_4);
     }
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_4 + 0x10));
   }
 LAB_006613ae:
@@ -49032,8 +49410,10 @@ void std_map_copyAssign(int param_1)
       puVar6 = (undefined4 *)piVar7[10];
       if (puVar6 != (undefined4 *)0x0) {
         if ((void *)*puVar6 == (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
           operator_delete(puVar6);
         }
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar6);
       }
       if (*(char *)((int)piVar7 + 0xd) == '\0') {
@@ -49158,6 +49538,7 @@ void std_map_getOrInsertByKey(int param_1)
   iVar3 = MapNode_CreateA(local_30);
   std_map_insert_hint_string(local_34,iVar1,iVar3 + 0x10,iVar3);
   if (7 < local_1c) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_30[0]);
   }
 LAB_006618ea:
@@ -49183,11 +49564,13 @@ void std_map_eraseTreeRec(void *param_1)
   }
   std_map_eraseTreeRec(*(undefined4 *)((int)param_1 + 8));
   if (7 < *(uint *)((int)param_1 + 0x24)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x10));
   }
   *(undefined4 *)((int)param_1 + 0x24) = 7;
   *(undefined4 *)((int)param_1 + 0x20) = 0;
   *(undefined2 *)((int)param_1 + 0x10) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -49285,6 +49668,7 @@ void std_rbtree_eraseNode(undefined4 param_1,int *param_2)
   int *piVar6;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -49393,11 +49777,13 @@ LAB_00661ce0:
   }
 LAB_00661d3e:
   if (7 < (uint)param_2[9]) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[4]);
   }
   param_2[9] = 7;
   param_2[8] = 0;
   *(undefined2 *)(param_2 + 4) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -49559,6 +49945,7 @@ void std_Rb_tree_Insert_rebalance(undefined4 *param_1,char param_2,undefined4 *p
   int *piVar7;
   
   if (0xaaaaaa8 < (uint)in_ECX[1]) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   piVar3 = (int *)map_insertPairNode(param_4);
@@ -50011,8 +50398,10 @@ undefined4 * std_map_operator_667a90(int *param_1)
   *local_24 = local_24;
   local_24[1] = local_24;
   if (puVar2 != local_24) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(puVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(local_24);
 }
 
@@ -50166,12 +50555,14 @@ void std_vector_Insert_n_4byte(int *param_1,undefined4 *param_2,void *param_3,un
     if ((uint)(in_ECX[2] - (int)pvVar2 >> 2) < param_3) {
       iVar6 = (int)pvVar2 - *in_ECX >> 2;
       if (0x3fffffffU - iVar6 < param_3) {
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       uVar4 = vector_growCap_stride4(iVar6 + (int)param_3);
       param_3 = (void *)0x0;
       if ((uVar4 != 0) &&
          ((0x3fffffff < uVar4 || (param_3 = operator_new(uVar4 << 2), param_3 == (void *)0x0)))) {
+                    /* WARNING: Subroutine does not return */
         std::_Xbad_alloc();
       }
       iVar6 = (int)param_2 - *in_ECX >> 2;
@@ -50185,6 +50576,7 @@ void std_vector_Insert_n_4byte(int *param_1,undefined4 *param_2,void *param_3,un
               in_ECX[1] - (int)param_2 & 0xfffffffc);
       pvVar2 = (void *)*in_ECX;
       if (pvVar2 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(pvVar2);
       }
       *in_ECX = (int)param_3;
@@ -50278,6 +50670,7 @@ void std_vector_Insert_n_0x40(int *param_1,int param_2,uint param_3,undefined4 *
       if (0x3ffffffU - iVar4 < param_3) {
         param_3 = iVar7;
         local_14 = (undefined1 *)&uStack_70;
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       iVar4 = iVar4 + param_3;
@@ -50287,6 +50680,7 @@ void std_vector_Insert_n_0x40(int *param_1,int param_2,uint param_3,undefined4 *
       if ((local_20 != 0) &&
          ((0x3ffffff < local_20 || (local_18 = operator_new(local_20 << 6), local_18 == (void *)0x0)
           ))) {
+                    /* WARNING: Subroutine does not return */
         std::_Xbad_alloc();
       }
       iVar7 = param_2 - *in_ECX >> 6;
@@ -50299,6 +50693,7 @@ void std_vector_Insert_n_0x40(int *param_1,int param_2,uint param_3,undefined4 *
                    (int)&param_4 + 3,0,param_2);
       pvVar1 = (void *)*in_ECX;
       if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(pvVar1);
       }
       in_ECX[2] = (int)(local_20 * 0x40 + (int)piVar3);
@@ -50390,6 +50785,7 @@ void std_vector_Insert_n_8byte(int *param_1,undefined8 *param_2,uint param_3,und
       iVar7 = iVar7 - *in_ECX >> 3;
       if (0x1fffffffU - iVar7 < param_3) {
         local_14 = (undefined1 *)&local_40;
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_14 = (undefined1 *)&local_40;
@@ -50398,6 +50794,7 @@ void std_vector_Insert_n_8byte(int *param_1,undefined8 *param_2,uint param_3,und
       if ((uVar4 != 0) &&
          ((0x1fffffff < uVar4 || (pvStack_1c = operator_new(uVar4 * 8), pvStack_1c == (void *)0x0)))
          ) {
+                    /* WARNING: Subroutine does not return */
         std::_Xbad_alloc();
       }
       iVar7 = (int)param_2 - *in_ECX >> 3;
@@ -50409,6 +50806,7 @@ void std_vector_Insert_n_8byte(int *param_1,undefined8 *param_2,uint param_3,und
                    param_1);
       pvVar1 = (void *)*in_ECX;
       if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(pvVar1);
       }
       *in_ECX = (int)pvVar2;
@@ -50502,6 +50900,7 @@ void std_vector_Insert_n_0xc(int *param_1,int param_2,uint param_3,undefined4 *p
       iVar2 = (iVar2 - *in_ECX) / 0xc;
       if (0x15555555U - iVar2 < param_3) {
         local_14 = (undefined1 *)&uStack_4c;
+                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_14 = (undefined1 *)&uStack_4c;
@@ -50514,6 +50913,7 @@ void std_vector_Insert_n_0xc(int *param_1,int param_2,uint param_3,undefined4 *p
       std_Uninitialized_copy_0xc(param_2,in_ECX[1],iVar5 + (iVar2 + param_3) * 0xc,&local_25,0,param_1);
       iVar2 = *in_ECX;
       if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*in_ECX);
       }
       *in_ECX = iVar5;
@@ -50581,6 +50981,7 @@ void std_vector_Reallocate_0xc(uint param_1)
       pvVar2 = operator_new(param_1 * 0xc);
       if (pvVar2 != (void *)0x0) goto LAB_006689af;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_006689af:
@@ -50588,6 +50989,7 @@ LAB_006689af:
   std_Uninitialized_copy_0xc(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0xc;
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar2;
@@ -50848,6 +51250,7 @@ void std_vector_Reallocate_0xc_v2(uint param_1)
       pvVar2 = operator_new(param_1 * 0xc);
       if (pvVar2 != (void *)0x0) goto LAB_00672edf;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00672edf:
@@ -50855,6 +51258,7 @@ LAB_00672edf:
   std_uninitialized_copy_vec3i(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0xc;
   if ((void *)*in_ECX != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar2;
@@ -50883,6 +51287,7 @@ void std_vector_Reserve_0xc(uint param_1)
     return;
   }
   if (0x15555555U - (in_ECX[1] - *in_ECX) / 0xc < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0xc;
@@ -51124,6 +51529,7 @@ void std_vector_Assign_range_0xc(int *param_1)
         if ((uint)((in_ECX[2] - (int)pvVar2) / 0xc) < uVar4) {
           if (pvVar2 != (void *)0x0) {
             param_1 = (int *)uVar4;
+                    /* WARNING: Subroutine does not return */
             operator_delete(pvVar2);
           }
           piVar1 = param_1 + 1;
@@ -51292,6 +51698,7 @@ void std_vector_destroyRange(undefined4 *param_1,undefined4 *param_2)
     *(undefined2 *)param_1 = 0;
     param_1 = param_1 + 7;
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*param_1);
 }
 
@@ -51362,6 +51769,7 @@ void std_vector_reallocate_677d10(uint param_1)
       pvVar3 = operator_new(param_1 * 0x1c);
       if (pvVar3 != (void *)0x0) goto LAB_00677d75;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00677d75:
@@ -51370,6 +51778,7 @@ LAB_00677d75:
   iVar1 = *in_ECX;
   if (*in_ECX != 0) {
     std_vector_destroyRange(*in_ECX,in_ECX[1],(int)&param_1 + 3,param_1);
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar3;
@@ -51401,6 +51810,7 @@ int std_vector_growIfNeeded(uint param_1)
   if ((uint)(iVar3 / 0x1c) < param_1) {
     iVar2 = (in_ECX[1] - *in_ECX) / 0x1c;
     if (0x9249249U - iVar2 < param_1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = std_vector_Calculate_growth_5aee40(iVar2 + param_1);
@@ -51466,6 +51876,7 @@ void std_vector_findOrAppendNamed(undefined4 *param_1,int param_2)
   local_8 = 0;
   std_vector_insertAt(local_30);
   if (7 < local_1c) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_30[0]);
   }
 LAB_00677f7a:
@@ -51543,6 +51954,7 @@ void std_Tree_allocHeadSentinel(void)
   pvVar1 = operator_new(0x14);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0067852e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -51604,6 +52016,7 @@ int * std_vector_assignRange(int *param_1)
       return in_ECX;
     }
     if (_Dst != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
       operator_delete(_Dst);
     }
     cVar1 = std_vector_allocateN(param_1[1] - *param_1 >> 2);
@@ -51633,6 +52046,7 @@ void std_list_clear_67e480(void)
   pvVar1 = *(void **)(*in_ECX + 4);
   if (*(char *)((int)pvVar1 + 0xd) == '\0') {
     rbtree_destroyRec_simple(*(undefined4 *)((int)pvVar1 + 8));
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   *(int *)(*in_ECX + 4) = *in_ECX;
@@ -51976,8 +52390,10 @@ undefined4 * std_map_findOrInsert(uint *param_1)
   *local_24 = local_24;
   local_24[1] = local_24;
   if (puVar2 != local_24) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(puVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(local_24);
 }
 
@@ -51998,6 +52414,7 @@ undefined4 * std_list_allocNode(void)
   
   puVar1 = operator_new(0x1c);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -52031,8 +52448,10 @@ void std_Tree_destroyHead(int param_1)
   *(int *)(*(int *)(param_1 + 0x14) + 4) = *(int *)(param_1 + 0x14);
   *(undefined4 *)(param_1 + 0x18) = 0;
   if (pvVar2 != *(void **)(param_1 + 0x14)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
+                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(param_1 + 0x14));
 }
 
@@ -52058,12 +52477,14 @@ void std_vector_reallocate8byte(uint param_1)
       _Dst = operator_new(param_1 * 8);
       if (_Dst != (void *)0x0) goto LAB_00681aa5;
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00681aa5:
   memmove(_Dst,(void *)*in_ECX,in_ECX[1] - (int)*in_ECX & 0xfffffff8);
   pvVar1 = (void *)*in_ECX;
   if (pvVar1 != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)((int)_Dst + param_1 * 8);
@@ -52091,6 +52512,7 @@ void std_vector_growIfNeeded8byte(uint param_1)
     return;
   }
   if (0x1fffffffU - (in_ECX[1] - *in_ECX >> 3) < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 3;
@@ -52127,17 +52549,20 @@ void std_list_clearNodesWithStrings(void)
     return;
   }
   if (0xf < *(uint *)((int)pvVar2 + 0x34)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)pvVar2 + 0x20));
   }
   *(undefined4 *)((int)pvVar2 + 0x34) = 0xf;
   *(undefined4 *)((int)pvVar2 + 0x30) = 0;
   *(undefined1 *)((int)pvVar2 + 0x20) = 0;
   if (0xf < *(uint *)((int)pvVar2 + 0x1c)) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)pvVar2 + 8));
   }
   *(undefined4 *)((int)pvVar2 + 0x1c) = 0xf;
   *(undefined4 *)((int)pvVar2 + 0x18) = 0;
   *(undefined1 *)((int)pvVar2 + 8) = 0;
+                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar2);
 }
 
@@ -52234,6 +52659,7 @@ void StreamReader_readWString(void)
   operator_delete__(pcVar2);
   u16string_moveConstruct(local_20);
   if (7 < local_c) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(local_20[0]);
   }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -52266,6 +52692,7 @@ void list_allocNode(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -59598,6 +60025,7 @@ LAB_006d2121:
 
 /* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
 /* WARNING: Unable to track spacebase fully for stack */
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 vorbis_build_codebook_table(void)
 

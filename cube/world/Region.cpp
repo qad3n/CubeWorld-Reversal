@@ -1,4 +1,4 @@
-// Region (world) — cube. 4 functions. Bodies = Ghidra pseudo-C.
+// Region (world) — cube. 3 functions. Bodies = Ghidra pseudo-C.
 #include "Region.h"
 
 /* cube::Region::ctor_0 @ 005c3ac0 */
@@ -48,47 +48,6 @@ void cube::Region::ctor_0(void)
 
 
 
-/* [AUDIT] proposed: Region_ctor  (confidence: high)
- * purpose: Region constructor: zero-inits ~0x60-byte struct, sets flag [9]=1
- * vars: class Region; field[9]=1 default
- */
-/* Global::Region_ctor @ 005c3bb0 */
-
-void Region_ctor(void)
-
-{
-  undefined4 *self;
-  
-  *self = 0;
-  self[1] = 0;
-  self[2] = 0;
-  self[3] = 0;
-  self[4] = 0;
-  self[5] = 0;
-  self[6] = 0;
-  self[7] = 0;
-  self[8] = 0;
-  self[9] = 1;
-  self[10] = 0;
-  self[0xb] = 0;
-  self[0xc] = 0;
-  self[0xd] = 0;
-  self[0xe] = 0;
-  self[0xf] = 0;
-  *(undefined2 *)(self + 0x10) = 0;
-  self[0x11] = 0;
-  self[0x12] = 0;
-  self[0x13] = 0;
-  self[0x14] = 0;
-  self[0x15] = 0;
-  self[0x16] = 0;
-  *(undefined1 *)(self + 0x17) = 0;
-  return;
-}
-
-
-
-
 /* cube::Region::ctor_1 @ 005c3cc0 */
 
 void cube::Region::ctor_1(void)
@@ -126,6 +85,7 @@ void cube::Region::ctor_1(void)
   } while (row != 0);
   local_8 = 0xffffffff;
   std_Tree_eraseRange(&local_14,*(undefined4 *)local_14[0x5687],(undefined4 *)local_14[0x5687]);
+                    /* WARNING: Subroutine does not return */
   operator_delete((void *)local_14[0x5687]);
 }
 
@@ -141,6 +101,7 @@ void cube::Region::vfunc_0(byte flags)
   
   ctor_1();
   if ((flags & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

@@ -599,6 +599,7 @@ LAB_0042d427:
       pvVar7 = *(void **)(*(int *)((int)fVar23 + 0x13a4) + 4);
       if (*(char *)((int)pvVar7 + 0xd) == '\0') {
         rbtree_destroyRec_simple(*(undefined4 *)((int)pvVar7 + 8));
+                    /* WARNING: Subroutine does not return */
         operator_delete(pvVar7);
       }
       *(int *)(*distance + 4) = *distance;
@@ -717,6 +718,7 @@ LAB_0042d427:
       fVar23 = fStack_218;
       fVar24 = fStack_21c;
       if (pvStack_2ac != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
         operator_delete(pvStack_2ac);
       }
     }
@@ -1908,6 +1910,7 @@ void CombatBehavior_pushHitEntry(int projectile,undefined8 *pos,int entity)
   local_20 = local_28;
   node = map_insertVal_5x64payload(list,*(undefined4 *)(list + 4),&hitInfo);
   if (*(int *)(entity + 0x5c) == 0x5555554) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(entity + 0x5c) = *(int *)(entity + 0x5c) + 1;
@@ -2090,6 +2093,7 @@ void CombatController_acquireNearbyTargets(int attacker,int target,int behavior)
     __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 

@@ -1,4 +1,4 @@
-// Spawn (world) — cube. 5 functions. Bodies = Ghidra pseudo-C.
+// Spawn (world) — cube. 4 functions. Bodies = Ghidra pseudo-C.
 #include "Spawn.h"
 
 /* [AUDIT] proposed: Spawn_initDefaults  (confidence: med)
@@ -60,127 +60,6 @@ void Spawn_initDefaults(void)
   self[0x28] = 0;
   self[0x29] = 0;
   self[0x2a] = 0;
-  return;
-}
-
-
-
-
-/* [AUDIT] proposed: Spawn::initNameArrays  (confidence: med)
- * purpose: Zero-inits Spawn struct with ~14 repeated 0x100 memset blocks + string-slot headers (NPC name/attr arrays)
- * vars: repeated 0x100 memset, cap short=1
- */
-/* Global::Spawn_initNameArrays @ 0043bc00 */
-
-void Spawn_initNameArrays(void)
-
-{
-  undefined2 *self;
-  
-  *self = 0;
-  *(undefined4 *)(self + 2) = 0;
-  *(undefined4 *)(self + 4) = 0;
-  self[6] = 0;
-  *(undefined1 *)(self + 7) = 0;
-  self[8] = 1;
-  *(undefined4 *)(self + 0x8a) = 0;
-  memset(self + 10,0,0x100);
-  self[0x8c] = 0;
-  *(undefined4 *)(self + 0x8e) = 0;
-  *(undefined4 *)(self + 0x90) = 0;
-  self[0x92] = 0;
-  *(undefined1 *)(self + 0x93) = 0;
-  self[0x94] = 1;
-  *(undefined4 *)(self + 0x116) = 0;
-  memset(self + 0x96,0,0x100);
-  self[0x118] = 0;
-  *(undefined4 *)(self + 0x11a) = 0;
-  *(undefined4 *)(self + 0x11c) = 0;
-  self[0x11e] = 0;
-  *(undefined1 *)(self + 0x11f) = 0;
-  self[0x120] = 1;
-  *(undefined4 *)(self + 0x1a2) = 0;
-  memset(self + 0x122,0,0x100);
-  self[0x1a4] = 0;
-  *(undefined4 *)(self + 0x1a6) = 0;
-  *(undefined4 *)(self + 0x1a8) = 0;
-  self[0x1aa] = 0;
-  *(undefined1 *)(self + 0x1ab) = 0;
-  self[0x1ac] = 1;
-  *(undefined4 *)(self + 0x22e) = 0;
-  memset(self + 0x1ae,0,0x100);
-  self[0x230] = 0;
-  *(undefined4 *)(self + 0x232) = 0;
-  *(undefined4 *)(self + 0x234) = 0;
-  self[0x236] = 0;
-  *(undefined1 *)(self + 0x237) = 0;
-  self[0x238] = 1;
-  *(undefined4 *)(self + 0x2ba) = 0;
-  memset(self + 0x23a,0,0x100);
-  self[700] = 0;
-  *(undefined4 *)(self + 0x2be) = 0;
-  *(undefined4 *)(self + 0x2c0) = 0;
-  self[0x2c2] = 0;
-  *(undefined1 *)(self + 0x2c3) = 0;
-  self[0x2c4] = 1;
-  *(undefined4 *)(self + 0x346) = 0;
-  memset(self + 0x2c6,0,0x100);
-  self[0x348] = 0;
-  *(undefined4 *)(self + 0x34a) = 0;
-  *(undefined4 *)(self + 0x34c) = 0;
-  self[0x34e] = 0;
-  *(undefined1 *)(self + 0x34f) = 0;
-  self[0x350] = 1;
-  *(undefined4 *)(self + 0x3d2) = 0;
-  memset(self + 0x352,0,0x100);
-  self[0x3d4] = 0;
-  *(undefined4 *)(self + 0x3d6) = 0;
-  *(undefined4 *)(self + 0x3d8) = 0;
-  self[0x3da] = 0;
-  *(undefined1 *)(self + 0x3db) = 0;
-  self[0x3dc] = 1;
-  *(undefined4 *)(self + 0x45e) = 0;
-  memset(self + 0x3de,0,0x100);
-  self[0x460] = 0;
-  *(undefined4 *)(self + 0x462) = 0;
-  *(undefined4 *)(self + 0x464) = 0;
-  self[0x466] = 0;
-  *(undefined1 *)(self + 0x467) = 0;
-  self[0x468] = 1;
-  *(undefined4 *)(self + 0x4ea) = 0;
-  memset(self + 0x46a,0,0x100);
-  self[0x4ec] = 0;
-  *(undefined4 *)(self + 0x4ee) = 0;
-  *(undefined4 *)(self + 0x4f0) = 0;
-  self[0x4f2] = 0;
-  *(undefined1 *)(self + 0x4f3) = 0;
-  self[0x4f4] = 1;
-  *(undefined4 *)(self + 0x576) = 0;
-  memset(self + 0x4f6,0,0x100);
-  self[0x578] = 0;
-  *(undefined4 *)(self + 0x57a) = 0;
-  *(undefined4 *)(self + 0x57c) = 0;
-  self[0x57e] = 0;
-  *(undefined1 *)(self + 0x57f) = 0;
-  self[0x580] = 1;
-  *(undefined4 *)(self + 0x602) = 0;
-  memset(self + 0x582,0,0x100);
-  self[0x604] = 0;
-  *(undefined4 *)(self + 0x606) = 0;
-  *(undefined4 *)(self + 0x608) = 0;
-  self[0x60a] = 0;
-  *(undefined1 *)(self + 0x60b) = 0;
-  self[0x60c] = 1;
-  *(undefined4 *)(self + 0x68e) = 0;
-  memset(self + 0x60e,0,0x100);
-  self[0x690] = 0;
-  *(undefined4 *)(self + 0x692) = 0;
-  *(undefined4 *)(self + 0x694) = 0;
-  self[0x696] = 0;
-  *(undefined1 *)(self + 0x697) = 0;
-  self[0x698] = 1;
-  *(undefined4 *)(self + 0x71a) = 0;
-  memset(self + 0x69a,0,0x100);
   return;
 }
 
@@ -255,19 +134,24 @@ void cube::Spawn::ctor_1(void)
   
   *in_ECX = vftable;
   if ((void *)in_ECX[0x427] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x427]);
   }
   if ((void *)in_ECX[0x42f] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x42f]);
   }
   if ((void *)in_ECX[0x42b] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x42b]);
   }
   if ((void *)in_ECX[0x428] != (void *)0x0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x428]);
   }
   if (in_ECX[0x3db] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x3db],in_ECX[0x3dc],&local_5);
+                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x3db]);
   }
   return;
@@ -285,6 +169,7 @@ void cube::Spawn::vfunc_0(byte flags)
   
   ctor_1();
   if ((flags & 1) != 0) {
+                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

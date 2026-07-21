@@ -408,6 +408,7 @@ void List_allocSentinel0x34(void)
   pvVar1 = operator_new(0x34);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x00407ade. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -440,6 +441,7 @@ void List_allocSentinel0x20(void)
   pvVar1 = operator_new(0x20);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x00407b0e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -472,6 +474,7 @@ void List_allocSentinel0x18(void)
   pvVar1 = operator_new(0x18);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x00407b3e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -513,6 +516,7 @@ void List_allocNode0x134(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -542,6 +546,7 @@ void List_allocNode0x30(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -571,6 +576,7 @@ void List_allocNode0x14(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -627,6 +633,7 @@ void __thiscall RBTree_eraseNode_plain(void *this,undefined4 *param_1,int *param
   
   piVar1 = param_2;
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&param_2);
@@ -787,6 +794,7 @@ void __thiscall vector_reallocate(void *this,uint param_1)
   
   _Dst = (void *)0x0;
   if ((param_1 != 0) && (_Dst = operator_new(param_1), _Dst == (void *)0x0)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   memmove(_Dst,*(void **)this,*(int *)((int)this + 4) - (int)*(void **)this);
@@ -824,6 +832,7 @@ void __thiscall vector_growToFit(void *this,uint param_1)
   }
   iVar2 = *(int *)this;
   if ((iVar2 - iVar1) - 1U < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar3 = *(int *)((int)this + 8) - iVar2;
@@ -1011,6 +1020,7 @@ void __thiscall U16String_reallocGrow(void *this,uint param_1,int param_2)
   local_18 = (void *)0x0;
   if ((uVar3 != 0) &&
      ((0x7fffffff < uVar3 || (local_18 = operator_new(uVar3 * 2), local_18 == (void *)0x0)))) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   if (param_2 != 0) {
@@ -1053,11 +1063,13 @@ int * __thiscall U16String_appendFill(void *this,uint param_1,undefined2 param_2
   
   iVar2 = *(int *)((int)this + 0x10);
   if (-iVar2 - 1U <= param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_1 != 0) {
     uVar1 = iVar2 + param_1;
     if (0x7ffffffe < uVar1) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if (*(uint *)((int)this + 0x14) < uVar1) {
@@ -1102,6 +1114,7 @@ int * __thiscall U16String_assignSubstr(void *this,int *param_1,uint param_2,uin
   uint uVar2;
   
   if ((uint)param_1[4] < param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar2 = param_1[4] - param_2;
@@ -1111,6 +1124,7 @@ int * __thiscall U16String_assignSubstr(void *this,int *param_1,uint param_2,uin
   if (this == param_1) {
     uVar2 = uVar2 + param_2;
     if (*(uint *)((int)this + 0x10) < uVar2) {
+                    /* WARNING: Subroutine does not return */
       std::_Xout_of_range("invalid string position");
     }
     *(uint *)((int)this + 0x10) = uVar2;
@@ -1123,6 +1137,7 @@ int * __thiscall U16String_assignSubstr(void *this,int *param_1,uint param_2,uin
     return this;
   }
   if (0x7ffffffe < uVar2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (*(uint *)((int)this + 0x14) < uVar2) {
@@ -1197,6 +1212,7 @@ int * __thiscall U16String_assignPtrCount(void *this,int *param_1,uint param_2)
     }
   }
   if (0x7ffffffe < param_2) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (*(uint *)((int)this + 0x14) < param_2) {
@@ -1248,6 +1264,7 @@ int * __thiscall U16String_erase(void *this,uint param_1,uint param_2)
   
   uVar1 = *(uint *)((int)this + 0x10);
   if (uVar1 < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   if (param_2 < uVar1 - param_1) {
@@ -1295,6 +1312,7 @@ uint __thiscall wstring_compareSubstr(void *this,uint param_1,uint param_2,ushor
   ushort *puVar2;
   
   if (*(uint *)((int)this + 0x10) < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar1 = *(uint *)((int)this + 0x10) - param_1;
@@ -1367,6 +1385,7 @@ void MapNode_allocSentinel40(void)
   pvVar1 = operator_new(0x28);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0041a06e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -1404,6 +1423,7 @@ void __thiscall RBTree_eraseNode(void *this,undefined4 *param_1,int *param_2)
   
   piVar2 = param_2;
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&param_2);
@@ -1661,6 +1681,7 @@ RBTree_insertRebalance_41a7b0(void *this,undefined4 *param_1,char param_2,undefi
   int *piVar7;
   
   if (0x6666664 < *(uint *)((int)this + 4)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   piVar3 = RBTree_buyNodeStr(this,param_4);
@@ -1846,6 +1867,7 @@ undefined4 * __fastcall RBTree_buyNode40(undefined4 *param_1)
   
   puVar1 = operator_new(0x28);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -2223,6 +2245,7 @@ std_map_insertRebalance_str2(void *this,undefined4 *param_1,char param_2,undefin
     param_5[9] = 0;
     *(undefined2 *)(param_5 + 5) = 0;
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -2390,6 +2413,7 @@ std_map_insertRebalance_SpeechNode(void *this,undefined4 *param_1,char param_2,u
   if (0x4924922 < *(uint *)((int)this + 4)) {
     Speech_mapNode_dtor(param_5 + 4);
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -2556,6 +2580,7 @@ std_map_insertRebalance_variantC(void *this,undefined4 *param_1,char param_2,und
   
   if (0x3fffffd < *(uint *)((int)this + 4)) {
     node_free_twoStrings(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -2737,6 +2762,7 @@ std_map_insertRebalance_QuestText(void *this,undefined4 *param_1,char param_2,un
     param_5[8] = 0;
     *(undefined2 *)(param_5 + 4) = 0;
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -3821,6 +3847,7 @@ void __thiscall std_list_appendCopy_strNodes(void *this,undefined4 *param_1,unde
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -3869,6 +3896,7 @@ LAB_0042aed5:
     puVar1 = *(undefined4 **)this;
     iVar2 = std_list_Speech_makeStrNode(puVar1,(undefined4 *)puVar1[1],param_1 + 2);
     if (*(int *)((int)this + 4) == 0x7fffffe) {
+                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -3934,6 +3962,7 @@ LAB_0042afcf:
     pfVar4 = local_14;
     if (uVar2 == 0xffffffff) {
       std::bad_cast::bad_cast(local_24,"bad cast");
+                    /* WARNING: Subroutine does not return */
       _CxxThrowException(local_24,(ThrowInfo *)&DAT_005779e4);
     }
     DAT_00583df0 = local_14;
@@ -4269,6 +4298,7 @@ void std_map_makeHeader_0x2c(void)
   pvVar1 = operator_new(0x2c);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0042ceae. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -4301,6 +4331,7 @@ void std_map_makeHeader_0x38(void)
   pvVar1 = operator_new(0x38);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0042cede. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -4332,6 +4363,7 @@ undefined4 * __fastcall std_map_allocRawNode_0x2c(undefined4 *param_1)
   
   puVar1 = operator_new(0x2c);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -4360,6 +4392,7 @@ undefined4 * __fastcall std_map_allocRawNode_0x38(undefined4 *param_1)
   
   puVar1 = operator_new(0x38);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -4388,6 +4421,7 @@ undefined4 * __fastcall std_map_allocRawNode_0x40(undefined4 *param_1)
   
   puVar1 = operator_new(0x40);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -4568,6 +4602,7 @@ void __thiscall std_strstreambuf_init(void *this,void *param_1,uint param_2,unde
         return;
       }
     }
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   return;
@@ -4826,6 +4861,7 @@ void __thiscall std_map_eraseNode_strNode(void *this,undefined4 *param_1,int *pa
   
   piVar2 = param_2;
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&param_2);
@@ -5061,6 +5097,7 @@ void std_map_eraseNode_SpeechNode(undefined4 *param_1,int *param_2)
   
   piVar1 = param_2;
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&param_2);
@@ -5309,6 +5346,7 @@ void __thiscall std_map_eraseNode_QuestText(void *this,undefined4 *param_1,int *
   local_10 = ExceptionList;
   ExceptionList = &local_10;
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&param_2);
@@ -5515,6 +5553,7 @@ void std_map_makeHeader_0x1c(void)
   pvVar1 = operator_new(0x1c);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0042f04e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -5679,6 +5718,7 @@ void __thiscall std_map_eraseNode_SpriteNode(void *this,undefined4 *param_1,int 
   
   piVar2 = param_2;
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&param_2);
@@ -9367,6 +9407,7 @@ LAB_0047fec5:
  */
 /* Global::sqlite3_mallocRaw @ 00480650 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 uint __cdecl sqlite3_mallocRaw(int param_1,int *param_2)
 
@@ -11430,6 +11471,7 @@ int __cdecl pager_commitPhaseOne(int *param_1,int param_2)
  */
 /* Global::pcache_allocPage @ 004868a0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 * __cdecl pcache_allocPage(int param_1)
 
@@ -13020,6 +13062,7 @@ int __cdecl btree_commitPhaseTwo(int *param_1,int param_2)
  */
 /* Global::btree_enter @ 0048fbc0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __cdecl btree_enter(undefined4 *param_1)
 
@@ -13073,6 +13116,7 @@ void __cdecl btree_enter(undefined4 *param_1)
  */
 /* Global::btree_enterAll @ 0048fca0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __cdecl btree_enterAll(int param_1)
 
@@ -15389,6 +15433,7 @@ void __cdecl sqlite3MallocAlarm(undefined4 param_1)
  */
 /* Global::pcache1Initialize @ 004a0440 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void __cdecl pcache1Initialize(undefined4 param_1)
 
@@ -15460,6 +15505,7 @@ void __cdecl pcache1Initialize(undefined4 param_1)
  */
 /* Global::sqlite3MutexInit @ 004a0cd0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void sqlite3MutexInit(void)
 
@@ -18167,6 +18213,7 @@ void __cdecl pcache1Free(undefined4 *param_1)
  */
 /* Global::pcache1Alloc @ 004a7d10 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 * __cdecl pcache1Alloc(int param_1)
 
@@ -21860,6 +21907,7 @@ int __cdecl sqlite3WalUndo_or_iterate(int param_1,undefined *param_2,undefined4 
  */
 /* Global::sqlite3_config @ 004bc440 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 __cdecl
 sqlite3_config(undefined4 param_1,undefined8 *param_2,undefined4 param_3,undefined4 param_4)
@@ -21982,6 +22030,7 @@ switchD_004bc47c_caseD_e:
  */
 /* Global::sqlite3_initialize @ 004bc920 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int sqlite3_initialize(void)
 
@@ -22090,6 +22139,7 @@ LAB_004bcae2:
  */
 /* Global::pcache1_init_systeminfo @ 004bcbc0 */
 
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 pcache1_init_systeminfo(void)
 
@@ -24471,6 +24521,7 @@ undefined4 __thiscall std_vector_Reserve_4c5d90(void *this,uint param_1)
     return 0;
   }
   if (0xaaaaaaa < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x18);
@@ -24481,6 +24532,7 @@ undefined4 __thiscall std_vector_Reserve_4c5d90(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -24654,6 +24706,7 @@ std_Tree_Rebalance_int(void *this,undefined4 *param_1,char param_2,undefined4 *p
   
   if (0xaaaaaa8 < *(uint *)((int)this + 4)) {
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -24826,6 +24879,7 @@ std_Tree_Rebalance_strkey(void *this,undefined4 *param_1,char param_2,undefined4
     param_5[10] = 0;
     *(undefined2 *)(param_5 + 6) = 0;
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -24998,6 +25052,7 @@ std_Tree_Rebalance_strkey2(void *this,undefined4 *param_1,char param_2,undefined
     param_5[8] = 0;
     *(undefined2 *)(param_5 + 4) = 0;
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -25170,6 +25225,7 @@ std_Tree_Rebalance_strkey3(void *this,undefined4 *param_1,char param_2,undefined
     param_5[8] = 0;
     *(undefined2 *)(param_5 + 4) = 0;
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -25335,6 +25391,7 @@ std_Tree_Rebalance_buynode(void *this,undefined4 *param_1,char param_2,undefined
   int *piVar7;
   
   if (0xcccccca < *(uint *)((int)this + 4)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   piVar3 = (int *)Path_allocNodeAssign(this,param_4);
@@ -26502,6 +26559,7 @@ void std_Tree_ctor_sentinel(void)
   pvVar1 = operator_new(0x30);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x004ce5fe. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -26543,6 +26601,7 @@ void std_List_node_alloc_0x48(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -26572,6 +26631,7 @@ void std_List_node_alloc_0xc(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -26591,6 +26651,7 @@ undefined4 * __fastcall std_Tree_node_alloc_0x30(undefined4 *param_1)
   
   puVar1 = operator_new(0x30);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -26758,6 +26819,7 @@ void __thiscall std_Rb_tree_erase_node(void *this,undefined4 *param_1,int *param
   
   piVar2 = param_2;
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&param_2);
@@ -26931,6 +26993,7 @@ void __thiscall std_Rb_tree_erase_node_variant(void *this,undefined4 *param_1,in
   
   piVar2 = param_2;
   if (*(char *)((int)param_2 + 0xd) != '\0') {
+                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   RBTree_iterIncrement((int *)&param_2);
@@ -27441,6 +27504,7 @@ std_Rb_tree_insert_rebalance_A(void *this,undefined4 *param_1,char param_2,undef
       param_5[6] = 0;
     }
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -27606,6 +27670,7 @@ std_Rb_tree_insert_rebalance_B(void *this,undefined4 *param_1,char param_2,undef
   int *piVar7;
   
   if (0x9249247 < *(uint *)((int)this + 4)) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   piVar3 = std_Tree_node_construct_seh(this,param_4);
@@ -28378,6 +28443,7 @@ undefined4 __thiscall std_vector_reserve_4dae20(void *this,uint param_1)
     return 0;
   }
   if (0x3fffffff < param_1) {
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 4);
@@ -28388,6 +28454,7 @@ undefined4 __thiscall std_vector_reserve_4dae20(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -28407,6 +28474,7 @@ undefined4 * __fastcall std_Tree_node_alloc_0x14(undefined4 *param_1)
   
   puVar1 = operator_new(0x14);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -28435,6 +28503,7 @@ undefined4 * __fastcall std_Tree_node_alloc_0x34(undefined4 *param_1)
   
   puVar1 = operator_new(0x34);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -28556,6 +28625,7 @@ std_Rb_tree_insert_rebalance_C(void *this,undefined4 *param_1,char param_2,undef
   
   if (0x7fffffd < *(uint *)((int)this + 4)) {
     operator_delete(param_5);
+                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -28725,6 +28795,7 @@ void std_List_node_alloc_0x20(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
+                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -28744,6 +28815,7 @@ undefined4 * __fastcall std_Tree_node_alloc_0x1c(undefined4 *param_1)
   
   puVar1 = operator_new(0x1c);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -28772,6 +28844,7 @@ undefined4 * __fastcall std_Tree_node_alloc_0x20b(undefined4 *param_1)
   
   puVar1 = operator_new(0x20);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
@@ -28993,6 +29066,7 @@ void std_List_init_sentinel(void)
   pvVar1 = operator_new(0x14);
   if (pvVar1 == (void *)0x0) {
                     /* WARNING: Could not recover jumptable at 0x0052ed3e. Too many branches */
+                    /* WARNING: Subroutine does not return */
                     /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
@@ -29024,6 +29098,7 @@ undefined4 * __fastcall std_Tree_node_alloc_0x18(undefined4 *param_1)
   
   puVar1 = operator_new(0x18);
   if (puVar1 == (undefined4 *)0x0) {
+                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *param_1;
