@@ -2842,9 +2842,12 @@ void Catch_All_00424e30(void)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_23 @ 00425450 */
+/* cube::Interface::drawCharacterCreation @ 00425450 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::Interface::drawCharacterCreation.
+ * Via GC *(this+0x160): anim timer +0x118c += (*(this+4)+0xe4 dt)*0.0075, zeroes +0x5c/+0x68/+0x124/+0x128, GameController_updateWidgetLayout(), vec3_lerp camera +0x40/+0x34; strings 'New character'/'Specialization:' via AdaptionWidget. stringstream vftable is on a local stack scratch, not this.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_23(void)
+void cube::Interface::drawCharacterCreation(void)
 
 {
   int *piVar1;
@@ -3925,9 +3928,12 @@ void Catch_All_00428c5c(void)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_7 @ 00428e40 */
+/* cube::GameController::drawCharacterAppearancePanel @ 00428e40 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::drawCharacterAppearancePanel.
+ * String xrefs Race/Gender/Female/Class/Face/Haircut/Hair color; 11 cube::GameController callees + AdaptionWidget_draw_text. Single stringstream vftable write to a stack local (text formatting), not this. Character appearance panel.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_7(void)
+void cube::GameController::drawCharacterAppearancePanel(void)
 
 {
   int *piVar1;
@@ -5244,9 +5250,12 @@ float10 get_float_field_0x1000e78(void)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_11 @ 0042f910 */
+/* cube::GameController::drawQuestHud @ 0042f910 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::drawQuestHud.
+ * Body calls quest_hasActiveItemReq((player)+0x16c) x3, getTileCell32, reads local player via pinned +0x8006d0, ~34 AdaptionWidget_draw_text_locked/Widget_measure. The 2 'vftable' writes target LOCAL stack wstringstream objects (text formatting), never this; not a ctor.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_11(void)
+void cube::GameController::drawQuestHud(void)
 
 {
   char cVar1;
@@ -7536,9 +7545,12 @@ float10 get_float_field_0xd8(void)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_26 @ 00434e30 */
+/* cube::Interface::drawCharacterStatsPanel @ 00434e30 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::Interface::drawCharacterStatsPanel.
+ * Body reads *(this+0x160)+0x8006d0=Creature: name@+0x1168, level@+0x190 ('LVL '), switch class byte@+0x140 -> Warrior/Ranger/Mage/Rogue +spec@+0x141; strings Power/ARMOR/RESI/CRIT/Weapon Rating via AdaptionWidget_draw_text_locked. The basic_stringstream vftable is written to a LOCAL stack scratch, not this.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_26(void)
+void cube::Interface::drawCharacterStatsPanel(void)
 
 {
   uint uVar1;
@@ -9818,11 +9830,14 @@ void Catch_All_0044bbec(void)
  * purpose: deserialize world/entity state from packet buffer (game, big)
  * vars: param_1=world
  */
-/* Global::GameWorld_deserialize_state @ 0044be40 */
+/* cube::Creature::deserializeState @ 0044be40 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::Creature::deserializeState.
+ * Player_resetFull(this); rebuilds this+0x1d28 ObjWithListMap; reads stream cursor in_ECX (ptr[1]-ptr[0] bounds, ptr[3] pos) into pos +0x10/+0x18/+0x20, kind +0x60=0, level +0x190, +0x16c/+0x194; callees Creature 43c100/43c790, Spawn 43bc00, GameController 44a7e0/44b040, WorldInfo 44b460. Body deserializes game state.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 /* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
-void GameWorld_deserialize_state(int param_1)
+void cube::Creature::deserializeState(int param_1)
 
 {
   void *pvVar1;
@@ -11212,9 +11227,12 @@ void buffer_append_bytes(void *param_1,size_t param_2)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_16 @ 0044ea30 */
+/* cube::Interface::drawMerchantDialog @ 0044ea30 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::Interface::drawMerchantDialog.
+ * GameController_getHoveredTilePtr + GameController_item_icon_id + drawBillboardModelRotated for the item; price calc FUN_004c76e0 (GameController); strings 'Identification'/'Identify'/'COST:'/'Goodbye!' via AdaptionWidget (62b510). Merchant/identify shop render, not a stringbuf ctor.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_16(void)
+void cube::Interface::drawMerchantDialog(void)
 
 {
   float fVar1;
@@ -13653,13 +13671,16 @@ void Catch_All_004685c8(void)
  * purpose: GAME (mislabeled lib): spatial scan of chunk grid under lock, sort candidates, dispatch; timeGetTime/CriticalSection
  * vars: in_ECX=world/controller
  */
-/* Global::World_updateNearbyEntities @ 004690a0 */
+/* cube::World::updateNearbyEntities @ 004690a0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::World::updateNearbyEntities.
+ * Loops nearby entities: EnterCriticalSection(GC+0x8005d0), seed check GC+0x800a50==+0x800448, cube::ChunkBuffer::ctor_0, sort by distance, WorldInfo_clearUnderLock, then calls saveEntityBlob@0x487520 (edge confirmed). in_ECX holds GC* at +0. Persistence loop.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 /* WARNING: Removing unreachable block (ram,0x0046949b) */
 /* WARNING: Removing unreachable block (ram,0x00469417) */
 /* WARNING: Restarted to delay deadcode elimination for space: stack */
 
-void World_updateNearbyEntities(void)
+void cube::World::updateNearbyEntities(void)
 
 {
   uint uVar1;
@@ -13884,7 +13905,7 @@ LAB_00469533:
     DVar7 = timeGetTime();
     if (((60000 < (int)(DVar7 - _DAT_0076b078)) && (*(int *)(*in_ECX + 0x388) != 0)) &&
        (*(char *)(*in_ECX + 0x800584) != '\0')) {
-      std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_12
+      cube::GameController::saveEntityBlob
                 (*(undefined4 *)(*in_ECX + 0x800a0c),*(undefined4 *)(*in_ECX + 0x8006d0));
       _DAT_0076b078 = DVar7;
     }
@@ -14113,7 +14134,7 @@ LAB_00469927:
               LeaveCriticalSection((LPCRITICAL_SECTION)(iVar15 + 0x8005d0));
               if (bVar21) goto LAB_00469993;
               World_enterCriticalSection();
-              std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_6
+              cube::GameController::loadLandscapeTile
                         (local_40,local_48);
               leave_critical_section_b();
               local_48 = local_48 + 1;
@@ -14186,7 +14207,7 @@ LAB_00469ac7:
           } while ((int)uVar20 < iVar4 + 10);
           if (-1 < iVar7) {
             World_enterCriticalSection();
-            std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
+            cube::GameController::streamTileChunk
                       ((undefined4)local_18,local_18._4_4_);
             leave_critical_section_b();
           }
@@ -14213,11 +14234,14 @@ LAB_00469ac7:
  * purpose: GAME (mislabeled lib): large per-frame chunk/entity update (alloca, timeGetTime, sort)
  * vars: in_ECX=world/controller
  */
-/* Global::World_updateActiveChunks @ 00469c10 */
+/* cube::World::updateActiveChunks @ 00469c10 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::World::updateActiveChunks.
+ * Body: timeBeginPeriod/timeGetTime; enter/leave critical section; clears GC active-chunk std::lists 0x8006ec/f4/fc; reads Creature GC+0x8006d0 (+0x130c/0x1310); EntityState_serializeToBuffer then winsock Ordinal_19 sends on socket GC+0x8006cc. World/net chunk sync.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 /* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
-void World_updateActiveChunks(void)
+void cube::World::updateActiveChunks(void)
 
 {
   int *piVar1;
@@ -14554,12 +14578,15 @@ LAB_0046a870:
  * purpose: GAME (mislabeled lib): vfunc_2 background worker thread body; allocs tree head, timeGetTime, io ordinals, big stack scratch
  * vars: in_ECX=subsystem
  */
-/* Global::WorkerThread_run @ 0046b740 */
+/* cube::GameController::networkReceiveThread @ 0046b740 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::networkReceiveThread.
+ * Net loop gated on GC+0x800585: Ordinal_16(recv) 4B headers from socket (GC)+0x8006cc; msgtype==2 sets ping _DAT_0076b048 under lock; inflate, operator_new(0x1e60)+cube::Creature::ctor_0 into rbtree, EntityState_deserializeFromBuffer, writes pos/vel entity+0x1350, skips local player GC+0x8006d0.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 /* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 /* WARNING: Exceeded maximum restarts with more pending */
 
-void WorkerThread_run(void)
+void cube::GameController::networkReceiveThread(void)
 
 {
   char cVar1;
@@ -14899,7 +14926,7 @@ void std::
      ::vfunc_2(void)
 
 {
-  World_updateNearbyEntities();
+  cube::World::updateNearbyEntities();
   return;
 }
 
@@ -14927,7 +14954,7 @@ void std::
      ::vfunc_2(void)
 
 {
-  World_updateActiveChunks();
+  cube::World::updateActiveChunks();
   return;
 }
 
@@ -14955,7 +14982,7 @@ void std::
      ::vfunc_2(void)
 
 {
-  WorkerThread_run();
+  cube::GameController::networkReceiveThread();
   return;
 }
 
@@ -15469,11 +15496,14 @@ undefined4 GameController_check_tile_walkable(int param_1,int param_2)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_12 @ 0046fc50 */
+/* cube::GameController::connectToServer @ 0046fc50 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::connectToServer.
+ * WS2 socket(Ord23) stored GC+0x8006cc; htons(0x3039) connect(Ord4); send(Ord19) handshake 0x11; recv(Ord16) version-check; owns strings 'could not connect to server.'/'different version'; caller=handleKeyPress 47e1b0.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 /* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_12
+void cube::GameController::connectToServer
                (undefined4 *param_1)
 
 {
@@ -17458,10 +17488,13 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_19 @ 0047e1b0 */
+/* cube::GameController::handleKeyPress @ 0047e1b0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::handleKeyPress.
+ * Reads 5 GC widget nodes +0x800880..894 + tooltip/text-input guard (+0x800a14); calls cube::Controller::vfunc_2(key); switch Tab/Esc/B/I/C/F/G toggles GC widgets + local Creature +0x8006d0; also calls connectToServer 46fc50.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_19
+void cube::GameController::handleKeyPress
                (uint param_1)
 
 {
@@ -17911,7 +17944,7 @@ void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ct
     obj_init_and_inflate();
     iVar2 = param_2;
     refcount_initTo1(&local_40);
-    GameWorld_deserialize_state(iVar2);
+    cube::Creature::deserializeState(iVar2);
     *(undefined4 *)(param_2 + 0x10) = local_50;
     *(undefined4 *)(param_2 + 0x14) = local_58;
     *(undefined4 *)(param_2 + 0x18) = local_4c;
@@ -17951,9 +17984,12 @@ void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ct
 
 
 
-/* std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_8 @ 004809a0 */
+/* cube::GameController::loadStructureBlob @ 004809a0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::loadStructureBlob.
+ * Streams key, db_getBlobInto, zlib_inflateBuffer, rebuilds cube::Sprite::ctor_0+VoxelModel_allocate/build_mesh into param_2. Sole caller GameController::ctor_0 (0x459c40). Load twin of 0x4878a0; stream is read cursor only.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_8
+void cube::GameController::loadStructureBlob
                (int param_1,int param_2)
 
 {
@@ -18652,9 +18688,12 @@ void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ct
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_2 @ 00482530 */
+/* cube::GameController::loadWorldList @ 00482530 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::loadWorldList.
+ * Constructs cube::WorldInfo::vftable (new 0x28), parses id via basic_istream<wchar_t>::operator>>, std_vector_push_back, sets selected idx this+0x800a10, calls GameController_reloadServerList+buildWorldList on 0x800xxx fields. RTTI AUWorldInfo@cube@@.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_2(void)
+void cube::GameController::loadWorldList(void)
 
 {
   int iVar1;
@@ -18969,9 +19008,12 @@ void Catch_All_00487470(void)
 
 
 
-/* std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_12 @ 00487520 */
+/* cube::GameController::saveEntityBlob @ 00487520 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::saveEntityBlob.
+ * Clones Creature (cube::Creature::ctor_0, 0x1e60 alloc)+Item_copyStruct, inserts WorldInfo_mapInsertUnique keyed by seed@GC+0x800448, GameWorld_serialize_state+db_storeBlobVec. 4/5 callers GameController. STL stream = blob buffer only.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_12
+void cube::GameController::saveEntityBlob
                (int param_1,int param_2)
 
 {
@@ -19116,9 +19158,12 @@ void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ct
 
 
 
-/* std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_10 @ 004878a0 */
+/* cube::GameController::saveStructureBlob @ 004878a0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::saveStructureBlob.
+ * Matches seed@GC+0x800448, reads Creature@GC+0x8006d0, builds cube::Sprite::ctor_0+VoxelModel_set_data/build_mesh, prints 'wrote N', db_storeBlobVec. Callers GameController/WorldInfo. Save twin of 0x4809a0; stream only serializes.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_10
+void cube::GameController::saveStructureBlob
                (int param_1,int param_2,char param_3)
 
 {
@@ -19344,9 +19389,12 @@ undefined4 GameController_get_selected_char_ptr(void)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_0 @ 004a28c0 */
+/* cube::GameController::drawItemTooltip @ 004a28c0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::drawItemTooltip.
+ * Caller = cube::AdaptionWidget::vfunc_1. Body switches Creature+0x140 class byte (1/2/3/4), calls item_rarityScaled/item_classifyRecursive, tooltip strings Warrior/Ranger/Mage/Rogue/(adapted)/ARMOR/RESI. 'resource1.dat' is the font-atlas arg to draw_text, no file I/O.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_0
+void cube::GameController::drawItemTooltip
                (char *param_1,int param_2,int param_3,float param_4,int param_5,char param_6,
                char param_7)
 
@@ -21331,9 +21379,12 @@ void Catch_All_004abf64(void)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_1 @ 004c2050 */
+/* cube::GameController::drawCurrencyPanel @ 004c2050 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::drawCurrencyPanel.
+ * String xref L"Platinum Coins"; 16 cube::GameController callees + AdaptionWidget_draw_text. FOUR separate stringstream vftable writes to distinct stack locals (number->text formatting), impossible for a single-this ctor. Genuine currency-panel HUD.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_1(void)
+void cube::GameController::drawCurrencyPanel(void)
 
 {
   char cVar1;
@@ -23050,9 +23101,12 @@ void Item_get_type_color(undefined4 *param_1)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_4 @ 004c9680 */
+/* cube::World::updateObjectLabels @ 004c9680 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::World::updateObjectLabels.
+ * Body: World_enterCriticalSection; this+0x160=GC; reads Creature GC+0x8006d0 pos+0x10/+0x18, /0x10000 chunk math; resets+writes GC+0x800dd4/dd8 hover sentinels; camera-projects objects, AdaptionWidget_draw_text. Not a stringbuf ctor.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_4(void)
+void cube::World::updateObjectLabels(void)
 
 {
   uint uVar1;
@@ -25152,9 +25206,12 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_8
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_9 @ 004d0230 */
+/* cube::Interface::drawOptionsMenu @ 004d0230 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::Interface::drawOptionsMenu.
+ * if(*(this+0x1d4)==0) L"Windowed" else L"Fullscreen"; reads GC via this+0x160; string xrefs Mode/Resolution/Anti-aliasing/Render Distance/Sound FX+Music Volume/Camera Speed/Camera Smoothness/Invert Y Axis/FPS Limit/Language, all drawn via AdaptionWidget_draw_text_locked. Options menu render, not a stringbuf ctor.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_9(void)
+void cube::Interface::drawOptionsMenu(void)
 
 {
   int iVar1;
@@ -30284,15 +30341,18 @@ undefined2 QuestText_isPunctuation(short param_1)
 
 
 
-/* [AUDIT] proposed: cube_QuestText_parseTemplate  (confidence: med)
+/* [AUDIT] proposed: cube::QuestText::parseTemplate  (confidence: med)
  * purpose: Parse quest-text template string into QuestTextNode tree, splitting {..}/[..]/word tokens
  * vars: param_1=out;in_ECX=QuestText
  */
-/* Global::cube_QuestText_parseTemplate @ 004da850 */
+/* cube::QuestText::parseTemplate @ 004da850 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::QuestText::parseTemplate.
+ * operator_new(0x44)+cube::QuestTextNode::ctor_0 (twice), scans wide chars for 0x20(space)/0x7b('{') building an IntMap node tree (IntMap_SetScalar). Caller 004e1970=cube::Speech::ctor_1. RTTI AUQuestTextNode@cube@@. Quest-text templating, not string code.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 /* WARNING: Type propagation algorithm not settling */
 
-void cube_QuestText_parseTemplate(undefined4 *param_1)
+void cube::QuestText::parseTemplate(undefined4 *param_1)
 
 {
   short sVar1;
@@ -32080,9 +32140,18 @@ void Catch_All_004e194f(void)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_3 @ 004e1970 */
+/* cube::Speech::ctor_1 @ 004e1970 */
+/* NOTE(re) 2026-07-15: RECLASSIFIED game function (was mislabeled
+ * std::basic_stringbuf<wchar_t>::ctor_3 and misfiled in _library/crt_stl.cpp). This is the
+ * cube::Speech constructor (writes cube::Speech::vftable @ in_ECX), constructed by World (see
+ * World.cpp). It opens data4.db (db_openBlobStore), builds dict_<lang>.xml from the `language`
+ * option (literal "dict_en.xml" @ .rdata 0x00302B80), fetches the blob (db_getBlobInto),
+ * deobfuscates it (blob_deobfuscate 0x4496a0), then parses the <root> of <name>/<speech>/
+ * <landscape> entries (via a wchar basic_stringstream) into the localization map. Sibling
+ * Speech ctor at 0x4e2b10 (ctor_0). Belongs in a cube::Speech unit, not crt_stl.cpp; kept here
+ * pending a reclassified regen. Provenance: scratchpad/re_findings.md, scratchpad/loc/. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_3(void)
+void cube::Speech::ctor_1(void)
 
 {
   short sVar1;
@@ -32594,7 +32663,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
                   local_8._0_1_ = 0x1d;
                   cube::QuestText::ctor_0(local_2c);
                   local_8._0_1_ = 0x1c;
-                  cube_QuestText_parseTemplate();
+                  cube::QuestText::parseTemplate();
                   local_8._0_1_ = 0x10;
                   if (7 < local_18) {
                     operator_delete(local_2c[0]);
@@ -32645,7 +32714,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
             local_8._0_1_ = 0x1f;
             std_map_getOrInsertByKey(local_44);
             local_8._0_1_ = 0x10;
-            cube_QuestText_parseTemplate();
+            cube::QuestText::parseTemplate();
             uVar3 = (undefined1)local_8;
           }
         }
@@ -32913,9 +32982,12 @@ void node_release_free(void *param_1)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_25 @ 004e4bd0 */
+/* cube::GameController::generateQuestText @ 004e4bd0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::generateQuestText.
+ * Body: srand(param_3[2]); GameController_getVoxelColumn8(x>>3,y>>3); dispatch on quest type param_2 (case4 scenery/explored, case3 creature/food/petfood); switch(rand()%5) itemvendoritem variants; GameController_build_quest_text. Caller 4882e0=GameController.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_25
+void cube::GameController::generateQuestText
                (int param_1,int param_2,int *param_3,undefined4 param_4)
 
 {
@@ -33492,9 +33564,12 @@ void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ct
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_10 @ 00588500 */
+/* cube::GameController::drawWeaponCustomization @ 00588500 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::drawWeaponCustomization.
+ * String xrefs L"Weapon Customization"/L"Upgrades"; 10 GameController + 10 gamemisc callees; renders item mesh (draw_mesh, uploadModelViewMatrices, Item_copyStruct, item_rarityScaled). Two stringstream vftable writes to stack locals, not this.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_10(void)
+void cube::GameController::drawWeaponCustomization(void)
 
 {
   undefined1 uVar1;
@@ -35740,9 +35815,12 @@ void lib_fn_5953a0(undefined4 param_1,int param_2,int param_3)
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_6 @ 00598a50 */
+/* cube::GameController::buildObjectName @ 00598a50 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::buildObjectName.
+ * Body dispatches on object-type byte *param_2 (0x02/0x13/0x15/0x01/0x12/0x0e), builds display name via u16string_assignCStr with item:shabby..superb/'Formula:'/'Pet:'/'singular'; calls World_getObjectName, NameGen_initFirstNameTables, entityState_copy. Real dispatch, not glue.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_6
+void cube::GameController::buildObjectName
                (int **param_1,char *param_2)
 
 {
@@ -37924,11 +38002,14 @@ LAB_005d7d29:
 
 
 
-/* std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_5 @ 005da280 */
+/* cube::GameController::generateRegion @ 005da280 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::generateRegion.
+ * Bounds-checks tile<0x400, indexes grid@+0xbc, srand(seed@GC+0x800188+tile), operator_new(0x15a28) then cube::Region::ctor_0 + spawn math. Sole caller FUN_005e4850=WorldInfo. Region worldgen; no stringbuf behavior.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 /* WARNING: Removing unreachable block (ram,0x005dacc3) */
 
-void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_5
+void cube::GameController::generateRegion
                (int param_1,int param_2)
 
 {
@@ -39195,9 +39276,12 @@ void lib_fn_5f4d10(undefined4 *param_1)
 
 
 
-/* Global::lib_fn_5fae00 @ 005fae00 */
+/* cube::Zone::constructTileGrid @ 005fae00 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::Zone::constructTileGrid.
+ * Composite ctor: eh_vector_constructor_iterator builds ZoneTile[4096]@0x34 (cube::ZoneTile::ctor) then a hardcoded 64x cube::Region_ctor loop. Caller operator_new(0x35a00 = 4096*0x34 + 64*0x68). Type-specific game aggregate ctor, not a template/thunk.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void lib_fn_5fae00(void)
+void cube::Zone::constructTileGrid(void)
 
 {
   void *in_ECX;
@@ -39431,7 +39515,7 @@ void lib_fn_5fbed0(int param_1,int param_2)
         if ((8 < iVar6) ||
            (uVar3 = iVar2 - ((int)((param_2 >> 0x1f & 0x3fU) + param_2) >> 6),
            uVar4 = (int)uVar3 >> 0x1f, 8 < (int)((uVar3 ^ uVar4) - uVar4))) {
-          lib_fn_602160(local_1c,iVar2);
+          cube::GameController::unloadZone(local_1c,iVar2);
         }
         if ((((8 < iVar6) ||
              (uVar3 = iVar2 - ((int)((param_2 >> 0x1f & 0x3fU) + param_2) >> 6),
@@ -39484,9 +39568,12 @@ void lib_fn_5fc0d0(int *param_1,undefined4 *param_2)
 
 
 
-/* Global::lib_fn_602160 @ 00602160 */
+/* cube::GameController::unloadZone @ 00602160 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::unloadZone.
+ * Body persists string_assignCStr("discovered")+db_storeBlobVec, then under GC locks this+0x8000c0/+0x8000d8 clears zone grid slot at this+0xb0 and _eh_vector_destructor_iterator_(0x34,0x1000,cube::ZoneTile::ctor_0)+operator_delete. Callees GameController 403eb0/403350, WorldInfo 4499c0.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void lib_fn_602160(int param_1,int param_2)
+void cube::GameController::unloadZone(int param_1,int param_2)
 
 {
   void *pvVar1;
@@ -39620,10 +39707,13 @@ int lib_fn_6023b0(uint param_1,uint param_2)
 
 
 
-/* std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_6 @ 006024d0 */
+/* cube::GameController::loadLandscapeTile @ 006024d0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::loadLandscapeTile.
+ * Body writes cube::LandscapeTile::vftable (new 0x34)+cube::Sprite::ctor_0, zlib_inflateBuffer, VoxelModel_build_mesh under EnterCriticalSection(this+0x8000d8), indexing this+0x4000b0 1024x1024 grid (param<0x400). RTTI AULandscapeTile@cube@@. Not a stringbuf ctor.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 
-void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_6
+void cube::GameController::loadLandscapeTile
                (int param_1,int param_2)
 
 {
@@ -40226,7 +40316,7 @@ void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ct
       local_50 = 0;
     }
     else {
-      local_50 = lib_fn_5fae00(uVar2);
+      local_50 = cube::Zone::constructTileGrid(uVar2);
     }
     iVar13 = local_50;
     local_8 = 0xffffffff;
@@ -40492,9 +40582,12 @@ void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ct
 
 
 
-/* std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1 @ 00603a00 */
+/* cube::GameController::streamTileChunk @ 00603a00 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::streamTileChunk.
+ * Indexes ZoneTile grid (stride 0x34, clamp<=0xffff); GC crit-sec +0x8000d8; db_getBlobInto by x,y -> zlib_inflate -> cube::Sprite::ctor_0 + VoxelModel mesh, caches sprite to tile+8. Caller World_streamChunksAroundPlayer. Not a stringbuf ctor.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_1
+void cube::GameController::streamTileChunk
                (uint param_1,uint param_2)
 
 {
@@ -41636,9 +41729,12 @@ void std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ct
 
 
 
-/* std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_21 @ 00605ae0 */
+/* cube::GameController::drawWorldSelectEntry @ 00605ae0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::drawWorldSelectEntry.
+ * String xrefs L"New world"/L"Explored:"/L"Seed:"; 10 GameController + 9 gamemisc callees; renders model (uploadBoneMatrices, setLightDirUniform, mat4_identity, vec3_lerp). Two stringstream vftable writes to stack locals, not this. World-select entry.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_21(void)
+void cube::GameController::drawWorldSelectEntry(void)
 
 {
   char cVar1;

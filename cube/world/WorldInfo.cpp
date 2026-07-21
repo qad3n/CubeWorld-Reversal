@@ -757,7 +757,7 @@ LAB_0046b731:
       worldPtr = *pWorldInfoCopy;
       *(int *)(worldPtr + 0x800a10) =
            (*(int *)(worldPtr + 0x8009e0) - *(int *)(worldPtr + 0x8009dc) >> 2) + -1;
-      std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_10
+      cube::GameController::saveStructureBlob
                 (*(undefined4 *)(*pWorldInfoCopy + 0x800a10),puVar9,0);
       GameController_buildWorldList();
       local_8 = local_8 & 0xffffff00;
@@ -1739,7 +1739,7 @@ void WorldInfo_generateBiomeContent(float param_1,uint param_2)
     do {
       iVar26 = -1;
       do {
-        std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_5
+        cube::GameController::generateRegion
                   ((int)local_1328 + local_13d4,(int)local_1388 + iVar26,uVar5);
         iVar26 = iVar26 + 1;
       } while (iVar26 < 2);

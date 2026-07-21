@@ -6,6 +6,22 @@
  * vars: table 006ffa68 mod 0x2c
  */
 /* Global::blob_deobfuscate @ 004496a0 */
+/* NOTE(re) 2026-07-15: CONFIRMED shared asset-blob deobfuscator; decode is byte-exact
+ * (round-trip proven). `self` is a std::vector<char> {begin,end,cap}; the buffer is
+ * transformed in place, equivalent to:
+ *     len = end - begin
+ *     for i = len-1 downto 0:  swap(buf[i], buf[(T[i % 44] + i) % len])   // de-shuffle
+ *     for i = 0 .. len-1:      buf[i] = ~buf[i]                            // XOR 0xFF
+ * T = 44 int32 @ 0x006FFA68 (.rdata, file off 0x2FEA68):
+ *   4242,9551,840,84800,9242,9846,127,9,9483,394,123,4834,32444,24355,2433,17,34234,42342,
+ *   4243,14,184934,1987,3094,1901,89409,4813,37,143,3490,19483,1343,432,84732,9184,9612,1233,
+ *   3434,1839,2984,1993,2984,4895,816583,13
+ * Keyless + deterministic (independent of db.dat, which ships as "PLACEHOLDER..."). Callers:
+ * 0x623a60 (XAudio2Engine, data2 *.wav), 0x4e1970 (cube::Speech, data4 dict_*.xml), 0x486a20,
+ * 0x4e7290. Verified by decoding data4.db dict_en/de.xml to valid UTF-8 XML and re-encoding to
+ * the exact stored bytes. Tool + decoded output: scratchpad/decode_loc.py, scratchpad/loc/.
+ * This is a Global helper; its placement under XAudio2Engine.cpp is a caller-dominance misfiling.
+ */
 
 void blob_deobfuscate(void)
 

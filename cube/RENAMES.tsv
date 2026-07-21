@@ -661,7 +661,7 @@ addr	old	new
 44bde0	FUN_0044bde0	allocRawArray_0x148
 44be20	FUN_0044be20	vector_clear
 44be30	FUN_0044be30	isNonNegativeFlag
-44be40	FUN_0044be40	GameWorld_deserialize_state
+44be40	FUN_0044be40	cube::Creature::deserializeState
 44cb50	FUN_0044cb50	deserialize_struct_0x28
 44cce0	FUN_0044cce0	deserialize_struct_small
 44cdb0	FUN_0044cdb0	deserializeRegionChunk
@@ -970,10 +970,10 @@ addr	old	new
 469000	FUN_00469000	vec2i_divScalar
 469020	FUN_00469020	vec3_divScalar
 469060	FUN_00469060	int64_divScalar_double
-4690a0	FUN_004690a0	World_updateNearbyEntities
+4690a0	FUN_004690a0	cube::World::updateNearbyEntities
 469590	FUN_00469590	World_streamChunksAroundPlayer
-469c10	FUN_00469c10	World_updateActiveChunks
-46b740	FUN_0046b740	WorkerThread_run
+469c10	FUN_00469c10	cube::World::updateActiveChunks
+46b740	FUN_0046b740	cube::GameController::networkReceiveThread
 46d1c0	FUN_0046d1c0	less_pair_int
 46d1f0	FUN_0046d1f0	less_stringKey_map
 46d220	FUN_0046d220	vec3_mulInPlace
@@ -1109,7 +1109,7 @@ addr	old	new
 4815e0	FUN_004815e0	GameController_create_edit_textbox
 481d30	FUN_00481d30	GameController_delete_selected_world_saves
 481fe0	FUN_00481fe0	GameController_show_rename_dialog
-4821a0	FUN_004821a0	GameController_enter_edit_mode
+4821a0	FUN_004821a0	cube::GameController::enterEditMode
 483e70	FUN_00483e70	GameController_load_or_new_character
 484170	FUN_00484170	GameController_reset_editor_camera
 484230	FUN_00484230	GameController_toggle_sp_mp_worlds
@@ -1446,7 +1446,7 @@ addr	old	new
 4da730	FUN_004da730	rbtree_allocNode_28
 4da770	FUN_004da770	cube_QuestTextNode_destroyTree
 4da800	FUN_004da800	QuestText_isPunctuation
-4da850	FUN_004da850	cube_QuestText_parseTemplate
+4da850	FUN_004da850	cube::QuestText::parseTemplate
 4db110	FUN_004db110	vector_at_12
 4dc470	FUN_004dc470	list_copyAll_328
 4dc4e0	FUN_004dc4e0	list_appendRange_a
@@ -3185,7 +3185,7 @@ addr	old	new
 5fa9e0	FUN_005fa9e0	octree_recursiveTraverse
 5faad0	FUN_005faad0	octree_applyLeaf
 5fab40	FUN_005fab40	octree_applySplit
-5fae00	FUN_005fae00	lib_fn_5fae00
+5fae00	FUN_005fae00	cube::Zone::constructTileGrid
 5fb860	FUN_005fb860	unwind_free_object
 5fb9f0	FUN_005fb9f0	lib_fn_5fb9f0
 5fbb30	FUN_005fbb30	vector_reallocate
@@ -3201,7 +3201,7 @@ addr	old	new
 601eb0	FUN_00601eb0	list_pushBack_601eb0
 601f00	FUN_00601f00	vector_pushWithGrow
 601f80	FUN_00601f80	WorldMap_ctor
-602160	FUN_00602160	lib_fn_602160
+602160	FUN_00602160	cube::GameController::unloadZone
 6022d0	FUN_006022d0	lib_fn_6022d0
 6023b0	FUN_006023b0	lib_fn_6023b0
 602440	FUN_00602440	hash_or_index_compute
@@ -3243,7 +3243,7 @@ addr	old	new
 6231e0	FUN_006231e0	riff_findChunkInFile
 623340	FUN_00623340	riff_readFromMemory
 6233a0	FUN_006233a0	riff_readFromFile
-623530	FUN_00623530	lib_fn_623530
+623530	FUN_00623530	cube::XAudio2Engine::initialize
 623710	FUN_00623710	XAudio2_loadSound
 623ee0	FUN_00623ee0	XAudio2_decodeStream
 6240d0	FUN_006240d0	lib_fn_6240d0
@@ -3430,7 +3430,7 @@ addr	old	new
 63c0b0	FUN_0063c0b0	std_vector_assign_range_stride2
 63c160	FUN_0063c160	std_vector_assign_range_stride4
 63c680	FUN_0063c680	lib_fn_63c680
-63c700	FUN_0063c700	lib_fn_63c700
+63c700	FUN_0063c700	plasma::SmoothMeshShape::destroyLevelBuffers
 63cd20	FUN_0063cd20	lib_fn_63cd20
 63ce30	FUN_0063ce30	lib_fn_63ce30
 63cf40	FUN_0063cf40	lib_fn_63cf40
@@ -3778,7 +3778,7 @@ addr	old	new
 671290	FUN_00671290	lib_fn_671290
 6712c0	FUN_006712c0	lib_fn_6712c0
 671340	FUN_00671340	lib_fn_671340
-671420	FUN_00671420	lib_fn_671420
+671420	FUN_00671420	plasma::SmoothMeshShape::clearLevelBuffers
 671450	FUN_00671450	AdaptionWidget_buildMeshIndices
 671750	FUN_00671750	AdaptionWidget_buildTopology
 671f80	FUN_00671f80	lib_fn_671f80

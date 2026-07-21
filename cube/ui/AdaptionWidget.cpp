@@ -225,13 +225,13 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
     }
     piVar4 = *(int **)(*(int *)((int)self + 0x16c) + 0x134);
     (**(code **)(*piVar4 + 0xe4))(piVar4,7,0);
-    std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_0
+    cube::GameController::drawItemTooltip
               (targetEntity,0xf,0xb4,0x3f800000,300,1,0,0);
     entityState_copy(targetEntity);
     local_37c = *(undefined2 *)(*(int *)(*(int *)((int)self + 0x16c) + 0x8006d0) + 400);
     fVar12 = (float10)security_cookie_guard_b(0xb4,0x3f800000,300,0,0,0);
     coinPtr = (float *)(float)fVar12;
-    std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_0
+    cube::GameController::drawItemTooltip
               (local_38c,(int)((float)coinPtr * 0.5 + 50.0));
     targetEntity = *(int *)(*(int *)((int)self + 0x174) + 0x3c);
     *(undefined4 *)(*(int *)(targetEntity + 0x94) + *(int *)(targetEntity + 0x68) * 4) = 1;

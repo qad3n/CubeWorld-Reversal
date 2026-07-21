@@ -4777,6 +4777,9 @@ bool handle_isOpen(void)
  * vars: +4 db handle
  */
 /* Global::db_openBlobStore @ 004497b0 */
+/* NOTE(re) 2026-07-15: cube::Database member (this=ECX, sqlite3* at +4), misfiled as game_misc;
+ * it sits with the Database class (ctor 0x449380). Opens the key/value asset store used by
+ * data1-4.db and creates the shared schema "blobs(key TEXT PRIMARY KEY, value BLOB)". */
 
 undefined4 db_openBlobStore(undefined4 *path)
 
@@ -4859,6 +4862,10 @@ undefined4 db_loadBlobByKey(undefined4 key,undefined4 *stmtOrOut,size_t *outLen)
  * vars: stmtOrOut[3]=size
  */
 /* Global::db_getBlobInto @ 004498d0 */
+/* NOTE(re) 2026-07-15: cube::Database member (misfiled as game_misc). Shared blob fetch:
+ * db_loadBlobByKey (0x449810) -> value ptr+len, resize the out std::vector<char>, memcpy in.
+ * This is the fetch feeding blob_deobfuscate (0x4496a0) for the encoded assets (data2 wav,
+ * data3 png, data4 dict_*.xml). Raw here; caller deobfuscates. */
 
 undefined1 db_getBlobInto(undefined4 key,undefined4 *dest)
 
@@ -52297,7 +52304,7 @@ void plasma::SmoothMeshShape::ctor_0(undefined4 param_1,undefined4 name)
   local_c = 0;
   *self = vftable;
   _eh_vector_constructor_iterator_
-            (self + 0x239,0x60,6,(_func_void_void_ptr *)&LAB_0063c210,lib_fn_63c700);
+            (self + 0x239,0x60,6,(_func_void_void_ptr *)&LAB_0063c210,plasma::SmoothMeshShape::destroyLevelBuffers);
   self[0x2c9] = 3;
   self[0x2ca] = 0x14;
   *(undefined2 *)(self + 0x2cb) = 0;

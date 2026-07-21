@@ -207,7 +207,7 @@ void cube::World::ctor_1(undefined4 world,undefined1 isServer)
   local_8._0_1_ = 2;
   SpriteManager::ctor_0(world);
   local_8._0_1_ = 3;
-  std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_3();
+  cube::Speech::ctor_1();
   local_70 = self + 0x22;
   self[0x21] = 0;
   *local_70 = 0;

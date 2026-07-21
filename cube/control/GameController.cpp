@@ -16174,7 +16174,7 @@ void cube::GameController::ctor_1(void)
   slotIdx = pThis[0x200283];
   if ((-1 < slotIdx) && (slotIdx < (int)(pThis[0x200262] - pThis[0x200261]) >> 2)) {
     if (pThis[0xe2] == 0) goto LAB_00466f64;
-    std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_12
+    cube::GameController::saveEntityBlob
               (slotIdx,*(undefined4 *)(pThis[0x200261] + slotIdx * 4));
   }
   if (((pThis[0xe2] != 0) && (slotIdx = pThis[0x200284], -1 < slotIdx)) &&
@@ -16182,7 +16182,7 @@ void cube::GameController::ctor_1(void)
       ((*(int *)(*(int *)(pThis[0x200277] + slotIdx * 4) + 0x20) == pThis[0x200112] &&
        (match = memEqual_0040c520(*(int *)(pThis[0x200277] + slotIdx * 4) + 8,pThis + 0xde),
        match != '\0')))))) {
-    std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_10
+    cube::GameController::saveStructureBlob
               (pThis[0x200284],*(undefined4 *)(pThis[0x200277] + pThis[0x200284] * 4),1);
   }
 LAB_00466f64:
@@ -17779,7 +17779,7 @@ void GameController_disconnect(void)
   ExceptionList = &savedExcList;
   local_14 = stackCookie;
   if (*(char *)(pThis + 0x800585) != '\0') {
-    std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_12
+    cube::GameController::saveEntityBlob
               (*(undefined4 *)(pThis + 0x800a0c),*(undefined4 *)(pThis + 0x8006d0));
     *(undefined1 *)(pThis + 0x800585) = 0;
     if (*(int *)(pThis + 0x8006cc) != 0) {
@@ -20848,9 +20848,9 @@ LAB_0047e00e:
        *(int *)(*(int *)(pThis[0x200280] + 0x3c) + 0x68) * 4) = 1;
     }
     else if (pWidget == 1) {
-      std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_12
+      cube::GameController::saveEntityBlob
                 (pThis[0x200283],pThis[0x2001b4]);
-      std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_10
+      cube::GameController::saveStructureBlob
                 (pThis[0x200284],*(undefined4 *)(pThis[0x200277] + pThis[0x200284] * 4),1);
       GameController_disconnect();
       pWidget = 0;
@@ -23751,7 +23751,7 @@ LAB_0048852c:
           Zone_rbtree_eraseRange(&pResult,*local_58,local_58);
           operator_delete(local_58);
         }
-        std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_25
+        cube::GameController::generateQuestText
                   (pThis + 0x2e4,*(undefined1 *)(pEntity + 0x1d8),&posX,&local_4c);
         GameController_tryLockAndProcess(posX,posY);
         pResult = hash_or_index_compute(posX,posY);

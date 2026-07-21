@@ -13893,7 +13893,7 @@ void GameController_create_edit_textbox(void)
     *(undefined4 *)(*(int *)(iVar1 + 0x94) + *(int *)(iVar1 + 0x68) * 4) = 0;
     uVar3 = std_string_assignFromString(local_5c,local_44,uVar2);
     local_8._0_1_ = 3;
-    std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>_>::ctor_12(uVar3)
+    cube::GameController::connectToServer(uVar3)
     ;
     if (0xf < local_48) {
       operator_delete(local_5c[0]);
@@ -14020,7 +14020,7 @@ void GameController_delete_selected_world_saves(void)
     iVar6 = 0;
     if (0 < iVar5) {
       do {
-        std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_10
+        cube::GameController::saveStructureBlob
                   (*(undefined4 *)(in_ECX + 0x800a10),
                    *(undefined4 *)(*(int *)(in_ECX + 0x8009dc) + iVar6 * 4),1);
         iVar6 = iVar6 + 1;
@@ -14138,9 +14138,12 @@ void GameController_show_rename_dialog(void)
  * purpose: Enter world-edit mode, spawn editor Creature/camera (game)
  * vars: in_ECX=GameController
  */
-/* Global::GameController_enter_edit_mode @ 004821a0 */
+/* cube::GameController::enterEditMode @ 004821a0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::GameController::enterEditMode.
+ * Toggles GC widgets +0x800880/+0x80088c, builds 'edit' string, writes it to local Creature name +0x8006d0+0x1168 (known name offset), sets Creature+0x190=1, db_storeBlobVec; callees WorldInfo 4499c0, GameController 635550.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void GameController_enter_edit_mode(void)
+void cube::GameController::enterEditMode(void)
 
 {
   char cVar1;
@@ -14232,7 +14235,7 @@ void GameController_enter_edit_mode(void)
     operator_delete(local_2c[0]);
   }
   *(int *)(in_ECX + 0x800a0c) = iVar10;
-  std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_12
+  cube::GameController::saveEntityBlob
             (iVar10,*(undefined4 *)(in_ECX + 0x8006d0));
   local_78 = operator_new(0x1e60);
   local_8._0_1_ = 7;
@@ -17166,7 +17169,10 @@ void App_reset_device(void)
  * purpose: Entry: RegisterClass/CreateWindow 'Cube World', init D3D/audio/input, run loop
  * vars: param_1=hInstance
  */
-/* Global::WinMain @ 004c8ae0 */
+/* WinMain @ 004c8ae0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): WinMain.
+ * RegisterClassW(CubeWndProc,L"Cube")+CreateWindowExW 800x600, App_init_direct3d + 'Cube World' D3D MsgBox, cube::XAudio2Engine::ctor_0, cube::GameController::ctor_0 (new 0x1001018), PeekMessageW/DispatchMessageW loop, DI 0x100/0x10 input into GC bools, App_render_frame. Game entry, not CRT.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 void WinMain(HINSTANCE param_1)
 
@@ -17318,7 +17324,7 @@ LAB_004c8d73:
   DAT_0076b1e0 = GetSystemMetrics(1);
   Options_loadFromCfg();
   cube::XAudio2Engine::ctor_0();
-  cVar2 = lib_fn_623530();
+  cVar2 = cube::XAudio2Engine::initialize();
   if (cVar2 == '\0') {
     MessageBoxA(DAT_0076b1c0,
                 "Could not initialize XAudio2. Please make sure the latest DirectX End-User Runtime is installed: http://www.microsoft.com/en-us/download/details.aspx?id=35"
@@ -61393,9 +61399,12 @@ void lib_fn_60aac0(undefined4 *param_1)
 
 
 
-/* Global::lib_fn_623530 @ 00623530 */
+/* cube::XAudio2Engine::initialize @ 00623530 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->game. Identity (RE-inferred, high): cube::XAudio2Engine::initialize.
+ * CoCreateInstance(CLSID_XAudio2); IXAudio2::Initialize at vtbl+0x14 (arg XAUDIO2_DEFAULT_PROCESSOR), CreateMasteringVoice vtbl+0x28; builds 2 cube::Music::ctor_0 streams (0x1e02f0). In XAudio2Engine block; caller=WinMain 4c8ae0.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-undefined4 lib_fn_623530(void)
+undefined4 cube::XAudio2Engine::initialize(void)
 
 {
   HRESULT HVar1;
@@ -64819,9 +64828,12 @@ void lib_fn_63c680(void)
 
 
 
-/* Global::lib_fn_63c700 @ 0063c700 */
+/* plasma::SmoothMeshShape::destroyLevelBuffers @ 0063c700 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->plasma_engine. Identity (RE-inferred, high): plasma::SmoothMeshShape::destroyLevelBuffers.
+ * Body fully tears down one 0x60B mesh level: 3x _Internal_clear + buffer-free(63d9c0) + ~_Concurrent_vector(+4/+0x24/+0x44). Registered as per-elem dtor of plasma::SmoothMeshShape+0x239 [6x0x60] via eh_vector_destructor_iterator; not a template.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void lib_fn_63c700(void)
+void plasma::SmoothMeshShape::destroyLevelBuffers(void)
 
 {
   undefined4 uVar1;
@@ -64963,7 +64975,7 @@ void plasma::SmoothMeshShape::ctor_1(void)
     operator_delete((void *)in_ECX[0x2cc]);
   }
   local_8 = local_8 & 0xffffff00;
-  _eh_vector_destructor_iterator_(in_ECX + 0x239,0x60,6,lib_fn_63c700);
+  _eh_vector_destructor_iterator_(in_ECX + 0x239,0x60,6,plasma::SmoothMeshShape::destroyLevelBuffers);
   local_8 = 0xffffffff;
   MeshShape::ctor_0();
   ExceptionList = local_10;
@@ -67083,9 +67095,12 @@ lib_fn_6414c0(int param_1,int param_2,float param_3,float param_4,int *param_5,f
 
 
 
-/* plasma::SmoothMeshShape::vfunc_16 @ 00641660 */
+/* plasma::SmoothMeshShape::clear @ 00641660 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->plasma_engine. Identity (RE-inferred, high): plasma::SmoothMeshShape::clear.
+ * Clears ~15 member vectors at fixed offsets 0xb34-0xbe8 (12B triples, operator_delete each, end=begin) after 6x sub-reset, resets list@0x8d0, dispatches cube::AdaptionWidget::vfunc_6 to children@0xc10-0xc18. RTTI AVSmoothMeshShape@plasma@@. Engine object method, not generic STL.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void plasma::SmoothMeshShape::vfunc_16(void)
+void plasma::SmoothMeshShape::clear(void)
 
 {
   int *piVar1;
@@ -67096,7 +67111,7 @@ void plasma::SmoothMeshShape::vfunc_16(void)
   
   iVar3 = 6;
   do {
-    lib_fn_671420();
+    plasma::SmoothMeshShape::clearLevelBuffers();
     iVar3 = iVar3 + -1;
   } while (iVar3 != 0);
   *(undefined4 *)(in_ECX + 0xb34) = *(undefined4 *)(in_ECX + 0xb30);
@@ -68435,9 +68450,12 @@ LAB_00643edb:
 
 
 
-/* plasma::SmoothMeshShape::vfunc_1 @ 00644fa0 */
+/* plasma::SmoothMeshShape::rebuild @ 00644fa0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->plasma_engine. Identity (RE-inferred, high): plasma::SmoothMeshShape::rebuild.
+ * RTTI AVSmoothMeshShape@plasma@@. Vfunc EnterCriticalSection(this+0xc1c), flag-gated on bits this+0x85c rebuilds GPU child objects this+0xc10/0xc14/0xc18 via Object_release+alloc; 233 float refs (vertex/normal geometry); callees are engine other/lib+gamemisc, no cube:: game. Substantial mesh work, not glue.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void plasma::SmoothMeshShape::vfunc_1(char param_1)
+void plasma::SmoothMeshShape::rebuild(char param_1)
 
 {
   void *_Dst;
@@ -73067,6 +73085,9 @@ void plasma::ScrollSlider::vfunc_11(void)
 
 
 /* plasma::ScrollSlider::vfunc_21 @ 00662b80 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->plasma_engine. Identity (RE-inferred, high): plasma::ScrollSlider::vfunc_21.
+ * RTTI AVScrollSlider@plasma@@. Relayout vfunc: chains cube::AdaptionWidget::vfunc_21, recomputes scroll extent via getBoundsRect/getContentSize, applyScrollLayout + clampScrollToContent, dispatches widget event 0x11. In-house UI widget.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 void plasma::ScrollSlider::vfunc_21(void)
 
@@ -73149,6 +73170,9 @@ void plasma::ScrollSlider::vfunc_21(void)
 
 
 /* plasma::ScrollSlider::vfunc_9 @ 00662db0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->plasma_engine. Identity (RE-inferred, high): plasma::ScrollSlider::vfunc_9.
+ * RTTI AVScrollSlider@plasma@@ is a real class. Widget layout vfunc override calls base cube::AdaptionWidget::vfunc_9 (62af10, real float geometry) + Widget_layoutAspectFit (662860); both game/AdaptionWidget. Two distinct calls => not an adjustor thunk, not STL glue.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 void plasma::ScrollSlider::vfunc_9(undefined4 param_1,undefined4 param_2)
 
@@ -74182,6 +74206,9 @@ undefined4 plasma::Button::vfunc_40(undefined4 param_1)
 
 
 /* plasma::Button::vfunc_7 @ 006655d0 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->plasma_engine. Identity (RE-inferred, high): plasma::Button::vfunc_7.
+ * RTTI AVButton@plasma@@=plasma::Button (base AVAdaptionWidget@cube@@). Body calls base cube::AdaptionWidget::vfunc_7, rebuilds child list@+0x220, relayouts after onContentResized, filters children +0x38==1 & +0x22c==2. Callers=derived PopUp/ScrollButton vfunc_7. Engine UI, not CRT/STL.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
 void plasma::Button::vfunc_7(void)
 
@@ -77892,9 +77919,12 @@ void lib_fn_671290(undefined4 *param_1,undefined4 param_2,int param_3)
 
 
 
-/* Global::lib_fn_671420 @ 00671420 */
+/* plasma::SmoothMeshShape::clearLevelBuffers @ 00671420 */
+/* NOTE(re) 2026-07-15 audit: RECLASSIFIED lib->plasma_engine. Identity (RE-inferred, high): plasma::SmoothMeshShape::clearLevelBuffers.
+ * Clears the SAME 3 concurrent_vectors(+4/+0x24/+0x44) of one 0x60B mesh level (same layout as dtor 63c700). Sole caller plasma::SmoothMeshShape::clear loops it 6x, once per level. Type-specific member, not a generic 1-container lib clear.
+ * Still physically in _library pending a reclassified regen. See scratchpad/audit/verdicts.json. */
 
-void lib_fn_671420(void)
+void plasma::SmoothMeshShape::clearLevelBuffers(void)
 
 {
   int in_ECX;
@@ -218047,7 +218077,7 @@ void Unwind_006f5d38(void)
 {
   int unaff_EBP;
   
-  _eh_vector_destructor_iterator_((void *)(*(int *)(unaff_EBP + -0x14) + 0x8e4),0x60,6,lib_fn_63c700)
+  _eh_vector_destructor_iterator_((void *)(*(int *)(unaff_EBP + -0x14) + 0x8e4),0x60,6,plasma::SmoothMeshShape::destroyLevelBuffers)
   ;
   return;
 }
