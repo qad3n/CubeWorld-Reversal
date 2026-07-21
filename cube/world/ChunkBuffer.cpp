@@ -1907,12 +1907,12 @@ LAB_0049f443:
     do {
       local_900 = (double)*(longlong *)(piVar16 + 6);
       local_8a0 = local_900 * 0.03125;
-      uVar24 = float_to_uint64_round();
+      uVar24 = ftol2();
       uVar3 = __alldiv(uVar24,0x10000,0);
       local_8c0 = (double)*(longlong *)(piVar16 + 4);
       local_900 = (double)CONCAT44(local_900._4_4_,uVar3);
       local_858 = local_8c0 * 0.03125;
-      uVar24 = float_to_uint64_round();
+      uVar24 = ftol2();
       local_81c = (undefined4 *)__alldiv(uVar24,0x10000,0);
       if ((local_81c == local_868) && ((int)local_900 == local_830)) {
         uVar3 = __alldiv(piVar16[8],piVar16[9],0x10000,0);
@@ -1957,7 +1957,7 @@ LAB_0049f443:
   }
   leave_critical_section_b();
   EnterCriticalSection((LPCRITICAL_SECTION)(local_8b8[1] + 0x250));
-  local_8c8 = float_to_uint64_round();
+  local_8c8 = ftol2();
   iStack_780 = uVar1 + local_8a0._0_4_;
   iStack_77c = local_8f0 + local_8c0._0_4_ + (uint)CARRY4(uVar1,local_8a0._0_4_);
   iStack_778 = (int)local_8dc + (int)pvVar25;

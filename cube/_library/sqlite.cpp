@@ -6791,7 +6791,7 @@ void sqlite3_explainOneScan(undefined4 *param_1,int param_2,uint *param_3,undefi
   }
 LAB_0053510e:
   if ((param_6 & 3) == 0) {
-    uVar15 = float_to_uint64_round();
+    uVar15 = ftol2();
   }
   else {
     uVar15 = 1;
@@ -30970,9 +30970,9 @@ LAB_0056d4cd:
           }
           goto LAB_0056d67a;
         default:
-          uVar39 = float_to_uint64_round();
+          uVar39 = ftol2();
           local_c8 = uVar39;
-          uVar40 = float_to_uint64_round();
+          uVar40 = ftol2();
           if (uVar39 == 0) goto LAB_0056d67a;
           if (uVar39 == 0xffffffffffffffff) {
             uVar39 = 1;

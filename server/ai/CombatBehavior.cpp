@@ -664,7 +664,7 @@ LAB_00403847:
         *(undefined4 *)((int)pvVar5 + 0x1450) = *(undefined4 *)(iVar22 + 0x20);
         *(undefined4 *)((int)pvVar5 + 0x1454) = *(undefined4 *)(iVar22 + 0x24);
         local_2e0 = (*(float *)(iVar22 + 0x88) * 0.5 - 0.1) * 65536.0;
-        uVar31 = ftol2_round();
+        uVar31 = ftol2();
         puVar14 = (uint *)((int)pvVar5 + 0x1450);
         uVar13 = *puVar14;
         *puVar14 = *puVar14 - (uint)uVar31;
@@ -678,7 +678,7 @@ LAB_00403847:
         *(undefined4 *)((int)pvVar5 + 0x1438) = *(undefined4 *)((int)pvVar5 + 0x20);
         *(undefined4 *)((int)pvVar5 + 0x143c) = *(undefined4 *)((int)pvVar5 + 0x24);
         local_2e0 = (*(float *)((int)pvVar5 + 0x88) * 0.5 - 0.1) * 65536.0;
-        uVar31 = ftol2_round();
+        uVar31 = ftol2();
         pvVar23 = world_p;
         puVar14 = (uint *)((int)pvVar5 + 0x1438);
         uVar13 = *puVar14;
@@ -1094,7 +1094,7 @@ LAB_004041dc:
           uVar8 = *(uint *)(local_30c + 0x20);
           iVar11 = *(int *)((int)pvVar23 + 0x24);
           iVar22 = *(int *)(local_30c + 0x24);
-          uVar31 = ftol2_round();
+          uVar31 = ftol2();
           if (CONCAT44((iVar11 - iVar22) - (uint)(uVar13 < uVar7),uVar13 - uVar8) <=
               (longlong)uVar31) {
             *(undefined4 *)((int)pvVar23 + 0x3c) = 0x41f00000;
@@ -1154,7 +1154,7 @@ LAB_00404420:
           uVar8 = *(uint *)(local_30c + 0x20);
           iVar11 = *(int *)((int)pvVar23 + 0x24);
           iVar22 = *(int *)(local_30c + 0x24);
-          uVar31 = ftol2_round();
+          uVar31 = ftol2();
           if (CONCAT44((iVar11 - iVar22) - (uint)(uVar13 < uVar7),uVar13 - uVar8) <=
               (longlong)uVar31) {
             *(undefined4 *)((int)pvVar23 + 0x3c) = 0x40a00000;
@@ -3325,7 +3325,7 @@ void __thiscall Combat_getProjectileSpawnPos(void *this,uint *out_pos)
     local_c = fVar4 * (fVar9 * (local_54 * fVar5 - local_64 * fVar7) +
                        (local_54 * fVar7 + local_64 * fVar5) * 0.0 + local_44 * fVar8 + local_34);
     do {
-      uVar10 = ftol2_round();
+      uVar10 = ftol2();
       rnd[iVar3 * 2] = (uint)uVar10;
       rnd[iVar3 * 2 + 1] = (uint)(uVar10 >> 0x20);
       iVar3 = iVar3 + 1;

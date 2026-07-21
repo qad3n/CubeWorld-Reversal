@@ -75,7 +75,7 @@ void cube::SpawnLocationBehavior::vfunc_0(void *creature,void *world)
     count = 0;
     local_30 = 0.5 - *(float *)((int)creature + 0x88) * 0.5;
     do {
-      uVar16 = ftol2_round();
+      uVar16 = ftol2();
       rnd[count * 2] = (uint)uVar16;
       rnd[count * 2 + 1] = (uint)(uVar16 >> 0x20);
       count = count + 1;

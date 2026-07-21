@@ -545,7 +545,7 @@ LAB_00469175:
       local_68 = local_68 & 0xffffff00;
       std_Sort(0,puVar14,(int)puVar14 >> 4,local_68);
       enter_critical_section();
-      lVar19 = float_to_uint64_round();
+      lVar19 = ftol2();
       leave_critical_section();
       uStack_40 = CONCAT13(1,(uint3)uStack_40);
       EnterCriticalSection((LPCRITICAL_SECTION)(*in_ECX + 0x800600));
@@ -1370,14 +1370,14 @@ void cube::World::updateObjectLabels(void)
   local_334 = *(float *)(iVar6 + 0x1000e4c);
   iVar5 = *(int *)(iVar6 + 0x8006d0);
   local_354 = local_334 * 65536.0;
-  uVar21 = float_to_uint64_round();
+  uVar21 = ftol2();
   iVar4 = __alldiv((uint)uVar21 + *(uint *)(iVar5 + 0x10),
                    (int)((ulonglong)uVar21 >> 0x20) + *(int *)(iVar5 + 0x14) +
                    (uint)CARRY4((uint)uVar21,*(uint *)(iVar5 + 0x10)),0x10000,0);
   local_33c = *(float *)(iVar6 + 0x1000e50);
   local_354 = local_33c * 65536.0;
   local_360 = (int)(iVar4 + (iVar4 >> 0x1f & 0xffU)) >> 8;
-  uVar21 = float_to_uint64_round();
+  uVar21 = ftol2();
   iVar5 = __alldiv((uint)uVar21 + *(uint *)(iVar5 + 0x18),
                    (int)((ulonglong)uVar21 >> 0x20) + *(int *)(iVar5 + 0x1c) +
                    (uint)CARRY4((uint)uVar21,*(uint *)(iVar5 + 0x18)),0x10000,0);
@@ -1410,7 +1410,7 @@ void cube::World::updateObjectLabels(void)
             local_1c8[2] = (float)*(undefined4 *)(iVar6 + 0x1000e54);
             do {
               local_354 = local_1c8[iVar5] * 65536.0;
-              uVar21 = float_to_uint64_round();
+              uVar21 = ftol2();
               uVar14 = local_368;
               local_1bc[iVar5 * 2] = (uint)uVar21;
               local_1bc[iVar5 * 2 + 1] = (uint)((ulonglong)uVar21 >> 0x20);
@@ -1420,7 +1420,7 @@ void cube::World::updateObjectLabels(void)
             fVar17 = (float10)terrain_generateColumnColor(local_344,local_368,0);
             local_348 = (float)fVar17;
             local_37c = local_348 * 65536.0;
-            uVar21 = float_to_uint64_round();
+            uVar21 = ftol2();
             in_ECX = local_364;
             local_3d8 = ((int)local_344 >> 0x1f) << 0x10 | local_344 >> 0x10;
             local_3cc = ((int)uVar14 >> 0x1f) << 0x10 | uVar14 >> 0x10;
@@ -1717,7 +1717,7 @@ LAB_004ca59b:
                   fVar17 = (float10)terrain_generateColumnColor(uVar12,uVar11,0);
                   local_34c = (float)fVar17;
                   local_378 = local_34c * 65536.0;
-                  uVar21 = float_to_uint64_round();
+                  uVar21 = ftol2();
                   puVar7 = (uint *)(iVar6 + 0x20);
                   local_3c0 = (uint)uVar21 - *puVar7;
                   iStack_3bc = ((int)((ulonglong)uVar21 >> 0x20) - *(int *)(iVar6 + 0x24)) -
@@ -1733,7 +1733,7 @@ LAB_004ca59b:
                   uVar16 = uVar14 - *(uint *)(iVar6 + 0x18);
                   uVar1 = local_358[3];
                   iVar5 = *(int *)(iVar6 + 0x1c);
-                  uVar21 = float_to_uint64_round();
+                  uVar21 = ftol2();
                   local_3a8 = uVar16 - (uint)uVar21;
                   iStack_3a4 = (((uVar1 - iVar5) - (uint)(uVar14 < uVar15)) -
                                (int)((ulonglong)uVar21 >> 0x20)) - (uint)(uVar16 < (uint)uVar21);
@@ -1746,7 +1746,7 @@ LAB_004ca59b:
                   uVar16 = uVar14 - *(uint *)(iVar6 + 0x10);
                   uVar1 = local_36c[1];
                   iVar6 = *(int *)(iVar6 + 0x14);
-                  uVar21 = float_to_uint64_round();
+                  uVar21 = ftol2();
                   in_ECX = local_364;
                   puVar7 = local_36c;
                   local_3b0 = uVar16 - (uint)uVar21;

@@ -4,7 +4,7 @@ Best-effort analysis of functions automation could not name (still `FUN_`), from
 sub-agent audit: proposed name, purpose, confidence, key variables. Inline `[AUDIT]`
 comments with the same content are also written above each function in the .cpp files.
 
-**3393 functions analyzed** — confidence: high=1539, med=1175, low=679.
+**3399 functions analyzed** — confidence: high=1544, med=1176, low=679.
 
 ## audit (1121)
 
@@ -1132,7 +1132,7 @@ comments with the same content are also written above each function in the .cpp 
 | 6cf9e0 | `vorbis_validate_packet_crc` | low | Vorbis: validate/consume a packet field, signal error via bit-skip on mismatch |
 | 6d0300 | `vorbis_init_pcm_struct` | low | Vorbis: zero a 2-word (undefined8[2]) pcm/output descriptor |
 
-## other (785)
+## other (791)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -1295,6 +1295,10 @@ comments with the same content are also written above each function in the .cpp 
 | 64d770 | `WorldInfo::copy_record` | high | Copy WorldInfo record: two std::strings (FUN_0040c0a0) plus three ints (+0x30/34/38) |
 | 65ad80 | `TupleKey::less` | high | 3-field comparator: returns 1 if (a<b) lexicographically over int,int,then FUN_005a78a0 tail compare. |
 | 67fdb0 | `uninitializedCopy_8byte` | high | Uninitialized-copies a range of 8-byte pair elements from [param_1,param_2) into param_3 |
+| 68d593 | `_Fac_tidy_reg_t_dtor` | high | Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x24). Mangled: ??1_Fac_tidy_reg_t@std@@QAE@XZ. public: __thiscall std::_Fac_tidy_reg_t::~_Fac_tidy_reg_t(void) |
+| 68e489 | `__except_handler4` | high | Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x23). Mangled: __except_handler4. |
+| 68e604 | `__CxxUnhandledExceptionFilter` | high | Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x41). Mangled: ?__CxxUnhandledExceptionFilter@@YGJPAU_EXCEPTION_POINTERS@@@Z. long __stdcall __CxxUnhandledExceptionFilter(struct _EXCEPTION_POINTERS *) |
+| 68e87e | `__setdefaultprecision` | high | Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x27). Mangled: __setdefaultprecision. |
 | 68e9a0 | `umul32to64` | high | Computes full 64-bit product of two 32-bit uints, stores lo/hi into param_1[0/1] |
 | 68ea00 | `udiv64by32_bitwise` | high | Bit-by-bit 64-bit-by-32-bit unsigned division (32 iterations), returns quotient or 0x7fffffff on overflow |
 | 68ea40 | `uadd64` | high | Adds two 64-bit values (from EDI/ESI) with carry, stores result to EDX ptr |
@@ -1574,6 +1578,8 @@ comments with the same content are also written above each function in the .cpp 
 | 550b60 | `schema::compact_hash` | med | Removes empty entries from a schema hash array and reclaims small tables back to inline storage |
 | 5ae900 | `initZero_T28` | med | Zero-initializes array of param_2 elements of 28 bytes (7-dword stride, 6 dwords cleared each) |
 | 630850 | `tree_buildFromData` | med | Builds a tree/map from source data (FUN_0062f690/0062f8c0/0062fdc0), frees temp |
+| 68e83e | `__RTC_Initialize` | med | Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=14.67;n=2;nocrc). Mangled: __RTC_Initialize. |
+| 68e85e | `__RTC_Initialize_2` | med | Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=14.67;n=2;nocrc). Mangled: __RTC_Initialize. |
 | 68f020 | `copyMatrix9` | med | Copies a 9-word block from struct+0x14 to struct+0x38 (e.g. matrix/transform snapshot) |
 | 68f250 | `game_misc::alignLayout64` | med | Aligns/rounds layout rectangle fields (pos/size at +0x18..+0x34) to 64-byte (0x40) grid; two branches by param_1 |
 | 691840 | `T1_Read_PFB_Segments` | med | FreeType/Type1: parse PFB font ('typ1'/CID/'TYP1' 0x43494420/0x54595031 tags), accumulating segment offsets |
@@ -2130,6 +2136,7 @@ comments with the same content are also written above each function in the .cpp 
 | 67bd40 | `thunk_vector_int_assign` | high | Thin wrapper that forwards to the vector<int> assign/copy routine FUN_0067a7b0 |
 | 681220 | `istream::readValue` | high | Reads sizeof-value bytes from the object's istream (at +8) into a stack temporary and returns it |
 | 681240 | `istream::readFloat` | high | Reads a float from the object's istream (at +8) and returns it |
+| 68d946 | `__ftol2` | high | Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x75). Mangled: __ftol2. |
 | 402e80 | `vectorString_popBack` | med | Destroys and pops last std::string element of a vector (dtor + shrink end by 0xc) |
 | 4034c0 | `vectorString_copyElem` | med | Copy-constructs a std::string element into slot after reserving (FUN_0064e310) |
 | 4040d0 | `std_container_assign_range` | med | MSVC STL: vector/string assign from [param_1,param_1[1]) via memmove/grow |
@@ -2387,7 +2394,6 @@ comments with the same content are also written above each function in the .cpp 
 | 680d80 | `Attribute::readVec3` | med | Deserializes an Attribute reading 0xc-byte (vec3) records into vector[0x13], stride 0xc per frame |
 | 680fd0 | `Attribute::readVec4` | med | Deserializes an Attribute reading 0x10-byte (vec4/quat) records into vector[0x13], stride 0x10 per frame |
 | 682a80 | `Attribute::readSequence` | med | Deserializes an animation "Attribute.sequence": reads name/wname and per-key frame/time/smoothness, inserting sorted keyframes |
-| 68d946 | `float_to_uint64_round` | med | Converts float10 ST0 to rounded unsigned 64-bit integer with banker's-style correction |
 | 402ed0 | `signal_dispatchArg` | low | Builds a 1-element arg vector and dispatches a registered callback/handler, then cleans up |
 | 40d010 | `filebuf_openInstantiate` | low | Opens filebuf (basic_filebuf::ctor_3) and constructs an abstr::Method0<Machine,int>, returns success byte |
 | 411340 | `proximityCheck` | low | Game logic: gets target entity then compares its height/distance thresholds via FUN_00627ce0/d50 |

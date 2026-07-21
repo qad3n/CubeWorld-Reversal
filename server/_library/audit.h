@@ -450,7 +450,7 @@ void std_List_init_sentinel(void);
 undefined4 * __fastcall std_Tree_node_alloc_0x18(undefined4 *param_1);
 void __thiscall std_map_lower_bound_yx(void *this,int *param_1,uint *param_2);
 void __cdecl operator_new_wrapper(uint param_1);
-ulonglong ftol2_round(void);
+ulonglong ftol2(void);
 void eh_vector_ctor_iter_unwind(void);
 void eh_vector_dtor_iter_unwind(void);
 

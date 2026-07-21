@@ -9532,7 +9532,7 @@ void std_vector_ctor_fillFrom(undefined4 param_1,undefined4 param_2)
 
 
 /* [AUDIT] proposed: Store_ftol64_result  (confidence: med)
- * purpose: Call float-to-int64 helper float_to_uint64_round and store 8-byte result into *this
+ * purpose: Call float-to-int64 helper ftol2 and store 8-byte result into *this
  * vars: in_ECX=int64 dst
  */
 /* Global::Store_ftol64_result @ 00459c00 */
@@ -9543,7 +9543,7 @@ void Store_ftol64_result(void)
   undefined8 *in_ECX;
   undefined8 uVar1;
   
-  uVar1 = float_to_uint64_round();
+  uVar1 = ftol2();
   *in_ECX = uVar1;
   return;
 }
@@ -10303,7 +10303,7 @@ void list_popFront_node(undefined4 *param_1)
 
 /* [AUDIT] proposed: fixed_sub_ftol_64  (confidence: med)
  * purpose: param_1(int64) = ftol64() - param_3(int64)
- * vars: float_to_uint64_round
+ * vars: ftol2
  */
 /* Global::fixed_sub_ftol_64 @ 00468ee0 */
 
@@ -10314,7 +10314,7 @@ void fixed_sub_ftol_64(int *param_1,undefined4 param_2,uint *param_3)
   uint uVar2;
   undefined8 uVar3;
   
-  uVar3 = float_to_uint64_round();
+  uVar3 = ftol2();
   uVar1 = *param_3;
   uVar2 = param_3[1];
   *param_1 = (uint)uVar3 - *param_3;
@@ -10327,7 +10327,7 @@ void fixed_sub_ftol_64(int *param_1,undefined4 param_2,uint *param_3)
 
 /* [AUDIT] proposed: fixed_sub_ftol_rev64  (confidence: med)
  * purpose: param_1(int64) = *this - ftol64() (64-bit subtract)
- * vars: float_to_uint64_round
+ * vars: ftol2
  */
 /* Global::fixed_sub_ftol_rev64 @ 00468fc0 */
 
@@ -10339,7 +10339,7 @@ void fixed_sub_ftol_rev64(int *param_1)
   uint *in_ECX;
   undefined8 uVar3;
   
-  uVar3 = float_to_uint64_round();
+  uVar3 = ftol2();
   uVar1 = *in_ECX;
   uVar2 = in_ECX[1];
   *param_1 = uVar1 - (uint)uVar3;
@@ -26457,7 +26457,7 @@ undefined4 sqlite3_OsCurrentTimeInt64(int *param_1,undefined8 *param_2)
   }
   uVar1 = (*(code *)param_1[0x10])(param_1,&local_c);
   local_c = local_c * 86400000.0;
-  uVar2 = float_to_uint64_round();
+  uVar2 = ftol2();
   *param_2 = uVar2;
   return uVar1;
 }
@@ -37239,7 +37239,7 @@ void WalkPathBehavior_isAreaWalkable(uint *param_1,float *param_2,char param_3)
   local_c = param_2[2] * 0.5;
   iVar15 = 0;
   do {
-    uVar21 = float_to_uint64_round();
+    uVar21 = ftol2();
     local_2c[iVar15 * 2] = (uint)uVar21;
     local_2c[iVar15 * 2 + 1] = (uint)((ulonglong)uVar21 >> 0x20);
     iVar15 = iVar15 + 1;
@@ -37259,7 +37259,7 @@ void WalkPathBehavior_isAreaWalkable(uint *param_1,float *param_2,char param_3)
   local_14 = CONCAT44(param_2[1] * 0.5,*param_2 * 0.5);
   local_c = param_2[2] * 0.5;
   do {
-    uVar21 = float_to_uint64_round();
+    uVar21 = ftol2();
     local_2c[iVar16 * 2] = (uint)uVar21;
     local_2c[iVar16 * 2 + 1] = (uint)((ulonglong)uVar21 >> 0x20);
     iVar16 = iVar16 + 1;
@@ -37375,8 +37375,8 @@ LAB_0059f407:
                     ((char)piVar2[0xc] != '\0')))) {
                   local_c = (float)piVar2[0xb];
                   local_14 = *(undefined8 *)(piVar2 + 9);
-                  lVar22 = float_to_uint64_round();
-                  uVar21 = float_to_uint64_round();
+                  lVar22 = ftol2();
+                  uVar21 = ftol2();
                   iVar18 = (int)((ulonglong)uVar21 >> 0x20);
                   uVar10 = (uint)uVar21;
                   uVar13 = piVar2[2];
@@ -37388,8 +37388,8 @@ LAB_0059f407:
                      (((iVar7 < iVar14 || (uVar13 - (uint)lVar22 <= uVar10 + *param_1)) &&
                       (CONCAT44((param_1[1] - iVar18) - (uint)(*param_1 < uVar10),*param_1 - uVar10)
                        < lVar22 + *(longlong *)(piVar2 + 2))))) {
-                    lVar22 = float_to_uint64_round();
-                    uVar21 = float_to_uint64_round();
+                    lVar22 = ftol2();
+                    uVar21 = ftol2();
                     iVar14 = (int)((ulonglong)uVar21 >> 0x20);
                     uVar10 = (uint)uVar21;
                     puVar1 = (uint *)(iVar12 + 0x10);
@@ -37406,14 +37406,14 @@ LAB_0059f407:
                       uVar10 = *puVar1;
                       iVar12 = *(int *)(puVar4[2] + 0x1c);
                       lVar22 = *(longlong *)puVar1;
-                      uVar21 = float_to_uint64_round();
+                      uVar21 = ftol2();
                       uVar17 = param_1[5];
                       iVar14 = (int)((ulonglong)uVar21 >> 0x20) + uVar17 +
                                (uint)CARRY4((uint)uVar21,uVar13);
                       if ((iVar12 <= iVar14) &&
                          ((iVar12 < iVar14 || (uVar10 <= (uint)uVar21 + uVar13)))) {
-                        uVar21 = float_to_uint64_round();
-                        lVar23 = float_to_uint64_round();
+                        uVar21 = ftol2();
+                        lVar23 = ftol2();
                         if (CONCAT44((uVar17 - (int)((ulonglong)uVar21 >> 0x20)) -
                                      (uint)(uVar13 < (uint)uVar21),uVar13 - (uint)uVar21) <
                             lVar23 + lVar22) {
@@ -37481,7 +37481,7 @@ void WalkPathBehavior_sampleStepCollision(uint *param_1,float *param_2)
   local_c = 0.2;
   iVar9 = 0;
   do {
-    uVar11 = float_to_uint64_round();
+    uVar11 = ftol2();
     local_50[iVar9 * 2 + 6] = (uint)uVar11;
     local_50[iVar9 * 2 + 7] = (uint)((ulonglong)uVar11 >> 0x20);
     iVar9 = iVar9 + 1;
@@ -37491,7 +37491,7 @@ void WalkPathBehavior_sampleStepCollision(uint *param_1,float *param_2)
   local_10 = param_2[1] * 0.5;
   local_c = param_2[2] * 0.5;
   do {
-    uVar11 = float_to_uint64_round();
+    uVar11 = ftol2();
     local_50[iVar9 * 2] = (uint)uVar11;
     local_50[iVar9 * 2 + 1] = (uint)((ulonglong)uVar11 >> 0x20);
     iVar9 = iVar9 + 1;
@@ -37517,7 +37517,7 @@ void WalkPathBehavior_sampleStepCollision(uint *param_1,float *param_2)
   iVar9 = 0;
   local_c = param_2[2] * 0.5;
   do {
-    uVar11 = float_to_uint64_round();
+    uVar11 = ftol2();
     local_50[iVar9 * 2 + 6] = (uint)uVar11;
     local_50[iVar9 * 2 + 7] = (uint)((ulonglong)uVar11 >> 0x20);
     iVar9 = iVar9 + 1;

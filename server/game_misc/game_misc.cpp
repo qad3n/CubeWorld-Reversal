@@ -168,7 +168,7 @@ void __fastcall Matrix4_setIdentity(undefined4 *matrix)
 
 
 /* [AUDIT] proposed: Vec3i64_randomize  (confidence: high)
- * purpose: Fills 3 int64 slots with 64-bit random values via ftol2_round (RNG)
+ * purpose: Fills 3 int64 slots with 64-bit random values via ftol2 (RNG)
  * vars: matrix=dest 3x int64; loop x3
  */
 /* Global::Vec3i64_randomize @ 00402510 */
@@ -181,7 +181,7 @@ int __fastcall Vec3i64_randomize(int dst)
   
   i = 0;
   do {
-    val = ftol2_round();
+    val = ftol2();
     *(int *)(dst + i * 8) = (int)val;
     *(int *)(dst + 4 + i * 8) = (int)(val >> 0x20);
     i = i + 1;
@@ -4629,7 +4629,7 @@ LAB_004d68cf:
       local_5c = CONCAT44(local_5c._4_4_ * t_accum,(float)local_5c * t_accum);
       local_54 = direction[2] * t_accum;
       do {
-        uVar22 = ftol2_round();
+        uVar22 = ftol2();
         local_168[iVar6 * 2 + 0x18] = (uint)uVar22;
         local_168[iVar6 * 2 + 0x19] = (uint)(uVar22 >> 0x20);
         iVar6 = iVar6 + 1;
@@ -4659,10 +4659,10 @@ LAB_004d68cf:
         fVar1 = *pfVar17;
         if (1e-06 <= fVar1 * fVar1) {
           if (fVar1 <= 0.0) {
-            uVar22 = ftol2_round();
+            uVar22 = ftol2();
           }
           else {
-            uVar22 = ftol2_round();
+            uVar22 = ftol2();
           }
           local_17c = (float)(longlong)uVar22;
           local_17c = local_17c * 1.5258789e-05;
@@ -4762,7 +4762,7 @@ LAB_004d68cf:
                       }
                       fVar20 = *direction;
                       if (fVar20 != 0.0) {
-                        uVar22 = ftol2_round();
+                        uVar22 = ftol2();
                         uVar18 = piVar16[2];
                         iVar6 = piVar16[3];
                         uVar15 = uVar18 - (uint)uVar22;
@@ -4777,7 +4777,7 @@ LAB_004d68cf:
                           local_44 = CONCAT44(local_44._4_4_ * fVar13,(float)local_44 * fVar13);
                           local_3c = direction[2] * fVar13;
                           do {
-                            uVar24 = ftol2_round();
+                            uVar24 = ftol2();
                             local_168[iVar10 * 2 + 6] = (uint)uVar24;
                             local_168[iVar10 * 2 + 7] = (uint)(uVar24 >> 0x20);
                             iVar10 = iVar10 + 1;
@@ -4793,7 +4793,7 @@ LAB_004d68cf:
                           local_9c = CONCAT44(local_9c._4_4_ + local_168[0xb] +
                                               (uint)CARRY4((uint)local_9c,local_168[10]),
                                               (uint)local_9c + local_168[10]);
-                          uVar24 = ftol2_round();
+                          uVar24 = ftol2();
                           fVar1 = (float)piVar16[4];
                           local_190 = (int)(uVar24 >> 0x20);
                           iVar10 = (piVar16[5] - local_190) - (uint)((uint)fVar1 < (uint)local_194);
@@ -4809,7 +4809,7 @@ LAB_004d68cf:
                               if ((local_a4._4_4_ <= iVar10) &&
                                  ((local_a4._4_4_ < iVar10 ||
                                   ((uint)local_a4 < (uint)((int)fVar1 + (int)local_194))))) {
-                                uVar24 = ftol2_round();
+                                uVar24 = ftol2();
                                 iVar10 = (int)(uVar24 >> 0x20) + piVar16[7] +
                                          (uint)CARRY4((uint)uVar24,piVar16[6]);
                                 if ((local_9c._4_4_ <= iVar10) &&
@@ -4833,7 +4833,7 @@ LAB_004d70ee:
                           local_74 = CONCAT44(local_74._4_4_ * fVar20,(float)local_74 * fVar20);
                           local_6c = direction[2] * fVar20;
                           do {
-                            uVar22 = ftol2_round();
+                            uVar22 = ftol2();
                             local_168[iVar6 * 2 + 0xc] = (uint)uVar22;
                             local_168[iVar6 * 2 + 0xd] = (uint)(uVar22 >> 0x20);
                             iVar6 = iVar6 + 1;
@@ -4849,7 +4849,7 @@ LAB_004d70ee:
                                               (uint)CARRY4((uint)local_dc,local_168[0xe]),uVar12);
                           local_d4 = CONCAT44(local_d4._4_4_ + local_168[0x11] +
                                               (uint)CARRY4((uint)local_d4,local_168[0x10]),uVar15);
-                          uVar22 = ftol2_round();
+                          uVar22 = ftol2();
                           uVar18 = piVar16[4];
                           iVar6 = (piVar16[5] - (int)(uVar22 >> 0x20)) -
                                   (uint)(uVar18 < (uint)uVar22);
@@ -4859,7 +4859,7 @@ LAB_004d70ee:
                                (((piVar16[7] < local_d4._4_4_ || ((uint)piVar16[6] <= uVar15)) &&
                                 (CONCAT44(local_dc._4_4_,uVar12) <
                                  (longlong)(uVar22 + *(longlong *)(piVar16 + 4)))))) {
-                              uVar22 = ftol2_round();
+                              uVar22 = ftol2();
                               iVar6 = (int)(uVar22 >> 0x20) + piVar16[7] +
                                       (uint)CARRY4((uint)uVar22,piVar16[6]);
                               if ((local_d4._4_4_ <= iVar6) &&
@@ -4873,7 +4873,7 @@ LAB_004d70ee:
                       }
                       local_194 = direction[1];
                       if (local_194 != 0.0) {
-                        uVar22 = ftol2_round();
+                        uVar22 = ftol2();
                         uVar18 = piVar16[4];
                         iVar6 = piVar16[5];
                         uVar15 = uVar18 - (uint)uVar22;
@@ -4889,7 +4889,7 @@ LAB_004d70ee:
                           local_50 = CONCAT44(local_50._4_4_ * fVar20,(float)local_50 * fVar20);
                           local_48 = direction[2] * fVar20;
                           do {
-                            uVar24 = ftol2_round();
+                            uVar24 = ftol2();
                             local_168[iVar10 * 2 + 0x12] = (uint)uVar24;
                             local_168[iVar10 * 2 + 0x13] = (uint)(uVar24 >> 0x20);
                             iVar10 = iVar10 + 1;
@@ -4905,7 +4905,7 @@ LAB_004d70ee:
                           local_84 = CONCAT44(local_84._4_4_ + local_168[0x17] +
                                               (uint)CARRY4((uint)local_84,local_168[0x16]),
                                               (uint)local_84 + local_168[0x16]);
-                          uVar24 = ftol2_round();
+                          uVar24 = ftol2();
                           uVar15 = piVar16[2];
                           iVar10 = (piVar16[3] - (int)(uVar24 >> 0x20)) -
                                    (uint)(uVar15 < (uint)uVar24);
@@ -4915,7 +4915,7 @@ LAB_004d70ee:
                                (((piVar16[7] < local_84._4_4_ ||
                                  ((uint)piVar16[6] <= (uint)local_84)) &&
                                 (local_94 < (longlong)(uVar24 + *(longlong *)(piVar16 + 2)))))) {
-                              uVar24 = ftol2_round();
+                              uVar24 = ftol2();
                               iVar10 = (int)(uVar24 >> 0x20) + piVar16[7] +
                                        (uint)CARRY4((uint)uVar24,piVar16[6]);
                               if ((local_84._4_4_ <= iVar10) &&
@@ -4938,7 +4938,7 @@ LAB_004d75c0:
                           local_68 = CONCAT44(local_68._4_4_ * fVar8,(float)local_68 * fVar8);
                           local_60 = direction[2] * fVar8;
                           do {
-                            uVar22 = ftol2_round();
+                            uVar22 = ftol2();
                             local_168[iVar6 * 2] = (uint)uVar22;
                             local_168[iVar6 * 2 + 1] = (uint)(uVar22 >> 0x20);
                             iVar6 = iVar6 + 1;
@@ -4954,7 +4954,7 @@ LAB_004d75c0:
                                               (uint)CARRY4((uint)local_cc,local_168[0]),uVar12);
                           local_bc = CONCAT44(local_bc._4_4_ + local_168[5] +
                                               (uint)CARRY4((uint)local_bc,local_168[4]),uVar15);
-                          uVar22 = ftol2_round();
+                          uVar22 = ftol2();
                           uVar18 = piVar16[2];
                           iVar6 = (piVar16[3] - (int)(uVar22 >> 0x20)) -
                                   (uint)(uVar18 < (uint)uVar22);
@@ -4964,7 +4964,7 @@ LAB_004d75c0:
                                (((piVar16[7] < local_bc._4_4_ || ((uint)piVar16[6] <= uVar15)) &&
                                 (CONCAT44(local_cc._4_4_,uVar12) <
                                  (longlong)(uVar22 + *(longlong *)(piVar16 + 2)))))) {
-                              uVar22 = ftol2_round();
+                              uVar22 = ftol2();
                               iVar6 = (int)(uVar22 >> 0x20) + piVar16[7] +
                                       (uint)CARRY4((uint)uVar22,piVar16[6]);
                               if ((local_bc._4_4_ <= iVar6) &&
@@ -5497,7 +5497,7 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
   local_c = *(float *)((int)agent + 0x88) * 0.5;
   heuristic = 0;
   do {
-    uVar23 = ftol2_round();
+    uVar23 = ftol2();
     local_38[heuristic * 2] = (uint)uVar23;
     local_38[heuristic * 2 + 1] = (uint)(uVar23 >> 0x20);
     heuristic = heuristic + 1;
@@ -5551,16 +5551,16 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
                   ((char)piVar3[0xc] != '\0')))) {
                 local_c = (float)piVar3[0xb];
                 local_14 = *(undefined8 *)(piVar3 + 9);
-                uVar23 = ftol2_round();
-                uVar25 = ftol2_round();
+                uVar23 = ftol2();
+                uVar25 = ftol2();
                 uVar17 = piVar3[2];
                 if ((CONCAT44((piVar3[3] - (int)(uVar23 >> 0x20)) - (uint)(uVar17 < (uint)uVar23),
                               uVar17 - (uint)uVar23) <= (longlong)(uVar25 + CONCAT44(uVar12,uVar11))
                     ) && (CONCAT44((uVar12 - (int)(uVar25 >> 0x20)) - (uint)(uVar11 < (uint)uVar25),
                                    uVar11 - (uint)uVar25) <
                           (longlong)(uVar23 + *(longlong *)(piVar3 + 2)))) {
-                  uVar23 = ftol2_round();
-                  uVar25 = ftol2_round();
+                  uVar23 = ftol2();
+                  uVar25 = ftol2();
                   uVar17 = piVar3[4];
                   if ((CONCAT44((piVar3[5] - (int)(uVar23 >> 0x20)) - (uint)(uVar17 < (uint)uVar23),
                                 uVar17 - (uint)uVar23) <=
@@ -5568,12 +5568,12 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
                      (CONCAT44((uVar13 - (int)(uVar25 >> 0x20)) - (uint)(uVar20 < (uint)uVar25),
                                uVar20 - (uint)uVar25) <
                       (longlong)(uVar23 + *(longlong *)(piVar3 + 4)))) {
-                    uVar23 = ftol2_round();
+                    uVar23 = ftol2();
                     lVar4 = uVar23 + CONCAT44(iVar21,uVar14);
                     iVar10 = (int)((ulonglong)lVar4 >> 0x20);
                     if ((piVar3[7] <= iVar10) &&
                        ((piVar3[7] < iVar10 || ((uint)piVar3[6] <= (uint)lVar4)))) {
-                      uVar25 = ftol2_round();
+                      uVar25 = ftol2();
                       iVar18 = (int)(uVar25 >> 0x20) + piVar3[7] +
                                (uint)CARRY4((uint)uVar25,piVar3[6]);
                       iVar10 = (iVar21 - (int)(uVar23 >> 0x20)) - (uint)(uVar14 < (uint)uVar23);
@@ -5600,7 +5600,7 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
   heuristic = 0;
   local_c = *(float *)((int)agent + 0x88) * 0.5;
   do {
-    uVar23 = ftol2_round();
+    uVar23 = ftol2();
     local_38[heuristic * 2] = (uint)uVar23;
     local_38[heuristic * 2 + 1] = (uint)(uVar23 >> 0x20);
     heuristic = heuristic + 1;
@@ -5675,10 +5675,10 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
                         ((char)piVar3[0xc] != '\0')))) {
                       local_c = (float)piVar3[0xb];
                       local_14 = *(undefined8 *)(piVar3 + 9);
-                      uVar23 = ftol2_round();
+                      uVar23 = ftol2();
                       iVar10 = (int)(uVar23 >> 0x20);
                       uVar17 = (uint)uVar23;
-                      uVar23 = ftol2_round();
+                      uVar23 = ftol2();
                       if (CONCAT44((piVar3[3] - iVar10) - (uint)((uint)piVar3[2] < uVar17),
                                    piVar3[2] - uVar17) <=
                           (longlong)(uVar23 + CONCAT44(uVar12,uVar11))) {
@@ -5688,10 +5688,10 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
                         iVar10 = iVar10 + piVar3[3] + (uint)CARRY4(uVar17,piVar3[2]);
                         if ((iVar18 <= iVar10) &&
                            ((iVar18 < iVar10 || (uVar11 - local_78 < uVar17 + piVar3[2])))) {
-                          uVar23 = ftol2_round();
+                          uVar23 = ftol2();
                           iVar10 = (int)(uVar23 >> 0x20);
                           uVar17 = (uint)uVar23;
-                          uVar23 = ftol2_round();
+                          uVar23 = ftol2();
                           if (CONCAT44((piVar3[5] - iVar10) - (uint)((uint)piVar3[4] < uVar17),
                                        piVar3[4] - uVar17) <=
                               (longlong)(uVar23 + CONCAT44(uVar13,uVar20))) {
@@ -5701,12 +5701,12 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
                             iVar10 = iVar10 + piVar3[5] + (uint)CARRY4(uVar17,piVar3[4]);
                             if ((iVar18 <= iVar10) &&
                                ((iVar18 < iVar10 || (uVar20 - local_78 < uVar17 + piVar3[4])))) {
-                              uVar23 = ftol2_round();
+                              uVar23 = ftol2();
                               lVar4 = uVar23 + CONCAT44(iVar21,uVar14);
                               iVar10 = (int)((ulonglong)lVar4 >> 0x20);
                               if ((piVar3[7] <= iVar10) &&
                                  ((piVar3[7] < iVar10 || ((uint)piVar3[6] <= (uint)lVar4)))) {
-                                uVar25 = ftol2_round();
+                                uVar25 = ftol2();
                                 iVar18 = (int)(uVar25 >> 0x20) + piVar3[7] +
                                          (uint)CARRY4((uint)uVar25,piVar3[6]);
                                 iVar10 = (iVar21 - (int)(uVar23 >> 0x20)) -
@@ -5979,8 +5979,8 @@ void __thiscall NavGraph_findPath(void *this,void *agent)
             goal_pos = CONCAT44(uVar23 << 0x10,((int)local_a0 >> 0x1f) << 0x10 | local_a0 >> 0x10);
             puVar6 = &local_38;
             puVar35 = &local_50;
-            uVar31 = ftol2_round();
-            local_68 = ftol2_round();
+            uVar31 = ftol2();
+            local_68 = ftol2();
             local_60 = local_68;
             local_58 = (double)uVar31;
             Vec3i64_add(&local_68,puVar35,puVar6);
@@ -6055,7 +6055,7 @@ void __thiscall NavGraph_findPath(void *this,void *agent)
             local_bc = uVar24;
             local_b0 = uVar27;
             local_ac = uVar23;
-            uVar31 = ftol2_round();
+            uVar31 = ftol2();
             iVar15 = World_getBlockFloat(world_ptr,local_50,local_4c,local_48,local_44,
                                   local_40 - (uint)uVar31,
                                   (local_3c - (int)(uVar31 >> 0x20)) -
@@ -6361,14 +6361,14 @@ LAB_004dea80:
                                 local_11c = piVar25[3];
                                 local_1c8 = goal_pos._4_4_ * 0.5 * 65536.0;
                                 goal_pos = uVar1;
-                                uVar31 = ftol2_round();
+                                uVar31 = ftol2();
                                 local_d4 = (uint)(uVar31 >> 0x20);
                                 local_128 = (uint)uVar31;
                                 local_b8 = (float)(piVar25[2] - local_128);
                                 local_b0 = (piVar25[3] - local_d4) -
                                            (uint)((uint)piVar25[2] < local_128);
                                 local_1b0 = *(float *)((int)agent_ptr + 0x80) * 0.5 * 65536.0;
-                                uVar32 = ftol2_round();
+                                uVar32 = ftol2();
                                 local_f0 = (int)(uVar32 >> 0x20);
                                 local_c0 = (int *)uVar32;
                                 lVar2 = uVar32 + CONCAT44(local_4c,local_50);
@@ -6388,11 +6388,11 @@ LAB_004dea80:
                                       (uVar33 = CONCAT44(local_cc,local_b4),
                                       local_cc < local_128 + piVar25[2])))) {
                                     local_1ac = local_d8 * 0.5 * 65536.0;
-                                    uVar31 = ftol2_round();
+                                    uVar31 = ftol2();
                                     local_dc = (int)(uVar31 >> 0x20);
                                     local_ec = (uint)uVar31;
                                     local_18c = *(float *)((int)agent_ptr + 0x84) * 0.5 * 65536.0;
-                                    uVar33 = ftol2_round();
+                                    uVar33 = ftol2();
                                     local_cc = (uint)(uVar33 >> 0x20);
                                     local_e0 = piVar25[4] - local_ec;
                                     lVar3 = uVar33 + CONCAT44(local_44,local_48);
@@ -6419,7 +6419,7 @@ LAB_004dea80:
                                         local_1d0 = *(float *)((int)agent_ptr + 0x88) * 0.5 * 65536.0
                                         ;
                                         local_ec = uVar23;
-                                        uVar31 = ftol2_round();
+                                        uVar31 = ftol2();
                                         local_e0 = (uint)(uVar31 >> 0x20);
                                         local_b4 = (uint)uVar31;
                                         lVar2 = uVar31 + CONCAT44(local_3c,local_40);
@@ -6437,7 +6437,7 @@ LAB_004dea80:
                                             uVar33 = CONCAT44(local_cc,local_b4),
                                             (uint)piVar25[6] <= uVar16 - 0x10000)))) {
                                           local_1d8 = local_124 * 65536.0;
-                                          uVar31 = ftol2_round();
+                                          uVar31 = ftol2();
                                           uVar23 = (uint)uVar31 + piVar25[6];
                                           iVar18 = (int)(uVar31 >> 0x20) + piVar25[7] +
                                                    (uint)CARRY4((uint)uVar31,piVar25[6]);
@@ -6500,12 +6500,12 @@ LAB_004dea80:
                                             (uVar33 = uVar31,
                                             (local_50 - (int)local_c0) - 0x10000 < local_b4)))) {
                                           local_1e0 = local_d8 * 0.5 * 65536.0;
-                                          uVar31 = ftol2_round();
+                                          uVar31 = ftol2();
                                           local_cc = (uint)(uVar31 >> 0x20);
                                           local_b4 = (uint)uVar31;
                                           local_1cc = *(float *)((int)agent_ptr + 0x84) * 0.5 *
                                                       65536.0;
-                                          uVar33 = ftol2_round();
+                                          uVar33 = ftol2();
                                           local_dc = (int)(uVar33 >> 0x20);
                                           local_ec = (uint)uVar33;
                                           local_e0 = piVar25[4] - local_b4;
@@ -6532,7 +6532,7 @@ LAB_004dea80:
                                                 local_b4 < uVar16)))) {
                                               local_184 = *(float *)((int)agent_ptr + 0x88) * 0.5 *
                                                           65536.0;
-                                              uVar31 = ftol2_round();
+                                              uVar31 = ftol2();
                                               local_e0 = (uint)(uVar31 >> 0x20);
                                               local_b4 = (uint)uVar31;
                                               local_1e8 = uVar31 + CONCAT44(local_3c,local_40);
@@ -6544,7 +6544,7 @@ LAB_004dea80:
                                               uVar23 = local_b4;
                                               if ((char)uVar16 != '\0') {
                                                 local_1b8 = local_124 * 65536.0;
-                                                uVar31 = ftol2_round();
+                                                uVar31 = ftol2();
                                                 local_1f0 = (uint)uVar31 + piVar25[6];
                                                 local_1ec = (int)(uVar31 >> 0x20) + piVar25[7] +
                                                             (uint)CARRY4((uint)uVar31,piVar25[6]);
@@ -6585,12 +6585,12 @@ LAB_004dea80:
                                            ((iVar18 < iVar15 ||
                                             ((local_50 - (int)local_c0) + 0x10000 < local_b4)))) {
                                           local_194 = local_d8 * 0.5 * 65536.0;
-                                          uVar31 = ftol2_round();
+                                          uVar31 = ftol2();
                                           local_cc = (uint)(uVar31 >> 0x20);
                                           local_b4 = (uint)uVar31;
                                           local_1bc = *(float *)((int)agent_ptr + 0x84) * 0.5 *
                                                       65536.0;
-                                          uVar33 = ftol2_round();
+                                          uVar33 = ftol2();
                                           local_dc = (int)(uVar33 >> 0x20);
                                           local_ec = (uint)uVar33;
                                           local_e0 = piVar25[4] - local_b4;
@@ -6617,7 +6617,7 @@ LAB_004dea80:
                                                 local_b4 < uVar16)))) {
                                               local_19c = *(float *)((int)agent_ptr + 0x88) * 0.5 *
                                                           65536.0;
-                                              uVar31 = ftol2_round();
+                                              uVar31 = ftol2();
                                               local_e0 = (uint)(uVar31 >> 0x20);
                                               local_b4 = (uint)uVar31;
                                               local_208 = uVar31 + CONCAT44(local_3c,local_40);
@@ -6629,7 +6629,7 @@ LAB_004dea80:
                                               uVar23 = local_b4;
                                               if ((char)uVar16 != '\0') {
                                                 local_1dc = local_124 * 65536.0;
-                                                uVar31 = ftol2_round();
+                                                uVar31 = ftol2();
                                                 local_218 = (uint)uVar31 + piVar25[6];
                                                 local_214 = (int)(uVar31 >> 0x20) + piVar25[7] +
                                                             (uint)CARRY4((uint)uVar31,piVar25[6]);
@@ -6667,12 +6667,12 @@ LAB_004dea80:
                                            ((iVar18 < iVar15 || (local_b4 < local_128 + piVar25[2]))
                                            )) {
                                           local_1a4 = local_d8 * 0.5 * 65536.0;
-                                          uVar31 = ftol2_round();
+                                          uVar31 = ftol2();
                                           local_dc = (int)(uVar31 >> 0x20);
                                           local_cc = (uint)uVar31;
                                           local_1c4 = *(float *)((int)agent_ptr + 0x84) * 0.5 *
                                                       65536.0;
-                                          uVar31 = ftol2_round();
+                                          uVar31 = ftol2();
                                           local_ec = (uint)(uVar31 >> 0x20);
                                           local_e0 = (uint)uVar31;
                                           lVar2 = uVar31 + CONCAT44(local_44,local_48);
@@ -6710,7 +6710,7 @@ LAB_004dea80:
                                                 )))) {
                                               local_1d4 = *(float *)((int)agent_ptr + 0x88) * 0.5 *
                                                           65536.0;
-                                              uVar31 = ftol2_round();
+                                              uVar31 = ftol2();
                                               local_b4 = (uint)(uVar31 >> 0x20);
                                               local_100 = (uint)uVar31;
                                               local_238 = uVar31 + CONCAT44(local_3c,local_40);
@@ -6721,7 +6721,7 @@ LAB_004dea80:
                                               uVar33 = CONCAT44(local_dc,local_ec);
                                               if ((char)uVar23 != '\0') {
                                                 local_1b4 = local_124 * 65536.0;
-                                                uVar31 = ftol2_round();
+                                                uVar31 = ftol2();
                                                 local_230 = (uint)uVar31 + piVar25[6];
                                                 local_22c = (int)(uVar31 >> 0x20) + piVar25[7] +
                                                             (uint)CARRY4((uint)uVar31,piVar25[6]);
@@ -6761,12 +6761,12 @@ LAB_004dea80:
                                             (uVar33 = CONCAT44(local_cc,local_b4),
                                             local_50 - (int)local_c0 < local_128 + piVar25[2])))) {
                                           local_190 = local_d8 * 0.5 * 65536.0;
-                                          uVar31 = ftol2_round();
+                                          uVar31 = ftol2();
                                           local_f0 = (int)(uVar31 >> 0x20);
                                           local_fc = (uint)uVar31;
                                           local_198 = *(float *)((int)agent_ptr + 0x84) * 0.5 *
                                                       65536.0;
-                                          uVar34 = ftol2_round();
+                                          uVar34 = ftol2();
                                           local_cc = (uint)(uVar34 >> 0x20);
                                           local_100 = (uint)uVar34;
                                           local_11c = *(uint *)(iVar15 + 0x10) - local_fc;
@@ -6800,7 +6800,7 @@ LAB_004dea80:
                                                 local_fc + *(uint *)(iVar15 + 0x10))))) {
                                               local_1a0 = *(float *)((int)agent_ptr + 0x88) * 0.5 *
                                                           65536.0;
-                                              uVar31 = ftol2_round();
+                                              uVar31 = ftol2();
                                               local_100 = (uint)(uVar31 >> 0x20);
                                               local_11c = (uint)uVar31;
                                               local_220 = uVar31 + CONCAT44(local_3c,local_40);
@@ -6812,7 +6812,7 @@ LAB_004dea80:
                                               lVar2 = CONCAT44(local_fc,local_bc);
                                               if ((char)uVar23 != '\0') {
                                                 local_1a8 = local_124 * 65536.0;
-                                                uVar31 = ftol2_round();
+                                                uVar31 = ftol2();
                                                 local_210 = (uint)uVar31 + *puVar6;
                                                 local_20c = (int)(uVar31 >> 0x20) +
                                                             *(int *)(iVar18 + 0x1c) +
@@ -9036,7 +9036,7 @@ LAB_0052f06b:
         local_2a8 = (int *)(uVar24 >> 0x20);
         local_290 = (uint)uVar24;
         local_240 = local_1ec[local_2b0] * 65536.0;
-        uVar24 = ftol2_round();
+        uVar24 = ftol2();
         local_22c = (int)(uVar24 >> 0x20);
         local_234 = (uint)uVar24;
         puVar1 = local_208 + uVar19 * 2;
@@ -9186,23 +9186,23 @@ LAB_0052fba4:
                                                        (uint)local_2b4[local_2b0 * 2 + 2]);
                                     local_2c8 = (float)CONCAT44(iStack_20c,local_210);
                                     local_25c = local_2c8 * local_1ec[local_2b0];
-                                    uVar27 = ftol2_round();
+                                    uVar27 = ftol2();
                                     local_2c8 = (float)uVar27;
                                     local_224 = 0;
-                                    uVar25 = ftol2_round();
+                                    uVar25 = ftol2();
                                     uVar24 = CONCAT44(local_2a8,local_290);
                                     uVar26 = CONCAT44(local_2c8,local_278);
                                     if (CONCAT44((int)(uVar27 >> 0x20),local_2c8) < (longlong)uVar25
                                        ) {
                                       local_260 = (float)local_1c4 * 0.5 * 65536.0;
-                                      uVar24 = ftol2_round();
+                                      uVar24 = ftol2();
                                       local_28c = (uint)(uVar24 >> 0x20);
                                       local_278 = (int *)uVar24;
                                       local_2c8 = (float)local_2b4[2];
                                       uVar13 = local_2b4[3];
                                       local_238 = *local_264 * 0.5 * 65536.0;
                                       local_2ac = uVar13;
-                                      uVar24 = ftol2_round();
+                                      uVar24 = ftol2();
                                       local_2a8 = (int *)(uVar24 >> 0x20);
                                       local_290 = (uint)uVar24;
                                       local_27c = (int)local_2c8 - (int)local_278;
@@ -9224,14 +9224,14 @@ LAB_0052fba4:
                                             (uint)((int)local_2c8 + (int)local_278))))) {
                                           local_250 = local_1c4._4_4_ * 0.5 * 65536.0;
                                           local_2c8 = (float)uVar12;
-                                          uVar24 = ftol2_round();
+                                          uVar24 = ftol2();
                                           local_28c = (uint)(uVar24 >> 0x20);
                                           local_2a8 = (int *)uVar24;
                                           local_290 = local_2b4[4];
                                           uVar13 = local_2b4[5];
                                           local_230 = *(float *)(param_copy + 0x84) * 0.5 * 65536.0;
                                           local_2ac = uVar13;
-                                          uVar26 = ftol2_round();
+                                          uVar26 = ftol2();
                                           local_2c8 = (float)(uVar26 >> 0x20);
                                           local_278 = (int *)uVar26;
                                           local_27c = local_290 - (int)local_2a8;
@@ -9254,7 +9254,7 @@ LAB_0052fba4:
                                               local_248 = *(float *)(param_copy + 0x88) * 0.5 *
                                                           65536.0;
                                               local_290 = uVar12;
-                                              uVar27 = ftol2_round();
+                                              uVar27 = ftol2();
                                               local_2c8 = (float)(uVar27 >> 0x20);
                                               local_2a8 = (int *)uVar27;
                                               uVar26 = CONCAT44(local_2c8,local_278);
@@ -9264,7 +9264,7 @@ LAB_0052fba4:
                                               if (*(longlong *)(local_2b4 + 6) <=
                                                   (longlong)(uVar27 + local_1f8)) {
                                                 local_220 = local_1bc * 65536.0;
-                                                uVar27 = ftol2_round();
+                                                uVar27 = ftol2();
                                                 uVar26 = CONCAT44(local_2c8,local_278);
                                                 uVar24 = CONCAT44(local_2a8,local_290);
                                                 if (local_1f8 - CONCAT44(local_2c8,local_2a8) <
@@ -9337,7 +9337,7 @@ LAB_00530301:
                 local_2a8 = (int *)(uVar24 >> 0x20);
                 local_290 = (uint)uVar24;
                 local_26c = local_e4[iVar18] * 65536.0;
-                uVar27 = ftol2_round();
+                uVar27 = ftol2();
                 uVar26 = CONCAT44(local_2c8,local_278);
                 uVar24 = CONCAT44(local_2a8,local_290);
                 local_98[iVar18 * 2] = (uint)uVar27;
@@ -9350,7 +9350,7 @@ LAB_00530301:
               iVar18 = 0;
               do {
                 local_254 = local_e4[iVar18 + 3] * 65536.0;
-                uVar24 = ftol2_round();
+                uVar24 = ftol2();
                 local_c0[iVar18 * 2] = (uint)uVar24;
                 local_c0[iVar18 * 2 + 1] = (uint)(uVar24 >> 0x20);
                 iVar18 = iVar18 + 1;
@@ -9375,7 +9375,7 @@ LAB_00530301:
               local_a4[2] = (float)local_270 * 0.5;
               do {
                 local_24c = local_a4[iVar18] * 65536.0;
-                uVar24 = ftol2_round();
+                uVar24 = ftol2();
                 local_98[iVar18 * 2 + 6] = (uint)uVar24;
                 local_98[iVar18 * 2 + 7] = (uint)(uVar24 >> 0x20);
                 iVar18 = iVar18 + 1;
@@ -9386,7 +9386,7 @@ LAB_00530301:
               iVar18 = 0;
               do {
                 local_244 = local_e4[iVar18 + 6] * 65536.0;
-                uVar24 = ftol2_round();
+                uVar24 = ftol2();
                 local_98[iVar18 * 2 + 0xc] = (uint)uVar24;
                 local_98[iVar18 * 2 + 0xd] = (uint)(uVar24 >> 0x20);
                 iVar18 = iVar18 + 1;
@@ -9496,7 +9496,7 @@ LAB_005301cb:
                 } while ((int)local_2c0 <= local_154);
               }
               local_23c = *(float *)(param_copy + 0x88) * 0.5 * 65536.0;
-              uVar24 = ftol2_round();
+              uVar24 = ftol2();
               local_280 = (float)(uVar24 >> 0x20);
               local_288 = (float)uVar24;
               lVar4 = local_1f8 - uVar24;
@@ -9505,14 +9505,14 @@ LAB_005301cb:
               }
               uVar28 = __alldiv((uint)lVar4,(uint)((ulonglong)lVar4 >> 0x20),0x10000,0);
               uVar13 = (uint)uVar28;
-              uVar24 = ftol2_round();
+              uVar24 = ftol2();
               uVar19 = uVar13 * 0x10000 - (uint)uVar24;
               local_1f8._0_4_ = uVar19 + (int)local_288;
               local_1f8._4_4_ =
                    (((((int)uVar13 >> 0x1f) << 0x10 | uVar13 >> 0x10) - (int)(uVar24 >> 0x20)) -
                    (uint)(uVar13 * 0x10000 < (uint)uVar24)) + (int)local_280 +
                    (uint)CARRY4(uVar19,(uint)local_288);
-              uVar27 = ftol2_round();
+              uVar27 = ftol2();
               uVar26 = CONCAT44(local_2c8,local_278);
               uVar24 = CONCAT44(local_2a8,local_290);
               local_1f8 = uVar27 + CONCAT44(local_1f8._4_4_,(uint)local_1f8);

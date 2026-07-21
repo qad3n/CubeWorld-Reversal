@@ -10351,13 +10351,13 @@ void __cdecl roundFunc(int param_1,int param_2,int *param_3)
   }
   if (iVar6 == 0) {
     if ((0.0 <= local_c) && (local_c < 9.223372036854776e+18)) {
-      local_14 = (double)ftol2_round();
+      local_14 = (double)ftol2();
       local_c = (double)(longlong)local_14;
       dVar7 = local_c;
       goto LAB_00469488;
     }
     if ((local_c < 0.0) && (-local_c < 9.223372036854776e+18)) {
-      uVar8 = ftol2_round();
+      uVar8 = ftol2();
       dVar7 = -(double)(longlong)uVar8;
       goto LAB_00469488;
     }
@@ -15134,13 +15134,13 @@ void __cdecl lib_fn_4753b0(ulonglong *param_1)
   ulonglong uVar4;
   
   if (*(char *)((int)param_1 + 0x2a) == '\0') {
-    uVar3 = ftol2_round();
+    uVar3 = ftol2();
     *param_1 = uVar3;
     *(undefined1 *)((int)param_1 + 0x2a) = 1;
     if (*(char *)((int)param_1 + 0x29) != '\0') {
       uVar1 = ((int)param_1[3] +
               (*(int *)((int)param_1 + 0x14) * 0x10 - *(int *)((int)param_1 + 0x14)) * 4) * 60000;
-      uVar4 = ftol2_round();
+      uVar4 = ftol2();
       uVar2 = uVar1 - (uint)uVar4;
       uVar3 = *param_1;
       *(uint *)param_1 = (int)*param_1 + uVar2;
@@ -15827,7 +15827,7 @@ ulonglong __cdecl lib_fn_477080(double param_1)
   
   if (-9.223372036854776e+18 <= param_1) {
     if (param_1 <= 9.223372036854776e+18) {
-      uVar1 = ftol2_round();
+      uVar1 = ftol2();
       return uVar1;
     }
   }
@@ -18574,7 +18574,7 @@ undefined4 __cdecl lib_fn_47eaa0(int param_1,int param_2,undefined4 *param_3,ulo
       local_c = *(double *)(piVar2 + 2);
     }
     local_c = local_c * 86400000.0 + 0.5;
-    uVar7 = ftol2_round();
+    uVar7 = ftol2();
     *param_4 = uVar7;
     *(undefined1 *)((int)param_4 + 0x2a) = 1;
   }
@@ -19794,7 +19794,7 @@ undefined4 __cdecl lib_fn_485890(int param_1,byte *param_2,ulonglong *param_3)
       return 1;
     }
     local_c = local_c * 86400000.0 + 0.5;
-    uVar6 = ftol2_round();
+    uVar6 = ftol2();
     *param_3 = uVar6;
     *(undefined1 *)((int)param_3 + 0x2a) = 1;
   }
@@ -20150,7 +20150,7 @@ LAB_00486259:
             local_34 = ((double)CONCAT44(iStack_38,local_3c) - dVar11) * 30.0 * 86400000.0 +
                        local_34;
           }
-          uVar15 = ftol2_round();
+          uVar15 = ftol2();
           uVar2 = *param_3;
           *(uint *)param_3 = (int)*param_3 + (uint)uVar15;
           *(int *)((int)param_3 + 4) =
@@ -21836,7 +21836,7 @@ undefined4 __cdecl lib_fn_48b480(int param_1,ulonglong *param_2)
   if ((*piVar1 < 2) || ((code *)piVar1[0x12] == (code *)0x0)) {
     iVar2 = (*(code *)piVar1[0x10])(piVar1,&local_c);
     local_c = local_c * 86400000.0;
-    uVar3 = ftol2_round();
+    uVar3 = ftol2();
     *param_2 = uVar3;
   }
   else {
@@ -32676,7 +32676,7 @@ void __cdecl lib_fn_4b6650(int param_1)
   dVar1 = *(double *)(param_1 + 8);
   if (-9.223372036854776e+18 <= dVar1) {
     if (dVar1 <= 9.223372036854776e+18) {
-      uVar2 = ftol2_round();
+      uVar2 = ftol2();
     }
     else {
       uVar2 = 0x8000000000000000;
@@ -38679,9 +38679,13 @@ void __fastcall lib_fn_548db0(undefined4 *param_1)
 
 
 
-/* Global::lib_fn_54a6d7 @ 0054a6d7 */
+/* [AUDIT] proposed: _Fac_node_dtor  (confidence: med)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=22.01;n=1;nocrc). Mangled: ??1_Fac_node@std@@QAE@XZ. public: __thiscall std::_Fac_node::~_Fac_node(void)
+ * vars: -
+ */
+/* Global::Fac_node_dtor @ 0054a6d7 */
 
-void __fastcall lib_fn_54a6d7(int param_1)
+void __fastcall Fac_node_dtor(int param_1)
 
 {
   undefined4 *puVar1;
@@ -38696,16 +38700,20 @@ void __fastcall lib_fn_54a6d7(int param_1)
 
 
 
-/* Global::lib_fn_54a6ec @ 0054a6ec */
+/* [AUDIT] proposed: _Fac_tidy_reg_t_dtor  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=20.0;n=1;crc:swap~). Mangled: ??1_Fac_tidy_reg_t@std@@QAE@XZ. public: __thiscall std::_Fac_tidy_reg_t::~_Fac_tidy_reg_t(void)
+ * vars: -
+ */
+/* Global::Fac_tidy_reg_t_dtor @ 0054a6ec */
 
-void lib_fn_54a6ec(void)
+void Fac_tidy_reg_t_dtor(void)
 
 {
   undefined4 *puVar1;
   
   while (puVar1 = DAT_005842f4, DAT_005842f4 != (undefined4 *)0x0) {
     DAT_005842f4 = (undefined4 *)*DAT_005842f4;
-    lib_fn_54a6d7((int)puVar1);
+    Fac_node_dtor((int)puVar1);
     operator_delete(puVar1);
   }
   return;
@@ -38727,10 +38735,14 @@ void entry(void)
 
 
 
-/* Global::lib_fn_54b4c9 @ 0054b4c9 */
+/* [AUDIT] proposed: __except_handler4  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x23). Mangled: __except_handler4.
+ * vars: -
+ */
+/* Global::except_handler4 @ 0054b4c9 */
 
 void __cdecl
-lib_fn_54b4c9(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+except_handler4(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
   except_handler4_common(&DAT_00583cc8,__security_check_cookie,param_1,param_2,param_3,param_4);
@@ -38740,9 +38752,13 @@ lib_fn_54b4c9(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined
 
 
 
-/* Global::lib_fn_54b644 @ 0054b644 */
+/* [AUDIT] proposed: __CxxUnhandledExceptionFilter  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x41). Mangled: ?__CxxUnhandledExceptionFilter@@YGJPAU_EXCEPTION_POINTERS@@@Z. long __stdcall __CxxUnhandledExceptionFilter(struct _EXCEPTION_POINTERS *)
+ * vars: -
+ */
+/* Global::CxxUnhandledExceptionFilter @ 0054b644 */
 
-undefined4 lib_fn_54b644(int *param_1)
+undefined4 CxxUnhandledExceptionFilter(int *param_1)
 
 {
   int *piVar1;
@@ -38772,9 +38788,13 @@ undefined4 lib_fn_54b6a0(void)
 
 
 
-/* Global::lib_fn_54b88b @ 0054b88b */
+/* [AUDIT] proposed: __RTC_Initialize  (confidence: med)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=14.67;n=2;nocrc). Mangled: __RTC_Initialize.
+ * vars: -
+ */
+/* Global::RTC_Initialize @ 0054b88b */
 
-void lib_fn_54b88b(void)
+void RTC_Initialize(void)
 
 {
   undefined4 *puVar1;
@@ -38790,9 +38810,13 @@ void lib_fn_54b88b(void)
 
 
 
-/* Global::lib_fn_54b8ab @ 0054b8ab */
+/* [AUDIT] proposed: __RTC_Initialize_2  (confidence: med)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=14.67;n=2;nocrc). Mangled: __RTC_Initialize.
+ * vars: -
+ */
+/* Global::RTC_Initialize_2 @ 0054b8ab */
 
-void lib_fn_54b8ab(void)
+void RTC_Initialize_2(void)
 
 {
   undefined4 *puVar1;
@@ -38808,9 +38832,13 @@ void lib_fn_54b8ab(void)
 
 
 
-/* Global::lib_fn_54b8cb @ 0054b8cb */
+/* [AUDIT] proposed: __setdefaultprecision  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x27). Mangled: __setdefaultprecision.
+ * vars: -
+ */
+/* Global::setdefaultprecision @ 0054b8cb */
 
-void lib_fn_54b8cb(void)
+void setdefaultprecision(void)
 
 {
   errno_t eVar1;
@@ -85636,7 +85664,7 @@ void lib_fn_5575f0(void)
 void lib_fn_55765b(void)
 
 {
-  lib_fn_54a6ec();
+  Fac_tidy_reg_t_dtor();
   return;
 }
 

@@ -2008,7 +2008,7 @@ void vec3i64_setFromGen(void)
   
   index = 0;
   do {
-    rnd = float_to_uint64_round();
+    rnd = ftol2();
     *(int *)(self + index * 8) = (int)rnd;
     *(int *)(self + 4 + index * 8) = (int)((ulonglong)rnd >> 0x20);
     index = index + 1;
@@ -2200,7 +2200,7 @@ undefined4 int64_ltGen(void)
   int rndHi;
   undefined8 rnd;
   
-  rnd = float_to_uint64_round();
+  rnd = ftol2();
   rndHi = (int)((ulonglong)rnd >> 0x20);
   if ((rndHi <= (int)self[1]) && ((rndHi < (int)self[1] || ((uint)rnd < *self)))) {
     return 1;
@@ -2316,7 +2316,7 @@ void int64_subGen(int *out)
   uint *self;
   undefined8 rhs;
   
-  rhs = float_to_uint64_round();
+  rhs = ftol2();
   lo = *self;
   hi = self[1];
   *out = lo - (uint)rhs;
@@ -6663,7 +6663,7 @@ void projectile_getMuzzlePosition(uint *posOut)
     local_c = angleRad * (halfWidth * (local_54 * cosA - local_64 * sinA) +
                        (local_54 * sinA + local_64 * cosA) * 0.0 + local_44 * height + local_34);
     do {
-      uVar10 = float_to_uint64_round();
+      uVar10 = ftol2();
       jitter[i * 2] = (uint)uVar10;
       jitter[i * 2 + 1] = (uint)((ulonglong)uVar10 >> 0x20);
       i = i + 1;
@@ -9221,7 +9221,7 @@ bool predicate_notFUN_2f4a0(undefined4 arg)
 
 
 /* [AUDIT] proposed: ftol64_ofFloat  (confidence: med)
- * purpose: Convert (float)*this to int64 via float_to_uint64_round
+ * purpose: Convert (float)*this to int64 via ftol2
  * vars: longlong *in_ECX
  */
 /* Global::ftol64_ofFloat @ 00468cf0 */
@@ -9232,7 +9232,7 @@ undefined8 * ftol64_ofFloat(undefined8 *pResult)
   longlong *pThis;
   undefined8 result;
   
-  result = float_to_uint64_round((float)*pThis);
+  result = ftol2((float)*pThis);
   *pResult = result;
   return pResult;
 }
@@ -16922,7 +16922,7 @@ void Array_ElementPtr12(int *out,int index)
 
 
 /* [AUDIT] proposed: Float_FromRef  (confidence: low)
- * purpose: Game: reads a value referenced by base, converts to float via float_to_uint64_round, returns boxed result
+ * purpose: Game: reads a value referenced by base, converts to float via ftol2, returns boxed result
  * vars: base ptr
  */
 /* Global::Float_FromRef @ 00594620 */
@@ -16933,7 +16933,7 @@ undefined8 * Float_FromRef(undefined8 *out)
   longlong *src;
   undefined8 uVar1;
   
-  uVar1 = float_to_uint64_round((float)*src);
+  uVar1 = ftol2((float)*src);
   *out = uVar1;
   return out;
 }
@@ -18753,7 +18753,7 @@ undefined4 Terrain_blockTypeAtTime(undefined4 xLo,undefined4 xHi,undefined8 pos)
   float10 dist;
   undefined8 uVar4;
   
-  uVar4 = float_to_uint64_round();
+  uVar4 = ftol2();
   zFixed = __alldiv(uVar4,0x10000,0);
   zone = __alldiv(xLo,xHi,0x10000,0);
   zone = GameController_getVoxelColumn8((int)(zone + (zone >> 0x1f & 0x7ffU)) >> 0xb,zFixed);
@@ -19270,7 +19270,7 @@ LAB_0059b924:
       randDir[1] = 1.0 - ((float)iVar5 * 2.0) / 32767.0;
       do {
         statPtr = (int *)(randDir[iVar6] * 65536.0);
-        uVar12 = float_to_uint64_round();
+        uVar12 = ftol2();
         randFn = rand_exref;
         local_50[iVar6 * 2] = (uint)uVar12;
         local_50[iVar6 * 2 + 1] = (uint)((ulonglong)uVar12 >> 0x20);
@@ -19304,7 +19304,7 @@ LAB_0059bb28:
       randDir[1] = 1.0 - ((float)roll * 2.0) / 32767.0;
       do {
         statPtr = (int *)(randDir[iVar5] * 65536.0);
-        uVar12 = float_to_uint64_round();
+        uVar12 = ftol2();
         randFn = rand_exref;
         local_50[iVar5 * 2] = (uint)uVar12;
         local_50[iVar5 * 2 + 1] = (uint)((ulonglong)uVar12 >> 0x20);
@@ -19457,7 +19457,7 @@ LAB_0059c156:
                   iVar5 = 0;
                   randDir[1] = 1.0 - ((float)roll * 2.0) / 32767.0;
                   do {
-                    uVar12 = float_to_uint64_round();
+                    uVar12 = ftol2();
                     randFn = rand_exref;
                     local_50[iVar5 * 2] = (uint)uVar12;
                     local_50[iVar5 * 2 + 1] = (uint)((ulonglong)uVar12 >> 0x20);
@@ -20234,8 +20234,8 @@ float10 terrainNoiseDensityAt(int x,float y)
 
 
 /* [AUDIT] proposed: randomizeVec3  (confidence: med)
- * purpose: Fill float[3] with RNG-derived (float_to_uint64_round) values through trig perlinNoise2D_cosInterp: [0],[1]=2*f, [2]=f+0.5; random direction/offset
- * vars: float_to_uint64_round=RNG; perlinNoise2D_cosInterp=cos/trig; constants=fixed-pt seeds
+ * purpose: Fill float[3] with RNG-derived (ftol2) values through trig perlinNoise2D_cosInterp: [0],[1]=2*f, [2]=f+0.5; random direction/offset
+ * vars: ftol2=RNG; perlinNoise2D_cosInterp=cos/trig; constants=fixed-pt seeds
  */
 /* Global::randomizeVec3 @ 005a6270 */
 
@@ -20246,22 +20246,22 @@ float * randomizeVec3(float *out_color)
   undefined8 uVar2;
   undefined8 rnd;
   
-  rnd = float_to_uint64_round();
-  rnd = float_to_uint64_round((double)rnd * 1.52587890625e-05);
+  rnd = ftol2();
+  rnd = ftol2((double)rnd * 1.52587890625e-05);
   fVar1 = (float10)perlinNoise2D_cosInterp((double)rnd * 1.52587890625e-05);
   *out_color = (float)fVar1 * 2.0;
-  uVar2 = float_to_uint64_round();
+  uVar2 = ftol2();
   rnd = CONCAT44(-(uint)(0x20f60000 < (uint)uVar2) - (int)((ulonglong)uVar2 >> 0x20),
                       0x20f60000 - (uint)uVar2);
-  uVar2 = float_to_uint64_round((double)rnd * 1.52587890625e-05);
+  uVar2 = ftol2((double)rnd * 1.52587890625e-05);
   rnd = CONCAT44(-(uint)(0xd7f0000 < (uint)uVar2) - (int)((ulonglong)uVar2 >> 0x20),
                       0xd7f0000 - (uint)uVar2);
   fVar1 = (float10)perlinNoise2D_cosInterp((double)rnd * 1.52587890625e-05);
   out_color[1] = (float)fVar1 * 2.0;
-  uVar2 = float_to_uint64_round();
+  uVar2 = ftol2();
   rnd = CONCAT44(-(uint)(0x14e10000 < (uint)uVar2) - (int)((ulonglong)uVar2 >> 0x20),
                       0x14e10000 - (uint)uVar2);
-  uVar2 = float_to_uint64_round((double)rnd * 1.52587890625e-05);
+  uVar2 = ftol2((double)rnd * 1.52587890625e-05);
   rnd = CONCAT44(-(uint)(0x108a0000 < (uint)uVar2) - (int)((ulonglong)uVar2 >> 0x20),
                       0x108a0000 - (uint)uVar2);
   fVar1 = (float10)perlinNoise2D_cosInterp((double)rnd * 1.52587890625e-05);
@@ -20437,7 +20437,7 @@ LAB_005a7b26:
 
 
 /* [AUDIT] proposed: AStar::coordExceedsBound  (confidence: low)
- * purpose: Returns 1 if 64-bit value from float_to_uint64_round is below the (tree[1]:tree[0]) pair; a 64-bit coord/cost bound check
+ * purpose: Returns 1 if 64-bit value from ftol2 is below the (tree[1]:tree[0]) pair; a 64-bit coord/cost bound check
  * vars: tree=i64 hi/lo pair
  */
 /* Global::AStar_coordExceedsBound @ 005a7b50 */
@@ -20449,7 +20449,7 @@ undefined4 AStar_coordExceedsBound(void)
   int hi;
   undefined8 uVar2;
   
-  uVar2 = float_to_uint64_round();
+  uVar2 = ftol2();
   hi = (int)((ulonglong)uVar2 >> 0x20);
   if (((int)range[1] <= hi) && (((int)range[1] < hi || (*range < (uint)uVar2)))) {
     return 1;
@@ -20803,7 +20803,7 @@ void Creature_expandNeighbors(int self)
   local_c = *(float *)(self + 0x88) * 0.5;
   count = 0;
   do {
-    uVar21 = float_to_uint64_round();
+    uVar21 = ftol2();
     cell[count * 2] = (uint)uVar21;
     cell[count * 2 + 1] = (uint)((ulonglong)uVar21 >> 0x20);
     count = count + 1;
@@ -20855,8 +20855,8 @@ void Creature_expandNeighbors(int self)
                    ) || ((char)piVar2[0xc] != '\0')))) {
                 local_c = (float)piVar2[0xb];
                 local_14 = *(undefined8 *)(piVar2 + 9);
-                lVar22 = float_to_uint64_round();
-                lVar23 = float_to_uint64_round();
+                lVar22 = ftol2();
+                lVar23 = ftol2();
                 uVar15 = piVar2[2];
                 if ((CONCAT44((piVar2[3] - (int)((ulonglong)lVar22 >> 0x20)) -
                               (uint)(uVar15 < (uint)lVar22),uVar15 - (uint)lVar22) <=
@@ -20864,8 +20864,8 @@ void Creature_expandNeighbors(int self)
                    (CONCAT44((iVar10 - (int)((ulonglong)lVar23 >> 0x20)) -
                              (uint)(uVar9 < (uint)lVar23),uVar9 - (uint)lVar23) <
                     lVar22 + *(longlong *)(piVar2 + 2))) {
-                  lVar22 = float_to_uint64_round();
-                  lVar23 = float_to_uint64_round();
+                  lVar22 = ftol2();
+                  lVar23 = ftol2();
                   uVar15 = piVar2[4];
                   if ((CONCAT44((piVar2[5] - (int)((ulonglong)lVar22 >> 0x20)) -
                                 (uint)(uVar15 < (uint)lVar22),uVar15 - (uint)lVar22) <=
@@ -20873,12 +20873,12 @@ void Creature_expandNeighbors(int self)
                      (CONCAT44((iVar11 - (int)((ulonglong)lVar23 >> 0x20)) -
                                (uint)(uVar18 < (uint)lVar23),uVar18 - (uint)lVar23) <
                       lVar22 + *(longlong *)(piVar2 + 4))) {
-                    lVar23 = float_to_uint64_round();
+                    lVar23 = ftol2();
                     lVar22 = lVar23 + CONCAT44(iVar19,uVar12);
                     iVar8 = (int)((ulonglong)lVar22 >> 0x20);
                     if ((piVar2[7] <= iVar8) &&
                        ((piVar2[7] < iVar8 || ((uint)piVar2[6] <= (uint)lVar22)))) {
-                      uVar21 = float_to_uint64_round();
+                      uVar21 = ftol2();
                       iVar16 = (int)((ulonglong)uVar21 >> 0x20) + piVar2[7] +
                                (uint)CARRY4((uint)uVar21,piVar2[6]);
                       iVar8 = (iVar19 - (int)((ulonglong)lVar23 >> 0x20)) -
@@ -20904,7 +20904,7 @@ void Creature_expandNeighbors(int self)
   count = 0;
   local_c = *(float *)(self + 0x88) * 0.5;
   do {
-    uVar21 = float_to_uint64_round();
+    uVar21 = ftol2();
     cell[count * 2] = (uint)uVar21;
     cell[count * 2 + 1] = (uint)((ulonglong)uVar21 >> 0x20);
     count = count + 1;
@@ -20977,10 +20977,10 @@ void Creature_expandNeighbors(int self)
                         ((char)piVar2[0xc] != '\0')))) {
                       local_c = (float)piVar2[0xb];
                       local_14 = *(undefined8 *)(piVar2 + 9);
-                      uVar21 = float_to_uint64_round();
+                      uVar21 = ftol2();
                       iVar8 = (int)((ulonglong)uVar21 >> 0x20);
                       uVar15 = (uint)uVar21;
-                      lVar22 = float_to_uint64_round();
+                      lVar22 = ftol2();
                       if (CONCAT44((piVar2[3] - iVar8) - (uint)((uint)piVar2[2] < uVar15),
                                    piVar2[2] - uVar15) <= lVar22 + CONCAT44(iVar10,uVar9)) {
                         iVar16 = (iVar10 - (int)((ulonglong)lVar22 >> 0x20)) -
@@ -20988,10 +20988,10 @@ void Creature_expandNeighbors(int self)
                         iVar8 = iVar8 + piVar2[3] + (uint)CARRY4(uVar15,piVar2[2]);
                         if ((iVar16 <= iVar8) &&
                            ((iVar16 < iVar8 || (uVar9 - (uint)lVar22 < uVar15 + piVar2[2])))) {
-                          uVar21 = float_to_uint64_round();
+                          uVar21 = ftol2();
                           iVar8 = (int)((ulonglong)uVar21 >> 0x20);
                           uVar15 = (uint)uVar21;
-                          lVar22 = float_to_uint64_round();
+                          lVar22 = ftol2();
                           if (CONCAT44((piVar2[5] - iVar8) - (uint)((uint)piVar2[4] < uVar15),
                                        piVar2[4] - uVar15) <= lVar22 + CONCAT44(iVar11,uVar18)) {
                             iVar16 = (iVar11 - (int)((ulonglong)lVar22 >> 0x20)) -
@@ -20999,12 +20999,12 @@ void Creature_expandNeighbors(int self)
                             iVar8 = iVar8 + piVar2[5] + (uint)CARRY4(uVar15,piVar2[4]);
                             if ((iVar16 <= iVar8) &&
                                ((iVar16 < iVar8 || (uVar18 - (uint)lVar22 < uVar15 + piVar2[4])))) {
-                              lVar23 = float_to_uint64_round();
+                              lVar23 = ftol2();
                               lVar22 = lVar23 + CONCAT44(iVar19,uVar12);
                               iVar8 = (int)((ulonglong)lVar22 >> 0x20);
                               if ((piVar2[7] <= iVar8) &&
                                  ((piVar2[7] < iVar8 || ((uint)piVar2[6] <= (uint)lVar22)))) {
-                                uVar21 = float_to_uint64_round();
+                                uVar21 = ftol2();
                                 iVar16 = (int)((ulonglong)uVar21 >> 0x20) + piVar2[7] +
                                          (uint)CARRY4((uint)uVar21,piVar2[6]);
                                 iVar8 = (iVar19 - (int)((ulonglong)lVar23 >> 0x20)) -
@@ -21269,8 +21269,8 @@ void Creature_runPathfindingLoop(int self)
             local_2c = CONCAT44(uVar27 << 0x10,((int)local_a0 >> 0x1f) << 0x10 | local_a0 >> 0x10);
             piVar12 = &local_38;
             puVar24 = &local_50;
-            uVar31 = float_to_uint64_round(puVar24,piVar12);
-            local_68 = float_to_uint64_round();
+            uVar31 = ftol2(puVar24,piVar12);
+            local_68 = ftol2();
             local_58 = (double)uVar31;
             local_60 = local_68;
             vec3i64_copyAdd(puVar24,piVar12);
@@ -21344,7 +21344,7 @@ void Creature_runPathfindingLoop(int self)
             local_bc = uVar23;
             local_b0 = uVar25;
             local_ac = uVar27;
-            uVar31 = float_to_uint64_round();
+            uVar31 = ftol2();
             iVar22 = world_getColumnAtFixedPos(local_50,local_4c,local_48,local_44,local_40 - (uint)uVar31,
                                   (local_3c - (int)((ulonglong)uVar31 >> 0x20)) -
                                   (uint)(local_40 < (uint)uVar31),0);
@@ -21629,14 +21629,14 @@ LAB_005ab6a0:
                                 local_11c = piVar6[3];
                                 local_1c8 = local_2c._4_4_ * 0.5 * 65536.0;
                                 local_2c = uVar31;
-                                uVar31 = float_to_uint64_round();
+                                uVar31 = ftol2();
                                 local_d4 = (uint)((ulonglong)uVar31 >> 0x20);
                                 local_128 = (uint)uVar31;
                                 local_b8 = (float)(piVar6[2] - local_128);
                                 local_b0 = (piVar6[3] - local_d4) -
                                            (uint)((uint)piVar6[2] < local_128);
                                 local_1b0 = *(float *)(self_ptr + 0x80) * 0.5 * 65536.0;
-                                lVar32 = float_to_uint64_round();
+                                lVar32 = ftol2();
                                 local_f0 = (int)((ulonglong)lVar32 >> 0x20);
                                 local_c0 = (uint)lVar32;
                                 lVar34 = lVar32 + CONCAT44(local_4c,local_50);
@@ -21655,11 +21655,11 @@ LAB_005ab6a0:
                                       (lVar33 = CONCAT44(local_cc,local_b4),
                                       local_cc < local_128 + piVar6[2])))) {
                                     local_1ac = local_d8 * 0.5 * 65536.0;
-                                    uVar31 = float_to_uint64_round();
+                                    uVar31 = ftol2();
                                     local_dc = (int)((ulonglong)uVar31 >> 0x20);
                                     local_ec = (uint)uVar31;
                                     local_18c = *(float *)(self_ptr + 0x84) * 0.5 * 65536.0;
-                                    lVar33 = float_to_uint64_round();
+                                    lVar33 = ftol2();
                                     local_cc = (uint)((ulonglong)lVar33 >> 0x20);
                                     local_e0 = piVar6[4] - local_ec;
                                     lVar2 = lVar33 + CONCAT44(local_44,local_48);
@@ -21685,7 +21685,7 @@ LAB_005ab6a0:
                                           local_b4 < local_ec + piVar6[4])))) {
                                         local_1d0 = *(float *)(self_ptr + 0x88) * 0.5 * 65536.0;
                                         local_ec = uVar27;
-                                        lVar34 = float_to_uint64_round();
+                                        lVar34 = ftol2();
                                         local_e0 = (uint)((ulonglong)lVar34 >> 0x20);
                                         local_b4 = (uint)lVar34;
                                         lVar34 = lVar34 + CONCAT44(local_3c,local_40);
@@ -21703,7 +21703,7 @@ LAB_005ab6a0:
                                             lVar33 = CONCAT44(local_cc,local_b4),
                                             (uint)piVar6[6] <= uVar17 - 0x10000)))) {
                                           local_1d8 = local_124 * 65536.0;
-                                          uVar31 = float_to_uint64_round();
+                                          uVar31 = ftol2();
                                           uVar27 = (uint)uVar31 + piVar6[6];
                                           iVar16 = (int)((ulonglong)uVar31 >> 0x20) + piVar6[7] +
                                                    (uint)CARRY4((uint)uVar31,piVar6[6]);
@@ -21767,11 +21767,11 @@ LAB_005ab6a0:
                                             (lVar35 = lVar2,
                                             (local_50 - local_c0) - 0x10000 < local_b4)))) {
                                           local_1e0 = local_d8 * 0.5 * 65536.0;
-                                          uVar31 = float_to_uint64_round();
+                                          uVar31 = ftol2();
                                           local_cc = (uint)((ulonglong)uVar31 >> 0x20);
                                           local_b4 = (uint)uVar31;
                                           local_1cc = *(float *)(self_ptr + 0x84) * 0.5 * 65536.0;
-                                          lVar35 = float_to_uint64_round();
+                                          lVar35 = ftol2();
                                           local_dc = (int)((ulonglong)lVar35 >> 0x20);
                                           local_ec = (uint)lVar35;
                                           local_e0 = piVar6[4] - local_b4;
@@ -21798,7 +21798,7 @@ LAB_005ab6a0:
                                                 local_b4 < uVar17)))) {
                                               local_184 = *(float *)(self_ptr + 0x88) * 0.5 *
                                                           65536.0;
-                                              lVar34 = float_to_uint64_round();
+                                              lVar34 = ftol2();
                                               local_e0 = (uint)((ulonglong)lVar34 >> 0x20);
                                               local_b4 = (uint)lVar34;
                                               local_1e8 = lVar34 + CONCAT44(local_3c,local_40);
@@ -21809,7 +21809,7 @@ LAB_005ab6a0:
                                               lVar35 = CONCAT44(local_dc,local_ec);
                                               if (cVar5 != '\0') {
                                                 local_1b8 = local_124 * 65536.0;
-                                                uVar31 = float_to_uint64_round();
+                                                uVar31 = ftol2();
                                                 local_1f0 = (uint)uVar31 + piVar6[6];
                                                 local_1ec = (int)((ulonglong)uVar31 >> 0x20) +
                                                             piVar6[7] +
@@ -21854,11 +21854,11 @@ LAB_005ab6a0:
                                            ((iVar16 < iVar22 ||
                                             ((local_50 - local_c0) + 0x10000 < local_b4)))) {
                                           local_194 = local_d8 * 0.5 * 65536.0;
-                                          uVar31 = float_to_uint64_round();
+                                          uVar31 = ftol2();
                                           local_cc = (uint)((ulonglong)uVar31 >> 0x20);
                                           local_b4 = (uint)uVar31;
                                           local_1bc = *(float *)(self_ptr + 0x84) * 0.5 * 65536.0;
-                                          lVar35 = float_to_uint64_round();
+                                          lVar35 = ftol2();
                                           local_dc = (int)((ulonglong)lVar35 >> 0x20);
                                           local_ec = (uint)lVar35;
                                           local_e0 = piVar6[4] - local_b4;
@@ -21885,7 +21885,7 @@ LAB_005ab6a0:
                                                 local_b4 < uVar17)))) {
                                               local_19c = *(float *)(self_ptr + 0x88) * 0.5 *
                                                           65536.0;
-                                              lVar34 = float_to_uint64_round();
+                                              lVar34 = ftol2();
                                               local_e0 = (uint)((ulonglong)lVar34 >> 0x20);
                                               local_b4 = (uint)lVar34;
                                               local_208 = lVar34 + CONCAT44(local_3c,local_40);
@@ -21896,7 +21896,7 @@ LAB_005ab6a0:
                                               lVar32 = CONCAT44(local_f0,local_c0);
                                               if (cVar5 != '\0') {
                                                 local_1dc = local_124 * 65536.0;
-                                                uVar31 = float_to_uint64_round();
+                                                uVar31 = ftol2();
                                                 local_218 = (uint)uVar31 + piVar6[6];
                                                 local_214 = (int)((ulonglong)uVar31 >> 0x20) +
                                                             piVar6[7] +
@@ -21938,11 +21938,11 @@ LAB_005ab6a0:
                                            ((iVar16 < iVar22 || (local_b4 < local_128 + piVar6[2])))
                                            ) {
                                           local_1a4 = local_d8 * 0.5 * 65536.0;
-                                          uVar31 = float_to_uint64_round();
+                                          uVar31 = ftol2();
                                           local_dc = (int)((ulonglong)uVar31 >> 0x20);
                                           local_cc = (uint)uVar31;
                                           local_1c4 = *(float *)(self_ptr + 0x84) * 0.5 * 65536.0;
-                                          lVar34 = float_to_uint64_round();
+                                          lVar34 = ftol2();
                                           local_ec = (uint)((ulonglong)lVar34 >> 0x20);
                                           local_e0 = (uint)lVar34;
                                           lVar34 = lVar34 + CONCAT44(local_44,local_48);
@@ -21980,7 +21980,7 @@ LAB_005ab6a0:
                                                 local_cc + *puVar24)))) {
                                               local_1d4 = *(float *)(self_ptr + 0x88) * 0.5 *
                                                           65536.0;
-                                              uVar31 = float_to_uint64_round();
+                                              uVar31 = ftol2();
                                               local_b4 = (uint)((ulonglong)uVar31 >> 0x20);
                                               local_100 = (uint)uVar31;
                                               cVar5 = Vec2_LessEqual(piVar6 + 6);
@@ -21989,7 +21989,7 @@ LAB_005ab6a0:
                                               lVar32 = CONCAT44(local_f0,local_c0);
                                               if (cVar5 != '\0') {
                                                 local_1b4 = local_124 * 65536.0;
-                                                uVar31 = float_to_uint64_round();
+                                                uVar31 = ftol2();
                                                 local_230 = (uint)uVar31 + piVar6[6];
                                                 local_22c = (int)((ulonglong)uVar31 >> 0x20) +
                                                             piVar6[7] +
@@ -22033,11 +22033,11 @@ LAB_005ab6a0:
                                             (lVar33 = CONCAT44(local_cc,local_b4),
                                             local_50 - local_c0 < local_128 + piVar6[2])))) {
                                           local_190 = local_d8 * 0.5 * 65536.0;
-                                          uVar31 = float_to_uint64_round();
+                                          uVar31 = ftol2();
                                           local_f0 = (int)((ulonglong)uVar31 >> 0x20);
                                           local_fc = (uint)uVar31;
                                           local_198 = *(float *)(self_ptr + 0x84) * 0.5 * 65536.0;
-                                          lVar35 = float_to_uint64_round();
+                                          lVar35 = ftol2();
                                           local_cc = (uint)((ulonglong)lVar35 >> 0x20);
                                           local_100 = (uint)lVar35;
                                           local_11c = *(uint *)(iVar22 + 0x10) - local_fc;
@@ -22070,7 +22070,7 @@ LAB_005ab6a0:
                                                 local_fc + *(uint *)(iVar22 + 0x10))))) {
                                               local_1a0 = *(float *)(self_ptr + 0x88) * 0.5 *
                                                           65536.0;
-                                              lVar34 = float_to_uint64_round();
+                                              lVar34 = ftol2();
                                               local_100 = (uint)((ulonglong)lVar34 >> 0x20);
                                               local_11c = (uint)lVar34;
                                               local_220 = lVar34 + CONCAT44(local_3c,local_40);
@@ -22082,7 +22082,7 @@ LAB_005ab6a0:
                                               lVar32 = CONCAT44(local_f0,local_c0);
                                               if (cVar5 != '\0') {
                                                 local_1a8 = local_124 * 65536.0;
-                                                uVar31 = float_to_uint64_round();
+                                                uVar31 = ftol2();
                                                 local_210 = (uint)uVar31 + *puVar24;
                                                 local_20c = (int)((ulonglong)uVar31 >> 0x20) +
                                                             *(int *)(iVar16 + 0x1c) +
@@ -22929,7 +22929,7 @@ void Region_scatterProps(int zone,uint *bounds)
       cVar4 = World_scaleFixedByLevel(local_354,zone,1);
       if (cVar4 != '\0') {
         std_vector_pushBack_0x188(local_354);
-        uVar13 = float_to_uint64_round();
+        uVar13 = ftol2();
         iVar10 = (int)((ulonglong)uVar13 >> 0x20);
         uVar5 = (uint)uVar13;
         ix = 0;
@@ -31074,7 +31074,7 @@ undefined4 * spawnRandomObject7(undefined4 *out_obj,undefined4 *pos,undefined4 z
 
 
 /* [AUDIT] proposed: spawnRandomObjectPositioned  (confidence: low)
- * purpose: Creates a randomized object with type/scale switch and randomized world position offsets via float_to_uint64_round; SEH-guarded
+ * purpose: Creates a randomized object with type/scale switch and randomized world position offsets via ftol2; SEH-guarded
  * vars: pos=6-dword template; zone=axis; param_4=mode; local_19c=type
  */
 /* Global::spawnRandomObjectPositioned @ 005bf7c0 */
@@ -31191,26 +31191,26 @@ LAB_005bf97a:
       case 0:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0) * 65536.0;
-        uVar6 = float_to_uint64_round();
+        uVar6 = ftol2();
         local_18c = CONCAT44((local_1a4 - (int)((ulonglong)uVar6 >> 0x20)) -
                              (uint)(uVar2 < (uint)uVar6),uVar2 - (uint)uVar6);
         break;
       case 1:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0) * 65536.0;
-        local_194 = float_to_uint64_round();
+        local_194 = ftol2();
         local_194 = local_194 + lVar7;
         break;
       case 2:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0) * 65536.0;
-        local_18c = float_to_uint64_round();
+        local_18c = ftol2();
         local_18c = local_18c + CONCAT44(local_1a4,uVar2);
         break;
       case 3:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0) * 65536.0;
-        uVar6 = float_to_uint64_round();
+        uVar6 = ftol2();
         local_194 = CONCAT44((uVar1 - (int)((ulonglong)uVar6 >> 0x20)) - (uint)(uVar4 < (uint)uVar6)
                              ,uVar4 - (uint)uVar6);
       }
@@ -31226,13 +31226,13 @@ LAB_005bf97a:
       case 0:
         goto LAB_005bfb89;
       case 1:
-        local_194 = float_to_uint64_round();
+        local_194 = ftol2();
         local_194 = local_194 + lVar7;
         break;
       case 2:
         goto LAB_005bfb89;
       case 3:
-        local_194 = float_to_uint64_round();
+        local_194 = ftol2();
         local_194 = local_194 + lVar7;
       }
       goto switchD_005bf8e6_default;
@@ -31247,13 +31247,13 @@ LAB_005bf97a:
       case 0:
         goto LAB_005bfb89;
       case 1:
-        local_194 = float_to_uint64_round();
+        local_194 = ftol2();
         local_194 = local_194 + lVar7;
         break;
       case 2:
         goto LAB_005bfb89;
       case 3:
-        local_194 = float_to_uint64_round();
+        local_194 = ftol2();
         local_194 = local_194 + lVar7;
       }
       goto switchD_005bf8e6_default;
@@ -31283,18 +31283,18 @@ LAB_005bfca7:
   case 0:
     goto LAB_005bfb89;
   case 1:
-    lVar5 = float_to_uint64_round();
+    lVar5 = ftol2();
     local_194 = lVar5 + lVar7;
     local_18c = CONCAT44(local_18c._4_4_,(uint)local_18c);
     break;
   case 2:
 LAB_005bfb89:
-    lVar7 = float_to_uint64_round();
+    lVar7 = ftol2();
     local_194 = CONCAT44(local_194._4_4_,(uint)local_194);
     local_18c = lVar7 + CONCAT44(local_1a4,uVar2);
     break;
   case 3:
-    lVar5 = float_to_uint64_round();
+    lVar5 = ftol2();
     local_194 = lVar5 + lVar7;
     local_18c = CONCAT44(local_18c._4_4_,(uint)local_18c);
   }
@@ -33350,7 +33350,7 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
   local_134 = ((int)x >> 0x1f) << 0x10 | x >> 0x10;
   local_128 = x * 0x10000;
   local_48 = (float)local_15c;
-  lVar18 = float_to_uint64_round();
+  lVar18 = ftol2();
   lVar18 = lVar18 + CONCAT44(local_134,x * 0x10000);
   local_f0 = (uint)lVar18;
   local_e8 = (int)((ulonglong)lVar18 >> 0x20);
@@ -33358,7 +33358,7 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
   local_140 = (double)CONCAT44(local_140._4_4_,(float)local_15c * 65536.0);
   uVar7 = local_124 * 0x10000;
   local_160 = (float)uVar7;
-  lVar18 = float_to_uint64_round();
+  lVar18 = ftol2();
   lVar18 = lVar18 + CONCAT44(local_12c,uVar7);
   uVar7 = (uint)lVar18;
   iVar6 = (int)((ulonglong)lVar18 >> 0x20);
@@ -33551,7 +33551,7 @@ LAB_005c6a63:
       local_118 = local_118 * 0.0025;
       fVar11 = (float10)perlinNoise2D_cosInterp(local_118 + 8432984.0,local_110 + 90493.0);
       local_174 = (float)fVar11 * 100.0 * 65536.0;
-      uVar19 = float_to_uint64_round();
+      uVar19 = ftol2();
       uVar7 = local_128;
       uVar8 = (uint)uVar19 - *puVar3;
       local_120 = (double)CONCAT44((((int)((ulonglong)uVar19 >> 0x20) - puVar3[1]) -
@@ -33561,7 +33561,7 @@ LAB_005c6a63:
       local_a8 = local_174 * 1.5258789e-05;
       fVar11 = (float10)perlinNoise2D_cosInterp(local_118 + 3423.0,local_110 + 112.0);
       local_174 = ((float)fVar11 * 100.0 + (float)(int)local_124) * 65536.0;
-      uVar19 = float_to_uint64_round();
+      uVar19 = ftol2();
       local_120 = (double)CONCAT44(((int)((ulonglong)uVar19 >> 0x20) - puVar3[3]) -
                                    (uint)((uint)uVar19 < puVar3[2]),(uint)uVar19 - puVar3[2]);
       local_174 = (float)(longlong)local_120;
@@ -35797,7 +35797,7 @@ void World_computeStructurePlacement(undefined4 param_1,uint *param_2,undefined4
     __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
     return;
   }
-  uVar8 = float_to_uint64_round();
+  uVar8 = ftol2();
   uVar7 = hit_x1 + hit_z1;
   uVar6 = hit_x0 + hit_z0;
   vec3i64_scaleFixed(uVar8);
@@ -44504,7 +44504,7 @@ LAB_005de139:
               local_408 = (uint *)((int)local_408 + 1);
             } while ((int)local_408 < 3);
 LAB_005de2c1:
-            uVar22 = float_to_uint64_round();
+            uVar22 = ftol2();
             local_43c = 0;
             do {
               local_40c = (float)((ulonglong)uVar22 >> 0x20);
@@ -44742,12 +44742,12 @@ LAB_005de6d3:
               local_65c[0] = iVar3;
               libm_sse2_sin_precise();
               local_62c = (float)dVar21 * 3.0 * 65536.0;
-              lVar23 = float_to_uint64_round();
+              lVar23 = ftol2();
               dVar21 = (double)local_40c;
               lVar23 = lVar23 + CONCAT44(local_448,local_444);
               libm_sse2_cos_precise();
               local_634 = (float)dVar21 * 3.0 * 65536.0;
-              lVar24 = float_to_uint64_round();
+              lVar24 = ftol2();
               lVar24 = lVar24 + CONCAT44(local_44c,local_438);
               *(int *)(iVar3 + 0x10) = (int)lVar24;
               *(int *)(iVar3 + 0x18) = (int)lVar23;
@@ -45483,7 +45483,7 @@ void World_generateWaterOrPathFeature(uint x,uint z,float scale,int param_4,int 
   local_5d8 = x;
   local_5a0 = param_7;
   local_5c4 = local_5cc;
-  uVar25 = float_to_uint64_round();
+  uVar25 = ftol2();
   uVar6 = local_5dc;
   iVar2 = (int)((ulonglong)uVar25 >> 0x20);
   uVar15 = (uint)uVar25;
@@ -46203,10 +46203,10 @@ LAB_005e1918:
     goto LAB_005e1918;
   }
   local_5d4 = local_5b8 * 65536.0;
-  lVar26 = float_to_uint64_round();
+  lVar26 = ftol2();
   local_598 = (float)__alldiv(lVar26 + CONCAT44(local_5f8,local_5c8),0x10000,0);
   local_5d4 = local_5a4 * 65536.0;
-  lVar26 = float_to_uint64_round();
+  lVar26 = ftol2();
   local_5b8 = (float)__alldiv(lVar26 + CONCAT44(local_61c,local_5ec),0x10000,0);
   iVar2 = local_5a0;
   if ((0x23f0 < (int)(*(int *)(local_5a8 + 0x24) - *(int *)(local_5a8 + 0x20) & 0xfffffffcU)) &&
@@ -46470,11 +46470,11 @@ LAB_005e21cc:
               fVar23 = 1.0 - (float)(int)local_5dc / fVar24;
               local_5bc = 1.0 - fVar23 * fVar23;
               local_700 = ((double)((float)(int)local_5dc * 0.5) + local_5e8) * 65536.0;
-              local_650 = (double)float_to_uint64_round();
+              local_650 = (double)ftol2();
               local_70c = ((double)(local_5bc * local_618) + local_6ec) * 65536.0;
-              local_640 = (double)float_to_uint64_round();
+              local_640 = (double)ftol2();
               local_614 = ((double)(local_5bc * local_648) + local_6e4) * 65536.0;
-              local_60c = (double)float_to_uint64_round();
+              local_60c = (double)ftol2();
               iVar13 = world_getColumnAtFixedPos();
               if ((*(byte *)(iVar13 + 3) & 0x40) == 0) {
                 local_5f8 = (uint)local_650 + 0x10000;
@@ -46518,13 +46518,13 @@ LAB_005e2882:
                     local_630 = (double)CONCAT44((((float)iVar13 * 0.5) / 32767.0 + 0.5) * local_5c4
                                                  ,(undefined4)local_630);
                     local_674 = local_5c4 * local_5e0 * 0.25 * 65536.0;
-                    lVar26 = float_to_uint64_round();
+                    lVar26 = ftol2();
                     uVar17 = (uint)(lVar26 + (longlong)local_640);
                     local_5b8 = (float)((ulonglong)(lVar26 + (longlong)local_640) >> 0x20);
                     local_638 = (double)CONCAT44(local_5c4 * local_17c * 0.25 * 65536.0,
                                                  (undefined4)local_638);
                     local_5c8 = (float)uVar17;
-                    lVar26 = float_to_uint64_round();
+                    lVar26 = ftol2();
                     local_5a4 = (float)(lVar26 + (longlong)local_60c);
                     local_5f0 = local_5c4 * 65536.0;
                     local_598 = (float)((ulonglong)(lVar26 + (longlong)local_60c) >> 0x20);
@@ -46532,7 +46532,7 @@ LAB_005e2882:
                     local_194._0_4_ = (uint)local_5a4;
                     local_194._4_4_ = (int)local_598;
                     local_18c._0_4_ = uVar17;
-                    lVar26 = float_to_uint64_round();
+                    lVar26 = ftol2();
                     local_61c = (int)((ulonglong)lVar26 >> 0x20);
                     local_5ec = (uint)lVar26;
                     local_5bc = (float)(((int)local_5a4 - local_5ec) - 0x10000);
@@ -46549,7 +46549,7 @@ LAB_005e2882:
                         local_194 = CONCAT44(local_194._4_4_,(uint)local_194),
                         (uint)local_5bc < uVar6 << 0x18)))) {
                       local_628 = ((float)(int)local_620 + local_5c4 + 1.0) * 65536.0;
-                      lVar27 = float_to_uint64_round();
+                      lVar27 = ftol2();
                       lVar26 = CONCAT44(local_61c,local_5ec);
                       local_194 = lVar27;
                     }
@@ -46571,7 +46571,7 @@ LAB_005e2882:
                         uVar28 = CONCAT44(local_18c._4_4_,local_5c8),
                         (uint)local_5c0 < uVar6 << 0x18)))) {
                       local_644 = ((float)(int)local_594 + local_5c4 + 1.0) * 65536.0;
-                      uVar25 = float_to_uint64_round();
+                      uVar25 = ftol2();
                       lVar27 = CONCAT44(local_598,local_5a4);
                       lVar26 = CONCAT44(local_61c,local_5ec);
                       local_18c._0_4_ = (uint)uVar25;
@@ -46590,7 +46590,7 @@ LAB_005e2882:
                     if (CONCAT44(((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10,uVar6 * 0x10000) <=
                         lVar1) {
                       fStack_678 = (((float)((int)local_620 + 0x100) - local_5c4) - 2.0) * 65536.0;
-                      lVar27 = float_to_uint64_round();
+                      lVar27 = ftol2();
                       uVar28 = CONCAT44(local_18c._4_4_,local_5c8);
                       lVar26 = CONCAT44(local_61c,local_5ec);
                       local_194 = lVar27;
@@ -46609,7 +46609,7 @@ LAB_005e2882:
                         lVar26 + CONCAT44(local_5b8,(int)uVar25) + 0x10000) {
                       local_670 = (double)CONCAT44((((float)(int)local_594 - local_5c4) - 2.0) *
                                                    65536.0,(undefined4)local_670);
-                      uVar28 = float_to_uint64_round();
+                      uVar28 = ftol2();
                       lVar27 = CONCAT44(local_598,local_5a4);
                       lVar26 = CONCAT44(local_61c,local_5ec);
                       local_18c = uVar28;
@@ -46795,7 +46795,7 @@ LAB_005e2882:
           local_410[2] = local_640 + (double)local_604._4_4_;
           do {
             local_700 = *(double *)((int)local_410 + iVar13) * 65536.0;
-            uVar25 = float_to_uint64_round();
+            uVar25 = ftol2();
             *(int *)((int)auStack_454 + iVar13) = (int)uVar25;
             *(int *)((int)auStack_454 + iVar13 + 4) = (int)((ulonglong)uVar25 >> 0x20);
             iVar13 = iVar13 + 8;
@@ -46961,7 +46961,7 @@ LAB_005e2882:
               iVar13 = 0;
               do {
                 local_700 = *(double *)((int)local_2dc + iVar13) * 65536.0;
-                uVar25 = float_to_uint64_round();
+                uVar25 = ftol2();
                 iVar2 = local_5a0;
                 *(int *)((int)auStack_494 + iVar13) = (int)uVar25;
                 *(int *)((int)auStack_494 + iVar13 + 4) = (int)((ulonglong)uVar25 >> 0x20);
@@ -48295,7 +48295,7 @@ LAB_005f4ced:
 
 
 /* [AUDIT] proposed: World_scaleFixedByLevel  (confidence: med)
- * purpose: Scales a fixed-point value by level using __alldiv and rng (float_to_uint64_round)
+ * purpose: Scales a fixed-point value by level using __alldiv and rng (ftol2)
  * vars: elem base; param_3 flag; __alldiv
  */
 /* Global::World_scaleFixedByLevel @ 005f4da0 */
@@ -48321,13 +48321,13 @@ void World_scaleFixedByLevel(int obj,undefined4 zone,char allow_up)
   int local_c;
   
   uVar4 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  lVar14 = float_to_uint64_round();
+  lVar14 = ftol2();
   z1 = *(int *)(obj + 0xc);
   x0 = __alldiv(*(uint *)(obj + 8) - (uint)lVar14,
                    (z1 - (int)((ulonglong)lVar14 >> 0x20)) -
                    (uint)(*(uint *)(obj + 8) < (uint)lVar14),0x10000,0);
   x1 = __alldiv(lVar14 + CONCAT44(z1,*(undefined4 *)(obj + 8)),0x10000,0);
-  lVar14 = float_to_uint64_round();
+  lVar14 = ftol2();
   z1 = *(int *)(obj + 0x14);
   z0 = __alldiv(*(uint *)(obj + 0x10) - (uint)lVar14,
                    (z1 - (int)((ulonglong)lVar14 >> 0x20)) -
@@ -48636,26 +48636,26 @@ void World_serializeCellData(undefined4 param_1,uint *pos,uint orient,int type)
         local_1a0 = (float)roll / 32767.0 + 1.0;
 LAB_005f7076:
         local_1a0 = local_1a0 * 65536.0;
-        uVar8 = float_to_uint64_round();
+        uVar8 = ftol2();
         local_18c = CONCAT44((uVar1 - (int)((ulonglong)uVar8 >> 0x20)) - (uint)(uVar4 < (uint)uVar8)
                              ,uVar4 - (uint)uVar8);
         break;
       case 1:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0 + 1.0) * 65536.0;
-        local_194 = float_to_uint64_round();
+        local_194 = ftol2();
         local_194 = local_194 + lVar5;
         break;
       case 2:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0 + 1.0) * 65536.0;
-        local_18c = float_to_uint64_round();
+        local_18c = ftol2();
         local_18c = local_18c + lVar6;
         break;
       case 3:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0 + 1.0) * 65536.0;
-        uVar8 = float_to_uint64_round();
+        uVar8 = ftol2();
         local_194 = CONCAT44((uVar3 - (int)((ulonglong)uVar8 >> 0x20)) - (uint)(uVar2 < (uint)uVar8)
                              ,uVar2 - (uint)uVar8);
       }
@@ -48683,19 +48683,19 @@ LAB_005f7076:
       case 1:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0) * 65536.0;
-        local_194 = float_to_uint64_round();
+        local_194 = ftol2();
         local_194 = local_194 + lVar5;
         break;
       case 2:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0) * 65536.0;
-        local_18c = float_to_uint64_round();
+        local_18c = ftol2();
         local_18c = local_18c + lVar6;
         break;
       case 3:
         roll = rand();
         local_1a0 = ((float)roll / 32767.0) * 65536.0;
-        uVar8 = float_to_uint64_round();
+        uVar8 = ftol2();
         local_194 = CONCAT44((uVar3 - (int)((ulonglong)uVar8 >> 0x20)) - (uint)(uVar2 < (uint)uVar8)
                              ,uVar2 - (uint)uVar8);
       }
@@ -48716,16 +48716,16 @@ LAB_005f7076:
   case 0:
     goto LAB_005f6f68;
   case 1:
-    local_194 = float_to_uint64_round();
+    local_194 = ftol2();
     local_194 = local_194 + lVar5;
     break;
   case 2:
 LAB_005f6f68:
-    local_18c = float_to_uint64_round();
+    local_18c = ftol2();
     local_18c = local_18c + lVar6;
     break;
   case 3:
-    local_194 = float_to_uint64_round();
+    local_194 = ftol2();
     local_194 = local_194 + lVar5;
   }
 switchD_005f6f5b_default:
@@ -50995,8 +50995,8 @@ void setter_stub(int *out)
 
 
 /* [AUDIT] proposed: get_rng_dword  (confidence: low)
- * purpose: Returns a value derived from rng (float_to_uint64_round)
- * vars: float_to_uint64_round
+ * purpose: Returns a value derived from rng (ftol2)
+ * vars: ftol2
  */
 /* Global::get_rng_dword @ 006091d0 */
 
@@ -51007,7 +51007,7 @@ undefined4 get_rng_dword(void)
   int hi;
   undefined8 uVar2;
   
-  uVar2 = float_to_uint64_round();
+  uVar2 = ftol2();
   hi = (int)((ulonglong)uVar2 >> 0x20);
   if ((hi <= (int)range[1]) && ((hi < (int)range[1] || ((uint)uVar2 <= *range)))) {
     return 1;
@@ -51086,7 +51086,7 @@ void compute_index_pair(int *out,uint *key)
 
 /* [AUDIT] proposed: vec_normalize_or_distance  (confidence: med)
  * purpose: Computes normalized/distance vector (sqrt, __alldiv, WalkPathBehavior_isAreaWalkable); called by vfunc_0
- * vars: libm sqrt; __alldiv; float_to_uint64_round rng
+ * vars: libm sqrt; __alldiv; ftol2 rng
  */
 /* Global::vec_normalize_or_distance @ 00609480 */
 
@@ -51354,7 +51354,7 @@ LAB_006095eb:
         local_2c8 = (float)((ulonglong)lVar25 >> 0x20);
         local_278 = (int *)lVar25;
         local_240 = local_1ec[(int)local_2b0] * 65536.0;
-        uVar24 = float_to_uint64_round();
+        uVar24 = ftol2();
         local_22c = (int)((ulonglong)uVar24 >> 0x20);
         local_234 = (float)uVar24;
         pfVar1 = local_208 + (int)fVar20 * 2;
@@ -51505,23 +51505,23 @@ LAB_0060a124:
                                                        (uint)local_2b4[(int)local_2b0 * 2 + 2]);
                                     local_2c8 = (float)CONCAT44(iStack_20c,local_210);
                                     local_25c = local_2c8 * local_1ec[(int)local_2b0];
-                                    uVar24 = float_to_uint64_round();
+                                    uVar24 = ftol2();
                                     local_2c8 = (float)uVar24;
                                     local_224 = 0;
-                                    lVar27 = float_to_uint64_round();
+                                    lVar27 = ftol2();
                                     lVar26 = CONCAT44(local_2a8,local_290);
                                     lVar25 = CONCAT44(local_2c8,local_278);
                                     if (CONCAT44((int)((ulonglong)uVar24 >> 0x20),local_2c8) <
                                         lVar27) {
                                       local_260 = (float)local_1c4 * 0.5 * 65536.0;
-                                      uVar24 = float_to_uint64_round();
+                                      uVar24 = ftol2();
                                       local_28c = (float)((ulonglong)uVar24 >> 0x20);
                                       local_278 = (int *)uVar24;
                                       local_2c8 = (float)local_2b4[2];
                                       fVar23 = (float)local_2b4[3];
                                       local_238 = *local_264 * 0.5 * 65536.0;
                                       local_2ac = fVar23;
-                                      lVar26 = float_to_uint64_round();
+                                      lVar26 = ftol2();
                                       local_2a8 = (int *)((ulonglong)lVar26 >> 0x20);
                                       local_290 = (float)lVar26;
                                       local_27c = (int)local_2c8 - (int)local_278;
@@ -51544,14 +51544,14 @@ LAB_0060a124:
                                             (uint)((int)local_2c8 + (int)local_278))))) {
                                           local_250 = local_1c4._4_4_ * 0.5 * 65536.0;
                                           local_2c8 = (float)uVar12;
-                                          uVar24 = float_to_uint64_round();
+                                          uVar24 = ftol2();
                                           local_28c = (float)((ulonglong)uVar24 >> 0x20);
                                           local_2a8 = (int *)uVar24;
                                           local_290 = (float)local_2b4[4];
                                           fVar23 = (float)local_2b4[5];
                                           local_230 = *(float *)(local_2a4 + 0x84) * 0.5 * 65536.0;
                                           local_2ac = fVar23;
-                                          lVar25 = float_to_uint64_round();
+                                          lVar25 = ftol2();
                                           local_2c8 = (float)((ulonglong)lVar25 >> 0x20);
                                           local_278 = (int *)lVar25;
                                           local_27c = (int)local_290 - (int)local_2a8;
@@ -51575,7 +51575,7 @@ LAB_0060a124:
                                               local_248 = *(float *)(local_2a4 + 0x88) * 0.5 *
                                                           65536.0;
                                               local_290 = (float)uVar12;
-                                              lVar27 = float_to_uint64_round();
+                                              lVar27 = ftol2();
                                               local_2c8 = (float)((ulonglong)lVar27 >> 0x20);
                                               lVar25 = CONCAT44(local_2c8,local_278);
                                               local_2a8 = (int *)lVar27;
@@ -51585,7 +51585,7 @@ LAB_0060a124:
                                               if (*(longlong *)(local_2b4 + 6) <= lVar27 + local_1f8
                                                  ) {
                                                 local_220 = local_1bc * 65536.0;
-                                                lVar27 = float_to_uint64_round();
+                                                lVar27 = ftol2();
                                                 lVar25 = CONCAT44(local_2c8,local_278);
                                                 lVar26 = CONCAT44(local_2a8,local_290);
                                                 if (local_1f8 - CONCAT44(local_2c8,local_2a8) <
@@ -51659,7 +51659,7 @@ LAB_0060a881:
                 local_2c8 = (float)((ulonglong)lVar25 >> 0x20);
                 local_278 = (int *)lVar25;
                 local_26c = local_e4[iVar17] * 65536.0;
-                uVar24 = float_to_uint64_round();
+                uVar24 = ftol2();
                 lVar26 = CONCAT44(local_2a8,local_290);
                 lVar25 = CONCAT44(local_2c8,local_278);
                 local_98[iVar17 * 2] = (uint)uVar24;
@@ -51672,7 +51672,7 @@ LAB_0060a881:
               iVar17 = 0;
               do {
                 local_254 = local_e4[iVar17 + 3] * 65536.0;
-                uVar24 = float_to_uint64_round();
+                uVar24 = ftol2();
                 local_c0[iVar17 * 2] = (uint)uVar24;
                 local_c0[iVar17 * 2 + 1] = (uint)((ulonglong)uVar24 >> 0x20);
                 iVar17 = iVar17 + 1;
@@ -51698,7 +51698,7 @@ LAB_0060a881:
               local_a4[2] = (float)local_270 * 0.5;
               do {
                 local_24c = local_a4[iVar17] * 65536.0;
-                uVar24 = float_to_uint64_round();
+                uVar24 = ftol2();
                 local_98[iVar17 * 2 + 6] = (uint)uVar24;
                 local_98[iVar17 * 2 + 7] = (uint)((ulonglong)uVar24 >> 0x20);
                 iVar17 = iVar17 + 1;
@@ -51709,7 +51709,7 @@ LAB_0060a881:
               iVar17 = 0;
               do {
                 local_244 = local_e4[iVar17 + 6] * 65536.0;
-                uVar24 = float_to_uint64_round();
+                uVar24 = ftol2();
                 local_98[iVar17 * 2 + 0xc] = (uint)uVar24;
                 local_98[iVar17 * 2 + 0xd] = (uint)((ulonglong)uVar24 >> 0x20);
                 iVar17 = iVar17 + 1;
@@ -51819,7 +51819,7 @@ LAB_0060a74b:
                 } while ((int)local_2c0 <= local_154);
               }
               local_23c = *(float *)(local_2a4 + 0x88) * 0.5 * 65536.0;
-              lVar26 = float_to_uint64_round();
+              lVar26 = ftol2();
               local_280 = (float)((ulonglong)lVar26 >> 0x20);
               local_288 = (float)lVar26;
               lVar26 = local_1f8 - lVar26;
@@ -51827,7 +51827,7 @@ LAB_0060a74b:
                 lVar26 = lVar26 + -0x10000;
               }
               uVar13 = __alldiv(lVar26,0x10000,0);
-              uVar24 = float_to_uint64_round();
+              uVar24 = ftol2();
               uVar18 = uVar13 * 0x10000 - (uint)uVar24;
               local_1f8._0_4_ = (float)(uVar18 + (int)local_288);
               local_1f8._4_4_ =
@@ -51835,7 +51835,7 @@ LAB_0060a74b:
                             (int)((ulonglong)uVar24 >> 0x20)) -
                            (uint)(uVar13 * 0x10000 < (uint)uVar24)) + (int)local_280 +
                           (uint)CARRY4(uVar18,(uint)local_288));
-              lVar27 = float_to_uint64_round();
+              lVar27 = ftol2();
               lVar26 = CONCAT44(local_2a8,local_290);
               lVar25 = CONCAT44(local_2c8,local_278);
               local_1f8 = lVar27 + CONCAT44(local_1f8._4_4_,(float)local_1f8);
@@ -51921,7 +51921,7 @@ byte get_byte_flag(void)
 
 /* [AUDIT] proposed: direction_from_angle  (confidence: med)
  * purpose: Computes a direction/velocity vector from angle using cos/sin/__alldiv
- * vars: libm cos/sin; float_to_uint64_round rng; __alldiv
+ * vars: libm cos/sin; ftol2 rng; __alldiv
  */
 /* Global::direction_from_angle @ 0060ab30 */
 
@@ -52108,7 +52108,7 @@ LAB_0060ab70:
     local_1a4[2] = *(float *)(local_2b8 + 0x88) * 0.5;
     do {
       local_294 = local_1a4[iVar13] * 65536.0;
-      uVar23 = float_to_uint64_round();
+      uVar23 = ftol2();
       local_18c[iVar13 * 2] = (uint)uVar23;
       local_18c[iVar13 * 2 + 1] = (uint)((ulonglong)uVar23 >> 0x20);
       iVar13 = iVar13 + 1;
@@ -52133,7 +52133,7 @@ LAB_0060ab70:
     local_174[2] = local_29c * 0.5;
     do {
       local_2d0 = local_174[iVar13] * 65536.0;
-      uVar23 = float_to_uint64_round();
+      uVar23 = ftol2();
       local_1d4[iVar13 * 2] = (uint)uVar23;
       local_1d4[iVar13 * 2 + 1] = (uint)((ulonglong)uVar23 >> 0x20);
       iVar13 = iVar13 + 1;
@@ -52234,7 +52234,7 @@ LAB_0060afac:
               iVar14 = local_9c;
               if ((char)piVar12 != '\0') {
                 local_2dc = *(float *)(local_2b8 + 0x88) * 0.5 * 65536.0;
-                uVar23 = float_to_uint64_round();
+                uVar23 = ftol2();
                 local_2c0 = (float)((ulonglong)uVar23 >> 0x20);
                 local_2c8 = (uint)uVar23;
                 uVar6 = *(uint *)(iVar7 + 0x20);
@@ -52250,7 +52250,7 @@ LAB_0060afac:
                 bVar17 = CARRY4(uVar6 * 0x10000,local_2c8);
                 iVar14 = uVar6 * 0x10000 + local_2c8;
                 iVar13 = (((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10) + (int)local_2c0;
-                lVar24 = float_to_uint64_round();
+                lVar24 = ftol2();
                 local_2d8 = local_2d8 + 1;
                 *(longlong *)(local_2b8 + 0x20) = lVar24 + CONCAT44(iVar13 + (uint)bVar17,iVar14);
                 *(undefined4 *)(local_2b8 + 0x1180) = 0;
@@ -52368,7 +52368,7 @@ LAB_0060b060:
           local_3c = local_c - local_214;
           iVar13 = 0;
           do {
-            uVar23 = float_to_uint64_round();
+            uVar23 = ftol2();
             local_24c[iVar13 * 2 + 6] = (float)uVar23;
             local_24c[iVar13 * 2 + 7] = (float)((ulonglong)uVar23 >> 0x20);
             iVar13 = iVar13 + 1;
@@ -52384,7 +52384,7 @@ LAB_0060b060:
           local_48 = local_c + local_2a0 * 0.5;
           iVar13 = 0;
           do {
-            uVar23 = float_to_uint64_round();
+            uVar23 = ftol2();
             local_24c[iVar13 * 2] = (float)uVar23;
             local_24c[iVar13 * 2 + 1] = (float)((ulonglong)uVar23 >> 0x20);
             iVar13 = iVar13 + 1;
@@ -52702,7 +52702,7 @@ LAB_0060c2a7:
     local_194 = fStack_7c * local_2bc + local_80 * local_294 + local_78 * 0.0;
     local_190 = fStack_7c * local_2c0 + local_80 * (fVar21 + fVar19) + local_78;
     do {
-      uVar23 = float_to_uint64_round();
+      uVar23 = ftol2();
       local_1d4[iVar13 * 2 + 6] = (uint)uVar23;
       local_1d4[iVar13 * 2 + 7] = (uint)((ulonglong)uVar23 >> 0x20);
       iVar13 = iVar13 + 1;
@@ -53808,7 +53808,7 @@ LAB_00625ea8:
 
 
 /* [AUDIT] proposed: codec_decodeSetup  (confidence: low)
- * purpose: Decodes codec setup/header block (codec_decodeCodebook, codec_decodeMapping, float_to_uint64_round)
+ * purpose: Decodes codec setup/header block (codec_decodeCodebook, codec_decodeMapping, ftol2)
  * vars: target_lo flags; target_hi ctx
  */
 /* Global::codec_decodeSetup @ 006260c0 */
@@ -53935,7 +53935,7 @@ LAB_00626256:
         local_54 = lVar17 - lVar2;
         local_3c = lVar2;
         local_44 = lVar17;
-        lVar17 = float_to_uint64_round();
+        lVar17 = ftol2();
         lVar17 = lVar17 + CONCAT44(local_8,local_c);
         uVar11 = (uint)lVar17;
         uVar6 = uVar11 - 0x10000;
@@ -71547,13 +71547,13 @@ void _eh_vector_destructor_iterator_
 
 
 
-/* [AUDIT] proposed: float_to_uint64_round  (confidence: med)
- * purpose: Converts float10 ST0 to rounded unsigned 64-bit integer with banker's-style correction
- * vars: in_ST0=input
+/* [AUDIT] proposed: __ftol2  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x75). Mangled: __ftol2.
+ * vars: -
  */
-/* Global::float_to_uint64_round @ 0068d946 */
+/* Global::ftol2 @ 0068d946 */
 
-ulonglong float_to_uint64_round(void)
+ulonglong ftol2(void)
 
 {
   ulonglong rounded;

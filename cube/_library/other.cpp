@@ -26662,13 +26662,13 @@ void sqlite3_bind_double(int param_1,int param_2,int *param_3)
   }
   if (iVar6 == 0) {
     if ((0.0 <= local_c) && (local_c < 9.223372036854776e+18)) {
-      local_14 = (double)float_to_uint64_round();
+      local_14 = (double)ftol2();
       local_c = (double)(longlong)local_14;
       dVar7 = local_c;
       goto LAB_00526ad8;
     }
     if ((local_c < 0.0) && (-local_c < 9.223372036854776e+18)) {
-      local_1c = float_to_uint64_round();
+      local_1c = ftol2();
       dVar7 = -(double)local_1c;
       goto LAB_00526ad8;
     }
@@ -31462,7 +31462,7 @@ void sqlite3_date_compute_hms(uint *param_1)
 
 /* [AUDIT] proposed: sqlite3_date_compute_jd  (confidence: med)
  * purpose: setDateTimeToCurrent/computeJD: seeds a DateTime from the OS clock and applies local timezone offset
- * vars: param_1=DateTime; float_to_uint64_round=OS time; 60000=ms/min
+ * vars: param_1=DateTime; ftol2=OS time; 60000=ms/min
  */
 /* Global::sqlite3_date_compute_jd @ 00532a40 */
 
@@ -31475,12 +31475,12 @@ void sqlite3_date_compute_jd(uint *param_1)
   undefined8 uVar4;
   
   if (*(char *)((int)param_1 + 0x2a) == '\0') {
-    uVar4 = float_to_uint64_round();
+    uVar4 = ftol2();
     *(undefined8 *)param_1 = uVar4;
     *(undefined1 *)((int)param_1 + 0x2a) = 1;
     if (*(char *)((int)param_1 + 0x29) != '\0') {
       uVar2 = (param_1[6] + (param_1[5] * 0x10 - param_1[5]) * 4) * 60000;
-      uVar4 = float_to_uint64_round();
+      uVar4 = ftol2();
       uVar3 = uVar2 - (uint)uVar4;
       uVar1 = *param_1;
       *param_1 = *param_1 + uVar3;
@@ -32220,7 +32220,7 @@ undefined8 sqlite3_doubleToInt64(double param_1)
   
   if (-9.223372036854776e+18 <= param_1) {
     if (param_1 <= 9.223372036854776e+18) {
-      uVar1 = float_to_uint64_round();
+      uVar1 = ftol2();
       return uVar1;
     }
   }
@@ -35005,7 +35005,7 @@ undefined4 isDate(undefined4 param_1,int param_2,int *param_3,undefined8 *param_
       local_c = *(double *)(iVar3 + 8);
     }
     local_c = local_c * 86400000.0 + 0.5;
-    uVar5 = float_to_uint64_round();
+    uVar5 = ftol2();
     *param_4 = uVar5;
     *(undefined1 *)((int)param_4 + 0x2a) = 1;
   }
@@ -36345,7 +36345,7 @@ undefined4 parseDateOrTime(undefined4 param_1,char *param_2,undefined8 *param_3)
       return 1;
     }
     local_c = local_c * 86400000.0 + 0.5;
-    uVar6 = float_to_uint64_round();
+    uVar6 = ftol2();
     *param_3 = uVar6;
     *(undefined1 *)((int)param_3 + 0x2a) = 1;
   }
@@ -36705,7 +36705,7 @@ LAB_005438f9:
             local_34 = ((double)CONCAT44(uStack_38,local_3c) - dVar11) * 30.0 * 86400000.0 +
                        local_34;
           }
-          uVar13 = float_to_uint64_round();
+          uVar13 = ftol2();
           uVar9 = *param_3;
           *param_3 = *param_3 + (uint)uVar13;
           param_3[1] = param_3[1] + (int)((ulonglong)uVar13 >> 0x20) +
@@ -38717,7 +38717,7 @@ undefined4 setDateTimeToCurrent(int param_1,undefined8 *param_2)
   if ((*piVar1 < 2) || ((code *)piVar1[0x12] == (code *)0x0)) {
     iVar2 = (*(code *)piVar1[0x10])(piVar1,&local_c);
     local_c = local_c * 86400000.0;
-    uVar3 = float_to_uint64_round();
+    uVar3 = ftol2();
     *param_2 = uVar3;
   }
   else {
@@ -49442,7 +49442,7 @@ void lib_fn_573cb0(int param_1)
   dVar1 = *(double *)(param_1 + 8);
   if (-9.223372036854776e+18 <= dVar1) {
     if (dVar1 <= 9.223372036854776e+18) {
-      lVar2 = float_to_uint64_round();
+      lVar2 = ftol2();
     }
     else {
       lVar2 = -0x8000000000000000;
@@ -75111,9 +75111,13 @@ void lib_fn_68d57e(void)
 
 
 
-/* Global::lib_fn_68d593 @ 0068d593 */
+/* [AUDIT] proposed: _Fac_tidy_reg_t_dtor  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x24). Mangled: ??1_Fac_tidy_reg_t@std@@QAE@XZ. public: __thiscall std::_Fac_tidy_reg_t::~_Fac_tidy_reg_t(void)
+ * vars: -
+ */
+/* Global::Fac_tidy_reg_t_dtor @ 0068d593 */
 
-void lib_fn_68d593(void)
+void Fac_tidy_reg_t_dtor(void)
 
 {
   undefined4 *puVar1;
@@ -75219,9 +75223,13 @@ LAB_0068e231:
 
 
 
-/* Global::lib_fn_68e489 @ 0068e489 */
+/* [AUDIT] proposed: __except_handler4  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x23). Mangled: __except_handler4.
+ * vars: -
+ */
+/* Global::except_handler4 @ 0068e489 */
 
-void lib_fn_68e489(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
+void except_handler4(undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4)
 
 {
   except_handler4_common(&DAT_0076aa78,__security_check_cookie,param_1,param_2,param_3,param_4);
@@ -75231,9 +75239,13 @@ void lib_fn_68e489(undefined4 param_1,undefined4 param_2,undefined4 param_3,unde
 
 
 
-/* Global::lib_fn_68e604 @ 0068e604 */
+/* [AUDIT] proposed: __CxxUnhandledExceptionFilter  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x41). Mangled: ?__CxxUnhandledExceptionFilter@@YGJPAU_EXCEPTION_POINTERS@@@Z. long __stdcall __CxxUnhandledExceptionFilter(struct _EXCEPTION_POINTERS *)
+ * vars: -
+ */
+/* Global::CxxUnhandledExceptionFilter @ 0068e604 */
 
-undefined4 lib_fn_68e604(int *param_1)
+undefined4 CxxUnhandledExceptionFilter(int *param_1)
 
 {
   int iVar1;
@@ -75262,9 +75274,13 @@ undefined4 lib_fn_68e83b(void)
 
 
 
-/* Global::lib_fn_68e83e @ 0068e83e */
+/* [AUDIT] proposed: __RTC_Initialize  (confidence: med)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=14.67;n=2;nocrc). Mangled: __RTC_Initialize.
+ * vars: -
+ */
+/* Global::RTC_Initialize @ 0068e83e */
 
-void lib_fn_68e83e(void)
+void RTC_Initialize(void)
 
 {
   undefined4 *puVar1;
@@ -75280,9 +75296,13 @@ void lib_fn_68e83e(void)
 
 
 
-/* Global::lib_fn_68e85e @ 0068e85e */
+/* [AUDIT] proposed: __RTC_Initialize_2  (confidence: med)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=14.67;n=2;nocrc). Mangled: __RTC_Initialize.
+ * vars: -
+ */
+/* Global::RTC_Initialize_2 @ 0068e85e */
 
-void lib_fn_68e85e(void)
+void RTC_Initialize_2(void)
 
 {
   undefined4 *puVar1;
@@ -75298,9 +75318,13 @@ void lib_fn_68e85e(void)
 
 
 
-/* Global::lib_fn_68e87e @ 0068e87e */
+/* [AUDIT] proposed: __setdefaultprecision  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x27). Mangled: __setdefaultprecision.
+ * vars: -
+ */
+/* Global::setdefaultprecision @ 0068e87e */
 
-void lib_fn_68e87e(void)
+void setdefaultprecision(void)
 
 {
   errno_t eVar1;
@@ -214846,7 +214870,7 @@ void lib_fn_6fb9f0(void)
 void lib_fn_6fbab5(void)
 
 {
-  lib_fn_68d593();
+  Fac_tidy_reg_t_dtor();
   return;
 }
 

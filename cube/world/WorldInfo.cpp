@@ -684,7 +684,7 @@ LAB_0046b4a7:
     iVar6 = *(int *)(worldPtr + 0x8006d0);
     do {
       local_f0 = *(float *)(worldPtr + 0x8003d4 + iVar20 * 4) * 65536.0;
-      uVar24 = float_to_uint64_round();
+      uVar24 = ftol2();
       *(int *)(iVar6 + 0x10 + iVar20 * 8) = (int)uVar24;
       *(int *)(iVar6 + 0x14 + iVar20 * 8) = (int)((ulonglong)uVar24 >> 0x20);
       iVar20 = iVar20 + 1;
@@ -2077,7 +2077,7 @@ LAB_005e4de0:
                       uVar21 = (int)local_12cc * 0x10000;
                       local_1314 = pfStack_1584;
                       local_1300 = pfStack_1588;
-                      uVar37 = float_to_uint64_round();
+                      uVar37 = ftol2();
                       iVar26 = (int)((ulonglong)uVar37 >> 0x20);
                       uVar5 = (uint)uVar37;
                       iStack_9b0 = uVar21 - uVar5;
@@ -2121,7 +2121,7 @@ LAB_005e4de0:
                     local_1300 = pfStack_149c;
                     local_12f4 = pfStack_153c;
                     local_12e0 = pfStack_1540;
-                    uVar37 = float_to_uint64_round();
+                    uVar37 = ftol2();
                     pfVar9 = local_1300;
                     iVar26 = (int)((ulonglong)uVar37 >> 0x20);
                     uVar5 = (uint)uVar37;
@@ -2200,7 +2200,7 @@ LAB_005e4de0:
                     local_132c = pfStack_157c;
                     local_1300 = pfStack_14b0;
                     local_12f4 = pfStack_1580;
-                    uVar37 = float_to_uint64_round();
+                    uVar37 = ftol2();
                     world = local_12e4;
                     pfVar9 = local_1300;
                     iVar26 = (int)((ulonglong)uVar37 >> 0x20);
@@ -3058,7 +3058,7 @@ LAB_005e767b:
       }
       if (local_1364 != (float *)0x0) {
         local_133c = (float *)0x0;
-        uVar37 = float_to_uint64_round();
+        uVar37 = ftol2();
         do {
           local_12e0 = (float *)((ulonglong)uVar37 >> 0x20);
           local_12d4 = (float *)uVar37;
@@ -3401,7 +3401,7 @@ LAB_005e9764:
         Struct_InitDefaults();
         local_8 = CONCAT31(local_8._1_3_,4);
         local_16b8 = 0;
-        local_1548 = float_to_uint64_round();
+        local_1548 = ftol2();
         iVar26 = local_12e4;
         uVar5 = local_130c;
         local_3b4 = local_132c;
@@ -3716,7 +3716,7 @@ LAB_005ea7b3:
           uVar21 = (int)local_12d4 * 0x10000;
           local_12f4 = local_1550;
           local_12e0 = local_1554;
-          uVar37 = float_to_uint64_round();
+          uVar37 = ftol2();
           iVar26 = (int)((ulonglong)uVar37 >> 0x20);
           uVar5 = (uint)uVar37;
           local_978 = uVar21 - uVar5;
@@ -3801,7 +3801,7 @@ LAB_005ea7b3:
                   iVar22 = (int)local_1300 << 0x10;
                   local_1564 = iVar22;
                   local_1560 = uVar5;
-                  uVar37 = float_to_uint64_round();
+                  uVar37 = ftol2();
                   iVar26 = (int)((ulonglong)uVar37 >> 0x20);
                   pfVar9 = (float *)uVar37;
                   local_334 = (int)local_1344._4_4_ - (int)pfVar9;
@@ -4022,7 +4022,7 @@ LAB_005eae6a:
                 iVar22 = (int)local_12d8 * 0x10000;
                 local_1338 = local_1558;
                 local_12e8 = local_1320;
-                lVar38 = float_to_uint64_round();
+                lVar38 = ftol2();
                 local_1334 = (float *)lVar38;
                 local_228 = lVar38 + CONCAT44(iVar26 << 0x10 | uVar5,iVar22);
                 local_220 = (float)local_1358._4_4_;
@@ -4208,12 +4208,12 @@ LAB_005eb4c0:
                       local_12ec = (int *)local_1388;
                       libm_sse2_sin_precise();
                       local_132c = (float *)((float)dVar32 * 8.0 * 65536.0);
-                      lVar38 = float_to_uint64_round();
+                      lVar38 = ftol2();
                       dVar32 = (double)(float)local_1334;
                       local_1490 = lVar38;
                       libm_sse2_cos_precise();
                       local_133c = (float *)((float)dVar32 * 8.0 * 65536.0);
-                      lVar39 = float_to_uint64_round();
+                      lVar39 = ftol2();
                       fVar30 = local_1388;
                       local_454 = local_1490._4_4_;
                       local_450 = 0;
@@ -5112,7 +5112,7 @@ LAB_005ec591:
 
 /* [AUDIT] proposed: WorldInfo_placeStructure  (confidence: med)
  * purpose: Places a building/structure: allocates object, computes footprint, appends via vector grow + ctors
- * vars: param_2 vec3; Struct_InitDefaults build; std_vector_Reserve_grow_188; float_to_uint64_round rng
+ * vars: param_2 vec3; Struct_InitDefaults build; std_vector_Reserve_grow_188; ftol2 rng
  */
 /* Global::WorldInfo_placeStructure @ 005f0ce0 */
 
@@ -5955,8 +5955,8 @@ LAB_005f1eb0:
     local_44 = 0x3f800000;
     iVar4 = rand();
     local_78[0] = iVar4 % 3 + 0x29;
-    lVar19 = float_to_uint64_round();
-    local_d0 = float_to_uint64_round();
+    lVar19 = ftol2();
+    local_d0 = ftol2();
     param_6 = local_6e8;
     local_38._4_4_ = (uint *)(((int)local_20 >> 0x1f) << 0x10 | (uint)local_20 >> 0x10);
     local_38._0_4_ = (int)local_20 * 0x10000;
@@ -6019,7 +6019,7 @@ LAB_005f2170:
   Struct_InitDefaults();
   local_8 = 4;
   local_308[0] = 0x13;
-  local_6b0 = float_to_uint64_round();
+  local_6b0 = ftol2();
   local_6a4 = (_Container_base0 *)(((int)local_20 >> 0x1f) << 0x10 | (uint)local_20 >> 0x10);
   local_2ec = ((int)local_18 >> 0x1f) << 0x10 | (uint)local_18 >> 0x10;
   local_6a8 = (uint *)((int)local_18 << 0x10);
@@ -6037,7 +6037,7 @@ LAB_005f2170:
   Struct_InitDefaults();
   local_8 = CONCAT31(local_8._1_3_,5);
   local_618[0] = 0x14;
-  lVar19 = float_to_uint64_round();
+  lVar19 = ftol2();
   param_6 = local_6e8;
   local_6a4 = (_Container_base0 *)((ulonglong)lVar19 >> 0x20);
   local_5fc = ((int)local_18 >> 0x1f) << 0x10 | (uint)local_18 >> 0x10;
@@ -6096,7 +6096,7 @@ LAB_005f2570:
   local_8 = 6;
   iVar4 = rand();
   local_308[0] = iVar4 % 3 + 0x20;
-  lVar19 = float_to_uint64_round();
+  lVar19 = ftol2();
   param_6 = local_6e8;
   local_6b0._0_4_ = (uint *)((ulonglong)lVar19 >> 0x20);
   local_6a4 = (_Container_base0 *)(((int)local_20 >> 0x1f) << 0x10 | (uint)local_20 >> 0x10);
@@ -6158,7 +6158,7 @@ LAB_005f27e0:
   Struct_InitDefaults();
   local_8 = 7;
   local_308[0] = 0xc;
-  local_6b0 = float_to_uint64_round();
+  local_6b0 = ftol2();
   local_6a4 = (_Container_base0 *)(((int)local_20 >> 0x1f) << 0x10 | (uint)local_20 >> 0x10);
   local_2ec = ((int)local_18 >> 0x1f) << 0x10 | (uint)local_18 >> 0x10;
   local_6a8 = (uint *)((int)local_18 << 0x10);
@@ -6180,7 +6180,7 @@ LAB_005f27e0:
   Struct_InitDefaults();
   local_8 = CONCAT31(local_8._1_3_,8);
   local_618[0] = 0x10;
-  lVar19 = float_to_uint64_round();
+  lVar19 = ftol2();
   uVar8 = (uint *)local_6b0;
   local_6a4 = (_Container_base0 *)((ulonglong)lVar19 >> 0x20);
   local_5fc = ((int)local_18 >> 0x1f) << 0x10 | (uint)local_18 >> 0x10;
@@ -6205,7 +6205,7 @@ LAB_005f27e0:
   uStack_14c = 0x3f800000;
   local_5f4 = 0x3f8000003f800000;
   std_vector_pushBack_0x188(local_618);
-  uVar20 = float_to_uint64_round();
+  uVar20 = ftol2();
   local_88._4_4_ = local_6b0._4_4_;
   local_38._4_4_ = (uint *)(((int)local_20 >> 0x1f) << 0x10 | (uint)local_20 >> 0x10);
   local_38._0_4_ = (int)local_20 << 0x10;
@@ -6283,7 +6283,7 @@ LAB_005f2bf0:
   uStack_48 = 0x3f800000;
   local_44 = 0x3f800000;
   local_78[0] = 0xd;
-  uVar20 = float_to_uint64_round();
+  uVar20 = ftol2();
   local_38._4_4_ = (uint *)(((int)local_20 >> 0x1f) << 0x10 | (uint)local_20 >> 0x10);
   local_38._0_4_ = (int)local_20 << 0x10;
   uStack_30._4_4_ = (uint *)(((int)uStack_1c >> 0x1f) << 0x10 | uStack_1c >> 0x10);
@@ -6346,7 +6346,7 @@ LAB_005f2df0:
   uStack_48 = 0x3f800000;
   local_44 = 0x3f800000;
   local_78[0] = 0x30;
-  uVar20 = float_to_uint64_round();
+  uVar20 = ftol2();
   uStack_24 = (uint)((ulonglong)uVar20 >> 0x20);
   local_28 = (undefined2)uVar20;
   uStack_26 = (undefined1)((ulonglong)uVar20 >> 0x10);
@@ -7030,7 +7030,7 @@ LAB_005f33b0:
     local_40 = zone;
     local_78[0] = 0x21;
     uVar22 = CONCAT44(0x5f2fe0,uVar8);
-    uVar20 = float_to_uint64_round();
+    uVar20 = ftol2();
     uVar21 = 0x3fe0000000000000;
     Store_ftol64_result(0x3fe0000000000000);
     Store_ftol64_result(0x3fe0000000000000);

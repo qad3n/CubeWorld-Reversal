@@ -118,7 +118,7 @@ void cube::WalkPathBehavior::vfunc_0(int self,undefined4 param_2,int dt)
     local_c = *(float *)(self + 0x88) * 0.5;
     timer = iStack_48;
     do {
-      uVar11 = float_to_uint64_round();
+      uVar11 = ftol2();
       randOffset[waypointIdx * 2] = (uint)uVar11;
       randOffset[waypointIdx * 2 + 1] = (uint)((ulonglong)uVar11 >> 0x20);
       waypointIdx = waypointIdx + 1;
@@ -179,7 +179,7 @@ LAB_0058d260:
     waypointIdx = 0;
     local_c = *(float *)(self + 0x88) * 0.5;
     do {
-      uVar11 = float_to_uint64_round();
+      uVar11 = ftol2();
       randOffset[waypointIdx * 2] = (uint)uVar11;
       randOffset[waypointIdx * 2 + 1] = (uint)((ulonglong)uVar11 >> 0x20);
       waypointIdx = waypointIdx + 1;

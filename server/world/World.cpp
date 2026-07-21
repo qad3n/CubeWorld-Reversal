@@ -4661,7 +4661,7 @@ void __thiscall World_baseHeightField(void *this,uint x,float y,int z)
   local_134 = ((int)x >> 0x1f) << 0x10 | x >> 0x10;
   local_128 = x * 0x10000;
   local_48 = (float)local_15c;
-  uVar17 = ftol2_round();
+  uVar17 = ftol2();
   lVar2 = uVar17 + CONCAT44(local_134,x * 0x10000);
   local_f0 = (uint)lVar2;
   local_e8 = (int)((ulonglong)lVar2 >> 0x20);
@@ -4669,7 +4669,7 @@ void __thiscall World_baseHeightField(void *this,uint x,float y,int z)
   local_140 = (double)CONCAT44(local_140._4_4_,(float)local_15c * 65536.0);
   uVar6 = (int)local_124 * 0x10000;
   local_160 = (float)uVar6;
-  uVar17 = ftol2_round();
+  uVar17 = ftol2();
   lVar2 = uVar17 + CONCAT44(local_12c,uVar6);
   uVar6 = (uint)lVar2;
   iVar5 = (int)((ulonglong)lVar2 >> 0x20);
@@ -4868,7 +4868,7 @@ LAB_004fa7b3:
       fVar10 = valueNoise2D(SUB84(local_118 + 8432984.0,0),
                             (int)((ulonglong)(local_118 + 8432984.0) >> 0x20),local_110 + 90493.0);
       local_174 = (float)fVar10 * 100.0 * 65536.0;
-      uVar17 = ftol2_round();
+      uVar17 = ftol2();
       uVar6 = local_128;
       uVar7 = (uint)uVar17 - *puVar4;
       local_120 = (double)CONCAT44((((int)(uVar17 >> 0x20) - puVar4[1]) -
@@ -4879,7 +4879,7 @@ LAB_004fa7b3:
       fVar10 = valueNoise2D(SUB84(local_118 + 3423.0,0),
                             (int)((ulonglong)(local_118 + 3423.0) >> 0x20),local_110 + 112.0);
       local_174 = ((float)fVar10 * 100.0 + (float)(int)local_124) * 65536.0;
-      uVar17 = ftol2_round();
+      uVar17 = ftol2();
       local_120 = (double)CONCAT44(((int)(uVar17 >> 0x20) - puVar4[3]) -
                                    (uint)((uint)uVar17 < puVar4[2]),(uint)uVar17 - puVar4[2]);
       local_174 = (float)(longlong)local_120;
@@ -5415,14 +5415,14 @@ World_generateRegionFeatures
             uVar19 = (uint)local_2ec >> 0x10;
             uVar14 = (int)local_300 * 0x10000;
             uVar25 = (int)local_2ec * 0x10000;
-            uVar30 = ftol2_round();
+            uVar30 = ftol2();
             lVar3 = uVar30 + CONCAT44((iVar18 << 0x10 | uVar19) + (iVar24 << 0x10 | uVar6) +
                                       (uint)CARRY4(uVar25,uVar14),uVar25 + uVar14) + 0x1000000;
             local_2a0 = (float)((ulonglong)lVar3 >> 0x20);
             local_318 = *local_2dc + 256.0;
             iVar24 = rand();
             local_288 = (((float)iVar24 * (2048.0 - local_318 * 2.0)) / 32767.0) * 65536.0;
-            uVar30 = ftol2_round();
+            uVar30 = ftol2();
             local_29c = local_318 * 65536.0;
             lVar3 = uVar30 + CONCAT44(local_2a0,(int)lVar3);
             local_308 = (undefined4 *)((ulonglong)lVar3 >> 0x20);
@@ -5433,7 +5433,7 @@ World_generateRegionFeatures
             uVar19 = (uint)local_2a8 >> 0x10;
             uVar14 = local_2c8 * 0x10000;
             uVar25 = (int)local_2a8 * 0x10000;
-            uVar30 = ftol2_round();
+            uVar30 = ftol2();
             pcVar21 = rand_exref;
             lVar3 = uVar30 + CONCAT44((iVar18 << 0x10 | uVar19) + (iVar24 << 0x10 | uVar6) +
                                       (uint)CARRY4(uVar25,uVar14),uVar25 + uVar14);
@@ -5443,7 +5443,7 @@ World_generateRegionFeatures
             local_2cc = (undefined **)
                         ((((float)iVar24 * (2048.0 - (*local_2dc + 256.0) * 2.0)) / 32767.0) *
                         65536.0);
-            uVar30 = ftol2_round();
+            uVar30 = ftol2();
             *(ulonglong *)(pfVar8 + -4) = uVar30 + CONCAT44(local_2a0,(int)lVar3);
             pfVar8[-2] = local_2e8._0_4_;
             pfVar8[-1] = (float)local_308;
@@ -5486,7 +5486,7 @@ World_generateRegionFeatures
           pfVar8[-2] = (float)(uVar6 << 0x10);
           pfVar8[-1] = (float)(((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10);
           local_238 = (double)CONCAT44(local_238._4_4_,*pfVar8 * 65536.0);
-          uVar30 = ftol2_round();
+          uVar30 = ftol2();
           uVar19 = (int)pfVar8[-4] - (int)(float)uVar30;
           iVar24 = (((int)pfVar8[-3] - (int)(uVar30 >> 0x20)) -
                    (uint)((uint)pfVar8[-4] < (uint)(float)uVar30)) - (uint)(uVar19 < 0x1000000);
@@ -5495,11 +5495,11 @@ World_generateRegionFeatures
           if ((iVar24 <= (int)uVar6) &&
              ((iVar24 < (int)uVar6 || (uVar19 - 0x1000000 < (uint)((int)local_318 * 0x10000))))) {
             local_240 = ((float)(int)local_318 + *pfVar8 + 256.0) * 65536.0;
-            uVar30 = ftol2_round();
+            uVar30 = ftol2();
             *(ulonglong *)(pfVar8 + -4) = uVar30;
           }
           local_270 = *pfVar8 * 65536.0;
-          uVar30 = ftol2_round();
+          uVar30 = ftol2();
           uVar19 = local_2f4;
           uVar6 = (int)pfVar8[-2] - (int)(float)uVar30;
           local_318 = (float)(uVar6 - 0x1000000);
@@ -5510,11 +5510,11 @@ World_generateRegionFeatures
           if ((iVar24 <= (int)uVar14) &&
              ((iVar24 < (int)uVar14 || ((uint)local_318 < uVar6 * 0x10000)))) {
             local_268 = ((float)(int)(local_2f4 - 0x800) + *pfVar8 + 256.0) * 65536.0;
-            uVar30 = ftol2_round();
+            uVar30 = ftol2();
             *(ulonglong *)(pfVar8 + -2) = uVar30;
           }
           local_94 = *pfVar8 * 65536.0;
-          uVar30 = ftol2_round();
+          uVar30 = ftol2();
           uVar6 = (uint)uVar30 + (int)pfVar8[-4];
           local_318 = (float)(uVar6 + 0x1000000);
           iVar24 = (int)(uVar30 >> 0x20) + (int)pfVar8[-3] +
@@ -5523,11 +5523,11 @@ World_generateRegionFeatures
           if (((int)uVar6 <= iVar24) &&
              (((int)uVar6 < iVar24 || (local_314 << 0x10 < (uint)local_318)))) {
             local_27c = (((float)(int)local_314 - *pfVar8) - 256.0) * 65536.0;
-            uVar30 = ftol2_round();
+            uVar30 = ftol2();
             *(ulonglong *)(pfVar8 + -4) = uVar30;
           }
           local_28c = *pfVar8 * 65536.0;
-          uVar30 = ftol2_round();
+          uVar30 = ftol2();
           uVar6 = (uint)uVar30 + (int)pfVar8[-2];
           local_318 = (float)(uVar6 + 0x1000000);
           iVar24 = (int)(uVar30 >> 0x20) + (int)pfVar8[-1] +
@@ -5536,7 +5536,7 @@ World_generateRegionFeatures
           if (((int)uVar6 <= iVar24) &&
              (((int)uVar6 < iVar24 || (uVar19 << 0x10 < (uint)local_318)))) {
             local_284 = (((float)(int)uVar19 - *pfVar8) - 256.0) * 65536.0;
-            uVar30 = ftol2_round();
+            uVar30 = ftol2();
             *(ulonglong *)(pfVar8 + -2) = uVar30;
           }
           uVar31 = __alldiv((uint)pfVar8[-2],(uint)pfVar8[-1],0x10000,0);
@@ -5611,7 +5611,7 @@ World_generateRegionFeatures
         *(uint *)(local_314 + 0x14024 + (int)puVar17) = uVar14;
         local_2e8 = (double)*(longlong *)(local_314 + 0x14018 + (int)puVar17);
         local_238 = local_2e8 * 0.00390625;
-        uVar30 = ftol2_round();
+        uVar30 = ftol2();
         uVar31 = __alldiv((uint)uVar30,(uint)(uVar30 >> 0x20),0x10000,0);
         uVar6 = (uint)uVar31 & 0x8000003f;
         if ((int)uVar6 < 0) {
@@ -5619,7 +5619,7 @@ World_generateRegionFeatures
         }
         local_2e8 = (double)*(longlong *)(local_314 + 0x14020 + (int)puVar17);
         local_230 = local_2e8 * 0.00390625;
-        uVar30 = ftol2_round();
+        uVar30 = ftol2();
         uVar31 = __alldiv((uint)uVar30,(uint)(uVar30 >> 0x20),0x10000,0);
         uVar19 = (uint)uVar31 & 0x8000003f;
         if ((int)uVar19 < 0) {
@@ -5740,7 +5740,7 @@ LAB_0050ee95:
         uVar19 = (uint)local_2e8._0_4_ & 0x1fffff;
         uVar14 = (int)local_300 * 0x10000;
         uVar25 = (int)local_2e8._0_4_ * 0x8000000;
-        uVar30 = ftol2_round();
+        uVar30 = ftol2();
         lVar3 = uVar30 + CONCAT44(((iVar18 >> 0x1f) << 0x10 | uVar19 >> 5) +
                                   (iVar15 << 0x10 | uVar6) + (uint)CARRY4(uVar25,uVar14),
                                   uVar25 + uVar14) + 0x1000000;
@@ -5748,7 +5748,7 @@ LAB_0050ee95:
         local_2e8._0_4_ = (float)(int)((ulonglong)lVar3 >> 0x20);
         iVar24 = rand();
         local_288 = (((float)iVar24 * (2048.0 - local_318 * 2.0)) / 32767.0) * 65536.0;
-        uVar30 = ftol2_round();
+        uVar30 = ftol2();
         local_280 = local_318 * 65536.0;
         lVar3 = uVar30 + CONCAT44(local_2e8._0_4_,(int)lVar3);
         local_29c = (float)lVar3;
@@ -5759,7 +5759,7 @@ LAB_0050ee95:
         uVar19 = (uint)local_2cc & 0x1fffff;
         uVar14 = local_2c8 * 0x10000;
         uVar25 = (int)local_2cc * 0x8000000;
-        uVar30 = ftol2_round();
+        uVar30 = ftol2();
         lVar3 = uVar30 + CONCAT44(((iVar24 >> 0x1f) << 0x10 | uVar19 >> 5) +
                                   (iVar18 << 0x10 | uVar6) + (uint)CARRY4(uVar25,uVar14),
                                   uVar25 + uVar14);
@@ -5771,7 +5771,7 @@ LAB_0050ee95:
         local_284 = (((float)iVar24 *
                      (2048.0 - (*(float *)(local_314 + 0x14028 + (int)local_2f0) + 256.0) * 2.0)) /
                     32767.0) * 65536.0;
-        uVar30 = ftol2_round();
+        uVar30 = ftol2();
         *(uint *)(uVar19 + 0x14018 + (int)puVar17) = (uint)uVar30 + uVar6;
         *(float *)(uVar19 + 0x14020 + (int)puVar17) = local_29c;
         *(uint *)(uVar19 + 0x1401c + (int)puVar17) =
@@ -6550,7 +6550,7 @@ void __thiscall FUN_005286a0(void *this,undefined4 *param_1)
 
 /* [AUDIT] proposed: World::objectFalloffWeight  (confidence: high)
  * purpose: Distance-based falloff/influence weight of an object over a point, branching on object type (0xb-0xe special)
- * vars: param_1[4]=radius; [6]=type; ftol2_round=ftol; result=dist^2/radius^2
+ * vars: param_1[4]=radius; [6]=type; ftol2=ftol; result=dist^2/radius^2
  */
 /* Global::World_objectFalloffWeight @ 0052c820 */
 
@@ -6581,12 +6581,12 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
     uVar2 = *pos_b;
     uVar3 = pos_b[1];
     if (feature_type == 0xd) {
-      uVar13 = ftol2_round();
+      uVar13 = ftol2();
       iVar11 = (int)(uVar13 >> 0x20);
       uVar7 = (uint)uVar13;
       feature_type = *pos_a;
       uVar4 = pos_a[1];
-      uVar13 = ftol2_round();
+      uVar13 = ftol2();
       iVar12 = (int)(uVar13 >> 0x20);
       uVar8 = (uint)uVar13;
       tmp = CONCAT44((1 - iVar11) - (uint)(0x617d0000 < uVar7),0x617d0000 - uVar7);
@@ -6595,7 +6595,7 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
       valueNoise2D(SUB84((double)tmp * 1.52587890625e-05,0),
                    (int)((ulonglong)((double)tmp * 1.52587890625e-05) >> 0x20),
                    dVar5 * 1.52587890625e-05);
-      uVar13 = ftol2_round();
+      uVar13 = ftol2();
       uVar9 = (uint)uVar13 - *feature;
       tmp = CONCAT44((((int)(uVar13 >> 0x20) - feature[1]) - (uint)((uint)uVar13 < *feature)) +
                           uVar4 + (uint)CARRY4(uVar9,feature_type),uVar9 + feature_type);
@@ -6606,19 +6606,19 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
       valueNoise2D(SUB84((double)tmp * 1.52587890625e-05,0),
                    (int)((ulonglong)((double)tmp * 1.52587890625e-05) >> 0x20),
                    dVar5 * 1.52587890625e-05);
-      uVar13 = ftol2_round();
+      uVar13 = ftol2();
       feature_type = (uint)uVar13 - feature[2];
       tmp = CONCAT44((((int)(uVar13 >> 0x20) - feature[3]) - (uint)((uint)uVar13 < feature[2]))
                           + uVar3 + (uint)CARRY4(feature_type,uVar2),feature_type + uVar2);
       return (float10)(((float)tmp * 1.5258789e-05 * (float)tmp * 1.5258789e-05 +
                        dx * 1.5258789e-05 * dx * 1.5258789e-05) / (radius * radius));
     }
-    uVar13 = ftol2_round();
+    uVar13 = ftol2();
     iVar11 = (int)(uVar13 >> 0x20);
     uVar7 = (uint)uVar13;
     feature_type = *pos_a;
     uVar4 = pos_a[1];
-    uVar13 = ftol2_round();
+    uVar13 = ftol2();
     iVar12 = (int)(uVar13 >> 0x20);
     uVar8 = (uint)uVar13;
     tmp = CONCAT44((1 - iVar11) - (uint)(0x617d0000 < uVar7),0x617d0000 - uVar7);
@@ -6627,7 +6627,7 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
     valueNoise2D(SUB84((double)tmp * 1.52587890625e-05,0),
                  (int)((ulonglong)((double)tmp * 1.52587890625e-05) >> 0x20),
                  dVar5 * 1.52587890625e-05);
-    uVar13 = ftol2_round();
+    uVar13 = ftol2();
     uVar9 = (uint)uVar13 - *feature;
     tmp = CONCAT44((((int)(uVar13 >> 0x20) - feature[1]) - (uint)((uint)uVar13 < *feature)) +
                         uVar4 + (uint)CARRY4(uVar9,feature_type),uVar9 + feature_type);
@@ -6638,7 +6638,7 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
     valueNoise2D(SUB84((double)tmp * 1.52587890625e-05,0),
                  (int)((ulonglong)((double)tmp * 1.52587890625e-05) >> 0x20),
                  dVar5 * 1.52587890625e-05);
-    uVar13 = ftol2_round();
+    uVar13 = ftol2();
     feature_type = (uint)uVar13 - feature[2];
     tmp = CONCAT44((((int)(uVar13 >> 0x20) - feature[3]) - (uint)((uint)uVar13 < feature[2])) +
                         uVar3 + (uint)CARRY4(feature_type,uVar2),feature_type + uVar2);

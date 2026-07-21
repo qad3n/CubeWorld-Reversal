@@ -76,7 +76,7 @@ void cube::SpawnLocationBehavior::vfunc_0(int self,int region)
     spawnEnd = 0;
     halfSize = 0.5 - *(float *)(self + 0x88) * 0.5;
     do {
-      uVar15 = float_to_uint64_round();
+      uVar15 = ftol2();
       randOffset[spawnEnd * 2] = (uint)uVar15;
       randOffset[spawnEnd * 2 + 1] = (uint)((ulonglong)uVar15 >> 0x20);
       spawnEnd = spawnEnd + 1;

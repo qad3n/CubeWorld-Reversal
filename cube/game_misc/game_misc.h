@@ -650,7 +650,7 @@ void Attribute_readSequence(undefined4 param_1);
 void plasma::NamedObject::ctor_3(int param_1,int param_2);
 /* Library Function - Multiple Matches With Same Base Name private: static void __cdecl std::locale::facet::_Facet_Register(class std::locale::facet *) void __cdecl std::_Facet_Register(class std::_Facet_base *) Libraries: Visual Studio 2010 Release, Visual Studio 2012 Release */ void Facet_Register(undefined4 param_1);
 /* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */ /* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */ /* Library Function - Single Match void __stdcall `eh vector destructor iterator'(void *,unsigned int,int,void (__thiscall*)(void *)) Library: Visual Studio 2012 Release */ void _eh_vector_destructor_iterator_ (void *param_1,uint param_2,int param_3,_func_void_void_ptr *param_4);
-ulonglong float_to_uint64_round(void);
+ulonglong ftol2(void);
 /* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */ /* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */ /* Library Function - Single Match void __stdcall `eh vector constructor iterator'(void *,unsigned int,int,void (__thiscall*)(void *),void (__thiscall*)(void *)) Library: Visual Studio 2012 Release */ void _eh_vector_constructor_iterator_ (void *param_1,uint param_2,int param_3,_func_void_void_ptr *param_4, _func_void_void_ptr *param_5);
 void FUN_0068e8d0(undefined4 param_1);
 int FUN_0068e900(undefined4 *param_1);

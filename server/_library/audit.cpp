@@ -15557,7 +15557,7 @@ undefined4 __cdecl sqlite3OsClose(int *param_1)
 
 /* [AUDIT] proposed: sqlite3OsCurrentTimeInt64  (confidence: high)
  * purpose: Get current time as int64 ms: use xCurrentTimeInt64 if v>=2 else xCurrentTime*86400000
- * vars: param_1[0x12]/[0x10] method slots; ftol2_round f2ll
+ * vars: param_1[0x12]/[0x10] method slots; ftol2 f2ll
  */
 /* Global::sqlite3OsCurrentTimeInt64 @ 004a1280 */
 
@@ -15574,7 +15574,7 @@ undefined4 __cdecl sqlite3OsCurrentTimeInt64(int *param_1,ulonglong *param_2)
   }
   uVar1 = (*(code *)param_1[0x10])(param_1,&local_c);
   local_c = local_c * 86400000.0;
-  uVar2 = ftol2_round();
+  uVar2 = ftol2();
   *param_2 = uVar2;
   return uVar1;
 }
@@ -27200,7 +27200,7 @@ void __thiscall WalkPathBehavior_checkPathClear(void *this,uint *param_1,float *
   local_c = param_2[2] * 0.5;
   iVar15 = 0;
   do {
-    uVar21 = ftol2_round();
+    uVar21 = ftol2();
     local_2c[iVar15 * 2] = (uint)uVar21;
     local_2c[iVar15 * 2 + 1] = (uint)(uVar21 >> 0x20);
     iVar15 = iVar15 + 1;
@@ -27220,7 +27220,7 @@ void __thiscall WalkPathBehavior_checkPathClear(void *this,uint *param_1,float *
   local_14 = CONCAT44(param_2[1] * 0.5,*param_2 * 0.5);
   local_c = param_2[2] * 0.5;
   do {
-    uVar21 = ftol2_round();
+    uVar21 = ftol2();
     local_2c[iVar15 * 2] = (uint)uVar21;
     local_2c[iVar15 * 2 + 1] = (uint)(uVar21 >> 0x20);
     iVar15 = iVar15 + 1;
@@ -27338,8 +27338,8 @@ LAB_004d52f7:
                     ((char)piVar2[0xc] != '\0')))) {
                   local_c = (float)piVar2[0xb];
                   local_14 = *(undefined8 *)(piVar2 + 9);
-                  uVar21 = ftol2_round();
-                  uVar28 = ftol2_round();
+                  uVar21 = ftol2();
+                  uVar28 = ftol2();
                   iVar18 = (int)(uVar28 >> 0x20);
                   uVar11 = (uint)uVar28;
                   uVar16 = piVar2[2];
@@ -27350,8 +27350,8 @@ LAB_004d52f7:
                      (((iVar17 < iVar12 || (uVar16 - (uint)uVar21 <= uVar11 + *param_1)) &&
                       (CONCAT44((param_1[1] - iVar18) - (uint)(*param_1 < uVar11),*param_1 - uVar11)
                        < (longlong)(uVar21 + *(longlong *)(piVar2 + 2)))))) {
-                    uVar21 = ftol2_round();
-                    uVar28 = ftol2_round();
+                    uVar21 = ftol2();
+                    uVar28 = ftol2();
                     iVar12 = (int)(uVar28 >> 0x20);
                     uVar11 = (uint)uVar28;
                     puVar1 = (uint *)(iVar8 + 0x10);
@@ -27369,13 +27369,13 @@ LAB_004d52f7:
                       uVar11 = *puVar1;
                       iVar8 = *(int *)(puVar4[2] + 0x1c);
                       lVar6 = *(longlong *)puVar1;
-                      uVar21 = ftol2_round();
+                      uVar21 = ftol2();
                       uVar5 = param_1[5];
                       iVar12 = (int)(uVar21 >> 0x20) + uVar5 + (uint)CARRY4((uint)uVar21,uVar16);
                       if ((iVar8 <= iVar12) &&
                          ((iVar8 < iVar12 || (uVar11 <= (uint)uVar21 + uVar16)))) {
-                        uVar21 = ftol2_round();
-                        uVar28 = ftol2_round();
+                        uVar21 = ftol2();
+                        uVar28 = ftol2();
                         if (CONCAT44((uVar5 - (int)(uVar21 >> 0x20)) - (uint)(uVar16 < (uint)uVar21)
                                      ,uVar16 - (uint)uVar21) < (longlong)(uVar28 + lVar6)) {
 LAB_004d54bb:
@@ -29174,13 +29174,13 @@ void __cdecl operator_new_wrapper(uint param_1)
 
 
 
-/* [AUDIT] proposed: _ftol2_round  (confidence: high)
- * purpose: Converts x87 float10 in ST0 to rounded int64 (banker/half-up correction); MSVC ftol helper
- * vars: in_ST0=input; corrects toward nearest on 0.5 boundary
+/* [AUDIT] proposed: __ftol2  (confidence: high)
+ * purpose: Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x75). Mangled: __ftol2.
+ * vars: -
  */
-/* Global::ftol2_round @ 0054a946 */
+/* Global::ftol2 @ 0054a946 */
 
-ulonglong ftol2_round(void)
+ulonglong ftol2(void)
 
 {
   ulonglong uVar1;

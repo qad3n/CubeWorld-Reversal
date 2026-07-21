@@ -6515,7 +6515,7 @@ sqlite3_fn_4778d0(int *param_1,int param_2,uint *param_3,undefined4 param_4,unde
   }
 LAB_00477a6e:
   if ((param_6 & 3) == 0) {
-    ftol2_round();
+    ftol2();
   }
   piVar8 = (int *)sqlite3_fn_4a0240(iVar4,puVar6,(byte *)"%s (~%lld rows)");
   lib_fn_4ae8f0(piVar2,0x96,iVar3,param_4,param_5,piVar8,0xffffffff);
@@ -30217,9 +30217,9 @@ LAB_004afe6d:
           }
           goto LAB_004b001a;
         default:
-          uVar42 = ftol2_round();
+          uVar42 = ftol2();
           local_c8 = uVar42;
-          local_c0 = ftol2_round();
+          local_c0 = ftol2();
           if (uVar42 == 0) goto LAB_004b001a;
           if (uVar42 == 0xffffffffffffffff) {
             uVar42 = 1;

@@ -4,7 +4,7 @@ Best-effort analysis of functions automation could not name (still `FUN_`), from
 sub-agent audit: proposed name, purpose, confidence, key variables. Inline `[AUDIT]`
 comments with the same content are also written above each function in the .cpp files.
 
-**1369 functions analyzed** — confidence: high=767, med=483, low=119.
+**1376 functions analyzed** — confidence: high=771, med=486, low=119.
 
 ## audit (450)
 
@@ -331,7 +331,7 @@ comments with the same content are also written above each function in the .cpp 
 | 4fc060 | `std::map::erase_range_B` | high | Erases node range [param_2,param_3) from a map; full-clear fast path; per-node FUN_0040a1d0 erase |
 | 530600 | `std::map::lower_bound_yx` | high | Lower-bound in map ordered by (y,x): descends tree comparing key[1] then key[0] |
 | 54a6ce | `operator_new_wrapper` | high | Thin wrapper calling operator_new(param_1); discards result (allocation stub) |
-| 54a946 | `_ftol2_round` | high | Converts x87 float10 in ST0 to rounded int64 (banker/half-up correction); MSVC ftol helper |
+| 54a946 | `__ftol2` | high | Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x75). Mangled: __ftol2. |
 | 4025b0 | `RBNode_allocSetKey` | med | Allocates rb-tree node then stores vec3 key (3 dwords) at node+0x10 |
 | 402b10 | `RBTree_findOrInsert` | med | Map find by vec3 key; returns existing value+0x18 or inserts new node and returns it |
 | 407a30 | `RBTree_copyBeginThenInc` | med | Stores *this into param_1 then advances this via tree successor |
@@ -843,7 +843,7 @@ comments with the same content are also written above each function in the .cpp 
 | 42ede0 | `vec3_div_scalar` | low | Divides a 3-int vector by scalar into out param (game math) |
 | 430730 | `game_voxelColorAt` | low | 3D voxel-model color accessor (x,y,z into RGB grid) — .cub model (game) |
 
-## other (300)
+## other (307)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -1024,6 +1024,10 @@ comments with the same content are also written above each function in the .cpp 
 | 48ec40 | `bitvec_test` | high | Tests whether a page bit is set in a Bitvec (recurse/hash probe); SQLite sqlite3BitvecTestNotNull |
 | 4a14c0 | `getAndInitPage` | high | Acquire pager page param_2 into a MemPage, error on 0/corruption, init contents or zero |
 | 4bd350 | `subjournalPage` | high | Write a page to the pager sub-journal (encode pgno + page data at computed offset), bump count |
+| 54a6ec | `_Fac_tidy_reg_t_dtor` | high | Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=20.0;n=1;crc:swap~). Mangled: ??1_Fac_tidy_reg_t@std@@QAE@XZ. public: __thiscall std::_Fac_tidy_reg_t::~_Fac_tidy_reg_t(void) |
+| 54b4c9 | `__except_handler4` | high | Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x23). Mangled: __except_handler4. |
+| 54b644 | `__CxxUnhandledExceptionFilter` | high | Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x41). Mangled: ?__CxxUnhandledExceptionFilter@@YGJPAU_EXCEPTION_POINTERS@@@Z. long __stdcall __CxxUnhandledExceptionFilter(struct _EXCEPTION_POINTERS *) |
+| 54b8cb | `__setdefaultprecision` | high | Statically-linked MSVC CRT/STL function identified by signature match (flirt-crc, crc:swap~;len=0x27). Mangled: __setdefaultprecision. |
 | 407730 | `copy_struct_0xac` | med | Field-by-field copy of ~0xac-byte struct |
 | 412980 | `unwind_stream_dtor` | med | Unwind cleanup: invoke stream base virtual destructor |
 | 413560 | `std_function_deleter` | med | std::function target deleter (invoke vfunc +0x10, null slot) |
@@ -1113,6 +1117,9 @@ comments with the same content are also written above each function in the .cpp 
 | 4a6530 | `registerDateTimeFunctions` | med | Insert built-in date/time FuncDefs (base &DAT_00582bc8) into global function hash |
 | 4c29b0 | `writeBigEndianToFile` | med | Byte-swap a 32-bit value to big-endian and write it to a file at given offset via xWrite |
 | 4d9960 | `Path::moveConstruct` | med | Move-constructs a 0x24-byte object: steals 3-ptr vector [0..8] from source (nulls it), copies 6 tail fields |
+| 54a6d7 | `_Fac_node_dtor` | med | Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=22.01;n=1;nocrc). Mangled: ??1_Fac_node@std@@QAE@XZ. public: __thiscall std::_Fac_node::~_Fac_node(void) |
+| 54b88b | `__RTC_Initialize` | med | Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=14.67;n=2;nocrc). Mangled: __RTC_Initialize. |
+| 54b8ab | `__RTC_Initialize_2` | med | Statically-linked MSVC CRT/STL function identified by signature match (fid+flirt, score=14.67;n=2;nocrc). Mangled: __RTC_Initialize. |
 | 409270 | `collect_equipped_items` | low | Gather list of relevant equipped item pointers by weapon type (game) |
 | 409660 | `check_quest_id_match` | low | True if event type 0x19 and id matches computed value (game) |
 | 409d10 | `get_ability_multiplier` | low | Switch ability id -> float multiplier constant (game) |

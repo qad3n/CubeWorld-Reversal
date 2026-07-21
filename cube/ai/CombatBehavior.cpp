@@ -556,7 +556,7 @@ LAB_0042d427:
         *(undefined4 *)((int)fVar23 + 0x1450) = *(undefined4 *)(iVar18 + 0x20);
         *(undefined4 *)((int)fVar23 + 0x1454) = *(undefined4 *)(iVar18 + 0x24);
         local_2e0 = (*(float *)(iVar18 + 0x88) * 0.5 - 0.1) * 65536.0;
-        uVar29 = float_to_uint64_round();
+        uVar29 = ftol2();
         puVar1 = (uint *)((int)fVar23 + 0x1450);
         uVar10 = *puVar1;
         *puVar1 = *puVar1 - (uint)uVar29;
@@ -570,7 +570,7 @@ LAB_0042d427:
         *(undefined4 *)((int)fVar23 + 0x1438) = *(undefined4 *)((int)fVar23 + 0x20);
         *(undefined4 *)((int)fVar23 + 0x143c) = *(undefined4 *)((int)fVar23 + 0x24);
         local_2e0 = (*(float *)((int)fVar23 + 0x88) * 0.5 - 0.1) * 65536.0;
-        uVar29 = float_to_uint64_round();
+        uVar29 = ftol2();
         puVar1 = (uint *)((int)fVar23 + 0x1438);
         uVar10 = *puVar1;
         *puVar1 = *puVar1 - (uint)uVar29;
@@ -975,7 +975,7 @@ LAB_0042ddbc:
           uVar6 = *(uint *)(local_30c + 0x20);
           cooldown = *(int *)((int)fVar27 + 0x24);
           iVar18 = *(int *)(local_30c + 0x24);
-          lVar28 = float_to_uint64_round();
+          lVar28 = ftol2();
           if (CONCAT44((cooldown - iVar18) - (uint)(uVar10 < uVar5),uVar10 - uVar6) <= lVar28) {
             *(undefined4 *)((int)fVar27 + 0x3c) = 0x41f00000;
             fVar23 = fStack_218;
@@ -1034,7 +1034,7 @@ LAB_0042e000:
           uVar6 = *(uint *)(local_30c + 0x20);
           cooldown = *(int *)((int)fVar27 + 0x24);
           iVar18 = *(int *)(local_30c + 0x24);
-          lVar28 = float_to_uint64_round();
+          lVar28 = ftol2();
           if (CONCAT44((cooldown - iVar18) - (uint)(uVar10 < uVar5),uVar10 - uVar6) <= lVar28) {
             *(undefined4 *)((int)fVar27 + 0x3c) = 0x40a00000;
             fVar23 = fStack_218;

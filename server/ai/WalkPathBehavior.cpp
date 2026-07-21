@@ -116,7 +116,7 @@ cube::WalkPathBehavior::vfunc_0(WalkPathBehavior *this,void *creature,void *worl
     axis = 0;
     half_height = *(float *)((int)creature + 0x88) * 0.5;
     do {
-      uVar12 = ftol2_round();
+      uVar12 = ftol2();
       rand_offset[axis * 2] = (uint)uVar12;
       rand_offset[axis * 2 + 1] = (uint)(uVar12 >> 0x20);
       axis = axis + 1;
@@ -176,7 +176,7 @@ LAB_004c6010:
     axis = 0;
     half_height = *(float *)((int)creature + 0x88) * 0.5;
     do {
-      uVar12 = ftol2_round();
+      uVar12 = ftol2();
       rand_offset[axis * 2] = (uint)uVar12;
       rand_offset[axis * 2 + 1] = (uint)(uVar12 >> 0x20);
       axis = axis + 1;

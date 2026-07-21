@@ -23508,7 +23508,7 @@ BOOL __cdecl __IsNonwritableInCurrentImage(PBYTE pTarget)
   uint local_c;
   undefined4 local_8;
   
-  pcStack_10 = lib_fn_68e489;
+  pcStack_10 = except_handler4;
   local_14 = ExceptionList;
   local_c = DAT_0076aa78 ^ 0x760730;
   ExceptionList = &local_14;
