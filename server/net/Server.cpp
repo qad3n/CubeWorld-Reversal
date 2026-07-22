@@ -14,7 +14,6 @@ int * __thiscall String_replaceRange(void *this,int *src_str,uint pos,uint count
   uint copy_len;
   
   if ((uint)src_str[4] < pos) {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   copy_len = src_str[4] - pos;
@@ -24,7 +23,6 @@ int * __thiscall String_replaceRange(void *this,int *src_str,uint pos,uint count
   if (this == src_str) {
     copy_len = copy_len + pos;
     if (*(uint *)((int)this + 0x10) < copy_len) {
-                    /* WARNING: Subroutine does not return */
       std::_Xout_of_range("invalid string position");
     }
     *(uint *)((int)this + 0x10) = copy_len;
@@ -38,7 +36,6 @@ int * __thiscall String_replaceRange(void *this,int *src_str,uint pos,uint count
     return this;
   }
   if (copy_len == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (*(uint *)((int)this + 0x14) < copy_len) {
@@ -93,7 +90,6 @@ int * __thiscall String_erase(void *this,uint pos,uint count)
   
   size = *(uint *)((int)this + 0x10);
   if (size < pos) {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   if (count < size - pos) {

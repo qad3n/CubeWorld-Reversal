@@ -76,7 +76,6 @@ void cube::Sprite::ctor_1(void)
   }
   local_8 = local_8 & 0xffffff00;
   Sprite_map_erase_range(tmp,*(undefined4 *)self[10],(undefined4 *)self[10]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[10]);
 }
 
@@ -92,7 +91,6 @@ void cube::Sprite::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -168,17 +166,6 @@ undefined4 * Sprite_map_erase_range(undefined4 *param_1,int *first,int *last)
  */
 /* Global::Sprite_map_erase_node @ 004e6f20 */
 
-/* WARNING: Removing unreachable block (ram,0x004e6fed) */
-/* WARNING: Removing unreachable block (ram,0x004e6ffd) */
-/* WARNING: Removing unreachable block (ram,0x004e7006) */
-/* WARNING: Removing unreachable block (ram,0x004e7009) */
-/* WARNING: Removing unreachable block (ram,0x004e6ff9) */
-/* WARNING: Removing unreachable block (ram,0x004e7017) */
-/* WARNING: Removing unreachable block (ram,0x004e7026) */
-/* WARNING: Removing unreachable block (ram,0x004e7031) */
-/* WARNING: Removing unreachable block (ram,0x004e702d) */
-/* WARNING: Removing unreachable block (ram,0x004e7021) */
-/* WARNING: Removing unreachable block (ram,0x004e7034) */
 
 void Sprite_map_erase_node(undefined4 param_1,int *node)
 
@@ -193,7 +180,6 @@ void Sprite_map_erase_node(undefined4 param_1,int *node)
   int *fixupNode;
   
   if (*(char *)((int)node + 0xd) != '\0') {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -304,10 +290,8 @@ LAB_004e7117:
   *(int *)(node[5] + 4) = node[5];
   node[6] = 0;
   if (firstChar != (void *)node[5]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(firstChar);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)node[5]);
 }
 

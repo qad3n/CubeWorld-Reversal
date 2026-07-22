@@ -47,7 +47,6 @@ void cube::Database::vfunc_0(byte deleteFlag)
     self[1] = 0;
   }
   if ((deleteFlag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

@@ -129,8 +129,6 @@ uint * __thiscall Vec3i64_scaleFixed(void *this,uint mul_lo,int mul_hi)
 
 /* cube::CombatBehavior::vfunc_0 @ 00402f40 */
 
-/* WARNING: Removing unreachable block (ram,0x004045c6) */
-/* WARNING: Removing unreachable block (ram,0x0040436d) */
 
 void __thiscall
 cube::CombatBehavior::vfunc_0
@@ -3750,7 +3748,6 @@ void CombatBehavior_pushTargetPos(void *dst_pos,char *target_entity,int combat_s
   local_20 = rec_y;
   list_node = list_emplaceCopy40(list_head,(undefined4 *)list_head[1],(undefined8 *)&rec_x);
   if (*(int *)(combat_state + 0x5c) == 0x5555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(combat_state + 0x5c) = *(int *)(combat_state + 0x5c) + 1;
@@ -3935,7 +3932,6 @@ void CombatBehavior_alertNearbyAllies(int attacker,int target,int param_3)
     __security_check_cookie(security_cookie ^ (uint)&stack0xfffffffc);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -3957,7 +3953,6 @@ void __thiscall CombatBehavior_pushAlertMsg(void *this,undefined8 *value)
   head = *(undefined4 **)this;
   new_node = list_emplaceCopy24(head,(undefined4 *)head[1],value);
   if (*(int *)((int)this + 4) == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;

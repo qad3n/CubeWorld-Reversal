@@ -27,7 +27,6 @@ void cube::PreviewWidget::ctor_0(undefined4 param_1,undefined4 param_2,undefined
   plasma::NamedObject::ctor_4(param_1,param_2,local_2c);
   local_8 = CONCAT31(local_8._1_3_,2);
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   *self = vftable;
@@ -71,10 +70,8 @@ void PreviewWidget_dtor(void)
   *(int *)(*(int *)(self + 0x174) + 4) = *(int *)(self + 0x174);
   *(undefined4 *)(self + 0x178) = 0;
   if (firstNode != *(void **)(self + 0x174)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(firstNode);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(self + 0x174));
 }
 
@@ -90,7 +87,6 @@ void cube::PreviewWidget::vfunc_0(byte param_1)
   
   PreviewWidget_dtor();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;

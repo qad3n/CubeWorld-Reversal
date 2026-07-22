@@ -75,7 +75,6 @@ void cube::CubeShader::vfunc_0(byte deleteFlag)
   
   ctor_0();
   if ((deleteFlag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

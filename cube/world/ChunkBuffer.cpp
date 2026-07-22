@@ -50,7 +50,6 @@ void cube::ChunkBuffer::vfunc_0(byte flags)
     (**(code **)(*pMember + 8))(pMember);
   }
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pThis);
   }
   return;
@@ -90,7 +89,6 @@ void ChunkBuffer_pushQuadFaces(undefined4 param_1,int baseIndex)
 
 /* cube::ChunkBuffer::ctor_0 @ 0049d910 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void cube::ChunkBuffer::ctor_0(undefined4 *pOut,int chunkPtr)
 
@@ -2030,7 +2028,6 @@ LAB_0049f443:
   *(undefined4 *)(iVar10 + 0x14) = 0;
   if (pvVar25 != (void *)*piVar16) {
     local_8c8 = uVar24;
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar25);
   }
   pvVar25 = (void *)0x0;
@@ -2065,7 +2062,6 @@ LAB_0049f443:
         iVar8 = IntMap_SetScalar(iVar2,*(undefined4 *)(iVar2 + 4),&local_8ec);
         if (*(int *)(iVar10 + 0x14) == 0x15555554) {
 LAB_004a0f10:
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         *(int *)(iVar10 + 0x14) = *(int *)(iVar10 + 0x14) + 1;
@@ -2091,10 +2087,8 @@ LAB_004a0f10:
   *local_8b0 = local_8b0;
   local_8b0[1] = local_8b0;
   if (puVar12 == local_8b0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_8b0);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(puVar12);
 }
 
@@ -2107,7 +2101,6 @@ LAB_004a0f10:
  */
 /* Global::ChunkBuffer_sampleVoxelColorAO @ 004c1510 */
 
-/* WARNING: Removing unreachable block (ram,0x004c1834) */
 
 float * ChunkBuffer_sampleVoxelColorAO(float *pOutColor,int x,int y,int z,float *pBaseColor,int *pNormal,
                     char skip)
@@ -2352,7 +2345,6 @@ LAB_004c1732:
  */
 /* Global::VoxelChunk_propagateSunlight @ 0059a0e0 */
 
-/* WARNING: Removing unreachable block (ram,0x0059a64d) */
 
 void VoxelChunk_propagateSunlight(int cx,int cy,int w,int h,int margin,undefined4 param_6)
 
@@ -2757,7 +2749,6 @@ LAB_0059a303:
  */
 /* Global::VoxelColumn_at @ 0059aaf0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * VoxelColumn_at(int index)
 

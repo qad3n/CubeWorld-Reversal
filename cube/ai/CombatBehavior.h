@@ -5,7 +5,7 @@
 
 void struct_clearFields(void);
 void cube::CombatBehavior::ctor_0(undefined4 param_1);
-/* WARNING: Removing unreachable block (ram,0x0042e1a6) */ /* WARNING: Removing unreachable block (ram,0x0042df4d) */ /* WARNING: Type propagation algorithm not settling */ void cube::CombatBehavior::vfunc_0(float param_1,float param_2,int param_3,undefined4 param_4);
+void cube::CombatBehavior::vfunc_0(float param_1,float param_2,int param_3,undefined4 param_4);
 undefined4 * cube::CombatBehavior::vfunc_1(void);
 undefined8 combat_findTopThreat(void);
 undefined4 CombatBehavior_chooseAttack(void);

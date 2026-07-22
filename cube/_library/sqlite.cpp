@@ -3143,7 +3143,6 @@ int sqlite3BtreeBalanceDeeper(int param_1,int *param_2)
  */
 /* Global::sqlite3BtreeBalanceNonroot @ 0052be70 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void sqlite3BtreeBalanceNonroot(int param_1,uint param_2,int param_3,int param_4,int param_5)
 
@@ -21992,7 +21991,6 @@ int sqlite3_fn_55e990(int param_1,undefined4 param_2,undefined4 *param_3,uint pa
 
 /* Global::sqlite3_fn_55ed20 @ 0055ed20 */
 
-/* WARNING: Removing unreachable block (ram,0x0055ee05) */
 
 int sqlite3_fn_55ed20(int param_1,int param_2,undefined1 param_3)
 
@@ -26450,19 +26448,6 @@ void sqlite3_fn_568a40(int param_1,uint param_2,char *param_3)
  */
 /* Global::sqlite3Update @ 00568b40 */
 
-/* WARNING: Removing unreachable block (ram,0x0056a639) */
-/* WARNING: Removing unreachable block (ram,0x0056a644) */
-/* WARNING: Removing unreachable block (ram,0x0056a65f) */
-/* WARNING: Removing unreachable block (ram,0x0056a666) */
-/* WARNING: Removing unreachable block (ram,0x0056a67e) */
-/* WARNING: Removing unreachable block (ram,0x0056a68f) */
-/* WARNING: Removing unreachable block (ram,0x0056a693) */
-/* WARNING: Removing unreachable block (ram,0x0056a6ad) */
-/* WARNING: Removing unreachable block (ram,0x0056a6b8) */
-/* WARNING: Removing unreachable block (ram,0x0056a682) */
-/* WARNING: Removing unreachable block (ram,0x0056a66d) */
-/* WARNING: Removing unreachable block (ram,0x0056a64b) */
-/* WARNING: Removing unreachable block (ram,0x0056a6d0) */
 
 void sqlite3Update(int *param_1,int param_2,int *param_3,undefined4 param_4,int param_5)
 
@@ -28262,9 +28247,6 @@ void sqlite3_fn_56c960(int *param_1)
  */
 /* Global::sqlite3VdbeExec @ 0056c9c0 */
 
-/* WARNING: Removing unreachable block (ram,0x00571cdd) */
-/* WARNING: Removing unreachable block (ram,0x0056da07) */
-/* WARNING: Removing unreachable block (ram,0x00570ac3) */
 
 void sqlite3VdbeExec(int *param_1)
 
@@ -36880,7 +36862,6 @@ void sqlite3_fn_580cd0(int *param_1,int param_2)
   local_20 = 0;
   if (0x13e < param_2 - 5U) goto switchD_00580d2a_caseD_b3;
                     /* WARNING (jumptable): Sanity check requires truncation of jumptable */
-                    /* WARNING: Could not find normalized switch variable to match jumptable */
   switch(*(undefined1 *)((int)&PTR_caseD_b2_00582f74 + param_2 + 3)) {
   case 0:
     *(undefined1 *)(piVar7 + 0x75) = 0;

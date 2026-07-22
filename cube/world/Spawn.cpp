@@ -134,24 +134,19 @@ void cube::Spawn::ctor_1(void)
   
   *in_ECX = vftable;
   if ((void *)in_ECX[0x427] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x427]);
   }
   if ((void *)in_ECX[0x42f] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x42f]);
   }
   if ((void *)in_ECX[0x42b] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x42b]);
   }
   if ((void *)in_ECX[0x428] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x428]);
   }
   if (in_ECX[0x3db] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x3db],in_ECX[0x3dc],&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x3db]);
   }
   return;
@@ -169,7 +164,6 @@ void cube::Spawn::vfunc_0(byte flags)
   
   ctor_1();
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

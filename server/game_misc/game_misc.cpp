@@ -34,7 +34,6 @@ void __thiscall String_reserveGrow(void *this,uint new_capacity,size_t copy_len)
   local_8 = 0;
   new_buffer = (void *)0x0;
   if ((new_capacity + 1 != 0) && (new_buffer = operator_new(new_capacity + 1), new_buffer == (void *)0x0)) {
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   if (copy_len != 0) {
@@ -99,7 +98,6 @@ int * __thiscall String_assign(void *this,int *src,uint len)
     }
   }
   if (len == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (*(uint *)((int)this + 0x14) < len) {
@@ -410,7 +408,6 @@ void __cdecl Vec3i64_toBlockCoords(int *dst,uint *src)
  */
 /* Global::Column_getBlockChecked @ 00405f20 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * __thiscall Column_getBlockChecked(void *this,int index)
 
@@ -1111,7 +1108,6 @@ void __thiscall Combat_upsertBuffEntry(void *this,char *buff)
     **(int **)(new_node + 4) = new_node;
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -1474,8 +1470,6 @@ float10 __fastcall Combat_equipHealthBonus(char *item)
 void malloc_thunk(size_t size)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x00416934. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   malloc(size);
   return;
 }
@@ -2470,7 +2464,6 @@ LAB_0041855c:
           local_8 = XmlPool_allocChildNode((uint)puVar6,this,2);
           if (local_8 == (uint *)0x0) {
 LAB_00418957:
-                    /* WARNING: Subroutine does not return */
             longjmp((int *)((int)this + 8),3);
           }
           local_8[2] = (uint)puVar11;
@@ -2514,7 +2507,6 @@ joined_r0x004188ab:
                 {
 LAB_0041862c:
                   *(ushort **)((int)this + 0x48) = puVar10;
-                    /* WARNING: Subroutine does not return */
                   longjmp((int *)((int)this + 8),0xb);
                 }
               }
@@ -2598,7 +2590,6 @@ LAB_00418720:
                 puVar8 = (ushort *)(*pcVar5)(puVar8 + 1,uVar4);
                 if (puVar8 == (ushort *)0x0) {
                   *(int *)((int)this + 0x48) = piVar7[2];
-                    /* WARNING: Subroutine does not return */
                   longjmp((int *)((int)this + 8),0xc);
                 }
                 if (*puVar8 < 0x80) {
@@ -2611,7 +2602,6 @@ LAB_00418720:
                 if (cVar3 < '\0') {
 LAB_0041892f:
                   *(ushort **)((int)this + 0x48) = puVar8;
-                    /* WARNING: Subroutine does not return */
                   longjmp((int *)((int)this + 8),0xc);
                 }
               }
@@ -2645,7 +2635,6 @@ LAB_0041892f:
           if (puVar10 == (ushort *)0x0) {
 LAB_0041867b:
             *(ushort **)((int)this + 0x48) = puVar8;
-                    /* WARNING: Subroutine does not return */
             longjmp((int *)((int)this + 8),0xe);
           }
           while( true ) {
@@ -2683,7 +2672,6 @@ LAB_0041867b:
             if ((ushort)end_char != 0x3e) {
 LAB_00418920:
               *(ushort **)((int)this + 0x48) = puVar8;
-                    /* WARNING: Subroutine does not return */
               longjmp((int *)((int)this + 8),0xd);
             }
           }
@@ -2703,11 +2691,9 @@ LAB_00418920:
           if (uVar9 != 0x21) {
             if ((*puVar11 == 0) && ((ushort)end_char == 0x3f)) {
               *(ushort **)((int)this + 0x48) = puVar11;
-                    /* WARNING: Subroutine does not return */
               longjmp((int *)((int)this + 8),6);
             }
             *(ushort **)((int)this + 0x48) = puVar11;
-                    /* WARNING: Subroutine does not return */
             longjmp((int *)((int)this + 8),5);
           }
           Xml_parseCommentOrCData(this,(int *)&text,puVar6,flags,end_char);
@@ -2744,7 +2730,6 @@ LAB_004184ce:
           else {
             puVar6 = XmlPool_allocChildNode((uint)puVar6,this,3);
             if (puVar6 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
               longjmp((int *)((int)this + 8),3);
             }
             puVar6[3] = (uint)puVar11;
@@ -2768,7 +2753,6 @@ LAB_004184ce:
 LAB_00418532:
     if (puVar6 != pool) {
       *(ushort **)((int)this + 0x48) = puVar8;
-                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),0xe);
     }
   }
@@ -2798,7 +2782,6 @@ void __thiscall Xml_skipDoctypeSubset(void *this,int *cursor,undefined4 end_char
         return;
       }
       *(int *)((int)this + 0x48) = *cursor;
-                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),9);
     }
     p = (short *)*cursor;
@@ -2849,7 +2832,6 @@ void __thiscall Xml_skipMarkedSection(void *this,int *cursor)
   do {
     if (ch == 0) {
       *(int *)((int)this + 0x48) = *cursor;
-                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),9);
     }
     p = (short *)*cursor;
@@ -2900,7 +2882,6 @@ void __thiscall Xml_skipQuotedOrComment(void *this,undefined4 *cursor)
       return;
     }
     *(short **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
     longjmp((int *)((int)this + 8),9);
   }
   if (quote == 0x3c) {
@@ -2933,12 +2914,10 @@ void __thiscall Xml_skipQuotedOrComment(void *this,undefined4 *cursor)
         return;
       }
       *(short **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),9);
     }
   }
   *(short **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
   longjmp((int *)((int)this + 8),9);
 }
 
@@ -2979,7 +2958,6 @@ void __thiscall Xml_parseCommentOrCData(void *this,int *cursor,uint *pool,uint f
         if ((flags & 4) != 0) {
           puVar4 = XmlPool_allocChildNode((uint)pool,this,4);
           if (puVar4 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
             longjmp((int *)((int)this + 8),3);
           }
           puVar4[3] = (uint)p;
@@ -3006,7 +2984,6 @@ void __thiscall Xml_parseCommentOrCData(void *this,int *cursor,uint *pool,uint f
             p = (ushort *)0x0;
           }
           *(ushort **)((int)this + 0x48) = puVar5;
-                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),8);
         }
         uVar1 = *p;
@@ -3023,7 +3000,6 @@ void __thiscall Xml_parseCommentOrCData(void *this,int *cursor,uint *pool,uint f
       }
 LAB_004191e7:
       *(ushort **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),8);
     }
     if (((((uVar1 == 0x44) && (*(short *)(iVar2 + 4) == 0x4f)) && (*(short *)(iVar2 + 6) == 0x43))
@@ -3036,7 +3012,6 @@ LAB_004191e7:
       }
       if ((*(short *)(iVar2 + 0xe) == 0) && (sVar6 == 0x45)) {
         *(ushort **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
         longjmp((int *)((int)this + 8),9);
       }
     }
@@ -3045,7 +3020,6 @@ LAB_004191e7:
       if (sVar6 == 0x5b) goto LAB_004191e7;
     }
     *(ushort **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
     longjmp((int *)((int)this + 8),5);
   }
   p = (ushort *)(iVar2 + 4);
@@ -3055,7 +3029,6 @@ LAB_004191e7:
     if (uVar3 != 0) {
       pool = XmlPool_allocChildNode((uint)pool,this,5);
       if (pool == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
         longjmp((int *)((int)this + 8),3);
       }
       pool[3] = (uint)p;
@@ -3064,7 +3037,6 @@ LAB_004191e7:
       p = Xml_scanCommentContent(p,sVar6);
       if (p == (ushort *)0x0) {
         *(uint *)((int)this + 0x48) = pool[3];
-                    /* WARNING: Subroutine does not return */
         longjmp((int *)((int)this + 8),7);
       }
 LAB_004191b9:
@@ -3090,7 +3062,6 @@ LAB_004191b9:
   }
 LAB_004191d2:
   *(ushort **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
   longjmp((int *)((int)this + 8),7);
 LAB_0041912d:
   puVar5 = puVar5 + 1;
@@ -3145,7 +3116,6 @@ void __thiscall Xml_parseProcInstr(void *this,int *cursor,uint *pool,uint flags,
     }
     if (*p == 0) {
       *(ushort **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
       longjmp((int *)((int)this + 8),6);
     }
     if (((((*name | 0x20) == 0x78) && ((*(ushort *)(iVar1 + 4) | 0x20) == 0x6d)) &&
@@ -3175,19 +3145,16 @@ void __thiscall Xml_parseProcInstr(void *this,int *cursor,uint *pool,uint flags,
       if (bVar2) {
         if (((byte)*puVar8 & 7) != 1) {
           *(ushort **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),6);
         }
         puVar7 = XmlPool_allocChildNode((uint)puVar8,this,7);
         if (puVar7 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),3);
         }
       }
       else {
         puVar7 = XmlPool_allocChildNode((uint)puVar8,this,6);
         if (puVar7 == (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),3);
         }
       }
@@ -3199,7 +3166,6 @@ void __thiscall Xml_parseProcInstr(void *this,int *cursor,uint *pool,uint flags,
         uVar5 = *p;
         if ((uVar5 != 0x3e) && ((uVar5 != 0 || (end_char != 0x3e)))) {
           *(ushort **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
           longjmp((int *)((int)this + 8),6);
         }
         puVar8 = (undefined4 *)puVar7[1];
@@ -3249,13 +3215,11 @@ LAB_00419471:
           }
         }
         *(ushort **)((int)this + 0x48) = name;
-                    /* WARNING: Subroutine does not return */
         longjmp((int *)((int)this + 8),6);
       }
     }
   }
   *(ushort **)((int)this + 0x48) = p;
-                    /* WARNING: Subroutine does not return */
   longjmp((int *)((int)this + 8),6);
 }
 
@@ -3877,7 +3841,6 @@ void __thiscall vec12_reallocate(void *this,uint new_capacity)
       new_buffer = operator_new(new_capacity * 0xc);
       if (new_buffer != (undefined4 *)0x0) goto LAB_0041baef;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041baef:
@@ -3916,7 +3879,6 @@ void __thiscall vec12_reserveGrow(void *this,uint add_count)
   }
   size = (*(int *)((int)this + 4) - *(int *)this) / 0xc;
   if (0x15555555U - size < add_count) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   capacity = (*(int *)((int)this + 8) - *(int *)this) / 0xc;
@@ -3963,7 +3925,6 @@ void buyNode120(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -3993,7 +3954,6 @@ void buyNode80(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -4019,7 +3979,6 @@ void __thiscall vecInt_reallocate(void *this,uint new_capacity)
       _Dst = operator_new(new_capacity * 4);
       if (_Dst != (void *)0x0) goto LAB_00426d65;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00426d65:
@@ -4056,7 +4015,6 @@ void __thiscall vecInt_reserveGrow(void *this,uint add_count)
   }
   size = *(int *)((int)this + 4) - *(int *)this >> 2;
   if (0x3fffffffU - size < add_count) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   required = size + add_count;
@@ -4225,7 +4183,6 @@ void __thiscall vec3b_reallocate(void *this,uint new_count)
       new_buf = operator_new(new_count * 3);
       if (new_buf != (undefined1 *)0x0) goto LAB_0042f2ac;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0042f2ac:
@@ -4264,7 +4221,6 @@ void __thiscall vec3b_reserveGrow(void *this,uint add_count)
   }
   cur_size = (*(int *)((int)this + 4) - *(int *)this) / 3;
   if (0x55555555U - cur_size < add_count) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   new_cap = (*(int *)((int)this + 8) - *(int *)this) / 3;
@@ -4910,7 +4866,6 @@ switchD_004cf51a_caseD_6:
                           iVar12 = std_map_insert_node_str_2(local_2ec,(undefined4 *)local_2ec[1],&local_1a4);
                           if (*(int *)((int)pvVar16 + 0x44) == 0xdd67c7) {
 LAB_004cfc8a:
-                    /* WARNING: Subroutine does not return */
                             std::_Xlength_error("list<T> too long");
                           }
                           *(int *)((int)pvVar16 + 0x44) = *(int *)((int)pvVar16 + 0x44) + 1;
@@ -5091,7 +5046,6 @@ LAB_004d193e:
  */
 /* Global::VoxelGrid_cellAt3D @ 004d1950 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * __thiscall VoxelGrid_cellAt3D(void *this,int x,int y,int z)
 
@@ -5121,7 +5075,6 @@ undefined * __thiscall VoxelGrid_cellAt3D(void *this,int x,int y,int z)
 
 /* Global::FUN_004d1a70 @ 004d1a70 */
 
-/* WARNING: Removing unreachable block (ram,0x004d1fdd) */
 
 void __thiscall
 FUN_004d1a70(void *this,uint param_1,uint param_2,int param_3,int param_4,int param_5,int param_6)
@@ -6403,9 +6356,6 @@ float10 __thiscall FUN_004d5c80(void *param_1,uint *param_2)
  */
 /* Global::Creature_stepAlongPath @ 004d6730 */
 
-/* WARNING: Removing unreachable block (ram,0x004d72e4) */
-/* WARNING: Removing unreachable block (ram,0x004d7570) */
-/* WARNING: Removing unreachable block (ram,0x004d77b4) */
 
 void __thiscall
 Creature_stepAlongPath(void *this,uint *origin,float *direction,float max_dist,char solid_flag,char mode)
@@ -7234,7 +7184,6 @@ void __thiscall FUN_004d9160(void *this,int param_1,int *param_2,uint param_3,ui
                    (*(byte *)(iVar11 + 3) & 0x1f) == 0)) {
                   iVar11 = std_list_insertNode1(puVar9,(undefined4 *)puVar9[1],&param_2);
                   if (local_20 == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("list<T> too long");
                   }
                   puVar9[1] = iVar11;
@@ -7581,7 +7530,6 @@ LAB_004db0e5:
       puVar5 = cur_pos;
     } while( true );
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -8032,7 +7980,6 @@ LAB_004dba99:
               if (local_3e4 == local_3e0) goto LAB_004dbade;
               iVar25 = std_list_insertNode1(local_39c,(undefined4 *)local_39c[1],&local_3c4);
               if (local_398 == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
                 std::_Xlength_error("list<T> too long");
               }
               local_398 = local_398 + 1;
@@ -9011,12 +8958,6 @@ LAB_004dd2b2:
  */
 /* Global::NavGraph_expandNeighbors @ 004dd2e0 */
 
-/* WARNING: Removing unreachable block (ram,0x004ddc29) */
-/* WARNING: Removing unreachable block (ram,0x004dd78e) */
-/* WARNING: Removing unreachable block (ram,0x004dd6d1) */
-/* WARNING: Removing unreachable block (ram,0x004dd6fd) */
-/* WARNING: Removing unreachable block (ram,0x004dd7bd) */
-/* WARNING: Removing unreachable block (ram,0x004ddcdf) */
 
 void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
 
@@ -9341,14 +9282,6 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
  */
 /* Global::NavGraph_findPath @ 004dde90 */
 
-/* WARNING: Removing unreachable block (ram,0x004df1bb) */
-/* WARNING: Removing unreachable block (ram,0x004deb9a) */
-/* WARNING: Removing unreachable block (ram,0x004dec8e) */
-/* WARNING: Removing unreachable block (ram,0x004def61) */
-/* WARNING: Removing unreachable block (ram,0x004df550) */
-/* WARNING: Removing unreachable block (ram,0x004df64b) */
-/* WARNING: Removing unreachable block (ram,0x004df0b8) */
-/* WARNING: Removing unreachable block (ram,0x004df307) */
 
 void __thiscall NavGraph_findPath(void *this,void *agent)
 
@@ -11479,23 +11412,6 @@ undefined4 * __cdecl FUN_004e1e50(undefined4 *param_1,undefined4 *param_2,undefi
 
 /* Global::FUN_004e28e0 @ 004e28e0 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
-/* WARNING: Removing unreachable block (ram,0x004e9862) */
-/* WARNING: Removing unreachable block (ram,0x004e5295) */
-/* WARNING: Removing unreachable block (ram,0x004e5269) */
-/* WARNING: Removing unreachable block (ram,0x004e99b8) */
-/* WARNING: Removing unreachable block (ram,0x004e9ab5) */
-/* WARNING: Removing unreachable block (ram,0x004e9d1b) */
-/* WARNING: Removing unreachable block (ram,0x004e9be8) */
-/* WARNING: Removing unreachable block (ram,0x004e9932) */
-/* WARNING: Removing unreachable block (ram,0x004e995b) */
-/* WARNING: Removing unreachable block (ram,0x004e9ade) */
-/* WARNING: Removing unreachable block (ram,0x004e9d44) */
-/* WARNING: Removing unreachable block (ram,0x004e9c11) */
-/* WARNING: Removing unreachable block (ram,0x004e99e1) */
-/* WARNING: Removing unreachable block (ram,0x004e9db6) */
-/* WARNING: Removing unreachable block (ram,0x004e9ddf) */
-/* WARNING: Removing unreachable block (ram,0x004e9efa) */
 
 void FUN_004e28e0(int param_1,uint *param_2)
 
@@ -20683,7 +20599,6 @@ void __thiscall FUN_004f8230(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0xc;
   if (0x15555555U - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0xc;
@@ -21760,7 +21675,6 @@ LAB_005002e7:
 
 /* Global::FUN_00500300 @ 00500300 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void FUN_00500300(uint param_1,undefined4 param_2,uint *param_3,uint *param_4,uint param_5,
                  char param_6)
@@ -27160,7 +27074,6 @@ void FUN_0050bd60(int param_1,int param_2,int param_3,float param_4,float param_
 
 /* Global::FUN_0050c550 @ 0050c550 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void __thiscall FUN_0050c550(void *this,uint param_1,uint param_2,int param_3)
 
@@ -27561,7 +27474,6 @@ LAB_0050d119:
             iVar19 = *(int *)(iVar9 + 100);
             if (iVar19 == 0x3fffffe) {
 LAB_0050d1b6:
-                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             *(int *)(iVar9 + 100) = iVar19 + 1;
@@ -27643,7 +27555,6 @@ LAB_0050cc3f:
                       iVar9 = ((int)pfVar18 - (int)pfVar20) / 0xc;
                       if (iVar9 == 0x15555555) {
 LAB_0050cfb3:
-                    /* WARNING: Subroutine does not return */
                         std::_Xlength_error("vector<T> too long");
                       }
                       uVar7 = iVar9 + 1;
@@ -28019,7 +27930,6 @@ void __thiscall FUN_0050d260(void *this,int param_1)
           local_8 = 0xffffffff;
           iVar19 = std_list_insertNode1((undefined4 *)local_138,*(undefined4 **)(local_138 + 4),&local_134);
           if (puVar8[2] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           puVar8[2] = puVar8[2] + 1;
@@ -28037,7 +27947,6 @@ void __thiscall FUN_0050d260(void *this,int param_1)
           local_8 = 0xffffffff;
           uVar10 = std_list_insertNode1(local_134,(undefined4 *)local_134[1],&local_138);
           if (puVar8[2] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           puVar8[2] = puVar8[2] + 1;
@@ -29133,7 +29042,6 @@ LAB_00512b3e:
             iVar14 = std_list_insertNode1(puVar12,(undefined4 *)puVar12[1],&local_664);
             if (puVar17[2] == 0x15555554) {
 LAB_005133a4:
-                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             puVar17[2] = puVar17[2] + 1;
@@ -30053,8 +29961,6 @@ FUN_00513400(void *this,int param_1,int param_2,int param_3,int *param_4,byte *p
 
 /* Global::FUN_00513760 @ 00513760 */
 
-/* WARNING: Removing unreachable block (ram,0x00516958) */
-/* WARNING: Removing unreachable block (ram,0x005169f1) */
 
 void FUN_00513760(float param_1,uint param_2,float param_3,int param_4,int param_5,int param_6,
                  int param_7)
@@ -31383,7 +31289,6 @@ LAB_00515e0e:
     iVar15 = lib_fn_4c6770(local_5d4,(undefined4 *)local_5d4[1],local_3e0);
     if (*(int *)(iVar5 + 8) == 0x38e38e2) {
 LAB_00515ef0:
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(iVar5 + 8) = *(int *)(iVar5 + 8) + 1;
@@ -32588,7 +32493,6 @@ float10 __thiscall FUN_00523b90(void *param_1,float param_2,uint param_3,int par
 
 /* Global::FUN_00524540 @ 00524540 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void __thiscall
 FUN_00524540(void *this,void *param_1,uint *param_2,uint param_3,undefined4 param_4,int param_5,
@@ -33465,7 +33369,6 @@ LAB_00524f80:
     iVar3 = std_map_insert_node_0x1c(puVar6,(undefined4 *)puVar6[1],(undefined4 *)((int)&local_38 + 4));
     if (*(int *)(param_9 + 0x1c) == 0x9249248) {
 LAB_00528343:
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(param_9 + 0x1c) = *(int *)(param_9 + 0x1c) + 1;
@@ -35094,7 +34997,6 @@ LAB_00528ab2:
 
 /* Global::FUN_005290d0 @ 005290d0 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void * __thiscall
 FUN_005290d0(void *this,float param_1,float param_2,int param_3,undefined4 param_4)
@@ -36187,11 +36089,6 @@ float * __thiscall FUN_0052db90(void *this,float *param_1,int param_2,int param_
  */
 /* Global::Creature_resolveSeparation @ 0052ef00 */
 
-/* WARNING: Removing unreachable block (ram,0x0052fae6) */
-/* WARNING: Removing unreachable block (ram,0x0052f93e) */
-/* WARNING: Removing unreachable block (ram,0x0052f887) */
-/* WARNING: Removing unreachable block (ram,0x0052fa3b) */
-/* WARNING: Removing unreachable block (ram,0x0052fb34) */
 
 void __thiscall Creature_resolveSeparation(void *this,int arg,uint *pos_a,uint *pos_b,float radius)
 
@@ -37848,7 +37745,6 @@ LAB_00531823:
  */
 /* Global::GameController_updateSubsystems @ 005322d0 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void GameController_updateSubsystems(uint param_1,int *param_2,void *param_3)
 
@@ -48458,8 +48354,6 @@ LAB_00546b3a:
 
 /* Global::`eh_vector_constructor_iterator' @ 0054ad4e */
 
-/* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */
-/* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */
 /* Library Function - Single Match
     void __stdcall `eh vector constructor iterator'(void *,unsigned int,int,void (__thiscall*)(void
    *),void (__thiscall*)(void *))
@@ -48486,8 +48380,6 @@ void _eh_vector_constructor_iterator_
 
 /* Global::`eh_vector_destructor_iterator' @ 0054adb6 */
 
-/* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */
-/* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */
 /* Library Function - Single Match
     void __stdcall `eh vector destructor iterator'(void *,unsigned int,int,void (__thiscall*)(void
    *))

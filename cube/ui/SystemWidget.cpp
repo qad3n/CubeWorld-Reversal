@@ -25,7 +25,6 @@ void cube::SystemWidget::ctor_0(undefined4 param_1,undefined4 param_2,undefined4
   local_8 = 0;
   plasma::NamedObject::ctor_4(param_1,param_2,local_28);
   if (7 < local_14) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_28[0]);
   }
   in_ECX[0x59] = param_3;
@@ -112,7 +111,6 @@ void cube::SystemWidget::vfunc_1(void)
   fontLoaded = FontCache_find_or_create_scalable(local_8c);
   local_8 = 0xffffffff;
   if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_8c[0]);
   }
   local_78 = 7;
@@ -167,7 +165,6 @@ void cube::SystemWidget::vfunc_1(void)
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_74[0]);
     }
     u16string_assignCStr(L"Options");
@@ -196,7 +193,6 @@ void cube::SystemWidget::vfunc_1(void)
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_74[0]);
     }
     local_24 = 0x3f800000;
@@ -244,7 +240,6 @@ void cube::SystemWidget::vfunc_1(void)
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_74[0]);
     }
     u16string_assignCStr(L"Start Menu");
@@ -273,7 +268,6 @@ void cube::SystemWidget::vfunc_1(void)
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_74[0]);
     }
     local_24 = 0x3f800000;
@@ -321,7 +315,6 @@ void cube::SystemWidget::vfunc_1(void)
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_74[0]);
     }
     u16string_assignCStr(L"Exit Game");
@@ -350,7 +343,6 @@ void cube::SystemWidget::vfunc_1(void)
                  puVar12,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_b0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_c4[0]);
     }
     local_c4[0] = (void *)((uint)local_c4[0] & 0xffff0000);

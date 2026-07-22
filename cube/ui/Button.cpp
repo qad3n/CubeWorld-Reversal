@@ -41,7 +41,6 @@ void plasma::Button::vfunc_7(void)
   *(int *)(*piVar1 + 4) = *piVar1;
   *(undefined4 *)(in_ECX + 0x224) = 0;
   if (pvVar3 != (void *)*piVar1) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar3);
   }
   iVar4 = AdaptionWidget_onContentResized();
@@ -74,7 +73,6 @@ void plasma::Button::vfunc_7(void)
                 iVar4 = IntMap_SetScalar(local_1c,*(undefined4 *)(local_1c + 4),&local_18);
                 if (*(int *)(in_ECX + 0x224) == 0x15555554) {
 LAB_00665836:
-                    /* WARNING: Subroutine does not return */
                   std::_Xlength_error("list<T> too long");
                 }
                 *(int *)(in_ECX + 0x224) = *(int *)(in_ECX + 0x224) + 1;
@@ -91,10 +89,8 @@ LAB_00665836:
           local_2c[1] = (int)local_2c;
           local_28 = 0;
           if (piVar1 == local_2c) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_2c);
           }
-                    /* WARNING: Subroutine does not return */
           operator_delete(piVar1);
         }
         local_1c = piVar7[2];
@@ -119,10 +115,8 @@ LAB_00665836:
     local_24[1] = (int)local_24;
     local_20 = 0;
     if (piVar1 == local_24) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_24);
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar1);
   }
 LAB_0066580d:

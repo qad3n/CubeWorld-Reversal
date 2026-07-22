@@ -32,7 +32,6 @@ void cube::AdaptionWidget::ctor_0
   plasma::NamedObject::ctor_4(param_1,param_2,nameBuf);
   trylevel = CONCAT31(trylevel._1_3_,2);
   if (7 < nameSize) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameBuf[0]);
   }
   self[0x58] = 0;
@@ -282,7 +281,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x41700000,0x41c80000,0x41400000,0x40400000,&local_244,
                &local_20c,&local_1fc,0,0xbf800000,1);
   if (7 < local_210) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_224[0]);
   }
   local_210 = 7;
@@ -290,7 +288,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_224[0] = (void *)((uint)local_224[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   local_1d8 = 7;
@@ -315,7 +312,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x41700000,0x41c80000,0x41400000,0,&local_244,&local_20c,
                &local_1fc,0,0xbf800000,1);
   if (7 < local_210) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_224[0]);
   }
   local_210 = 7;
@@ -323,7 +319,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_224[0] = (void *)((uint)local_224[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   local_1d8 = 7;
@@ -332,7 +327,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   u16string_assignPtrLen(&PTR_006fccac,0);
   trylevel._0_1_ = 8;
   if ((local_3fc & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*local_42c);
   }
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -350,7 +344,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   strstreambuf_init(puVar10,local_1dc,local_3fc);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   wostream_insertNarrow(local_440,"Adapt");
@@ -389,7 +382,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,(float)coinPtr / 3.0,fVar14,uVar21,uVar15,puVar16,puVar17,
                puVar10,uVar19,uVar20,uVar22);
   if (7 < local_210) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_224[0]);
   }
   local_210 = 7;
@@ -397,7 +389,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_224[0] = (void *)((uint)local_224[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   if (local_3a0 == 0) {
@@ -453,7 +444,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,(float)coinPtr / 3.0,fVar14,uVar21,uVar15,puVar16,puVar17,
                puVar10,uVar19,uVar20,uVar22);
   if (7 < local_248) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -461,7 +451,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   local_1d8 = 7;
@@ -470,7 +459,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   u16string_assignPtrLen(&PTR_006fccac,0);
   trylevel._0_1_ = 0xd;
   if ((local_3fc & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*local_42c);
   }
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -488,7 +476,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   strstreambuf_init(puVar10,local_1dc,local_3fc);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   wostream_insertNarrow(local_440,"Goodbye!");
@@ -527,7 +514,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,((float)coinPtr * 2.0) / 3.0,fVar14,uVar21,uVar15,puVar16,
                puVar17,puVar10,uVar19,uVar20,uVar22);
   if (7 < local_248) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -535,7 +521,6 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel = CONCAT31(trylevel._1_3_,3);
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   Widget_computeBoundsFloat(&local_23c);
@@ -598,7 +583,6 @@ LAB_00410902:
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,((float)coinPtr * 2.0) / 3.0,fVar14,uVar21,uVar15,puVar16,
                puVar17,puVar10,uVar19,uVar20,uVar22);
   if (7 < local_248) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -606,7 +590,6 @@ LAB_00410902:
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   fVar12 = (float10)security_cookie_guard_a();
@@ -619,7 +602,6 @@ LAB_00410902:
   u16string_assignPtrLen(&PTR_006fccac,0);
   trylevel._0_1_ = 0x12;
   if ((local_3fc & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*local_42c);
   }
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -637,7 +619,6 @@ LAB_00410902:
   strstreambuf_init(puVar10,local_1dc,local_3fc);
   trylevel = CONCAT31(trylevel._1_3_,3);
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   targetEntity = getTargetEntity();
@@ -683,7 +664,6 @@ LAB_00410902:
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x435c0000,(float)(int)fVar14,0x41200000,0x40200000,&local_1fc,
                &local_234,&local_21c,2,0xbf800000,1);
   if (7 < local_248) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -691,7 +671,6 @@ LAB_00410902:
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -713,7 +692,6 @@ LAB_00410902:
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x435c0000,(float)(int)fVar14,0x41200000,0,&local_1fc,
                &local_234,&local_21c,2,0xbf800000,1);
   if (7 < local_248) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -721,7 +699,6 @@ LAB_00410902:
   local_25c[0] = (void *)((uint)local_25c[0] & 0xffff0000);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -734,7 +711,6 @@ LAB_00410902:
   strstreambuf_init(puVar10,local_1dc,local_3fc);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   wostream_insertNarrow(local_440,"COST:");
@@ -757,7 +733,6 @@ LAB_00410902:
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,0x41700000,(float)(int)fVar14,0x41200000,0x40000000,&local_1fc,
                &local_234,&local_21c,0,0xbf800000,1);
   if (7 < local_248) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_25c[0]);
   }
   local_248 = 7;
@@ -784,7 +759,6 @@ LAB_00410902:
     AdaptionWidget_draw_text_locked(local_274,uVar18,0,0,0x41700000,(float)(int)fVar14,0x41200000,0,&local_1e4,
                  &local_234,&local_21c,0,0xbf800000,1);
     if (7 < local_248) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_25c[0]);
     }
     local_248 = 7;
@@ -796,10 +770,8 @@ LAB_00410902:
       __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc);
       return;
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_274[0]);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_1ec);
 }
 
@@ -867,7 +839,6 @@ void cube::AdaptionWidget::vfunc_0_00428a30(byte deleteFlag)
   
   plasma::Widget::ctor_0();
   if ((deleteFlag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;
@@ -1754,7 +1725,6 @@ void cube::AdaptionWidget::vfunc_41(char enabled)
     AdaptionWidget_apply_to_attributes(event_buf,0);
     local_8 = 0xffffffff;
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf[0]);
     }
     u16string_assignCStr(L"widget:disable");
@@ -1763,7 +1733,6 @@ void cube::AdaptionWidget::vfunc_41(char enabled)
     AdaptionWidget_relayout(uVar1);
     local_8 = 0xffffffff;
     if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf2[0]);
     }
     local_30 = 7;
@@ -1776,7 +1745,6 @@ void cube::AdaptionWidget::vfunc_41(char enabled)
     AdaptionWidget_apply_to_attributes(event_buf,0);
     local_8 = 0xffffffff;
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf[0]);
     }
     u16string_assignCStr(L"widget:enable");
@@ -1785,7 +1753,6 @@ void cube::AdaptionWidget::vfunc_41(char enabled)
     AdaptionWidget_relayout(uVar1);
     local_8 = 0xffffffff;
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf[0]);
     }
   }
@@ -2332,7 +2299,6 @@ void cube::AdaptionWidget::vfunc_7(void)
     AdaptionWidget_apply_to_attributes(event_buf,0);
     local_8 = 0xffffffff;
     if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf[0]);
     }
     u16string_assignCStr(L"widget:disable");
@@ -2341,7 +2307,6 @@ void cube::AdaptionWidget::vfunc_7(void)
     AdaptionWidget_relayout(uVar2);
     local_8 = 0xffffffff;
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(event_buf2[0]);
     }
     local_18 = 7;
@@ -2446,7 +2411,6 @@ void cube::AdaptionWidget::vfunc_12(void)
 
 /* cube::AdaptionWidget::vfunc_21 @ 0062ac20 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void cube::AdaptionWidget::vfunc_21(void)
 
@@ -2885,7 +2849,6 @@ void AdaptionWidget_setCaption(void)
   Node_collect_matching_children(&widget_list,name_buf);
   local_8 = (uint)local_8._1_3_ << 8;
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(name_buf[0]);
   }
   node = (int *)*widget_list;
@@ -2905,10 +2868,8 @@ void AdaptionWidget_setCaption(void)
   widget_list[1] = (int)widget_list;
   local_30 = 0;
   if (node == widget_list) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(widget_list);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(node);
 }
 
@@ -4226,7 +4187,6 @@ undefined4 * Registry_push_node_locked_0x7c(undefined4 *out)
   list = *(int *)(self + 0x7c);
   new_node = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&stack0x00000008);
   if (*(int *)(self + 0x80) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x80) = *(int *)(self + 0x80) + 1;

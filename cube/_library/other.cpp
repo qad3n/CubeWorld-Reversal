@@ -298,7 +298,6 @@ void std_destroy_ptr_range(int param_1,int param_2)
     param_1 = param_1 + 4;
     local_10[0] = (void *)0x0;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_10[0]);
 }
 
@@ -341,7 +340,6 @@ void std_vector_char_insert(void *param_1,int param_2,int param_3)
       iVar1 = *in_ECX;
       if ((iVar1 - in_ECX[1]) - 1U < uVar4) {
         local_14 = (undefined1 *)&uStack_30;
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       uVar5 = in_ECX[2] - iVar1;
@@ -360,7 +358,6 @@ void std_vector_char_insert(void *param_1,int param_2,int param_3)
       if ((uVar5 != 0) &&
          (local_14 = (undefined1 *)&uStack_30, local_1c = operator_new(uVar5),
          local_1c == (void *)0x0)) {
-                    /* WARNING: Subroutine does not return */
         std::_Xbad_alloc();
       }
       _Size = (int)param_1 - *in_ECX;
@@ -376,7 +373,6 @@ void std_vector_char_insert(void *param_1,int param_2,int param_3)
         ExceptionList = local_10;
         return;
       }
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     copyBytes(param_2,param_3,in_ECX[1],&local_15,param_1);
@@ -429,7 +425,6 @@ void std_vector_int_insert(void *param_1,int param_2,int param_3)
       iVar1 = *in_ECX;
       if ((iVar1 - in_ECX[1]) - 1U < uVar4) {
         local_14 = (undefined1 *)&uStack_30;
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       uVar5 = in_ECX[2] - iVar1;
@@ -448,7 +443,6 @@ void std_vector_int_insert(void *param_1,int param_2,int param_3)
       if ((uVar5 != 0) &&
          (local_14 = (undefined1 *)&uStack_30, local_1c = operator_new(uVar5),
          local_1c == (void *)0x0)) {
-                    /* WARNING: Subroutine does not return */
         std::_Xbad_alloc();
       }
       _Size = (int)param_1 - *in_ECX;
@@ -464,7 +458,6 @@ void std_vector_int_insert(void *param_1,int param_2,int param_3)
         ExceptionList = local_10;
         return;
       }
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     std_copy_low_byte(param_2,param_3,in_ECX[1],&local_15,param_1);
@@ -580,7 +573,6 @@ undefined4 uivm_pop_int(void)
   if (*(int *)(in_ECX + 0x2c) != *(int *)(in_ECX + 0x30)) {
     pvVar2 = *(void **)(*(int *)(in_ECX + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(in_ECX + 0x30) = *(int *)(in_ECX + 0x30) + -0xc;
@@ -608,7 +600,6 @@ float10 uivm_pop_float(void)
   if (*(int *)(in_ECX + 0x2c) != *(int *)(in_ECX + 0x30)) {
     pvVar2 = *(void **)(*(int *)(in_ECX + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(in_ECX + 0x30) = *(int *)(in_ECX + 0x30) + -0xc;
@@ -647,7 +638,6 @@ void uivm_push_int(undefined4 param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -670,7 +660,6 @@ void eh_cleanup_delete_node(void)
   undefined1 local_8 [4];
   
   map_eraseRange(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -688,7 +677,6 @@ void abstr::Machine::ctor_0(void)
   
   *in_ECX = vftable;
   if ((void *)in_ECX[0x10] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x10]);
   }
   puVar1 = (undefined4 *)in_ECX[0xe];
@@ -697,10 +685,8 @@ void abstr::Machine::ctor_0(void)
   *(undefined4 *)(in_ECX[0xe] + 4) = in_ECX[0xe];
   in_ECX[0xf] = 0;
   if (pvVar2 != (void *)in_ECX[0xe]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0xe]);
 }
 
@@ -751,8 +737,6 @@ void std_ostream_sentry_dtor(void)
   }
   piVar1 = *(int **)(*(int *)(*(int *)*in_ECX + 4) + 0x38 + *in_ECX);
   if (piVar1 != (int *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x00404087. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     (**(code **)(*piVar1 + 8))();
     return;
   }
@@ -794,7 +778,6 @@ void abstr::Machine::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -830,7 +813,6 @@ undefined4 uivm_op_index_add(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -839,7 +821,6 @@ undefined4 uivm_op_index_add(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -853,7 +834,6 @@ undefined4 uivm_op_index_add(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -891,7 +871,6 @@ undefined4 uivm_op_signed_combine(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -900,7 +879,6 @@ undefined4 uivm_op_signed_combine(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -920,7 +898,6 @@ undefined4 uivm_op_signed_combine(int param_1)
   local_8 = (uint)(iVar3 <= iVar1);
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -959,7 +936,6 @@ undefined4 uivm_op_binary_call(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -968,7 +944,6 @@ undefined4 uivm_op_binary_call(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -982,7 +957,6 @@ undefined4 uivm_op_binary_call(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1019,7 +993,6 @@ undefined4 uivm_op_add(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1028,7 +1001,6 @@ undefined4 uivm_op_add(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1041,7 +1013,6 @@ undefined4 uivm_op_add(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1078,7 +1049,6 @@ undefined4 uivm_op_scale(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1087,7 +1057,6 @@ undefined4 uivm_op_scale(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1100,7 +1069,6 @@ undefined4 uivm_op_scale(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1138,7 +1106,6 @@ undefined4 uivm_op_logical_and(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1147,7 +1114,6 @@ undefined4 uivm_op_logical_and(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1166,7 +1132,6 @@ undefined4 uivm_op_logical_and(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1203,7 +1168,6 @@ undefined4 uivm_op_bool_and(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1212,7 +1176,6 @@ undefined4 uivm_op_bool_and(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1225,7 +1188,6 @@ undefined4 uivm_op_bool_and(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1262,7 +1224,6 @@ undefined4 uivm_op_masked_and(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1271,7 +1232,6 @@ undefined4 uivm_op_masked_and(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1284,7 +1244,6 @@ undefined4 uivm_op_masked_and(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1321,7 +1280,6 @@ undefined4 uivm_op_cond_and(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1330,7 +1288,6 @@ undefined4 uivm_op_cond_and(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1348,7 +1305,6 @@ undefined4 uivm_op_cond_and(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -1380,7 +1336,6 @@ undefined4 uivm_op_push_arg(undefined4 param_1,undefined4 param_2)
  */
 /* Global::widget_checkbutton_ctor @ 00405120 */
 
-/* WARNING: Removing unreachable block (ram,0x00405184) */
 
 void widget_checkbutton_ctor(undefined4 param_1,undefined4 param_2)
 
@@ -1561,7 +1516,6 @@ void widget_caption_format_cos(undefined4 param_1,int param_2)
             (local_2c,(float)dVar1);
   uivm_map_lookup_pop(param_2);
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   ExceptionList = local_10;
@@ -1667,7 +1621,6 @@ undefined4 uivm_op_load_indexed(int param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1704,7 +1657,6 @@ undefined4 uivm_op_idiv(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1713,7 +1665,6 @@ undefined4 uivm_op_idiv(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1726,7 +1677,6 @@ undefined4 uivm_op_idiv(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1763,7 +1713,6 @@ undefined4 uivm_op_ieq(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1772,7 +1721,6 @@ undefined4 uivm_op_ieq(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1785,7 +1733,6 @@ undefined4 uivm_op_ieq(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1822,7 +1769,6 @@ undefined4 uivm_op_ieq_sqdiff(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1831,7 +1777,6 @@ undefined4 uivm_op_ieq_sqdiff(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1845,7 +1790,6 @@ undefined4 uivm_op_ieq_sqdiff(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -1882,7 +1826,6 @@ undefined4 uivm_op_ieq_scaled(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1891,7 +1834,6 @@ undefined4 uivm_op_ieq_scaled(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1907,7 +1849,6 @@ undefined4 uivm_op_ieq_scaled(int param_1)
     ExceptionList = local_10;
     return 0;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_1c);
 }
 
@@ -1941,7 +1882,6 @@ undefined4 uivm_op_ieq_offset(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1950,7 +1890,6 @@ undefined4 uivm_op_ieq_offset(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -1963,7 +1902,6 @@ undefined4 uivm_op_ieq_offset(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -2000,7 +1938,6 @@ undefined4 uivm_op_fadd(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2009,7 +1946,6 @@ undefined4 uivm_op_fadd(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2023,7 +1959,6 @@ undefined4 uivm_op_fadd(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2060,7 +1995,6 @@ undefined4 uivm_op_fdiv(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2069,7 +2003,6 @@ undefined4 uivm_op_fdiv(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2083,7 +2016,6 @@ undefined4 uivm_op_fdiv(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2121,7 +2053,6 @@ undefined4 uivm_op_feq(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2130,7 +2061,6 @@ undefined4 uivm_op_feq(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2144,7 +2074,6 @@ undefined4 uivm_op_feq(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2182,7 +2111,6 @@ undefined4 uivm_op_fle(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2191,7 +2119,6 @@ undefined4 uivm_op_fle(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2205,7 +2132,6 @@ undefined4 uivm_op_fle(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2243,7 +2169,6 @@ undefined4 uivm_op_flt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2252,7 +2177,6 @@ undefined4 uivm_op_flt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2266,7 +2190,6 @@ undefined4 uivm_op_flt(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2304,7 +2227,6 @@ undefined4 uivm_op_fge(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2313,7 +2235,6 @@ undefined4 uivm_op_fge(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2327,7 +2248,6 @@ undefined4 uivm_op_fge(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2365,7 +2285,6 @@ undefined4 uivm_op_fgt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2374,7 +2293,6 @@ undefined4 uivm_op_fgt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2388,7 +2306,6 @@ undefined4 uivm_op_fgt(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2426,7 +2343,6 @@ undefined4 uivm_op_push_const(undefined4 param_1,undefined4 param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -2462,7 +2378,6 @@ undefined4 uivm_op_ftoi(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2475,7 +2390,6 @@ undefined4 uivm_op_ftoi(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -2511,7 +2425,6 @@ undefined4 uivm_op_ftoi_scaled(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2524,7 +2437,6 @@ undefined4 uivm_op_ftoi_scaled(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -2565,7 +2477,6 @@ undefined4 uivm_op_series_sum(int param_1)
   if (*local_14 != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2595,7 +2506,6 @@ undefined4 uivm_op_series_sum(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2650,7 +2560,6 @@ undefined4 uivm_op_fmul(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2659,7 +2568,6 @@ undefined4 uivm_op_fmul(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2673,7 +2581,6 @@ undefined4 uivm_op_fmul(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2711,7 +2618,6 @@ undefined4 uivm_op_fne(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2720,7 +2626,6 @@ undefined4 uivm_op_fne(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2734,7 +2639,6 @@ undefined4 uivm_op_fne(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2771,7 +2675,6 @@ undefined4 uivm_op_fsub(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2780,7 +2683,6 @@ undefined4 uivm_op_fsub(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2794,7 +2696,6 @@ undefined4 uivm_op_fsub(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -2824,7 +2725,6 @@ undefined4 uivm_list_push_depth(int param_1,int param_2)
   iVar4 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&param_1);
   iVar2 = *(int *)(iVar3 + 0x3c);
   if (iVar2 == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(iVar3 + 0x3c) = iVar2 + 1;
@@ -2856,7 +2756,6 @@ undefined4 uivm_list_push_depth_off(int param_1,int param_2)
   iVar4 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&param_1);
   iVar2 = *(int *)(iVar3 + 0x3c);
   if (iVar2 == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(iVar3 + 0x3c) = iVar2 + 1;
@@ -2888,7 +2787,6 @@ undefined4 uivm_list_push_cond(int param_1,int param_2)
   param_2 = (*(int *)(param_1 + 0x30) - *(int *)(param_1 + 0x2c)) / 0xc + DAT_0076502c * param_2;
   iVar2 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&param_2);
   if (*(int *)(param_1 + 0x3c) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(param_1 + 0x3c) = *(int *)(param_1 + 0x3c) + 1;
@@ -2916,7 +2814,6 @@ undefined4 uivm_list_push_depth2(int param_1,int param_2)
   iVar1 = *(int *)(param_1 + 0x38);
   iVar2 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&param_2);
   if (*(int *)(param_1 + 0x3c) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(param_1 + 0x3c) = *(int *)(param_1 + 0x3c) + 1;
@@ -2956,7 +2853,6 @@ undefined4 uivm_op_ile(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2965,7 +2861,6 @@ undefined4 uivm_op_ile(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -2979,7 +2874,6 @@ undefined4 uivm_op_ile(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -3016,7 +2910,6 @@ undefined4 uivm_op_ile2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3025,7 +2918,6 @@ undefined4 uivm_op_ile2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3038,7 +2930,6 @@ undefined4 uivm_op_ile2(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -3076,7 +2967,6 @@ undefined4 uivm_op_ige(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3085,7 +2975,6 @@ undefined4 uivm_op_ige(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3104,7 +2993,6 @@ undefined4 uivm_op_ige(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -3145,7 +3033,6 @@ undefined4 uivm_op_ilt_flagged(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3154,7 +3041,6 @@ undefined4 uivm_op_ilt_flagged(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3173,7 +3059,6 @@ undefined4 uivm_op_ilt_flagged(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -3211,7 +3096,6 @@ undefined4 uivm_op_icmp_special(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3220,7 +3104,6 @@ undefined4 uivm_op_icmp_special(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3236,7 +3119,6 @@ undefined4 uivm_op_icmp_special(int param_1)
     local_8 = 0;
     vectorPOD_insertAt(&local_20);
     if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_20);
     }
   }
@@ -3303,7 +3185,6 @@ undefined4 uivm_op_load_scaled_index2(int param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(local_1c);
   if (local_1c[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c[0]);
   }
   ExceptionList = local_10;
@@ -3383,7 +3264,6 @@ undefined4 uivm_op_igt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3392,7 +3272,6 @@ undefined4 uivm_op_igt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3414,7 +3293,6 @@ undefined4 uivm_op_igt(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -3451,7 +3329,6 @@ undefined4 uivm_op_cmp_gt_adjusted(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3464,7 +3341,6 @@ undefined4 uivm_op_cmp_gt_adjusted(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3477,7 +3353,6 @@ undefined4 uivm_op_cmp_gt_adjusted(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -3493,7 +3368,6 @@ undefined4 uivm_op_cmp_gt_adjusted(int param_1)
  */
 /* Global::uivm_op_cmp_scaled_lt @ 00407910 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 uivm_op_cmp_scaled_lt(int param_1)
 
@@ -3516,7 +3390,6 @@ undefined4 uivm_op_cmp_scaled_lt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3526,7 +3399,6 @@ undefined4 uivm_op_cmp_scaled_lt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3539,7 +3411,6 @@ undefined4 uivm_op_cmp_scaled_lt(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -3599,7 +3470,6 @@ undefined4 uivm_op_less_dispatch(int param_1,int param_2)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3608,7 +3478,6 @@ undefined4 uivm_op_less_dispatch(int param_1,int param_2)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3625,7 +3494,6 @@ undefined4 uivm_op_less_dispatch(int param_1,int param_2)
     ExceptionList = local_10;
     return 0;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_20);
 }
 
@@ -3659,7 +3527,6 @@ undefined4 uivm_op_cmp_range(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3668,7 +3535,6 @@ undefined4 uivm_op_cmp_range(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3681,7 +3547,6 @@ undefined4 uivm_op_cmp_range(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -3740,7 +3605,6 @@ undefined4 uivm_op_push_int_identity(undefined4 param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -3756,8 +3620,6 @@ undefined4 uivm_op_push_int_identity(undefined4 param_1,int param_2)
  */
 /* Global::uivm_op_push_folded @ 00407ed0 */
 
-/* WARNING: Removing unreachable block (ram,0x00407f5a) */
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined4 uivm_op_push_folded(undefined4 param_1,int param_2)
 
@@ -3835,7 +3697,6 @@ void uivm_op_push_computed_array(undefined4 param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_48);
   if (local_48 != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_48);
   }
   ExceptionList = local_10;
@@ -3872,7 +3733,6 @@ undefined4 uivm_op_int_to_float(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -3885,7 +3745,6 @@ undefined4 uivm_op_int_to_float(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -3935,7 +3794,6 @@ void uivm_op_mod5_stub(undefined4 param_1,uint param_2)
  */
 /* Global::uivm_map_small_int @ 004081b0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int uivm_map_small_int(undefined4 param_1,int param_2)
 
@@ -3998,7 +3856,6 @@ undefined4 uivm_op_select_if_zero(int param_1,undefined4 param_2)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4030,7 +3887,6 @@ int uivm_op_accumulate(int param_1,int param_2)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4067,7 +3923,6 @@ undefined4 uivm_op_zero_if_nonzero(int param_1,undefined4 param_2)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4097,7 +3952,6 @@ undefined4 uivm_op_zero_if_nonzero_f(int param_1,undefined4 param_2)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4128,7 +3982,6 @@ int widget_btncheck_eval(int param_1,int param_2)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4179,7 +4032,6 @@ undefined4 uivm_op_cmp_push_const(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4188,7 +4040,6 @@ undefined4 uivm_op_cmp_push_const(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4203,7 +4054,6 @@ undefined4 uivm_op_cmp_push_const(int param_1)
     local_8 = 0;
     vectorPOD_insertAt(&local_20);
     if (local_20 != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_20);
     }
   }
@@ -4261,7 +4111,6 @@ void uivm_op_cmp_push_vec(int param_1)
   if (*puVar1 != *(uint *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(uint *)(param_1 + 0x30) - 0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4270,7 +4119,6 @@ void uivm_op_cmp_push_vec(int param_1)
   if (*puVar1 != *(uint *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(uint *)(param_1 + 0x30) - 0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4332,7 +4180,6 @@ LAB_00408724:
     __security_check_cookie(local_24[4] ^ (uint)&stack0xfffffffc,ppuVar7,iVar4);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(puVar3);
 }
 
@@ -4369,7 +4216,6 @@ void abstr::HelperCmpClass::ctor_0(int param_1)
     if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
       pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
       if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(pvVar1);
       }
       *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4382,7 +4228,6 @@ void abstr::HelperCmpClass::ctor_0(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4396,10 +4241,8 @@ void abstr::HelperCmpClass::ctor_0(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(puVar3);
 }
 
@@ -4441,7 +4284,6 @@ undefined4 uivm_op_series_compare(int param_1)
   if (*local_18 != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4450,7 +4292,6 @@ undefined4 uivm_op_series_compare(int param_1)
   if (*local_18 != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4484,7 +4325,6 @@ undefined4 uivm_op_series_compare(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_28);
   if (local_28 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_28);
   }
   ExceptionList = local_10;
@@ -4521,7 +4361,6 @@ undefined4 uivm_op_le(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4530,7 +4369,6 @@ undefined4 uivm_op_le(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4543,7 +4381,6 @@ undefined4 uivm_op_le(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -4580,7 +4417,6 @@ undefined4 uivm_op_lt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4589,7 +4425,6 @@ undefined4 uivm_op_lt(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4602,7 +4437,6 @@ undefined4 uivm_op_lt(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -4639,7 +4473,6 @@ undefined4 uivm_op_lt_double(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4649,7 +4482,6 @@ undefined4 uivm_op_lt_double(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4662,7 +4494,6 @@ undefined4 uivm_op_lt_double(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -4699,7 +4530,6 @@ undefined4 uivm_op_cmp_push_scaled(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4708,7 +4538,6 @@ undefined4 uivm_op_cmp_push_scaled(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4723,7 +4552,6 @@ undefined4 uivm_op_cmp_push_scaled(int param_1)
     local_8 = 0;
     vectorPOD_insertAt(&local_20);
     if (local_20 != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_20);
     }
   }
@@ -4771,7 +4599,6 @@ undefined4 uivm_op_lt_2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4780,7 +4607,6 @@ undefined4 uivm_op_lt_2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4794,7 +4620,6 @@ undefined4 uivm_op_lt_2(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -4831,7 +4656,6 @@ undefined4 uivm_op_mod(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4840,7 +4664,6 @@ undefined4 uivm_op_mod(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4853,7 +4676,6 @@ undefined4 uivm_op_mod(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -4890,7 +4712,6 @@ undefined4 uivm_op_mul(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4899,7 +4720,6 @@ undefined4 uivm_op_mul(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4912,7 +4732,6 @@ undefined4 uivm_op_mul(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -4949,7 +4768,6 @@ undefined4 uivm_op_mul_2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4958,7 +4776,6 @@ undefined4 uivm_op_mul_2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -4971,7 +4788,6 @@ undefined4 uivm_op_mul_2(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5009,7 +4825,6 @@ undefined4 uivm_op_affine(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5018,7 +4833,6 @@ undefined4 uivm_op_affine(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5033,7 +4847,6 @@ undefined4 uivm_op_affine(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5070,7 +4883,6 @@ undefined4 uivm_op_ne_offset(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5079,7 +4891,6 @@ undefined4 uivm_op_ne_offset(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5093,7 +4904,6 @@ undefined4 uivm_op_ne_offset(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5130,7 +4940,6 @@ undefined4 uivm_op_diff(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5139,7 +4948,6 @@ undefined4 uivm_op_diff(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5155,7 +4963,6 @@ undefined4 uivm_op_diff(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5195,7 +5002,6 @@ undefined4 widget_frame_text_eval(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5204,7 +5010,6 @@ undefined4 widget_frame_text_eval(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5221,7 +5026,6 @@ undefined4 widget_frame_text_eval(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_24);
   if (local_24 != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_24);
   }
   ExceptionList = local_10;
@@ -5260,7 +5064,6 @@ undefined4 uivm_op_abs_compare(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5269,7 +5072,6 @@ undefined4 uivm_op_abs_compare(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5285,7 +5087,6 @@ undefined4 uivm_op_abs_compare(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5322,7 +5123,6 @@ undefined4 uivm_op_ne(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5331,7 +5131,6 @@ undefined4 uivm_op_ne(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5344,7 +5143,6 @@ undefined4 uivm_op_ne(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5380,7 +5178,6 @@ undefined4 uivm_op_is_zero(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5393,7 +5190,6 @@ undefined4 uivm_op_is_zero(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5429,7 +5225,6 @@ undefined4 uivm_op_is_zero_scaled(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5443,7 +5238,6 @@ undefined4 uivm_op_is_zero_scaled(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5480,7 +5274,6 @@ undefined4 uivm_op_abs_le_zero(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5495,7 +5288,6 @@ undefined4 uivm_op_abs_le_zero(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5533,7 +5325,6 @@ undefined4 uivm_op_cond_flag(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5554,7 +5345,6 @@ undefined4 uivm_op_cond_flag(int param_1)
   local_8 = (uint)bVar4;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5590,7 +5380,6 @@ undefined4 uivm_op_is_zero_409de0(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5603,7 +5392,6 @@ undefined4 uivm_op_is_zero_409de0(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5641,7 +5429,6 @@ undefined4 uivm_op_logical_or(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5650,7 +5437,6 @@ undefined4 uivm_op_logical_or(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5669,7 +5455,6 @@ undefined4 uivm_op_logical_or(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5708,7 +5493,6 @@ undefined4 uivm_op_absum_positive(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5717,7 +5501,6 @@ undefined4 uivm_op_absum_positive(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5732,7 +5515,6 @@ undefined4 uivm_op_absum_positive(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5770,7 +5552,6 @@ undefined4 uivm_op_logical_or2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5779,7 +5560,6 @@ undefined4 uivm_op_logical_or2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5801,7 +5581,6 @@ undefined4 uivm_op_logical_or2(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -5817,7 +5596,6 @@ undefined4 uivm_op_logical_or2(int param_1)
  */
 /* Global::uivm_op_logical_or_call @ 0040a200 */
 
-/* WARNING: Removing unreachable block (ram,0x0040a330) */
 
 undefined4 uivm_op_logical_or_call(int param_1)
 
@@ -5840,7 +5618,6 @@ undefined4 uivm_op_logical_or_call(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5849,7 +5626,6 @@ undefined4 uivm_op_logical_or_call(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -5874,7 +5650,6 @@ undefined4 uivm_op_logical_or_call(int param_1)
     ExceptionList = local_10;
     return 0;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_20);
 }
 
@@ -5896,7 +5671,6 @@ undefined4 uivm_pop_n_operands(undefined4 param_1,int param_2)
     do {
       uivm_pop_operand(local_10);
       if (local_10[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_10[0]);
       }
       param_2 = param_2 + -1;
@@ -5932,14 +5706,12 @@ undefined4 uivm_pop_operands_alt(undefined4 param_1,int param_2)
     if (iVar1 == 0) {
       uivm_pop_operand(local_10);
       if (local_10[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_10[0]);
       }
     }
     else {
       uivm_pop_operand(local_1c);
       if (local_1c[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1c[0]);
       }
     }
@@ -5957,7 +5729,6 @@ undefined4 uivm_pop_operands_alt(undefined4 param_1,int param_2)
  */
 /* Global::uivm_op_push_zero_wrapper @ 0040a430 */
 
-/* WARNING: Removing unreachable block (ram,0x0040a4a5) */
 
 undefined4 uivm_op_push_zero_wrapper(undefined4 param_1,undefined4 param_2)
 
@@ -6003,7 +5774,6 @@ undefined4 uivm_pop_operands_switch(undefined4 param_1,int param_2)
       do {
         uivm_pop_operand(local_10);
         if (local_10[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_10[0]);
         }
         param_2 = param_2 + -1;
@@ -6012,7 +5782,6 @@ undefined4 uivm_pop_operands_switch(undefined4 param_1,int param_2)
     }
     uivm_pop_operand(local_10);
     if (local_10[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_10[0]);
     }
   }
@@ -6020,7 +5789,6 @@ undefined4 uivm_pop_operands_switch(undefined4 param_1,int param_2)
   if (local_10[0] == (void *)0x0) {
     return 0;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_10[0]);
 }
 
@@ -6059,7 +5827,6 @@ undefined4 uivm_op_push_indexed(int param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -6097,7 +5864,6 @@ undefined4 uivm_op_push_int(undefined4 param_1,undefined4 param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -6149,7 +5915,6 @@ undefined4 uivm_op_button_press_push(undefined4 param_1,undefined4 param_2)
     ExceptionList = local_10;
     return 0;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_20);
 }
 
@@ -6189,13 +5954,11 @@ undefined4 uivm_op_push_repeat(int param_1,undefined4 param_2)
     vectorPOD_insertAt(&local_1c);
     local_8 = 0xffffffff;
     if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1c);
     }
     if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
       pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
       if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(pvVar1);
       }
       *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -6211,7 +5974,6 @@ undefined4 uivm_op_push_repeat(int param_1,undefined4 param_2)
   local_8 = 1;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -6267,7 +6029,6 @@ undefined4 uivm_op_dispatch_or_push(undefined4 param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -6300,7 +6061,6 @@ undefined4 uivm_pop_and_process(void)
   local_8 = 0;
   std_container_assign_range(uVar1);
   if (local_1c[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c[0]);
   }
   ExceptionList = local_10;
@@ -6334,7 +6094,6 @@ undefined4 uivm_eval_and_emit(undefined4 param_1)
   local_8 = 0;
   std_container_assign_range(uVar1);
   if (local_1c[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c[0]);
   }
   ExceptionList = local_10;
@@ -6394,11 +6153,9 @@ undefined4 uivm_build_and_emit(void)
   std_container_assign_range(&local_28);
   std_container_assign_range(&local_1c);
   if (local_28 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_28);
   }
   if (local_1c != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -6430,7 +6187,6 @@ undefined4 uivm_pop_and_emit(void)
   local_8 = 0;
   std_container_assign_range(local_1c);
   if (local_1c[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c[0]);
   }
   ExceptionList = local_10;
@@ -6499,10 +6255,8 @@ int uivm_compute_offsets(int param_1,int param_2)
       ExceptionList = local_10;
       return param_2;
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar3);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_28);
 }
 
@@ -6515,8 +6269,6 @@ int uivm_compute_offsets(int param_1,int param_2)
  */
 /* Global::uivm_op_build_buffer_push @ 0040ad70 */
 
-/* WARNING: Removing unreachable block (ram,0x0040af06) */
-/* WARNING: Removing unreachable block (ram,0x0040aef9) */
 
 size_t uivm_op_build_buffer_push(int param_1,size_t param_2)
 
@@ -6586,7 +6338,6 @@ size_t uivm_op_build_buffer_push(int param_1,size_t param_2)
 LAB_0040aede:
   *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + 0xc;
   if (local_1c[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c[0]);
   }
   ExceptionList = local_1c[3];
@@ -6602,7 +6353,6 @@ LAB_0040aede:
  */
 /* Global::uivm_op_compute_push @ 0040af30 */
 
-/* WARNING: Removing unreachable block (ram,0x0040b083) */
 
 int uivm_op_compute_push(int param_1,int param_2)
 
@@ -6668,7 +6418,6 @@ int uivm_op_compute_push(int param_1,int param_2)
 LAB_0040b06b:
   *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + 0xc;
   if (local_1c[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c[0]);
   }
   ExceptionList = local_1c[3];
@@ -6700,9 +6449,6 @@ void uivm_op_wrap_offset(undefined4 param_1,int param_2)
  */
 /* Global::uivm_op_compute_eval_push @ 0040b0c0 */
 
-/* WARNING: Removing unreachable block (ram,0x0040b198) */
-/* WARNING: Removing unreachable block (ram,0x0040b1a0) */
-/* WARNING: Removing unreachable block (ram,0x0040b246) */
 
 int uivm_op_compute_eval_push(int param_1,int param_2)
 
@@ -6771,7 +6517,6 @@ LAB_0040b228:
   *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + 0xc;
 LAB_0040b232:
   if (local_20[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20[0]);
   }
   ExceptionList = local_10;
@@ -6808,7 +6553,6 @@ undefined4 uivm_op_sub(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -6817,7 +6561,6 @@ undefined4 uivm_op_sub(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -6830,7 +6573,6 @@ undefined4 uivm_op_sub(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -6883,7 +6625,6 @@ undefined4 uivm_op_sub2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -6892,7 +6633,6 @@ undefined4 uivm_op_sub2(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -6906,7 +6646,6 @@ undefined4 uivm_op_sub2(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -6944,7 +6683,6 @@ undefined4 uivm_op_push_int2(undefined4 param_1,undefined4 param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -6984,7 +6722,6 @@ undefined4 uivm_op_push_adjusted(undefined4 param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -7023,7 +6760,6 @@ undefined4 uivm_op_push_or_offset(undefined4 param_1,uint param_2)
     local_8 = 0;
     vectorPOD_insertAt(&local_1c);
     if (local_1c != (uint *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1c);
     }
   }
@@ -7076,11 +6812,9 @@ void uivm_op_named_push(undefined4 param_1,undefined4 param_2)
   local_8 = CONCAT31(local_8._1_3_,1);
   vectorPOD_insertAt(&local_38);
   if (local_38 != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_38);
   }
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c);
   }
   ExceptionList = local_10;
@@ -7117,7 +6851,6 @@ undefined4 uivm_op_float_to_int(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -7130,7 +6863,6 @@ undefined4 uivm_op_float_to_int(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -7160,7 +6892,6 @@ void std_list_push_back(int param_1,int param_2,int param_3)
   iVar4 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&param_1);
   iVar2 = *(int *)(iVar3 + 0x3c);
   if (iVar2 == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(iVar3 + 0x3c) = iVar2 + 1;
@@ -7238,9 +6969,6 @@ int add_int(int param_1,int param_2)
  */
 /* Global::uivm_compute_pop_range @ 0040bbc0 */
 
-/* WARNING: Removing unreachable block (ram,0x0040bc76) */
-/* WARNING: Removing unreachable block (ram,0x0040bc80) */
-/* WARNING: Removing unreachable block (ram,0x0040bd26) */
 
 int uivm_compute_pop_range(int param_1,int param_2,int param_3)
 
@@ -7300,7 +7028,6 @@ int uivm_compute_pop_range(int param_1,int param_2,int param_3)
 LAB_0040bd0e:
   *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + 0xc;
   if (local_1c[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c[0]);
   }
   ExceptionList = local_1c[3];
@@ -7337,7 +7064,6 @@ undefined4 uivm_op_sub_variant(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -7346,7 +7072,6 @@ undefined4 uivm_op_sub_variant(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -7359,7 +7084,6 @@ undefined4 uivm_op_sub_variant(int param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -7398,7 +7122,6 @@ void uivm_op_push_offset(undefined4 param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -7541,7 +7264,6 @@ void uivm_map_lookup_pop(undefined4 *param_1)
       do {
         uivm_pop_operand(&local_1c);
         if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_1c);
         }
         iVar7 = iVar7 + -1;
@@ -7555,7 +7277,6 @@ void uivm_map_lookup_pop(undefined4 *param_1)
     local_8 = 0;
     vectorPOD_insertAt(&local_1c);
     if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1c);
     }
   }
@@ -7601,7 +7322,6 @@ undefined4 uivm_pop_operand(undefined4 param_1)
   if (*(int *)(in_ECX + 0x2c) != *(int *)(in_ECX + 0x30)) {
     pvVar1 = *(void **)(*(int *)(in_ECX + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(in_ECX + 0x30) = *(int *)(in_ECX + 0x30) + -0xc;
@@ -7638,7 +7358,6 @@ void uivm_pop_and_list_erase(void)
   if (piVar1 != *(int **)(in_ECX + 0x38)) {
     *(int *)piVar1[1] = *piVar1;
     *(int *)(*piVar1 + 4) = piVar1[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar1);
   }
   vectorString_copyElem(*(int *)(in_ECX + 0x30) + -0xc);
@@ -7646,7 +7365,6 @@ void uivm_pop_and_list_erase(void)
   std_vector_resize_12(iVar2 + 1);
   std_container_assign_range(local_1c);
   if (local_1c[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c[0]);
   }
   ExceptionList = local_10;
@@ -7676,8 +7394,6 @@ void std_basic_ostream_Osfx_unwind(void)
   }
   piVar1 = *(int **)(*(int *)(*(int *)*in_ECX + 4) + 0x38 + *in_ECX);
   if (piVar1 != (int *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x0040ef47. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     (**(code **)(*piVar1 + 8))();
     return;
   }
@@ -8090,7 +7806,6 @@ void std_wstring_Tidy_dtor_unwind(void)
   undefined4 *in_ECX;
   
   list_clear();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -8110,7 +7825,6 @@ void std_map_dtor(void)
   undefined1 local_8 [4];
   
   rbtree_eraseRange_str(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -8130,7 +7844,6 @@ void std_map_dtor_variant(void)
   undefined1 local_8 [4];
   
   rbtree_eraseRange_buf(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -8387,10 +8100,8 @@ void Creature_compute_stat_pow(void)
   *local_24 = (int)local_24;
   local_24[1] = (int)local_24;
   if (piVar2 != local_24) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_24);
 }
 
@@ -8482,7 +8193,6 @@ void std_string_Tidy_unwind(void)
   int in_ECX;
   
   if (0xf < *(uint *)(in_ECX + 0x18)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 4));
   }
   *(undefined4 *)(in_ECX + 0x18) = 0xf;
@@ -8572,7 +8282,6 @@ void * allocRawArray_0x148(uint param_1)
   if ((param_1 < 0xc7ce0d) && (pvVar1 = operator_new(param_1 * 0x148), pvVar1 != (void *)0x0)) {
     return pvVar1;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -8614,7 +8323,6 @@ void std_function_invoke_and_delete(int *param_1)
   int *piVar1;
   
   if ((int *)param_1[4] == (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_function_call();
   }
   (**(code **)(*(int *)param_1[4] + 8))();
@@ -8628,7 +8336,6 @@ void std_function_invoke_and_delete(int *param_1)
     (**(code **)(*piVar1 + 0x10))(piVar1 != param_1);
     param_1[4] = 0;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -8983,7 +8690,6 @@ void std_Tree_Insert_node(undefined4 *param_1,char param_2,undefined4 *param_3,u
   int *piVar6;
   
   if (0xea0e8 < (uint)in_ECX[1]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_5);
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -9315,7 +9021,6 @@ LAB_00453d2c:
   }
   if (((int)param_3[1] < _param_2[5]) ||
      (((int)param_3[1] <= _param_2[5] && (*param_3 <= (uint)_param_2[4])))) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_00453d51:
@@ -9419,7 +9124,6 @@ void makeHeap_0x128(int param_1,int param_2,undefined4 param_3)
       heap_siftDown_0x128(param_1,iVar3,iVar1,local_13c,param_3,uVar2);
       local_8 = 0xffffffff;
       if (local_20 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_20);
       }
       iVar4 = iVar4 + -0x128;
@@ -9780,7 +9484,6 @@ void popHeap_sift_0x128(int param_1,int param_2,undefined4 param_3)
   std_vector_copyAssign_stride11c(param_1 + 0x11c);
   heap_siftDown_0x128(param_1,0,((param_2 - param_1) + -0x128) / 0x128,local_13c,param_3,uVar1);
   if (local_20 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -10573,7 +10276,6 @@ void std_list_Deserialize(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar3 = map_insertVal_3x64payload(iVar1,*(undefined4 *)(iVar1 + 4),&local_1c);
       if (param_2[1] == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -10636,7 +10338,6 @@ void std_list_Deserialize_458030(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar3 = map_insertVal_5x64payload(iVar1,*(undefined4 *)(iVar1 + 4),local_2c);
       if (param_2[1] == 0x5555554) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -10694,7 +10395,6 @@ void std_list_Deserialize_458100(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = map_insertVec4Node(iVar1,*(undefined4 *)(iVar1 + 4),&local_18);
       if (param_2[1] == 0xaaaaaa9) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -10784,7 +10484,6 @@ void std_list_Deserialize_4581d0(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = map_insertVal_4595b0(iVar1,*(undefined4 *)(iVar1 + 4),&local_78);
       if (param_2[1] == 0x2222221) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -10847,7 +10546,6 @@ void std_list_Deserialize_458310(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = map_insertVal_0x18payload(iVar1,*(undefined4 *)(iVar1 + 4),&local_1c);
       if (param_2[1] == 0x9249248) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -10926,7 +10624,6 @@ void std_list_Deserialize_4583f0(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = map_insertVal_4599a0(iVar1,*(undefined4 *)(iVar1 + 4),local_50);
       if (param_2[1] == 0x3333332) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -10999,7 +10696,6 @@ void std_list_Deserialize_458500(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = map_insertVal_strPayload(iVar1,*(undefined4 *)(iVar1 + 4),local_128);
       if (param_2[1] == 0xdd67c7) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -11081,7 +10777,6 @@ void std_list_Deserialize_458650(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = map_insertVal_465c00(iVar1,*(undefined4 *)(iVar1 + 4),&local_40);
       if (param_2[1] == 0x3fffffe) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -11146,7 +10841,6 @@ void std_list_Deserialize_458780(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = map_insertVal_00468670(iVar1,*(undefined4 *)(iVar1 + 4),local_60);
       if (param_2[1] == 0x2aaaaa9) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -11207,7 +10901,6 @@ void std_list_Deserialize_458860(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = map_insertVal_00465e60(iVar1,*(undefined4 *)(iVar1 + 4),local_50);
       if (param_2[1] == 0x3333332) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -11269,7 +10962,6 @@ void std_list_Deserialize_458940(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = Map_InsertVec6(iVar1,*(undefined4 *)(iVar1 + 4),&local_20);
       if (param_2[1] == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -11351,7 +11043,6 @@ void std_list_Deserialize_458a20(int *param_1,int *param_2)
       iVar1 = *param_2;
       iVar2 = map_insertVal_0044a8c0(iVar1,*(undefined4 *)(iVar1 + 4),local_150);
       if (param_2[1] == 0xc30c2f) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       param_2[1] = param_2[1] + 1;
@@ -11400,7 +11091,6 @@ void swapElem_0x128(int param_1,int param_2)
   *(undefined4 *)(param_2 + 0x118) = local_24;
   std_vector_copyAssign_stride11c(local_20);
   if (local_20[0] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20[0]);
   }
   ExceptionList = local_10;
@@ -11791,7 +11481,6 @@ void operator_delete_unwind(void)
 {
   undefined4 *in_ECX;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -11810,7 +11499,6 @@ void dtor_free_unwind(void)
   undefined4 *in_ECX;
   
   std_list_clear();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -11829,7 +11517,6 @@ void dtor_free_unwind_466ad0(void)
   undefined4 *in_ECX;
   
   list_clearNestedList();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -11848,7 +11535,6 @@ void dtor_free_unwind_466af0(void)
   undefined4 *in_ECX;
   
   std_list_clear_46f9f0();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -11868,7 +11554,6 @@ void tree_dtor_free_unwind(void)
   undefined1 local_8 [4];
   
   Zone_rbtree_eraseRange(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -11887,14 +11572,12 @@ void string_tidy_unwind(void)
   undefined4 *in_ECX;
   
   if (7 < (uint)in_ECX[0xb]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[6]);
   }
   in_ECX[0xb] = 7;
   in_ECX[10] = 0;
   *(undefined2 *)(in_ECX + 6) = 0;
   if (7 < (uint)in_ECX[5]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   in_ECX[5] = 7;
@@ -11920,7 +11603,6 @@ void vector_dtor_free_unwind(void)
   
   if (*in_ECX != 0) {
     dtor_freePtrRange_0x128(*in_ECX,in_ECX[1],&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   return;
@@ -11941,7 +11623,6 @@ void dtor_free_unwind_467ab0(void)
   int in_ECX;
   
   listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(in_ECX + 8));
 }
 
@@ -11960,7 +11641,6 @@ void dtor_free_unwind_467b40(void)
   undefined4 *in_ECX;
   
   listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -11973,7 +11653,6 @@ void dtor_free_unwind_467b40(void)
  */
 /* Global::std_map_operator @ 00468b70 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void std_map_operator(uint *param_1)
 
@@ -12077,7 +11756,6 @@ undefined4 * std_Tree_Buyheadnode_46d950(void)
   
   puVar1 = operator_new(0x1180);
   if (puVar1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -12150,7 +11828,6 @@ void std_vector_Reallocate_46e430(uint param_1)
       pvVar2 = operator_new(param_1 * 0x78);
       if (pvVar2 != (void *)0x0) goto LAB_0046e493;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0046e493:
@@ -12158,7 +11835,6 @@ LAB_0046e493:
   std_Uninitialized_copy(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0x78;
   if ((void *)*in_ECX != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar2;
@@ -12199,7 +11875,6 @@ void std_vector_Reallocate_46e610(uint param_1)
       pvVar3 = operator_new(param_1 * 0x18);
       if (pvVar3 != (void *)0x0) goto LAB_0046e66f;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0046e66f:
@@ -12208,7 +11883,6 @@ LAB_0046e66f:
   iVar1 = *in_ECX;
   if (*in_ECX != 0) {
     dtor_stringRange_0x18(*in_ECX,in_ECX[1],(int)&param_1 + 3,param_1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar3;
@@ -12240,7 +11914,6 @@ int std_vector_Reserve_grow(uint param_1)
   if ((uint)(iVar3 / 0x78) < param_1) {
     iVar2 = (in_ECX[1] - *in_ECX) / 0x78;
     if (0x2222222U - iVar2 < param_1) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = std_vector_Calculate_growth(iVar2 + param_1);
@@ -12268,7 +11941,6 @@ void std_vector_reserve_46e970(uint param_1)
     return;
   }
   if (0xaaaaaaaU - (in_ECX[1] - *in_ECX) / 0x18 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0x18;
@@ -12335,8 +12007,6 @@ void plasma::Widget::MemberFunctionConnection<cube::GameController>::vfunc_0(voi
 {
   int in_ECX;
   
-                    /* WARNING: Could not recover jumptable at 0x0046f488. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   (**(code **)(in_ECX + 0xc))();
   return;
 }
@@ -12366,13 +12036,11 @@ void std_list_clear(void)
     return;
   }
   if (7 < *(uint *)((int)pvVar2 + 0x24)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)pvVar2 + 0x10));
   }
   *(undefined4 *)((int)pvVar2 + 0x24) = 7;
   *(undefined4 *)((int)pvVar2 + 0x20) = 0;
   *(undefined2 *)((int)pvVar2 + 0x10) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar2);
 }
 
@@ -12401,13 +12069,11 @@ void std_list_clear_46f9f0(void)
     return;
   }
   if (7 < *(uint *)((int)pvVar2 + 0x54)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)pvVar2 + 0x40));
   }
   *(undefined4 *)((int)pvVar2 + 0x54) = 7;
   *(undefined4 *)((int)pvVar2 + 0x50) = 0;
   *(undefined2 *)((int)pvVar2 + 0x40) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar2);
 }
 
@@ -12533,7 +12199,6 @@ void GameController_create_edit_textbox(void)
   Node_find_child_name_by_string(local_44,local_2c,1);
   local_8._0_1_ = 2;
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_18 = 7;
@@ -12547,12 +12212,10 @@ void GameController_create_edit_textbox(void)
     cube::GameController::connectToServer(uVar3)
     ;
     if (0xf < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
   }
   if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   ExceptionList = local_10;
@@ -12615,7 +12278,6 @@ void GameController_delete_selected_world_saves(void)
     std_string_ctor_cstr(local_74,uVar3,&DAT_00701e5c);
     local_8._0_1_ = 2;
     if (0xf < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 0xf;
@@ -12628,7 +12290,6 @@ void GameController_delete_selected_world_saves(void)
     std_string_ctor_cstr(local_44,uVar3,&DAT_00701e5c);
     local_8 = CONCAT31(local_8._1_3_,5);
     if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     pppCVar4 = local_74;
@@ -12670,7 +12331,6 @@ void GameController_delete_selected_world_saves(void)
     db_storeBlobVec(local_2c,&local_84);
     local_8 = CONCAT31(local_8._1_3_,6);
     if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     iVar6 = 0;
@@ -12684,18 +12344,15 @@ void GameController_delete_selected_world_saves(void)
     }
     GameController_buildWorldList();
     if (local_84 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_84);
     }
     if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_44[0]);
     }
     local_30 = 0xf;
     local_34 = 0;
     local_44[0] = (LPCSTR *)((uint)local_44[0] & 0xffffff00);
     if (0xf < local_60) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_74[0]);
     }
   }
@@ -12756,7 +12413,6 @@ void GameController_show_rename_dialog(void)
   local_8 = CONCAT31(local_8._1_3_,1);
   Node_pick_link_by_name(&local_44,local_5c,1);
   if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44);
   }
   local_30 = 7;
@@ -12764,7 +12420,6 @@ void GameController_show_rename_dialog(void)
   local_44 = (void *)((uint)local_44 & 0xffff0000);
   local_8 = 0xffffffff;
   if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_5c[0]);
   }
   local_60 = 7;
@@ -12779,14 +12434,12 @@ void GameController_show_rename_dialog(void)
   local_8 = CONCAT31(local_8._1_3_,3);
   Node_pick_link_by_name(&local_2c,&local_74,1);
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c);
   }
   local_18 = 7;
   local_1c = 0;
   local_2c = (void *)((uint)local_2c & 0xffff0000);
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   ExceptionList = local_10;
@@ -12866,7 +12519,6 @@ void GameController_load_or_new_character(void)
     pvVar2 = *(void **)(*(int *)(in_ECX + 0x8006d0) + 0x1d28);
     if (pvVar2 != (void *)0x0) {
       Creature_partialDtor();
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     pvVar2 = operator_new(0x40);
@@ -12887,7 +12539,6 @@ void GameController_load_or_new_character(void)
     Node_select_glyph_by_name(&local_2c);
     local_8 = 0xffffffff;
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c);
     }
     local_18 = 7;
@@ -12982,7 +12633,6 @@ void GameController_toggle_sp_mp_worlds(void)
     Node_select_glyph_by_name(local_44);
     local_8 = 0xffffffff;
     if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_44[0]);
     }
   }
@@ -12992,7 +12642,6 @@ void GameController_toggle_sp_mp_worlds(void)
     Node_select_glyph_by_name(local_2c);
     local_8 = 0xffffffff;
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_18 = 7;
@@ -13025,7 +12674,6 @@ void std_list_push_back_486380(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_strPayload(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0xdd67c7) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -15087,8 +14735,6 @@ void plasma::Widget::MemberFunctionConnection<cube::CharacterStyleWidget>::vfunc
 {
   int in_ECX;
   
-                    /* WARNING: Could not recover jumptable at 0x004c204b. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   (**(code **)(in_ECX + 0x10))();
   return;
 }
@@ -15378,8 +15024,6 @@ undefined4 CubeWndProc(HWND param_1,uint param_2,int param_3)
         }
       }
 LAB_004c8596:
-                    /* WARNING: Could not recover jumptable at 0x004c859c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
       uVar2 = DefWindowProcW();
       return uVar2;
     }
@@ -16974,8 +16618,6 @@ void std_istream_sentry_unwind_thunk(void)
   
   piVar1 = *(int **)(*(int *)(*(int *)*in_ECX + 4) + 0x38 + *in_ECX);
   if (piVar1 != (int *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x004ce6d1. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     (**(code **)(*piVar1 + 8))();
     return;
   }
@@ -18034,7 +17676,6 @@ void node_erase_and_free(void)
   undefined1 local_8 [4];
   
   Speech_map_erase_range(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -18054,7 +17695,6 @@ void node_erase_and_free_v2(void)
   undefined1 local_8 [4];
   
   map_erase_node(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -18073,7 +17713,6 @@ void object_dtor(void)
   int in_ECX;
   
   if (7 < *(uint *)(in_ECX + 0x18)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 4));
   }
   *(undefined4 *)(in_ECX + 0x18) = 7;
@@ -18105,7 +17744,6 @@ void object_dtor_v2(void)
   local_8 = 0;
   cube::QuestText::ctor_2(DAT_0076aa78 ^ (uint)&stack0xfffffffc);
   if (7 < (uint)in_ECX[5]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   in_ECX[5] = 7;
@@ -18130,7 +17768,6 @@ void tree_free_recursive_v2(int param_1)
   if (*(char *)(param_1 + 0xd) == '\0') {
     tree_free_recursive_v2(*(undefined4 *)(param_1 + 8));
     listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(param_1 + 0x30));
   }
   return;
@@ -18206,17 +17843,6 @@ undefined4 * map_erase_node(undefined4 *param_1,int *param_2,int *param_3)
  */
 /* Global::std_Tree_erase @ 004e3c70 */
 
-/* WARNING: Removing unreachable block (ram,0x004e3d3d) */
-/* WARNING: Removing unreachable block (ram,0x004e3d4d) */
-/* WARNING: Removing unreachable block (ram,0x004e3d56) */
-/* WARNING: Removing unreachable block (ram,0x004e3d59) */
-/* WARNING: Removing unreachable block (ram,0x004e3d49) */
-/* WARNING: Removing unreachable block (ram,0x004e3d67) */
-/* WARNING: Removing unreachable block (ram,0x004e3d76) */
-/* WARNING: Removing unreachable block (ram,0x004e3d81) */
-/* WARNING: Removing unreachable block (ram,0x004e3d7d) */
-/* WARNING: Removing unreachable block (ram,0x004e3d71) */
-/* WARNING: Removing unreachable block (ram,0x004e3d84) */
 
 void std_Tree_erase(undefined4 param_1,int *param_2)
 
@@ -18230,7 +17856,6 @@ void std_Tree_erase(undefined4 param_1,int *param_2)
   int *piVar6;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -18336,7 +17961,6 @@ LAB_004e3e67:
     *(undefined1 *)(piVar6 + 3) = 1;
   }
   listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)param_2[0xc]);
 }
 
@@ -18357,7 +17981,6 @@ void object_dtor_v3(void)
   
   if (*in_ECX != 0) {
     dtor_stringRange_0x18(*in_ECX,in_ECX[1],&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   return;
@@ -18379,7 +18002,6 @@ void object_dtor_v4(void)
   undefined1 local_8 [4];
   
   Sprite_map_erase_range(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -18405,10 +18027,8 @@ void std_list_clear_free(void)
   *(int *)(*(int *)(in_ECX + 4) + 4) = *(int *)(in_ECX + 4);
   *(undefined4 *)(in_ECX + 8) = 0;
   if (pvVar2 != *(void **)(in_ECX + 4)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(in_ECX + 4));
 }
 
@@ -20133,7 +19753,6 @@ undefined4 sqlite3SafeDeref_u32(undefined4 *param_1)
  */
 /* Global::sqlite3_result_length_check @ 0051de50 */
 
-/* WARNING: Removing unreachable block (ram,0x0051decf) */
 
 void sqlite3_result_length_check(int param_1,undefined4 param_2,int *param_3)
 
@@ -20496,7 +20115,6 @@ undefined4 sqlite3_global_state_set(undefined4 param_1)
  */
 /* Global::sqlite3_soft_heap_limit64 @ 0051e960 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined8 sqlite3_soft_heap_limit64(int param_1,int param_2)
 
@@ -20661,19 +20279,6 @@ void juliandayFunc(int param_1,undefined4 param_2,undefined4 param_3)
  */
 /* Global::trimFunc @ 0051ec50 */
 
-/* WARNING: Removing unreachable block (ram,0x0051f045) */
-/* WARNING: Removing unreachable block (ram,0x0051f050) */
-/* WARNING: Removing unreachable block (ram,0x0051f06b) */
-/* WARNING: Removing unreachable block (ram,0x0051f072) */
-/* WARNING: Removing unreachable block (ram,0x0051f08a) */
-/* WARNING: Removing unreachable block (ram,0x0051f09b) */
-/* WARNING: Removing unreachable block (ram,0x0051f09f) */
-/* WARNING: Removing unreachable block (ram,0x0051f0b9) */
-/* WARNING: Removing unreachable block (ram,0x0051f0c4) */
-/* WARNING: Removing unreachable block (ram,0x0051f08e) */
-/* WARNING: Removing unreachable block (ram,0x0051f079) */
-/* WARNING: Removing unreachable block (ram,0x0051f057) */
-/* WARNING: Removing unreachable block (ram,0x0051f0dc) */
 
 void trimFunc(int *param_1,int param_2,int *param_3)
 
@@ -21414,8 +21019,6 @@ void pcache1_flush(int *param_1)
     sqlite3DbMallocZero(param_1);
     param_1[1] = iVar1;
     if (*param_1 != 0) {
-                    /* WARNING: Could not recover jumptable at 0x0051f962. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
       (*DAT_00766638)();
       return;
     }
@@ -23249,8 +22852,6 @@ undefined4 sqlite3_mutex_guard_b(void)
   if (iVar1 != 0) {
     return 0;
   }
-                    /* WARNING: Could not recover jumptable at 0x00522651. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   uVar2 = (*DAT_00766628)();
   return uVar2;
 }
@@ -23268,8 +22869,6 @@ void sqlite3_leaf_stub_b(int param_1)
 
 {
   if (param_1 != 0) {
-                    /* WARNING: Could not recover jumptable at 0x0052266e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     (*DAT_0076662c)();
     return;
   }
@@ -23341,8 +22940,6 @@ undefined4 winSectorSize_stub(int param_1)
   undefined4 uVar1;
   
   if (param_1 != 0) {
-                    /* WARNING: Could not recover jumptable at 0x0052272e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     uVar1 = (*DAT_00766634)();
     return uVar1;
   }
@@ -24929,9 +24526,6 @@ undefined4 sqlite3Malloc_helper_b(void)
  */
 /* Global::renameQuoteFunc_b @ 005241a0 */
 
-/* WARNING: Removing unreachable block (ram,0x00524391) */
-/* WARNING: Removing unreachable block (ram,0x00524397) */
-/* WARNING: Removing unreachable block (ram,0x005243a0) */
 
 void renameQuoteFunc_b(int param_1,undefined4 param_2,char *param_3)
 
@@ -26568,8 +26162,6 @@ int sqlite3_context_result_b(int *param_1,int param_2,int param_3)
 void sqlite3_leaf_stub_s(int param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x005268d8. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   free((void *)(param_1 + -8));
   return;
 }
@@ -34219,7 +33811,6 @@ int sqlite3_date_get_digits(byte *param_1)
  */
 /* Global::sqlite3_win_get_last_error_msg @ 0053a8f0 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void sqlite3_win_get_last_error_msg(undefined4 param_1,undefined4 param_2,undefined4 param_3)
 
@@ -36426,7 +36017,6 @@ undefined4 parseHhMmSs(int param_1,int param_2)
  */
 /* Global::isDate_543120 @ 00543120 */
 
-/* WARNING: Removing unreachable block (ram,0x005433e2) */
 
 void isDate_543120(undefined4 param_1,byte *param_2,uint *param_3)
 
@@ -37675,7 +37265,6 @@ int file_read32_be(int *param_1,undefined4 param_2,undefined4 param_3,uint *para
  */
 /* Global::wal_read_frame_or_journal @ 00544e80 */
 
-/* WARNING: Removing unreachable block (ram,0x00544eff) */
 
 void wal_read_frame_or_journal(int param_1,int param_2,undefined4 param_3,undefined4 param_4,uint param_5,
                  uint param_6)
@@ -39923,8 +39512,6 @@ void bitvec_destroy(int param_1)
       }
       (*DAT_00766604)(param_1);
       if (DAT_0076b488 != 0) {
-                    /* WARNING: Could not recover jumptable at 0x0054c0e8. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
         (*DAT_00766638)();
         return;
       }
@@ -47101,7 +46688,6 @@ undefined4 lib_fn_55ce30(undefined4 param_1,char *param_2,uint *param_3,undefine
 
 /* Global::lib_fn_55cec0 @ 0055cec0 */
 
-/* WARNING: Removing unreachable block (ram,0x0055ceea) */
 
 undefined4 lib_fn_55cec0(void)
 
@@ -47370,8 +46956,6 @@ void lib_fn_55d980(int param_1,undefined4 param_2)
 void lib_fn_55dc20(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0055dc24. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   (*DAT_00766608._4_4_)();
   return;
 }
@@ -49451,7 +49035,6 @@ int lib_fn_5736e0(undefined4 *param_1,int param_2,undefined4 param_3)
 
 /* Global::lib_fn_573cb0 @ 00573cb0 */
 
-/* WARNING: Removing unreachable block (ram,0x00573d5d) */
 
 void lib_fn_573cb0(int param_1)
 
@@ -49584,11 +49167,6 @@ undefined4 lib_fn_574c50(int param_1)
 
 /* Global::lib_fn_574df0 @ 00574df0 */
 
-/* WARNING: Removing unreachable block (ram,0x00574e1e) */
-/* WARNING: Removing unreachable block (ram,0x00574e24) */
-/* WARNING: Removing unreachable block (ram,0x00574e38) */
-/* WARNING: Removing unreachable block (ram,0x00574e3e) */
-/* WARNING: Removing unreachable block (ram,0x00574e49) */
 
 void lib_fn_574df0(undefined4 *param_1,undefined8 param_2)
 
@@ -53120,7 +52698,6 @@ void lib_fn_583da0(undefined4 param_1,int param_2)
   if (*(int *)(param_2 + 0x2c) != *(int *)(param_2 + 0x30)) {
     pvVar1 = *(void **)(*(int *)(param_2 + 0x30) + -0xc);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     *(int *)(param_2 + 0x30) = *(int *)(param_2 + 0x30) + -0xc;
@@ -53134,7 +52711,6 @@ void lib_fn_583da0(undefined4 param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -53173,7 +52749,6 @@ void lib_fn_583e80(void)
   uVar1 = (**(code **)(in_ECX + 0xc))(uVar2);
   local_8 = 0xffffffff;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_20 = (undefined4 *)0x0;
@@ -53184,7 +52759,6 @@ void lib_fn_583e80(void)
   local_8 = 1;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -53219,7 +52793,6 @@ undefined1 * lib_fn_584240(undefined1 *param_1)
   *param_1 = 0;
   std_string_AssignRange(local_20,local_1c,param_1);
   if (local_20 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -53583,7 +53156,6 @@ void abstr::Method0<abstr::Machine,int>::vfunc_0(void)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -53699,7 +53271,6 @@ void lib_fn_5859f0(undefined4 param_1,int param_2)
   if (*(int *)(param_2 + 0x2c) != *(int *)(param_2 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_2 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_2 + 0x30) = *(int *)(param_2 + 0x30) + -0xc;
@@ -53713,7 +53284,6 @@ void lib_fn_5859f0(undefined4 param_1,int param_2)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -53765,7 +53335,6 @@ void lib_fn_585af0(void)
   (**(code **)(in_ECX + 0xc))(uVar1);
   local_8 = 0xffffffff;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_20 = (undefined4 *)0x0;
@@ -53776,7 +53345,6 @@ void lib_fn_585af0(void)
   local_8 = 1;
   vectorPOD_insertAt(&local_20);
   if (local_20 != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20);
   }
   ExceptionList = local_10;
@@ -53829,7 +53397,6 @@ void abstr::Method2<cube::System,int,int,int>::vfunc_0(undefined4 param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -53867,7 +53434,6 @@ void abstr::
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -53919,7 +53485,6 @@ void abstr::Method2<cube::System,void,int,int>::vfunc_0(undefined4 param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -53956,7 +53521,6 @@ void abstr::
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -53991,7 +53555,6 @@ void abstr::Method3<cube::System,void,int,int,int>::vfunc_0(undefined4 param_1)
   local_8 = 0;
   vectorPOD_insertAt(&local_1c);
   if (local_1c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1c);
   }
   ExceptionList = local_10;
@@ -54032,7 +53595,6 @@ void lib_fn_585ef0(undefined4 *param_1)
   _Src[4] = 0;
   *(undefined1 *)_Src = 0;
   if (0xf < local_c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20[0]);
   }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -54060,7 +53622,6 @@ void lib_fn_585fa0(undefined4 *param_1,int param_2)
   if (*(int *)(param_2 + 0x2c) != *(int *)(param_2 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_2 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_2 + 0x30) = *(int *)(param_2 + 0x30) + -0xc;
@@ -54084,7 +53645,6 @@ void lib_fn_585fa0(undefined4 *param_1,int param_2)
   _Src[4] = 0;
   *(undefined1 *)_Src = 0;
   if (0xf < local_c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_20[0]);
   }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -54140,14 +53700,12 @@ void lib_fn_586090(undefined4 *param_1)
   _Src[4] = 0;
   *(undefined1 *)_Src = 0;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_18 = 0xf;
   local_1c = 0;
   local_2c[0] = (void *)((uint)local_2c[0] & 0xffffff00);
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   ExceptionList = local_10;
@@ -54172,7 +53730,6 @@ void lib_fn_5861b0(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -54181,7 +53738,6 @@ void lib_fn_5861b0(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -54232,11 +53788,9 @@ void lib_fn_586250(void)
   local_8 = CONCAT31(local_8._1_3_,1);
   (**(code **)(in_ECX + 0xc))(uVar1);
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   ExceptionList = local_10;
@@ -54312,18 +53866,15 @@ void lib_fn_586340(undefined4 *param_1)
   _Src[4] = 0;
   *(undefined1 *)_Src = 0;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_18 = 0xf;
   local_1c = 0;
   local_2c[0] = (void *)((uint)local_2c[0] & 0xffffff00);
   if (0xf < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_5c[0]);
   }
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   ExceptionList = local_10;
@@ -54373,11 +53924,9 @@ void lib_fn_5864c0(void)
   local_8 = CONCAT31(local_8._1_3_,1);
   (**(code **)(in_ECX + 0xc))(uVar1);
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   ExceptionList = local_10;
@@ -54403,7 +53952,6 @@ void lib_fn_5865b0(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -54412,7 +53960,6 @@ void lib_fn_5865b0(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -54421,7 +53968,6 @@ void lib_fn_5865b0(int param_1)
   if (*(int *)(param_1 + 0x2c) != *(int *)(param_1 + 0x30)) {
     pvVar2 = *(void **)(*(int *)(param_1 + 0x30) + -0xc);
     if (pvVar2 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar2);
     }
     *(int *)(param_1 + 0x30) = *(int *)(param_1 + 0x30) + -0xc;
@@ -54452,14 +53998,12 @@ undefined4 lib_fn_5866a0(undefined4 param_1,void *param_2)
   local_8 = 1;
   lib_fn_583bf0(param_1,&param_2,&stack0x00000020,DAT_0076aa78 ^ (uint)&stack0xfffffffc);
   if (0xf < in_stack_0000001c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_2);
   }
   in_stack_0000001c = 0xf;
   in_stack_00000018 = 0;
   param_2 = (void *)((uint)param_2 & 0xffffff00);
   if (0xf < in_stack_00000034) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_stack_00000020);
   }
   ExceptionList = local_10;
@@ -54482,10 +54026,8 @@ void lib_fn_586730(undefined4 *param_1)
     return;
   }
   if ((void *)*puVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*puVar1);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(puVar1);
 }
 
@@ -54657,7 +54199,6 @@ void lib_fn_586980(undefined1 *param_1,undefined4 *param_2)
   }
   string_assignPtrLen(pcVar4,iVar5);
   if (0xf < in_stack_0000001c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_2);
   }
   ExceptionList = local_10;
@@ -54731,7 +54272,6 @@ void lib_fn_586a80(undefined1 *param_1,undefined4 *param_2)
   }
   string_assignPtrLen(local_38,iVar4);
   if (0xf < in_stack_0000001c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_2);
   }
   ExceptionList = local_10;
@@ -54948,7 +54488,6 @@ undefined4 lib_fn_586d70(void)
   iVar1 = *(int *)(in_ECX + 0x51a0);
   iVar2 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&local_8);
   if (*(int *)(in_ECX + 0x51a4) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(in_ECX + 0x51a4) = *(int *)(in_ECX + 0x51a4) + 1;
@@ -55023,7 +54562,6 @@ undefined4 lib_fn_586e00(void *param_1)
     iVar8 = IntMap_SetScalar(local_14,local_14[1],&local_18);
     iVar1 = puVar3[0x1469];
     if (iVar1 == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     puVar3[0x1469] = iVar1 + 1;
@@ -55053,7 +54591,6 @@ undefined4 lib_fn_586e00(void *param_1)
     local_8 = CONCAT31(local_8._1_3_,1);
     iVar5 = IntMap_SetScalar(iVar9,*(undefined4 *)(iVar9 + 4),&local_14);
     if (in_ECX[0x1469] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     in_ECX[0x1469] = in_ECX[0x1469] + 1;
@@ -55064,7 +54601,6 @@ undefined4 lib_fn_586e00(void *param_1)
   std::basic_filebuf<char,std::char_traits<char>_>::ctor_1();
   std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>(local_60);
   if (0xf < in_stack_00000018) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   ExceptionList = local_10;
@@ -55088,7 +54624,6 @@ void lib_fn_587020(LPCSTR param_1)
   }
   CreateFileA(lpFileName,0x80000000,1,(LPSECURITY_ATTRIBUTES)0x0,3,0x80,(HANDLE)0x0);
   if (0xf < in_stack_00000018) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   return;
@@ -55119,7 +54654,6 @@ void lib_fn_587070(int *param_1)
   iVar3 = *piVar1;
   *piVar2 = iVar3;
   *(int **)(iVar3 + 4) = piVar2;
-                    /* WARNING: Subroutine does not return */
   operator_delete(piVar1);
 }
 
@@ -55169,7 +54703,6 @@ void lib_fn_587180(void *param_1)
     string_assignSubstr(&param_1,0,0xffffffff);
   }
   if (0xf < in_stack_00000018) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   ExceptionList = local_10;
@@ -55204,14 +54737,12 @@ void lib_fn_5871f0(void *param_1)
     string_assignSubstr(&stack0x0000001c,0,0xffffffff);
   }
   if (0xf < in_stack_00000018) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   in_stack_00000018 = 0xf;
   in_stack_00000014 = 0;
   param_1 = (void *)((uint)param_1 & 0xffffff00);
   if (0xf < in_stack_00000030) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_stack_0000001c);
   }
   ExceptionList = local_10;
@@ -55268,14 +54799,12 @@ bool lib_fn_587290(undefined4 *param_1)
     }
   }
   if (0xf < in_stack_00000018) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   in_stack_00000018 = 0xf;
   in_stack_00000014 = 0;
   param_1 = (undefined4 *)((uint)param_1 & 0xffffff00);
   if (0xf < in_stack_00000030) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_stack_0000001c);
   }
   ExceptionList = local_10;
@@ -55326,7 +54855,6 @@ undefined4 lib_fn_587350(undefined4 *param_1)
   local_14 = puVar3;
   iVar4 = IntMap_SetScalar(iVar2,*(undefined4 *)(iVar2 + 4),&local_14);
   if (*(int *)(in_ECX + 0x51a4) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(in_ECX + 0x51a4) = *(int *)(in_ECX + 0x51a4) + 1;
@@ -55340,7 +54868,6 @@ undefined4 lib_fn_587350(undefined4 *param_1)
     memcpy((void *)**(undefined4 **)(*(int *)(*piVar1 + 4) + 8),puVar3,_Size);
   }
   if (0xf < in_stack_00000018) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   ExceptionList = local_10;
@@ -55414,7 +54941,6 @@ void lib_fn_593df0(void)
   undefined1 local_8 [4];
   
   lib_fn_59c490(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -55444,13 +54970,11 @@ void lib_fn_5947e0(void *param_1)
   }
   lib_fn_5947e0(*(undefined4 *)((int)param_1 + 8));
   if (7 < *(uint *)((int)param_1 + 0x2c)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x18));
   }
   *(undefined4 *)((int)param_1 + 0x2c) = 7;
   *(undefined4 *)((int)param_1 + 0x28) = 0;
   *(undefined2 *)((int)param_1 + 0x18) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -55614,17 +55138,6 @@ undefined4 * lib_fn_59c490(undefined4 *param_1,int *param_2,int *param_3)
 
 /* Global::stl_fn_59c550 @ 0059c550 */
 
-/* WARNING: Removing unreachable block (ram,0x0059c61d) */
-/* WARNING: Removing unreachable block (ram,0x0059c62d) */
-/* WARNING: Removing unreachable block (ram,0x0059c636) */
-/* WARNING: Removing unreachable block (ram,0x0059c639) */
-/* WARNING: Removing unreachable block (ram,0x0059c629) */
-/* WARNING: Removing unreachable block (ram,0x0059c647) */
-/* WARNING: Removing unreachable block (ram,0x0059c656) */
-/* WARNING: Removing unreachable block (ram,0x0059c661) */
-/* WARNING: Removing unreachable block (ram,0x0059c65d) */
-/* WARNING: Removing unreachable block (ram,0x0059c651) */
-/* WARNING: Removing unreachable block (ram,0x0059c664) */
 
 void stl_fn_59c550(undefined4 param_1,int *param_2)
 
@@ -55638,7 +55151,6 @@ void stl_fn_59c550(undefined4 param_1,int *param_2)
   int *piVar6;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -55747,13 +55259,11 @@ LAB_0059c750:
   }
 LAB_0059c7ae:
   if (7 < (uint)param_2[0xb]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[6]);
   }
   param_2[0xb] = 7;
   param_2[10] = 0;
   *(undefined2 *)(param_2 + 6) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -55836,10 +55346,8 @@ void lib_fn_5a4980(void)
   *puVar7 = puVar7;
   puVar7[1] = puVar7;
   if (puVar4 == puVar7) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(puVar7);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(puVar4);
 }
 
@@ -56444,7 +55952,6 @@ uint buffer_allocate(uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0x7ffffff < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x20);
@@ -56455,7 +55962,6 @@ uint buffer_allocate(uint param_1)
     in_ECX[2] = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -56486,7 +55992,6 @@ void lib_fn_609320(uint param_1)
       pvVar3 = operator_new(param_1 << 4);
       if (pvVar3 != (void *)0x0) goto LAB_00609381;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00609381:
@@ -56494,7 +55999,6 @@ LAB_00609381:
   list_copyNodesToVector_0x10(*in_ECX,in_ECX[1],pvVar3,(int)&param_1 + 3,0,param_1);
   pvVar1 = (void *)*in_ECX;
   if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)(uVar2 * 0x10 + (int)pvVar3);
@@ -56519,7 +56023,6 @@ void lib_fn_609400(uint param_1)
     return;
   }
   if (0xfffffffU - (in_ECX[1] - *in_ECX >> 4) < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 4;
@@ -56610,7 +56113,6 @@ void lib_fn_627670(void)
   int in_ECX;
   
   if (7 < *(uint *)(in_ECX + 0x20)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 0xc));
   }
   *(undefined4 *)(in_ECX + 0x20) = 7;
@@ -56655,7 +56157,6 @@ void plasma::NamedObject::vfunc_0(byte param_1)
   void *in_ECX;
   
   if (7 < *(uint *)((int)in_ECX + 0x20)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)in_ECX + 0xc));
   }
   *(undefined4 *)((int)in_ECX + 0x20) = 7;
@@ -56663,7 +56164,6 @@ void plasma::NamedObject::vfunc_0(byte param_1)
   *(undefined2 *)((int)in_ECX + 0xc) = 0;
   Object::ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -56849,7 +56349,6 @@ void lib_fn_630690(void)
   undefined4 *in_ECX;
   
   std_list_clear_nodes();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -56865,7 +56364,6 @@ void lib_fn_6306b0(void)
   undefined1 local_8 [4];
   
   lib_fn_633900(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -56893,7 +56391,6 @@ void plasma::Node::ctor_0(void)
   }
   local_8 = CONCAT31(local_8._1_3_,3);
   lib_fn_633900(local_18,*(undefined4 *)in_ECX[0x3a],(undefined4 *)in_ECX[0x3a]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x3a]);
 }
 
@@ -56952,21 +56449,18 @@ void tree_buildFromData(int param_1)
   iVar3 = tree_allocLeaf(uVar4);
   map_findOrInsert(local_60,iVar1,iVar3 + 0x10,iVar3);
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44);
   }
   local_30 = 0xf;
   local_34 = 0;
   local_44 = (void *)((uint)local_44 & 0xffffff00);
   if (0xf < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_5c);
   }
   local_48 = 0xf;
   local_4c = 0;
   local_5c = (void *)((uint)local_5c & 0xffffff00);
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
 LAB_0063094f:
@@ -56987,7 +56481,6 @@ void plasma::Node::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -57541,17 +57034,6 @@ undefined4 * lib_fn_633900(undefined4 *param_1,int *param_2,int *param_3)
 
 /* Global::stl_fn_6339c0 @ 006339c0 */
 
-/* WARNING: Removing unreachable block (ram,0x00633a8d) */
-/* WARNING: Removing unreachable block (ram,0x00633a9d) */
-/* WARNING: Removing unreachable block (ram,0x00633aa6) */
-/* WARNING: Removing unreachable block (ram,0x00633aa9) */
-/* WARNING: Removing unreachable block (ram,0x00633a99) */
-/* WARNING: Removing unreachable block (ram,0x00633ab7) */
-/* WARNING: Removing unreachable block (ram,0x00633ac6) */
-/* WARNING: Removing unreachable block (ram,0x00633ad1) */
-/* WARNING: Removing unreachable block (ram,0x00633acd) */
-/* WARNING: Removing unreachable block (ram,0x00633ac1) */
-/* WARNING: Removing unreachable block (ram,0x00633ad4) */
 
 void stl_fn_6339c0(undefined4 param_1,int *param_2)
 
@@ -57565,7 +57047,6 @@ void stl_fn_6339c0(undefined4 param_1,int *param_2)
   int *piVar6;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -57674,20 +57155,17 @@ LAB_00633bc0:
   }
 LAB_00633c1e:
   if (0xf < (uint)param_2[0xf]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[10]);
   }
   param_2[0xf] = 0xf;
   param_2[0xe] = 0;
   *(undefined1 *)(param_2 + 10) = 0;
   if (0xf < (uint)param_2[9]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[4]);
   }
   param_2[9] = 0xf;
   param_2[8] = 0;
   *(undefined1 *)(param_2 + 4) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -57705,7 +57183,6 @@ void plasma::Edit::vfunc_0(byte param_1)
   in_ECX[9] = vftable;
   Widget::ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -58178,7 +57655,6 @@ LAB_00637fc9:
     FUN_00638610();
     lib_fn_627cb0(0x14);
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_18 = 7;
@@ -58202,7 +57678,6 @@ LAB_00637fc2:
   }
 LAB_0063808b:
   if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
 LAB_0063809c:
@@ -58512,7 +57987,6 @@ void lib_fn_639060(void)
   undefined1 local_8 [4];
   
   lib_fn_639470(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -58574,7 +58048,6 @@ void plasma::FontEngine::ctor_0(void)
   lib_fn_68e950(in_ECX[6]);
   DeleteCriticalSection((LPCRITICAL_SECTION)(in_ECX + 9));
   listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[7]);
 }
 
@@ -58590,7 +58063,6 @@ void plasma::FontEngine::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -58609,17 +58081,14 @@ void lib_fn_639300(void *param_1)
   }
   lib_fn_639300(*(undefined4 *)((int)param_1 + 8));
   if (*(void **)((int)param_1 + 0x28) != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x28));
   }
   if (7 < *(uint *)((int)param_1 + 0x24)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x10));
   }
   *(undefined4 *)((int)param_1 + 0x24) = 7;
   *(undefined4 *)((int)param_1 + 0x20) = 0;
   *(undefined2 *)((int)param_1 + 0x10) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 
@@ -58699,17 +58168,6 @@ undefined4 * lib_fn_639470(undefined4 *param_1,int *param_2,int *param_3)
 
 /* Global::stl_fn_639530 @ 00639530 */
 
-/* WARNING: Removing unreachable block (ram,0x006395fd) */
-/* WARNING: Removing unreachable block (ram,0x0063960d) */
-/* WARNING: Removing unreachable block (ram,0x00639616) */
-/* WARNING: Removing unreachable block (ram,0x00639619) */
-/* WARNING: Removing unreachable block (ram,0x00639609) */
-/* WARNING: Removing unreachable block (ram,0x00639627) */
-/* WARNING: Removing unreachable block (ram,0x00639636) */
-/* WARNING: Removing unreachable block (ram,0x00639641) */
-/* WARNING: Removing unreachable block (ram,0x0063963d) */
-/* WARNING: Removing unreachable block (ram,0x00639631) */
-/* WARNING: Removing unreachable block (ram,0x00639644) */
 
 void stl_fn_639530(undefined4 param_1,int *param_2)
 
@@ -58723,7 +58181,6 @@ void stl_fn_639530(undefined4 param_1,int *param_2)
   int *piVar6;
   
   if (*(char *)((int)param_2 + 0xd) != '\0') {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -58832,17 +58289,14 @@ LAB_00639730:
   }
 LAB_0063978e:
   if ((void *)param_2[10] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[10]);
   }
   if (7 < (uint)param_2[9]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[4]);
   }
   param_2[9] = 7;
   param_2[8] = 0;
   *(undefined2 *)(param_2 + 4) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -58879,10 +58333,8 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<4,float>_>::ctor_1(void)
       puVar1 = *(undefined4 **)(in_ECX[0x13] + iVar2 * 4);
       if (puVar1 != (undefined4 *)0x0) {
         if ((void *)*puVar1 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(puVar1);
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar1);
       }
       iVar2 = iVar2 + 1;
@@ -58892,7 +58344,6 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<4,float>_>::ctor_1(void)
     Attribute::ctor_1();
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x13]);
 }
 
@@ -58961,83 +58412,66 @@ void plasma::SmoothMeshShape::ctor_1(void)
   DeleteCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x307));
   if (in_ECX[0x2ff] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2ff],in_ECX[0x300],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2ff]);
   }
   if (in_ECX[0x2f9] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2f9],in_ECX[0x2fa],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2f9]);
   }
   if (in_ECX[0x2f6] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2f6],in_ECX[0x2f7],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2f6]);
   }
   if (in_ECX[0x2f3] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2f3],in_ECX[0x2f4],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2f3]);
   }
   if (in_ECX[0x2f0] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2f0],in_ECX[0x2f1],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2f0]);
   }
   if (in_ECX[0x2ed] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2ed],in_ECX[0x2ee],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2ed]);
   }
   if (in_ECX[0x2ea] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2ea],in_ECX[0x2eb],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2ea]);
   }
   if (in_ECX[0x2e7] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2e7],in_ECX[0x2e8],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2e7]);
   }
   if (in_ECX[0x2e4] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2e4],in_ECX[0x2e5],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2e4]);
   }
   if (in_ECX[0x2e1] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2e1],in_ECX[0x2e2],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2e1]);
   }
   if (in_ECX[0x2de] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2de],in_ECX[0x2df],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2de]);
   }
   if (in_ECX[0x2db] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2db],in_ECX[0x2dc],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2db]);
   }
   if ((void *)in_ECX[0x2d8] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2d8]);
   }
   if (in_ECX[0x2d5] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x2d5],in_ECX[0x2d6],&local_11,in_ECX,uVar1);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2d5]);
   }
   if ((void *)in_ECX[0x2d2] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2d2]);
   }
   if ((void *)in_ECX[0x2cf] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2cf]);
   }
   if ((void *)in_ECX[0x2cc] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2cc]);
   }
   local_8 = local_8 & 0xffffff00;
@@ -59080,10 +58514,8 @@ int lib_fn_63cd20(int param_1)
       puVar2 = *(undefined4 **)(iVar6 + iVar5 * 4);
       if (puVar2 != (undefined4 *)0x0) {
         if ((void *)*puVar2 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(puVar2);
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar2);
       }
       iVar6 = *piVar1;
@@ -59143,10 +58575,8 @@ int lib_fn_63ce30(int param_1)
       puVar2 = *(undefined4 **)(iVar6 + iVar5 * 4);
       if (puVar2 != (undefined4 *)0x0) {
         if ((void *)*puVar2 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(puVar2);
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar2);
       }
       iVar6 = *piVar1;
@@ -59206,10 +58636,8 @@ int lib_fn_63cf40(int param_1)
       puVar2 = *(undefined4 **)(iVar6 + iVar5 * 4);
       if (puVar2 != (undefined4 *)0x0) {
         if ((void *)*puVar2 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(puVar2);
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar2);
       }
       iVar6 = *piVar1;
@@ -59276,7 +58704,6 @@ void lib_fn_63d050(int *param_1)
         if ((uint)(in_ECX[2] - (int)pvVar2 >> 6) < uVar5) {
           if (pvVar2 != (void *)0x0) {
             param_1 = (int *)uVar5;
-                    /* WARNING: Subroutine does not return */
             operator_delete(pvVar2);
           }
           piVar1 = param_1 + 1;
@@ -59349,7 +58776,6 @@ void lib_fn_63d170(int *param_1)
         if ((uint)(in_ECX[2] - (int)pvVar2 >> 3) < uVar8) {
           if (pvVar2 != (void *)0x0) {
             param_1 = (int *)uVar6;
-                    /* WARNING: Subroutine does not return */
             operator_delete(pvVar2);
           }
           piVar1 = param_1 + 1;
@@ -59422,7 +58848,6 @@ void lib_fn_63d290(int *param_1)
         if ((uint)((in_ECX[2] - (int)pvVar2) / 0xc) < uVar4) {
           if (pvVar2 != (void *)0x0) {
             param_1 = (int *)uVar4;
-                    /* WARNING: Subroutine does not return */
             operator_delete(pvVar2);
           }
           piVar1 = param_1 + 1;
@@ -59494,7 +58919,6 @@ void lib_fn_63d400(int *param_1)
       if (uVar6 < uVar5) {
         if ((uint)(in_ECX[2] - (int)pvVar1 >> 4) < uVar5) {
           if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(pvVar1);
           }
           cVar3 = std_vector_allocate_stride0x10(param_1[1] - *param_1 >> 4);
@@ -59552,7 +58976,6 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<4,float>_>::vfunc_0(byte pa
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -59570,7 +58993,6 @@ void plasma::SmoothMeshShape::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -59595,7 +59017,6 @@ uint lib_fn_63d850(uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0x3ffffff < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x40);
@@ -59606,7 +59027,6 @@ uint lib_fn_63d850(uint param_1)
     in_ECX[2] = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -59627,9 +59047,6 @@ void * lib_fn_63d930(undefined4 param_1,uint param_2)
   if ((param_2 < 0x40000000) && (pvVar1 = operator_new(param_2 << 2), pvVar1 != (void *)0x0)) {
     return pvVar1;
   }
-                    /* WARNING: Could not recover jumptable at 0x0063d955. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
   std::_Xbad_alloc();
   return extraout_EAX;
 }
@@ -59651,9 +59068,6 @@ void * lib_fn_63d960(undefined4 param_1,uint param_2)
   if ((param_2 < 0x35e50d8) && (pvVar1 = operator_new(param_2 * 0x4c), pvVar1 != (void *)0x0)) {
     return pvVar1;
   }
-                    /* WARNING: Could not recover jumptable at 0x0063d985. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
   std::_Xbad_alloc();
   return extraout_EAX;
 }
@@ -59675,9 +59089,6 @@ void * lib_fn_63d990(undefined4 param_1,uint param_2)
   if ((param_2 < 0x2108422) && (pvVar1 = operator_new(param_2 * 0x7c), pvVar1 != (void *)0x0)) {
     return pvVar1;
   }
-                    /* WARNING: Could not recover jumptable at 0x0063d9b5. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
   std::_Xbad_alloc();
   return extraout_EAX;
 }
@@ -59874,10 +59285,8 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<4,float>_>::vfunc_4(int par
     puVar1 = *(undefined4 **)(*(int *)(in_ECX + 0x4c) + param_1 * 4);
     if (puVar1 != (undefined4 *)0x0) {
       if ((void *)*puVar1 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(puVar1);
       }
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar1);
     }
     _Dst = (void *)(*(int *)(in_ECX + 0x4c) + param_1 * 4);
@@ -60194,7 +59603,6 @@ void stl_fn_64b770(undefined4 *param_1,char param_2,undefined4 *param_3,undefine
   int *piVar7;
   
   if (0xffffffd < (uint)in_ECX[1]) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   piVar3 = (int *)lib_fn_64b460(param_4);
@@ -60458,7 +59866,6 @@ void lib_fn_64d810(void)
   int in_ECX;
   
   if (*(void **)(in_ECX + 0x4c) != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 0x4c));
   }
   plasma::Attribute::ctor_1();
@@ -60512,10 +59919,8 @@ void plasma::Engine::ctor_0(void)
   *(undefined4 *)(in_ECX[0x55] + 4) = in_ECX[0x55];
   in_ECX[0x56] = 0;
   if (pvVar2 != (void *)in_ECX[0x55]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x55]);
 }
 
@@ -60531,7 +59936,6 @@ void lib_fn_64dd20(void)
   undefined1 local_8 [4];
   
   rbtree_eraseRange_str(local_8,**(undefined4 **)(in_ECX + 0x18),*(undefined4 **)(in_ECX + 0x18));
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(in_ECX + 0x18));
 }
 
@@ -60574,10 +59978,8 @@ void plasma::ObjectManager::ctor_0(void)
   *(undefined4 *)(in_ECX[2] + 4) = in_ECX[2];
   in_ECX[3] = 0;
   if (pvVar2 != (void *)in_ECX[2]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[2]);
 }
 
@@ -60592,12 +59994,10 @@ void plasma::DiscreteAttribute<int>::vfunc_0(byte param_1)
   void *in_ECX;
   
   if (*(void **)((int)in_ECX + 0x4c) != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)in_ECX + 0x4c));
   }
   Attribute::ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -60615,7 +60015,6 @@ void plasma::Engine::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -60633,7 +60032,6 @@ void plasma::ObjectManager::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -60652,7 +60050,6 @@ undefined4 * lib_fn_64e410(void)
   
   puVar1 = operator_new(0x10);
   if (puVar1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *puVar1 = *in_ECX;
@@ -60758,7 +60155,6 @@ undefined4 * lib_fn_64ec40(undefined4 *param_1)
   iVar1 = *(int *)(in_ECX + 0x9c);
   iVar2 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&stack0x00000008);
   if (*(int *)(in_ECX + 0xa0) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(in_ECX + 0xa0) = *(int *)(in_ECX + 0xa0) + 1;
@@ -60944,8 +60340,6 @@ void lib_fn_652710(void)
   
   piVar1 = *(int **)(in_ECX + 0xcc);
   if ((piVar1 != (int *)0x0) && ((char)piVar1[0x57] != '\0')) {
-                    /* WARNING: Could not recover jumptable at 0x00652729. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     (**(code **)(*piVar1 + 0x68))();
     return;
   }
@@ -61154,7 +60548,6 @@ int lib_fn_653320(void)
   if (piVar1 != *(int **)(in_ECX + 0x50)) {
     *(int *)piVar1[1] = *piVar1;
     *(int *)(*piVar1 + 4) = piVar1[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar1);
   }
   return piVar1[2];
@@ -61175,7 +60568,6 @@ void lib_fn_653680(void)
   iVar1 = *(int *)(in_ECX + 0x50);
   iVar2 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&stack0x00000004);
   if (*(int *)(in_ECX + 0x54) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(in_ECX + 0x54) = *(int *)(in_ECX + 0x54) + 1;
@@ -61256,7 +60648,6 @@ void lib_fn_65aa90(void)
   undefined4 *in_ECX;
   
   std_list_clearNodes();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -61272,7 +60663,6 @@ void lib_fn_65aab0(void)
   undefined1 local_8 [4];
   
   std_map_eraseRange(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -61287,7 +60677,6 @@ void lib_fn_65aae0(void)
   int in_ECX;
   
   if (*(void **)(in_ECX + 8) != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 8));
   }
   return;
@@ -61318,7 +60707,6 @@ void plasma::ScalableFont::ctor_1(void)
   DeleteCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x43));
   local_8 = CONCAT31(local_8._1_3_,5);
   std_Tree_eraseRange(local_18,*(undefined4 *)in_ECX[0x34],(undefined4 *)in_ECX[0x34]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x34]);
 }
 
@@ -61367,7 +60755,6 @@ void plasma::ScalableFont::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -61487,11 +60874,9 @@ void plasma::Texture::ctor_0(void)
   
   *in_ECX = vftable;
   if ((void *)in_ECX[9] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[9]);
   }
   if (7 < (uint)in_ECX[8]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[3]);
   }
   in_ECX[8] = 7;
@@ -61513,7 +60898,6 @@ void plasma::Texture::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -61531,7 +60915,6 @@ void lib_fn_661540(void)
   undefined1 local_8 [4];
   
   std_map_eraseRange_661a20(local_8,*(undefined4 *)*in_ECX,(undefined4 *)*in_ECX);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -61558,10 +60941,8 @@ void plasma::Attribute::ctor_1(void)
       puVar2 = (undefined4 *)piVar5[10];
       if (puVar2 != (undefined4 *)0x0) {
         if ((void *)*puVar2 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(puVar2);
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar2);
       }
       if (*(char *)((int)piVar5 + 0xd) == '\0') {
@@ -61595,13 +60976,10 @@ void plasma::Attribute::ctor_1(void)
     *(undefined1 *)(in_ECX + 9) = 0;
     if ((void *)in_ECX[3] == (void *)0x0) {
       std_map_eraseRange_661a20(local_8,*(undefined4 *)in_ECX[1],(undefined4 *)in_ECX[1]);
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)in_ECX[1]);
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[3]);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[9]);
 }
 
@@ -61617,7 +60995,6 @@ void plasma::Attribute::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -61639,7 +61016,6 @@ void plasma::Object::ctor_0(void)
      (piVar1 = (int *)in_ECX[2], piVar1 != *(int **)(in_ECX[1] + 8))) {
     *(int *)piVar1[1] = *piVar1;
     *(int *)(*piVar1 + 4) = piVar1[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar1);
   }
   return;
@@ -61661,11 +61037,9 @@ void plasma::Object::vfunc_0(byte param_1)
      (piVar1 = (int *)in_ECX[2], piVar1 != *(int **)(in_ECX[1] + 8))) {
     *(int *)piVar1[1] = *piVar1;
     *(int *)(*piVar1 + 4) = piVar1[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar1);
   }
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -61685,7 +61059,6 @@ void plasma::ScrollSlider::vfunc_0(byte param_1)
   in_ECX[9] = vftable;
   Button::ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -61830,10 +61203,8 @@ void lib_fn_662e10(int param_1)
   local_18[1] = (int)local_18;
   local_14 = 0;
   if (piVar2 == local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_18);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(piVar2);
 }
 
@@ -61850,7 +61221,6 @@ void lib_fn_663510(void)
   
   if (*(int *)(in_ECX + 0x4c) != 0) {
     dtor_stringRange_0x18(*(int *)(in_ECX + 0x4c),*(undefined4 *)(in_ECX + 0x50),&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 0x4c));
   }
   plasma::Attribute::ctor_1();
@@ -61880,33 +61250,28 @@ void plasma::TextShape::ctor_1(void)
   local_8 = 3;
   DeleteCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x81));
   if (7 < (uint)in_ECX[0x78]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x73]);
   }
   in_ECX[0x78] = 7;
   in_ECX[0x77] = 0;
   *(undefined2 *)(in_ECX + 0x73) = 0;
   if ((void *)in_ECX[0x6c] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x6c]);
   }
   Attribute::ctor_1(uVar1);
   local_8._0_1_ = 2;
   if ((void *)in_ECX[0x56] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x56]);
   }
   Attribute::ctor_1(uVar1);
   local_8._0_1_ = 1;
   if ((void *)in_ECX[0x40] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x40]);
   }
   Attribute::ctor_1(uVar1);
   local_8 = (uint)local_8._1_3_ << 8;
   if (in_ECX[0x2a] != 0) {
     dtor_stringRange_0x18(in_ECX[0x2a],in_ECX[0x2b],&local_11,in_ECX);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x2a]);
   }
   Attribute::ctor_1(uVar1);
@@ -61931,12 +61296,10 @@ void plasma::
   
   if (*(int *)((int)in_ECX + 0x4c) != 0) {
     dtor_stringRange_0x18(*(int *)((int)in_ECX + 0x4c),*(undefined4 *)((int)in_ECX + 0x50),&local_5,param_1);
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)in_ECX + 0x4c));
   }
   Attribute::ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -61954,7 +61317,6 @@ void plasma::TextShape::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -62000,7 +61362,6 @@ void plasma::
   local_8 = (uint)bVar2;
   std_vector_insert(&local_2c);
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c);
   }
   iVar1 = *(int *)(in_ECX + 0x50) - *(int *)(in_ECX + 0x4c);
@@ -62166,7 +61527,6 @@ void plasma::
     ppvVar1 = (void **)(*(int *)(in_ECX + 0x4c) + *(int *)(in_ECX + 0x20) * 0x18);
     if (ppvVar1 != local_20) {
       if ((void *)0x7 < ppvVar1[5]) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(*ppvVar1);
       }
       ppvVar1[5] = (void *)0x7;
@@ -62175,7 +61535,6 @@ void plasma::
       u16string_move(local_20);
     }
     if (7 < local_c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_20[0]);
     }
   }
@@ -62240,7 +61599,6 @@ void plasma::
   ppvVar1 = (void **)(*(int *)(in_ECX + 0x4c) + *(int *)(in_ECX + 0x20) * 0x18);
   if (ppvVar1 != ppvVar4) {
     if ((void *)0x7 < ppvVar1[5]) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(*ppvVar1);
     }
     ppvVar1[5] = (void *)0x7;
@@ -62251,7 +61609,6 @@ void plasma::
   }
   if (bVar2) {
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_18 = 7;
@@ -62259,7 +61616,6 @@ void plasma::
     local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
   }
   if ((!bVar2) && (7 < local_30)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   ExceptionList = local_10;
@@ -62432,7 +61788,6 @@ void plasma::
     ppvVar1 = (void **)(*(int *)(in_ECX + 0x4c) + param_1 * 0x18);
     if (ppvVar1 != local_20) {
       if ((void *)0x7 < ppvVar1[5]) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(*ppvVar1);
       }
       ppvVar1[5] = (void *)0x7;
@@ -62441,7 +61796,6 @@ void plasma::
       u16string_move(local_20);
     }
     if (7 < local_c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_20[0]);
     }
   }
@@ -62486,7 +61840,6 @@ void plasma::TextShape::vfunc_1(void)
     *(undefined4 *)(in_ECX + 0x1e8) = uVar3;
     local_8 = 0xffffffff;
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
   }
@@ -62563,7 +61916,6 @@ void plasma::Keyable::ctor_0(void)
   
   *in_ECX = vftable;
   if (7 < (uint)in_ECX[0x11]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xc]);
   }
   in_ECX[0x11] = 7;
@@ -62575,10 +61927,8 @@ void plasma::Keyable::ctor_0(void)
   *(undefined4 *)(in_ECX[9] + 4) = in_ECX[9];
   in_ECX[10] = 0;
   if (pvVar2 != (void *)in_ECX[9]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[9]);
 }
 
@@ -62594,7 +61944,6 @@ void plasma::Keyable::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -62693,10 +62042,8 @@ void plasma::Button::ctor_0(void)
   *(undefined4 *)(in_ECX[0x88] + 4) = in_ECX[0x88];
   in_ECX[0x89] = 0;
   if (pvVar2 != (void *)in_ECX[0x88]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x88]);
 }
 
@@ -62712,7 +62059,6 @@ void plasma::Button::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -62758,8 +62104,6 @@ void plasma::ScrollSlider::vfunc_13(void)
 {
   int *in_ECX;
   
-                    /* WARNING: Could not recover jumptable at 0x006659d2. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   (**(code **)(*in_ECX + 0x2c))();
   return;
 }
@@ -62909,10 +62253,8 @@ void plasma::ContinuousArrayAttribute<float>::ctor_0(void)
       puVar1 = *(undefined4 **)(in_ECX[0x13] + iVar2 * 4);
       if (puVar1 != (undefined4 *)0x0) {
         if ((void *)*puVar1 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(puVar1);
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar1);
       }
       iVar2 = iVar2 + 1;
@@ -62922,7 +62264,6 @@ void plasma::ContinuousArrayAttribute<float>::ctor_0(void)
     Attribute::ctor_1();
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x13]);
 }
 
@@ -62945,10 +62286,8 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<2,float>_>::ctor_0(void)
       puVar1 = *(undefined4 **)(in_ECX[0x13] + iVar2 * 4);
       if (puVar1 != (undefined4 *)0x0) {
         if ((void *)*puVar1 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(puVar1);
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar1);
       }
       iVar2 = iVar2 + 1;
@@ -62958,7 +62297,6 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<2,float>_>::ctor_0(void)
     Attribute::ctor_1();
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x13]);
 }
 
@@ -62984,11 +62322,9 @@ void plasma::MeshShape::ctor_0(void)
   local_8 = 0x18;
   if (in_ECX[0x236] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x236],in_ECX[0x237],&local_11);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x236]);
   }
   std_Tree_eraseRange(local_1c,*(undefined4 *)in_ECX[0x234],(undefined4 *)in_ECX[0x234]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x234]);
 }
 
@@ -63068,7 +62404,6 @@ void plasma::ContinuousArrayAttribute<float>::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -63086,7 +62421,6 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<2,float>_>::vfunc_0(byte pa
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -63104,7 +62438,6 @@ void plasma::MeshShape::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -63137,7 +62470,6 @@ void lib_fn_668870(uint param_1)
       pvVar3 = operator_new(param_1 << 6);
       if (pvVar3 != (void *)0x0) goto LAB_006688d1;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_006688d1:
@@ -63145,7 +62477,6 @@ LAB_006688d1:
   std_uninitialized_copy_matrix(*in_ECX,in_ECX[1],pvVar3,(int)&param_1 + 3,0,param_1);
   pvVar1 = (void *)*in_ECX;
   if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)(uVar2 * 0x40 + (int)pvVar3);
@@ -63170,7 +62501,6 @@ void lib_fn_668a40(uint param_1)
     return;
   }
   if (0x3ffffffU - (in_ECX[1] - *in_ECX >> 6) < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 6;
@@ -63197,7 +62527,6 @@ void lib_fn_668ac0(uint param_1)
     return;
   }
   if (0x15555555U - (in_ECX[1] - *in_ECX) / 0xc < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = (in_ECX[2] - *in_ECX) / 0xc;
@@ -64990,8 +64319,6 @@ void lib_fn_66e970(void)
     *(undefined4 *)(in_ECX + 0x10) = 1;
     UNLOCK();
   }
-                    /* WARNING: Could not recover jumptable at 0x0066e999. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Concurrency::details::_Cancellation_beacon::~_Cancellation_beacon
             ((_Cancellation_beacon *)(in_ECX + 8));
   return;
@@ -65017,7 +64344,6 @@ void lib_fn_66eb80(void)
         Concurrency::details::_StructuredTaskCollection::_CleanupToken(in_ECX);
       }
       Concurrency::missing_wait::missing_wait(local_10);
-                    /* WARNING: Subroutine does not return */
       _CxxThrowException(local_10,(ThrowInfo *)&DAT_0075f3d8);
     }
   }
@@ -65047,7 +64373,6 @@ void lib_fn_66ec20(void)
         Concurrency::details::_StructuredTaskCollection::_CleanupToken(in_ECX);
       }
       Concurrency::missing_wait::missing_wait(amStack_10);
-                    /* WARNING: Subroutine does not return */
       _CxxThrowException(amStack_10,(ThrowInfo *)&DAT_0075f3d8);
     }
   }
@@ -65150,62 +64475,48 @@ void plasma::Drawing::ctor_1(void)
   *in_ECX = vftable;
   if (in_ECX[0x40] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x40],in_ECX[0x41],&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x40]);
   }
   if ((void *)in_ECX[0x3d] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x3d]);
   }
   if ((void *)in_ECX[0x3a] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x3a]);
   }
   if ((void *)in_ECX[0x37] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x37]);
   }
   if ((void *)in_ECX[0x34] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x34]);
   }
   if ((void *)in_ECX[0x31] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x31]);
   }
   if (in_ECX[0x16] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x16],in_ECX[0x17],&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x16]);
   }
   if (in_ECX[0x13] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x13],in_ECX[0x14],&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x13]);
   }
   if (in_ECX[0x10] != 0) {
     std_vector_destroy_ptr_elems_stride3(in_ECX[0x10],in_ECX[0x11],&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x10]);
   }
   if ((void *)in_ECX[0xd] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xd]);
   }
   if ((void *)in_ECX[10] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[10]);
   }
   if ((void *)in_ECX[7] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[7]);
   }
   if ((void *)in_ECX[4] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[4]);
   }
   if ((void *)in_ECX[1] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[1]);
   }
   return;
@@ -65223,7 +64534,6 @@ void plasma::Drawing::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -65580,7 +64890,6 @@ void lib_fn_674f80(void)
   if ((uint)(*(int *)(in_ECX + 0xc) - *(int *)(in_ECX + 4) >> 3) < uVar3) {
     if (0x1fffffff < uVar3) {
 LAB_00674fad:
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     vectorReserve8(uVar3);
@@ -65588,7 +64897,6 @@ LAB_00674fad:
   uVar3 = *(int *)(in_ECX + 0x20) - *(int *)(in_ECX + 0x1c) >> 4;
   if ((uint)(*(int *)(in_ECX + 0x24) - *(int *)(in_ECX + 0x1c) >> 4) < uVar3) {
     if (0xfffffff < uVar3) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     vectorReserve16(uVar3);
@@ -65596,7 +64904,6 @@ LAB_00674fad:
   uVar3 = *(int *)(in_ECX + 0x14) - *(int *)(in_ECX + 0x10) >> 3;
   if ((uint)(*(int *)(in_ECX + 0x18) - *(int *)(in_ECX + 0x10) >> 3) < uVar3) {
     if (0x1fffffff < uVar3) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     vectorReserve8(uVar3);
@@ -65604,7 +64911,6 @@ LAB_00674fad:
   uVar3 = *(int *)(in_ECX + 0x38) - *(int *)(in_ECX + 0x34) >> 2;
   if ((uint)(*(int *)(in_ECX + 0x3c) - *(int *)(in_ECX + 0x34) >> 2) < uVar3) {
     if (0x3fffffff < uVar3) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     std_vector_grow_realloc_stride4(uVar3);
@@ -65613,7 +64919,6 @@ LAB_00674fad:
   uVar3 = (*(int *)(in_ECX + 0x44) - *(int *)(in_ECX + 0x40)) / 0xc;
   if ((uint)((*(int *)(in_ECX + 0x48) - *piVar5) / 0xc) < uVar3) {
     if (0x15555555 < uVar3) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     std_vector_grow_realloc_stride0xc(uVar3);
@@ -65636,7 +64941,6 @@ LAB_00674fad:
   uVar3 = (*(int *)(in_ECX + 0x104) - *piVar5) / 0xc;
   if ((uint)((*(int *)(in_ECX + 0x108) - *piVar5) / 0xc) < uVar3) {
     if (0x15555555 < uVar3) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     std_vector_grow_realloc_stride0xc(uVar3);
@@ -66715,7 +66019,6 @@ LAB_006768a0:
                     iVar14 = (int)piStack_1c - (int)local_20 >> 2;
                     if (iVar14 == 0x3fffffff) {
 LAB_00677238:
-                    /* WARNING: Subroutine does not return */
                       std::_Xlength_error("vector<T> too long");
                     }
                     uVar16 = (int)local_18 - (int)local_20 >> 2;
@@ -66819,7 +66122,6 @@ LAB_00676d85:
           iVar20 = local_10c;
           if (piVar13 != (int *)0x0) {
             std::_Container_base0::_Orphan_all((_Container_base0 *)&local_20);
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_20);
           }
         }
@@ -66876,7 +66178,6 @@ void plasma::StaticMeshShape::vfunc_0(byte param_1)
   local_8 = 0xffffffff;
   Shape::ctor_1(uVar1);
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   ExceptionList = local_10;
@@ -67092,11 +66393,9 @@ void lib_fn_677c60(void)
   
   if (*(int *)(in_ECX + 0x24) != 0) {
     std_vector_destroyRange(*(int *)(in_ECX + 0x24),*(undefined4 *)(in_ECX + 0x28),&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 0x24));
   }
   if (7 < *(uint *)(in_ECX + 0x20)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 0xc));
   }
   *(undefined4 *)(in_ECX + 0x20) = 7;
@@ -67118,7 +66417,6 @@ void plasma::Movie::vfunc_0(byte param_1)
   
   lib_fn_677c60();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -67144,7 +66442,6 @@ void plasma::Transformation::ctor_0(void)
   *in_ECX = vftable;
   local_8 = 3;
   std_Tree_eraseRange(local_18,*(undefined4 *)in_ECX[0x6a],(undefined4 *)in_ECX[0x6a]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x6a]);
 }
 
@@ -67160,7 +66457,6 @@ void plasma::Transformation::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -67390,7 +66686,6 @@ void plasma::Display::ctor_0(void)
   *in_ECX = vftable;
   local_8 = 4;
   std_Tree_eraseRange(local_18,*(undefined4 *)in_ECX[0x81],(undefined4 *)in_ECX[0x81]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x81]);
 }
 
@@ -67406,7 +66701,6 @@ void plasma::Display::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -67503,7 +66797,6 @@ void lib_fn_679570(int *param_1,void *param_2,int param_3,undefined4 param_4,uin
   if (param_2 == (void *)0x0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -67617,7 +66910,6 @@ void lib_fn_679740(int *param_1,void *param_2,int param_3,undefined4 param_4,uin
     __security_check_cookie(local_c ^ (uint)&local_44);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -67762,7 +67054,6 @@ void lib_fn_679a40(int *param_1,void *param_2,int param_3,undefined4 param_4,uin
     __security_check_cookie(local_c ^ (uint)&local_64);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -67788,60 +67079,48 @@ void plasma::CurveShape::ctor_0(void)
   local_8 = 0x11;
   Object_release_if_nonnull(in_ECX[0xfd]);
   if ((void *)in_ECX[0xfa] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xfa]);
   }
   if ((void *)in_ECX[0xf7] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xf7]);
   }
   if ((void *)in_ECX[0xf4] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xf4]);
   }
   if ((void *)in_ECX[0xf1] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xf1]);
   }
   if ((void *)in_ECX[0xee] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xee]);
   }
   if ((void *)in_ECX[0xeb] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xeb]);
   }
   if ((void *)in_ECX[0xe4] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xe4]);
   }
   if ((void *)in_ECX[0xdd] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xdd]);
   }
   local_8._0_1_ = 8;
   ContinuousArrayAttribute<float>::ctor_0(uVar1);
   local_8._0_1_ = 7;
   if ((void *)in_ECX[0xc4] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xc4]);
   }
   Attribute::ctor_1();
   local_8._0_1_ = 6;
   if ((void *)in_ECX[0xae] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xae]);
   }
   Attribute::ctor_1();
   local_8._0_1_ = 5;
   if ((void *)in_ECX[0x98] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x98]);
   }
   Attribute::ctor_1();
   local_8._0_1_ = 4;
   if ((void *)in_ECX[0x82] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x82]);
   }
   Attribute::ctor_1();
@@ -67871,7 +67150,6 @@ void plasma::CurveShape::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -68456,7 +67734,6 @@ LAB_0067b013:
         iVar11 = (int)((int)piVar3 - *puVar1) >> 2;
         if (iVar11 == 0x3fffffff) {
 LAB_0067b3bf:
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68482,7 +67759,6 @@ LAB_0067b3bf:
       if ((piVar3 == piVar4) && ((int)piVar4 - (int)piVar3 >> 2 == 0)) {
         iVar11 = (int)((int)piVar3 - *puVar1) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68513,7 +67789,6 @@ LAB_0067b3bf:
       if ((piVar3 == piVar4) && ((int)piVar4 - (int)piVar3 >> 2 == 0)) {
         iVar11 = (int)((int)piVar3 - *puVar1) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68539,7 +67814,6 @@ LAB_0067b3bf:
       if ((piVar3 == piVar4) && ((int)piVar4 - (int)piVar3 >> 2 == 0)) {
         iVar11 = (int)((int)piVar3 - *puVar1) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68569,7 +67843,6 @@ LAB_0067b3bf:
       if ((puVar8 == puVar13) && ((int)puVar13 - (int)puVar8 >> 2 == 0)) {
         iVar11 = (int)puVar8 - *(int *)(iVar12 + 0x34) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68595,7 +67868,6 @@ LAB_0067b3bf:
       if ((puVar8 == puVar13) && ((int)puVar13 - (int)puVar8 >> 2 == 0)) {
         iVar11 = (int)puVar8 - *(int *)(iVar12 + 0x34) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68626,7 +67898,6 @@ LAB_0067b3bf:
       if ((puVar5 == puVar6) && ((int)puVar6 - (int)puVar5 >> 2 == 0)) {
         iVar11 = (int)((int)puVar5 - *puVar1) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68652,7 +67923,6 @@ LAB_0067b3bf:
       if ((puVar5 == puVar6) && ((int)puVar6 - (int)puVar5 >> 2 == 0)) {
         iVar11 = (int)((int)puVar5 - *puVar1) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68682,7 +67952,6 @@ LAB_0067b3bf:
       if ((puVar8 == puVar13) && ((int)puVar13 - (int)puVar8 >> 2 == 0)) {
         iVar11 = (int)puVar8 - *(int *)(iVar12 + 0x34) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68708,7 +67977,6 @@ LAB_0067b3bf:
       if ((puVar8 == puVar13) && ((int)puVar13 - (int)puVar8 >> 2 == 0)) {
         iVar11 = (int)puVar8 - *(int *)(iVar12 + 0x34) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_18[3] = iVar11 + 1;
@@ -68738,7 +68006,6 @@ LAB_0067b3bf:
       if ((puVar8 == puVar13) && ((int)puVar13 - (int)puVar8 >> 2 == 0)) {
         iVar11 = (int)puVar8 - *(int *)(iVar12 + 0x34) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar9 = iVar11 + 1;
@@ -68764,7 +68031,6 @@ LAB_0067b3bf:
       if ((puVar8 == puVar13) && ((int)puVar13 - (int)puVar8 >> 2 == 0)) {
         iVar11 = (int)puVar8 - *(int *)(iVar12 + 0x34) >> 2;
         if (iVar11 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar9 = iVar11 + 1;
@@ -69479,7 +68745,6 @@ void plasma::GenericShape::vfunc_0(byte param_1)
   local_8 = 1;
   Object_release_if_nonnull(in_ECX[0x22]);
   if (7 < (uint)in_ECX[0x20]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0x1b]);
   }
   in_ECX[0x20] = 7;
@@ -69488,7 +68753,6 @@ void plasma::GenericShape::vfunc_0(byte param_1)
   local_8 = 0xffffffff;
   Shape::ctor_1(uVar1);
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   ExceptionList = local_10;
@@ -69667,7 +68931,6 @@ void plasma::ScrollButton::vfunc_0(byte param_1)
   in_ECX[9] = vftable;
   Button::ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -69902,10 +69165,8 @@ void lib_fn_67d8e0(int param_1)
   local_18[1] = (int)local_18;
   local_14 = 0;
   if (piVar2 == local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_18);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(piVar2);
 }
 
@@ -69923,7 +69184,6 @@ void plasma::ListWidget::vfunc_0(byte param_1)
   in_ECX[9] = vftable;
   Widget::ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -69975,7 +69235,6 @@ void plasma::PopUpButton::vfunc_0(byte param_1)
   in_ECX[9] = vftable;
   Button::ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -70261,7 +69520,6 @@ void lib_fn_67e0f0(undefined4 *param_1,char param_2,ushort *param_3,void *param_
     rbtree_iteratorIncrement();
   }
   if (*puVar2 <= *(ushort *)(_param_2 + 4)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_4);
   }
 LAB_0067e186:
@@ -70292,7 +69550,6 @@ void plasma::PlasmaFont::ctor_1(void)
   if (piVar4 != (int *)in_ECX[0x16]) {
     do {
       if ((void *)piVar4[5] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)piVar4[5]);
       }
       if (*(char *)((int)piVar4 + 0xd) == '\0') {
@@ -70321,7 +69578,6 @@ void plasma::PlasmaFont::ctor_1(void)
     } while (piVar4 != (int *)in_ECX[0x16]);
   }
   std_Tree_eraseRange(local_8,*(undefined4 *)in_ECX[0x16],(undefined4 *)in_ECX[0x16]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x16]);
 }
 
@@ -70379,7 +69635,6 @@ void plasma::PlasmaFont::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -70463,7 +69718,6 @@ void plasma::PlasmaFont::vfunc_5
   iVar8 = *(int *)(iVar1 + 0x144);
   iVar4 = map_insertVec4Node(iVar8,*(undefined4 *)(iVar8 + 4),iVar1 + 0x15c);
   if (*(int *)(iVar1 + 0x148) == 0xaaaaaa9) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(iVar1 + 0x148) = *(int *)(iVar1 + 0x148) + 1;
@@ -70565,7 +69819,6 @@ void plasma::PlasmaFont::vfunc_5
       if (piVar3 != *(int **)(iVar1 + 0x144)) {
         *(int *)piVar3[1] = *piVar3;
         *(int *)(*piVar3 + 4) = piVar3[1];
-                    /* WARNING: Subroutine does not return */
         operator_delete(piVar3);
       }
     }
@@ -70580,14 +69833,12 @@ void plasma::PlasmaFont::vfunc_5
       if (piVar3 != *(int **)(iVar1 + 0x14c)) {
         *(int *)piVar3[1] = *piVar3;
         *(int *)(*piVar3 + 4) = piVar3[1];
-                    /* WARNING: Subroutine does not return */
         operator_delete(piVar3);
       }
     }
     __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -70975,7 +70226,6 @@ void plasma::PlasmaFont::vfunc_1
   *local_70 = fVar18 - fVar19;
   local_70[1] = fVar17 - fVar20;
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(ppppuVar12);
   }
   ExceptionList = local_10;
@@ -71003,7 +70253,6 @@ void plasma::PixelFont::ctor_1(void)
   if (piVar4 != (int *)in_ECX[0x17]) {
     do {
       if ((void *)piVar4[5] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)piVar4[5]);
       }
       if (*(char *)((int)piVar4 + 0xd) == '\0') {
@@ -71032,7 +70281,6 @@ void plasma::PixelFont::ctor_1(void)
     } while (piVar4 != (int *)in_ECX[0x17]);
   }
   std_Tree_eraseRange(local_8,*(undefined4 *)in_ECX[0x17],(undefined4 *)in_ECX[0x17]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x17]);
 }
 
@@ -71048,7 +70296,6 @@ void plasma::PixelFont::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -71451,7 +70698,6 @@ void plasma::PixelFont::vfunc_1
     local_64[1] = local_64[1] + local_20;
   }
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c[0]);
   }
   ExceptionList = local_10;
@@ -71587,7 +70833,6 @@ void lib_fn_681820(void)
   undefined4 *in_ECX;
   
   std_list_clearNodesWithStrings();
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*in_ECX);
 }
 
@@ -71602,14 +70847,12 @@ void lib_fn_681840(void)
   int in_ECX;
   
   if (0xf < *(uint *)(in_ECX + 0x30)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 0x1c));
   }
   *(undefined4 *)(in_ECX + 0x30) = 0xf;
   *(undefined4 *)(in_ECX + 0x2c) = 0;
   *(undefined1 *)(in_ECX + 0x1c) = 0;
   if (0xf < *(uint *)(in_ECX + 0x18)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 4));
   }
   *(undefined4 *)(in_ECX + 0x18) = 0xf;
@@ -71631,7 +70874,6 @@ void plasma::Shape::ctor_1(void)
   
   *in_ECX = vftable;
   std_Tree_eraseRange(local_8,*(undefined4 *)in_ECX[0x14],(undefined4 *)in_ECX[0x14]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x14]);
 }
 
@@ -71655,7 +70897,6 @@ void plasma::Shape::vfunc_0(void)
   *in_ECX = vftable;
   local_8 = 0;
   std_Tree_eraseRange(local_18,*(undefined4 *)in_ECX[0x14],(undefined4 *)in_ECX[0x14]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0x14]);
 }
 
@@ -71672,14 +70913,12 @@ void plasma::Font::ctor_0(void)
   
   *in_ECX = vftable;
   if (7 < (uint)in_ECX[0x12]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)in_ECX[0xd]);
   }
   in_ECX[0x12] = 7;
   in_ECX[0x11] = 0;
   *(undefined2 *)(in_ECX + 0xd) = 0;
   std_Tree_eraseRange(local_8,*(undefined4 *)in_ECX[9],(undefined4 *)in_ECX[9]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[9]);
 }
 
@@ -71695,7 +70934,6 @@ void plasma::Font::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -71860,10 +71098,8 @@ void plasma::D3D9Engine::ctor_0(void)
   *(undefined4 *)(in_ECX[0xae] + 4) = in_ECX[0xae];
   in_ECX[0xaf] = 0;
   if (pvVar3 != (void *)in_ECX[0xae]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar3);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)in_ECX[0xae]);
 }
 
@@ -71879,7 +71115,6 @@ void plasma::D3D9Engine::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -71956,7 +71191,6 @@ void plasma::D3D9Engine::vfunc_21(int param_1)
   iVar2 = *(int *)(in_ECX + 0x2b0);
   iVar1 = lib_fn_688770(iVar2,*(undefined4 *)(iVar2 + 4),(undefined4 *)(in_ECX + 0x224));
   if (*(int *)(in_ECX + 0x2b4) == 0x38e38e2) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(in_ECX + 0x2b4) = *(int *)(in_ECX + 0x2b4) + 1;
@@ -72122,7 +71356,6 @@ void plasma::D3D9Engine::vfunc_25
     local_10[1] = *(float *)(in_ECX + 0x2a8);
     iVar2 = lib_fn_688770(local_10[1],*(undefined4 *)((int)local_10[1] + 4),pfVar1);
     if (*(int *)(in_ECX + 0x2ac) == 0x38e38e2) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(in_ECX + 0x2ac) = *(int *)(in_ECX + 0x2ac) + 1;
@@ -72178,7 +71411,6 @@ void plasma::D3D9Engine::vfunc_25
     pfVar1 = (float *)(in_ECX + 0x264);
     iVar2 = lib_fn_688770(local_10[1],*(undefined4 *)((int)local_10[1] + 4),pfVar1);
     if (*(int *)(in_ECX + 0x2ac) == 0x38e38e2) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(in_ECX + 0x2ac) = *(int *)(in_ECX + 0x2ac) + 1;
@@ -72812,7 +72044,6 @@ void plasma::D3D9Engine::vfunc_22(void)
     if (piVar2 != piVar1) {
       *(int *)piVar2[1] = *piVar2;
       *(int *)(*piVar2 + 4) = piVar2[1];
-                    /* WARNING: Subroutine does not return */
       operator_delete(piVar2);
     }
   }
@@ -72849,7 +72080,6 @@ void plasma::D3D9Engine::vfunc_26(void)
     if (piVar2 != piVar1) {
       *(int *)piVar2[1] = *piVar2;
       *(int *)(*piVar2 + 4) = piVar2[1];
-                    /* WARNING: Subroutine does not return */
       operator_delete(piVar2);
     }
   }
@@ -73149,7 +72379,6 @@ void plasma::D3D9Drawing::ctor_0(int param_1)
   local_8 = 0;
   iVar2 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&param_1);
   if (*(int *)(param_1 + 700) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(param_1 + 700) = *(int *)(param_1 + 700) + 1;
@@ -73216,7 +72445,6 @@ void plasma::D3D9Drawing::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -73290,7 +72518,6 @@ void plasma::D3D9Drawing::vfunc_2(int param_1,float *param_2)
   local_34 = *(int *)(iVar6 + 0x2b0);
   iVar4 = lib_fn_688770(local_34,*(undefined4 *)(local_34 + 4),iVar6 + 0x224);
   if (*(int *)(iVar6 + 0x2b4) == 0x38e38e2) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(iVar6 + 0x2b4) = *(int *)(iVar6 + 0x2b4) + 1;
@@ -73534,7 +72761,6 @@ LAB_0068b27c:
   if (piVar2 != piVar1) {
     *(int *)piVar2[1] = *piVar2;
     *(int *)(*piVar2 + 4) = piVar2[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar2);
   }
   piVar1 = *(int **)(*(int *)(in_ECX + 0x124) + 0x2c0);
@@ -73721,7 +72947,6 @@ void plasma::D3D9Texture::vfunc_0(byte param_1)
   local_8 = 0xffffffff;
   Texture::ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   ExceptionList = local_10;
@@ -73970,7 +73195,6 @@ void plasma::D3D9RenderSurface::vfunc_0(byte param_1)
   local_8 = 0xffffffff;
   RenderSurface::ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   ExceptionList = local_10;
@@ -74613,7 +73837,6 @@ void Fac_tidy_reg_t_dtor(void)
   }
   DAT_0076df54 = (undefined4 *)*DAT_0076df54;
   lib_fn_68d57e();
-                    /* WARNING: Subroutine does not return */
   operator_delete(puVar1);
 }
 
@@ -74622,8 +73845,6 @@ void Fac_tidy_reg_t_dtor(void)
 
 /* Global::entry @ 0068e1e0 */
 
-/* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */
-/* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */
 
 int entry(void)
 
@@ -74701,7 +73922,6 @@ LAB_0068e231:
     }
     return DAT_0076e280;
   }
-                    /* WARNING: Subroutine does not return */
   exit(DAT_0076e280);
 }
 
@@ -74739,7 +73959,6 @@ undefined4 CxxUnhandledExceptionFilter(int *param_1)
   if (((*param_1 == -0x1f928c9d) && (param_1[4] == 3)) &&
      ((iVar1 = param_1[5], iVar1 == 0x19930520 ||
       (((iVar1 == 0x19930521 || (iVar1 == 0x19930522)) || (iVar1 == 0x1994000)))))) {
-                    /* WARNING: Subroutine does not return */
     terminate();
   }
   return 0;
@@ -74818,7 +74037,6 @@ void setdefaultprecision(void)
   if (eVar1 == 0) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   _invoke_watson((wchar_t *)0x0,(wchar_t *)0x0,(wchar_t *)0x0,0,0);
 }
 
@@ -75525,7 +74743,6 @@ void lib_fn_68f190(int param_1,undefined4 param_2)
 
 {
   *(undefined4 *)(param_1 + 0xc) = param_2;
-                    /* WARNING: Subroutine does not return */
   longjmp((int *)(param_1 + 0x10),1);
 }
 
@@ -76858,7 +76075,6 @@ undefined4 lib_fn_691a90(int param_1,int param_2)
 
 /* Global::lib_fn_691dc0 @ 00691dc0 */
 
-/* WARNING: Removing unreachable block (ram,0x00691eb8) */
 
 int lib_fn_691dc0(int param_1,undefined4 *param_2)
 
@@ -77070,7 +76286,6 @@ int lib_fn_692010(int param_1,byte *param_2,int param_3)
       goto LAB_00692170;
     case 0x16:
     case 0x17:
-                    /* WARNING: This code block may not be properly labeled as switch case */
       uVar4 = *(undefined2 *)((int)puVar7 + 1);
       bVar3 = (byte)*puVar7;
 LAB_00692170:
@@ -77080,7 +76295,6 @@ LAB_00692170:
       break;
     case 0x18:
     case 0x19:
-                    /* WARNING: This code block may not be properly labeled as switch case */
       puVar8 = (uint *)((uint)pbVar10[1] + (int)puVar7);
       if (puVar8 <= *(uint **)(param_1 + 0x24)) {
         if (bVar2 == 0x18) {
@@ -79179,7 +78393,6 @@ int lib_fn_697be0(undefined4 *param_1)
 
 /* Global::lib_fn_697ce0 @ 00697ce0 */
 
-/* WARNING: Removing unreachable block (ram,0x00697d71) */
 
 int lib_fn_697ce0(char *param_1,undefined4 param_2)
 
@@ -80797,7 +80010,6 @@ void lib_fn_69a7f0(void)
     *piVar1 = (int)piVar3;
     return;
   }
-                    /* WARNING: Subroutine does not return */
   longjmp(in_EDX + 0x13c,1);
 }
 
@@ -81342,7 +80554,6 @@ undefined4 lib_fn_69b520(int param_1)
 
 /* Global::lib_fn_69bc10 @ 0069bc10 */
 
-/* WARNING: Removing unreachable block (ram,0x0069bf54) */
 
 void lib_fn_69bc10(int param_1,int param_2,int param_3)
 
@@ -100693,7 +99904,6 @@ void lib_fn_6b6530(undefined4 param_1)
 
 /* Global::lib_fn_6b6560 @ 006b6560 */
 
-/* WARNING: Removing unreachable block (ram,0x006b65d4) */
 
 int lib_fn_6b6560(undefined4 param_1)
 
@@ -103660,7 +102870,6 @@ void lib_fn_6bae50(int param_1,int param_2,uint param_3,uint param_4,int param_5
 
 /* Global::lib_fn_6bb130 @ 006bb130 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6bb130(undefined2 *param_1)
 
@@ -107711,7 +106920,6 @@ undefined4 lib_fn_6c0c20(void)
 
 /* Global::lib_fn_6c0c90 @ 006c0c90 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int lib_fn_6c0c90(void)
 
@@ -115746,7 +114954,6 @@ int lib_fn_6cd080(undefined4 *param_1,int param_2)
 
 /* Global::lib_fn_6cd130 @ 006cd130 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void lib_fn_6cd130(undefined4 *param_1,undefined4 ***param_2,int param_3,int param_4,
                  undefined4 *param_5,undefined4 ****param_6,uint *param_7,uint *param_8)
@@ -117523,8 +116730,6 @@ void lib_fn_6cf090(undefined4 param_1,int param_2,int param_3)
 
 /* Global::lib_fn_6cf0e0 @ 006cf0e0 */
 
-/* WARNING: Removing unreachable block (ram,0x006cf1ff) */
-/* WARNING: Removing unreachable block (ram,0x006cf1c0) */
 
 int lib_fn_6cf0e0(void)
 
@@ -118001,7 +117206,6 @@ void plasma::RenderSurface::vfunc_0(byte param_1)
   
   *in_ECX = vftable;
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -118740,8 +117944,6 @@ undefined4 lib_fn_6d30d0(int *param_1,int param_2,undefined4 param_3,int param_4
 
 /* Global::lib_fn_6d3250 @ 006d3250 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 undefined4 lib_fn_6d3250(int *param_1,float *param_2,int *param_3,int param_4)
 
@@ -119048,8 +118250,6 @@ undefined4 lib_fn_6d3800(undefined4 param_1)
 
 /* Global::lib_fn_6d3c20 @ 006d3c20 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 void lib_fn_6d3c20(int *param_1,int param_2,int param_3,int param_4,int param_5,int param_6,
                  int param_7)
@@ -119428,9 +118628,6 @@ void lib_fn_6d3c20(int *param_1,int param_2,int param_3,int param_4,int param_5,
 
 /* Global::lib_fn_6d4490 @ 006d4490 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
-/* WARNING: Type propagation algorithm not settling */
 
 void lib_fn_6d4490(int param_1,float *param_2,int param_3,int param_4,undefined4 param_5,int param_6,
                  int param_7,int param_8)
@@ -119681,8 +118878,6 @@ void lib_fn_6d48a0(float *param_1,int param_2,int param_3,int param_4,int param_
 
 /* Global::lib_fn_6d49c0 @ 006d49c0 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 void lib_fn_6d49c0(int param_1,float param_2)
 
@@ -119754,9 +118949,6 @@ void lib_fn_6d49c0(int param_1,float param_2)
 
 /* Global::lib_fn_6d4b20 @ 006d4b20 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
-/* WARNING: Type propagation algorithm not settling */
 
 void lib_fn_6d4b20(float *param_1)
 
@@ -119938,8 +119130,6 @@ void lib_fn_6d4b20(float *param_1)
 
 /* Global::lib_fn_6d4e80 @ 006d4e80 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 void lib_fn_6d4e80(float *param_1,int param_2,float param_3,int param_4)
 
@@ -120251,8 +119441,6 @@ void lib_fn_6d54c0(int param_1)
 
 /* Global::lib_fn_6d55d0 @ 006d55d0 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 void lib_fn_6d55d0(int param_1)
 
@@ -120473,9 +119661,6 @@ void lib_fn_6d5910(int param_1,int param_2,int param_3,float param_4)
 
 /* Global::lib_fn_6d59d0 @ 006d59d0 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 void * lib_fn_6d59d0(float param_1)
 
@@ -123136,8 +122321,6 @@ void lib_fn_6d9e90(void)
 
 /* Global::lib_fn_6d9f50 @ 006d9f50 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 void lib_fn_6d9f50(int param_1)
 
@@ -123920,8 +123103,6 @@ lib_fn_6daf40(undefined4 param_1,undefined4 param_2,undefined4 *param_3,int para
 
 /* Global::lib_fn_6dafa0 @ 006dafa0 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 undefined4 lib_fn_6dafa0(int param_1,int param_2,code *param_3)
 
@@ -125095,8 +124276,6 @@ void lib_fn_6dc280(void *param_1)
 
 /* Global::lib_fn_6dc2b0 @ 006dc2b0 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 undefined4 lib_fn_6dc2b0(int *param_1,int *param_2)
 
@@ -125290,8 +124469,6 @@ undefined4 lib_fn_6dc2b0(int *param_1,int *param_2)
 
 /* Global::lib_fn_6dc5c0 @ 006dc5c0 */
 
-/* WARNING: Function: __alloca_probe_16 replaced with injection: alloca_probe */
-/* WARNING: Unable to track spacebase fully for stack */
 
 undefined4 lib_fn_6dc5c0(int *param_1)
 
@@ -126782,7 +125959,6 @@ int lib_fn_6de5c0(uint param_1,uint param_2,int param_3)
 
 /* Global::lib_fn_6de610 @ 006de610 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void * lib_fn_6de610(undefined4 param_1,int *param_2)
 
@@ -126951,7 +126127,6 @@ void * lib_fn_6de610(undefined4 param_1,int *param_2)
 
 /* Global::lib_fn_6de900 @ 006de900 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int * lib_fn_6de900(int param_1)
 
@@ -127247,7 +126422,6 @@ void lib_fn_6deea0(void *param_1)
 
 /* Global::lib_fn_6deed0 @ 006deed0 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 undefined4 * lib_fn_6deed0(undefined4 param_1,undefined4 param_2)
 
@@ -127393,7 +126567,6 @@ undefined4 * lib_fn_6deed0(undefined4 param_1,undefined4 param_2)
             local_1370 = (int *)((int)local_1370 + (int)local_1330[local_1334] >> 1);
           }
           if ((piVar9 == (int *)0xffffffff) || (local_1370 == (int *)0xffffffff)) {
-                    /* WARNING: Subroutine does not return */
             exit(1);
           }
           iVar3 = lib_fn_6ddde0(piVar9,local_1370,param_2,param_1,local_136c);
@@ -128257,7 +127430,6 @@ void lib_fn_6e0150(int param_1,int param_2,undefined8 *param_3,uint param_4,floa
 
 /* Global::lib_fn_6e0390 @ 006e0390 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6e0390(void)
 
@@ -128323,7 +127495,6 @@ void lib_fn_6e0390(void)
       lib_fn_6e0bd0(ABS(dVar5),&dStack_18);
     }
   }
-                    /* WARNING: Read-only address (ram,0x0076f250) is written */
   return;
 }
 
@@ -128367,7 +127538,6 @@ void lib_fn_6e03b0(void)
 
 /* Global::lib_fn_6e0bd0 @ 006e0bd0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 uint lib_fn_6e0bd0(undefined4 param_1,uint param_2,double *param_3)
 
@@ -128455,7 +127625,6 @@ uint lib_fn_6e0bd0(undefined4 param_1,uint param_2,double *param_3)
 
 /* Global::lib_fn_6e0ec0 @ 006e0ec0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 int lib_fn_6e0ec0(undefined4 param_1,uint param_2,double *param_3)
 
@@ -128579,8 +127748,6 @@ void Unwind_006e12c0(void)
   
   if ((*(uint *)(unaff_EBP + -0x10) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x10) = *(uint *)(unaff_EBP + -0x10) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e12d6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(unaff_EBP + -0x14) + 0x68));
     return;
@@ -128598,8 +127765,6 @@ void Unwind_006e12dd(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e12e3. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(*(int *)(unaff_EBP + -0x14) + 0x20));
   return;
@@ -128615,8 +127780,6 @@ void Unwind_006e12e9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e12ec. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x18));
   return;
@@ -129152,8 +128315,6 @@ void Unwind_006e1830(void)
   
   if ((*(uint *)(unaff_EBP + -0x2c) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x2c) = *(uint *)(unaff_EBP + -0x2c) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e1843. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x74));
     return;
@@ -129171,8 +128332,6 @@ void Unwind_006e184a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1850. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xbc));
   return;
@@ -129188,8 +128347,6 @@ void Unwind_006e1856(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e185c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0xe0));
   return;
@@ -129377,8 +128534,6 @@ void Unwind_006e1a00(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1a03. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::_Lockit::~_Lockit((_Lockit *)(unaff_EBP + -0x14));
   return;
 }
@@ -129395,8 +128550,6 @@ void Unwind_006e1a30(void)
   
   if ((*(uint *)(unaff_EBP + -0x10) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x10) = *(uint *)(unaff_EBP + -0x10) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e1a46. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(*(int *)(unaff_EBP + -0x14) + 0x68)
@@ -129416,8 +128569,6 @@ void Unwind_006e1a4d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1a53. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)
@@ -129435,8 +128586,6 @@ void Unwind_006e1a59(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1a5c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x18));
@@ -129479,8 +128628,6 @@ void Unwind_006e1ad0(void)
   
   if ((*(uint *)(unaff_EBP + -0x38c) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x38c) = *(uint *)(unaff_EBP + -0x38c) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e1aec. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x3e4));
@@ -129499,8 +128646,6 @@ void Unwind_006e1af3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1af9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x42c));
@@ -129517,8 +128662,6 @@ void Unwind_006e1aff(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1b05. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x450));
@@ -129861,8 +129004,6 @@ void Unwind_006e1ca0(void)
   
   if ((*(uint *)(unaff_EBP + -0x89c) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x89c) = *(uint *)(unaff_EBP + -0x89c) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e1cbc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x760));
@@ -129881,8 +129022,6 @@ void Unwind_006e1cc3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1cc9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x7a8));
@@ -129899,8 +129038,6 @@ void Unwind_006e1ccf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1cd5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x8b4));
@@ -129979,8 +129116,6 @@ void Unwind_006e1d12(void)
   
   if ((*(uint *)(unaff_EBP + -0x89c) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x89c) = *(uint *)(unaff_EBP + -0x89c) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006e1d2e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x810));
@@ -129999,8 +129134,6 @@ void Unwind_006e1d35(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1d3b. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x858));
@@ -130017,8 +129150,6 @@ void Unwind_006e1d41(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1d47. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x8b8));
@@ -130445,8 +129576,6 @@ void Unwind_006e1f60(void)
   
   if ((*(uint *)(unaff_EBP + -0xbc) & 1) != 0) {
     *(uint *)(unaff_EBP + -0xbc) = *(uint *)(unaff_EBP + -0xbc) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e1f7c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -300));
@@ -130465,8 +129594,6 @@ void Unwind_006e1f83(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1f89. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x174));
@@ -130483,8 +129610,6 @@ void Unwind_006e1f8f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e1f95. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x198));
@@ -131211,8 +130336,6 @@ void Unwind_006e2250(void)
   
   if ((*(uint *)(unaff_EBP + -0xe60) & 1) != 0) {
     *(uint *)(unaff_EBP + -0xe60) = *(uint *)(unaff_EBP + -0xe60) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e226c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xde8));
@@ -131231,8 +130354,6 @@ void Unwind_006e2273(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e2279. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xe30));
@@ -131249,8 +130370,6 @@ void Unwind_006e227f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e2285. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0xeb4));
@@ -131341,8 +130460,6 @@ void Unwind_006e22cd(void)
   
   if ((*(uint *)(unaff_EBP + -0xe60) & 2) != 0) {
     *(uint *)(unaff_EBP + -0xe60) = *(uint *)(unaff_EBP + -0xe60) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006e22e9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xd38));
@@ -131361,8 +130478,6 @@ void Unwind_006e22f0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e22f6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xd80));
@@ -131379,8 +130494,6 @@ void Unwind_006e22fc(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e2302. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0xeb8));
@@ -131831,8 +130944,6 @@ void Unwind_006e24d0(void)
   
   if ((*(uint *)(unaff_EBP + -0x2a8) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x2a8) = *(uint *)(unaff_EBP + -0x2a8) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e24ec. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x300));
@@ -131851,8 +130962,6 @@ void Unwind_006e24f3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e24f9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x348));
@@ -131869,8 +130978,6 @@ void Unwind_006e24ff(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e2505. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x36c));
@@ -133657,7 +132764,6 @@ void Unwind_006e2de0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1314));
 }
 
@@ -133683,7 +132789,6 @@ void Unwind_006e2df9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1314));
 }
 
@@ -133807,8 +132912,6 @@ void Unwind_006e2f20(void)
   
   if ((*(uint *)(unaff_EBP + -0x274) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x274) = *(uint *)(unaff_EBP + -0x274) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e2f3c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x2cc));
@@ -133827,8 +132930,6 @@ void Unwind_006e2f43(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e2f49. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x314));
@@ -133845,8 +132946,6 @@ void Unwind_006e2f4f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e2f55. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x338));
@@ -134283,7 +133382,6 @@ void Unwind_006e3110(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x10));
 }
 
@@ -136038,7 +135136,6 @@ void Unwind_006e40cf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6fbc));
 }
 
@@ -137072,7 +136169,6 @@ void Unwind_006e4481(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f70));
 }
 
@@ -138214,7 +137310,6 @@ void Unwind_006e4899(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f70));
 }
 
@@ -138420,7 +137515,6 @@ void Unwind_006e4957(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f70));
 }
 
@@ -138950,7 +138044,6 @@ void Unwind_006e4b3e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f4c));
 }
 
@@ -138976,7 +138069,6 @@ void Unwind_006e4b57(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f4c));
 }
 
@@ -139002,7 +138094,6 @@ void Unwind_006e4b70(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f4c));
 }
 
@@ -139028,7 +138119,6 @@ void Unwind_006e4b89(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f4c));
 }
 
@@ -139054,7 +138144,6 @@ void Unwind_006e4ba2(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f4c));
 }
 
@@ -139106,7 +138195,6 @@ void Unwind_006e4bd4(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f4c));
 }
 
@@ -139120,7 +138208,6 @@ void Unwind_006e4be2(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f4c));
 }
 
@@ -139134,7 +138221,6 @@ void Unwind_006e4bf0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f4c));
 }
 
@@ -139148,7 +138234,6 @@ void Unwind_006e4bfe(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f74));
 }
 
@@ -139438,7 +138523,6 @@ void Unwind_006e4d09(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139464,7 +138548,6 @@ void Unwind_006e4d22(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139514,7 +138597,6 @@ void Unwind_006e4d51(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139540,7 +138622,6 @@ void Unwind_006e4d6a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139590,7 +138671,6 @@ void Unwind_006e4d99(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6fe4));
 }
 
@@ -139634,7 +138714,6 @@ void Unwind_006e4dd4(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139660,7 +138739,6 @@ void Unwind_006e4ded(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139686,7 +138764,6 @@ void Unwind_006e4e06(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139724,7 +138801,6 @@ void Unwind_006e4e2a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139762,7 +138838,6 @@ void Unwind_006e4e4e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139788,7 +138863,6 @@ void Unwind_006e4e67(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139838,7 +138912,6 @@ void Unwind_006e4e96(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139900,7 +138973,6 @@ void Unwind_006e4ed0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -139926,7 +138998,6 @@ void Unwind_006e4ee9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -140000,7 +139071,6 @@ void Unwind_006e4f2e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6f5c));
 }
 
@@ -140988,8 +140058,6 @@ void Unwind_006e5526(void)
   
   if ((*(uint *)(unaff_EBP + -0x1260) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x1260) = *(uint *)(unaff_EBP + -0x1260) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e5542. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x13bc));
     return;
@@ -141007,8 +140075,6 @@ void Unwind_006e5549(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e554f. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0x1404));
   return;
@@ -141024,8 +140090,6 @@ void Unwind_006e5555(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e555b. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x1428));
   return;
@@ -141077,7 +140141,6 @@ void Unwind_006e557f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x11d8));
 }
 
@@ -141115,7 +140178,6 @@ void Unwind_006e55a3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x11d8));
 }
 
@@ -141165,7 +140227,6 @@ void Unwind_006e55d2(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x11d8));
 }
 
@@ -141277,8 +140338,6 @@ void Unwind_006e5770(void)
   
   if ((*(uint *)(unaff_EBP + -0x25e4) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x25e4) = *(uint *)(unaff_EBP + -0x25e4) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e578c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x27a0));
@@ -141297,8 +140356,6 @@ void Unwind_006e5793(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e5799. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x27e8));
@@ -141315,8 +140372,6 @@ void Unwind_006e579f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e57a5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x280c));
@@ -141453,7 +140508,6 @@ void Unwind_006e5819(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x25f8));
 }
 
@@ -141467,7 +140521,6 @@ void Unwind_006e5827(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x25f8));
 }
 
@@ -141507,8 +140560,6 @@ void Unwind_006e584b(void)
   
   if ((*(uint *)(unaff_EBP + -0x25e4) & 4) != 0) {
     *(uint *)(unaff_EBP + -0x25e4) = *(uint *)(unaff_EBP + -0x25e4) & 0xfffffffb;
-                    /* WARNING: Could not recover jumptable at 0x006e5867. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x2640));
@@ -141527,8 +140578,6 @@ void Unwind_006e586e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e5874. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x2688));
@@ -141545,8 +140594,6 @@ void Unwind_006e587a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e5880. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x2810));
@@ -141589,8 +140636,6 @@ void Unwind_006e589c(void)
   
   if ((*(uint *)(unaff_EBP + -0x25e4) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x25e4) = *(uint *)(unaff_EBP + -0x25e4) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006e58b8. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x26f0));
@@ -141609,8 +140654,6 @@ void Unwind_006e58bf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e58c5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x2738));
@@ -141627,8 +140670,6 @@ void Unwind_006e58cb(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e58d1. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x2814));
@@ -141947,8 +140988,6 @@ void Unwind_006e5a79(void)
   
   if ((*(uint *)(unaff_EBP + -0x158) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x158) = *(uint *)(unaff_EBP + -0x158) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006e5a95. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x1a0));
@@ -141967,8 +141006,6 @@ void Unwind_006e5a9c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e5aa2. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x1e8));
@@ -141985,8 +141022,6 @@ void Unwind_006e5aa8(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e5aae. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x20c));
@@ -142017,8 +141052,6 @@ void Unwind_006e5af0(void)
   
   if ((*(uint *)(unaff_EBP + -0x4cc) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x4cc) = *(uint *)(unaff_EBP + -0x4cc) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e5b0c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x514));
@@ -142037,8 +141070,6 @@ void Unwind_006e5b13(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e5b19. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x55c));
@@ -142055,8 +141086,6 @@ void Unwind_006e5b1f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e5b25. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x580));
@@ -143569,8 +142598,6 @@ void Unwind_006e60a0(void)
   
   if ((*(uint *)(unaff_EBP + -0x90) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x90) = *(uint *)(unaff_EBP + -0x90) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e60bc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xd8));
@@ -143589,8 +142616,6 @@ void Unwind_006e60c3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e60c9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x120));
@@ -143607,8 +142632,6 @@ void Unwind_006e60cf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e60d2. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x2c));
@@ -143711,8 +142734,6 @@ void Unwind_006e6140(void)
   
   if ((*(uint *)(unaff_EBP + -0x58) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x58) = *(uint *)(unaff_EBP + -0x58) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e6156. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0xa0));
     return;
@@ -143730,8 +142751,6 @@ void Unwind_006e615d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e6163. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xe8));
   return;
@@ -143747,8 +142766,6 @@ void Unwind_006e6169(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e616f. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x10c));
   return;
@@ -143802,8 +142819,6 @@ void Unwind_006e61c0(void)
   
   if ((*(uint *)(unaff_EBP + -0x50) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x50) = *(uint *)(unaff_EBP + -0x50) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e61d6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0xa8));
     return;
@@ -143821,8 +142836,6 @@ void Unwind_006e61dd(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e61e3. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xf0));
   return;
@@ -143838,8 +142851,6 @@ void Unwind_006e61e9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e61ef. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x114));
   return;
@@ -143915,7 +142926,6 @@ void Unwind_006e6220(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x50));
 }
 
@@ -144015,8 +143025,6 @@ void Unwind_006e62c0(void)
   
   if ((*(uint *)(unaff_EBP + -0x94) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x94) = *(uint *)(unaff_EBP + -0x94) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e62dc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xdc));
@@ -144035,8 +143043,6 @@ void Unwind_006e62e3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e62e9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x124));
@@ -144053,8 +143059,6 @@ void Unwind_006e62ef(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e62f5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x148));
@@ -144229,8 +143233,6 @@ void Unwind_006e63c0(void)
   
   if ((*(uint *)(unaff_EBP + -0x44) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x44) = *(uint *)(unaff_EBP + -0x44) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e63d6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x208));
     return;
@@ -144248,8 +143250,6 @@ void Unwind_006e63dd(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e63e3. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0x250));
   return;
@@ -144265,8 +143265,6 @@ void Unwind_006e63e9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e63ef. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x274));
   return;
@@ -144308,8 +143306,6 @@ void Unwind_006e6408(void)
   
   if ((*(uint *)(unaff_EBP + -0x44) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x44) = *(uint *)(unaff_EBP + -0x44) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006e641e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x158));
     return;
@@ -144327,8 +143323,6 @@ void Unwind_006e6425(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e642b. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0x1a0));
   return;
@@ -144344,8 +143338,6 @@ void Unwind_006e6431(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e6437. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x278));
   return;
@@ -144375,8 +143367,6 @@ void Unwind_006e6448(void)
   
   if ((*(uint *)(unaff_EBP + -0x44) & 4) != 0) {
     *(uint *)(unaff_EBP + -0x44) = *(uint *)(unaff_EBP + -0x44) & 0xfffffffb;
-                    /* WARNING: Could not recover jumptable at 0x006e645e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0xa8));
     return;
@@ -144394,8 +143384,6 @@ void Unwind_006e6465(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e646b. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xf0));
   return;
@@ -144411,8 +143399,6 @@ void Unwind_006e6471(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e6477. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x27c));
   return;
@@ -144644,7 +143630,6 @@ void Unwind_006e6598(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x74));
 }
 
@@ -144658,7 +143643,6 @@ void Unwind_006e65a3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6c));
 }
 
@@ -144746,8 +143730,6 @@ void Unwind_006e6613(void)
   
   if ((*(uint *)(unaff_EBP + -0x74) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x74) = *(uint *)(unaff_EBP + -0x74) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e6629. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xd4));
@@ -144766,8 +143748,6 @@ void Unwind_006e6630(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e6636. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x11c));
@@ -144784,8 +143764,6 @@ void Unwind_006e663c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e6642. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x8c));
@@ -144814,7 +143792,6 @@ void Unwind_006e6680(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -146164,7 +145141,6 @@ void Unwind_006e6c78(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x34));
 }
 
@@ -146178,7 +145154,6 @@ void Unwind_006e6c83(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x34));
 }
 
@@ -146206,8 +145181,6 @@ void Unwind_006e6c96(void)
   
   if ((*(uint *)(unaff_EBP + -0x30) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x30) = *(uint *)(unaff_EBP + -0x30) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e6cac. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x98));
     return;
@@ -146225,8 +145198,6 @@ void Unwind_006e6cb3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e6cb9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xe0));
   return;
@@ -146242,8 +145213,6 @@ void Unwind_006e6cbf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e6cc5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x104));
   return;
@@ -146283,7 +145252,6 @@ void Unwind_006e6d10(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40));
 }
 
@@ -146335,8 +145303,6 @@ void Unwind_006e6d33(void)
   
   if ((*(uint *)(unaff_EBP + -0x40) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x40) = *(uint *)(unaff_EBP + -0x40) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e6d49. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x94));
     return;
@@ -146354,8 +145320,6 @@ void Unwind_006e6d50(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e6d56. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xdc));
   return;
@@ -146371,8 +145335,6 @@ void Unwind_006e6d5c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e6d62. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x100));
   return;
@@ -149280,7 +148242,6 @@ void Unwind_006e7888(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x24));
 }
 
@@ -149480,7 +148441,6 @@ void Unwind_006e79f1(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x44));
 }
 
@@ -149496,8 +148456,6 @@ void Unwind_006e7a30(void)
   
   if ((*(uint *)(unaff_EBP + -0x1e0) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x1e0) = *(uint *)(unaff_EBP + -0x1e0) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e7a4c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x238));
@@ -149516,8 +148474,6 @@ void Unwind_006e7a53(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e7a59. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x280));
@@ -149534,8 +148490,6 @@ void Unwind_006e7a5f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e7a65. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x2a4));
@@ -150886,8 +149840,6 @@ void Unwind_006e7ff0(void)
   
   if ((*(uint *)(unaff_EBP + -0x4e8) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x4e8) = *(uint *)(unaff_EBP + -0x4e8) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e800c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x53c));
@@ -150906,8 +149858,6 @@ void Unwind_006e8013(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e8019. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x584));
@@ -150924,8 +149874,6 @@ void Unwind_006e801f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e8025. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x7b8));
@@ -151244,8 +150192,6 @@ void Unwind_006e813e(void)
   
   if ((*(uint *)(unaff_EBP + -0x4e8) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x4e8) = *(uint *)(unaff_EBP + -0x4e8) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006e815a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x74c));
@@ -151264,8 +150210,6 @@ void Unwind_006e8161(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e8167. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x794));
@@ -151282,8 +150226,6 @@ void Unwind_006e816d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e8173. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x7bc));
@@ -151362,8 +150304,6 @@ void Unwind_006e81b0(void)
   
   if ((*(uint *)(unaff_EBP + -0x4e8) & 4) != 0) {
     *(uint *)(unaff_EBP + -0x4e8) = *(uint *)(unaff_EBP + -0x4e8) & 0xfffffffb;
-                    /* WARNING: Could not recover jumptable at 0x006e81cc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x69c));
@@ -151382,8 +150322,6 @@ void Unwind_006e81d3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e81d9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x6e4));
@@ -151400,8 +150338,6 @@ void Unwind_006e81df(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e81e5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x7c0));
@@ -151552,8 +150488,6 @@ void Unwind_006e8264(void)
   
   if ((*(uint *)(unaff_EBP + -0x4e8) & 8) != 0) {
     *(uint *)(unaff_EBP + -0x4e8) = *(uint *)(unaff_EBP + -0x4e8) & 0xfffffff7;
-                    /* WARNING: Could not recover jumptable at 0x006e8280. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x5ec));
@@ -151572,8 +150506,6 @@ void Unwind_006e8287(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e828d. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x634));
@@ -151590,8 +150522,6 @@ void Unwind_006e8293(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e8299. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x1fc));
@@ -151884,7 +150814,6 @@ void Unwind_006e8410(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -151910,7 +150839,6 @@ void Unwind_006e8423(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -151926,8 +150854,6 @@ void Unwind_006e8460(void)
   
   if ((*(uint *)(unaff_EBP + -900) & 1) != 0) {
     *(uint *)(unaff_EBP + -900) = *(uint *)(unaff_EBP + -900) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e847c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x428));
@@ -151946,8 +150872,6 @@ void Unwind_006e8483(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e8489. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x470));
@@ -151964,8 +150888,6 @@ void Unwind_006e848f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e8495. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x494));
@@ -152128,8 +151050,6 @@ void Unwind_006e85d0(void)
   
   if ((*(uint *)(unaff_EBP + -0x10) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x10) = *(uint *)(unaff_EBP + -0x10) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e85e6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(unaff_EBP + -0x14) + 0x60));
     return;
@@ -152147,8 +151067,6 @@ void Unwind_006e85ed(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e85f3. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_ostream<char,std::char_traits<char>_>::~basic_ostream<char,std::char_traits<char>_>
             ((basic_ostream<char,std::char_traits<char>_> *)(*(int *)(unaff_EBP + -0x14) + 8));
   return;
@@ -152164,8 +151082,6 @@ void Unwind_006e85f9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e85fc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + 0x14));
   return;
@@ -152567,8 +151483,6 @@ void Unwind_006e87b0(void)
   
   if ((*(uint *)(unaff_EBP + -500) & 1) != 0) {
     *(uint *)(unaff_EBP + -500) = *(uint *)(unaff_EBP + -500) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e87cc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x23c));
@@ -152587,8 +151501,6 @@ void Unwind_006e87d3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e87d9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x284));
@@ -152605,8 +151517,6 @@ void Unwind_006e87df(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e87e5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x2a8));
@@ -154101,8 +153011,6 @@ void Unwind_006e8cc8(void)
   
   if ((*(uint *)(unaff_EBP + -0x3d8) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x3d8) = *(uint *)(unaff_EBP + -0x3d8) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e8ce1. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x58));
@@ -154121,8 +153029,6 @@ void Unwind_006e8ce8(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e8cee. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xa0));
@@ -154139,8 +153045,6 @@ void Unwind_006e8cf4(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e8cfa. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x3e0));
@@ -154544,7 +153448,6 @@ void Unwind_006e8fa8(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x50));
 }
 
@@ -154570,7 +153473,6 @@ void Unwind_006e8fbb(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -154584,7 +153486,6 @@ void Unwind_006e8fc6(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -154598,7 +153499,6 @@ void Unwind_006e8fd1(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -154624,7 +153524,6 @@ void Unwind_006e8fe4(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -154638,7 +153537,6 @@ void Unwind_006e8fef(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -154652,7 +153550,6 @@ void Unwind_006e8ffa(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -154752,8 +153649,6 @@ void Unwind_006e91d0(void)
   
   if ((*(uint *)(unaff_EBP + -0xac) & 1) != 0) {
     *(uint *)(unaff_EBP + -0xac) = *(uint *)(unaff_EBP + -0xac) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e91ec. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xfc));
@@ -154772,8 +153667,6 @@ void Unwind_006e91f3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e91f9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x144));
@@ -154790,8 +153683,6 @@ void Unwind_006e91ff(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e9205. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x168));
@@ -155817,8 +154708,6 @@ void Unwind_006e97b3(void)
   
   if ((*(uint *)(unaff_EBP + -0x17c) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x17c) = *(uint *)(unaff_EBP + -0x17c) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e97cf. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x21c));
@@ -155837,8 +154726,6 @@ void Unwind_006e97d6(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e97dc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x264));
@@ -155855,8 +154742,6 @@ void Unwind_006e97e2(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e97e8. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x154));
@@ -155897,7 +154782,6 @@ void Unwind_006e9801(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x154));
 }
 
@@ -155935,7 +154819,6 @@ void Unwind_006e9822(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x154));
 }
 
@@ -156539,8 +155422,6 @@ void Unwind_006e9bee(void)
   
   if ((*(uint *)(unaff_EBP + -0x1bc) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x1bc) = *(uint *)(unaff_EBP + -0x1bc) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e9c0a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x20c));
@@ -156559,8 +155440,6 @@ void Unwind_006e9c11(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e9c17. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x254));
@@ -156577,8 +155456,6 @@ void Unwind_006e9c1d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e9c23. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x278));
@@ -156729,8 +155606,6 @@ void Unwind_006e9d18(void)
   
   if ((*(uint *)(unaff_EBP + -0x54) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x54) = *(uint *)(unaff_EBP + -0x54) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006e9d2e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xc0));
@@ -156749,8 +155624,6 @@ void Unwind_006e9d35(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e9d3b. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x108));
@@ -156767,8 +155640,6 @@ void Unwind_006e9d41(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006e9d44. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x74));
@@ -157116,7 +155987,6 @@ void Unwind_006ea080(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0xf02c));
 }
 
@@ -157142,7 +156012,6 @@ void Unwind_006ea096(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0xf02c));
 }
 
@@ -188608,7 +187477,6 @@ void Unwind_006f12a3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x14));
 }
 
@@ -188622,7 +187490,6 @@ void Unwind_006f12ae(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x14));
 }
 
@@ -188708,7 +187575,6 @@ void Unwind_006f1378(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x10));
 }
 
@@ -188724,8 +187590,6 @@ void Unwind_006f13a0(void)
   
   if ((*(uint *)(unaff_EBP + -0x22c) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x22c) = *(uint *)(unaff_EBP + -0x22c) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006f13bc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x280));
     return;
@@ -188743,8 +187607,6 @@ void Unwind_006f13c3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f13c9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0x2c8));
   return;
@@ -188760,8 +187622,6 @@ void Unwind_006f13cf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f13d5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x2ec));
   return;
@@ -188863,8 +187723,6 @@ void Unwind_006f14a0(void)
   
   if ((*(uint *)(unaff_EBP + -0x760) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x760) = *(uint *)(unaff_EBP + -0x760) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f14bc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x668));
@@ -188883,8 +187741,6 @@ void Unwind_006f14c3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f14c9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x6b0));
@@ -188901,8 +187757,6 @@ void Unwind_006f14cf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f14d5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x764));
@@ -189029,8 +187883,6 @@ void Unwind_006f153e(void)
   
   if ((*(uint *)(unaff_EBP + -0x760) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x760) = *(uint *)(unaff_EBP + -0x760) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006f155a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x5b8));
@@ -189049,8 +187901,6 @@ void Unwind_006f1561(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f1567. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x600));
@@ -189067,8 +187917,6 @@ void Unwind_006f156d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f1573. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x768));
@@ -189417,7 +188265,6 @@ void Unwind_006f184c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189443,7 +188290,6 @@ void Unwind_006f185f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189469,7 +188315,6 @@ void Unwind_006f1872(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189495,7 +188340,6 @@ void Unwind_006f1885(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189521,7 +188365,6 @@ void Unwind_006f1898(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189547,7 +188390,6 @@ void Unwind_006f18ab(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189573,7 +188415,6 @@ void Unwind_006f18be(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189599,7 +188440,6 @@ void Unwind_006f18d1(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189625,7 +188465,6 @@ void Unwind_006f18e4(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189651,7 +188490,6 @@ void Unwind_006f18f7(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189677,7 +188515,6 @@ void Unwind_006f190a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -189703,7 +188540,6 @@ void Unwind_006f191d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -190391,8 +189227,6 @@ void Unwind_006f1d1e(void)
   
   if ((*(uint *)(unaff_EBP + -0x6ac) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x6ac) = *(uint *)(unaff_EBP + -0x6ac) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006f1d3a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x6f4));
@@ -190411,8 +189245,6 @@ void Unwind_006f1d41(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f1d47. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x73c));
@@ -190429,8 +189261,6 @@ void Unwind_006f1d4d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f1d53. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x760));
@@ -195669,8 +194499,6 @@ void Unwind_006f3060(void)
   
   if ((*(uint *)(unaff_EBP + -0x2c) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x2c) = *(uint *)(unaff_EBP + -0x2c) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f3076. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0xa4));
     return;
@@ -195688,8 +194516,6 @@ void Unwind_006f307d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f3083. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xec));
   return;
@@ -195705,8 +194531,6 @@ void Unwind_006f3089(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f308f. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x1d8));
   return;
@@ -195760,8 +194584,6 @@ void Unwind_006f30b0(void)
   
   if ((*(uint *)(unaff_EBP + -0x2c) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x2c) = *(uint *)(unaff_EBP + -0x2c) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006f30c6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x154));
     return;
@@ -195779,8 +194601,6 @@ void Unwind_006f30cd(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f30d3. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0x19c));
   return;
@@ -195796,8 +194616,6 @@ void Unwind_006f30d9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f30df. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x1dc));
   return;
@@ -195851,8 +194669,6 @@ void Unwind_006f3130(void)
   
   if ((*(uint *)(unaff_EBP + -0x3c) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x3c) = *(uint *)(unaff_EBP + -0x3c) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f3146. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x84));
     return;
@@ -195870,8 +194686,6 @@ void Unwind_006f314d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f3153. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xcc));
   return;
@@ -195887,8 +194701,6 @@ void Unwind_006f3159(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f315f. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0xf0));
   return;
@@ -195942,8 +194754,6 @@ void Unwind_006f31b0(void)
   
   if ((*(uint *)(unaff_EBP + -0x30) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x30) = *(uint *)(unaff_EBP + -0x30) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f31c6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x90));
     return;
@@ -195961,8 +194771,6 @@ void Unwind_006f31cd(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f31d3. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xd8));
   return;
@@ -195978,8 +194786,6 @@ void Unwind_006f31d9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f31df. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0xfc));
   return;
@@ -197123,7 +195929,6 @@ void Unwind_006f387f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5cdc));
 }
 
@@ -197401,7 +196206,6 @@ void Unwind_006f397c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197415,7 +196219,6 @@ void Unwind_006f398a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197429,7 +196232,6 @@ void Unwind_006f3998(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197527,7 +196329,6 @@ void Unwind_006f39ed(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197541,7 +196342,6 @@ void Unwind_006f39fb(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197555,7 +196355,6 @@ void Unwind_006f3a09(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197569,7 +196368,6 @@ void Unwind_006f3a17(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197583,7 +196381,6 @@ void Unwind_006f3a25(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197597,7 +196394,6 @@ void Unwind_006f3a33(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197611,7 +196407,6 @@ void Unwind_006f3a41(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197625,7 +196420,6 @@ void Unwind_006f3a4f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197639,7 +196433,6 @@ void Unwind_006f3a5d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197653,7 +196446,6 @@ void Unwind_006f3a6b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197667,7 +196459,6 @@ void Unwind_006f3a79(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197681,7 +196472,6 @@ void Unwind_006f3a87(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197695,7 +196485,6 @@ void Unwind_006f3a95(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197709,7 +196498,6 @@ void Unwind_006f3aa3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197723,7 +196511,6 @@ void Unwind_006f3ab1(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197737,7 +196524,6 @@ void Unwind_006f3abf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197751,7 +196537,6 @@ void Unwind_006f3acd(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197765,7 +196550,6 @@ void Unwind_006f3adb(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197779,7 +196563,6 @@ void Unwind_006f3ae9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197793,7 +196576,6 @@ void Unwind_006f3af7(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197807,7 +196589,6 @@ void Unwind_006f3b05(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197821,7 +196602,6 @@ void Unwind_006f3b13(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197835,7 +196615,6 @@ void Unwind_006f3b21(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197849,7 +196628,6 @@ void Unwind_006f3b2f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -197863,7 +196641,6 @@ void Unwind_006f3b3d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198021,7 +196798,6 @@ void Unwind_006f3bb1(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198035,7 +196811,6 @@ void Unwind_006f3bbf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198049,7 +196824,6 @@ void Unwind_006f3bcd(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198075,7 +196849,6 @@ void Unwind_006f3be3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198089,7 +196862,6 @@ void Unwind_006f3bf1(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198103,7 +196875,6 @@ void Unwind_006f3bff(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198117,7 +196888,6 @@ void Unwind_006f3c0d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198131,7 +196901,6 @@ void Unwind_006f3c1b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198145,7 +196914,6 @@ void Unwind_006f3c29(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x5c48));
 }
 
@@ -198473,7 +197241,6 @@ void Unwind_006f3f02(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b28));
 }
 
@@ -198487,7 +197254,6 @@ void Unwind_006f3f10(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b24));
 }
 
@@ -198501,7 +197267,6 @@ void Unwind_006f3f1e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b24));
 }
 
@@ -198515,7 +197280,6 @@ void Unwind_006f3f2c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b24));
 }
 
@@ -198529,7 +197293,6 @@ void Unwind_006f3f3a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b24));
 }
 
@@ -198543,7 +197306,6 @@ void Unwind_006f3f48(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b24));
 }
 
@@ -198557,7 +197319,6 @@ void Unwind_006f3f56(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b24));
 }
 
@@ -198571,7 +197332,6 @@ void Unwind_006f3f64(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b24));
 }
 
@@ -198585,7 +197345,6 @@ void Unwind_006f3f72(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b2c));
 }
 
@@ -198599,7 +197358,6 @@ void Unwind_006f3f80(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b30));
 }
 
@@ -198613,7 +197371,6 @@ void Unwind_006f3f8e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b30));
 }
 
@@ -198627,7 +197384,6 @@ void Unwind_006f3f9c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b2c));
 }
 
@@ -198641,7 +197397,6 @@ void Unwind_006f3faa(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b20));
 }
 
@@ -198655,7 +197410,6 @@ void Unwind_006f3fb8(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b20));
 }
 
@@ -198693,7 +197447,6 @@ void Unwind_006f4006(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c4));
 }
 
@@ -198707,7 +197460,6 @@ void Unwind_006f4014(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c4));
 }
 
@@ -198721,7 +197473,6 @@ void Unwind_006f4022(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c4));
 }
 
@@ -198735,7 +197486,6 @@ void Unwind_006f4030(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c4));
 }
 
@@ -198749,7 +197499,6 @@ void Unwind_006f403e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c4));
 }
 
@@ -198763,7 +197512,6 @@ void Unwind_006f404c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c0));
 }
 
@@ -198777,7 +197525,6 @@ void Unwind_006f405a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c0));
 }
 
@@ -198791,7 +197538,6 @@ void Unwind_006f4068(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c0));
 }
 
@@ -198805,7 +197551,6 @@ void Unwind_006f4076(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c0));
 }
 
@@ -198819,7 +197564,6 @@ void Unwind_006f4084(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c0));
 }
 
@@ -198833,7 +197577,6 @@ void Unwind_006f4092(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1c0));
 }
 
@@ -198895,7 +197638,6 @@ void Unwind_006f4130(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x134));
 }
 
@@ -198909,7 +197651,6 @@ void Unwind_006f413e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x134));
 }
 
@@ -198923,7 +197664,6 @@ void Unwind_006f414c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x134));
 }
 
@@ -198985,7 +197725,6 @@ void Unwind_006f41f0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x300));
 }
 
@@ -199037,8 +197776,6 @@ void Unwind_006f421f(void)
   
   if ((*(uint *)(unaff_EBP + -0x270) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x270) = *(uint *)(unaff_EBP + -0x270) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f423b. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0xf8));
     return;
@@ -199056,8 +197793,6 @@ void Unwind_006f4242(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4248. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0x140));
   return;
@@ -199073,8 +197808,6 @@ void Unwind_006f424e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4254. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x314));
   return;
@@ -199128,8 +197861,6 @@ void Unwind_006f4278(void)
   
   if ((*(uint *)(unaff_EBP + -0x270) & 2) != 0) {
     *(uint *)(unaff_EBP + -0x270) = *(uint *)(unaff_EBP + -0x270) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006f4294. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x1a8));
     return;
@@ -199147,8 +197878,6 @@ void Unwind_006f429b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f42a1. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0x1f0));
   return;
@@ -199164,8 +197893,6 @@ void Unwind_006f42a7(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f42ad. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x318));
   return;
@@ -199481,7 +198208,6 @@ void Unwind_006f4417(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199495,7 +198221,6 @@ void Unwind_006f4425(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199509,7 +198234,6 @@ void Unwind_006f4433(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199523,7 +198247,6 @@ void Unwind_006f4441(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199537,7 +198260,6 @@ void Unwind_006f444f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199551,7 +198273,6 @@ void Unwind_006f445d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199565,7 +198286,6 @@ void Unwind_006f446b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199579,7 +198299,6 @@ void Unwind_006f4479(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199593,7 +198312,6 @@ void Unwind_006f4487(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199607,7 +198325,6 @@ void Unwind_006f4495(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199621,7 +198338,6 @@ void Unwind_006f44a3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199635,7 +198351,6 @@ void Unwind_006f44b1(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199649,7 +198364,6 @@ void Unwind_006f44bf(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x40c));
 }
 
@@ -199663,7 +198377,6 @@ void Unwind_006f4500(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x13ac));
 }
 
@@ -199833,7 +198546,6 @@ void Unwind_006f45d0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x10));
 }
 
@@ -199847,7 +198559,6 @@ void Unwind_006f45db(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x10));
 }
 
@@ -199861,7 +198572,6 @@ void Unwind_006f45e6(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x10));
 }
 
@@ -200097,7 +198807,6 @@ void Unwind_006f46ee(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6bc));
 }
 
@@ -200111,7 +198820,6 @@ void Unwind_006f46fc(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6bc));
 }
 
@@ -200125,7 +198833,6 @@ void Unwind_006f470a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6bc));
 }
 
@@ -200139,7 +198846,6 @@ void Unwind_006f4718(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6bc));
 }
 
@@ -200301,7 +199007,6 @@ void Unwind_006f491c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x44));
 }
 
@@ -200315,7 +199020,6 @@ void Unwind_006f4927(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -200341,7 +199045,6 @@ void Unwind_006f493a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -200367,7 +199070,6 @@ void Unwind_006f494d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -200393,7 +199095,6 @@ void Unwind_006f4960(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -200419,7 +199120,6 @@ void Unwind_006f4973(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -200445,7 +199145,6 @@ void Unwind_006f4986(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -200509,8 +199208,6 @@ void Unwind_006f4a50(void)
   
   if ((*(uint *)(unaff_EBP + -0x3c) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x3c) = *(uint *)(unaff_EBP + -0x3c) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f4a66. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x84));
     return;
@@ -200528,8 +199225,6 @@ void Unwind_006f4a6d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4a73. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xcc));
   return;
@@ -200545,8 +199240,6 @@ void Unwind_006f4a79(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4a7f. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0xf0));
   return;
@@ -200672,8 +199365,6 @@ void Unwind_006f4b90(void)
   
   if ((*(uint *)(unaff_EBP + -0x7c) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x7c) = *(uint *)(unaff_EBP + -0x7c) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f4ba6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x110));
     return;
@@ -200691,8 +199382,6 @@ void Unwind_006f4bad(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4bb3. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0x158));
   return;
@@ -200708,8 +199397,6 @@ void Unwind_006f4bb9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4bbf. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x17c));
   return;
@@ -200785,7 +199472,6 @@ void Unwind_006f4bf3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6c));
 }
 
@@ -200799,7 +199485,6 @@ void Unwind_006f4bfe(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6c));
 }
 
@@ -200813,7 +199498,6 @@ void Unwind_006f4c40(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x58));
 }
 
@@ -200829,8 +199513,6 @@ void Unwind_006f4c4b(void)
   
   if ((*(uint *)(unaff_EBP + -0x40) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x40) = *(uint *)(unaff_EBP + -0x40) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f4c61. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0xa4));
     return;
@@ -200848,8 +199530,6 @@ void Unwind_006f4c68(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4c6e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xec));
   return;
@@ -200865,8 +199545,6 @@ void Unwind_006f4c74(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4c7a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x110));
   return;
@@ -200920,8 +199598,6 @@ void Unwind_006f4cd0(void)
   
   if ((*(uint *)(unaff_EBP + -200) & 2) != 0) {
     *(uint *)(unaff_EBP + -200) = *(uint *)(unaff_EBP + -200) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006f4cec. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x174));
     return;
@@ -200939,8 +199615,6 @@ void Unwind_006f4cf3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4cf9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0x1bc));
   return;
@@ -200956,8 +199630,6 @@ void Unwind_006f4cff(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4d05. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x1e0));
   return;
@@ -201039,7 +199711,6 @@ void Unwind_006f4d50(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x10c));
 }
 
@@ -201053,7 +199724,6 @@ void Unwind_006f4d5e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x124));
 }
 
@@ -201141,8 +199811,6 @@ void Unwind_006f4dd0(void)
   
   if ((*(uint *)(unaff_EBP + -0x44) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x44) = *(uint *)(unaff_EBP + -0x44) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f4de6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x98));
     return;
@@ -201160,8 +199828,6 @@ void Unwind_006f4ded(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4df3. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xe0));
   return;
@@ -201177,8 +199843,6 @@ void Unwind_006f4df9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4dff. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x104));
   return;
@@ -201256,8 +199920,6 @@ void Unwind_006f4e60(void)
   
   if ((*(uint *)(unaff_EBP + -0x44) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x44) = *(uint *)(unaff_EBP + -0x44) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f4e76. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x90));
     return;
@@ -201275,8 +199937,6 @@ void Unwind_006f4e7d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4e83. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<char,std::char_traits<char>_>::~basic_iostream<char,std::char_traits<char>_>
             ((basic_iostream<char,std::char_traits<char>_> *)(unaff_EBP + -0xd8));
   return;
@@ -201292,8 +199952,6 @@ void Unwind_006f4e89(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4e8f. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0xfc));
   return;
@@ -201347,8 +200005,6 @@ void Unwind_006f4ee0(void)
   
   if ((*(uint *)(unaff_EBP + -0xbe8) & 1) != 0) {
     *(uint *)(unaff_EBP + -0xbe8) = *(uint *)(unaff_EBP + -0xbe8) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f4efc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xaa8));
@@ -201367,8 +200023,6 @@ void Unwind_006f4f03(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4f09. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xaf0));
@@ -201385,8 +200039,6 @@ void Unwind_006f4f0f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4f15. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0xc18));
@@ -201465,8 +200117,6 @@ void Unwind_006f4f52(void)
   
   if ((*(uint *)(unaff_EBP + -0xbe8) & 2) != 0) {
     *(uint *)(unaff_EBP + -0xbe8) = *(uint *)(unaff_EBP + -0xbe8) & 0xfffffffd;
-                    /* WARNING: Could not recover jumptable at 0x006f4f6e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xb58));
@@ -201485,8 +200135,6 @@ void Unwind_006f4f75(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4f7b. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0xba0));
@@ -201503,8 +200151,6 @@ void Unwind_006f4f81(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f4f87. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0xc1c));
@@ -201835,7 +200481,6 @@ void Unwind_006f51c8(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2bcc));
 }
 
@@ -201861,7 +200506,6 @@ void Unwind_006f51e1(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b44));
 }
 
@@ -201875,7 +200519,6 @@ void Unwind_006f51ef(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b44));
 }
 
@@ -201889,7 +200532,6 @@ void Unwind_006f51fd(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b44));
 }
 
@@ -201903,7 +200545,6 @@ void Unwind_006f520b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b44));
 }
 
@@ -201917,7 +200558,6 @@ void Unwind_006f5219(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b44));
 }
 
@@ -201931,7 +200571,6 @@ void Unwind_006f5227(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b44));
 }
 
@@ -201945,7 +200584,6 @@ void Unwind_006f5235(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b30));
 }
 
@@ -201971,7 +200609,6 @@ void Unwind_006f524e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b30));
 }
 
@@ -201985,7 +200622,6 @@ void Unwind_006f525c(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b30));
 }
 
@@ -201999,7 +200635,6 @@ void Unwind_006f526a(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b30));
 }
 
@@ -202013,7 +200648,6 @@ void Unwind_006f5278(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b30));
 }
 
@@ -202027,7 +200661,6 @@ void Unwind_006f5286(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2b30));
 }
 
@@ -202149,7 +200782,6 @@ void Unwind_006f5321(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -203150,7 +201782,6 @@ void Unwind_006f5b18(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -100));
 }
 
@@ -203214,8 +201845,6 @@ void Unwind_006f5ca0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f5ca6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Concurrency::details::_Concurrent_vector_base_v4::~_Concurrent_vector_base_v4
             ((_Concurrent_vector_base_v4 *)(*(int *)(unaff_EBP + -0x10) + 4));
   return;
@@ -203255,8 +201884,6 @@ void Unwind_006f5ce3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f5ce9. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Concurrency::details::_Concurrent_vector_base_v4::~_Concurrent_vector_base_v4
             ((_Concurrent_vector_base_v4 *)(*(int *)(unaff_EBP + -0x14) + 4));
   return;
@@ -203272,8 +201899,6 @@ void Unwind_006f5cef(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f5cf5. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Concurrency::details::_Concurrent_vector_base_v4::~_Concurrent_vector_base_v4
             ((_Concurrent_vector_base_v4 *)(*(int *)(unaff_EBP + -0x14) + 4));
   return;
@@ -203289,8 +201914,6 @@ void Unwind_006f5cfb(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f5d01. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Concurrency::details::_Concurrent_vector_base_v4::~_Concurrent_vector_base_v4
             ((_Concurrent_vector_base_v4 *)(*(int *)(unaff_EBP + -0x14) + 4));
   return;
@@ -203573,7 +202196,6 @@ void Unwind_006f5f80(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x14));
 }
 
@@ -203651,8 +202273,6 @@ void Unwind_006f60c0(void)
   
   if ((*(uint *)(unaff_EBP + -0x10) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x10) = *(uint *)(unaff_EBP + -0x10) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f60d6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(unaff_EBP + -0x14) + 0x70));
     return;
@@ -203670,8 +202290,6 @@ void Unwind_006f60dd(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f60e3. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_istream<char,std::char_traits<char>_>::~basic_istream<char,std::char_traits<char>_>
             ((basic_istream<char,std::char_traits<char>_> *)(*(int *)(unaff_EBP + -0x14) + 0x18));
   return;
@@ -203687,8 +202305,6 @@ void Unwind_006f60e9(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f60ec. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + 0x14));
   return;
@@ -203718,8 +202334,6 @@ void Unwind_006f6120(void)
   
   if ((*(uint *)(unaff_EBP + -0x10) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x10) = *(uint *)(unaff_EBP + -0x10) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f6136. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(*(int *)(unaff_EBP + -0x14) + 0x70));
     return;
@@ -203737,8 +202351,6 @@ void Unwind_006f613d(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f6143. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_istream<char,std::char_traits<char>_>::~basic_istream<char,std::char_traits<char>_>
             ((basic_istream<char,std::char_traits<char>_> *)(*(int *)(unaff_EBP + -0x14) + 0x18));
   return;
@@ -203754,8 +202366,6 @@ void Unwind_006f6149(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f614c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + 8));
   return;
@@ -204011,7 +202621,6 @@ void Unwind_006f6276(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x2c));
 }
 
@@ -204349,7 +202958,6 @@ void Unwind_006f64c0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 8));
 }
 
@@ -204375,7 +202983,6 @@ void Unwind_006f64f8(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 8));
 }
 
@@ -204401,7 +203008,6 @@ void Unwind_006f650b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 8));
 }
 
@@ -204415,7 +203021,6 @@ void Unwind_006f6516(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 8));
 }
 
@@ -204443,8 +203048,6 @@ void Unwind_006f6548(void)
   
   if ((*(uint *)(unaff_EBP + -0xcc) & 1) != 0) {
     *(uint *)(unaff_EBP + -0xcc) = *(uint *)(unaff_EBP + -0xcc) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f6564. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
     ~basic_ios<wchar_t,std::char_traits<wchar_t>_>
               ((basic_ios<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x138));
@@ -204463,8 +203066,6 @@ void Unwind_006f656b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f6571. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)(unaff_EBP + -0x180));
@@ -204481,8 +203082,6 @@ void Unwind_006f6577(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f657d. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::
   ~basic_streambuf<wchar_t,std::char_traits<wchar_t>_>
             (*(basic_streambuf<wchar_t,std::char_traits<wchar_t>_> **)(unaff_EBP + -0x1a4));
@@ -204511,7 +203110,6 @@ void Unwind_006f658e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0xec));
 }
 
@@ -204525,7 +203123,6 @@ void Unwind_006f65d0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x6c));
 }
 
@@ -204551,7 +203148,6 @@ void Unwind_006f6610(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x10));
 }
 
@@ -204627,8 +203223,6 @@ void Unwind_006f6698(void)
   
   if ((*(uint *)(unaff_EBP + -0x1c4) & 1) != 0) {
     *(uint *)(unaff_EBP + -0x1c4) = *(uint *)(unaff_EBP + -0x1c4) & 0xfffffffe;
-                    /* WARNING: Could not recover jumptable at 0x006f66b4. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
               ((basic_ios<char,std::char_traits<char>_> *)(unaff_EBP + -0x264));
     return;
@@ -204646,8 +203240,6 @@ void Unwind_006f66bb(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f66c1. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_istream<char,std::char_traits<char>_>::~basic_istream<char,std::char_traits<char>_>
             ((basic_istream<char,std::char_traits<char>_> *)(unaff_EBP + -700));
   return;
@@ -204663,8 +203255,6 @@ void Unwind_006f66c7(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f66cd. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (*(basic_streambuf<char,std::char_traits<char>_> **)(unaff_EBP + -0x1b0));
   return;
@@ -204728,7 +203318,6 @@ void Unwind_006f66fc(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1b0));
 }
 
@@ -204814,7 +203403,6 @@ void Unwind_006f6743(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1b0));
 }
 
@@ -204864,7 +203452,6 @@ void Unwind_006f676f(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x1b0));
 }
 
@@ -205022,7 +203609,6 @@ void Unwind_006f6868(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 8));
 }
 
@@ -205048,7 +203634,6 @@ void Unwind_006f68ab(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x58));
 }
 
@@ -205110,7 +203695,6 @@ void Unwind_006f6908(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 8));
 }
 
@@ -205148,7 +203732,6 @@ void Unwind_006f6956(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x94));
 }
 
@@ -205618,7 +204201,6 @@ void Unwind_006f6b60(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x78));
 }
 
@@ -205656,7 +204238,6 @@ void Unwind_006f6b7b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x7c));
 }
 
@@ -205742,7 +204323,6 @@ void Unwind_006f6beb(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x78));
 }
 
@@ -205792,7 +204372,6 @@ void Unwind_006f6c3b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x54));
 }
 
@@ -205878,7 +204457,6 @@ void Unwind_006f6ca3(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x84));
 }
 
@@ -205964,7 +204542,6 @@ void Unwind_006f6d3b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x58));
 }
 
@@ -206460,7 +205037,6 @@ void Unwind_006f7140(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 0xc));
 }
 
@@ -206474,7 +205050,6 @@ void Unwind_006f714b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 0x10));
 }
 
@@ -206500,7 +205075,6 @@ void Unwind_006f7188(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x48));
 }
 
@@ -206526,7 +205100,6 @@ void Unwind_006f719b(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x3c));
 }
 
@@ -206612,7 +205185,6 @@ void Unwind_006f7270(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x10));
 }
 
@@ -207249,7 +205821,6 @@ void Unwind_006f7763(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 8));
 }
 
@@ -207263,7 +205834,6 @@ void Unwind_006f776e(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + 8));
 }
 
@@ -208621,7 +207191,6 @@ void Unwind_006f7dc0(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(unaff_EBP + -0x10));
 }
 
@@ -208779,8 +207348,6 @@ void Unwind_006f7f60(void)
 {
   int unaff_EBP;
   
-                    /* WARNING: Could not recover jumptable at 0x006f7f66. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Concurrency::details::_Cancellation_beacon::~_Cancellation_beacon
             ((_Cancellation_beacon *)(*(int *)(unaff_EBP + -0x10) + 8));
   return;
@@ -211824,7 +210391,6 @@ void Unwind_006f93b0(void)
 
 /* Global::lib_fn_6f9450 @ 006f9450 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9450(void)
 
@@ -211840,7 +210406,6 @@ void lib_fn_6f9450(void)
 
 /* Global::lib_fn_6f9480 @ 006f9480 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9480(void)
 
@@ -211855,7 +210420,6 @@ void lib_fn_6f9480(void)
 
 /* Global::lib_fn_6f94b0 @ 006f94b0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f94b0(void)
 
@@ -211871,7 +210435,6 @@ void lib_fn_6f94b0(void)
 
 /* Global::lib_fn_6f94e0 @ 006f94e0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f94e0(void)
 
@@ -211887,7 +210450,6 @@ void lib_fn_6f94e0(void)
 
 /* Global::lib_fn_6f9510 @ 006f9510 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9510(void)
 
@@ -211902,7 +210464,6 @@ void lib_fn_6f9510(void)
 
 /* Global::lib_fn_6f9540 @ 006f9540 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9540(void)
 
@@ -211918,7 +210479,6 @@ void lib_fn_6f9540(void)
 
 /* Global::lib_fn_6f9570 @ 006f9570 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9570(void)
 
@@ -211934,7 +210494,6 @@ void lib_fn_6f9570(void)
 
 /* Global::lib_fn_6f95a0 @ 006f95a0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f95a0(void)
 
@@ -211949,7 +210508,6 @@ void lib_fn_6f95a0(void)
 
 /* Global::lib_fn_6f95d0 @ 006f95d0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f95d0(void)
 
@@ -211965,7 +210523,6 @@ void lib_fn_6f95d0(void)
 
 /* Global::lib_fn_6f9600 @ 006f9600 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9600(void)
 
@@ -211981,7 +210538,6 @@ void lib_fn_6f9600(void)
 
 /* Global::lib_fn_6f9630 @ 006f9630 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9630(void)
 
@@ -211996,7 +210552,6 @@ void lib_fn_6f9630(void)
 
 /* Global::lib_fn_6f9660 @ 006f9660 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9660(void)
 
@@ -212012,7 +210567,6 @@ void lib_fn_6f9660(void)
 
 /* Global::lib_fn_6f9690 @ 006f9690 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9690(void)
 
@@ -212028,7 +210582,6 @@ void lib_fn_6f9690(void)
 
 /* Global::lib_fn_6f96c0 @ 006f96c0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f96c0(void)
 
@@ -212043,7 +210596,6 @@ void lib_fn_6f96c0(void)
 
 /* Global::lib_fn_6f96f0 @ 006f96f0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f96f0(void)
 
@@ -212059,7 +210611,6 @@ void lib_fn_6f96f0(void)
 
 /* Global::lib_fn_6f9720 @ 006f9720 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9720(void)
 
@@ -212075,7 +210626,6 @@ void lib_fn_6f9720(void)
 
 /* Global::lib_fn_6f9750 @ 006f9750 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9750(void)
 
@@ -212090,7 +210640,6 @@ void lib_fn_6f9750(void)
 
 /* Global::lib_fn_6f9780 @ 006f9780 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9780(void)
 
@@ -212106,7 +210655,6 @@ void lib_fn_6f9780(void)
 
 /* Global::lib_fn_6f97b0 @ 006f97b0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f97b0(void)
 
@@ -212122,7 +210670,6 @@ void lib_fn_6f97b0(void)
 
 /* Global::lib_fn_6f97e0 @ 006f97e0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f97e0(void)
 
@@ -212137,7 +210684,6 @@ void lib_fn_6f97e0(void)
 
 /* Global::lib_fn_6f9810 @ 006f9810 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9810(void)
 
@@ -212153,7 +210699,6 @@ void lib_fn_6f9810(void)
 
 /* Global::lib_fn_6f9840 @ 006f9840 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9840(void)
 
@@ -212169,7 +210714,6 @@ void lib_fn_6f9840(void)
 
 /* Global::lib_fn_6f9870 @ 006f9870 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9870(void)
 
@@ -212184,7 +210728,6 @@ void lib_fn_6f9870(void)
 
 /* Global::lib_fn_6f98a0 @ 006f98a0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f98a0(void)
 
@@ -212200,7 +210743,6 @@ void lib_fn_6f98a0(void)
 
 /* Global::lib_fn_6f98d0 @ 006f98d0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f98d0(void)
 
@@ -212216,7 +210758,6 @@ void lib_fn_6f98d0(void)
 
 /* Global::lib_fn_6f9900 @ 006f9900 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9900(void)
 
@@ -212231,7 +210772,6 @@ void lib_fn_6f9900(void)
 
 /* Global::lib_fn_6f9930 @ 006f9930 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9930(void)
 
@@ -212247,7 +210787,6 @@ void lib_fn_6f9930(void)
 
 /* Global::lib_fn_6f9960 @ 006f9960 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9960(void)
 
@@ -212263,7 +210802,6 @@ void lib_fn_6f9960(void)
 
 /* Global::lib_fn_6f9990 @ 006f9990 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9990(void)
 
@@ -212278,7 +210816,6 @@ void lib_fn_6f9990(void)
 
 /* Global::lib_fn_6f99c0 @ 006f99c0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f99c0(void)
 
@@ -212294,7 +210831,6 @@ void lib_fn_6f99c0(void)
 
 /* Global::lib_fn_6f99f0 @ 006f99f0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f99f0(void)
 
@@ -212310,7 +210846,6 @@ void lib_fn_6f99f0(void)
 
 /* Global::lib_fn_6f9a20 @ 006f9a20 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9a20(void)
 
@@ -212325,7 +210860,6 @@ void lib_fn_6f9a20(void)
 
 /* Global::lib_fn_6f9a50 @ 006f9a50 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9a50(void)
 
@@ -212341,7 +210875,6 @@ void lib_fn_6f9a50(void)
 
 /* Global::lib_fn_6f9a80 @ 006f9a80 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9a80(void)
 
@@ -212357,7 +210890,6 @@ void lib_fn_6f9a80(void)
 
 /* Global::lib_fn_6f9ab0 @ 006f9ab0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9ab0(void)
 
@@ -212372,7 +210904,6 @@ void lib_fn_6f9ab0(void)
 
 /* Global::lib_fn_6f9ae0 @ 006f9ae0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9ae0(void)
 
@@ -212388,7 +210919,6 @@ void lib_fn_6f9ae0(void)
 
 /* Global::lib_fn_6f9b10 @ 006f9b10 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9b10(void)
 
@@ -212404,7 +210934,6 @@ void lib_fn_6f9b10(void)
 
 /* Global::lib_fn_6f9b40 @ 006f9b40 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9b40(void)
 
@@ -212419,7 +210948,6 @@ void lib_fn_6f9b40(void)
 
 /* Global::lib_fn_6f9b70 @ 006f9b70 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9b70(void)
 
@@ -212435,7 +210963,6 @@ void lib_fn_6f9b70(void)
 
 /* Global::lib_fn_6f9ba0 @ 006f9ba0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9ba0(void)
 
@@ -212451,7 +210978,6 @@ void lib_fn_6f9ba0(void)
 
 /* Global::lib_fn_6f9bd0 @ 006f9bd0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9bd0(void)
 
@@ -212466,7 +210992,6 @@ void lib_fn_6f9bd0(void)
 
 /* Global::lib_fn_6f9c00 @ 006f9c00 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9c00(void)
 
@@ -212482,7 +211007,6 @@ void lib_fn_6f9c00(void)
 
 /* Global::lib_fn_6f9c30 @ 006f9c30 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9c30(void)
 
@@ -212498,7 +211022,6 @@ void lib_fn_6f9c30(void)
 
 /* Global::lib_fn_6f9c60 @ 006f9c60 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9c60(void)
 
@@ -212513,7 +211036,6 @@ void lib_fn_6f9c60(void)
 
 /* Global::lib_fn_6f9c90 @ 006f9c90 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9c90(void)
 
@@ -212529,7 +211051,6 @@ void lib_fn_6f9c90(void)
 
 /* Global::lib_fn_6f9cc0 @ 006f9cc0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9cc0(void)
 
@@ -212545,7 +211066,6 @@ void lib_fn_6f9cc0(void)
 
 /* Global::lib_fn_6f9cf0 @ 006f9cf0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9cf0(void)
 
@@ -212560,7 +211080,6 @@ void lib_fn_6f9cf0(void)
 
 /* Global::lib_fn_6f9d20 @ 006f9d20 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9d20(void)
 
@@ -212576,7 +211095,6 @@ void lib_fn_6f9d20(void)
 
 /* Global::lib_fn_6f9d50 @ 006f9d50 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9d50(void)
 
@@ -212592,7 +211110,6 @@ void lib_fn_6f9d50(void)
 
 /* Global::lib_fn_6f9d80 @ 006f9d80 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9d80(void)
 
@@ -212607,7 +211124,6 @@ void lib_fn_6f9d80(void)
 
 /* Global::lib_fn_6f9db0 @ 006f9db0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9db0(void)
 
@@ -212623,7 +211139,6 @@ void lib_fn_6f9db0(void)
 
 /* Global::lib_fn_6f9de0 @ 006f9de0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9de0(void)
 
@@ -212639,7 +211154,6 @@ void lib_fn_6f9de0(void)
 
 /* Global::lib_fn_6f9e10 @ 006f9e10 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9e10(void)
 
@@ -212654,7 +211168,6 @@ void lib_fn_6f9e10(void)
 
 /* Global::lib_fn_6f9e40 @ 006f9e40 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9e40(void)
 
@@ -212670,7 +211183,6 @@ void lib_fn_6f9e40(void)
 
 /* Global::lib_fn_6f9ee0 @ 006f9ee0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9ee0(void)
 
@@ -212686,7 +211198,6 @@ void lib_fn_6f9ee0(void)
 
 /* Global::lib_fn_6f9f20 @ 006f9f20 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9f20(void)
 
@@ -212701,7 +211212,6 @@ void lib_fn_6f9f20(void)
 
 /* Global::lib_fn_6f9f50 @ 006f9f50 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9f50(void)
 
@@ -212717,7 +211227,6 @@ void lib_fn_6f9f50(void)
 
 /* Global::lib_fn_6f9f80 @ 006f9f80 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9f80(void)
 
@@ -212733,7 +211242,6 @@ void lib_fn_6f9f80(void)
 
 /* Global::lib_fn_6f9fb0 @ 006f9fb0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9fb0(void)
 
@@ -212748,7 +211256,6 @@ void lib_fn_6f9fb0(void)
 
 /* Global::lib_fn_6f9ff0 @ 006f9ff0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6f9ff0(void)
 
@@ -212764,7 +211271,6 @@ void lib_fn_6f9ff0(void)
 
 /* Global::lib_fn_6fa020 @ 006fa020 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa020(void)
 
@@ -212780,7 +211286,6 @@ void lib_fn_6fa020(void)
 
 /* Global::lib_fn_6fa050 @ 006fa050 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa050(void)
 
@@ -212795,7 +211300,6 @@ void lib_fn_6fa050(void)
 
 /* Global::lib_fn_6fa080 @ 006fa080 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa080(void)
 
@@ -212811,7 +211315,6 @@ void lib_fn_6fa080(void)
 
 /* Global::lib_fn_6fa0b0 @ 006fa0b0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa0b0(void)
 
@@ -212827,7 +211330,6 @@ void lib_fn_6fa0b0(void)
 
 /* Global::lib_fn_6fa0e0 @ 006fa0e0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa0e0(void)
 
@@ -212842,7 +211344,6 @@ void lib_fn_6fa0e0(void)
 
 /* Global::lib_fn_6fa110 @ 006fa110 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa110(void)
 
@@ -212858,7 +211359,6 @@ void lib_fn_6fa110(void)
 
 /* Global::lib_fn_6fa140 @ 006fa140 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa140(void)
 
@@ -212874,7 +211374,6 @@ void lib_fn_6fa140(void)
 
 /* Global::lib_fn_6fa170 @ 006fa170 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa170(void)
 
@@ -212889,7 +211388,6 @@ void lib_fn_6fa170(void)
 
 /* Global::lib_fn_6fa1a0 @ 006fa1a0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa1a0(void)
 
@@ -212905,7 +211403,6 @@ void lib_fn_6fa1a0(void)
 
 /* Global::lib_fn_6fa1d0 @ 006fa1d0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa1d0(void)
 
@@ -212921,7 +211418,6 @@ void lib_fn_6fa1d0(void)
 
 /* Global::lib_fn_6fa200 @ 006fa200 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa200(void)
 
@@ -212936,7 +211432,6 @@ void lib_fn_6fa200(void)
 
 /* Global::lib_fn_6fa230 @ 006fa230 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa230(void)
 
@@ -212952,7 +211447,6 @@ void lib_fn_6fa230(void)
 
 /* Global::lib_fn_6fa260 @ 006fa260 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa260(void)
 
@@ -212968,7 +211462,6 @@ void lib_fn_6fa260(void)
 
 /* Global::lib_fn_6fa290 @ 006fa290 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa290(void)
 
@@ -212983,7 +211476,6 @@ void lib_fn_6fa290(void)
 
 /* Global::lib_fn_6fa2c0 @ 006fa2c0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa2c0(void)
 
@@ -212999,7 +211491,6 @@ void lib_fn_6fa2c0(void)
 
 /* Global::lib_fn_6fa2f0 @ 006fa2f0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa2f0(void)
 
@@ -213015,7 +211506,6 @@ void lib_fn_6fa2f0(void)
 
 /* Global::lib_fn_6fa320 @ 006fa320 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa320(void)
 
@@ -213030,7 +211520,6 @@ void lib_fn_6fa320(void)
 
 /* Global::lib_fn_6fa350 @ 006fa350 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa350(void)
 
@@ -213046,7 +211535,6 @@ void lib_fn_6fa350(void)
 
 /* Global::lib_fn_6fa380 @ 006fa380 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa380(void)
 
@@ -213062,7 +211550,6 @@ void lib_fn_6fa380(void)
 
 /* Global::lib_fn_6fa3b0 @ 006fa3b0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa3b0(void)
 
@@ -213077,7 +211564,6 @@ void lib_fn_6fa3b0(void)
 
 /* Global::lib_fn_6fa3e0 @ 006fa3e0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa3e0(void)
 
@@ -213093,7 +211579,6 @@ void lib_fn_6fa3e0(void)
 
 /* Global::lib_fn_6fa410 @ 006fa410 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa410(void)
 
@@ -213109,7 +211594,6 @@ void lib_fn_6fa410(void)
 
 /* Global::lib_fn_6fa440 @ 006fa440 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa440(void)
 
@@ -213124,7 +211608,6 @@ void lib_fn_6fa440(void)
 
 /* Global::lib_fn_6fa470 @ 006fa470 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa470(void)
 
@@ -213140,7 +211623,6 @@ void lib_fn_6fa470(void)
 
 /* Global::lib_fn_6fa4a0 @ 006fa4a0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa4a0(void)
 
@@ -213156,7 +211638,6 @@ void lib_fn_6fa4a0(void)
 
 /* Global::lib_fn_6fa4d0 @ 006fa4d0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa4d0(void)
 
@@ -213171,7 +211652,6 @@ void lib_fn_6fa4d0(void)
 
 /* Global::lib_fn_6fa500 @ 006fa500 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa500(void)
 
@@ -213187,7 +211667,6 @@ void lib_fn_6fa500(void)
 
 /* Global::lib_fn_6fa530 @ 006fa530 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa530(void)
 
@@ -213203,7 +211682,6 @@ void lib_fn_6fa530(void)
 
 /* Global::lib_fn_6fa560 @ 006fa560 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa560(void)
 
@@ -213218,7 +211696,6 @@ void lib_fn_6fa560(void)
 
 /* Global::lib_fn_6fa590 @ 006fa590 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa590(void)
 
@@ -213234,7 +211711,6 @@ void lib_fn_6fa590(void)
 
 /* Global::lib_fn_6fa5c0 @ 006fa5c0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa5c0(void)
 
@@ -213250,7 +211726,6 @@ void lib_fn_6fa5c0(void)
 
 /* Global::lib_fn_6fa5f0 @ 006fa5f0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa5f0(void)
 
@@ -213265,7 +211740,6 @@ void lib_fn_6fa5f0(void)
 
 /* Global::lib_fn_6fa620 @ 006fa620 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa620(void)
 
@@ -213281,7 +211755,6 @@ void lib_fn_6fa620(void)
 
 /* Global::lib_fn_6fa650 @ 006fa650 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa650(void)
 
@@ -213297,7 +211770,6 @@ void lib_fn_6fa650(void)
 
 /* Global::lib_fn_6fa680 @ 006fa680 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa680(void)
 
@@ -213312,7 +211784,6 @@ void lib_fn_6fa680(void)
 
 /* Global::lib_fn_6fa6b0 @ 006fa6b0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa6b0(void)
 
@@ -213328,7 +211799,6 @@ void lib_fn_6fa6b0(void)
 
 /* Global::lib_fn_6fa6e0 @ 006fa6e0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa6e0(void)
 
@@ -213344,7 +211814,6 @@ void lib_fn_6fa6e0(void)
 
 /* Global::lib_fn_6fa710 @ 006fa710 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa710(void)
 
@@ -213359,7 +211828,6 @@ void lib_fn_6fa710(void)
 
 /* Global::lib_fn_6fa740 @ 006fa740 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa740(void)
 
@@ -213375,7 +211843,6 @@ void lib_fn_6fa740(void)
 
 /* Global::lib_fn_6fa770 @ 006fa770 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa770(void)
 
@@ -213391,7 +211858,6 @@ void lib_fn_6fa770(void)
 
 /* Global::lib_fn_6fa7a0 @ 006fa7a0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa7a0(void)
 
@@ -213406,7 +211872,6 @@ void lib_fn_6fa7a0(void)
 
 /* Global::lib_fn_6fa7d0 @ 006fa7d0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa7d0(void)
 
@@ -213422,7 +211887,6 @@ void lib_fn_6fa7d0(void)
 
 /* Global::lib_fn_6fa800 @ 006fa800 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa800(void)
 
@@ -213438,7 +211902,6 @@ void lib_fn_6fa800(void)
 
 /* Global::lib_fn_6fa830 @ 006fa830 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa830(void)
 
@@ -213453,7 +211916,6 @@ void lib_fn_6fa830(void)
 
 /* Global::lib_fn_6fa860 @ 006fa860 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa860(void)
 
@@ -213469,7 +211931,6 @@ void lib_fn_6fa860(void)
 
 /* Global::lib_fn_6fa890 @ 006fa890 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa890(void)
 
@@ -213485,7 +211946,6 @@ void lib_fn_6fa890(void)
 
 /* Global::lib_fn_6fa8c0 @ 006fa8c0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa8c0(void)
 
@@ -213500,7 +211960,6 @@ void lib_fn_6fa8c0(void)
 
 /* Global::lib_fn_6fa8f0 @ 006fa8f0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa8f0(void)
 
@@ -213516,7 +211975,6 @@ void lib_fn_6fa8f0(void)
 
 /* Global::lib_fn_6fa920 @ 006fa920 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa920(void)
 
@@ -213532,7 +211990,6 @@ void lib_fn_6fa920(void)
 
 /* Global::lib_fn_6fa950 @ 006fa950 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa950(void)
 
@@ -213547,7 +212004,6 @@ void lib_fn_6fa950(void)
 
 /* Global::lib_fn_6fa980 @ 006fa980 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa980(void)
 
@@ -213563,7 +212019,6 @@ void lib_fn_6fa980(void)
 
 /* Global::lib_fn_6fa9b0 @ 006fa9b0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa9b0(void)
 
@@ -213579,7 +212034,6 @@ void lib_fn_6fa9b0(void)
 
 /* Global::lib_fn_6fa9e0 @ 006fa9e0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fa9e0(void)
 
@@ -213594,7 +212048,6 @@ void lib_fn_6fa9e0(void)
 
 /* Global::lib_fn_6faa10 @ 006faa10 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faa10(void)
 
@@ -213610,7 +212063,6 @@ void lib_fn_6faa10(void)
 
 /* Global::lib_fn_6faa40 @ 006faa40 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faa40(void)
 
@@ -213626,7 +212078,6 @@ void lib_fn_6faa40(void)
 
 /* Global::lib_fn_6faa70 @ 006faa70 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faa70(void)
 
@@ -213641,7 +212092,6 @@ void lib_fn_6faa70(void)
 
 /* Global::lib_fn_6faaa0 @ 006faaa0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faaa0(void)
 
@@ -213657,7 +212107,6 @@ void lib_fn_6faaa0(void)
 
 /* Global::lib_fn_6faad0 @ 006faad0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faad0(void)
 
@@ -213673,7 +212122,6 @@ void lib_fn_6faad0(void)
 
 /* Global::lib_fn_6fab00 @ 006fab00 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fab00(void)
 
@@ -213688,7 +212136,6 @@ void lib_fn_6fab00(void)
 
 /* Global::lib_fn_6fab30 @ 006fab30 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fab30(void)
 
@@ -213704,7 +212151,6 @@ void lib_fn_6fab30(void)
 
 /* Global::lib_fn_6fab60 @ 006fab60 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fab60(void)
 
@@ -213720,7 +212166,6 @@ void lib_fn_6fab60(void)
 
 /* Global::lib_fn_6fab90 @ 006fab90 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fab90(void)
 
@@ -213735,7 +212180,6 @@ void lib_fn_6fab90(void)
 
 /* Global::lib_fn_6fabc0 @ 006fabc0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fabc0(void)
 
@@ -213751,7 +212195,6 @@ void lib_fn_6fabc0(void)
 
 /* Global::lib_fn_6fabf0 @ 006fabf0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fabf0(void)
 
@@ -213767,7 +212210,6 @@ void lib_fn_6fabf0(void)
 
 /* Global::lib_fn_6fac20 @ 006fac20 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fac20(void)
 
@@ -213782,7 +212224,6 @@ void lib_fn_6fac20(void)
 
 /* Global::lib_fn_6fac50 @ 006fac50 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fac50(void)
 
@@ -213798,7 +212239,6 @@ void lib_fn_6fac50(void)
 
 /* Global::lib_fn_6fac80 @ 006fac80 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fac80(void)
 
@@ -213814,7 +212254,6 @@ void lib_fn_6fac80(void)
 
 /* Global::lib_fn_6facb0 @ 006facb0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6facb0(void)
 
@@ -213829,7 +212268,6 @@ void lib_fn_6facb0(void)
 
 /* Global::lib_fn_6face0 @ 006face0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6face0(void)
 
@@ -213845,7 +212283,6 @@ void lib_fn_6face0(void)
 
 /* Global::lib_fn_6fad10 @ 006fad10 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fad10(void)
 
@@ -213861,7 +212298,6 @@ void lib_fn_6fad10(void)
 
 /* Global::lib_fn_6fad40 @ 006fad40 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fad40(void)
 
@@ -213876,7 +212312,6 @@ void lib_fn_6fad40(void)
 
 /* Global::lib_fn_6fad70 @ 006fad70 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fad70(void)
 
@@ -213892,7 +212327,6 @@ void lib_fn_6fad70(void)
 
 /* Global::lib_fn_6fada0 @ 006fada0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fada0(void)
 
@@ -213908,7 +212342,6 @@ void lib_fn_6fada0(void)
 
 /* Global::lib_fn_6fadd0 @ 006fadd0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fadd0(void)
 
@@ -213923,7 +212356,6 @@ void lib_fn_6fadd0(void)
 
 /* Global::lib_fn_6fae00 @ 006fae00 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fae00(void)
 
@@ -213953,7 +212385,6 @@ void lib_fn_6fae30(void)
 
 /* Global::lib_fn_6fae60 @ 006fae60 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fae60(void)
 
@@ -213968,7 +212399,6 @@ void lib_fn_6fae60(void)
 
 /* Global::lib_fn_6fae90 @ 006fae90 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fae90(void)
 
@@ -213984,7 +212414,6 @@ void lib_fn_6fae90(void)
 
 /* Global::lib_fn_6faec0 @ 006faec0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faec0(void)
 
@@ -214000,7 +212429,6 @@ void lib_fn_6faec0(void)
 
 /* Global::lib_fn_6faef0 @ 006faef0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faef0(void)
 
@@ -214029,7 +212457,6 @@ void lib_fn_6faf20(void)
 
 /* Global::lib_fn_6faf50 @ 006faf50 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faf50(void)
 
@@ -214045,7 +212472,6 @@ void lib_fn_6faf50(void)
 
 /* Global::lib_fn_6faf80 @ 006faf80 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faf80(void)
 
@@ -214060,7 +212486,6 @@ void lib_fn_6faf80(void)
 
 /* Global::lib_fn_6fafb0 @ 006fafb0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fafb0(void)
 
@@ -214076,7 +212501,6 @@ void lib_fn_6fafb0(void)
 
 /* Global::lib_fn_6faff0 @ 006faff0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6faff0(void)
 
@@ -214092,7 +212516,6 @@ void lib_fn_6faff0(void)
 
 /* Global::lib_fn_6fb020 @ 006fb020 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fb020(void)
 
@@ -214107,7 +212530,6 @@ void lib_fn_6fb020(void)
 
 /* Global::lib_fn_6fb050 @ 006fb050 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fb050(void)
 
@@ -214123,7 +212545,6 @@ void lib_fn_6fb050(void)
 
 /* Global::lib_fn_6fb150 @ 006fb150 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fb150(void)
 
@@ -214135,7 +212556,6 @@ void lib_fn_6fb150(void)
     noop();
     cube::AdaptionWidget::vfunc_24(&DAT_00765030);
     noop();
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   DAT_00765044 = 0xf;
@@ -214161,7 +212581,6 @@ void lib_fn_6fb1b0(void)
   noop();
   cube::AdaptionWidget::vfunc_24((int)pvVar1 + 4);
   noop();
-                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar1);
 }
 
@@ -214170,7 +212589,6 @@ void lib_fn_6fb1b0(void)
 
 /* Global::lib_fn_6fb270 @ 006fb270 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fb270(void)
 
@@ -214182,7 +212600,6 @@ void lib_fn_6fb270(void)
     noop();
     cube::AdaptionWidget::vfunc_24(&DAT_0076b104);
     noop();
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   DAT_0076b118 = 7;
@@ -214196,7 +212613,6 @@ void lib_fn_6fb270(void)
 
 /* Global::lib_fn_6fb2d0 @ 006fb2d0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fb2d0(void)
 
@@ -214208,7 +212624,6 @@ void lib_fn_6fb2d0(void)
     noop();
     cube::AdaptionWidget::vfunc_24(&DAT_0076b11c);
     noop();
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   DAT_0076b130 = 7;
@@ -214236,7 +212651,6 @@ void lib_fn_6fb330(void)
     identity_getter_thunk(&local_5);
     std_vector_destroy_ptr_elems_stride3(pvVar1,uVar2,&local_5,local_9);
     noop();
-                    /* WARNING: Subroutine does not return */
     operator_delete(DAT_0076b0a8);
   }
   return;
@@ -214261,7 +212675,6 @@ void lib_fn_6fb3b0(void)
     identity_getter_thunk(&local_5);
     std_vector_destroy_ptr_elems_stride3(pvVar1,uVar2,&local_5,local_9);
     noop();
-                    /* WARNING: Subroutine does not return */
     operator_delete(DAT_0076b0b4);
   }
   return;
@@ -214286,7 +212699,6 @@ void lib_fn_6fb430(void)
     identity_getter_thunk(&local_5);
     std_vector_destroy_ptr_elems_stride3(pvVar1,uVar2,&local_5,local_9);
     noop();
-                    /* WARNING: Subroutine does not return */
     operator_delete(DAT_0076b098);
   }
   return;
@@ -214309,7 +212721,6 @@ void lib_fn_6fb5f0(void)
   noop();
   cube::AdaptionWidget::vfunc_24((int)pvVar1 + 4);
   noop();
-                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar1);
 }
 
@@ -214318,7 +212729,6 @@ void lib_fn_6fb5f0(void)
 
 /* Global::lib_fn_6fb9f0 @ 006fb9f0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void lib_fn_6fb9f0(void)
 
@@ -214339,7 +212749,6 @@ void lib_fn_6fb9f0(void)
     noop();
     cube::AdaptionWidget::vfunc_24(puVar1 + 2);
     noop();
-                    /* WARNING: Subroutine does not return */
     operator_delete(puVar1);
   }
   noop();
@@ -214347,7 +212756,6 @@ void lib_fn_6fb9f0(void)
   noop();
   cube::AdaptionWidget::vfunc_24(puVar2 + 1);
   noop();
-                    /* WARNING: Subroutine does not return */
   operator_delete(puVar2);
 }
 

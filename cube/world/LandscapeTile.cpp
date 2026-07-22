@@ -13,7 +13,6 @@ void cube::LandscapeTile::vfunc_0(byte flags)
     (*(code *)**(undefined4 **)self[0xb])(1);
   }
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

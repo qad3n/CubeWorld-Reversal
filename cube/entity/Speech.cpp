@@ -606,7 +606,6 @@ LAB_004e1715:
     iVar1 = *in_ECX;
     iVar2 = map_insertVal_strKey(iVar1,*(undefined4 *)(iVar1 + 4),param_1 + 2);
     if (in_ECX[1] == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     in_ECX[1] = in_ECX[1] + 1;
@@ -774,7 +773,6 @@ void cube::Speech::ctor_1(void)
   local_8._0_1_ = 0xc;
   db_openBlobStore();
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_17c = (void *)0x0;
@@ -792,7 +790,6 @@ void cube::Speech::ctor_1(void)
   db_getBlobInto();
   local_8 = CONCAT31(local_8._1_3_,0xd);
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   blob_deobfuscate();
@@ -885,7 +882,6 @@ void cube::Speech::ctor_1(void)
                   u16string_assignPtrLen();
                   local_8 = CONCAT31(local_8._1_3_,0x12);
                   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
                     operator_delete(local_2c[0]);
                   }
                 }
@@ -946,7 +942,6 @@ void cube::Speech::ctor_1(void)
               pvStack_2b8 = (void *)0x4e1feb;
               strstreambuf_init();
               if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
                 operator_delete(local_2c[0]);
               }
               iVar8 = *(int *)((int)&iStack_27c + (int)local_288[0][1]);
@@ -963,7 +958,6 @@ void cube::Speech::ctor_1(void)
                   pvStack_2b8 = (void *)0x4e206a;
                   ppppuVar9 = (undefined4 ****)map_insertVal_strKey();
                   if (local_148 == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("list<T> too long");
                   }
                   local_148 = local_148 + 1;
@@ -971,7 +965,6 @@ void cube::Speech::ctor_1(void)
                   *ppppuVar9[1] = ppppuVar9;
                 }
                 if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
                   operator_delete(local_2c[0]);
                 }
                 iVar8 = *(int *)((int)&iStack_27c + (int)local_288[0][1]);
@@ -1008,7 +1001,6 @@ void cube::Speech::ctor_1(void)
             }
             local_8 = CONCAT31(local_8._1_3_,0x10);
             listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_14c);
           }
           ppppuStack_2b4 = (undefined4 ****)local_4c;
@@ -1152,7 +1144,6 @@ void cube::Speech::ctor_1(void)
                   cube::QuestText::parseTemplate();
                   local_8._0_1_ = 0x10;
                   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
                     operator_delete(local_2c[0]);
                   }
                 }
@@ -1207,7 +1198,6 @@ void cube::Speech::ctor_1(void)
         }
         local_8._0_1_ = uVar3;
         if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_44[0]);
         }
         local_30 = 7;
@@ -1215,7 +1205,6 @@ void cube::Speech::ctor_1(void)
         local_44[0] = (void *)((uint)local_44[0] & 0xffff0000);
         local_8 = CONCAT31(local_8._1_3_,0xd);
         if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_5c);
         }
         ppppuStack_2b4 = (undefined4 ****)0x4e270f;
@@ -1276,7 +1265,6 @@ void cube::Speech::ctor_1(void)
   local_8 = CONCAT31(local_8._1_3_,0xb);
   if (local_17c != (void *)0x0) {
     std::_Container_base0::_Orphan_all((_Container_base0 *)&local_17c);
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_17c);
   }
   local_8._0_1_ = 10;
@@ -1322,7 +1310,6 @@ void cube::Speech::ctor_0(void)
       speechObj = (undefined4 *)cur[10];
       if (speechObj != (undefined4 *)0x0) {
         Speech_map_erase_range2(local_18,*(undefined4 *)*speechObj,(undefined4 *)*speechObj);
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*speechObj);
       }
       if (*(char *)((int)cur + 0xd) == '\0') {
@@ -1384,7 +1371,6 @@ void cube::Speech::ctor_0(void)
   }
   local_8 = CONCAT31(local_8._1_3_,8);
   Speech_map_erase_range(local_18,*(undefined4 *)local_14[0x13],(undefined4 *)local_14[0x13]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)local_14[0x13]);
 }
 
@@ -1462,7 +1448,6 @@ void map_insert_string_key2(int key)
   unwind_delete_member();
   local_8 = 0xffffffff;
   listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
   operator_delete(valueList);
 }
 
@@ -1478,7 +1463,6 @@ void cube::Speech::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;
@@ -1500,9 +1484,6 @@ void node_alloc(void)
   
   pvVar1 = operator_new(0x38);
   if (pvVar1 == (void *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x004e348e. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
   }
@@ -1587,17 +1568,6 @@ undefined4 * Speech_map_erase_range(undefined4 *param_1,int *first,int *last)
  */
 /* Global::Speech_map_erase_node @ 004e3900 */
 
-/* WARNING: Removing unreachable block (ram,0x004e39cd) */
-/* WARNING: Removing unreachable block (ram,0x004e39dd) */
-/* WARNING: Removing unreachable block (ram,0x004e39e6) */
-/* WARNING: Removing unreachable block (ram,0x004e39e9) */
-/* WARNING: Removing unreachable block (ram,0x004e39d9) */
-/* WARNING: Removing unreachable block (ram,0x004e39f7) */
-/* WARNING: Removing unreachable block (ram,0x004e3a06) */
-/* WARNING: Removing unreachable block (ram,0x004e3a11) */
-/* WARNING: Removing unreachable block (ram,0x004e3a0d) */
-/* WARNING: Removing unreachable block (ram,0x004e3a01) */
-/* WARNING: Removing unreachable block (ram,0x004e3a14) */
 
 void Speech_map_erase_node(undefined4 param_1,int *node)
 
@@ -1611,7 +1581,6 @@ void Speech_map_erase_node(undefined4 param_1,int *node)
   int *fixupNode;
   
   if (*(char *)((int)node + 0xd) != '\0') {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment();
@@ -1720,13 +1689,11 @@ LAB_004e3b00:
   }
 LAB_004e3b5e:
   if (7 < (uint)node[10]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)node[5]);
   }
   node[10] = 7;
   node[9] = 0;
   *(undefined2 *)(node + 5) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(node);
 }
 
@@ -1800,17 +1767,6 @@ undefined4 * Speech_map_erase_range2(undefined4 *param_1,int *first,int *last)
  */
 /* Global::Speech_map_erase_node_qt @ 004e4000 */
 
-/* WARNING: Removing unreachable block (ram,0x004e40e1) */
-/* WARNING: Removing unreachable block (ram,0x004e40f1) */
-/* WARNING: Removing unreachable block (ram,0x004e40fa) */
-/* WARNING: Removing unreachable block (ram,0x004e40fd) */
-/* WARNING: Removing unreachable block (ram,0x004e40ed) */
-/* WARNING: Removing unreachable block (ram,0x004e410b) */
-/* WARNING: Removing unreachable block (ram,0x004e4117) */
-/* WARNING: Removing unreachable block (ram,0x004e4122) */
-/* WARNING: Removing unreachable block (ram,0x004e411e) */
-/* WARNING: Removing unreachable block (ram,0x004e4112) */
-/* WARNING: Removing unreachable block (ram,0x004e4125) */
 
 void Speech_map_erase_node_qt(undefined4 param_1,int *node)
 
@@ -1830,7 +1786,6 @@ void Speech_map_erase_node_qt(undefined4 param_1,int *node)
   local_10 = ExceptionList;
   ExceptionList = &local_10;
   if (*(char *)((int)node + 0xd) != '\0') {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid map/set<T> iterator");
   }
   rbtree_iterator_increment(DAT_0076aa78 ^ (uint)&stack0xfffffffc);
@@ -1938,13 +1893,11 @@ LAB_004e4201:
   local_8 = 0;
   cube::QuestText::ctor_2();
   if (7 < (uint)node[9]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)node[4]);
   }
   node[9] = 7;
   node[8] = 0;
   *(undefined2 *)(node + 4) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(node);
 }
 

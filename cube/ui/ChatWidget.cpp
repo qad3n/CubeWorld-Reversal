@@ -32,7 +32,6 @@ void cube::ChatWidget::ctor_0(undefined4 param_1,undefined4 param_2)
   plasma::NamedObject::ctor_4(param_1,param_2,nameBuf);
   local_8._0_1_ = 2;
   if (7 < nameCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameBuf[0]);
   }
   *self = vftable;
@@ -59,7 +58,6 @@ void cube::ChatWidget::ctor_0(undefined4 param_1,undefined4 param_2)
   tmp = FontCache_find_or_create_scalable(&resNameBuf);
   self[0x61] = tmp;
   if (7 < resNameCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(resNameBuf);
   }
   self[0x4a] = self[0x4a] | 0x40;
@@ -83,14 +81,12 @@ void ChatWidget_clearText(void)
   int self;
   
   if (7 < *(uint *)(self + 0x17c)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(self + 0x168));
   }
   *(undefined4 *)(self + 0x17c) = 7;
   *(undefined4 *)(self + 0x178) = 0;
   *(undefined2 *)(self + 0x168) = 0;
   list_clear();
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(self + 0x160));
 }
 
@@ -106,7 +102,6 @@ void cube::ChatWidget::vfunc_0(byte deleteFlag)
   
   ChatWidget_clearText();
   if ((deleteFlag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;
@@ -147,7 +142,6 @@ void list_clear(void)
   self[1] = 0;
   if (firstNode != *self) {
     listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(firstNode + 8));
   }
   return;
@@ -244,7 +238,6 @@ void cube::ChatWidget::vfunc_1(void)
       *(int *)msgNode[1] = *msgNode;
       *(int *)(*msgNode + 4) = msgNode[1];
       listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)msgNode[2]);
     }
     msgCount = *(uint *)(self + 0x164);
@@ -405,7 +398,6 @@ void cube::ChatWidget::vfunc_1(void)
                    puVar14,puVar15,puVar16,uVar17,uVar18);
       local_8 = 0xffffffff;
       if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_74[0]);
       }
       local_88 = 7;
@@ -440,7 +432,6 @@ void cube::ChatWidget::vfunc_1(void)
                    puVar14,puVar15,puVar16,uVar17,uVar18);
       local_8 = 0xffffffff;
       if (7 < local_88) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_9c);
       }
       local_88 = 7;
@@ -513,7 +504,6 @@ void ChatWidget_measureChatText(undefined4 text,undefined4 lineIndex,undefined4 
     TextRender_layoutAndWrap(clippedText,arg8);
     Font_measureTextBlock(clippedText,lineIndex,minOut,maxOut,flags);
     if (7 < clipCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(clippedText[0]);
     }
   }
@@ -666,7 +656,6 @@ void TextRender_setTransform(float size,float arg2,float *matrix)
   uVar4 = Pair_constructMoveKeyString(vecTmp,&faceSizeX,&charData);
   std_map_findVecKeyNode(&faceSizeX,uVar4);
   if (allocGuard != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(allocGuard);
   }
   if (faceSizeX == *(undefined4 **)(self + 0x70)) {
@@ -693,7 +682,6 @@ void TextRender_setTransform(float size,float arg2,float *matrix)
     *glyphSlot = *(undefined4 *)(self + 200);
     ehState._0_1_ = 0;
     if (allocGuard != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(allocGuard);
     }
   }
@@ -710,7 +698,6 @@ void TextRender_setTransform(float size,float arg2,float *matrix)
     uVar4 = Pair_constructMoveKeyString(vecTmp,&matrixField,&charData);
     matrixPtr = (int *)std_map_findVecKeyNode(&faceSizeY,uVar4);
     if (allocGuard != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(allocGuard);
     }
     if (*matrixPtr == *(int *)(self + 0x70)) {
@@ -735,7 +722,6 @@ void TextRender_setTransform(float size,float arg2,float *matrix)
       roundedSize = (undefined4 *)std_map_insertOrAssignMoveVal(uVar4);
       *roundedSize = *(undefined4 *)(self + 0xcc);
       if (allocGuard != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(allocGuard);
       }
     }
@@ -745,7 +731,6 @@ void TextRender_setTransform(float size,float arg2,float *matrix)
     ft_stroker_set_params(*(undefined4 *)(self + 0xdc),(int)(*(float *)(self + 0xe8) * 64.0 + 0.5),1,0,0)
     ;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(charData);
 }
 

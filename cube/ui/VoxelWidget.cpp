@@ -26,7 +26,6 @@ void cube::VoxelWidget::ctor_0(undefined4 param_1,undefined4 param_2,int owner)
   local_8 = 0;
   plasma::NamedObject::ctor_4(param_1,param_2,local_2c);
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   *self = vftable;
@@ -99,13 +98,11 @@ void cube::VoxelWidget::vfunc_0(byte param_1)
   local_8 = 1;
   Sprite::ctor_1(DAT_0076aa78 ^ (uint)&stack0xfffffffc);
   if (*(void **)((int)in_ECX + 0x170) != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)in_ECX + 0x170));
   }
   local_8 = 0xffffffff;
   plasma::Widget::ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   ExceptionList = local_10;

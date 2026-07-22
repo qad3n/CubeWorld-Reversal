@@ -8,7 +8,7 @@ undefined4 * __thiscall cube::CombatBehavior::ctor_0(CombatBehavior *this,undefi
 undefined1 * __thiscall Struct_copy0x118(void *this,undefined1 *param_1);
 undefined4 * __thiscall Vec3i64_copyAndScale(void *this,undefined4 *param_1,uint param_2,int param_3);
 uint * __thiscall Vec3i64_scaleFixed(void *this,uint param_1,int param_2);
-/* WARNING: Removing unreachable block (ram,0x004045c6) */ /* WARNING: Removing unreachable block (ram,0x0040436d) */ void __thiscall cube::CombatBehavior::vfunc_0 (CombatBehavior *this,void *param_1,void *param_2,int param_3,int param_4);
+void __thiscall cube::CombatBehavior::vfunc_0 (CombatBehavior *this,void *param_1,void *param_2,int param_3,int param_4);
 undefined4 * __fastcall cube::CombatBehavior::vfunc_1(int param_1);
 int __thiscall Combat_getAbilityCooldown(void *this,uint param_1);
 int __fastcall Combat_getWindupAndRecovery(int param_1);

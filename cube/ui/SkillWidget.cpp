@@ -25,7 +25,6 @@ void cube::SkillWidget::ctor_0(undefined4 param_1,undefined4 param_2,undefined4 
   local_8 = 0;
   plasma::NamedObject::ctor_4(param_1,param_2,local_28);
   if (7 < local_14) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_28[0]);
   }
   in_ECX[100] = param_3;

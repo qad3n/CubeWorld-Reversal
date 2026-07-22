@@ -34,7 +34,6 @@ void cube::BlueprintPreviewWidget::ctor_0
   trylevel = 0;
   plasma::NamedObject::ctor_4(param_1,param_2,nameBuf);
   if (7 < nameCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameBuf[0]);
   }
   *self = vftable;
@@ -69,7 +68,6 @@ void cube::BlueprintPreviewWidget::ctor_0
     iconObj = Node_find_child_by_name_recursive(iconBuf);
     self[0xa9] = iconObj;
     if (7 < iconCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(iconBuf[0]);
     }
   }
@@ -89,12 +87,10 @@ void cube::BlueprintPreviewWidget::vfunc_0(byte deleteFlag)
   void *self;
   
   if (*(void **)((int)self + 0x288) != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)self + 0x288));
   }
   plasma::Widget::ctor_0();
   if ((deleteFlag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

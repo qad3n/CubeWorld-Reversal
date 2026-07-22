@@ -60,7 +60,6 @@ void vectorReserve8(uint param_1)
       pvVar3 = operator_new(param_1 * 8);
       if (pvVar3 != (void *)0x0) goto LAB_00428b20;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00428b20:
@@ -69,7 +68,6 @@ LAB_00428b20:
   pvVar1 = (void *)*in_ECX;
   param_1 = in_ECX[1] - (int)pvVar1 >> 3;
   if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)((int)pvVar3 + uVar2 * 8);
@@ -110,7 +108,6 @@ void vectorReserve16(uint param_1)
       pvVar3 = operator_new(param_1 << 4);
       if (pvVar3 != (void *)0x0) goto LAB_00428c01;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00428c01:
@@ -118,7 +115,6 @@ LAB_00428c01:
   copyVec4Array2(*in_ECX,in_ECX[1],pvVar3,(int)&param_1 + 3,0,param_1);
   pvVar1 = (void *)*in_ECX;
   if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   in_ECX[2] = (void *)(uVar2 * 0x10 + (int)pvVar3);
@@ -870,7 +866,6 @@ void FUN_0063d9c0(undefined4 *param_1,uint param_2,uint param_3)
     param_2 = param_2 - 1;
     param_1[param_2] = 0;
     if ((void *)0x3f < pvVar1) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
   }
@@ -880,7 +875,6 @@ void FUN_0063d9c0(undefined4 *param_1,uint param_2,uint param_3)
       param_2 = param_2 - 1;
       param_1[param_2] = 0;
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   return;
@@ -956,7 +950,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xb54); puVar4 != *(undefined4 **)(in_ECX + 0xb58);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -965,7 +958,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xb6c); puVar4 != *(undefined4 **)(in_ECX + 0xb70);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -973,7 +965,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xb78); puVar4 != *(undefined4 **)(in_ECX + 0xb7c);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -981,7 +972,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xb84); puVar4 != *(undefined4 **)(in_ECX + 0xb88);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -989,7 +979,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xb90); puVar4 != *(undefined4 **)(in_ECX + 0xb94);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -997,7 +986,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xb9c); puVar4 != *(undefined4 **)(in_ECX + 0xba0);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -1005,7 +993,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xba8); puVar4 != *(undefined4 **)(in_ECX + 0xbac);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -1013,7 +1000,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xbb4); puVar4 != *(undefined4 **)(in_ECX + 3000);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -1021,7 +1007,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xbc0); puVar4 != *(undefined4 **)(in_ECX + 0xbc4);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -1029,7 +1014,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xbcc); puVar4 != *(undefined4 **)(in_ECX + 0xbd0);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -1037,7 +1021,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xbd8); puVar4 != *(undefined4 **)(in_ECX + 0xbdc);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -1045,7 +1028,6 @@ void plasma::SmoothMeshShape::clear(void)
   for (puVar4 = *(undefined4 **)(in_ECX + 0xbe4); puVar4 != *(undefined4 **)(in_ECX + 0xbe8);
       puVar4 = puVar4 + 3) {
     if ((void *)*puVar4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar4);
     }
   }
@@ -1069,7 +1051,6 @@ void plasma::SmoothMeshShape::clear(void)
     return;
   }
   rbtree_destroyRec_simple(*(undefined4 *)((int)pvVar2 + 8));
-                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar2);
 }
 
@@ -2843,7 +2824,6 @@ void plasma::SmoothMeshShape::rebuild(char param_1)
                   iVar9 = (int)pfVar19 - *piStack_3d8 >> 4;
                   if (iVar9 == 0xfffffff) {
 LAB_006485b3:
-                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("vector<T> too long");
                   }
                   pfStack_3bc = (float *)(iVar9 + 1);
@@ -4579,7 +4559,6 @@ LAB_0064a616:
                   iVar17 = (int)puVar18 - *(int *)(iVar22 + 4) >> 3;
                   if (iVar17 == 0x1fffffff) {
 LAB_00649419:
-                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("vector<T> too long");
                   }
                   local_124 = (float)(iVar17 + 1);
@@ -4761,8 +4740,6 @@ void Object_release_if_nonnull(undefined4 *object)
 
 {
   if (object != (undefined4 *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x006504d4. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
     (**(code **)*object)();
     return;
   }
@@ -5861,7 +5838,6 @@ LAB_00673c2e:
               if (iVar15 == 0x3fffffff) {
 LAB_00673a69:
                 local_1c = uVar2;
-                    /* WARNING: Subroutine does not return */
                 std::_Xlength_error("vector<T> too long");
               }
               local_8c = iVar15 + 1;
@@ -6106,7 +6082,6 @@ LAB_00674021:
     return;
   }
   std::_Container_base0::_Orphan_all((_Container_base0 *)&local_bc);
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_bc);
 }
 
@@ -6264,7 +6239,6 @@ LAB_00674381:
           iVar1 = *piVar7;
           iVar8 = IntMap_SetScalar(iVar1,*(undefined4 *)(iVar1 + 4),&local_38);
           if (piVar7[1] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           piVar7[1] = piVar7[1] + 1;
@@ -6281,7 +6255,6 @@ LAB_00674381:
     if (local_48 == 0) {
       local_8._0_1_ = 0;
       Sprite_map_erase_range(&local_44,*local_4c,local_4c);
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_4c);
     }
     local_68 = (void *)0x0;
@@ -6291,7 +6264,6 @@ LAB_00674381:
     std_vector_push_back_move_0xc(&local_68);
     local_8._0_1_ = 1;
     if (local_68 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_68);
     }
     local_1c = *(undefined4 **)(*local_4c + 0x10);
@@ -6327,7 +6299,6 @@ LAB_006744b0:
       if (piVar7 != (int *)*piVar11) {
         *(int *)piVar7[1] = *piVar7;
         *(int *)(*piVar7 + 4) = piVar7[1];
-                    /* WARNING: Subroutine does not return */
         operator_delete(piVar7);
       }
       if (piVar11[1] == 0) {
@@ -6343,7 +6314,6 @@ LAB_006744b0:
           iVar8 = (int)ppuVar6 - (int)ppuVar2 >> 2;
           if (iVar8 == 0x3fffffff) {
 LAB_0067467c:
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("vector<T> too long");
           }
           local_34 = (undefined4 *)(iVar8 + 1);

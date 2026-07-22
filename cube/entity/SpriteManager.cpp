@@ -49,7 +49,6 @@ void cube::SpriteManager::ctor_1(void)
     } while (i < (int)(self[2] - self[1]) >> 2);
   }
   if ((void *)self[1] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[1]);
   }
   ExceptionList = local_10;
@@ -68,7 +67,6 @@ void cube::SpriteManager::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;

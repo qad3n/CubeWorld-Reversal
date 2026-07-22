@@ -260,17 +260,14 @@ void cube::Creature::ctor_1(void)
   
   *self = vftable;
   if ((void *)self[0x4f9] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[0x4f9]);
   }
   node = (void *)self[0x74a];
   if (node != (void *)0x0) {
     Creature_partialDtor();
-                    /* WARNING: Subroutine does not return */
     operator_delete(node);
   }
   if ((void *)self[0x523] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[0x523]);
   }
   listHead = (undefined4 *)self[0x51c];
@@ -279,10 +276,8 @@ void cube::Creature::ctor_1(void)
   *(undefined4 *)(self[0x51c] + 4) = self[0x51c];
   self[0x51d] = 0;
   if (node != (void *)self[0x51c]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(node);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[0x51c]);
 }
 
@@ -302,14 +297,12 @@ void Creature_partialDtor(void)
   undefined1 tmp [4];
   
   if (0xf < *(uint *)(self + 0x3c)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(self + 0x28));
   }
   *(undefined4 *)(self + 0x3c) = 0xf;
   *(undefined4 *)(self + 0x38) = 0;
   *(undefined1 *)(self + 0x28) = 0;
   rbtree_eraseRange_str(tmp,**(undefined4 **)(self + 0x1c),*(undefined4 **)(self + 0x1c));
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(self + 0x1c));
 }
 
@@ -325,7 +318,6 @@ void cube::Creature::vfunc_0(byte deleteFlag)
   
   ctor_1();
   if ((deleteFlag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;
@@ -357,7 +349,6 @@ void list_allocNode0x134(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -381,7 +372,6 @@ void Player_resetFull(void)
   
   Player_resetState();
   if (*(void **)(self + 0x13e4) != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(self + 0x13e4));
   }
   *(undefined4 *)(self + 0x1d40) = 0;
@@ -400,7 +390,6 @@ void Player_resetFull(void)
   *(int *)(*(int *)(self + 0x130c) + 4) = *(int *)(self + 0x130c);
   *(undefined4 *)(self + 0x1310) = 0;
   if (node != *(void **)(self + 0x130c)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(node);
   }
   std_list_clear_67e480();
@@ -433,7 +422,6 @@ void Player_resetFull(void)
   *(int *)(*(int *)(self + 0x1470) + 4) = *(int *)(self + 0x1470);
   *(undefined4 *)(self + 0x1474) = 0;
   if (node != *(void **)(self + 0x1470)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(node);
   }
   *(undefined4 *)(self + 0x1484) = 0;
@@ -449,7 +437,6 @@ void Player_resetFull(void)
   *(int *)(*(int *)(self + 0x1178) + 4) = *(int *)(self + 0x1178);
   *(undefined4 *)(self + 0x117c) = 0;
   if (node != *(void **)(self + 0x1178)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(node);
   }
   return;
@@ -563,7 +550,6 @@ int list_makeNodeWrapper(undefined4 list,undefined4 head,undefined4 extra)
  * Player_resetFull(this); rebuilds this+0x1d28 ObjWithListMap; reads stream cursor in_ECX (ptr[1]-ptr[0] bounds, ptr[3] pos) into pos +0x10/+0x18/+0x20, kind +0x60=0, level +0x190, +0x16c/+0x194; callees Creature 43c100/43c790, Spawn 43bc00, GameController 44a7e0/44b040, WorldInfo 44b460. Body deserializes game state.
  * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void cube::Creature::deserializeState(int param_1)
 
@@ -624,7 +610,6 @@ void cube::Creature::deserializeState(int param_1)
   pvVar1 = *(void **)(param_1 + 0x1d28);
   if (pvVar1 != (void *)0x0) {
     Creature_partialDtor();
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar1);
   }
   local_1318 = operator_new(0x40);
@@ -886,7 +871,6 @@ void cube::Creature::deserializeState(int param_1)
     pvVar1 = *(void **)(iVar6 + 0x1d28);
     if (pvVar1 != (void *)0x0) {
       Creature_partialDtor();
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
     local_1318 = operator_new(0x40);
@@ -1004,7 +988,6 @@ void cube::Creature::deserializeState(int param_1)
         local_1318 = *(int ****)(iVar6 + 0x14);
         pppiVar8 = (int ***)list_makeNodeWrapper(local_1318,local_1318[1],local_190);
         if (*(int *)(iVar6 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         *(int *)(iVar6 + 0x18) = *(int *)(iVar6 + 0x18) + 1;
@@ -1048,7 +1031,6 @@ void cube::Creature::deserializeState(int param_1)
         local_44[0] = (int ***)((uint)local_44[0] & 0xffffff00);
         local_8 = 3;
         if (sVar12 == 0) {
-                    /* WARNING: Ignoring partial resolution of indirect */
           local_44[0]._0_1_ = 0;
           local_34 = 0;
         }
@@ -1091,11 +1073,9 @@ void cube::Creature::deserializeState(int param_1)
         puVar9[3] = local_54._4_4_;
         puVar9[5] = local_4c._4_4_;
         if (0xf < local_60) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_74);
         }
         if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_44[0]);
         }
         local_1314 = local_1314 + -1;
@@ -1128,7 +1108,6 @@ void cube::Creature::deserializeState(int param_1)
       sVar12 = *(size_t *)(piVar2[3] + *piVar2);
       piVar2[3] = piVar2[3] + 4;
       if (sVar12 == 0) {
-                    /* WARNING: Ignoring partial resolution of indirect */
         local_2c[0]._0_1_ = 0;
         local_1c = 0;
       }
@@ -1188,11 +1167,9 @@ void cube::Creature::deserializeState(int param_1)
       __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
       return;
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   std_vector_destroy_ptr_elems_stride3(local_1a8,local_1a4,&local_1325,local_1318);
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_1a8);
 }
 

@@ -21,13 +21,11 @@ void Zone_DestroyObjectRange(int *begin,int *end)
       if (objList != (undefined4 *)0x0) {
         while( true ) {
           if (objList == (undefined4 *)zonePtr[1]) {
-                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*zonePtr);
           }
           if ((void *)*objList != (void *)0x0) break;
           objList = objList + 3;
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*objList);
       }
       zoneEnd = zonePtr + 0x50;
@@ -217,7 +215,6 @@ void cube::Zone::ctor_1(void)
         puVar1 = (undefined4 *)(item + 0x78);
         puVar3 = (undefined4 *)*puVar1;
         std_Tree_eraseRange(local_20,*puVar3,puVar3);
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar1);
       }
       iter = iter + 1;
@@ -241,7 +238,6 @@ void cube::Zone::ctor_1(void)
         puVar1 = (undefined4 *)(item + 8);
         puVar3 = (undefined4 *)*puVar1;
         Zone_rbtree_eraseRange(local_20,*puVar3,puVar3);
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar1);
       }
       iter = iter + 1;
@@ -250,41 +246,32 @@ void cube::Zone::ctor_1(void)
   }
   DeleteCriticalSection((LPCRITICAL_SECTION)(self + 0x2c));
   if ((void *)self[0x25] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[0x25]);
   }
   if ((void *)self[0x22] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[0x22]);
   }
   if ((void *)self[0x1a] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[0x1a]);
   }
   if ((void *)self[0x15] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[0x15]);
   }
   if ((void *)self[0x12] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[0x12]);
   }
   if ((void *)self[0xf] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[0xf]);
   }
   if ((void *)self[0xc] == (void *)0x0) {
     if ((void *)self[9] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)self[9]);
     }
     if ((void *)self[6] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)self[6]);
     }
     if (self[3] != 0) {
       Zone_DestroyObjectRange(self[3],self[4],&local_11,local_24);
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)self[3]);
     }
     puVar1 = (undefined4 *)self[1];
@@ -293,13 +280,10 @@ void cube::Zone::ctor_1(void)
     *(undefined4 *)(self[1] + 4) = self[1];
     self[2] = 0;
     if (pvVar2 == (void *)self[1]) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)self[1]);
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[0xc]);
 }
 
@@ -315,7 +299,6 @@ void cube::Zone::vfunc_0(byte delete_flag)
   
   ctor_1();
   if ((delete_flag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

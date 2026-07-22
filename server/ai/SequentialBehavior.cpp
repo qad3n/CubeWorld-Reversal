@@ -36,7 +36,6 @@ undefined4 * __thiscall cube::SequentialBehavior::ctor_0(SequentialBehavior *thi
       puVar2 = *(undefined4 **)pSVar1;
       new_node = std_list_insertNode1(puVar2,(undefined4 *)puVar2[1],&local_14);
       if (*(int *)(this + 8) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(this + 8) = *(int *)(this + 8) + 1;

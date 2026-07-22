@@ -85,7 +85,6 @@ void cube::Region::ctor_1(void)
   } while (row != 0);
   local_8 = 0xffffffff;
   std_Tree_eraseRange(&local_14,*(undefined4 *)local_14[0x5687],(undefined4 *)local_14[0x5687]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)local_14[0x5687]);
 }
 
@@ -101,7 +100,6 @@ void cube::Region::vfunc_0(byte flags)
   
   ctor_1();
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

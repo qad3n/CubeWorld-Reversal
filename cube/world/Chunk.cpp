@@ -94,10 +94,8 @@ void cube::Chunk::ctor_1(void)
   *(undefined4 *)(pThis[0x92] + 4) = pThis[0x92];
   pThis[0x93] = 0;
   if (pFirst == (void *)pThis[0x92]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)pThis[0x92]);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(pFirst);
 }
 
@@ -120,7 +118,6 @@ void * cube::Chunk::vfunc_0(uint flags)
   }
   ctor_1();
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pThis);
   }
   return pThis;

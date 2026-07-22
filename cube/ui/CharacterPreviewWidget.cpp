@@ -25,7 +25,6 @@ void cube::CharacterPreviewWidget::ctor_0(undefined4 param_1,undefined4 param_2,
   trylevel = 0;
   plasma::NamedObject::ctor_4(param_1,param_2,nameBuf);
   if (7 < stackCookie) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameBuf[0]);
   }
   self[0x59] = param_3;

@@ -62,7 +62,6 @@ void cube::Dungeon::vfunc_0(byte flags)
   *self = vftable;
   operator_delete__((void *)self[6]);
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

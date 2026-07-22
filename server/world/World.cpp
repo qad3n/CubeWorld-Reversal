@@ -3599,7 +3599,6 @@ void __thiscall FUN_004e25e0(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 8);
       if (puVar3 != (undefined4 *)0x0) goto LAB_004e2640;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004e2640:
@@ -4142,7 +4141,6 @@ void __thiscall FUN_004f7ef0(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0xc);
       if (puVar3 != (undefined4 *)0x0) goto LAB_004f7f4f;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004f7f4f:
@@ -5141,7 +5139,6 @@ LAB_0050bb29:
 /* World_generateRegionFeatures @ 0050e080 */
 /* NOTE(re) 2026-07-21: RECLASSIFIED lib->game (World). Mislabeled std::basic_stringbuf<char>::ctor_1 by Ghidra namespace attribution; actually the per-region 8x8=64 feature-cell generator: srand(base+regZ*0x400+regX) then multi-pass placement. Renamed World_generateRegionFeatures (gap audit, high confidence; commit 7fa4843). */
 
-/* WARNING: Removing unreachable block (ram,0x0050eac3) */
 
 void __thiscall
 World_generateRegionFeatures
@@ -6029,7 +6026,6 @@ LAB_0050f27c:
               iVar18 = (int)local_2b4 - (int)local_2b8 >> 3;
               if (iVar18 == 0x1fffffff) {
 LAB_0050f9e0:
-                    /* WARNING: Subroutine does not return */
                 std::_Xlength_error("vector<T> too long");
               }
               local_308 = (undefined4 *)(iVar18 + 1);

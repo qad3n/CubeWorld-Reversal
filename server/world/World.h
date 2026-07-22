@@ -40,7 +40,7 @@ void __thiscall World_temperatureBlend(void *this,float param_1,uint param_2);
 void __thiscall World_humidityBlend(void *this,int param_1,int param_2);
 void __thiscall World_baseHeightField(void *this,uint param_1,float param_2,int param_3);
 int * __thiscall World_generateRegionSite(void *this,int param_1,int param_2);
-/* WARNING: Removing unreachable block (ram,0x0050eac3) */ void __thiscall World_generateRegionFeatures (basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_> *this,int param_1, int param_2);
+void __thiscall World_generateRegionFeatures (basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_> *this,int param_1, int param_2);
 void __thiscall World_featureCountRange(void *this,undefined4 *param_1,undefined4 *param_2);
 void World_siteDistanceSq(void);
 float * World_terrainOffset2D(float *param_1,int param_2,int param_3);

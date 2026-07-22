@@ -25,7 +25,6 @@ void cube::ObjectiveWidget::ctor_0(undefined4 param_1,undefined4 param_2,undefin
   local_8 = 0;
   plasma::NamedObject::ctor_4(param_1,param_2,local_28);
   if (7 < local_14) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_28[0]);
   }
   *in_ECX = vftable;
@@ -49,12 +48,10 @@ void cube::ObjectiveWidget::vfunc_0(byte param_1)
   void *in_ECX;
   
   if (*(void **)((int)in_ECX + 0x160) != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)in_ECX + 0x160));
   }
   plasma::Widget::ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;

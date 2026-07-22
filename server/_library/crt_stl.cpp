@@ -402,7 +402,6 @@ void Catch_All_004017c3(void)
   puVar1[5] = 0xf;
   puVar1[4] = 0;
   *(undefined1 *)puVar1 = 0;
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -423,7 +422,6 @@ bool __thiscall std_string_grow(void *this,uint param_1,char param_2)
   uint _Size;
   
   if (param_1 == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   uVar1 = *(uint *)((int)this + 0x14);
@@ -474,7 +472,6 @@ void * std_allocate(uint param_1)
   
   pvVar1 = (void *)0x0;
   if ((param_1 != 0) && (pvVar1 = operator_new(param_1), pvVar1 == (void *)0x0)) {
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   return pvVar1;
@@ -1073,7 +1070,6 @@ void Catch_All_004027ef(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -1088,7 +1084,6 @@ void Catch_All_00402954(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -2402,14 +2397,6 @@ float10 __cdecl formula_scaled_b(int param_1)
  */
 /* Global::generate_entity_appearance @ 0040a840 */
 
-/* WARNING: Removing unreachable block (ram,0x0040a935) */
-/* WARNING: Removing unreachable block (ram,0x0040a95c) */
-/* WARNING: Removing unreachable block (ram,0x0040a986) */
-/* WARNING: Removing unreachable block (ram,0x0040a99b) */
-/* WARNING: Removing unreachable block (ram,0x0040a971) */
-/* WARNING: Removing unreachable block (ram,0x0040a947) */
-/* WARNING: Removing unreachable block (ram,0x0040a919) */
-/* WARNING: Removing unreachable block (ram,0x0040a9b0) */
 
 void __cdecl generate_entity_appearance(uint *param_1,int param_2,undefined4 *param_3)
 
@@ -5388,7 +5375,6 @@ void __thiscall std_list_push_back(void *this,undefined8 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = list_emplaceCopy40(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x5555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -5803,7 +5789,6 @@ int * __thiscall std_vector_assign(void *this,int *param_1)
  */
 /* Global::std_vector_allocate @ 00412b00 */
 
-/* WARNING: Removing unreachable block (ram,0x00412b2f) */
 
 uint __thiscall std_vector_allocate(void *this,uint param_1)
 
@@ -5819,7 +5804,6 @@ uint __thiscall std_vector_allocate(void *this,uint param_1)
   }
   pvVar1 = operator_new(param_1);
   if (pvVar1 == (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   *(void **)this = pvVar1;
@@ -5957,7 +5941,6 @@ void __fastcall zlib_uncompress_to_vector(int *param_1)
  */
 /* Global::zlib_inflate_stream @ 00412e20 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void __cdecl zlib_inflate_stream(int *param_1,int *param_2)
 
@@ -6365,7 +6348,6 @@ void __thiscall std_vector_reallocate_0x118(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x118);
       if (pvVar3 != (void *)0x0) goto LAB_004138a4;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004138a4:
@@ -6394,7 +6376,6 @@ void Catch_All_0041391e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -6419,7 +6400,6 @@ int __thiscall std_vector_reserve_0x118(void *this,uint param_1)
   if ((uint)(iVar3 / 0x118) < param_1) {
     iVar2 = (*(int *)((int)this + 4) - *(int *)this) / 0x118;
     if (0xea0ea0U - iVar2 < param_1) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = vector_calc_growth_0x118(this,iVar2 + param_1);
@@ -6830,7 +6810,6 @@ net_encode_field_u8(undefined4 *param_1,uint *param_2,uint *param_3,char *param_
     local_8 = 1;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -6884,7 +6863,6 @@ net_encode_field_u16(undefined4 *param_1,uint *param_2,uint *param_3,short *para
     local_8 = 2;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -6937,7 +6915,6 @@ net_encode_field_u32(undefined4 *param_1,uint *param_2,uint *param_3,int *param_
     local_8 = 4;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -6991,7 +6968,6 @@ net_encode_field_f32(undefined4 *param_1,uint *param_2,uint *param_3,float *para
     local_8 = 4;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -7054,7 +7030,6 @@ net_encode_field_vec5(undefined4 *param_1,uint *param_2,uint *param_3,float *par
   local_8 = 0x14;
   iVar5 = lib_fn_549300(puVar3,(undefined4 *)puVar3[1],&local_c);
   if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7110,7 +7085,6 @@ net_encode_field_struct0xac(undefined4 *param_1,uint *param_2,uint *param_3,void
   local_c[1] = 0xac;
   iVar4 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],local_c);
   if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7168,7 +7142,6 @@ net_encode_field_creature(undefined4 *param_1,uint *param_2,uint *param_3,void *
   local_8 = 0xe38;
   iVar4 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
   if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7225,7 +7198,6 @@ net_encode_field_item0x118(undefined4 *param_1,uint *param_2,uint *param_3,void 
   local_8 = 0x118;
   iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
   if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7290,7 +7262,6 @@ net_encode_field_int3(undefined4 *param_1,uint *param_2,uint *param_3,int param_
   local_c = 0xc;
   iVar5 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_10);
   if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7360,7 +7331,6 @@ net_encode_field_f32x3(undefined4 *param_1,uint *param_2,uint *param_3,int param
   local_8 = 0xc;
   iVar6 = lib_fn_549300(puVar2,(undefined4 *)puVar2[1],&local_c);
   if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7424,7 +7394,6 @@ net_encode_field_2int_0x18(undefined4 *param_1,uint *param_2,uint *param_3,int p
   local_c = 0x18;
   iVar5 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_10);
   if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -7475,7 +7444,6 @@ net_encode_field_int2(undefined4 *param_1,uint *param_2,uint *param_3,int *param
     local_8 = 8;
     iVar3 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_c);
     if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_1[1] = param_1[1] + 1;
@@ -8194,7 +8162,6 @@ LAB_00415b65:
   local_8 = 0x10;
   iVar4 = lib_fn_549300(puVar2,(undefined4 *)puVar2[1],&local_c);
   if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -8259,7 +8226,6 @@ net_encode_field_struct0x2c(undefined4 *param_1,uint *param_2,uint *param_3,int 
   local_c = 0x2c;
   iVar5 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],&local_10);
   if (param_1[1] == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_1[1] = param_1[1] + 1;
@@ -8655,8 +8621,6 @@ void __thiscall WriteBuffer_appendRaw(void *this,void *param_1,size_t param_2)
 void __cdecl free(void *_Memory)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x00416940. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   free(_Memory);
   return;
 }
@@ -8845,7 +8809,6 @@ void Catch_All_00416e3c(void)
   puVar1[5] = 7;
   puVar1[4] = 0;
   *(undefined2 *)puVar1 = 0;
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -8869,7 +8832,6 @@ void * std_wstring_Allocate(uint param_1)
   if ((param_1 < 0x80000000) && (pvVar1 = operator_new(param_1 * 2), pvVar1 != (void *)0x0)) {
     return pvVar1;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -8890,13 +8852,11 @@ int * __thiscall std_string_append_count_char(void *this,uint param_1,char param
   
   sVar2 = *(size_t *)((int)this + 0x10);
   if (-sVar2 - 1 <= param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_1 != 0) {
     uVar1 = sVar2 + param_1;
     if (uVar1 == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if (*(uint *)((int)this + 0x14) < uVar1) {
@@ -8951,7 +8911,6 @@ void Catch_All_0041a657(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -8966,7 +8925,6 @@ void Catch_All_0041a78f(void)
   int unaff_EBP;
   
   Tree_destroyRec_oneStr(*(int **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -8978,7 +8936,6 @@ void Catch_All_0041a78f(void)
 void Catch_All_0041aaef(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9008,7 +8965,6 @@ void Catch_All_0041bb5f(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9102,7 +9058,6 @@ void __thiscall std_list_push_back_41caf0(void *this,undefined1 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = RandomBehavior_listEmplaceCopy(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xd4c77a) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -9461,7 +9416,6 @@ void Catch_All_0041d4c6(void)
   for (puVar2 = *(undefined4 **)(unaff_EBP + -0x14); puVar2 != puVar1; puVar2 = puVar2 + 3) {
     free_string_buffer(puVar2);
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9697,7 +9651,6 @@ void Catch_All_0041d7bf(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9846,7 +9799,6 @@ void Catch_All_0041dac0(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -9922,7 +9874,6 @@ void Catch_All_0041dc43(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10014,7 +9965,6 @@ void Catch_All_0041de13(void)
   int unaff_EBP;
   
   std_vector_string_tidy(*(undefined4 **)(unaff_EBP + -0x20));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10234,7 +10184,6 @@ uint __thiscall std_vector_Reserve(void *this,uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0xe6c2b4 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x11c);
@@ -10245,7 +10194,6 @@ uint __thiscall std_vector_Reserve(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10271,7 +10219,6 @@ uint __thiscall std_vector_Reserve_41e390(void *this,uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0xc7ce0c < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x148);
@@ -10282,7 +10229,6 @@ uint __thiscall std_vector_Reserve_41e390(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -10344,7 +10290,6 @@ void __thiscall std_vector_Reallocate(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0x14);
       if (puVar3 != (undefined4 *)0x0) goto LAB_0041e4af;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041e4af:
@@ -10373,7 +10318,6 @@ void Catch_All_0041e520(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10406,7 +10350,6 @@ void __thiscall std_vector_Reallocate_41e540(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0x11c);
       if (puVar3 != (undefined4 *)0x0) goto LAB_0041e5a4;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041e5a4:
@@ -10435,7 +10378,6 @@ void Catch_All_0041e61e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10468,7 +10410,6 @@ void __thiscall std_vector_Reallocate_41e640(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x148);
       if (pvVar3 != (void *)0x0) goto LAB_0041e6a4;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041e6a4:
@@ -10497,7 +10438,6 @@ void Catch_All_0041e71c(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10530,7 +10470,6 @@ void __thiscall std_vector_Reallocate_41e740(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0xc);
       if (puVar3 != (undefined4 *)0x0) goto LAB_0041e79f;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_0041e79f:
@@ -10560,7 +10499,6 @@ void Catch_All_0041e820(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -10585,7 +10523,6 @@ void __thiscall std_vector_reserve(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x14;
   if (0xcccccccU - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x14;
@@ -10627,7 +10564,6 @@ int __thiscall std_vector_Grow_by(void *this,uint param_1)
   if ((uint)(iVar3 / 0x11c) < param_1) {
     iVar2 = (*(int *)((int)this + 4) - *(int *)this) / 0x11c;
     if (0xe6c2b4U - iVar2 < param_1) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = std_vector_Grow_calc(this,iVar2 + param_1);
@@ -10657,7 +10593,6 @@ void __thiscall std_vector_reserve_41e960(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x148;
   if (0xc7ce0cU - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x148;
@@ -10699,7 +10634,6 @@ void __thiscall std_vector_reserve_41ea10(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0xc;
   if (0x15555555U - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0xc;
@@ -11042,7 +10976,6 @@ void __thiscall World_deserializeZonePacket(void *this,void *param_1,int param_2
              ) {
             iVar7 = std_list_insertNode1(puVar5,(undefined4 *)puVar5[1],&local_17c);
             if (local_180 == (int *)0x15555554) {
-                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             puVar5[1] = iVar7;
@@ -11307,7 +11240,6 @@ void Catch_All_0041f75d(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -11370,7 +11302,6 @@ void Catch_All_0041f860(void)
   int unaff_EBP;
   
   std_vector_string_tidy(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -11828,7 +11759,6 @@ void Catch_All_004201e2(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -11878,7 +11808,6 @@ void Catch_All_00420299(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -11946,7 +11875,6 @@ void Catch_All_00420362(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12073,7 +12001,6 @@ void Catch_All_0042052c(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12088,7 +12015,6 @@ void Catch_All_004205df(void)
   int unaff_EBP;
   
   std_Rb_tree_destroy_recursive_B(*(int **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12115,7 +12041,6 @@ std_map_Insert_rebalance(void *this,undefined4 *param_1,char param_2,undefined4 
   
   if (0xea0e8 < *(uint *)((int)this + 4)) {
     operator_delete(param_5);
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -12385,7 +12310,6 @@ void Catch_All_00420a0f(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12488,7 +12412,6 @@ void Catch_All_00420b74(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12525,7 +12448,6 @@ void __thiscall std_list_Assign_0x28(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12549,7 +12471,6 @@ void Catch_All_00420c39(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12586,7 +12507,6 @@ void __thiscall std_list_Assign_str(void *this,undefined4 *param_1,undefined4 *p
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12610,7 +12530,6 @@ void Catch_All_00420d09(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12647,7 +12566,6 @@ void __thiscall std_list_Assign_str2(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12671,7 +12589,6 @@ void Catch_All_00420dd9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12708,7 +12625,6 @@ void __thiscall std_list_Assign_0x1c(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12732,7 +12648,6 @@ void Catch_All_00420ea9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12769,7 +12684,6 @@ void __thiscall std_list_Assign_0x47a(void *this,undefined4 *param_1,undefined4 
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12793,7 +12707,6 @@ void Catch_All_00420f79(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12830,7 +12743,6 @@ void __thiscall std_list_Assign_list(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12854,7 +12766,6 @@ void Catch_All_00421049(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12891,7 +12802,6 @@ void __thiscall std_list_Assign_str3(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12915,7 +12825,6 @@ void Catch_All_00421119(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -12952,7 +12861,6 @@ void __thiscall std_list_Assign_0x18(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -12976,7 +12884,6 @@ void Catch_All_004211e9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13013,7 +12920,6 @@ void __thiscall std_list_Assign_0x28b(void *this,undefined4 *param_1,undefined4 
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13037,7 +12943,6 @@ void Catch_All_004212b9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13074,7 +12979,6 @@ void __thiscall std_list_Assign_0x48(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13098,7 +13002,6 @@ void Catch_All_00421389(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13135,7 +13038,6 @@ void __thiscall std_list_Assign_0x40(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13159,7 +13061,6 @@ void Catch_All_00421459(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13196,7 +13097,6 @@ void __thiscall std_list_Assign_0x08b(void *this,undefined4 *param_1,undefined4 
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13220,7 +13120,6 @@ void Catch_All_00421529(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13257,7 +13156,6 @@ void __thiscall std_list_Assign(void *this,undefined4 *param_1,undefined4 *param
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13281,7 +13179,6 @@ void Catch_All_004215f9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13318,7 +13215,6 @@ void __thiscall std_list_Assign_0x14b(void *this,undefined4 *param_1,undefined4 
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13342,7 +13238,6 @@ void Catch_All_004216c9(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13379,7 +13274,6 @@ void __thiscall std_list_Assign_0x70(void *this,undefined4 *param_1,undefined4 *
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = (undefined4 *)*param_2;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13403,7 +13297,6 @@ void Catch_All_00421799(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13440,7 +13333,6 @@ void __thiscall std_list_Assign_arr_0x1c(void *this,undefined4 *param_1,undefine
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = param_2 + 5;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13464,7 +13356,6 @@ void Catch_All_00421867(void)
       iVar1 = iVar1 + 0x14;
     } while (iVar1 != *(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13501,7 +13392,6 @@ void __thiscall std_list_Assign_arr(void *this,undefined4 *param_1,undefined1 *p
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = param_2 + 0x148;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13525,7 +13415,6 @@ void Catch_All_00421939(void)
       iVar1 = iVar1 + 0x148;
     } while (iVar1 != *(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13937,7 +13826,6 @@ void Catch_All_00421eff(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -13983,7 +13871,6 @@ void Catch_All_00421f9f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14029,7 +13916,6 @@ void Catch_All_0042203f(void)
   int unaff_EBP;
   
   Connection_destroyNestedLists(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14075,7 +13961,6 @@ void Catch_All_004220df(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14121,7 +14006,6 @@ void Catch_All_0042217f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14167,7 +14051,6 @@ void Catch_All_0042221f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14213,7 +14096,6 @@ void Catch_All_004222bf(void)
   int unaff_EBP;
   
   Connection_destroyNestedLists(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14259,7 +14141,6 @@ void Catch_All_0042235f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14305,7 +14186,6 @@ void Catch_All_004223ff(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14351,7 +14231,6 @@ void Catch_All_0042249f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14397,7 +14276,6 @@ void Catch_All_0042253f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14443,7 +14321,6 @@ void Catch_All_004225df(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14489,7 +14366,6 @@ void Catch_All_0042267f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14535,7 +14411,6 @@ void Catch_All_0042271f(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -14581,7 +14456,6 @@ void Catch_All_004227bf(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -15048,7 +14922,6 @@ undefined4 * __thiscall copyStruct_0x28(void *this,undefined4 *param_1)
  */
 /* Global::std_map_insert @ 00423ce0 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void __thiscall std_map_insert(void *this,uint *param_1)
 
@@ -15359,7 +15232,6 @@ LAB_00424084:
                   if (iVar3 == 0x2222222) {
 LAB_00425173:
                     local_80 = local_a8;
-                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("vector<T> too long");
                   }
                   uVar1 = iVar3 + 1;
@@ -16472,7 +16344,6 @@ LAB_00425c84:
           piVar14 = operator_new(0x40);
           if (piVar14 == (int *)0x0) {
 LAB_00426017:
-                    /* WARNING: Subroutine does not return */
             std::_Xbad_alloc();
           }
           *piVar14 = (int)vftable;
@@ -16568,7 +16439,6 @@ LAB_00425fd3:
  */
 /* Global::Connection_receiveDispatch @ 00426020 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void __fastcall Connection_receiveDispatch(int *param_1)
 
@@ -16917,9 +16787,6 @@ void std_list_Buyheadnode_0x1180(void)
   
   pvVar1 = operator_new(0x1180);
   if (pvVar1 == (void *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x004267c1. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
   }
@@ -16960,7 +16827,6 @@ void std_list_Buynode_0x150(undefined4 *param_1,undefined4 *param_2)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -16979,7 +16845,6 @@ _Func_impl<std::_Callable_obj<<lambda_ab9fa502c78db4b4288c2bfaac953e1a>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0x40);
     if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -17170,7 +17035,6 @@ _Func_impl<std::_Callable_obj<<lambda_38361316b522edf94308fdf9d1a2954a>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0x38);
     if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -17198,7 +17062,6 @@ _Func_impl<std::_Callable_obj<<lambda_8ac7a930af6f0ab005bd27e10d1330ab>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0xc);
     if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -17236,7 +17099,6 @@ void __thiscall std_vector_Reallocate_426db0(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x78);
       if (pvVar3 != (void *)0x0) goto LAB_00426e13;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_00426e13:
@@ -17265,7 +17127,6 @@ void Catch_All_00426e8e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -17792,7 +17653,6 @@ void __thiscall game_buildItemDefinition(void *this,undefined4 *param_1)
                   iVar5 = std_map_insert_node_list(puVar10,(undefined4 *)puVar10[1],&local_24);
                   if (*(int *)(iVar7 + 0x44) == 0xaaaaaa9) {
 LAB_00427fb9:
-                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("list<T> too long");
                   }
                   *(int *)(iVar7 + 0x44) = *(int *)(iVar7 + 0x44) + 1;
@@ -17972,11 +17832,9 @@ int * __thiscall std_basic_string_resize(void *this,uint param_1,undefined2 para
 
 {
   if (param_1 == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (0x7ffffffe < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (*(uint *)((int)this + 0x14) < param_1) {
@@ -18224,7 +18082,6 @@ void __thiscall std_list_push_back_428360(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x70(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x2222221) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18251,7 +18108,6 @@ void __thiscall std_list_push_back_4283b0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_wstring(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x6666665) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18278,7 +18134,6 @@ void __thiscall std_list_push_back_428400(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x47a(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x3333332) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18305,7 +18160,6 @@ void __thiscall std_list_push_back_428450(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_list(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xaaaaaa9) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18332,7 +18186,6 @@ void __thiscall std_list_push_back_4284a0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x28b(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x3fffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18359,7 +18212,6 @@ void __thiscall std_list_push_back_4284f0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x48(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x2aaaaa9) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18386,7 +18238,6 @@ void __thiscall std_list_push_back_428540(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x40(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x3333332) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18413,7 +18264,6 @@ void __thiscall std_list_push_back_428590(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = lib_fn_4f3ba0(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18440,7 +18290,6 @@ void __thiscall std_list_push_back_4285e0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = lib_fn_549300(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -18661,7 +18510,6 @@ void Catch_All_00429180(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18676,7 +18524,6 @@ void Catch_All_00429227(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18691,7 +18538,6 @@ void Catch_All_0042931d(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18706,7 +18552,6 @@ void Catch_All_00429415(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18721,7 +18566,6 @@ void Catch_All_0042954f(void)
   int unaff_EBP;
   
   SpeechTree_destroyRec(*(int **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18736,7 +18580,6 @@ void Catch_All_0042a018(void)
   int unaff_EBP;
   
   Catch_operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18751,7 +18594,6 @@ void Catch_All_0042a244(void)
   int unaff_EBP;
   
   Catch_operator_delete_42d000(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18766,7 +18608,6 @@ void Catch_All_0042a434(void)
   int unaff_EBP;
   
   Catch_cleanup_thunk(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18781,7 +18622,6 @@ void Catch_All_0042a624(void)
   int unaff_EBP;
   
   node_free_twoStrings(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18796,7 +18636,6 @@ void Catch_All_0042a814(void)
   int unaff_EBP;
   
   QuestText_node_free(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18811,7 +18650,6 @@ void Catch_All_0042a908(void)
   int unaff_EBP;
   
   Catch_operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18826,7 +18664,6 @@ void Catch_All_0042aac0(void)
   int unaff_EBP;
   
   Catch_cleanup_thunk(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18841,7 +18678,6 @@ void Catch_All_0042ac24(void)
   int unaff_EBP;
   
   node_free_twoStrings(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18856,7 +18692,6 @@ void Catch_All_0042ad84(void)
   int unaff_EBP;
   
   QuestText_node_free(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18880,7 +18715,6 @@ void Catch_All_0042ae29(void)
       piVar1 = (int *)*piVar1;
     } while (piVar1 != (int *)*(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18895,7 +18729,6 @@ void Catch_All_0042af1d(void)
   int unaff_EBP;
   
   std_list_clear(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18913,7 +18746,6 @@ void Catch_All_0042b0b6(void)
   piVar1 = (int *)**(undefined4 **)(unaff_EBP + -0x18);
   SpeechMap_eraseRange(*(undefined4 **)(unaff_EBP + -0x18),(undefined4 *)(unaff_EBP + 8),(int *)*piVar1,
                piVar1);
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18931,7 +18763,6 @@ void Catch_All_0042b156(void)
   piVar1 = (int *)**(undefined4 **)(unaff_EBP + -0x18);
   Tree_eraseRange_variant(*(undefined4 **)(unaff_EBP + -0x18),(undefined4 *)(unaff_EBP + 8),(int *)*piVar1,
                piVar1);
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -18946,7 +18777,6 @@ void Catch_All_0042b1ff(void)
   int unaff_EBP;
   
   std_list_clear(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -19064,8 +18894,6 @@ std::basic_stringstream<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t
           (int param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0042ce87. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_istream<wchar_t,std::char_traits<wchar_t>_>::_Add_vtordisp1
             ((basic_istream<wchar_t,std::char_traits<wchar_t>_> *)
              ((param_1 - *(int *)(param_1 + -4)) + -0x50));
@@ -19082,8 +18910,6 @@ std::basic_stringstream<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t
           (int param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0042ce93. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::_Add_vtordisp2
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)
              ((param_1 - *(int *)(param_1 + -4)) + -0x50));
@@ -19721,7 +19547,6 @@ LAB_0042ea1f:
     pfVar4 = local_14;
     if (uVar2 == 0xffffffff) {
       std::bad_cast::bad_cast(local_24,"bad cast");
-                    /* WARNING: Subroutine does not return */
       _CxxThrowException(local_24,(ThrowInfo *)&DAT_005779e4);
     }
     DAT_00583e04 = local_14;
@@ -19815,8 +19640,6 @@ std::basic_filebuf<char,std::char_traits<char>_>::ctor_5
   if (param_1[0x4c] != (basic_streambuf<char,std::char_traits<char>_>)0x0) {
     std_basic_filebuf_close(param_1);
   }
-                    /* WARNING: Could not recover jumptable at 0x0042ecbd. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             (param_1);
   return;
@@ -19849,8 +19672,6 @@ void __fastcall std::basic_filebuf<char,std::char_traits<char>_>::ctor_4(int par
   }
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             ((basic_streambuf<char,std::char_traits<char>_> *)(param_1 + -0x60));
-                    /* WARNING: Could not recover jumptable at 0x0042ed36. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_istream<char,std::char_traits<char>_>::~basic_istream<char,std::char_traits<char>_>
             ((basic_istream<char,std::char_traits<char>_> *)(param_1 + -0x58));
   return;
@@ -19883,8 +19704,6 @@ void __fastcall std::basic_filebuf<char,std::char_traits<char>_>::ctor_6(int par
   }
   std::basic_streambuf<char,std::char_traits<char>_>::~basic_streambuf<char,std::char_traits<char>_>
             ((basic_streambuf<char,std::char_traits<char>_> *)(param_1 + -0x5c));
-                    /* WARNING: Could not recover jumptable at 0x0042eda6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_ostream<char,std::char_traits<char>_>::~basic_ostream<char,std::char_traits<char>_>
             ((basic_ostream<char,std::char_traits<char>_> *)(param_1 + -0x58));
   return;
@@ -20046,8 +19865,6 @@ ios_base * __thiscall std_basic_streambuf_scalar_deleting_dtor_42ef30(void *this
 void __fastcall std::basic_ifstream<char,std::char_traits<char>_>::vfunc_1(int param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0042f029. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_istream<char,std::char_traits<char>_>::_Add_vtordisp1
             ((basic_istream<char,std::char_traits<char>_> *)
              ((param_1 - *(int *)(param_1 + -4)) + -0x58));
@@ -20062,8 +19879,6 @@ void __fastcall std::basic_ifstream<char,std::char_traits<char>_>::vfunc_1(int p
 void __fastcall std::basic_ofstream<char,std::char_traits<char>_>::vfunc_2(int param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0042f035. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_ostream<char,std::char_traits<char>_>::_Add_vtordisp2
             ((basic_ostream<char,std::char_traits<char>_> *)
              ((param_1 - *(int *)(param_1 + -4)) + -0x58));
@@ -20079,7 +19894,6 @@ void __fastcall std::basic_ofstream<char,std::char_traits<char>_>::vfunc_2(int p
  */
 /* Global::std_basic_filebuf_Endwrite @ 0042f070 */
 
-/* WARNING: Removing unreachable block (ram,0x0042f0db) */
 
 void __fastcall std_basic_filebuf_Endwrite(int *param_1)
 
@@ -20178,7 +19992,6 @@ void Catch_All_0042f318(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -20391,7 +20204,6 @@ std_basic_filebuf_open(void *this,char *param_1,int param_2,int *param_3)
 
 /* std::basic_filebuf<char,std::char_traits<char>_>::vfunc_3 @ 0042fc30 */
 
-/* WARNING: Removing unreachable block (ram,0x0042fcfd) */
 
 void __thiscall
 std::basic_filebuf<char,std::char_traits<char>_>::vfunc_3
@@ -20547,7 +20359,6 @@ void Catch_All_00430033(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -20999,7 +20810,6 @@ void Catch_All_00430911(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -21026,7 +20836,6 @@ std_Tree_Insert(void *this,undefined4 *param_1,char param_2,undefined4 *param_3,
   
   if (0x9249247 < *(uint *)((int)this + 4)) {
     std_Tree_Erase_node_with_list(param_5);
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -21288,7 +21097,6 @@ void Catch_All_00430d18(void)
   int unaff_EBP;
   
   std_Tree_Erase_node_with_list(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -21376,7 +21184,6 @@ void Catch_All_00430e4d(void)
   int unaff_EBP;
   
   std_Tree_Erase_node_with_list(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -21573,7 +21380,6 @@ int * __thiscall std_basic_string_replace(void *this,undefined4 *param_1,uint pa
   void *pvVar3;
   
   if ((uint)param_1[4] < param_2) {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   uVar2 = param_1[4] - param_2;
@@ -21582,13 +21388,11 @@ int * __thiscall std_basic_string_replace(void *this,undefined4 *param_1,uint pa
     param_3 = uVar2;
   }
   if (-sVar1 - 1 <= param_3) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_3 != 0) {
     uVar2 = sVar1 + param_3;
     if (uVar2 == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if (*(uint *)((int)this + 0x14) < uVar2) {
@@ -21667,13 +21471,11 @@ int * __thiscall std_basic_string_append(void *this,int *param_1,uint param_2)
   }
   sVar2 = *(size_t *)((int)this + 0x10);
   if (-sVar2 - 1 <= param_2) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (param_2 != 0) {
     uVar1 = sVar2 + param_2;
     if (uVar1 == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("string too long");
     }
     if (*(uint *)((int)this + 0x14) < uVar1) {
@@ -21717,7 +21519,6 @@ int * __thiscall std_basic_string_append(void *this,int *param_1,uint param_2)
  */
 /* Global::game_loadVoxelModelsFromDb @ 00431400 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void __thiscall game_loadVoxelModelsFromDb(void *this,undefined4 *param_1)
 
@@ -40363,7 +40164,6 @@ void __thiscall std_list_Insert(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_list_insertNode3(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xccccccb) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -40421,7 +40221,6 @@ void Catch_All_004c5cfd(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40633,7 +40432,6 @@ void Catch_All_004c7527(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40648,7 +40446,6 @@ void Catch_All_004c776f(void)
   int unaff_EBP;
   
   lib_fn_4ce6e0(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40663,7 +40460,6 @@ void Catch_All_004c7994(void)
   int unaff_EBP;
   
   Catch_operator_delete_42d000(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40678,7 +40474,6 @@ void Catch_All_004c7a8a(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40693,7 +40488,6 @@ void Catch_All_004c7c38(void)
   int unaff_EBP;
   
   lib_fn_4ce6e0(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40708,7 +40502,6 @@ void Catch_All_004c7dbd(void)
   int unaff_EBP;
   
   Catch_operator_delete_42d000(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40723,7 +40516,6 @@ void Catch_All_004c7f4d(void)
   int unaff_EBP;
   
   Catch_operator_delete_42d000(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40771,7 +40563,6 @@ void Catch_All_004c7fdd(void)
   for (puVar2 = *(undefined4 **)(unaff_EBP + -0x14); puVar2 != puVar1; puVar2 = puVar2 + 3) {
     free_string_buffer(puVar2);
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40819,7 +40610,6 @@ void Catch_All_004c808c(void)
   for (iVar2 = *(int *)(unaff_EBP + -0x14); iVar2 != iVar1; iVar2 = iVar2 + 0x188) {
     lib_fn_4c80d0(iVar2);
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -40989,7 +40779,6 @@ void Catch_All_004c833c(void)
   int unaff_EBP;
   
   std_vector_string_tidy(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -41346,8 +41135,6 @@ void __fastcall
 std::basic_stringstream<char,std::char_traits<char>,std::allocator<char>_>::vfunc_1(int param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x004ce567. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_istream<char,std::char_traits<char>_>::_Add_vtordisp1
             ((basic_istream<char,std::char_traits<char>_> *)
              ((param_1 - *(int *)(param_1 + -4)) + -0x50));
@@ -41363,8 +41150,6 @@ void __fastcall
 std::basic_stringstream<char,std::char_traits<char>,std::allocator<char>_>::vfunc_2(int param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x004ce573. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   std::basic_ostream<char,std::char_traits<char>_>::_Add_vtordisp2
             ((basic_ostream<char,std::char_traits<char>_> *)
              ((param_1 - *(int *)(param_1 + -4)) + -0x50));
@@ -41388,7 +41173,6 @@ undefined4 __thiscall lib_fn_4ce580(void *this,uint param_1)
     return 0;
   }
   if (0x15555555 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0xc);
@@ -41399,7 +41183,6 @@ undefined4 __thiscall lib_fn_4ce580(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -41446,7 +41229,6 @@ void __thiscall lib_fn_4ce7e0(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x188);
       if (pvVar3 != (void *)0x0) goto LAB_004ce841;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004ce841:
@@ -41476,7 +41258,6 @@ void Catch_All_004ce8c7(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -41497,7 +41278,6 @@ void __thiscall lib_fn_4ce8e0(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x188;
   if (0xa72f05U - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x188;
@@ -42028,7 +41808,6 @@ stl_fn_4cfd50(void *this,float param_1,void *param_2,float param_3,char param_4,
           iVar7 = std_map_insert_node_0x47a(local_344,(undefined4 *)local_344[1],&local_68);
           iVar5 = puVar1[1];
           if (iVar5 == 0x3333332) {
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           puVar1[1] = iVar5 + 1;
@@ -42239,7 +42018,6 @@ LAB_004d0e7e:
     local_300 = CONCAT31(local_300._1_3_,4);
     iVar5 = list_emplaceCopy24(local_344,(undefined4 *)local_344[1],(undefined8 *)&local_300);
     if (*(int *)((int)param_1 + 0x117c) == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     local_2d8 = CONCAT44(fStack_2fc,local_300);
@@ -42255,7 +42033,6 @@ LAB_004d0e7e:
     local_2dc = *(undefined4 *)((int)param_1 + 0xc);
     iVar5 = list_emplaceCopy40(local_344,(undefined4 *)local_344[1],(undefined8 *)&local_2e8);
     if (param_9[0x17] == 0x5555554) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     param_9[0x17] = param_9[0x17] + 1;
@@ -42401,7 +42178,6 @@ switchD_004d12bd_caseD_6:
         local_214 = 0x17;
         iVar5 = lib_fn_4f3ba0(local_344,(undefined4 *)local_344[1],&local_220);
         if (param_9[3] == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         param_9[3] = param_9[3] + 1;
@@ -42418,7 +42194,6 @@ switchD_004d12bd_caseD_6:
   puVar1 = (undefined4 *)*param_9;
   iVar5 = std_map_insert_node_0x47a(puVar1,(undefined4 *)puVar1[1],(undefined4 *)&local_290);
   if (param_9[1] == 0x3333332) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   param_9[1] = param_9[1] + 1;
@@ -42493,7 +42268,6 @@ void lib_fn_4d2190(undefined8 *param_1,undefined8 *param_2,float param_3,char pa
         puVar1 = *(undefined4 **)(param_6 + 0x10);
         iVar4 = std_map_insert_node_0x40(puVar1,(undefined4 *)puVar1[1],(undefined4 *)&local_60);
         if (*(int *)(param_6 + 0x14) == 0x3333332) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         *(int *)(param_6 + 0x14) = *(int *)(param_6 + 0x14) + 1;
@@ -42513,7 +42287,6 @@ void lib_fn_4d2190(undefined8 *param_1,undefined8 *param_2,float param_3,char pa
 
 /* Global::lib_fn_4d23f0 @ 004d23f0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * __thiscall lib_fn_4d23f0(void *this,int param_1)
 
@@ -44459,7 +44232,6 @@ void lib_fn_4d8c90(int *param_1,int param_2,char param_3)
     local_18 = (float)*(longlong *)(param_1 + 6) * 1.5258789e-05;
     iVar2 = lib_fn_4f3ba0(puVar1,(undefined4 *)puVar1[1],&local_20);
     if (*(int *)(param_2 + 0xc) == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(param_2 + 0xc) = *(int *)(param_2 + 0xc) + 1;
@@ -44601,7 +44373,6 @@ void Catch_All_004d9aa8(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -44616,7 +44387,6 @@ void Catch_All_004d9b31(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -44678,7 +44448,6 @@ void Catch_All_004d9cff(void)
   int unaff_EBP;
   
   RBTree_destroyRec(*(int **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -44693,7 +44462,6 @@ void Catch_All_004d9dbf(void)
   int unaff_EBP;
   
   RBTree_destroyRec(*(int **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -44708,7 +44476,6 @@ void Catch_All_004da44c(void)
   int unaff_EBP;
   
   lib_fn_4daf10(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -44723,7 +44490,6 @@ void Catch_All_004da611(void)
   int unaff_EBP;
   
   lib_fn_4daf10(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -44735,7 +44501,6 @@ void Catch_All_004da611(void)
 void Catch_All_004da75f(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -44747,7 +44512,6 @@ void Catch_All_004da75f(void)
 void Catch_All_004da906(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -44823,7 +44587,6 @@ void Catch_All_004dab0f(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -45088,7 +44851,6 @@ void __thiscall lib_fn_4e1280(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0x18);
       if (puVar3 != (undefined4 *)0x0) goto LAB_004e12df;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004e12df:
@@ -45117,7 +44879,6 @@ void Catch_All_004e1350(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -45138,7 +44899,6 @@ void __thiscall lib_fn_4e1370(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x18;
   if (0xaaaaaaaU - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x18;
@@ -45393,7 +45153,6 @@ void Catch_All_004e1f6c(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -45575,7 +45334,6 @@ void __thiscall lib_fn_4e2400(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0x1c);
       if (puVar3 != (undefined8 *)0x0) goto LAB_004e2465;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004e2465:
@@ -45604,7 +45362,6 @@ void Catch_All_004e24e4(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -45633,7 +45390,6 @@ void __thiscall lib_fn_4e2500(void *this,uint param_1)
       puVar3 = operator_new(param_1 << 5);
       if (puVar3 != (undefined4 *)0x0) goto LAB_004e2561;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004e2561:
@@ -45662,7 +45418,6 @@ void Catch_All_004e25bc(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -45677,7 +45432,6 @@ void Catch_All_004e269d(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -45698,7 +45452,6 @@ int __thiscall lib_fn_4e26c0(void *this,uint param_1)
   if ((uint)(iVar3 / 0x1c) < param_1) {
     iVar2 = (*(int *)((int)this + 4) - *(int *)this) / 0x1c;
     if (0x9249249U - iVar2 < param_1) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar1 = lib_fn_4e23b0(this,iVar2 + param_1);
@@ -45724,7 +45477,6 @@ void __thiscall lib_fn_4e2730(void *this,uint param_1)
   }
   iVar2 = *(int *)((int)this + 4) - *(int *)this >> 5;
   if (0x7ffffffU - iVar2 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar3 = iVar2 + param_1;
@@ -45762,7 +45514,6 @@ void __thiscall lib_fn_4e27b0(void *this,uint param_1)
   }
   iVar2 = *(int *)((int)this + 4) - *(int *)this >> 3;
   if (0x1fffffffU - iVar2 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar3 = iVar2 + param_1;
@@ -46349,7 +46100,6 @@ void Catch_All_004f3803(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46490,7 +46240,6 @@ stl_fn_4f3c60(void *this,undefined4 *param_1,char param_2,undefined4 *param_3,un
   
   if (0x9249247 < *(uint *)((int)this + 4)) {
     operator_delete(param_5);
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   *(uint *)((int)this + 4) = *(uint *)((int)this + 4) + 1;
@@ -46749,7 +46498,6 @@ void Catch_All_004f427f(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46871,7 +46619,6 @@ void Catch_All_004f4505(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -46968,7 +46715,6 @@ void Catch_All_004f469e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -47078,7 +46824,6 @@ void Catch_All_004f483e(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + 0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -47197,7 +46942,6 @@ void Catch_All_004f71a6(void)
   for (puVar2 = *(undefined4 **)(unaff_EBP + -0x14); puVar2 != puVar1; puVar2 = puVar2 + 6) {
     lib_fn_4f7270(puVar2);
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -47657,7 +47401,6 @@ void __thiscall lib_fn_4f7d00(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x140);
       if (pvVar3 != (void *)0x0) goto LAB_004f7d5f;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004f7d5f:
@@ -47686,7 +47429,6 @@ void Catch_All_004f7dd4(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -47715,7 +47457,6 @@ void __thiscall lib_fn_4f7df0(void *this,uint param_1)
       pvVar3 = operator_new(param_1 * 0x18);
       if (pvVar3 != (void *)0x0) goto LAB_004f7e4f;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004f7e4f:
@@ -47745,7 +47486,6 @@ void Catch_All_004f7ed1(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -47760,7 +47500,6 @@ void Catch_All_004f7fbf(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -47789,7 +47528,6 @@ void __thiscall lib_fn_4f7fe0(void *this,uint param_1)
       puVar3 = operator_new(param_1 * 0xc);
       if (puVar3 != (undefined4 *)0x0) goto LAB_004f803f;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_004f803f:
@@ -47818,7 +47556,6 @@ void Catch_All_004f80af(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -47839,7 +47576,6 @@ void __thiscall lib_fn_4f80d0(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x140;
   if (0xccccccU - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x140;
@@ -47877,7 +47613,6 @@ void __thiscall lib_fn_4f8180(void *this,uint param_1)
   }
   iVar1 = (*(int *)((int)this + 4) - *(int *)this) / 0x18;
   if (0xaaaaaaaU - iVar1 < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar2 = (*(int *)((int)this + 8) - *(int *)this) / 0x18;
@@ -50735,7 +50470,6 @@ lib_fn_4ff340(void *this,int param_1,int param_2,int param_3,int *param_4,undefi
 
 /* Global::stl_fn_509e40 @ 00509e40 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void __thiscall stl_fn_509e40(void *this,int param_1,int param_2)
 
@@ -51042,7 +50776,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -51066,7 +50799,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -51093,7 +50825,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -51117,7 +50848,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -51144,7 +50874,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -51168,7 +50897,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -51195,7 +50923,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -51219,7 +50946,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -51246,7 +50972,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -51270,7 +50995,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -51297,7 +51021,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -51321,7 +51044,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -51348,7 +51070,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         local_1a0 = (undefined4 *)(iVar12 + 1);
@@ -51372,7 +51093,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar16 = (int)local_194 - (int)local_19c >> 2;
@@ -51399,7 +51119,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar12 = (int)local_198 - (int)local_19c >> 2;
         if (iVar12 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar7 = (int)local_194 - (int)local_19c >> 2;
@@ -51423,7 +51142,6 @@ LAB_00509f85:
       if ((local_198 == local_194) && ((int)local_194 - (int)local_198 >> 2 == 0)) {
         iVar8 = (int)local_198 - (int)local_19c >> 2;
         if (iVar8 == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar7 = (int)local_194 - (int)local_19c >> 2;
@@ -51507,7 +51225,6 @@ LAB_00509f85:
     iVar8 = std_list_insertNode1(puVar9,(undefined4 *)puVar9[1],&local_1ec);
     if (puVar13[2] == 0x15555554) {
 LAB_0050af9c:
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     puVar13[2] = puVar13[2] + 1;
@@ -51525,7 +51242,6 @@ LAB_0050af9c:
     local_8._0_1_ = 1;
     iVar8 = std_list_insertNode1(puVar9,(undefined4 *)puVar9[1],&local_208);
     if (puVar13[2] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     puVar13[2] = puVar13[2] + 1;
@@ -51582,7 +51298,6 @@ LAB_0050af9c:
     puVar9 = (undefined4 *)local_1cc[1];
     iVar8 = std_list_insertNode1(puVar9,(undefined4 *)puVar9[1],local_218 + 2);
     if (puVar13[2] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     puVar13[2] = puVar13[2] + 1;
@@ -51602,7 +51317,6 @@ LAB_0050af9c:
     puVar3 = local_1b8;
     piVar17 = local_1d0;
     if (puVar13[2] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     puVar13[2] = puVar13[2] + 1;
@@ -52019,7 +51733,6 @@ LAB_0050db2f:
             iVar6 = std_map_insert_node_0x28b(local_70,(undefined4 *)local_70[1],&local_64);
             iVar7 = *(int *)(iVar16 + 100);
             if (iVar7 == 0x3fffffe) {
-                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             *(int *)(iVar16 + 100) = iVar7 + 1;
@@ -52241,7 +51954,6 @@ LAB_0050e05a:
  */
 /* Global::World_buildVoxelColumn @ 00518630 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void __thiscall World_buildVoxelColumn(void *this,float param_1,uint param_2)
 
@@ -54735,7 +54447,6 @@ LAB_0051d429:
         iVar34 = lib_fn_4f3ba0(local_137c,(undefined4 *)local_137c[1],&local_324);
         if (local_1378 == 0x7fffffe) {
 LAB_0051d544:
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         local_1378 = local_1378 + 1;
@@ -57008,7 +56719,6 @@ void __thiscall lib_fn_522580(void *this,uint param_1,undefined4 param_2,int par
   local_8 = 0xffffffff;
   iVar3 = std_list_insertNode1(puVar1,(undefined4 *)puVar1[1],&local_14);
   if (puVar2[2] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   puVar2[2] = puVar2[2] + 1;
@@ -57029,7 +56739,6 @@ void __thiscall lib_fn_522580(void *this,uint param_1,undefined4 param_2,int par
   iVar4 = std_list_insertNode1(puVar1,(undefined4 *)puVar1[1],&local_14);
   iVar3 = param_3;
   if (puVar2[2] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   puVar2[2] = puVar2[2] + 1;
@@ -57663,7 +57372,6 @@ void __thiscall lib_fn_5283b0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = lib_fn_52df40(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xaaaaaa9) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -57686,7 +57394,6 @@ void __thiscall lib_fn_528400(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_0x1c(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x9249248) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -57709,7 +57416,6 @@ void __thiscall lib_fn_528450(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = lib_fn_4c6770(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0x38e38e2) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -58302,7 +58008,6 @@ switchD_0052a96b_default:
 
 /* Global::lib_fn_52ae10 @ 0052ae10 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void * lib_fn_52ae10(void)
 
@@ -59858,7 +59563,6 @@ void Catch_All_0052e02c(void)
   int unaff_EBP;
   
   std_list_Tidy_no_size(*(int **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -59950,7 +59654,6 @@ void Catch_All_0052e1bf(void)
   int unaff_EBP;
   
   std_Rb_tree_destroy_recursive_B(*(int **)(unaff_EBP + 0xc));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -60018,7 +59721,6 @@ stl_fn_52e250(void *this,undefined4 *param_1,char param_2,undefined4 *param_3,un
   int *piVar7;
   
   if (0xaaaaaa8 < *(uint *)((int)this + 4)) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("map/set<T> too long");
   }
   piVar3 = std_Tree_node_alloc_assign2(this,param_4);
@@ -60258,7 +59960,6 @@ LAB_0052e514:
 void Catch_All_0052e567(void)
 
 {
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -60291,7 +59992,6 @@ void __thiscall lib_fn_52e590(void *this,undefined4 *param_1,undefined4 *param_2
     **(int **)(iVar1 + 4) = iVar1;
     param_2 = param_2 + 4;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -60315,7 +60015,6 @@ void Catch_All_0052e617(void)
       iVar1 = iVar1 + 0x10;
     } while (iVar1 != *(int *)(unaff_EBP + 0xc));
   }
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -60459,7 +60158,6 @@ void Catch_All_0052e906(void)
   piVar1 = (int *)**(undefined4 **)(unaff_EBP + -0x18);
   std_map_erase_range_B(*(undefined4 **)(unaff_EBP + -0x18),(undefined4 *)(unaff_EBP + 8),(int *)*piVar1,
                piVar1);
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -60608,7 +60306,6 @@ void Catch_All_0052eb79(void)
   int unaff_EBP;
   
   std_vector_free(*(undefined4 **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -60740,7 +60437,6 @@ uint __thiscall lib_fn_52ecc0(void *this,uint param_1)
     return in_EAX & 0xffffff00;
   }
   if (0x7ffffff < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   pvVar1 = operator_new(param_1 * 0x20);
@@ -60751,7 +60447,6 @@ uint __thiscall lib_fn_52ecc0(void *this,uint param_1)
     *(void **)((int)this + 8) = pvVar1;
     return CONCAT31((int3)((uint)pvVar1 >> 8),1);
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -60766,7 +60461,6 @@ void Catch_All_0052ee5c(void)
   int unaff_EBP;
   
   operator_delete(*(void **)(unaff_EBP + -0x14));
-                    /* WARNING: Subroutine does not return */
   _CxxThrowException((void *)0x0,(ThrowInfo *)0x0);
 }
 
@@ -60917,7 +60611,6 @@ void __thiscall lib_fn_5307f0(void *this,undefined4 *param_1)
   puVar1 = *(undefined4 **)this;
   iVar2 = std_map_insert_node_string(puVar1,(undefined4 *)puVar1[1],param_1);
   if (*(int *)((int)this + 4) == 0xaaaaaa9) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)((int)this + 4) = *(int *)((int)this + 4) + 1;
@@ -61581,7 +61274,6 @@ _Func_impl<std::_Callable_obj<<lambda_00ca7a589ff1e281ef3a7159f4e6a134>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0xc);
     if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -61605,7 +61297,6 @@ _Func_impl<std::_Callable_obj<<lambda_90aea85a8928b722e251ae835df30be1>,0>,std::
   if (param_1 == (undefined4 *)0x0) {
     param_1 = operator_new(0x1c);
     if (param_1 == (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
       std::_Xbad_alloc();
     }
   }
@@ -61979,7 +61670,6 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_0(void)
             iStack_38 = iVar5;
             iVar5 = lib_fn_549300(piVar9,(undefined4 *)piVar9[1],(undefined4 *)&local_34);
             if (local_1ec == 0xffffffe) {
-                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             local_1ec = local_1ec + 1;
@@ -62023,7 +61713,6 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_0(void)
       this = local_1fc;
     } while( true );
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -62035,8 +61724,6 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_0(void)
 void inflate(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a512. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   inflate();
   return;
 }
@@ -62049,8 +61736,6 @@ void inflate(void)
 void inflateEnd(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a518. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   inflateEnd();
   return;
 }
@@ -62063,8 +61748,6 @@ void inflateEnd(void)
 void compress(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a51e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   compress();
   return;
 }
@@ -62077,8 +61760,6 @@ void compress(void)
 void inflateInit_(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a524. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   inflateInit_();
   return;
 }
@@ -62091,8 +61772,6 @@ void inflateInit_(void)
 void Ordinal_16(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a52a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_16();
   return;
 }
@@ -62105,8 +61784,6 @@ void Ordinal_16(void)
 void Ordinal_19(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a530. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_19();
   return;
 }
@@ -62119,8 +61796,6 @@ void Ordinal_19(void)
 void Ordinal_1(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a536. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_1();
   return;
 }
@@ -62133,8 +61808,6 @@ void Ordinal_1(void)
 void Ordinal_2(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a53c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_2();
   return;
 }
@@ -62147,8 +61820,6 @@ void Ordinal_2(void)
 void Ordinal_3(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a542. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_3();
   return;
 }
@@ -62161,8 +61832,6 @@ void Ordinal_3(void)
 void Ordinal_9(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a548. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_9();
   return;
 }
@@ -62175,8 +61844,6 @@ void Ordinal_9(void)
 void Ordinal_13(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a54e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_13();
   return;
 }
@@ -62189,8 +61856,6 @@ void Ordinal_13(void)
 void Ordinal_23(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a554. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_23();
   return;
 }
@@ -62203,8 +61868,6 @@ void Ordinal_23(void)
 void Ordinal_115(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a55a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_115();
   return;
 }
@@ -62217,8 +61880,6 @@ void Ordinal_115(void)
 void Ordinal_116(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a560. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Ordinal_116();
   return;
 }
@@ -62231,8 +61892,6 @@ void Ordinal_116(void)
 void Sleep(DWORD dwMilliseconds)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a56c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   Sleep(dwMilliseconds);
   return;
 }
@@ -62247,8 +61906,6 @@ BOOL DeleteFileA(LPCSTR lpFileName)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a572. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = DeleteFileA(lpFileName);
   return BVar1;
 }
@@ -62263,8 +61920,6 @@ BOOL AreFileApisANSI(void)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a578. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = AreFileApisANSI();
   return BVar1;
 }
@@ -62277,8 +61932,6 @@ BOOL AreFileApisANSI(void)
 void GetSystemTime(LPSYSTEMTIME lpSystemTime)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a57e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   GetSystemTime(lpSystemTime);
   return;
 }
@@ -62293,8 +61946,6 @@ HLOCAL LocalFree(HLOCAL hMem)
 {
   HLOCAL pvVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a584. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pvVar1 = LocalFree(hMem);
   return pvVar1;
 }
@@ -62309,8 +61960,6 @@ DWORD GetTempPathA(DWORD nBufferLength,LPSTR lpBuffer)
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a58a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetTempPathA(nBufferLength,lpBuffer);
   return DVar1;
 }
@@ -62325,8 +61974,6 @@ DWORD GetCurrentProcessId(void)
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a590. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetCurrentProcessId();
   return DVar1;
 }
@@ -62341,8 +61988,6 @@ BOOL DeleteFileW(LPCWSTR lpFileName)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a596. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = DeleteFileW(lpFileName);
   return BVar1;
 }
@@ -62357,8 +62002,6 @@ BOOL CloseHandle(HANDLE hObject)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a59c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = CloseHandle(hObject);
   return BVar1;
 }
@@ -62373,8 +62016,6 @@ BOOL GetVersionExA(LPOSVERSIONINFOA lpVersionInformation)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5a2. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = GetVersionExA(lpVersionInformation);
   return BVar1;
 }
@@ -62390,8 +62031,6 @@ BOOL GetFileAttributesExW
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5ae. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = GetFileAttributesExW(lpFileName,fInfoLevelId,lpFileInformation);
   return BVar1;
 }
@@ -62404,8 +62043,6 @@ BOOL GetFileAttributesExW
 void GetSystemInfo(LPSYSTEM_INFO lpSystemInfo)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a5b4. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   GetSystemInfo(lpSystemInfo);
   return;
 }
@@ -62421,8 +62058,6 @@ HANDLE CreateFileMappingW(HANDLE hFile,LPSECURITY_ATTRIBUTES lpFileMappingAttrib
 {
   HANDLE pvVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5c0. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pvVar1 = CreateFileMappingW(hFile,lpFileMappingAttributes,flProtect,dwMaximumSizeHigh,
                               dwMaximumSizeLow,lpName);
   return pvVar1;
@@ -62438,8 +62073,6 @@ HMODULE LoadLibraryA(LPCSTR lpLibFileName)
 {
   HMODULE pHVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5cc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pHVar1 = LoadLibraryA(lpLibFileName);
   return pHVar1;
 }
@@ -62455,8 +62088,6 @@ BOOL LockFileEx(HANDLE hFile,DWORD dwFlags,DWORD dwReserved,DWORD nNumberOfBytes
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5d8. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = LockFileEx(hFile,dwFlags,dwReserved,nNumberOfBytesToLockLow,nNumberOfBytesToLockHigh,
                      lpOverlapped);
   return BVar1;
@@ -62472,8 +62103,6 @@ FARPROC GetProcAddress(HMODULE hModule,LPCSTR lpProcName)
 {
   FARPROC pFVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5e4. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pFVar1 = GetProcAddress(hModule,lpProcName);
   return pFVar1;
 }
@@ -62488,8 +62117,6 @@ DWORD GetLastError(void)
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5ea. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetLastError();
   return DVar1;
 }
@@ -62504,8 +62131,6 @@ DWORD GetTempPathW(DWORD nBufferLength,LPWSTR lpBuffer)
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5f0. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetTempPathW(nBufferLength,lpBuffer);
   return DVar1;
 }
@@ -62520,8 +62145,6 @@ BOOL FlushFileBuffers(HANDLE hFile)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5f6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = FlushFileBuffers(hFile);
   return BVar1;
 }
@@ -62537,8 +62160,6 @@ int MultiByteToWideChar(UINT CodePage,DWORD dwFlags,LPCSTR lpMultiByteStr,int cb
 {
   int iVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a5fc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   iVar1 = MultiByteToWideChar(CodePage,dwFlags,lpMultiByteStr,cbMultiByte,lpWideCharStr,cchWideChar)
   ;
   return iVar1;
@@ -62556,8 +62177,6 @@ HANDLE CreateFileW(LPCWSTR lpFileName,DWORD dwDesiredAccess,DWORD dwShareMode,
 {
   HANDLE pvVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a602. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pvVar1 = CreateFileW(lpFileName,dwDesiredAccess,dwShareMode,lpSecurityAttributes,
                        dwCreationDisposition,dwFlagsAndAttributes,hTemplateFile);
   return pvVar1;
@@ -62574,8 +62193,6 @@ BOOL ReadFile(HANDLE hFile,LPVOID lpBuffer,DWORD nNumberOfBytesToRead,LPDWORD lp
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a608. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = ReadFile(hFile,lpBuffer,nNumberOfBytesToRead,lpNumberOfBytesRead,lpOverlapped);
   return BVar1;
 }
@@ -62590,8 +62207,6 @@ DWORD GetFileAttributesW(LPCWSTR lpFileName)
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a60e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetFileAttributesW(lpFileName);
   return DVar1;
 }
@@ -62606,8 +62221,6 @@ DWORD GetFileAttributesA(LPCSTR lpFileName)
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a620. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetFileAttributesA(lpFileName);
   return DVar1;
 }
@@ -62623,8 +62236,6 @@ DWORD FormatMessageW(DWORD dwFlags,LPCVOID lpSource,DWORD dwMessageId,DWORD dwLa
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a62c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = FormatMessageW(dwFlags,lpSource,dwMessageId,dwLanguageId,lpBuffer,nSize,Arguments);
   return DVar1;
 }
@@ -62639,8 +62250,6 @@ HMODULE LoadLibraryW(LPCWSTR lpLibFileName)
 {
   HMODULE pHVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a632. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pHVar1 = LoadLibraryW(lpLibFileName);
   return pHVar1;
 }
@@ -62657,8 +62266,6 @@ int WideCharToMultiByte(UINT CodePage,DWORD dwFlags,LPCWSTR lpWideCharStr,int cc
 {
   int iVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a638. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   iVar1 = WideCharToMultiByte(CodePage,dwFlags,lpWideCharStr,cchWideChar,lpMultiByteStr,cbMultiByte,
                               lpDefaultChar,lpUsedDefaultChar);
   return iVar1;
@@ -62675,8 +62282,6 @@ BOOL WriteFile(HANDLE hFile,LPCVOID lpBuffer,DWORD nNumberOfBytesToWrite,
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a63e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = WriteFile(hFile,lpBuffer,nNumberOfBytesToWrite,lpNumberOfBytesWritten,lpOverlapped);
   return BVar1;
 }
@@ -62692,8 +62297,6 @@ DWORD FormatMessageA(DWORD dwFlags,LPCVOID lpSource,DWORD dwMessageId,DWORD dwLa
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a644. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = FormatMessageA(dwFlags,lpSource,dwMessageId,dwLanguageId,lpBuffer,nSize,Arguments);
   return DVar1;
 }
@@ -62706,8 +62309,6 @@ DWORD FormatMessageA(DWORD dwFlags,LPCVOID lpSource,DWORD dwMessageId,DWORD dwLa
 void GetSystemTimeAsFileTime(LPFILETIME lpSystemTimeAsFileTime)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a64a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   GetSystemTimeAsFileTime(lpSystemTimeAsFileTime);
   return;
 }
@@ -62723,8 +62324,6 @@ BOOL UnlockFileEx(HANDLE hFile,DWORD dwReserved,DWORD nNumberOfBytesToUnlockLow,
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a656. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = UnlockFileEx(hFile,dwReserved,nNumberOfBytesToUnlockLow,nNumberOfBytesToUnlockHigh,
                        lpOverlapped);
   return BVar1;
@@ -62740,8 +62339,6 @@ DWORD GetTickCount(void)
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a65c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetTickCount();
   return DVar1;
 }
@@ -62757,8 +62354,6 @@ BOOL LockFile(HANDLE hFile,DWORD dwFileOffsetLow,DWORD dwFileOffsetHigh,
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a668. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = LockFile(hFile,dwFileOffsetLow,dwFileOffsetHigh,nNumberOfBytesToLockLow,
                    nNumberOfBytesToLockHigh);
   return BVar1;
@@ -62775,8 +62370,6 @@ BOOL UnlockFile(HANDLE hFile,DWORD dwFileOffsetLow,DWORD dwFileOffsetHigh,
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a66e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = UnlockFile(hFile,dwFileOffsetLow,dwFileOffsetHigh,nNumberOfBytesToUnlockLow,
                      nNumberOfBytesToUnlockHigh);
   return BVar1;
@@ -62792,8 +62385,6 @@ BOOL QueryPerformanceCounter(LARGE_INTEGER *lpPerformanceCount)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a67a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = QueryPerformanceCounter(lpPerformanceCount);
   return BVar1;
 }
@@ -62808,8 +62399,6 @@ BOOL FreeLibrary(HMODULE hLibModule)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a68c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = FreeLibrary(hLibModule);
   return BVar1;
 }
@@ -62824,8 +62413,6 @@ BOOL SetEndOfFile(HANDLE hFile)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a692. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = SetEndOfFile(hFile);
   return BVar1;
 }
@@ -62840,8 +62427,6 @@ BOOL UnmapViewOfFile(LPCVOID lpBaseAddress)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a698. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = UnmapViewOfFile(lpBaseAddress);
   return BVar1;
 }
@@ -62857,8 +62442,6 @@ LPVOID MapViewOfFile(HANDLE hFileMappingObject,DWORD dwDesiredAccess,DWORD dwFil
 {
   LPVOID pvVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a69e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pvVar1 = MapViewOfFile(hFileMappingObject,dwDesiredAccess,dwFileOffsetHigh,dwFileOffsetLow,
                          dwNumberOfBytesToMap);
   return pvVar1;
@@ -62875,8 +62458,6 @@ DWORD SetFilePointer(HANDLE hFile,LONG lDistanceToMove,PLONG lpDistanceToMoveHig
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a6a4. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = SetFilePointer(hFile,lDistanceToMove,lpDistanceToMoveHigh,dwMoveMethod);
   return DVar1;
 }
@@ -62891,8 +62472,6 @@ DWORD GetFileSize(HANDLE hFile,LPDWORD lpFileSizeHigh)
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a6b0. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetFileSize(hFile,lpFileSizeHigh);
   return DVar1;
 }
@@ -62909,8 +62488,6 @@ HANDLE CreateFileA(LPCSTR lpFileName,DWORD dwDesiredAccess,DWORD dwShareMode,
 {
   HANDLE pvVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a6b6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pvVar1 = CreateFileA(lpFileName,dwDesiredAccess,dwShareMode,lpSecurityAttributes,
                        dwCreationDisposition,dwFlagsAndAttributes,hTemplateFile);
   return pvVar1;
@@ -62926,8 +62503,6 @@ DWORD GetFullPathNameA(LPCSTR lpFileName,DWORD nBufferLength,LPSTR lpBuffer,LPST
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a6c2. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetFullPathNameA(lpFileName,nBufferLength,lpBuffer,lpFilePart);
   return DVar1;
 }
@@ -62942,8 +62517,6 @@ DWORD GetFullPathNameW(LPCWSTR lpFileName,DWORD nBufferLength,LPWSTR lpBuffer,LP
 {
   DWORD DVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a6c8. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   DVar1 = GetFullPathNameW(lpFileName,nBufferLength,lpBuffer,lpFilePart);
   return DVar1;
 }
@@ -62986,8 +62559,6 @@ std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::_Lock
           (basic_streambuf<wchar_t,std::char_traits<wchar_t>_> *this)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a738. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Lock(this);
   return;
 }
@@ -63002,8 +62573,6 @@ std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::_Unlock
           (basic_streambuf<wchar_t,std::char_traits<wchar_t>_> *this)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a73e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Unlock(this);
   return;
 }
@@ -63018,8 +62587,6 @@ std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::imbue
           (basic_streambuf<wchar_t,std::char_traits<wchar_t>_> *this,locale *param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a744. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   imbue(this,param_1);
   return;
 }
@@ -63037,8 +62604,6 @@ std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setbuf
 {
   basic_streambuf<wchar_t,struct_std::char_traits<wchar_t>_> *pbVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a74a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pbVar1 = setbuf(this,param_1,param_2);
   return pbVar1;
 }
@@ -63055,8 +62620,6 @@ std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::showmanyc
 {
   __int64 _Var1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a750. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Var1 = showmanyc(this);
   return _Var1;
 }
@@ -63073,8 +62636,6 @@ std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::sync
 {
   int iVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a756. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   iVar1 = sync(this);
   return iVar1;
 }
@@ -63091,8 +62652,6 @@ std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::uflow
 {
   ushort uVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a75c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   uVar1 = uflow(this);
   return uVar1;
 }
@@ -63110,8 +62669,6 @@ std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::xsgetn
 {
   __int64 _Var1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a762. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Var1 = xsgetn(this,param_1,param_2);
   return _Var1;
 }
@@ -63129,8 +62686,6 @@ std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::xsputn
 {
   __int64 _Var1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a768. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Var1 = xsputn(this,param_1,param_2);
   return _Var1;
 }
@@ -63145,8 +62700,6 @@ std::basic_ios<char,std::char_traits<char>_>::_Add_vtordisp1
           (basic_ios<char,std::char_traits<char>_> *this)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a76e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Add_vtordisp1(this);
   return;
 }
@@ -63161,8 +62714,6 @@ std::basic_ios<char,std::char_traits<char>_>::_Add_vtordisp2
           (basic_ios<char,std::char_traits<char>_> *this)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a774. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Add_vtordisp2(this);
   return;
 }
@@ -63179,8 +62730,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::showmanyc
 {
   __int64 _Var1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a77a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Var1 = showmanyc(this);
   return _Var1;
 }
@@ -63197,8 +62746,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::xsgetn
 {
   __int64 _Var1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a780. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Var1 = xsgetn(this,param_1,param_2);
   return _Var1;
 }
@@ -63215,8 +62762,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::xsputn
 {
   __int64 _Var1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a786. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Var1 = xsputn(this,param_1,param_2);
   return _Var1;
 }
@@ -63231,8 +62776,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::_Lock
           (basic_streambuf<char,std::char_traits<char>_> *this)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a78c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Lock(this);
   return;
 }
@@ -63247,8 +62790,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::_Unlock
           (basic_streambuf<char,std::char_traits<char>_> *this)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a792. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _Unlock(this);
   return;
 }
@@ -63263,8 +62804,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::imbue
           (basic_streambuf<char,std::char_traits<char>_> *this,locale *param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a798. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   imbue(this,param_1);
   return;
 }
@@ -63281,8 +62820,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::setbuf
 {
   basic_streambuf<char,struct_std::char_traits<char>_> *pbVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a79e. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pbVar1 = setbuf(this,param_1,param_2);
   return pbVar1;
 }
@@ -63299,8 +62836,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::sync
 {
   int iVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a7a4. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   iVar1 = sync(this);
   return iVar1;
 }
@@ -63317,8 +62852,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::uflow
 {
   int iVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a7aa. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   iVar1 = uflow(this);
   return iVar1;
 }
@@ -63331,8 +62864,6 @@ std::basic_streambuf<char,std::char_traits<char>_>::uflow
 void __cdecl purecall(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a7b0. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   purecall();
   return;
 }
@@ -63347,8 +62878,6 @@ void * __cdecl operator_new(uint param_1)
 {
   void *pvVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a7b6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pvVar1 = operator_new(param_1);
   return pvVar1;
 }
@@ -63361,8 +62890,6 @@ void * __cdecl operator_new(uint param_1)
 void __cdecl operator_delete(void *param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a7bc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   operator_delete(param_1);
   return;
 }
@@ -63372,8 +62899,6 @@ void __cdecl operator_delete(void *param_1)
 
 /* Global::__onexit @ 0054a7fe */
 
-/* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */
-/* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */
 /* Library Function - Single Match
     __onexit
    
@@ -63462,7 +62987,6 @@ void __fastcall __security_check_cookie(int param_1)
   if (param_1 == DAT_00583cc8) {
     return;
   }
-                    /* WARNING: Subroutine does not return */
   ___report_gsfailure();
 }
 
@@ -63474,9 +62998,6 @@ void __fastcall __security_check_cookie(int param_1)
 void _CxxThrowException(void *pExceptionObject,ThrowInfo *pThrowInfo)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a8c8. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
   _CxxThrowException(pExceptionObject,pThrowInfo);
   return;
 }
@@ -63486,7 +63007,6 @@ void _CxxThrowException(void *pExceptionObject,ThrowInfo *pThrowInfo)
 
 /* Global::__alloca_probe @ 0054a8e0 */
 
-/* WARNING: This is an inlined function */
 
 void __alloca_probe(void)
 
@@ -63514,8 +63034,6 @@ void __alloca_probe(void)
 void __cdecl libm_sse2_asin_precise(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a9bc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   libm_sse2_asin_precise();
   return;
 }
@@ -63528,8 +63046,6 @@ void __cdecl libm_sse2_asin_precise(void)
 void __cdecl libm_sse2_cos_precise(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a9c2. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   libm_sse2_cos_precise();
   return;
 }
@@ -63542,8 +63058,6 @@ void __cdecl libm_sse2_cos_precise(void)
 void __cdecl libm_sse2_sin_precise(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a9c8. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   libm_sse2_sin_precise();
   return;
 }
@@ -63556,8 +63070,6 @@ void __cdecl libm_sse2_sin_precise(void)
 void __cdecl libm_sse2_sqrt_precise(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054a9ce. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   libm_sse2_sqrt_precise();
   return;
 }
@@ -63572,8 +63084,6 @@ void * __cdecl memcpy(void *_Dst,void *_Src,size_t _Size)
 {
   void *pvVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054a9d4. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pvVar1 = memcpy(_Dst,_Src,_Size);
   return pvVar1;
 }
@@ -63716,8 +63226,6 @@ longlong __allmul(uint param_1,int param_2,uint param_3,int param_4)
 void __cdecl libm_sse2_pow_precise(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054ab14. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   libm_sse2_pow_precise();
   return;
 }
@@ -63732,8 +63240,6 @@ void * __cdecl memset(void *_Dst,int _Val,size_t _Size)
 {
   void *pvVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054ab1a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   pvVar1 = memset(_Dst,_Val,_Size);
   return pvVar1;
 }
@@ -63746,8 +63252,6 @@ void * __cdecl memset(void *_Dst,int _Val,size_t _Size)
 void __cdecl setjmp3(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054ab20. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   setjmp3();
   return;
 }
@@ -63780,7 +63284,6 @@ void __cdecl ___raise_securityfailure(EXCEPTION_POINTERS *param_1)
 
 /* Global::___report_gsfailure @ 0054ab63 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* Library Function - Single Match
     ___report_gsfailure
    
@@ -63887,7 +63390,6 @@ void ___report_rangecheckfailure(void)
 
 /* Global::___report_securityfailure @ 0054ac68 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 /* Library Function - Single Match
     ___report_securityfailure
    
@@ -63979,8 +63481,6 @@ void __cdecl ___report_securityfailure(undefined4 param_1)
 void __cdecl operator_delete__(void *param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054ad3c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   operator_delete__(param_1);
   return;
 }
@@ -63990,8 +63490,6 @@ void __cdecl operator_delete__(void *param_1)
 
 /* Global::__ArrayUnwind @ 0054ae25 */
 
-/* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */
-/* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */
 /* Library Function - Single Match
     void __stdcall __ArrayUnwind(void *,unsigned int,int,void (__thiscall*)(void *))
    
@@ -64368,8 +63866,6 @@ undefined8 __aullrem(uint param_1,uint param_2,uint param_3,uint param_4)
 void __cdecl libm_sse2_acos_precise(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b1d6. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   libm_sse2_acos_precise();
   return;
 }
@@ -64382,8 +63878,6 @@ void __cdecl libm_sse2_acos_precise(void)
 void __cdecl libm_sse2_exp_precise(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b1dc. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   libm_sse2_exp_precise();
   return;
 }
@@ -64393,8 +63887,6 @@ void __cdecl libm_sse2_exp_precise(void)
 
 /* Global::___tmainCRTStartup @ 0054b2e6 */
 
-/* WARNING: Function: __SEH_prolog4 replaced with injection: SEH_prolog4 */
-/* WARNING: Function: __SEH_epilog4 replaced with injection: EH_epilog3 */
 /* Library Function - Single Match
     ___tmainCRTStartup
    
@@ -64458,7 +63950,6 @@ LAB_0054b321:
     }
     return DAT_00584620;
   }
-                    /* WARNING: Subroutine does not return */
   exit(DAT_00584620);
 }
 
@@ -64470,8 +63961,6 @@ LAB_0054b321:
 void __cdecl _lock(int _File)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b456. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _lock(_File);
   return;
 }
@@ -64484,8 +63973,6 @@ void __cdecl _lock(int _File)
 void __cdecl _unlock(int _File)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b45c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _unlock(_File);
   return;
 }
@@ -64498,8 +63985,6 @@ void __cdecl _unlock(int _File)
 void __dllonexit(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b462. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   __dllonexit();
   return;
 }
@@ -64509,9 +63994,6 @@ void __dllonexit(void)
 
 /* Global::__SEH_prolog4 @ 0054b470 */
 
-/* WARNING: This is an inlined function */
-/* WARNING: Unable to track spacebase fully for stack */
-/* WARNING: Variable defined which should be unmapped: param_2 */
 /* Library Function - Single Match
     __SEH_prolog4
    
@@ -64543,7 +64025,6 @@ void __cdecl __SEH_prolog4(undefined4 param_1,int param_2)
 
 /* Global::__SEH_epilog4 @ 0054b4b5 */
 
-/* WARNING: This is an inlined function */
 /* Library Function - Single Match
     __SEH_epilog4
    
@@ -64565,10 +64046,6 @@ void __SEH_epilog4(void)
 
 /* Global::___isa_available_init @ 0054b4ec */
 
-/* WARNING: Removing unreachable block (ram,0x0054b5d6) */
-/* WARNING: Removing unreachable block (ram,0x0054b5a6) */
-/* WARNING: Removing unreachable block (ram,0x0054b51c) */
-/* WARNING: Removing unreachable block (ram,0x0054b57a) */
 /* Library Function - Single Match
     ___isa_available_init
    
@@ -64625,8 +64102,6 @@ undefined4 ___isa_available_init(void)
 void __thiscall type_info::~type_info(type_info *this)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b626. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   ~type_info(this);
   return;
 }
@@ -64639,8 +64114,6 @@ void __thiscall type_info::~type_info(type_info *this)
 void __cdecl _crt_debugger_hook(int param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b62c. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _crt_debugger_hook(param_1);
   return;
 }
@@ -64655,8 +64128,6 @@ LONG __cdecl __crtUnhandledException(EXCEPTION_POINTERS *exceptionInfo)
 {
   LONG LVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054b632. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   LVar1 = __crtUnhandledException(exceptionInfo);
   return LVar1;
 }
@@ -64669,8 +64140,6 @@ LONG __cdecl __crtUnhandledException(EXCEPTION_POINTERS *exceptionInfo)
 void __cdecl __crtTerminateProcess(UINT uExitCode)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b638. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   __crtTerminateProcess(uExitCode);
   return;
 }
@@ -64683,9 +64152,6 @@ void __cdecl __crtTerminateProcess(UINT uExitCode)
 void __cdecl terminate(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b63e. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
   terminate();
   return;
 }
@@ -64700,8 +64166,6 @@ int __cdecl _XcptFilter(ulong _ExceptionNum,_EXCEPTION_POINTERS *_ExceptionPtr)
 {
   int iVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054b694. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   iVar1 = _XcptFilter(_ExceptionNum,_ExceptionPtr);
   return iVar1;
 }
@@ -64714,8 +64178,6 @@ int __cdecl _XcptFilter(ulong _ExceptionNum,_EXCEPTION_POINTERS *_ExceptionPtr)
 void __cdecl _amsg_exit(int param_1)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b69a. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   _amsg_exit(param_1);
   return;
 }
@@ -64865,8 +64327,6 @@ void __cdecl ___security_init_cookie(void)
 void __cdecl initterm_e(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b8f2. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   initterm_e();
   return;
 }
@@ -64879,8 +64339,6 @@ void __cdecl initterm_e(void)
 void __cdecl initterm(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b8f8. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   initterm();
   return;
 }
@@ -64893,8 +64351,6 @@ void __cdecl initterm(void)
 void __cdecl except_handler4_common(void)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b8fe. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   except_handler4_common();
   return;
 }
@@ -64907,8 +64363,6 @@ void __cdecl except_handler4_common(void)
 void __cdecl __crtSetUnhandledExceptionFilter(LPTOP_LEVEL_EXCEPTION_FILTER exceptionFilter)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b904. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   __crtSetUnhandledExceptionFilter(exceptionFilter);
   return;
 }
@@ -64922,9 +64376,6 @@ void __cdecl
 _invoke_watson(wchar_t *param_1,wchar_t *param_2,wchar_t *param_3,uint param_4,uintptr_t param_5)
 
 {
-                    /* WARNING: Could not recover jumptable at 0x0054b90a. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
   _invoke_watson(param_1,param_2,param_3,param_4,param_5);
   return;
 }
@@ -64939,8 +64390,6 @@ errno_t __cdecl _controlfp_s(uint *_CurrentState,uint _NewValue,uint _Mask)
 {
   errno_t eVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054b910. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   eVar1 = _controlfp_s(_CurrentState,_NewValue,_Mask);
   return eVar1;
 }
@@ -64955,8 +64404,6 @@ BOOL IsProcessorFeaturePresent(DWORD ProcessorFeature)
 {
   BOOL BVar1;
   
-                    /* WARNING: Could not recover jumptable at 0x0054b916. Too many branches */
-                    /* WARNING: Treating indirect jump as call */
   BVar1 = IsProcessorFeaturePresent(ProcessorFeature);
   return BVar1;
 }

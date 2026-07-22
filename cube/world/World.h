@@ -9,8 +9,8 @@ void std_Unguarded_partition(undefined4 *param_1,int *param_2,int *param_3,undef
 void std_list_list_const_458df0(undefined4 *param_1);
 void std_list_list_const_458f30(undefined4 *param_1);
 void std_list_list_const_458fd0(undefined4 *param_1);
-/* WARNING: Removing unreachable block (ram,0x0046949b) */ /* WARNING: Removing unreachable block (ram,0x00469417) */ /* WARNING: Globals starting with '_' overlap smaller symbols at the same address */ /* WARNING: Restarted to delay deadcode elimination for space: stack */ void cube::World::updateNearbyEntities(void);
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */ void cube::World::updateActiveChunks(void);
+void cube::World::updateNearbyEntities(void);
+void cube::World::updateActiveChunks(void);
 void std_vector_reserve(uint param_1);
 undefined4 GameController_check_tile_walkable(int param_1,int param_2);
 int * std_list_Erase_node(int *param_1,int *param_2);

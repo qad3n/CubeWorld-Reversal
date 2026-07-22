@@ -85,10 +85,8 @@ void cube::QuestTextNode::ctor_1(void)
   *(undefined4 *)(self[0xe] + 4) = self[0xe];
   self[0xf] = 0;
   if (pvVar2 != (void *)self[0xe]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[0xe]);
 }
 
@@ -104,7 +102,6 @@ void cube::QuestTextNode::vfunc_0(byte param_1)
   
   ctor_1();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;

@@ -65,7 +65,6 @@ void string_dtor(void)
   undefined4 *self;
   
   if (0xf < (uint)self[5]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*self);
   }
   self[5] = 0xf;
@@ -167,7 +166,6 @@ void string_grow(uint newCap,size_t copyLen)
   trylevel = 0;
   newBuf = (undefined4 *)0x0;
   if ((newCap + 1 != 0) && (newBuf = operator_new(newCap + 1), newBuf == (undefined4 *)0x0)) {
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
   if (copyLen != 0) {
@@ -180,7 +178,6 @@ void string_grow(uint newCap,size_t copyLen)
     }
   }
   if (0xf < (uint)self[5]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*self);
   }
   *(undefined1 *)self = 0;
@@ -213,7 +210,6 @@ bool string_resize(uint newSize,char grow)
   uint _Size;
   
   if (newSize == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   oldCap = self[5];
@@ -240,7 +236,6 @@ bool string_resize(uint newSize,char grow)
     if (_Size != 0) {
       memcpy(self,_Src,_Size);
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(_Src);
   }
   self[4] = _Size;
@@ -266,7 +261,6 @@ void string_assignSubstr(int *src,uint pos,uint count)
   uint copyLen;
   
   if ((uint)src[4] < pos) {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   copyLen = src[4] - pos;
@@ -276,7 +270,6 @@ void string_assignSubstr(int *src,uint pos,uint count)
   if (self == src) {
     copyLen = copyLen + pos;
     if ((uint)self[4] < copyLen) {
-                    /* WARNING: Subroutine does not return */
       std::_Xout_of_range("invalid string position");
     }
     self[4] = copyLen;
@@ -290,7 +283,6 @@ void string_assignSubstr(int *src,uint pos,uint count)
     return;
   }
   if (copyLen == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if ((uint)self[5] < copyLen) {
@@ -343,11 +335,9 @@ void string_assignFill(uint count,char ch)
   int *_Dst;
   
   if (count == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if (count == 0xffffffff) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("string too long");
   }
   if ((uint)self[5] < count) {
@@ -445,7 +435,6 @@ uint string_compare(uint pos,uint len,undefined4 other,uint otherLen)
   undefined4 *self;
   
   if ((uint)self[4] < pos) {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   cmpVal = self[4] - pos;
@@ -488,7 +477,6 @@ void string_erase(uint pos,uint count)
   
   len = self[4];
   if (len < pos) {
-                    /* WARNING: Subroutine does not return */
     std::_Xout_of_range("invalid string position");
   }
   if (count < len - pos) {
@@ -586,7 +574,6 @@ void ostrstream_str(void)
     string_moveConstruct2(strBuf);
     uVar3 = extraout_EDX;
     if (0xf < strCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf[0]);
     }
   }
@@ -607,7 +594,6 @@ void ostrstream_str(void)
     string_moveConstruct2(strBuf);
     uVar3 = extraout_EDX_00;
     if (0xf < strCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf[0]);
     }
   }
@@ -1177,7 +1163,6 @@ void u16_ostrstream_str(void)
 LAB_00411b5e:
   u16string_moveConstruct(&strBuf);
   if (7 < strCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(strBuf);
   }
   __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc,extraout_EDX,uVar4);
@@ -1826,7 +1811,6 @@ int mat_elemPtr(int col,int row)
  */
 /* Global::Creature_drawModel @ 004128f0 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void Creature_drawModel(undefined4 param_1,undefined4 param_2,undefined4 param_3,int param_4,
                  undefined4 param_5,undefined4 param_6,float *vecA,float *vecB,uint count,
@@ -8425,7 +8409,6 @@ LAB_00428f7c:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x41d80000,0x41400000,0x40400000,&local_5c,
                &local_4c,&local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8433,7 +8416,6 @@ LAB_00428f7c:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -8461,7 +8443,6 @@ LAB_00428f7c:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x41d80000,0x41400000,0,&local_5c,&local_4c,
                &local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8470,7 +8451,6 @@ LAB_00428f7c:
   local_3c = (undefined4 *)(uVar7 << 0x10);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_28 = 7;
@@ -8507,7 +8487,6 @@ LAB_00428f7c:
   AdaptionWidget_draw_text_locked(&local_3c,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -8515,7 +8494,6 @@ LAB_00428f7c:
   local_74 = (void *)((uint)local_74 & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8551,7 +8529,6 @@ LAB_00428f7c:
   AdaptionWidget_draw_text_locked(&local_3c,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -8559,7 +8536,6 @@ LAB_00428f7c:
   local_74 = (void *)((uint)local_74 & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8575,7 +8551,6 @@ LAB_00428f7c:
   strstreambuf_init(puVar9,local_2c,local_144);
   local_8._0_1_ = 3;
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   if (*(int *)(in_ECX + 0x194) == 0) {
@@ -8610,7 +8585,6 @@ LAB_00428f7c:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x42640000,0x41400000,0x40400000,&local_5c,
                &local_4c,&local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8618,7 +8592,6 @@ LAB_00428f7c:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -8646,7 +8619,6 @@ LAB_00428f7c:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x42640000,0x41400000,0,&local_5c,&local_4c,
                &local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8655,7 +8627,6 @@ LAB_00428f7c:
   local_3c = (undefined4 *)(uVar7 << 0x10);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_28 = 7;
@@ -8692,7 +8663,6 @@ LAB_00428f7c:
   AdaptionWidget_draw_text_locked(&local_3c,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -8700,7 +8670,6 @@ LAB_00428f7c:
   local_74 = (void *)((uint)local_74 & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -8733,7 +8702,6 @@ LAB_00428f7c:
   AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8741,7 +8709,6 @@ LAB_00428f7c:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -8754,7 +8721,6 @@ LAB_00428f7c:
   strstreambuf_init(puVar9,local_2c,local_144);
   local_8._0_1_ = 3;
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   switch(*(undefined4 *)(in_ECX + 400)) {
@@ -8794,7 +8760,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x42ae0000,0x41400000,0x40400000,&local_5c,
                &local_4c,&local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8802,7 +8767,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"Class");
@@ -8824,7 +8788,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x42ae0000,0x41400000,0,&local_5c,&local_4c,
                &local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8832,7 +8795,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -8866,7 +8828,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8874,7 +8835,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -8907,7 +8867,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8915,7 +8874,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -8928,7 +8886,6 @@ LAB_00429aac:
   strstreambuf_init(puVar9,local_2c,local_144);
   local_8._0_1_ = 3;
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   iVar4 = *(int *)(in_ECX + 0x198) + 1;
@@ -8953,7 +8910,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x42ea0000,0x41400000,0x40400000,&local_5c,
                &local_4c,&local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8961,7 +8917,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"Face");
@@ -8983,7 +8938,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x42ea0000,0x41400000,0,&local_5c,&local_4c,
                &local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -8991,7 +8945,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -9025,7 +8978,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -9033,7 +8985,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -9066,7 +9017,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -9074,7 +9024,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -9087,7 +9036,6 @@ LAB_00429aac:
   strstreambuf_init(puVar9,local_2c,local_144);
   local_8._0_1_ = 3;
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   iVar4 = *(int *)(in_ECX + 0x19c) + 1;
@@ -9112,7 +9060,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x43130000,0x41400000,0x40400000,&local_5c,
                &local_4c,&local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -9120,7 +9067,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"Haircut");
@@ -9142,7 +9088,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_3c,&local_74,0,0,0x41700000,0x43130000,0x41400000,0,&local_5c,&local_4c,
                &local_24,0,0xbf800000,1);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -9150,7 +9095,6 @@ LAB_00429aac:
   local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -9184,7 +9128,6 @@ LAB_00429aac:
   AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
   local_28 = 7;
@@ -9222,7 +9165,6 @@ LAB_00429aac:
     AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
                  puVar13,puVar9,uVar18,uVar19,uVar21);
     if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_3c);
     }
     local_28 = 7;
@@ -9230,7 +9172,6 @@ LAB_00429aac:
     local_3c = (undefined4 *)((uint)local_3c & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_74);
     }
     cVar2 = GameController_updateWidgetLayout();
@@ -9387,7 +9328,6 @@ LAB_00429aac:
     strstreambuf_init(puVar9,local_2c,local_144);
     local_8._0_1_ = 3;
     if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_3c);
     }
     wostream_insertWide(local_188,L"Hair color");
@@ -9422,7 +9362,6 @@ LAB_00429aac:
     AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,local_c0 * 0.5,uVar14,uVar15,uVar17,puVar12,puVar13,puVar9,
                  uVar18,uVar19,uVar21);
     if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_3c);
     }
     local_28 = 7;
@@ -9581,13 +9520,10 @@ LAB_00429aac:
         __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
         return;
       }
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_3c);
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_74);
 }
 
@@ -10231,7 +10167,6 @@ void buffer_freeAt0x11c(void)
   int self;
   
   if (*(void **)(self + 0x11c) != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(self + 0x11c));
   }
   return;
@@ -10423,7 +10358,6 @@ float10 get_float_field_0x1000e78(void)
  */
 /* Global::array_atChecked4 @ 0042f730 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * array_atChecked4(int index)
 
@@ -11382,7 +11316,6 @@ void cube::GameController::drawQuestHud(void)
     AdaptionWidget_draw_text_locked(apvStack_440,uVar7,0,0,0x41700000,0x42820000,0x41700000,0x40400000,&uStack_850,
                  &uStack_a60,&uStack_870,0,0xbf800000,1);
     if (7 < uStack_554) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_568[0]);
     }
     uStack_554 = 7;
@@ -11390,7 +11323,6 @@ void cube::GameController::drawQuestHud(void)
     apvStack_568[0] = (void *)((uint)apvStack_568[0] & 0xffff0000);
     uStack_c._0_1_ = 3;
     if (7 < uStack_42c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_440[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -11412,7 +11344,6 @@ void cube::GameController::drawQuestHud(void)
     AdaptionWidget_draw_text_locked(apvStack_410,uVar7,0,0,0x41700000,0x42820000,0x41700000,0,&uStack_a20,&uStack_830,
                  &uStack_a40,0,0xbf800000,1);
     if (7 < uStack_534) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_548[0]);
     }
     uStack_534 = 7;
@@ -11420,7 +11351,6 @@ void cube::GameController::drawQuestHud(void)
     apvStack_548[0] = (void *)((uint)apvStack_548[0] & 0xffff0000);
     uStack_c._0_1_ = 3;
     if (7 < uStack_3fc) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_410[0]);
     }
   }
@@ -11430,7 +11360,6 @@ void cube::GameController::drawQuestHud(void)
     wostream_insertU16string(&puStack_e60,uVar7);
     uStack_c._0_1_ = 3;
     if (7 < uStack_374) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvStack_388);
     }
     cVar1 = *pcVar18;
@@ -11478,7 +11407,6 @@ void cube::GameController::drawQuestHud(void)
     AdaptionWidget_draw_text_locked(&uStack_7c0,uVar7,0,0,fStack_eb0 * 0.5,uVar36,uVar37,uVar39,puVar41,puVar15,puVar14
                  ,uVar42,fVar3,uVar45);
     if (7 < uStack_4ec) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_500[0]);
     }
     uStack_4ec = 7;
@@ -11486,7 +11414,6 @@ void cube::GameController::drawQuestHud(void)
     apvStack_500[0] = (void *)((uint)apvStack_500[0] & 0xffff0000);
     uStack_c._0_1_ = 3;
     if (7 < uStack_7ac) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(uStack_7c0);
     }
     uStack_65c = 7;
@@ -11524,7 +11451,6 @@ void cube::GameController::drawQuestHud(void)
                  ,uVar42,fVar3,uVar45);
     fVar3 = local_ea8;
     if (7 < uStack_51c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_530[0]);
     }
     uStack_51c = 7;
@@ -11532,7 +11458,6 @@ void cube::GameController::drawQuestHud(void)
     apvStack_530[0] = (void *)((uint)apvStack_530[0] & 0xffff0000);
     uStack_c._0_1_ = 3;
     if (7 < uStack_65c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(uStack_670);
     }
     fStack_cf8 = 0.0;
@@ -11645,7 +11570,6 @@ void cube::GameController::drawQuestHud(void)
         AdaptionWidget_draw_text_locked(apvStack_778,uVar7,0,0,(float)(int)fStack_eb8,(float)(int)fStack_ea0,0x41200000
                      ,0x40000000,&uStack_aa0,&uStack_8b0,&uStack_ac0,2,0xbf800000,1);
         if (7 < uStack_56c) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(apvStack_580[0]);
         }
         uStack_56c = 7;
@@ -11653,7 +11577,6 @@ void cube::GameController::drawQuestHud(void)
         apvStack_580[0] = (void *)((uint)apvStack_580[0] & 0xffff0000);
         uStack_c._0_1_ = 0xc;
         if (7 < uStack_764) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(apvStack_778[0]);
         }
         uStack_6a4 = 7;
@@ -11674,14 +11597,12 @@ void cube::GameController::drawQuestHud(void)
         AdaptionWidget_draw_text_locked(apvStack_6b8,uVar7,0,0,(float)(int)fVar24,(float)(int)fStack_ea0,0x41200000,0,
                      &uStack_c60,&uStack_a80,&uStack_890,2,0xbf800000,1);
         if (7 < uStack_504) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(apvStack_518[0]);
         }
         uStack_504 = 7;
         uStack_508 = 0;
         apvStack_518[0] = (void *)((uint)apvStack_518[0] & 0xffff0000);
         if (7 < uStack_6a4) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(apvStack_6b8[0]);
         }
         uStack_c._0_1_ = 3;
@@ -11743,7 +11664,6 @@ void cube::GameController::drawQuestHud(void)
                      ((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
         uStack_c._0_1_ = 0x15;
         if (7 < uStack_734) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(apvStack_748[0]);
         }
         uStack_734 = 7;
@@ -11771,7 +11691,6 @@ void cube::GameController::drawQuestHud(void)
         AdaptionWidget_draw_text_locked(apvStack_658,apvStack_488,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_9c0,
                      &uStack_7e0,&uStack_7d0,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
         if (7 < uStack_644) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(apvStack_658[0]);
         }
         uStack_644 = 7;
@@ -11878,7 +11797,6 @@ void cube::GameController::drawQuestHud(void)
                  uVar7);
     uStack_c._0_1_ = 0x1e;
     if (7 < uStack_77c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_790[0]);
     }
     uStack_77c = 7;
@@ -11906,7 +11824,6 @@ void cube::GameController::drawQuestHud(void)
     AdaptionWidget_draw_text_locked(apvStack_760,apvStack_470,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_9b0,
                  &uStack_9d0,&uStack_9f0,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
     if (7 < uStack_74c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_760[0]);
     }
     uStack_74c = 7;
@@ -12007,7 +11924,6 @@ void cube::GameController::drawQuestHud(void)
                  uVar7);
     uStack_c._0_1_ = 0x21;
     if (7 < uStack_71c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_730[0]);
     }
     uStack_71c = 7;
@@ -12035,7 +11951,6 @@ void cube::GameController::drawQuestHud(void)
     AdaptionWidget_draw_text_locked(apvStack_700,apvStack_4b8,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_8f0,
                  &uStack_910,&uStack_930,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
     if (7 < uStack_6ec) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_700[0]);
     }
     uStack_6ec = 7;
@@ -12136,7 +12051,6 @@ void cube::GameController::drawQuestHud(void)
                  uVar7);
     uStack_c._0_1_ = 0x18;
     if (7 < uStack_704) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_718[0]);
     }
     uStack_704 = 7;
@@ -12164,7 +12078,6 @@ void cube::GameController::drawQuestHud(void)
     AdaptionWidget_draw_text_locked(apvStack_688,apvStack_4d0,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_960,
                  &uStack_8a0,&uStack_980,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
     if (7 < uStack_674) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_688[0]);
     }
     uStack_674 = 7;
@@ -12265,7 +12178,6 @@ void cube::GameController::drawQuestHud(void)
                  uVar7);
     uStack_c._0_1_ = 0x1b;
     if (7 < uStack_6d4) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_6e8[0]);
     }
     uStack_6d4 = 7;
@@ -12293,7 +12205,6 @@ void cube::GameController::drawQuestHud(void)
     AdaptionWidget_draw_text_locked(apvStack_7a8,apvStack_4a0,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_900,
                  &uStack_820,&uStack_920,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
     if (7 < uStack_794) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_7a8[0]);
     }
     uStack_794 = 7;
@@ -12394,7 +12305,6 @@ void cube::GameController::drawQuestHud(void)
                  uVar7);
     uStack_c._0_1_ = 0x24;
     if (7 < uStack_6bc) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_6d0[0]);
     }
     uStack_6bc = 7;
@@ -12422,7 +12332,6 @@ void cube::GameController::drawQuestHud(void)
     AdaptionWidget_draw_text_locked(apvStack_6a0,apvStack_4e8,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_b30,
                  &uStack_b50,&uStack_a90,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
     if (7 < uStack_68c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_6a0[0]);
     }
     uStack_68c = 7;
@@ -12671,7 +12580,6 @@ void cube::GameController::drawQuestHud(void)
   }
   if (7 < uStack_4d4) {
     uStack_c._0_1_ = 3;
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_4e8[0]);
   }
   uStack_c._0_1_ = 3;
@@ -13150,7 +13058,6 @@ void list_allocNode32(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -13193,7 +13100,6 @@ void textInput_insertChar(undefined4 ch)
     wstring_replace(*(undefined4 *)(self + 0x188),strBuf,0,0xffffffff);
     *(int *)(self + 0x188) = *(int *)(self + 0x188) + 1;
     if (7 < strCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf[0]);
     }
   }
@@ -13469,7 +13375,6 @@ LAB_0043a5a1:
           local_8._0_1_ = 0;
           textLen = textLenSave;
           if (7 < strCap) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(strBuf[0]);
           }
         }
@@ -13485,7 +13390,6 @@ LAB_0043a5a1:
           local_8._0_1_ = 0;
           textLen = textLenSave;
           if (7 < strCap) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(strBuf[0]);
           }
         }
@@ -13525,7 +13429,6 @@ LAB_0043a5a1:
       **(int **)(iVar9 + 4) = iVar9;
       local_8 = (uint)local_8._1_3_ << 8;
       listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
       operator_delete(newNode);
     }
     goto LAB_0043a6e7;
@@ -13565,7 +13468,6 @@ LAB_0043a808:
     if (puVar6 == wordList) {
       *(undefined1 *)(local_74 + 0x134) = 1;
       listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
       operator_delete(wordList);
     }
     Font_measureTextScaled(puVar6 + 2,*(int *)(iVar9 + 0x148) + 0x48,0x41200000,0x40000000,0,0,0,bounds0,
@@ -13593,7 +13495,6 @@ LAB_0043a808:
           **(int **)(node + 4) = node;
           local_8 = (uint)local_8._1_3_ << 8;
           listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_1c);
         }
         goto LAB_0043a6e7;
@@ -13612,7 +13513,6 @@ LAB_0043a808:
     local_40 = *color;
     local_3e = *(undefined1 *)(color + 1);
     if (7 < strCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(strBuf[0]);
     }
     strCap = 7;
@@ -13630,7 +13530,6 @@ LAB_0043a808:
     local_8._0_1_ = 0;
     **(int **)(iVar9 + 4) = iVar9;
     if (7 < local_44) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_58[0]);
     }
     puVar6 = (undefined4 *)*puVar6;
@@ -13648,11 +13547,9 @@ LAB_0043a808:
     **(int **)(node + 4) = node;
     local_8 = (uint)local_8._1_3_ << 8;
     listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_24);
   }
 LAB_0043a6e7:
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -13900,7 +13797,6 @@ void container_destroy(void)
   undefined1 tmp [4];
   
   std_Tree_eraseRange(tmp,*(undefined4 *)*self,(undefined4 *)*self);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)*self);
 }
 
@@ -15490,7 +15386,6 @@ void list_pushBack(undefined4 value)
   head = *self;
   node = map_insertVal_5x64payload(head,*(undefined4 *)(head + 4),value);
   if (self[1] == 0x5555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   self[1] = self[1] + 1;
@@ -15582,7 +15477,6 @@ void statusList_upsert(char *status)
     **(int **)(newNode + 4) = newNode;
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -15632,7 +15526,6 @@ void Player_resetCombatState(void)
   *(int *)(*(int *)(self + 0x1470) + 4) = *(int *)(self + 0x1470);
   *(undefined4 *)(self + 0x1474) = 0;
   if (node != *(void **)(self + 0x1470)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(node);
   }
   *(undefined4 *)(self + 0x141c) = 0xffffffff;
@@ -17097,7 +16990,6 @@ void allocNode_0x120(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -17550,7 +17442,6 @@ void GameWorld_serialize_state(int param_1)
       puVar6[2] = *(undefined8 *)(piVar11 + 0x10);
       piVar7[3] = piVar7[3] + 0x18;
       if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c[0]);
       }
       if (*(char *)((int)piVar11 + 0xd) == '\0') {
@@ -17614,7 +17505,6 @@ void GameWorld_serialize_state(int param_1)
   memcpy((void *)(piVar11[3] + *piVar11),(void *)(param_1 + 0x1138),0x2c);
   piVar11[3] = piVar11[3] + 0x2c;
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   ExceptionList = local_10;
@@ -18068,7 +17958,6 @@ void dtor_freePtrRange_0x128(undefined4 *first,undefined4 *last)
     item = first + 0x47;
     do {
       if ((void *)*item != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*item);
       }
       puVar1 = item + 3;
@@ -18167,20 +18056,17 @@ undefined4 GameController_popbackAndFormat(undefined4 param_1,void *str)
   if (*(int *)(self + 0x2c) != *(int *)(self + 0x30)) {
     node = *(void **)(*(int *)(self + 0x30) + -0xc);
     if (node != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(node);
     }
     *(int *)(self + 0x30) = *(int *)(self + 0x30) + -0xc;
   }
   if (0xf < in_stack_0000001c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(str);
   }
   in_stack_0000001c = 0xf;
   in_stack_00000018 = 0;
   str = (void *)((uint)str & 0xffffff00);
   if (0xf < in_stack_00000034) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_stack_00000020);
   }
   ExceptionList = local_10;
@@ -18226,14 +18112,12 @@ void GameController_writeTwoStrings(undefined4 param_1,void *param_2)
     dispatch_callbackChain(handle);
   }
   if (0xf < in_stack_0000001c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_2);
   }
   in_stack_0000001c = 0xf;
   in_stack_00000018 = 0;
   param_2 = (void *)((uint)param_2 & 0xffffff00);
   if (0xf < in_stack_00000034) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_stack_00000020);
   }
   ExceptionList = local_10;
@@ -18267,7 +18151,6 @@ void plasma::Widget::MemberFunctionConnection<cube::GameController>::ctor_0
   ExceptionList = &local_10;
   slotPtr = (undefined4 *)rbtree_findOrInsert_intKey(&param_1);
   if ((void *)*slotPtr != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*slotPtr);
   }
   connection = operator_new(0x10);
@@ -18301,10 +18184,8 @@ void plasma::Widget::MemberFunctionConnection<cube::GameController>::ctor_0
   listHead[1] = (int)listHead;
   local_18 = 0;
   if (node == listHead) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(listHead);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(node);
 }
 
@@ -18334,7 +18215,6 @@ void GameController_collectTextShapes(int *pTextShape)
       pListHead = *pList;
       pNewNode = IntMap_SetScalar(pListHead,*(undefined4 *)(pListHead + 4),&pTextShape);
       if (pList[1] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       pList[1] = pList[1] + 1;
@@ -18412,11 +18292,9 @@ void stream_writeString(undefined4 *param_1)
   memcpy(dstBuf,_Src,_Size);
   vectorPOD_insertAt(&dstBuf);
   if (dstBuf != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(dstBuf);
   }
   if (0xf < srcCapacity) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(param_1);
   }
   ExceptionList = savedExcList;
@@ -18625,9 +18503,6 @@ void Struct_reset_4Dwords(void)
  */
 /* cube::GameController::ctor_0 @ 00459c40 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
-/* WARNING: Removing unreachable block (ram,0x0045ad26) */
-/* WARNING: Removing unreachable block (ram,0x0045ad59) */
 
 void cube::GameController::ctor_0
                (undefined4 param_1,undefined4 param_2,undefined4 param_3,undefined4 param_4,
@@ -19550,7 +19425,6 @@ void cube::GameController::ctor_0
   GameController_load_game_assets();
   local_8._0_1_ = 0x2f;
   if (0xf < local_724c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_7260[0]);
   }
   local_724c = 0xf;
@@ -19571,7 +19445,6 @@ void cube::GameController::ctor_0
   in_ECX[0x200221] = uVar2;
   local_8._0_1_ = 0x32;
   if (7 < local_7204) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_7218);
   }
   local_7204 = 7;
@@ -19585,7 +19458,6 @@ void cube::GameController::ctor_0
   in_ECX[0x200220] = uVar2;
   local_8._0_1_ = 0x32;
   if (7 < local_72f4) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_7308);
   }
   local_72f4 = 7;
@@ -19602,7 +19474,6 @@ void cube::GameController::ctor_0
   in_ECX[0x200224] = uVar2;
   local_8._0_1_ = 0x32;
   if (7 < local_727c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_7290);
   }
   local_727c = 7;
@@ -19619,7 +19490,6 @@ void cube::GameController::ctor_0
   in_ECX[0x200222] = uVar2;
   local_8._0_1_ = 0x32;
   if (7 < local_7234) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_7248);
   }
   local_7234 = 7;
@@ -19636,7 +19506,6 @@ void cube::GameController::ctor_0
   in_ECX[0x200225] = uVar2;
   local_8._0_1_ = 0x32;
   if (7 < local_7264) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_7278);
   }
   local_7264 = 7;
@@ -19653,7 +19522,6 @@ void cube::GameController::ctor_0
   in_ECX[0x200223] = uVar2;
   local_8._0_1_ = 0x32;
   if (7 < local_72c4) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_72d8);
   }
   local_72c4 = 7;
@@ -19670,7 +19538,6 @@ void cube::GameController::ctor_0
   in_ECX[0x20021d] = uVar2;
   local_8._0_1_ = 0x32;
   if (7 < local_72ac) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_72c0);
   }
   local_72ac = 7;
@@ -19692,7 +19559,6 @@ void cube::GameController::ctor_0
   in_ECX[0x2001d4] = uVar2;
   local_8._0_1_ = 0x32;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c);
   }
   local_58 = 7;
@@ -19706,7 +19572,6 @@ void cube::GameController::ctor_0
   in_ECX[0x2001d5] = uVar2;
   local_8._0_1_ = 0x32;
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84);
   }
   local_70 = 7;
@@ -19730,7 +19595,6 @@ void cube::GameController::ctor_0
     local_8 = CONCAT31(local_8._1_3_,0x31);
     list_dtor_freeHeadAt51a0();
     if (0xf < local_160) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_174);
     }
   }
@@ -19756,7 +19620,6 @@ void cube::GameController::ctor_0
     string_assignCStr();
     local_6fc0 = (undefined1 *)&ppuStack_7c00;
     local_8._0_1_ = 0x3e;
-                    /* WARNING: Ignoring partial resolution of indirect */
     ppuStack_7c00._0_1_ = 0;
     string_assignSubstr();
     local_8._0_1_ = 0x3f;
@@ -19766,7 +19629,6 @@ void cube::GameController::ctor_0
     *(bool *)(in_ECX + 0x68) = iVar5 == 0;
     local_8._0_1_ = 0x3d;
     if (0xf < local_b8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_cc[0]);
     }
     local_b8 = 0xf;
@@ -19778,7 +19640,6 @@ void cube::GameController::ctor_0
     local_8._0_1_ = 0x41;
     piVar4 = (int *)TextShape_new_instance();
     if (7 < local_88) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_9c);
     }
     local_88 = 7;
@@ -19786,7 +19647,6 @@ void cube::GameController::ctor_0
     local_9c = (void *)((uint)local_9c & 0xffff0000);
     local_8._0_1_ = 0x3d;
     if (7 < local_72dc) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_72f0);
     }
     local_72dc = 7;
@@ -19824,7 +19684,6 @@ void cube::GameController::ctor_0
     in_ECX[0x200216] = uVar2;
     local_8._0_1_ = 0x3d;
     if (7 < local_a0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_b4);
     }
     local_a0 = 7;
@@ -19846,7 +19705,6 @@ void cube::GameController::ctor_0
     uVar2 = TextShape_new_instance();
     in_ECX[0x200217] = uVar2;
     if (7 < local_d0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_e4);
     }
     local_d0 = 7;
@@ -19854,7 +19712,6 @@ void cube::GameController::ctor_0
     local_e4 = (void *)((uint)local_e4 & 0xffff0000);
     local_8._0_1_ = 0x3d;
     if (7 < local_721c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_7230);
     }
     local_721c = 7;
@@ -19883,7 +19740,6 @@ void cube::GameController::ctor_0
     NamedObject_create_with_defaults();
     local_8._0_1_ = 0x3d;
     if (7 < local_100) {
-                    /* WARNING: Subroutine does not return */
       ppvStack_7bfc = (void **)&UNK_0045b1cd;
       operator_delete(local_114);
     }
@@ -19901,7 +19757,6 @@ void cube::GameController::ctor_0
     piVar4 = (int *)TextShape_new_instance();
     local_6fbc = piVar4;
     if (7 < local_e8) {
-                    /* WARNING: Subroutine does not return */
       ppvStack_7bfc = (void **)&UNK_0045b24a;
       operator_delete(local_fc[0]);
     }
@@ -19910,7 +19765,6 @@ void cube::GameController::ctor_0
     local_fc[0] = (void *)((uint)local_fc[0] & 0xffff0000);
     local_8._0_1_ = 0x3d;
     if (7 < local_7294) {
-                    /* WARNING: Subroutine does not return */
       ppvStack_7bfc = (void **)&UNK_0045b282;
       operator_delete(local_72a8);
     }
@@ -24554,13 +24408,10 @@ LAB_00466f64:
     *(undefined4 *)(pThis[0x40039a] + 4) = pThis[0x40039a];
     pThis[0x40039b] = 0;
     if (pFirst == (void *)pThis[0x40039a]) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)pThis[0x40039a]);
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(pFirst);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)pThis[0x4003e6]);
 }
 
@@ -24580,7 +24431,6 @@ void tree_dtor_free_unwind_467af0(void)
   undefined1 local_8 [4];
   
   Zone_rbtree_eraseRange(local_8,**(undefined4 **)(in_ECX + 8),*(undefined4 **)(in_ECX + 8));
-                    /* WARNING: Subroutine does not return */
   operator_delete(*(void **)(in_ECX + 8));
 }
 
@@ -25148,9 +24998,6 @@ undefined8 * int64_divScalar_double(undefined8 *pResult,int divisor)
  * Net loop gated on GC+0x800585: Ordinal_16(recv) 4B headers from socket (GC)+0x8006cc; msgtype==2 sets ping _DAT_0076b048 under lock; inflate, operator_new(0x1e60)+cube::Creature::ctor_0 into rbtree, EntityState_deserializeFromBuffer, writes pos/vel entity+0x1350, skips local player GC+0x8006d0.
  * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Exceeded maximum restarts with more pending */
 
 void cube::GameController::networkReceiveThread(void)
 
@@ -25232,7 +25079,6 @@ void cube::GameController::networkReceiveThread(void)
       }
       switch(local_1224[0]) {
       case 0x46baad:
-                    /* WARNING: This code block may not be properly labeled as switch case */
         iStack_1244 = 0;
         iStack_1240 = 0;
         uStack_123c = 0;
@@ -25342,7 +25188,6 @@ LAB_0046d0f2:
   timeEndPeriod(1);
   local_8 = local_8 & 0xffffff00;
   std_Tree_eraseRange(local_131c,*local_11f8,local_11f8);
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_11f8);
 }
 
@@ -25378,7 +25223,6 @@ void cube::GameController::vfunc_0(byte flags)
   
   ctor_1();
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pThis);
   }
   return;
@@ -25400,9 +25244,6 @@ void std_Tree_Buyheadnode(void)
   
   pvVar1 = operator_new(0x1180);
   if (pvVar1 == (void *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x0046d4f1. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
   }
@@ -25636,7 +25477,6 @@ void GameController_reloadServerList(undefined4 timeVal,int pStr)
   *(undefined4 *)(count + 0x24) = *pTmp;
   if (pList != pTmp + 1) {
     if (0xf < *(uint *)(count + 0x3c)) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*pList);
     }
     *(undefined4 *)(count + 0x3c) = 0xf;
@@ -25646,7 +25486,6 @@ void GameController_reloadServerList(undefined4 timeVal,int pStr)
   }
   ehState = 0xffffffff;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c);
   }
   *(undefined4 *)(pThis + 0x800a50) = timeVal;
@@ -25663,7 +25502,6 @@ void GameController_reloadServerList(undefined4 timeVal,int pStr)
       if (pNode[6] != *(int *)(pThis + 0x8006d0)) {
         iVar6 = IntMap_SetScalar(pList,pList[1],&pNodeIt);
         if (count == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         pList[1] = iVar6;
@@ -25708,10 +25546,8 @@ void GameController_reloadServerList(undefined4 timeVal,int pStr)
   *pList = pList;
   pList[1] = pList;
   if (pTmp == pList) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pList);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(pTmp);
 }
 
@@ -25723,7 +25559,6 @@ void GameController_reloadServerList(undefined4 timeVal,int pStr)
  * WS2 socket(Ord23) stored GC+0x8006cc; htons(0x3039) connect(Ord4); send(Ord19) handshake 0x11; recv(Ord16) version-check; owns strings 'could not connect to server.'/'different version'; caller=handleKeyPress 47e1b0.
  * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void cube::GameController::connectToServer
                (undefined4 *param_1)
@@ -25889,7 +25724,6 @@ void cube::GameController::connectToServer
     local_8 = CONCAT31(local_8._1_3_,4);
     Node_select_glyph_by_name(uVar3);
     if (7 < local_d4) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_e8[0]);
     }
     Ordinal_3(*(undefined4 *)(in_ECX + 0x8006cc));
@@ -25906,7 +25740,6 @@ void cube::GameController::connectToServer
     local_8 = 5;
     Node_select_glyph_by_name(local_88);
     if (7 < local_74) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_88[0]);
     }
   }
@@ -26337,7 +26170,6 @@ void GameController_onItemPickup(void)
     text_drawColoredString(colorBuf,&local_24);
     ehState = 0xffffffff;
     if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(colorBuf[0]);
     }
     playHitSoundAtPos(0x31,*(int *)(pThis + 0x8006d0) + 0x10,0x3f800000,0x3f800000);
@@ -26774,7 +26606,6 @@ void voxelRaycast_modelPick(int pModel,float *pMatrix)
                     local_110 = local_134[3];
                     dimY = map_insertVal_00465ce0(dimX,*(undefined4 *)(dimX + 4),&local_13c);
                     if (*(int *)(pThis + 0x800744) == 0x1555554) {
-                    /* WARNING: Subroutine does not return */
                       std::_Xlength_error("list<T> too long");
                     }
                     *(int *)(pThis + 0x800744) = *(int *)(pThis + 0x800744) + 1;
@@ -26916,7 +26747,6 @@ void GameController_disconnect(void)
     text_drawColoredString(msgColorBuf,&local_24);
     ehState = 0xffffffff;
     if (7 < colorCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(msgColorBuf[0]);
     }
     colorCap = 7;
@@ -27484,7 +27314,6 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
           local_1c = (((float)iVar5 * 0.005) / 32767.0 + 0.05) * param_11;
           iVar5 = map_insertVal_00465ce0(local_508,*(undefined4 *)((int)local_508 + 4),local_c8);
           if (*(int *)(pThis + 0x800744) == 0x1555554) {
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           *(int *)(pThis + 0x800744) = *(int *)(pThis + 0x800744) + 1;
@@ -28243,7 +28072,6 @@ void GameController_start_game_mode(void)
   local_8 = 0xffffffff;
   if (local_144 != (void *)0x0) {
     std_vector_destroy_ptr_elems_stride3(local_144,local_140,local_f7d,local_f81);
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_144);
   }
   std_vector_resize_12(4);
@@ -28361,7 +28189,6 @@ switchD_0047742e_default:
     __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(pvVar3);
 }
 
@@ -29159,7 +28986,6 @@ LAB_0047ba9e:
               text_drawColoredString(local_3c,&local_164);
               ehState = 0xffffffff;
               if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
                 operator_delete(local_3c[0]);
               }
               local_3c[0] = (void *)((uint)local_3c[0] & 0xffff0000);
@@ -29207,7 +29033,6 @@ LAB_0047ba9e:
           state = pThis[0x20034f];
           iVar6 = map_insertVal_1val(state,*(undefined4 *)(state + 4),&local_298);
           if (pThis[0x200350] == 0xe07037) {
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           pThis[0x200350] = pThis[0x200350] + 1;
@@ -29217,7 +29042,6 @@ LAB_0047ba9e:
              (piVar10 = *(int **)pThis[0x20034f], piVar10 != (int *)pThis[0x20034f])) {
             *(int *)piVar10[1] = *piVar10;
             *(int *)(*piVar10 + 4) = piVar10[1];
-                    /* WARNING: Subroutine does not return */
             operator_delete(piVar10);
           }
           GameController_rebuildCraftState();
@@ -29502,7 +29326,6 @@ LAB_0047d7c6:
           state = pThis[0x20034f];
           iVar6 = map_insertVal_1val(state,*(undefined4 *)(state + 4),&local_298);
           if (pThis[0x200350] == 0xe07037) {
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           pThis[0x200350] = pThis[0x200350] + 1;
@@ -29512,7 +29335,6 @@ LAB_0047d7c6:
              (piVar10 = *(int **)pThis[0x20034f], piVar10 != (int *)pThis[0x20034f])) {
             *(int *)piVar10[1] = *piVar10;
             *(int *)(*piVar10 + 4) = piVar10[1];
-                    /* WARNING: Subroutine does not return */
             operator_delete(piVar10);
           }
           GameController_rebuildCraftState();
@@ -29579,7 +29401,6 @@ LAB_0047bc99:
     }
     ehState = 0xffffffff;
     if (local_188 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_188);
     }
   }
@@ -30013,7 +29834,6 @@ LAB_0047daa0:
       text_drawColoredString(local_17c,&local_24);
       ehState = 0xffffffff;
       if (7 < local_168) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_17c[0]);
       }
       playHitSoundAtPos(0x31,pThis[0x2001b4] + 0x10,0x3f800000,0x3f800000);
@@ -30027,7 +29847,6 @@ LAB_0047dbe1:
   if ((*piVar10 == 0) && (piVar13 != (int *)pThis[0x20034f])) {
     *(int *)piVar13[1] = *piVar13;
     *(int *)(*piVar13 + 4) = piVar13[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar13);
   }
   playHitSoundAtPos(0x39,pThis[0x2001b4] + 0x10,0x3f800000,0x3f800000);
@@ -30167,7 +29986,6 @@ LAB_0047e00e:
       DVar4 = timeGetTime();
       GameController_reloadServerList(DVar4,ppvVar6);
       if (0xf < local_38) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_4c[0]);
       }
       pThis[0x6f] = 0;
@@ -30192,7 +30010,6 @@ LAB_0047e00e:
  * Reads 5 GC widget nodes +0x800880..894 + tooltip/text-input guard (+0x800a14); calls cube::Controller::vfunc_2(key); switch Tab/Esc/B/I/C/F/G toggles GC widgets + local Creature +0x8006d0; also calls connectToServer 46fc50.
  * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void cube::GameController::handleKeyPress
                (uint param_1)
@@ -30534,7 +30351,6 @@ void cube::GameController::vfunc_3(undefined4 param_1)
 
 /* cube::GameController::vfunc_6 @ 0047ea00 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void cube::GameController::vfunc_6(float dx,float dy)
 
@@ -30798,7 +30614,6 @@ uint getter_flagBit0_f4(void)
  */
 /* Global::testAABBvsFrustum_fixed @ 0047f3c0 */
 
-/* WARNING: Removing unreachable block (ram,0x0047f534) */
 
 void testAABBvsFrustum_fixed(uint *pPosA,uint *pPosB)
 
@@ -30899,7 +30714,6 @@ void testAABBvsFrustum_fixed(uint *pPosA,uint *pPosB)
  */
 /* Global::testSphereVsFrustum_fixed @ 0047f760 */
 
-/* WARNING: Removing unreachable block (ram,0x0047f81d) */
 
 void testSphereVsFrustum_fixed(uint *pPos,float bias,float radius)
 
@@ -31125,7 +30939,6 @@ void spawnItemAffixDrops(uint type)
       pList = *(int *)(mod5 + 0x14);
       pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
       if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31141,7 +30954,6 @@ void spawnItemAffixDrops(uint type)
       pList = *(int *)(mod5 + 0x14);
       pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
       if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31158,7 +30970,6 @@ void spawnItemAffixDrops(uint type)
       pNode = *(int *)(pList + 0x14);
       pNewNode = list_makeNodeWrapper(pNode,*(undefined4 *)(pNode + 4),&eventRec);
       if (*(int *)(pList + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(pList + 0x18) = *(int *)(pList + 0x18) + 1;
@@ -31172,7 +30983,6 @@ void spawnItemAffixDrops(uint type)
       pNode = *(int *)(pList + 0x14);
       pNewNode = list_makeNodeWrapper(pNode,*(undefined4 *)(pNode + 4),&eventRec);
       if (*(int *)(pList + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(pList + 0x18) = *(int *)(pList + 0x18) + 1;
@@ -31188,7 +30998,6 @@ void spawnItemAffixDrops(uint type)
       pNode = *(int *)(pList + 0x14);
       pNewNode = list_makeNodeWrapper(pNode,*(undefined4 *)(pNode + 4),&eventRec);
       if (*(int *)(pList + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(pList + 0x18) = *(int *)(pList + 0x18) + 1;
@@ -31204,7 +31013,6 @@ void spawnItemAffixDrops(uint type)
       pNode = *(int *)(pList + 0x14);
       pNewNode = list_makeNodeWrapper(pNode,*(undefined4 *)(pNode + 4),&eventRec);
       if (*(int *)(pList + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(pList + 0x18) = *(int *)(pList + 0x18) + 1;
@@ -31220,7 +31028,6 @@ void spawnItemAffixDrops(uint type)
       pList = *(int *)(mod5 + 0x14);
       pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
       if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31237,7 +31044,6 @@ void spawnItemAffixDrops(uint type)
       pList = *(int *)(mod5 + 0x14);
       pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
       if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31251,7 +31057,6 @@ void spawnItemAffixDrops(uint type)
       pList = *(int *)(mod5 + 0x14);
       pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
       if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31303,7 +31108,6 @@ void spawnItemAffixDrops(uint type)
       pList = *(int *)(mod5 + 0x14);
       pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
       if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31319,7 +31123,6 @@ void spawnItemAffixDrops(uint type)
       pList = *(int *)(mod5 + 0x14);
       pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
       if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31335,7 +31138,6 @@ void spawnItemAffixDrops(uint type)
       pList = *(int *)(mod5 + 0x14);
       pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
       if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31351,7 +31153,6 @@ void spawnItemAffixDrops(uint type)
       pList = *(int *)(mod5 + 0x14);
       pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
       if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31395,7 +31196,6 @@ void spawnItemAffixDrops(uint type)
     pList = *(int *)(mod5 + 0x14);
     pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
     if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31476,7 +31276,6 @@ void spawnItemAffixDrops(uint type)
     pList = *(int *)(mod5 + 0x14);
     pNode = list_makeNodeWrapper(pList,*(undefined4 *)(pList + 4),&eventRec);
     if (*(int *)(mod5 + 0x18) == 0xe38e37) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(mod5 + 0x18) = *(int *)(mod5 + 0x18) + 1;
@@ -31574,7 +31373,6 @@ void cube::GameController::loadStructureBlob
   local_39 = cVar3 == '\0';
   local_8 = CONCAT31(local_8._1_3_,4);
   if (0xf < local_24) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_38[0]);
   }
   if (!(bool)local_39) {
@@ -31674,7 +31472,6 @@ void cube::GameController::loadStructureBlob
     __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_4c);
 }
 
@@ -31759,7 +31556,6 @@ int getPtr_off94(void)
  */
 /* Global::lookupNestedStringMap @ 00480e00 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined2 * lookupNestedStringMap(undefined2 *pOut,int pKey,void *pKey2)
 
@@ -31840,7 +31636,6 @@ LAB_00480f7d:
     ExceptionList = savedExcList;
     return pOut;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(pKey2);
 }
 
@@ -31908,14 +31703,12 @@ void cube::GameController::enterEditMode(void)
   local_8._0_1_ = 1;
   std_string_assignFromString(local_44,uVar5,uVar4);
   if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_5c[0]);
   }
   local_48 = 7;
   local_4c = 0;
   local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   ppppcVar8 = local_44;
@@ -31947,7 +31740,6 @@ void cube::GameController::enterEditMode(void)
   db_storeBlobVec(local_2c,&local_6c);
   local_8._0_1_ = 5;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   *(int *)(in_ECX + 0x800a0c) = iVar10;
@@ -32006,11 +31798,9 @@ void cube::GameController::enterEditMode(void)
   std_vector_push_back_4byte(&local_78);
   GameController_buildCharacterList();
   if (local_6c != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c);
   }
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   ExceptionList = local_10;
@@ -32097,7 +31887,6 @@ void cube::GameController::loadWorldList(void)
   db_storeBlobVec(local_2c,&local_8c);
   local_8._0_1_ = 0;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_30 = 7;
@@ -32108,7 +31897,6 @@ void cube::GameController::loadWorldList(void)
   Node_find_child_name_by_string(local_74,&local_44,1);
   local_8._0_1_ = 4;
   if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44);
   }
   local_30 = 7;
@@ -32122,7 +31910,6 @@ void cube::GameController::loadWorldList(void)
   Node_find_child_name_by_string(local_5c,local_2c,1);
   local_8._0_1_ = 7;
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_18 = 7;
@@ -32185,7 +31972,6 @@ void cube::GameController::loadWorldList(void)
   puVar5 = puVar2 + 2;
   if (puVar5 != local_78) {
     if (0xf < (uint)puVar2[7]) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar5);
     }
     puVar2[7] = 0xf;
@@ -32194,7 +31980,6 @@ void cube::GameController::loadWorldList(void)
     string_move(local_78);
   }
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44);
   }
   std_vector_push_back_4byte(&local_7c);
@@ -32205,21 +31990,18 @@ void cube::GameController::loadWorldList(void)
   GameController_reloadServerList(*(undefined4 *)(iVar4 + 0x20),iVar4 + 8);
   GameController_buildWorldList();
   if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_5c[0]);
   }
   local_48 = 7;
   local_4c = 0;
   local_5c[0] = (undefined4 ***)((uint)local_5c[0] & 0xffff0000);
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74[0]);
   }
   local_74[0] = (void *)((uint)local_74[0] & 0xffff0000);
   local_60 = 7;
   local_64 = 0;
   if (local_8c != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_8c);
   }
   ExceptionList = local_10;
@@ -33446,7 +33228,6 @@ switchD_0048460d_default:
   (**(code **)(**(int **)((int)pThis + 0x800714) + 0x18))
             (uVar3,(float)*(int *)((int)pThis + 0x184) * pThisF * 0.01,fVar6,param_4,0);
   if (0xf < local_9ec) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_a00[0]);
   }
 LAB_00485e69:
@@ -33474,7 +33255,6 @@ void std_list_push_back_4861f0(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = std_map_insert_val_wstr(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x6666665) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -33502,7 +33282,6 @@ void std_list_push_back_4865b0(undefined4 param_1)
   iVar1 = *in_ECX;
   iVar2 = map_insertVal_strKey(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (in_ECX[1] == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   in_ECX[1] = in_ECX[1] + 1;
@@ -33561,7 +33340,6 @@ void GameController_saveKeyedString(undefined4 pKey,int hasData)
       ehState = CONCAT31(ehState._1_3_,1);
       Texture_load_from_memory_freeimage(pStream,pData,(int)pBufEnd - (int)pBufBegin);
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(strBuf[0]);
       }
       strBuf[0] = (void *)((uint)strBuf[0] & 0xffff0000);
@@ -33573,7 +33351,6 @@ void GameController_saveKeyedString(undefined4 pKey,int hasData)
     }
     ehState = 0xffffffff;
     if (pBufBegin != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pBufBegin);
     }
   }
@@ -33589,7 +33366,6 @@ LAB_00486b3e:
     return;
   }
 LAB_00486b36:
-                    /* WARNING: Subroutine does not return */
   operator_delete(pData);
 }
 
@@ -33671,7 +33447,6 @@ void cube::GameController::saveEntityBlob
     puVar2[4] = *(undefined4 *)(param_2 + 0x20);
     puVar2[5] = *(undefined4 *)(param_2 + 0x24);
     if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
   }
@@ -33739,7 +33514,6 @@ void cube::GameController::saveEntityBlob
   local_8 = CONCAT31(local_8._1_3_,8);
   db_storeBlobVec(uVar1,&local_4c);
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)(local_3c + 0x8005b8));
@@ -33755,7 +33529,6 @@ void cube::GameController::saveEntityBlob
   std::basic_ios<char,std::char_traits<char>_>::~basic_ios<char,std::char_traits<char>_>
             ((basic_ios<char,std::char_traits<char>_> *)local_9c);
   if (local_4c != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   ExceptionList = local_10;
@@ -33916,12 +33689,10 @@ void cube::GameController::saveStructureBlob
     memcpy((void *)((int)local_3c + local_30),local_50,_Size);
     local_30 = local_30 + _Size;
     if (local_50 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_50);
     }
     local_8 = CONCAT31(local_8._1_3_,1);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
   }
@@ -33969,10 +33740,8 @@ void cube::GameController::saveStructureBlob
       __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
       return;
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_2c[0]);
 }
 
@@ -34135,7 +33904,6 @@ void GameController_emitFormattedString(undefined4 pOut,undefined4 *pStr,undefin
     __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(buf[0]);
 }
 
@@ -34252,7 +34020,6 @@ LAB_004880ca:
           *(undefined4 *)(pEntity + 0x17c) = *(undefined4 *)(pEntity + 0x178);
           *(undefined4 *)(pEntity + 0x184) = 0;
           listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
           operator_delete(pTextObj);
         }
       }
@@ -34433,12 +34200,10 @@ LAB_0048852c:
           ehState._0_1_ = 4;
           GameController_build_quest_text(&local_38,&local_60,&local_4c);
           if (7 < local_24) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_38);
           }
           ehState = CONCAT31(ehState._1_3_,1);
           Zone_rbtree_eraseRange(&pResult,*local_58,local_58);
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_58);
         }
         cube::GameController::generateQuestText
@@ -34484,7 +34249,6 @@ LAB_0048852c:
           for (puVar12 = *(undefined4 **)(pTarget + 0x178); puVar12 != puVar2; puVar12 = puVar12 + 6)
           {
             if (7 < (uint)puVar12[5]) {
-                    /* WARNING: Subroutine does not return */
               operator_delete((void *)*puVar12);
             }
             puVar12[5] = 7;
@@ -34498,10 +34262,8 @@ LAB_0048852c:
         if (local_4c != (undefined4 *)0x0) {
           if (local_4c != local_48) {
             listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*puVar2);
           }
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_4c);
         }
       }
@@ -34790,9 +34552,6 @@ void mat3_transformVector(float *pResult,float *pVec)
  */
 /* cube::GameController::vfunc_10 @ 00488ee0 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
-/* WARNING: Type propagation algorithm not settling */
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void cube::GameController::vfunc_10(int *param_1)
 
@@ -35275,7 +35034,6 @@ LAB_00489274:
     Node_find_child_name_by_string();
     local_c._0_1_ = 2;
     if (7 < local_3244) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_3258);
     }
     local_3244 = 7;
@@ -35304,7 +35062,6 @@ LAB_00489274:
         iVar10 = u16string_compare();
         uStack_4724 = (int *)CONCAT13(iVar10 == 0,(undefined3)uStack_4724);
         if (7 < local_31e4) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_31f8);
         }
         local_31e4 = 7;
@@ -35312,7 +35069,6 @@ LAB_00489274:
         local_31f8 = (void *)((uint)local_31f8 & 0xffff0000);
         local_c._0_1_ = 2;
         if (0xf < local_325c) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_3270);
         }
         local_325c = 0xf;
@@ -35326,7 +35082,6 @@ LAB_00489274:
           local_c = CONCAT31(local_c._1_3_,5);
           Node_select_glyph_by_name();
           if (7 < local_3274) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_3288);
           }
           local_3274 = 7;
@@ -35348,7 +35103,6 @@ LAB_0048993c:
     *(uint *)(*(int *)(*(int *)(local_4764[0x20025c] + 0x3c) + 0x94) +
              *(int *)(*(int *)(local_4764[0x20025c] + 0x3c) + 0x68) * 4) = (uint)bVar3;
     if (7 < local_339c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_33b0[0]);
     }
     local_339c = 7;
@@ -42077,7 +41831,6 @@ void GameController_buildCharacterList(void)
       widgetHandle = NamedObject_create_with_defaults(0,0,0,0,local_40);
       ehState = 0xffffffff;
       if (7 < local_2c) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_40[0]);
       }
       local_40[0] = (void *)((uint)local_40[0] & 0xffff0000);
@@ -42266,7 +42019,6 @@ void GameController_loadInventoryItems(void)
 switchD_004a161d_caseD_2:
       ehState = 5;
       if (local_20 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_20);
       }
       pItemNode = (int *)*pItemNode;
@@ -42303,32 +42055,26 @@ switchD_004a161d_caseD_2:
   pvVar4 = local_174;
   if (local_174 != (void *)0x0) {
     dtor_freePtrRange_0x128(local_174,local_170,&local_13d,local_141);
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar4);
   }
   if (local_168 != (void *)0x0) {
     dtor_freePtrRange_0x128(local_168,local_164,&local_13d,local_141);
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar5);
   }
   if (local_150 != (void *)0x0) {
     dtor_freePtrRange_0x128(local_150,local_14c,&local_13d,local_141);
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar7);
   }
   if (local_15c != (void *)0x0) {
     dtor_freePtrRange_0x128(local_15c,local_158,&local_13d,local_141);
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar6);
   }
   if (pvVar3 != (void *)0x0) {
     dtor_freePtrRange_0x128(pvVar3,local_17c,&local_13d,local_141);
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar3);
   }
   if (pvVar2 != (void *)0x0) {
     dtor_freePtrRange_0x128(pvVar2,local_188,&local_13d,local_141);
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar2);
   }
   ExceptionList = savedExcList;
@@ -42472,7 +42218,6 @@ LAB_004a1d04:
           iVar1 = (int)((int)pStack - *pRowVec) / 0x11c;
           if (iVar1 == 0xe6c2b4) {
 LAB_004a1e3b:
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("vector<T> too long");
           }
           uVar7 = iVar1 + 1;
@@ -42551,7 +42296,6 @@ void GameController_equipStarterGear(void)
   Node_find_child_by_name_recursive(strBuf);
   ehState = 0xffffffff;
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(strBuf[0]);
   }
   local_18 = 7;
@@ -42631,7 +42375,6 @@ switchD_004a1f15_default:
        *(undefined4 *)(*(int *)(pThis + 0x8006b8) + 0x4c);
   pModel = IntMap_SetScalar(pList,pList[1],&pWidget);
   if (count == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   count = count + 1;
@@ -42647,7 +42390,6 @@ switchD_004a1f15_default:
        *(undefined4 *)(*(int *)(pThis + 0x8006bc) + 0x4c);
   pModel = IntMap_SetScalar(pList,pList[1],&pWidget);
   if (count == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   count = count + 1;
@@ -42663,7 +42405,6 @@ switchD_004a1f15_default:
        *(undefined4 *)(*(int *)(pThis + 0x8006c0) + 0x4c);
   pModel = IntMap_SetScalar(pList,pList[1],&pWidget);
   if (count == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   count = count + 1;
@@ -42679,7 +42420,6 @@ switchD_004a1f15_default:
        *(undefined4 *)(*(int *)(pThis + 0x8006c4) + 0x4c);
   pModel = IntMap_SetScalar(pList,pList[1],&pWidget);
   if (count == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   count = count + 1;
@@ -42698,10 +42438,8 @@ switchD_004a1f15_default:
   pList[1] = (int)pList;
   count = 0;
   if (piVar3 == pList) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pList);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(piVar3);
 }
 
@@ -42839,7 +42577,6 @@ LAB_004a2508:
         }
         ehState = 0xffffffff;
         if (((flags & 1) != 0) && (flags = flags & 0xfffffffe, 0xf < local_18)) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(strBuf[0]);
         }
         if (*(char *)(pThis + 0x8009b0) == isOnline) goto LAB_004a253b;
@@ -42861,7 +42598,6 @@ LAB_004a253b:
         uVar6 = NamedObject_create_with_defaults(0,0,0,0,strBuf);
         ehState = 0xffffffff;
         if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(strBuf[0]);
         }
         local_18 = 7;
@@ -43130,7 +42866,6 @@ void cube::GameController::drawItemTooltip
   strstreambuf_init(puVar10,local_24,local_250);
   local_8._0_1_ = 3;
   if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_34);
   }
   if (*param_1 == '\x14') {
@@ -43141,7 +42876,6 @@ void cube::GameController::drawItemTooltip
   wostream_insertU16string(local_294,uVar3);
   local_8._0_1_ = 3;
   if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_8c[0]);
   }
   cVar2 = *param_1;
@@ -43175,7 +42909,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0x40400000,local_1c,local_18,local_1e4,0x40400000,&local_2c,
                  &local_44,&local_6c,0x10,(float)param_5,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43183,7 +42916,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -43201,7 +42933,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0x40400000,local_1c,local_18,local_1e4,0,local_c4,&local_44,
                  &local_2c,0x10,(float)param_5,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43209,7 +42940,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
   }
@@ -43226,7 +42956,6 @@ void cube::GameController::drawItemTooltip
   strstreambuf_init(puVar10,local_24,local_250);
   local_8 = CONCAT31(local_8._1_3_,3);
   if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_34);
   }
   cVar2 = *param_1;
@@ -43292,7 +43021,6 @@ void cube::GameController::drawItemTooltip
   AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0x40000000,local_1c,local_18,local_1e8,0x40400000,&local_9c,
                &local_44,&local_2c,0x10,(float)param_5,1);
   if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_5c[0]);
   }
   local_48 = 7;
@@ -43300,7 +43028,6 @@ void cube::GameController::drawItemTooltip
   local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -43321,7 +43048,6 @@ void cube::GameController::drawItemTooltip
   AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0x40000000,local_1c,local_18,local_1e8,0,&local_9c,&local_44,
                &local_2c,0x10,(float)param_5,1);
   if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_5c[0]);
   }
   local_48 = 7;
@@ -43331,7 +43057,6 @@ void cube::GameController::drawItemTooltip
   uVar1 = (undefined1)local_8;
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   if (param_7 != '\0') {
@@ -43345,7 +43070,6 @@ void cube::GameController::drawItemTooltip
     strstreambuf_init(puVar10,local_24,local_250);
     local_8._0_1_ = 3;
     if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_34);
     }
     local_18 = param_4 * 14.0 + local_18;
@@ -43361,7 +43085,6 @@ void cube::GameController::drawItemTooltip
       strstreambuf_init(puVar10,local_24,local_250);
       local_8 = CONCAT31(local_8._1_3_,3);
       if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_34);
       }
       cVar2 = item_classifyRecursive(1);
@@ -43399,7 +43122,6 @@ void cube::GameController::drawItemTooltip
       AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0x40000000,local_1c,local_18,local_1e8,0x40400000,&local_6c,
                    &local_44,&local_2c,0x10,(float)param_5,1);
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_5c[0]);
       }
       local_48 = 7;
@@ -43407,7 +43129,6 @@ void cube::GameController::drawItemTooltip
       local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_8c[0]);
       }
       u16string_assignCStr(L"resource1.dat");
@@ -43429,7 +43150,6 @@ void cube::GameController::drawItemTooltip
       AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0x40000000,local_1c,local_18,local_1e8,0,&local_6c,&local_44,
                    &local_2c,0x10,(float)param_5,1);
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_5c[0]);
       }
       local_48 = 7;
@@ -43438,7 +43158,6 @@ void cube::GameController::drawItemTooltip
       local_8._0_1_ = 3;
       uVar1 = (undefined1)local_8;
       if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_8c[0]);
       }
     }
@@ -43512,7 +43231,6 @@ void cube::GameController::drawItemTooltip
   uVar1 = (undefined1)local_8;
   local_8._0_1_ = 3;
   if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_34);
   }
   local_1e8 = param_4 * 16.0;
@@ -43531,7 +43249,6 @@ void cube::GameController::drawItemTooltip
     strstreambuf_init(puVar10,local_24,local_250);
     local_8._0_1_ = 3;
     if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_34);
     }
     uVar22 = *(uint *)(param_1 + 4);
@@ -43560,7 +43277,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e4,0x40000000,&local_6c,&local_44,
                  &local_2c,0,0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43568,7 +43284,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -43590,7 +43305,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e4,0,&local_6c,&local_44,&local_2c,0,
                  0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43598,7 +43312,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     local_1e0 = param_4 * 14.0;
@@ -43616,7 +43329,6 @@ void cube::GameController::drawItemTooltip
       strstreambuf_init(puVar10,local_24,local_250);
       local_8._0_1_ = 3;
       if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_34);
       }
       wostream_insertWide(local_294,L"Ridable");
@@ -43639,7 +43351,6 @@ void cube::GameController::drawItemTooltip
       AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e4,0x40000000,&local_6c,&local_44,
                    &local_2c,0,0xbf800000,1);
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_5c[0]);
       }
       local_48 = 7;
@@ -43647,7 +43358,6 @@ void cube::GameController::drawItemTooltip
       local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_8c[0]);
       }
       u16string_assignCStr(L"resource1.dat");
@@ -43669,7 +43379,6 @@ void cube::GameController::drawItemTooltip
       AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e4,0,&local_6c,&local_44,&local_2c,0,
                    0xbf800000,1);
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_5c[0]);
       }
       local_48 = 7;
@@ -43677,7 +43386,6 @@ void cube::GameController::drawItemTooltip
       local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_8c[0]);
       }
       local_18 = local_18 + local_1e0;
@@ -43696,7 +43404,6 @@ void cube::GameController::drawItemTooltip
     strstreambuf_init(puVar10,local_24,local_250);
     local_8._0_1_ = 3;
     if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_34);
     }
     fVar14 = (float10)item_weaponDamage();
@@ -43725,7 +43432,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0x40000000,&local_6c,&local_44,
                  &local_2c,0,0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43733,7 +43439,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -43755,7 +43460,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0,&local_6c,&local_44,&local_2c,0,
                  0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43763,7 +43467,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     local_18 = param_4 * 14.0 + local_18;
@@ -43781,7 +43484,6 @@ void cube::GameController::drawItemTooltip
     strstreambuf_init(puVar10,local_24,local_250);
     local_8._0_1_ = 3;
     if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_34);
     }
     fVar14 = (float10)item_computeStat_armor();
@@ -43810,7 +43512,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0x40000000,&local_6c,&local_44,
                  &local_2c,0,0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43818,7 +43519,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -43840,7 +43540,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0,&local_6c,&local_44,&local_2c,0,
                  0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43848,7 +43547,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     local_18 = param_4 * 14.0 + local_18;
@@ -43866,7 +43564,6 @@ void cube::GameController::drawItemTooltip
     strstreambuf_init(puVar10,local_24,local_250);
     local_8._0_1_ = 3;
     if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_34);
     }
     fVar14 = (float10)item_computeBlockValue();
@@ -43894,7 +43591,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0x40000000,&local_6c,&local_44,
                  &local_2c,0,0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43902,7 +43598,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -43924,7 +43619,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0,&local_6c,&local_44,&local_2c,0,
                  0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43932,7 +43626,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     local_18 = local_18 + local_1e8;
@@ -43950,7 +43643,6 @@ void cube::GameController::drawItemTooltip
     strstreambuf_init(puVar10,local_24,local_250);
     local_8._0_1_ = 3;
     if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_34);
     }
     fVar14 = (float10)item_computeStat_variant2();
@@ -43978,7 +43670,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0x40000000,&local_6c,&local_44,
                  &local_2c,0,0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -43986,7 +43677,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -44008,7 +43698,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0,&local_6c,&local_44,&local_2c,0,
                  0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -44016,7 +43705,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     local_18 = local_18 + local_1e8;
@@ -44034,7 +43722,6 @@ void cube::GameController::drawItemTooltip
     strstreambuf_init(puVar10,local_24,local_250);
     local_8._0_1_ = 3;
     if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_34);
     }
     fVar14 = (float10)item_computeStat_variant3(&DAT_007020e0);
@@ -44064,7 +43751,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0x40000000,&local_6c,&local_44,
                  &local_2c,0,0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -44072,7 +43758,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -44094,7 +43779,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0,&local_6c,&local_44,&local_2c,0,
                  0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -44102,7 +43786,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     local_18 = local_18 + local_1e8;
@@ -44120,7 +43803,6 @@ void cube::GameController::drawItemTooltip
     strstreambuf_init(puVar10,local_24,local_250);
     local_8._0_1_ = 3;
     if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_34);
     }
     fVar14 = (float10)item_computeStat_regen(&DAT_007020e0);
@@ -44150,7 +43832,6 @@ void cube::GameController::drawItemTooltip
     AdaptionWidget_draw_text_locked(local_8c,uVar3,0,0,local_1c,local_18,local_1e0,0x40000000,&local_6c,&local_44,
                  &local_2c,0,0xbf800000,1);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -44158,7 +43839,6 @@ void cube::GameController::drawItemTooltip
     local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -45449,8 +45129,6 @@ float10 iterated_lerp_toward1(int steps,float factor)
  */
 /* cube::GameController::vfunc_11 @ 004ac260 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
-/* WARNING: Type propagation algorithm not settling */
 
 void cube::GameController::vfunc_11(void)
 
@@ -46367,7 +46045,6 @@ void cube::GameController::vfunc_11(void)
                 *(int *)(*piVar7 + 4) = *piVar7;
                 *(undefined4 *)(iVar60 + 0x14) = 0;
                 if (pvVar3 != (void *)*piVar7) {
-                    /* WARNING: Subroutine does not return */
                   ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)&UNK_004ac620;
                   operator_delete(pvVar3);
                 }
@@ -54783,7 +54460,6 @@ LAB_004c273e:
     AdaptionWidget_draw_text_locked(&local_1ec,uVar4,0,0,0x41700000,0x41c80000,0x41400000,0x40400000,&local_20c,
                  &local_1fc,&local_224,0,0xbf800000,1);
     if (7 < local_250) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_264[0]);
     }
     local_250 = 7;
@@ -54791,7 +54467,6 @@ LAB_004c273e:
     local_264[0] = (void *)((uint)local_264[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     local_1d8 = 7;
@@ -54816,7 +54491,6 @@ LAB_004c273e:
     AdaptionWidget_draw_text_locked(&local_1ec,uVar4,0,0,0x41700000,0x41c80000,0x41400000,0,&local_20c,&local_1fc,
                  &local_224,0,0xbf800000,1);
     if (7 < local_250) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_264[0]);
     }
     local_250 = 7;
@@ -54824,7 +54498,6 @@ LAB_004c273e:
     local_264[0] = (void *)((uint)local_264[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     if (*(int *)(in_ECX + 0x194) == 0) {
@@ -54845,7 +54518,6 @@ LAB_004c273e:
       u16string_assignPtrLen(&PTR_006fccac,0);
       local_8._0_1_ = 8;
       if ((local_554 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*local_584);
       }
       std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -54863,7 +54535,6 @@ LAB_004c273e:
       strstreambuf_init(puVar6,local_1dc,local_554);
       local_8._0_1_ = 3;
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       puVar28 = &DAT_006ffd80;
@@ -54893,7 +54564,6 @@ LAB_004c273e:
       AdaptionWidget_draw_text_locked(&local_1ec,uVar4,0,0,(float)iVar11,(float)(int)local_4dc,0x41200000,0x40000000,
                    &local_24c,&local_1fc,&local_224,2,0xbf800000,1);
       if (7 < local_250) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_264[0]);
       }
       local_250 = 7;
@@ -54901,7 +54571,6 @@ LAB_004c273e:
       local_264[0] = (void *)((uint)local_264[0] & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       local_1d8 = 7;
@@ -54926,7 +54595,6 @@ LAB_004c273e:
       AdaptionWidget_draw_text_locked(&local_1ec,uVar4,0,0,(float)iVar11,(float)(int)local_4dc,0x41200000,0,&local_1fc,
                    &local_224,&local_24c,2,0xbf800000,1);
       if (7 < local_250) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_264[0]);
       }
       local_250 = 7;
@@ -54934,7 +54602,6 @@ LAB_004c273e:
       local_264[0] = (void *)((uint)local_264[0] & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       local_1d8 = 7;
@@ -54943,7 +54610,6 @@ LAB_004c273e:
       u16string_assignPtrLen(&PTR_006fccac,0);
       local_8._0_1_ = 0xd;
       if ((local_554 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*local_584);
       }
       std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -54961,7 +54627,6 @@ LAB_004c273e:
       strstreambuf_init(puVar6,local_1dc,local_554);
       local_8._0_1_ = 3;
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       puVar28 = &DAT_006ffd84;
@@ -54990,7 +54655,6 @@ LAB_004c273e:
       AdaptionWidget_draw_text_locked(&local_1ec,uVar4,0,0,(float)(iVar11 + -0x28),(float)(int)local_4dc,0x41200000,
                    0x40000000,&local_1fc,&local_224,&local_24c,2,0xbf800000,1);
       if (7 < local_250) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_264[0]);
       }
       local_250 = 7;
@@ -54998,7 +54662,6 @@ LAB_004c273e:
       local_264[0] = (void *)((uint)local_264[0] & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       local_1d8 = 7;
@@ -55023,7 +54686,6 @@ LAB_004c273e:
       AdaptionWidget_draw_text_locked(&local_1ec,uVar4,0,0,(float)(iVar11 + -0x28),(float)(int)local_4dc,0x41200000,0,
                    &local_1fc,&local_224,&local_24c,2,0xbf800000,1);
       if (7 < local_250) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_264[0]);
       }
       local_250 = 7;
@@ -55031,7 +54693,6 @@ LAB_004c273e:
       local_264[0] = (void *)((uint)local_264[0] & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       u16string_assignCStr(&PTR_006fccac);
@@ -55044,7 +54705,6 @@ LAB_004c273e:
       strstreambuf_init(puVar6,local_1dc,local_554);
       local_8._0_1_ = 3;
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       puVar28 = &DAT_006ffd88;
@@ -55071,7 +54731,6 @@ LAB_004c273e:
       AdaptionWidget_draw_text_locked(local_23c,uVar4,0,0,(float)(iVar11 + -0x50),(float)(int)local_4dc,0x41200000,
                    0x40000000,&local_1fc,&local_224,&local_24c,2,0xbf800000,1);
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       local_1d8 = 7;
@@ -55079,7 +54738,6 @@ LAB_004c273e:
       local_1ec = (undefined4 *)((uint)local_1ec & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_23c[0]);
       }
       u16string_assignCStr(L"resource1.dat");
@@ -55101,7 +54759,6 @@ LAB_004c273e:
       AdaptionWidget_draw_text_locked(local_23c,uVar4,0,0,(float)(iVar11 + -0x50),(float)(int)local_4dc,0x41200000,0,
                    &local_1fc,&local_224,&local_24c,2,0xbf800000,1);
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       local_1d8 = 7;
@@ -55109,7 +54766,6 @@ LAB_004c273e:
       local_1ec = (undefined4 *)((uint)local_1ec & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_23c[0]);
       }
       fVar13 = (float10)security_cookie_guard_a();
@@ -55125,7 +54781,6 @@ LAB_004c273e:
       strstreambuf_init(puVar6,local_1dc,local_554);
       local_8._0_1_ = 3;
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       pcVar29 = "  Platinum Coins ";
@@ -55152,7 +54807,6 @@ LAB_004c273e:
       AdaptionWidget_draw_text_locked(local_23c,uVar4,0,0,0x41700000,(float)(int)fVar15,0x41200000,0x40000000,
                    &local_1fc,&local_224,&local_24c,0,0xbf800000,1);
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       local_1d8 = 7;
@@ -55160,7 +54814,6 @@ LAB_004c273e:
       local_1ec = (undefined4 *)((uint)local_1ec & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_23c[0]);
       }
       u16string_assignCStr(L"resource1.dat");
@@ -55182,7 +54835,6 @@ LAB_004c273e:
       AdaptionWidget_draw_text_locked(local_23c,uVar4,0,0,0x41700000,(float)(int)fVar15,0x41200000,0,&local_1fc,
                    &local_224,&local_24c,0,0xbf800000,1);
       if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1ec);
       }
       local_1d8 = 7;
@@ -55190,7 +54842,6 @@ LAB_004c273e:
       local_1ec = (undefined4 *)((uint)local_1ec & 0xffff0000);
       local_8._0_1_ = 3;
       if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_23c[0]);
       }
     }
@@ -55260,7 +54911,6 @@ LAB_004c273e:
                               *(int *)(in_ECX + 0x1ac) + 0x25),0x41200000,0x40000000,&local_1fc,
                        &local_224,&local_24c,2,0xbf800000,1);
           if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_214[0]);
           }
           local_200 = (pair<unsigned___int64,unsigned___int64> *)0x7;
@@ -55268,7 +54918,6 @@ LAB_004c273e:
           local_214[0] = (undefined4 ***)((uint)local_214[0] & 0xffff0000);
           local_8._0_1_ = 0x1f;
           if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_23c[0]);
           }
           u16string_assignCStr(L"resource1.dat");
@@ -55294,14 +54943,12 @@ LAB_004c273e:
                               *(int *)(in_ECX + 0x1ac) + 0x25),0x41200000,0,&local_2f4,&local_304,
                        &local_2d4,2,0xbf800000,1);
           if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_214[0]);
           }
           local_200 = (pair<unsigned___int64,unsigned___int64> *)0x7;
           uStack_204 = 0;
           local_214[0] = (undefined4 ***)((uint)local_214[0] & 0xffff0000);
           if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_23c[0]);
           }
           local_8._0_1_ = 3;
@@ -55363,7 +55010,6 @@ LAB_004c273e:
                                 *(int *)(in_ECX + 0x1ac) + 0x25),0x41200000,0x40000000,&local_324,
                          &local_334,&local_314,2,0xbf800000,1);
             if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_214[0]);
             }
             local_200 = (pair<unsigned___int64,unsigned___int64> *)0x7;
@@ -55371,7 +55017,6 @@ LAB_004c273e:
             local_214[0] = (undefined4 ***)((uint)local_214[0] & 0xffff0000);
             local_8._0_1_ = 0x27;
             if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_23c[0]);
             }
             u16string_assignCStr(L"resource1.dat");
@@ -55397,7 +55042,6 @@ LAB_004c273e:
                                 *(int *)(in_ECX + 0x1ac) + 0x25),0x41200000,0,&local_394,&local_344,
                          &local_3b4,2,0xbf800000,1);
             if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_214[0]);
             }
             local_200 = (pair<unsigned___int64,unsigned___int64> *)0x7;
@@ -55406,7 +55050,6 @@ LAB_004c273e:
             local_8._0_1_ = 0x27;
             piVar14 = local_4dc;
             if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_23c[0]);
             }
           }
@@ -55421,7 +55064,6 @@ LAB_004c273e:
           strstreambuf_init(ppppuVar9,uStack_204,local_6b4);
           local_8._0_1_ = 0x27;
           if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_214[0]);
           }
           uVar4 = ctor_6(local_23c,
@@ -55431,7 +55073,6 @@ LAB_004c273e:
           wostream_insertU16string(local_6f8,uVar4);
           local_8._0_1_ = 0x27;
           if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_23c[0]);
           }
           iVar11 = *(int *)(**(int **)(in_ECX + 0x160) + *(int *)(in_ECX + 0x1b4) * 0xc);
@@ -55469,7 +55110,6 @@ LAB_004c273e:
                        &local_3f4,&local_364,0x10,
                        (float)((*(int *)(in_ECX + 0x1a8) - iVar11) + -0x14),1);
           if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_214[0]);
           }
           local_200 = (pair<unsigned___int64,unsigned___int64> *)0x7;
@@ -55477,7 +55117,6 @@ LAB_004c273e:
           local_214[0] = (undefined4 ***)((uint)local_214[0] & 0xffff0000);
           local_8._0_1_ = 0x27;
           if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_23c[0]);
           }
           u16string_assignCStr(L"resource1.dat");
@@ -55504,14 +55143,12 @@ LAB_004c273e:
                        (float)((iVar11 + 5) * local_4e0 + 0x32),0x41200000,0,uVar8,puVar22,puVar6,
                        uVar23,fVar15,uVar30);
           if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_214[0]);
           }
           local_200 = (pair<unsigned___int64,unsigned___int64> *)0x7;
           uStack_204 = 0;
           local_214[0] = (undefined4 ***)((uint)local_214[0] & 0xffff0000);
           if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_23c[0]);
           }
           local_8._0_1_ = 3;
@@ -55551,7 +55188,6 @@ LAB_004c273e:
           wostream_insertU16string(local_648,uVar4);
           local_8._0_1_ = 0x35;
           if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_23c[0]);
           }
           iVar11 = *(int *)(**(int **)(in_ECX + 0x160) + *(int *)(in_ECX + 0x1b4) * 0xc);
@@ -55588,7 +55224,6 @@ LAB_004c273e:
                        &local_3c4,&local_3d4,0x10,
                        (float)((*(int *)(in_ECX + 0x1a8) - iVar11) + -0x14),1);
           if ((basic_streambuf<wchar_t,std::char_traits<wchar_t>_> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_214[0]);
           }
           local_200 = (pair<unsigned___int64,unsigned___int64> *)0x7;
@@ -55596,7 +55231,6 @@ LAB_004c273e:
           local_214[0] = (undefined4 ***)((uint)local_214[0] & 0xffff0000);
           local_8._0_1_ = 0x35;
           if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_23c[0]);
           }
           u16string_assignCStr(L"resource1.dat");
@@ -55624,7 +55258,6 @@ LAB_004c273e:
                        uVar23,fVar15,uVar30);
           in_ECX = local_4f4;
           if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_214[0]);
           }
           local_200 = (pair<unsigned___int64,unsigned___int64> *)0x7;
@@ -55632,7 +55265,6 @@ LAB_004c273e:
           local_214[0] = (undefined4 ***)((uint)local_214[0] & 0xffff0000);
           local_8._0_1_ = 0x35;
           if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_23c[0]);
           }
           iVar11 = item_valueByType();
@@ -55651,7 +55283,6 @@ LAB_004c273e:
             strstreambuf_init(ppppuVar9,uStack_204,local_604);
             local_8._0_1_ = 0x35;
             if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_214[0]);
             }
             puVar28 = &DAT_006ffd80;
@@ -55681,7 +55312,6 @@ LAB_004c273e:
                                 *(int *)(in_ECX + 0x1ac) + 0x25),0x41200000,0x40000000,&local_2e4,
                          &local_2c4,&local_2b4,2,0xbf800000,1);
             if ((pair<unsigned___int64,unsigned___int64> *)0x7 < local_200) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_214[0]);
             }
             local_200 = (pair<unsigned___int64,unsigned___int64> *)0x7;
@@ -55689,7 +55319,6 @@ LAB_004c273e:
             local_214[0] = (undefined4 ***)((uint)local_214[0] & 0xffff0000);
             local_8._0_1_ = 0x35;
             if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_23c[0]);
             }
             u16string_assignCStr(L"resource1.dat");
@@ -55713,7 +55342,6 @@ LAB_004c273e:
                                 *(int *)(in_ECX + 0x1ac) + 0x25),0x41200000,0,&local_374,&local_354,
                          &local_2a4,2,0xbf800000,1);
             if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_23c[0]);
             }
             local_228 = 7;
@@ -56027,7 +55655,6 @@ void InventoryWidget_rebuildItemList(int *pList)
           (iVar3 != *(int *)(pThis + 0x16c))) && (iVar3 != *(int *)(pThis + 0x178))) {
         iVar3 = IntMap_SetScalar(pTmpList,pTmpList[1],pIt + 2);
         if (count == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         pTmpList[1] = iVar3;
@@ -56059,10 +55686,8 @@ void InventoryWidget_rebuildItemList(int *pList)
   *pTmpList = pTmpList;
   pTmpList[1] = pTmpList;
   if (puVar1 != pTmpList) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(puVar1);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(pTmpList);
 }
 
@@ -57170,7 +56795,6 @@ LAB_004dcb52:
   *(int *)(*(int *)(zone + 0x80) + 4) = *(int *)(zone + 0x80);
   *(undefined4 *)(zone + 0x84) = 0;
   if (pvVar4 != *(void **)(zone + 0x80)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar4);
   }
   zone = *(int *)(*(int *)(in_ECX + 0x28) + iVar1);
@@ -57180,7 +56804,6 @@ LAB_004dcb52:
   *(int *)(*(int *)(zone + 0x88) + 4) = *(int *)(zone + 0x88);
   *(undefined4 *)(zone + 0x8c) = 0;
   if (pvVar4 != *(void **)(zone + 0x88)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvVar4);
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)(*(int *)(*(int *)(in_ECX + 0x28) + iVar1) + 0x98));
@@ -57194,10 +56817,8 @@ LAB_004dcb52:
           *local_130 = local_130;
           local_130[1] = local_130;
           if (puVar3 == local_130) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_130);
           }
-                    /* WARNING: Subroutine does not return */
           operator_delete(puVar3);
         }
         enter_critical_section();
@@ -57306,14 +56927,11 @@ LAB_004dcb52:
             local_1c[1] = local_1c;
             local_18 = 0;
             if (puVar3 == local_1c) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_1c);
             }
-                    /* WARNING: Subroutine does not return */
             operator_delete(puVar3);
           }
 LAB_004dd5c9:
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
       }
@@ -57347,7 +56965,6 @@ void GameController_clearListLocked_3c(undefined4 *arg)
   *(int *)(*(int *)(self + 0x3c) + 4) = *(int *)(self + 0x3c);
   *(undefined4 *)(self + 0x40) = 0;
   if (firstNode != *(void **)(self + 0x3c)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(firstNode);
   }
   leave_critical_section();
@@ -57378,7 +56995,6 @@ void GameController_clearListLocked_44(undefined4 *arg)
   *(int *)(*(int *)(self + 0x44) + 4) = *(int *)(self + 0x44);
   *(undefined4 *)(self + 0x48) = 0;
   if (firstNode != *(void **)(self + 0x44)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(firstNode);
   }
   leave_critical_section();
@@ -57409,7 +57025,6 @@ void GameController_clearListLocked_34(undefined4 *arg)
   *(int *)(*(int *)(self + 0x34) + 4) = *(int *)(self + 0x34);
   *(undefined4 *)(self + 0x38) = 0;
   if (firstNode != *(void **)(self + 0x34)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(firstNode);
   }
   leave_critical_section();
@@ -57747,14 +57362,12 @@ void GameController_build_quest_text(undefined4 param_1,int *nameTree,int *range
       std_vector_insert_one_8_seh(&local_28);
       local_8 = CONCAT31(local_8._1_3_,1);
       listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_28);
     }
     QuestText_substitute_placeholders(range,dialogueRoot,*(undefined4 *)(dialogueRoot + 4),keyTree,&valueTree);
   }
   local_8 = (uint)local_8._1_3_ << 8;
   Zone_rbtree_eraseRange(&nameTree,*valueTree,valueTree);
-                    /* WARNING: Subroutine does not return */
   operator_delete(valueTree);
 }
 
@@ -57833,14 +57446,12 @@ void cube::GameController::generateQuestText
       FUN_005953a0(local_2c,iVar3,&local_3c);
       local_8._0_1_ = 0;
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c[0]);
       }
       u16string_assignCStr(L"explored");
       local_8 = CONCAT31(local_8._1_3_,2);
       GameController_build_quest_text(local_2c,&local_3c,local_1c4);
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c[0]);
       }
       tree_dtor_free_unwind_467af0();
@@ -57867,7 +57478,6 @@ void cube::GameController::generateQuestText
     FUN_00594c80(local_2c,uVar5,0,0,&local_3c);
     local_8._0_1_ = 4;
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_1ac = 1;
@@ -57883,19 +57493,16 @@ void cube::GameController::generateQuestText
     FUN_00595010(local_2c,&local_1bc,&local_3c);
     local_8._0_1_ = 4;
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     u16string_assignCStr(L"petfood");
     local_8 = CONCAT31(local_8._1_3_,7);
     GameController_build_quest_text(local_2c,&local_3c,local_1c4);
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_8 = 0xffffffff;
     Zone_rbtree_eraseRange(&local_1c0,*local_34,local_34);
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_34);
   }
   local_24 = 0;
@@ -57959,7 +57566,6 @@ switchD_004e4f0a_default:
   FUN_00594c80(local_44,uVar5,0,0,&local_24);
   local_8._0_1_ = 9;
   if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   uVar5 = 0x6c;
@@ -58000,7 +57606,6 @@ switchD_004e4f0a_default:
   FUN_00594c80(local_44,uVar5,0,0,&local_24);
   local_8._0_1_ = 9;
   if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   local_278[0] = &PTR_006fcd00;
@@ -58032,13 +57637,11 @@ switchD_004e4f0a_default:
   local_8 = CONCAT31(local_8._1_3_,0x15);
   GameController_build_quest_text(uVar5,&local_24,local_1c4);
   if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_5c[0]);
   }
   ctor_18();
   local_8 = 0xffffffff;
   Zone_rbtree_eraseRange(&local_1c0,*local_1c,local_1c);
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_1c);
 }
 
@@ -58127,7 +57730,6 @@ void GameController_show_region_name(undefined4 param_1,undefined4 param_2,uint 
     u16string_replaceRange(uVar3,0,0xffffffff);
     local_8._0_1_ = 2;
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -58142,7 +57744,6 @@ void GameController_show_region_name(undefined4 param_1,undefined4 param_2,uint 
       }
       local_8._0_1_ = 2;
       if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_44[0]);
       }
     }
@@ -58163,7 +57764,6 @@ void GameController_show_region_name(undefined4 param_1,undefined4 param_2,uint 
         local_8._0_1_ = 4;
         std_wstring_replace(chunk,1,uVar3,0,0xffffffff);
         if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_44[0]);
         }
         u16string_moveConstruct(&local_2c);
@@ -58171,7 +57771,6 @@ void GameController_show_region_name(undefined4 param_1,undefined4 param_2,uint 
       }
     }
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c);
     }
   }
@@ -60187,11 +59786,9 @@ LAB_004ea1c6:
       return;
     }
     std::_Container_base0::_Orphan_all((_Container_base0 *)&local_bf8);
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_bf8);
   }
   std::_Container_base0::_Orphan_all((_Container_base0 *)&local_c04);
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_c04);
 }
 
@@ -60355,7 +59952,6 @@ undefined4 GameController_class_icon_id(undefined4 param_1)
  */
 /* Global::GameController_item_icon_id @ 004ec400 */
 
-/* WARNING: Removing unreachable block (ram,0x004edcd7) */
 
 undefined4 GameController_item_icon_id(undefined1 *itemDef)
 
@@ -61357,7 +60953,6 @@ LAB_004ed71e:
  */
 /* Global::GameController_load_game_assets @ 004ee230 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void GameController_load_game_assets(int arg)
 
@@ -79532,7 +79127,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   filebuf_openInstantiate(eventName);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79553,7 +79147,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79575,7 +79168,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79597,7 +79189,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79618,7 +79209,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79639,7 +79229,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79660,7 +79249,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79681,7 +79269,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79702,7 +79289,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79723,7 +79309,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79744,7 +79329,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79765,7 +79349,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79786,7 +79369,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79807,7 +79389,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79828,7 +79409,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79850,7 +79430,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   local_18 = 0xf;
@@ -79872,7 +79451,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   map_insertNode(eventName,delegate);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("checkbox:unmark");
@@ -79881,7 +79459,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   ctor_0(eventName,self,lib_fn_586780);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("static:enable");
@@ -79890,7 +79467,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   ctor_0(eventName,self,lib_fn_587020);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("static:disable");
@@ -79898,7 +79474,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   Method1<cube::System,void,int>::ctor_0(eventName,self,&DAT_00586690);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("static:1");
@@ -79906,7 +79481,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   Method1<cube::System,int,int>::ctor_0(eventName,self,lib_fn_586c00);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("static:2");
@@ -79914,7 +79488,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   Method1<cube::System,int,int>::ctor_0(eventName,self,lib_fn_586c20);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("static:3");
@@ -79922,7 +79495,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   Method1<cube::System,int,int>::ctor_0(eventName,self,lib_fn_586c40);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("static:4");
@@ -79930,7 +79502,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   Method1<cube::System,int,int>::ctor_0(eventName,self,lib_fn_586c60);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("static:5");
@@ -79938,7 +79509,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   Method1<cube::System,int,int>::ctor_0(eventName,self,lib_fn_586c80);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("static:7");
@@ -79946,7 +79516,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   Method1<cube::System,int,int>::ctor_0(eventName,self,lib_fn_586ca0);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("widget:enter");
@@ -79955,7 +79524,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   ctor_0(eventName,self,lib_fn_586ce0);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("widget:leave");
@@ -79965,7 +79533,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
          std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_11);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("widget:show");
@@ -79974,7 +79541,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   ::ctor_0(eventName,self,lib_fn_5866a0);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("widget:hide");
@@ -79983,7 +79549,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   ::ctor_0(eventName,self,lib_fn_5871f0);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("widget:enable");
@@ -79992,7 +79557,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   ctor_0(eventName,self,lib_fn_587180);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("widget:close");
@@ -80001,7 +79565,6 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   ctor_0(eventName,self,lib_fn_585880);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr("widget:open");
@@ -80010,14 +79573,12 @@ void abstr::Method0<cube::System,int>::ctor_0(undefined1 selfPtr)
   ::ctor_0(eventName,self,lib_fn_587290);
   local_8._0_1_ = 4;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   string_assignCStr(&DAT_0071a4d0);
   local_8 = CONCAT31(local_8._1_3_,0x26);
   vectorString_popBack(eventName,selfPtr);
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(eventName[0]);
   }
   ExceptionList = local_10;
@@ -80489,7 +80050,6 @@ void cube::GameController::drawWeaponCustomization(void)
                 iVar5 = ((int)local_760 - *piVar19) / 0x11c;
                 if (iVar5 == 0xe6c2b4) {
 LAB_00588c7d:
-                    /* WARNING: Subroutine does not return */
                   std::_Xlength_error("vector<T> too long");
                 }
                 local_710 = (float)(iVar5 + 1);
@@ -81373,7 +80933,6 @@ LAB_0058b410:
   AdaptionWidget_draw_text_locked(apvStack_4a8,uVar8,0,0,0x41a00000,fStack_744 - 20.0,uVar31,uVar32,puVar33,puVar14,
                pfVar6,uVar34,uVar35,uVar37);
   if (7 < uStack_4d4) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_4e8[0]);
   }
   uStack_4d4 = 7;
@@ -81381,7 +80940,6 @@ LAB_0058b410:
   apvStack_4e8[0] = (void *)((uint)apvStack_4e8[0] & 0xffff0000);
   uStack_c._0_1_ = 3;
   if (7 < uStack_494) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_4a8[0]);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -81410,14 +80968,12 @@ LAB_0058b410:
   AdaptionWidget_draw_text_locked(apvStack_4a8,uVar8,0,0,0x41a00000,fStack_744 - 20.0,uVar31,uVar32,puVar33,puVar14,
                pfVar6,uVar34,uVar35,uVar37);
   if (7 < uStack_4d4) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_4e8[0]);
   }
   uStack_4d4 = 7;
   uStack_4d8 = 0;
   apvStack_4e8[0] = (void *)((uint)apvStack_4e8[0] & 0xffff0000);
   if (7 < uStack_494) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_4a8[0]);
   }
   uStack_c = 0xffffffff;
@@ -81443,7 +80999,6 @@ LAB_0058bbf5:
   AdaptionWidget_draw_text_locked(apvStack_450,&local_4c0,0,0,0x41700000,0x41c80000,0x41400000,0x40400000,afStack_508,
                &uStack_568,afStack_578,0,0xbf800000,1);
   if (7 < uStack_43c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_450[0]);
   }
   uStack_43c = 7;
@@ -81451,7 +81006,6 @@ LAB_0058bbf5:
   apvStack_450[0] = (void *)((uint)apvStack_450[0] & 0xffff0000);
   uStack_c = 0xffffffff;
   if (7 < uStack_4ac) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c0);
   }
   u16string_assignCStr(L"Weapon Customization");
@@ -81472,7 +81026,6 @@ LAB_0058bbf5:
   AdaptionWidget_draw_text_locked(apvStack_450,&local_4c0,0,0,0x41700000,0x41c80000,0x41400000,0,afStack_508,
                &uStack_568,afStack_578,0,0xbf800000,1);
   if (7 < uStack_43c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_450[0]);
   }
   uStack_43c = 7;
@@ -81480,7 +81033,6 @@ LAB_0058bbf5:
   apvStack_450[0] = (void *)((uint)apvStack_450[0] & 0xffff0000);
   uStack_c = 0xffffffff;
   if (7 < uStack_4ac) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c0);
   }
   fStack_730 = 0.0;
@@ -81548,7 +81100,6 @@ LAB_0058bbf5:
       AdaptionWidget_draw_text_locked(apvStack_4a8,uVar8,0,0,(float)(int)local_750,(float)(int)local_6f0,0x41200000,
                    0x40000000,&local_4c0,afStack_508,&uStack_568,2,0xbf800000,1);
       if (7 < uStack_4d4) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(apvStack_4e8[0]);
       }
       uStack_4d4 = 7;
@@ -81556,7 +81107,6 @@ LAB_0058bbf5:
       apvStack_4e8[0] = (void *)((uint)apvStack_4e8[0] & 0xffff0000);
       uStack_c._0_1_ = 0xf;
       if (7 < uStack_494) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(apvStack_4a8[0]);
       }
       u16string_assignCStr(L"resource1.dat");
@@ -81574,14 +81124,12 @@ LAB_0058bbf5:
       AdaptionWidget_draw_text_locked(apvStack_4e8,uVar8,0,0,(float)(int)local_750,(float)(int)local_6f0,0x41200000,0,
                    &uStack_4f8,aiStack_518,aiStack_4d0,2,0xbf800000,1);
       if (7 < uStack_494) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(apvStack_4a8[0]);
       }
       uStack_494 = 7;
       uStack_498 = 0;
       apvStack_4a8[0] = (void *)((uint)apvStack_4a8[0] & 0xffff0000);
       if (7 < uStack_4d4) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(apvStack_4e8[0]);
       }
       uStack_4d4 = 7;
@@ -81672,7 +81220,6 @@ void FUN_00593e20(void)
   int in_ECX;
   
   if (7 < *(uint *)(in_ECX + 0x1c)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)(in_ECX + 8));
   }
   *(undefined4 *)(in_ECX + 0x1c) = 7;
@@ -81744,7 +81291,6 @@ void FUN_00594c80(undefined4 param_1,undefined4 param_2,undefined4 param_3,undef
   piVar5 = (int *)FUN_005a02d0(uVar4);
   local_8 = 0xffffffff;
   if (7 < local_90) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_a4[0]);
   }
   local_90 = 7;
@@ -81767,21 +81313,18 @@ void FUN_00594c80(undefined4 param_1,undefined4 param_2,undefined4 param_3,undef
       local_8 = CONCAT31(local_8._1_3_,4);
       std_map_insert_unique_v2(local_f8,0,uVar4,DAT_0076b7ca);
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_5c[0]);
       }
       local_48 = 7;
       local_4c = 0;
       local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
       if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_74[0]);
       }
       local_60 = 7;
       local_64 = 0;
       local_74[0] = (void *)((uint)local_74[0] & 0xffff0000);
       if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_8c[0]);
       }
       local_78 = 7;
@@ -81789,7 +81332,6 @@ void FUN_00594c80(undefined4 param_1,undefined4 param_2,undefined4 param_3,undef
       local_8c[0] = (void *)((uint)local_8c[0] & 0xffff0000);
       local_8 = 0xffffffff;
       if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_44[0]);
       }
       piVar7 = (int *)*piVar7;
@@ -81816,21 +81358,18 @@ void FUN_00594c80(undefined4 param_1,undefined4 param_2,undefined4 param_3,undef
         u16string_replaceRange(piVar7 + 10,0,0xffffffff);
       }
       if (7 < local_a8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_bc[0]);
       }
       local_a8 = 7;
       local_ac = 0;
       local_bc[0] = (void *)((uint)local_bc[0] & 0xffff0000);
       if (7 < local_c0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_d4[0]);
       }
       local_c0 = 7;
       local_c4 = 0;
       local_d4[0] = (void *)((uint)local_d4[0] & 0xffff0000);
       if (7 < local_d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_ec[0]);
       }
       local_d8 = 7;
@@ -81838,7 +81377,6 @@ void FUN_00594c80(undefined4 param_1,undefined4 param_2,undefined4 param_3,undef
       local_ec[0] = (void *)((uint)local_ec[0] & 0xffff0000);
       local_8 = 0xffffffff;
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c[0]);
       }
       if (*(char *)((int)piVar7 + 0xd) == '\0') {
@@ -81934,7 +81472,6 @@ void FUN_00595010(undefined4 param_1,undefined1 *param_2,int param_3)
   piVar5 = (int *)FUN_005a02d0(uVar4);
   local_8 = 0xffffffff;
   if (7 < local_90) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_a4[0]);
   }
   local_90 = 7;
@@ -81957,21 +81494,18 @@ void FUN_00595010(undefined4 param_1,undefined1 *param_2,int param_3)
       local_8 = CONCAT31(local_8._1_3_,4);
       std_map_insert_unique_v2(local_f8,0,uVar4,DAT_0076b7ca);
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_5c[0]);
       }
       local_48 = 7;
       local_4c = 0;
       local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
       if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_74[0]);
       }
       local_60 = 7;
       local_64 = 0;
       local_74[0] = (void *)((uint)local_74[0] & 0xffff0000);
       if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_8c[0]);
       }
       local_78 = 7;
@@ -81979,7 +81513,6 @@ void FUN_00595010(undefined4 param_1,undefined1 *param_2,int param_3)
       local_8c[0] = (void *)((uint)local_8c[0] & 0xffff0000);
       local_8 = 0xffffffff;
       if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_44[0]);
       }
       piVar7 = (int *)*piVar7;
@@ -82006,21 +81539,18 @@ void FUN_00595010(undefined4 param_1,undefined1 *param_2,int param_3)
         u16string_replaceRange(piVar7 + 10,0,0xffffffff);
       }
       if (7 < local_a8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_bc[0]);
       }
       local_a8 = 7;
       local_ac = 0;
       local_bc[0] = (void *)((uint)local_bc[0] & 0xffff0000);
       if (7 < local_c0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_d4[0]);
       }
       local_c0 = 7;
       local_c4 = 0;
       local_d4[0] = (void *)((uint)local_d4[0] & 0xffff0000);
       if (7 < local_d8) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_ec[0]);
       }
       local_d8 = 7;
@@ -82028,7 +81558,6 @@ void FUN_00595010(undefined4 param_1,undefined1 *param_2,int param_3)
       local_ec[0] = (void *)((uint)local_ec[0] & 0xffff0000);
       local_8 = 0xffffffff;
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c[0]);
       }
       if (*(char *)((int)piVar7 + 0xd) == '\0') {
@@ -82121,7 +81650,6 @@ void FUN_005953a0(undefined4 param_1,int param_2,int param_3)
   local_8 = 0xffffffff;
   local_ac = piVar5;
   if (7 < local_90) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_a4[0]);
   }
   local_90 = 7;
@@ -82144,21 +81672,18 @@ void FUN_005953a0(undefined4 param_1,int param_2,int param_3)
       local_8 = CONCAT31(local_8._1_3_,4);
       std_map_insert_unique_v2(local_c0,0,uVar4,DAT_0076b7ca);
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_5c[0]);
       }
       local_48 = 7;
       local_4c = 0;
       local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
       if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_74[0]);
       }
       local_60 = 7;
       local_64 = 0;
       local_74[0] = (void *)((uint)local_74[0] & 0xffff0000);
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c[0]);
       }
       local_18 = 7;
@@ -82166,7 +81691,6 @@ void FUN_005953a0(undefined4 param_1,int param_2,int param_3)
       local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
       local_8 = 0xffffffff;
       if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_44[0]);
       }
       piVar8 = (int *)*piVar8;
@@ -82191,7 +81715,6 @@ void FUN_005953a0(undefined4 param_1,int param_2,int param_3)
         std_wstring_replace(iVar6,1,uVar4,0,0xffffffff);
         local_8._0_1_ = 5;
         if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_2c[0]);
         }
       }
@@ -82211,33 +81734,28 @@ void FUN_005953a0(undefined4 param_1,int param_2,int param_3)
         u16string_replaceRange(local_8c,0,0xffffffff);
       }
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c[0]);
       }
       local_18 = 7;
       local_1c = 0;
       local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
       if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_74[0]);
       }
       local_60 = 7;
       local_64 = 0;
       local_74[0] = (void *)((uint)local_74[0] & 0xffff0000);
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_5c[0]);
       }
       local_48 = 7;
       local_4c = 0;
       local_5c[0] = (void *)((uint)local_5c[0] & 0xffff0000);
       if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_44[0]);
       }
       local_8 = 0xffffffff;
       if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_8c[0]);
       }
       if (*(char *)((int)piVar8 + 0xd) == '\0') {
@@ -82463,7 +81981,6 @@ LAB_00598afa:
     uStack_784 = 0x598b02;
     FUN_0058d730();
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_2c[0] = (int *)((uint)local_2c[0] & 0xffff0000);
@@ -82474,7 +81991,6 @@ LAB_00598b2a:
     local_90 = local_60;
 joined_r0x00599fcb:
     if (7 < local_90) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_a4[0]);
     }
 LAB_00599fdd:
@@ -82511,21 +82027,18 @@ LAB_00599fdd:
     uStack_784 = uVar4;
     FUN_0058d730();
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_18 = 7;
     local_1c = 0;
     local_2c[0] = (int *)((uint)local_2c[0] & 0xffff0000);
     if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_8c);
     }
     local_78 = 7;
     local_7c = 0;
     local_8c = (void *)((uint)local_8c & 0xffff0000);
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -82588,7 +82101,6 @@ LAB_00599fdd:
   lookupNestedStringMap(local_44,uVar4);
   local_8._0_1_ = 0x15;
   if (7 < local_d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_ec[0]);
   }
   local_ec[0] = (void *)((uint)local_ec[0] & 0xffff0000);
@@ -82606,14 +82118,12 @@ LAB_00599fdd:
     local_8 = CONCAT31(local_8._1_3_,0x18);
     lookupNestedStringMap(local_6ac,uVar4);
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_18 = 7;
     local_1c = 0;
     local_2c[0] = (int *)((uint)local_2c[0] & 0xffff0000);
     if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_44[0]);
     }
     local_30 = 7;
@@ -82633,7 +82143,6 @@ LAB_00599fdd:
   std_list_copy_ctor();
   local_8._0_1_ = 0x1c;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74[0]);
   }
   local_60 = 7;
@@ -82649,7 +82158,6 @@ LAB_00599fdd:
   u16string_replaceRange();
   local_8._0_1_ = 0x1f;
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_18 = 7;
@@ -83065,13 +82573,11 @@ LAB_00599c22:
           piStack_788 = piVar7;
           std_wstring_replace();
           if (7 < local_90) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_a4[0]);
           }
         }
         local_8._0_1_ = 0x21;
         if (7 < local_a8) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_bc[0]);
         }
         if (local_699 != '\0') goto LAB_00599ead;
@@ -83116,13 +82622,11 @@ LAB_00599c22:
       piStack_788 = piVar7;
       std_wstring_replace();
       if (7 < local_90) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_a4[0]);
       }
     }
     local_8._0_1_ = 0x21;
     if (7 < local_c0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_d4[0]);
     }
   }
@@ -83131,7 +82635,6 @@ LAB_00599ead:
   wostream_insertU16string();
   local_8 = CONCAT31(local_8._1_3_,0x1f);
   listNode_free_ownsString();
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_68c);
 }
 
@@ -84011,7 +83514,6 @@ undefined4 FUN_0059ff60(undefined4 param_1,undefined4 param_2)
 
 /* Global::FUN_005a02d0 @ 005a02d0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 undefined * FUN_005a02d0(int param_1)
 
@@ -84140,7 +83642,6 @@ void World_findNearestSpawnPoint(uint *out_pos,uint *in_pos)
               if (*piVar5 == 0) {
                 iVar6 = Map_InsertVec6(candidates,candidates[1],piVar5 + 2);
                 if (count == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
                   std::_Xlength_error("list<T> too long");
                 }
                 candidates[1] = iVar6;
@@ -84169,7 +83670,6 @@ void World_findNearestSpawnPoint(uint *out_pos,uint *in_pos)
     *candidates = (int)candidates;
     candidates[1] = (int)candidates;
     if (piVar5 != candidates) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(piVar5);
     }
   }
@@ -84185,7 +83685,6 @@ void World_findNearestSpawnPoint(uint *out_pos,uint *in_pos)
     *candidates = (int)candidates;
     candidates[1] = (int)candidates;
     if (piVar5 != candidates) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(piVar5);
     }
   }
@@ -84216,7 +83715,6 @@ void World_findNearestSpawnPoint(uint *out_pos,uint *in_pos)
     if (best_node != candidates) {
       *(int *)best_node[1] = *best_node;
       *(int *)(*best_node + 4) = best_node[1];
-                    /* WARNING: Subroutine does not return */
       operator_delete(best_node);
     }
     piVar5 = (int *)*candidates;
@@ -84249,11 +83747,9 @@ void World_findNearestSpawnPoint(uint *out_pos,uint *in_pos)
     *candidates = (int)candidates;
     candidates[1] = (int)candidates;
     if (piVar5 != candidates) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(piVar5);
     }
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(candidates);
 }
 
@@ -85330,10 +84826,6 @@ LAB_005a350f:
  */
 /* Global::World_raycastVoxels @ 005a35d0 */
 
-/* WARNING: Removing unreachable block (ram,0x005a4654) */
-/* WARNING: Removing unreachable block (ram,0x005a3f38) */
-/* WARNING: Removing unreachable block (ram,0x005a4184) */
-/* WARNING: Removing unreachable block (ram,0x005a4410) */
 
 void World_raycastVoxels(uint *origin,float *dir,float max_dist,char want_solid,char param_5)
 
@@ -85978,7 +85470,6 @@ void collectSolidBlocksInBox(int x0,int *z0,uint x1,uint z1)
                    (*(byte *)(iVar2 + 3) & 0x1f) == 0)) {
                   iVar2 = IntMap_SetScalar(puVar5,puVar5[1],&z0);
                   if (count == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("list<T> too long");
                   }
                   puVar5[1] = iVar2;
@@ -85994,7 +85485,6 @@ void collectSolidBlocksInBox(int x0,int *z0,uint x1,uint z1)
               if (node != *(int **)(iVar9 + 4)) {
                 *(int *)node[1] = *node;
                 *(int *)(*node + 4) = node[1];
-                    /* WARNING: Subroutine does not return */
                 operator_delete(node);
               }
             }
@@ -86003,10 +85493,8 @@ void collectSolidBlocksInBox(int x0,int *z0,uint x1,uint z1)
             local_8 = 0xffffffff;
             puVar5[1] = puVar5;
             if (puVar1 != puVar5) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(puVar1);
             }
-                    /* WARNING: Subroutine does not return */
             operator_delete(puVar5);
           }
         }
@@ -86599,12 +86087,10 @@ LAB_005a839f:
             }
           }
           if (local_340 != (float *)0x0) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_340);
           }
           uStack_18 = 1;
           rbtree_eraseRange_buf(&local_350,*local_394,local_394);
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_394);
         }
         puVar18 = (undefined4 *)local_3d0[4];
@@ -86625,7 +86111,6 @@ LAB_005a8749:
           if (pfVar20 != (float *)unaff_EDI) {
             iVar23 = IntMap_SetScalar(local_3b4,*(undefined4 *)(local_3b4 + 4),&local_3dc);
             if (local_3b0 == (float *)0x15555554) {
-                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             local_3b0 = (float *)((int)local_3b0 + 1);
@@ -86654,12 +86139,10 @@ LAB_005a8749:
         map_copyRange(*local_3ac,local_3ac);
 LAB_005a879e:
         if (local_37c != (undefined4 *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_37c);
         }
         uStack_24 = 2;
         rbtree_eraseRange_buf(&local_358,*local_3ac,local_3ac);
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_3ac);
       }
     }
@@ -87359,10 +86842,8 @@ void PathMap_findInOpenSet(int x,undefined4 y,undefined4 z)
   x = end;
 LAB_005a9e15:
   if (x == end) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(puVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(puVar2);
 }
 
@@ -87926,7 +87407,6 @@ void FUN_005c4230(uint param_1)
       pvVar2 = operator_new(param_1 * 0xc);
       if (pvVar2 != (void *)0x0) goto LAB_005c428f;
     }
-                    /* WARNING: Subroutine does not return */
     std::_Xbad_alloc();
   }
 LAB_005c428f:
@@ -87934,7 +87414,6 @@ LAB_005c428f:
   FUN_005c37d0(*in_ECX,in_ECX[1],pvVar2,(int)&param_1 + 3,0,param_1);
   param_1 = (in_ECX[1] - *in_ECX) / 0xc;
   if ((void *)*in_ECX != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   *in_ECX = (int)pvVar2;
@@ -88435,7 +87914,6 @@ LAB_005d7d29:
  * Bounds-checks tile<0x400, indexes grid@+0xbc, srand(seed@GC+0x800188+tile), operator_new(0x15a28) then cube::Region::ctor_0 + spawn math. Sole caller FUN_005e4850=WorldInfo. Region worldgen; no stringbuf behavior.
  * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
 
-/* WARNING: Removing unreachable block (ram,0x005dacc3) */
 
 void cube::GameController::generateRegion
                (int param_1,int param_2)
@@ -89421,7 +88899,6 @@ LAB_005db47c:
           cStack_301 = db_getBlobInto(uVar4,&pvStack_250);
           local_c._0_1_ = 8;
           if (0xf < uStack_38) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(apvStack_4c[0]);
           }
           if (cStack_301 != '\0') {
@@ -89431,7 +88908,6 @@ LAB_005db47c:
             *(undefined1 *)(iVar18 + 0x15a18) = 1;
           }
           if (pvStack_250 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(pvStack_250);
           }
           local_c._0_1_ = 2;
@@ -89440,7 +88916,6 @@ LAB_005db47c:
           *(undefined **)((int)&iStack_16c + (int)local_168[0][1]) = local_168[0][1] + -0x68;
           local_150[0] = vftable;
           if ((local_114 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*puStack_144);
           }
           std::basic_streambuf<char,std::char_traits<char>_>::setg
@@ -89496,7 +88971,6 @@ LAB_005db47c:
           cStack_301 = db_getBlobInto(uVar4,&pvStack_260);
           local_c._0_1_ = 0xe;
           if (0xf < uStack_20) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(apvStack_34[0]);
           }
           if (cStack_301 != '\0') {
@@ -89505,7 +88979,6 @@ LAB_005db47c:
             deserialize_struct_small(iVar20);
           }
           if (pvStack_260 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(pvStack_260);
           }
           local_c = CONCAT31(local_c._1_3_,2);
@@ -89514,7 +88987,6 @@ LAB_005db47c:
           *(undefined **)((int)&local_21c + (int)appuStack_218[0][1]) = appuStack_218[0][1] + -0x68;
           appuStack_200[0] = vftable;
           if ((uStack_1c4 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*puStack_1f4);
           }
           std::basic_streambuf<char,std::char_traits<char>_>::setg
@@ -89546,13 +89018,11 @@ LAB_005db47c:
     *(int *)(local_2f8 + 0xbc + local_274 * 4) = iVar18;
     if (local_2b8 != (int *)0x0) {
       std::_Container_base0::_Orphan_all((_Container_base0 *)&local_2b8);
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2b8);
     }
     local_c = 0xffffffff;
     if (local_2c4 != (undefined4 *)0x0) {
       std::_Container_base0::_Orphan_all((_Container_base0 *)&local_2c4);
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c4);
     }
   }
@@ -89619,7 +89089,6 @@ LAB_005dbc70:
         iVar18 = ((int)pfVar17 - (int)pfVar22) / 0xc;
         if (iVar18 == 0x15555555) {
 LAB_005dbbe0:
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar15 = ((int)pfVar13 - (int)pfVar22) / 0xc;
@@ -89661,7 +89130,6 @@ LAB_005dbbe0:
     *(undefined1 *)(local_2f0 + 0x19 + ((int)pfVar22[7] * 0x40 + (int)pfVar22[8]) * 0x10) = 3;
     *(undefined1 *)(local_2f0 + 0x18 + ((int)pfVar22[10] * 0x40 + (int)pfVar22[0xb]) * 0x10) = 1;
     *(undefined1 *)(local_2f0 + 0x19 + ((int)pfVar22[10] * 0x40 + (int)pfVar22[0xb]) * 0x10) = 4;
-                    /* WARNING: Subroutine does not return */
     operator_delete(pfVar22);
   }
   goto LAB_005dbc70;
@@ -89961,7 +89429,6 @@ void FUN_005f4d10(undefined4 *param_1)
  */
 /* Global::GameController_buildDecalMesh @ 005f51e0 */
 
-/* WARNING: Removing unreachable block (ram,0x005f568f) */
 
 void GameController_buildDecalMesh(undefined4 param_1,undefined2 param_2,undefined1 param_3,int variant)
 
@@ -90121,7 +89588,6 @@ void GameController_buildDecalMesh(undefined4 param_1,undefined2 param_2,undefin
  */
 /* Global::GameController_buildDecalMesh2 @ 005f8ad0 */
 
-/* WARNING: Removing unreachable block (ram,0x005f8ddb) */
 
 void GameController_buildDecalMesh2(undefined4 param_1,undefined2 param_2,undefined1 param_3,int variant)
 
@@ -92734,7 +92200,6 @@ void cube::GameController::unloadZone(int param_1,int param_2)
       LeaveCriticalSection((LPCRITICAL_SECTION)(in_ECX + 0x8000c0));
       pvVar1 = local_30;
       _eh_vector_destructor_iterator_(local_30,0x34,0x1000,cube::ZoneTile::ctor_0);
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
   }
@@ -92784,7 +92249,6 @@ int hash_or_index_compute(uint x,uint z)
  * Body writes cube::LandscapeTile::vftable (new 0x34)+cube::Sprite::ctor_0, zlib_inflateBuffer, VoxelModel_build_mesh under EnterCriticalSection(this+0x8000d8), indexing this+0x4000b0 1024x1024 grid (param<0x400). RTTI AULandscapeTile@cube@@. Not a stringbuf ctor.
  * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void cube::GameController::loadLandscapeTile
                (int param_1,int param_2)
@@ -93772,7 +93236,6 @@ LAB_00604286:
                 iVar5 = allocObjectWithVec3(iVar16,*(undefined4 *)(iVar16 + 4),&local_68);
                 iVar4 = piVar12[1];
                 if (iVar4 == 0xccccccb) {
-                    /* WARNING: Subroutine does not return */
                   std::_Xlength_error("list<T> too long");
                 }
                 piVar12[1] = iVar4 + 1;
@@ -94016,12 +93479,10 @@ LAB_0060490a:
         memcpy((void *)((int)local_c4 + local_b8),_Src,_Size);
         local_b8 = local_b8 + _Size;
         if (_Src != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(_Src);
         }
         local_8._0_1_ = 10;
         if (pvVar18 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(pvVar18);
         }
       }
@@ -94046,7 +93507,6 @@ LAB_0060490a:
       p_Var17 = local_cc;
       local_8 = CONCAT31(local_8._1_3_,10);
       if (0xf < local_6c) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_80[0]);
       }
       EnterCriticalSection(local_cc);
@@ -94074,19 +93534,15 @@ LAB_0060490a:
       local_8 = CONCAT31(local_8._1_3_,0xf);
       db_storeBlobVec(local_80,&local_124);
       if (0xf < local_6c) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_80[0]);
       }
       if (local_124 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_124);
       }
       if (local_c4 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_c4);
       }
       if (local_104 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_104);
       }
       local_8 = 0xffffffff;
@@ -94095,7 +93551,6 @@ LAB_0060490a:
       *(undefined **)((int)&iStack_1e4 + (int)local_1e0[0][1]) = local_1e0[0][1] + -0x68;
       local_1c8[0] = vftable;
       if ((local_18c & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*local_1bc);
       }
       std::basic_streambuf<char,std::char_traits<char>_>::setg
@@ -94505,7 +93960,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     AdaptionWidget_draw_text_locked(apvStack_498,uVar2,0,0x40000000,(float)(int)fVar15,0x41f00000,0x41600000,0x40400000
                  ,&uStack_6f8,&uStack_718,&uStack_7b8,5,0x43340000,1);
     if (7 < uStack_50c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_520[0]);
     }
     uStack_50c = 7;
@@ -94513,7 +93967,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     apvStack_520[0] = (void *)((uint)apvStack_520[0] & 0xffff0000);
     local_c._0_1_ = 3;
     if (7 < uStack_484) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_498[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -94535,14 +93988,12 @@ void cube::GameController::drawWorldSelectEntry(void)
     AdaptionWidget_draw_text_locked(apvStack_4c8,uVar2,0,0x40000000,(float)(int)fVar15,0x41f00000,0x41600000,0,
                  &uStack_698,&uStack_6b8,&uStack_6d8,5,0x43340000,1);
     if (7 < uStack_584) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_598[0]);
     }
     uStack_584 = 7;
     uStack_588 = 0;
     apvStack_598[0] = (void *)((uint)apvStack_598[0] & 0xffff0000);
     if (7 < uStack_4b4) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_4c8[0]);
     }
   }
@@ -95116,7 +94567,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     wostream_insertU16string(&puStack_bd0,uVar2);
     uStack_24._0_1_ = 0xb;
     if (7 < uStack_40c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_420[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -95138,7 +94588,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     AdaptionWidget_draw_text_locked(apvStack_480,uVar2,0,0x40000000,0x43480000,0x41f00000,0x41600000,0x40400000,
                  &uStack_7c0,&uStack_810,&uStack_740,0x10,0x43340000,1);
     if (7 < uStack_584) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_598[0]);
     }
     uStack_584 = 7;
@@ -95146,7 +94595,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     apvStack_598[0] = (void *)((uint)apvStack_598[0] & 0xffff0000);
     uStack_24._0_1_ = 0xb;
     if (7 < uStack_46c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_480[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -95168,7 +94616,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     AdaptionWidget_draw_text_locked(apvStack_438,uVar2,0,0x40000000,0x43480000,0x41f00000,0x41600000,0,&fStack_8b0,
                  &uStack_7b0,&uStack_7f0,0x10,0x43340000,1);
     if (7 < uStack_56c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_580[0]);
     }
     uStack_56c = 7;
@@ -95176,7 +94623,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     apvStack_580[0] = (void *)((uint)apvStack_580[0] & 0xffff0000);
     uStack_24._0_1_ = 0xb;
     if (7 < uStack_424) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_438[0]);
     }
     u16string_assignCStr(&PTR_006fccac);
@@ -95189,7 +94635,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     strstreambuf_init(ppppuVar8,uStack_690,uStack_b8c);
     uStack_24._0_1_ = 0xb;
     if (7 < uStack_68c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pppuStack_6a0);
     }
     fVar15 = (float)*(int *)(*(int *)((int)in_ECX + 0x160) + 0x24);
@@ -95216,7 +94661,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     AdaptionWidget_draw_text_locked(apvStack_450,uVar2,0,0x40000000,0x43480000,0x425c0000,0x41200000,0x40400000,
                  &uStack_7a0,&uStack_770,&uStack_790,0,0xbf800000,1);
     if (7 < uStack_53c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_550[0]);
     }
     uStack_53c = 7;
@@ -95224,7 +94668,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     apvStack_550[0] = (void *)((uint)apvStack_550[0] & 0xffff0000);
     uStack_24._0_1_ = 0xb;
     if (7 < uStack_43c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_450[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -95246,7 +94689,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     AdaptionWidget_draw_text_locked(apvStack_4c8,uVar2,0,0x40000000,0x43480000,0x425c0000,0x41200000,0,&uStack_8a0,
                  &uStack_780,&uStack_720,0,0xbf800000,1);
     if (7 < uStack_4f4) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_508[0]);
     }
     uStack_4f4 = 7;
@@ -95254,7 +94696,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     apvStack_508[0] = (void *)((uint)apvStack_508[0] & 0xffff0000);
     uStack_24._0_1_ = 0xb;
     if (7 < uStack_4b4) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_4c8[0]);
     }
     u16string_assignCStr(&PTR_006fccac);
@@ -95267,7 +94708,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     strstreambuf_init(ppppuVar8,uStack_678,uStack_b8c);
     uStack_24 = CONCAT31(uStack_24._1_3_,0xb);
     if (7 < uStack_674) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apppuStack_688[0]);
     }
     pbVar6 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)
@@ -95293,7 +94733,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     AdaptionWidget_draw_text_locked(apvStack_480,uVar2,0,0x40000000,0x43480000,0x42a00000,0x41200000,0x40400000,
                  &uStack_828,&uStack_848,&uStack_868,0,0xbf800000,1);
     if (7 < uStack_4f4) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_508[0]);
     }
     uStack_4f4 = 7;
@@ -95301,7 +94740,6 @@ void cube::GameController::drawWorldSelectEntry(void)
     apvStack_508[0] = (void *)((uint)apvStack_508[0] & 0xffff0000);
     local_c._0_1_ = 0xb;
     if (7 < uStack_46c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_480[0]);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -95323,14 +94761,12 @@ void cube::GameController::drawWorldSelectEntry(void)
     AdaptionWidget_draw_text_locked(apvStack_450,uVar2,0,0x40000000,0x43480000,0x42a00000,0x41200000,0,&uStack_7c8,
                  &uStack_7e8,&uStack_808,0,0xbf800000,1);
     if (7 < uStack_53c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_550[0]);
     }
     uStack_53c = 7;
     uStack_540 = 0;
     apvStack_550[0] = (void *)((uint)apvStack_550[0] & 0xffff0000);
     if (7 < uStack_43c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_450[0]);
     }
   }
@@ -95423,7 +94859,6 @@ int get_int_stub_b(void)
  */
 /* Global::GameController_updateSubsystems @ 0060c510 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void GameController_updateSubsystems(int param_1,undefined4 param_2,int param_3)
 
@@ -96049,7 +95484,6 @@ void GameController_updateSubsystems(int param_1,undefined4 param_2,int param_3)
     local_8 = CONCAT31(local_8._1_3_,1);
     db_storeBlobVec();
     if (0xf < local_3ec) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_400);
     }
     local_3ec = 0xf;
@@ -104441,7 +103875,6 @@ void string_appendGrow(int dst_list,undefined4 *first,undefined4 *last)
     **(int **)(node + 4) = node;
     first = (undefined4 *)*first;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xlength_error("list<T> too long");
 }
 
@@ -104576,9 +104009,6 @@ void object_alloc(void)
   
   sentinel = operator_new(0x40);
   if (sentinel == (void *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x00630a1e. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
   }
@@ -104707,7 +104137,6 @@ void Widget_setPositionFloat(float child)
   list = *(int *)(self + 0x2c);
   inserted = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&local_4c);
   if (*(int *)(self + 0x30) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x30) = *(int *)(self + 0x30) + 1;
@@ -104913,10 +104342,8 @@ void Node_dtor_release_children(void)
   *child_list = child_list;
   child_list[1] = child_list;
   if (node == child_list) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(child_list);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(node);
 }
 
@@ -105018,7 +104445,6 @@ void Node_get_first_material_name(undefined4 *out_text)
         goto LAB_00634a00;
       }
       if (7 < child_cap) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(child_text[0]);
       }
       child = (int *)*child;
@@ -105111,7 +104537,6 @@ void Node_find_child_name_by_string(undefined4 *out_text,undefined4 *name,char d
         goto LAB_00635690;
       }
       if (7 < child_cap) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(child_text[0]);
       }
       piVar4 = (int *)*piVar4;
@@ -105328,7 +104753,6 @@ void Node_remove_child_from_list(int child)
         iVar2 = *node;
         *list = iVar2;
         *(int **)(iVar2 + 4) = list;
-                    /* WARNING: Subroutine does not return */
         operator_delete(node);
       }
     }
@@ -105539,7 +104963,6 @@ void FUN_0063de60(void)
   
   if (*in_ECX != 0) {
     std_vector_destroy_ptr_elems_stride3(*in_ECX,in_ECX[1],&local_5);
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*in_ECX);
   }
   return;
@@ -105658,7 +105081,6 @@ undefined4 * Registry_push_node_locked_0x94(undefined4 *out)
   list = *(int *)(self + 0x94);
   new_node = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&stack0x00000008);
   if (*(int *)(self + 0x98) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x98) = *(int *)(self + 0x98) + 1;
@@ -105743,7 +105165,6 @@ undefined4 NamedObject_create_with_defaults(int pos_attr,undefined4 param_2,int 
     }
     local_8 = 0xffffffff;
     if (7 < local_14) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_28[0]);
     }
     local_14 = 7;
@@ -105764,7 +105185,6 @@ undefined4 NamedObject_create_with_defaults(int pos_attr,undefined4 param_2,int 
     }
     local_8 = 0xffffffff;
     if (7 < local_2c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_40[0]);
     }
     local_2c = 7;
@@ -105876,7 +105296,6 @@ void Node_destroy_and_unregister(undefined4 *node)
       if (listNode != *(int **)(self + 0x84)) {
         *(int *)listNode[1] = *listNode;
         *(int *)(*listNode + 4) = listNode[1];
-                    /* WARNING: Subroutine does not return */
         operator_delete(listNode);
       }
       LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x58));
@@ -105895,7 +105314,6 @@ void Node_destroy_and_unregister(undefined4 *node)
       if (listNode != *(int **)(self + 0x74)) {
         *(int *)listNode[1] = *listNode;
         *(int *)(*listNode + 4) = listNode[1];
-                    /* WARNING: Subroutine does not return */
         operator_delete(listNode);
       }
       LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x58));
@@ -105914,7 +105332,6 @@ void Node_destroy_and_unregister(undefined4 *node)
       if (listNode != *(int **)(self + 0x8c)) {
         *(int *)listNode[1] = *listNode;
         *(int *)(*listNode + 4) = listNode[1];
-                    /* WARNING: Subroutine does not return */
         operator_delete(listNode);
       }
       LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x58));
@@ -105933,7 +105350,6 @@ void Node_destroy_and_unregister(undefined4 *node)
   if (listNode != *(int **)(self + 0x94)) {
     *(int *)listNode[1] = *listNode;
     *(int *)(*listNode + 4) = listNode[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(listNode);
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x58));
@@ -105942,10 +105358,8 @@ void Node_destroy_and_unregister(undefined4 *node)
   *childList = childList;
   childList[1] = childList;
   if (nodeCopy != childList) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nodeCopy);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(childList);
 }
 
@@ -105969,7 +105383,6 @@ void ShapeNode_unregister_and_release(undefined4 *obj)
   if (listNode != *(int **)(self + 0x74)) {
     *(int *)listNode[1] = *listNode;
     *(int *)(*listNode + 4) = listNode[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(listNode);
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x58));
@@ -106006,7 +105419,6 @@ void Widget_unregister_and_release(undefined4 *obj)
   if (listNode != *(int **)(self + 0x7c)) {
     *(int *)listNode[1] = *listNode;
     *(int *)(*listNode + 4) = listNode[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(listNode);
   }
   LeaveCriticalSection((LPCRITICAL_SECTION)(self + 0x58));
@@ -106629,7 +106041,6 @@ void GameController_load_widget_file(undefined4 *pathStr,undefined4 arg2,undefin
   iVar6 = map_insertVal_strKey(sepBefore,*(undefined4 *)(sepBefore + 4),nameBuf);
   sepPos = *(int *)(iVar1 + 0x140);
   if (sepPos == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(iVar1 + 0x140) = sepPos + 1;
@@ -106683,14 +106094,12 @@ LAB_00653a18:
     ios_setstateFailIfZero();
   }
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(upperExtStr[0]);
   }
   local_18 = 7;
   local_1c = 0;
   upperExtStr[0] = (undefined4 ***)((uint)upperExtStr[0] & 0xffff0000);
   if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameBuf[0]);
   }
   local_30 = 7;
@@ -107283,7 +106692,6 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
       piVar15 = (int *)rbtree_findOrInsert_intKey(&local_2e8);
       *piVar15 = zero;
       std_list_clearNodesWithStrings();
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2cc);
     case 8:
       PopUpButton_deserialize(stream,&map);
@@ -107317,7 +106725,6 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
           ppvVar10 = (void **)istream_read_string(local_5c,stream);
           if (local_44 != ppvVar10) {
             if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_44[0]);
             }
             local_30 = 0xf;
@@ -107326,7 +106733,6 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
             string_move(ppvVar10);
           }
           if (0xf < local_48) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_5c[0]);
           }
           local_48 = 0xf;
@@ -107487,7 +106893,6 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
         *(undefined4 *)(zero + 0xdc) = 0;
         piVar14 = listA;
         if (pvVar3 != *(void **)(zero + 0xd8)) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(pvVar3);
         }
       }
@@ -107557,7 +106962,6 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
       zero = FontCache_load_font_by_name(uVar13,(float)piVar15[0xe],0,piVar15[0xf],1);
       ehState._0_1_ = 8;
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_5c[0]);
       }
       local_48 = 7;
@@ -107667,10 +107071,8 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
   *puVar18 = puVar18;
   puVar18[1] = puVar18;
   if (slot == puVar18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(puVar18);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(slot);
 }
 
@@ -107683,7 +107085,6 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
  */
 /* Global::ScrollButton_deserialize @ 00657a00 */
 
-/* WARNING: Removing unreachable block (ram,0x00657ae9) */
 
 undefined4 ScrollButton_deserialize(basic_istream<char,std::char_traits<char>_> *stream)
 
@@ -107819,7 +107220,6 @@ ScrollButton_read_field(basic_istream<char,std::char_traits<char>_> *stream,int 
  */
 /* Global::ScrollSlider_deserialize @ 00657ce0 */
 
-/* WARNING: Removing unreachable block (ram,0x00657dc9) */
 
 undefined4 ScrollSlider_deserialize(basic_istream<char,std::char_traits<char>_> *stream)
 
@@ -108037,7 +107437,6 @@ void SmoothMeshShape_deserialize_v2(basic_istream<char,std::char_traits<char>_> 
     shapePtr = plasma::SmoothMeshShape::ctor_0(shape,&local_b8);
   }
   if (7 < local_a4) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_b8);
   }
   local_a4 = 7;
@@ -108069,13 +107468,11 @@ void SmoothMeshShape_deserialize_v2(basic_istream<char,std::char_traits<char>_> 
       }
       while( true ) {
         if (puVar1 == faceListEnd) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(faceList);
         }
         if ((void *)*puVar1 != (void *)0x0) break;
         puVar1 = puVar1 + 3;
       }
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*puVar1);
     }
     std::basic_istream<char,std::char_traits<char>_>::read
@@ -108093,7 +107490,6 @@ void SmoothMeshShape_deserialize_v2(basic_istream<char,std::char_traits<char>_> 
       std_string_FreeMember();
       ehState._0_1_ = 2;
       if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(strBufB[0]);
       }
       break;
@@ -108254,7 +107650,6 @@ void istream_read_string(undefined1 *strOut,basic_istream<char,std::char_traits<
   operator_delete__(strBuf);
   string_moveConstruct2(tmpStr);
   if (0xf < tmpCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(tmpStr[0]);
   }
   __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc);
@@ -108270,7 +107665,6 @@ void istream_read_string(undefined1 *strOut,basic_istream<char,std::char_traits<
  */
 /* Global::TextShape_deserialize @ 00658630 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void TextShape_deserialize(basic_istream<char,std::char_traits<char>_> *stream,undefined4 arg2)
 
@@ -108379,7 +107773,6 @@ void TextShape_deserialize(basic_istream<char,std::char_traits<char>_> *stream,u
     shape = (int *)plasma::TextShape::ctor_0();
   }
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(strTmp);
   }
   local_18 = 7;
@@ -108387,7 +107780,6 @@ void TextShape_deserialize(basic_istream<char,std::char_traits<char>_> *stream,u
   strTmp = (void *)((uint)strTmp & 0xffff0000);
   ehState = 0xffffffff;
   if (7 < local_c4) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_d8);
   }
   local_d8 = (void *)((uint)local_d8 & 0xffff0000);
@@ -108423,7 +107815,6 @@ void TextShape_deserialize(basic_istream<char,std::char_traits<char>_> *stream,u
           u16string_replaceRange();
         }
         if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(nameBufB[0]);
         }
         local_48 = 7;
@@ -108431,7 +107822,6 @@ void TextShape_deserialize(basic_istream<char,std::char_traits<char>_> *stream,u
         nameBufB[0] = (void *)((uint)nameBufB[0] & 0xffff0000);
         ehState = 0xffffffff;
         if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(nameBufA[0]);
         }
         local_30 = 0xf;
@@ -108500,7 +107890,6 @@ void TextShape_deserialize(basic_istream<char,std::char_traits<char>_> *stream,u
         _Dst = (undefined4 *)(shape[0x2a] + length);
         if (_Dst != _Src) {
           if (7 < (uint)_Dst[5]) {
-                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*_Dst);
           }
           _Dst[5] = 7;
@@ -108522,7 +107911,6 @@ void TextShape_deserialize(basic_istream<char,std::char_traits<char>_> *stream,u
           *(undefined2 *)_Src = 0;
         }
         if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(nameBufC[0]);
         }
         local_84 = local_84 + 1;
@@ -108714,20 +108102,17 @@ void Texture_load_from_file_freeimage(undefined4 *pathObj)
     local_78 = 1;
     (**(code **)(*texture + 8))(upperExt,height,pvVar1,&local_88,&local_74,0);
     if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_74);
     }
     local_60 = 7;
     local_64 = 0;
     local_74 = (void *)((uint)local_74 & 0xffff0000);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
   }
 LAB_00658f62:
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(extStr[0]);
   }
   ExceptionList = savedExceptionList;
@@ -108896,20 +108281,17 @@ void Texture_load_from_memory_freeimage(int pathObj,int memBuf,int memLen)
     local_78 = 1;
     (**(code **)(*texture + 8))(upperExt,height,pvVar1,&local_88,&local_74,0);
     if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_74);
     }
     local_60 = 7;
     local_64 = 0;
     local_74 = (void *)((uint)local_74 & 0xffff0000);
     if (pvVar1 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar1);
     }
   }
 LAB_006592e2:
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(extStr[0]);
   }
   ExceptionList = savedExceptionList;
@@ -108996,7 +108378,6 @@ void ContinuousAttributeVec3_deserialize(basic_istream<char,std::char_traits<cha
   }
   ehState = 0xffffffff;
   if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_8c);
   }
   local_8c = (void *)((uint)local_8c & 0xffff0000);
@@ -109032,7 +108413,6 @@ void ContinuousAttributeVec3_deserialize(basic_istream<char,std::char_traits<cha
         u16string_replaceRange();
       }
       if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(nameBufA[0]);
       }
       local_30 = 7;
@@ -109040,7 +108420,6 @@ void ContinuousAttributeVec3_deserialize(basic_istream<char,std::char_traits<cha
       nameBufA[0] = (void *)((uint)nameBufA[0] & 0xffff0000);
       ehState = 0xffffffff;
       if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(strTmp[0]);
       }
       local_18 = 0xf;
@@ -109086,7 +108465,6 @@ void ContinuousAttributeVec3_deserialize(basic_istream<char,std::char_traits<cha
  */
 /* Global::NamedObject_deserialize @ 00659740 */
 
-/* WARNING: Removing unreachable block (ram,0x00659829) */
 
 undefined4 NamedObject_deserialize(basic_istream<char,std::char_traits<char>_> *stream)
 
@@ -109441,7 +108819,6 @@ void GameController_rebuildEntityLists(void)
                 if (*(int *)(glyph + 0x28) != 0) {
                   Node_unregister_notify_release(*(int *)(glyph + 0x28));
                 }
-                    /* WARNING: Subroutine does not return */
                 operator_delete((void *)charIter[5]);
               }
               *(undefined1 *)(glyph + 0x30) = 0;
@@ -109490,10 +108867,8 @@ LAB_0065b4d1:
           charIter[1] = (int)charIter;
           idListState = 0;
           if (fontIter == charIter) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(charIter);
           }
-                    /* WARNING: Subroutine does not return */
           operator_delete(fontIter);
         }
         if (*(int *)(selfCopy + 200) == fontIter[7]) {
@@ -109505,7 +108880,6 @@ LAB_0065b4d1:
         puVar3 = (undefined4 *)fontIter[7];
         if (puVar3 != (undefined4 *)0x0) {
           std_Tree_eraseRange(strBufA,*(undefined4 *)*puVar3,(undefined4 *)*puVar3);
-                    /* WARNING: Subroutine does not return */
           operator_delete((void *)*puVar3);
         }
         glyph = std_map_storeGlyphAt(snapshotPtr,snapshotPtr[1],fontIter + 4);
@@ -109567,7 +108941,6 @@ LAB_0065b4d1:
                 if (*(int *)(glyph + 0x28) != 0) {
                   Node_unregister_notify_release(*(int *)(glyph + 0x28));
                 }
-                    /* WARNING: Subroutine does not return */
                 operator_delete((void *)charIter[5]);
               }
               *(undefined1 *)(glyph + 0x30) = 0;
@@ -109618,13 +108991,11 @@ LAB_0065b4d1:
           snapshot = (undefined4 *)fontIter[9];
           if (snapshot != (undefined4 *)0x0) {
             std_Tree_eraseRange(strBufB,*(undefined4 *)*snapshot,(undefined4 *)*snapshot);
-                    /* WARNING: Subroutine does not return */
             operator_delete((void *)*snapshot);
           }
           glyph = std_map_insertOrAssignGuardedValue(idList,idList[1],fontIter + 4);
           if (idListState == 0x9249248) {
 LAB_0065b603:
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           piVar2[1] = glyph;
@@ -109637,10 +109008,8 @@ LAB_0065b603:
         charIter[1] = (int)charIter;
         local_3c = 0;
         if (fontIter == charIter) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(charIter);
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete(fontIter);
       }
       if (*(char *)((int)fontIter + 0xd) == '\0') {
@@ -109674,7 +109043,6 @@ LAB_0065b603:
   }
   LeaveCriticalSection(critSection);
   std_list_clearNodes();
-                    /* WARNING: Subroutine does not return */
   operator_delete(idList);
 }
 
@@ -109775,7 +109143,6 @@ void plasma::TextShape::ctor_0(undefined4 arg1,undefined4 text,undefined4 arg3)
   ::ctor_0(attrName,text);
   ehState._0_1_ = 3;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrName[0]);
   }
   local_18 = 0xf;
@@ -109793,7 +109160,6 @@ void plasma::TextShape::ctor_0(undefined4 arg1,undefined4 text,undefined4 arg3)
   ContinuousAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufB,&colorVec);
   ehState._0_1_ = 6;
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_30 = 0xf;
@@ -109811,7 +109177,6 @@ void plasma::TextShape::ctor_0(undefined4 arg1,undefined4 text,undefined4 arg3)
   ContinuousAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufA,&colorVec);
   ehState._0_1_ = 9;
   if (0xf < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_48 = 0xf;
@@ -109828,7 +109193,6 @@ void plasma::TextShape::ctor_0(undefined4 arg1,undefined4 text,undefined4 arg3)
   local_18 = 0x3f800000;
   ContinuousAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufB,&colorVec);
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   self[0x6f] = 0;
@@ -109873,7 +109237,6 @@ void list_pushFrontNode(void)
   list = *(int *)(self + 0x24);
   node = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&stack0x00000004);
   if (*(int *)(self + 0x28) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(self + 0x28) = *(int *)(self + 0x28) + 1;
@@ -110007,7 +109370,6 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_1
   ContinuousAttribute<plasma::Vector<2,float>_>::ctor_0(attrBufB,&defVal);
   ehState._0_1_ = 3;
   if (0xf < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_38 = 0xf;
@@ -110021,7 +109383,6 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_1
   ContinuousAttribute<plasma::Matrix<float>_>::ctor_0(attrBufC,matrixTmp);
   ehState._0_1_ = 6;
   if (0xf < local_20) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufC[0]);
   }
   local_20 = 0xf;
@@ -110046,7 +109407,6 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_1
   std_vector_resize_0xc(2,&local_40);
   ehState._0_1_ = 0xb;
   if (0xf < local_50) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_50 = 0xf;
@@ -110062,7 +109422,6 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::ctor_1
   ContinuousAttribute<plasma::Vector<2,float>_>::ctor_0(attrBufC,&defVal);
   ehState._0_1_ = 0xe;
   if (0xf < local_20) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufC[0]);
   }
   local_20 = 0xf;
@@ -110142,7 +109501,6 @@ void plasma::DiscreteAttribute<int>::ctor_0(undefined4 ownerArg,undefined4 nameA
   std_vector_resize_erase_4(2,&defVal);
   ehState._0_1_ = 5;
   if (0xf < local_48) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufA[0]);
   }
   local_48 = 0xf;
@@ -110165,7 +109523,6 @@ void plasma::DiscreteAttribute<int>::ctor_0(undefined4 ownerArg,undefined4 nameA
   std_vector_resize_erase_4(2,&defVal);
   ehState._0_1_ = 10;
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_30 = 0xf;
@@ -110183,7 +109540,6 @@ void plasma::DiscreteAttribute<int>::ctor_0(undefined4 ownerArg,undefined4 nameA
   ContinuousAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufC,&colorVec);
   ehState._0_1_ = 0xd;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufC[0]);
   }
   local_18 = 0xf;
@@ -110201,7 +109557,6 @@ void plasma::DiscreteAttribute<int>::ctor_0(undefined4 ownerArg,undefined4 nameA
   ContinuousAttribute<plasma::Vector<4,float>_>::ctor_0(attrBufB,&colorVec);
   ehState._0_1_ = 0x10;
   if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufB[0]);
   }
   local_30 = 0xf;
@@ -110223,7 +109578,6 @@ void plasma::DiscreteAttribute<int>::ctor_0(undefined4 ownerArg,undefined4 nameA
   std_vector_resize_4byte(2,&defVal);
   ehState._0_1_ = 0x15;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(attrBufC[0]);
   }
   self[0x80] = 0;
@@ -110528,7 +109882,6 @@ LAB_00681ee5:
       string_assignCStr(&DAT_006fc918);
       ehState = CONCAT31(ehState._1_3_,2);
       plasma::Exception::ctor_3(local_3c);
-                    /* WARNING: Subroutine does not return */
       _CxxThrowException(local_98,(ThrowInfo *)&DAT_00760340);
     }
   }
@@ -110588,10 +109941,8 @@ LAB_0068296d:
       *objMap = objMap;
       objMap[1] = objMap;
       if (puVar5 == objMap) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(objMap);
       }
-                    /* WARNING: Subroutine does not return */
       operator_delete(puVar5);
     }
     StreamReader_readToken(local_3c,1);
@@ -110601,7 +109952,6 @@ LAB_0068296d:
         0) {
       ehState._0_1_ = 1;
       if (0xf < local_28) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_3c[0]);
       }
       goto LAB_0068296d;
@@ -110629,7 +109979,6 @@ LAB_0068296d:
         string_assignPtrLen(&DAT_006fc918,0);
         ehState = CONCAT31(ehState._1_3_,4);
         plasma::Exception::ctor_4(&local_54);
-                    /* WARNING: Subroutine does not return */
         _CxxThrowException(local_98,(ThrowInfo *)&DAT_007603b4);
       }
       StreamReader_endBlockCheckPos();
@@ -110675,7 +110024,6 @@ LAB_0068296d:
         std_vector_pushBack8byte(&local_fc);
         ehState._0_1_ = 6;
         if (0xf < uStack_40) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_54);
         }
         headerBuf = (int *)(local_bc - (int)local_c0 >> 3);
@@ -110711,23 +110059,19 @@ LAB_0068296d:
               *(undefined4 *)(self + 0x10) = *(undefined4 *)((int)local_c0 + local_b4 * 8);
               *(undefined4 *)(self + 0x14) = *(undefined4 *)((int)local_c0 + local_b4 * 8 + 4);
               if (0xf < uStack_40) {
-                    /* WARNING: Subroutine does not return */
                 operator_delete(local_54);
               }
               ehState._0_1_ = 6;
               if (pvVar13 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
                 operator_delete(pvVar13);
               }
               break;
             }
             if (0xf < uStack_40) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(local_54);
             }
             ehState._0_1_ = 6;
             if (pvVar13 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(pvVar13);
             }
             local_b4 = local_b4 + 1;
@@ -110745,15 +110089,12 @@ LAB_0068296d:
           string_assignPtrLen(&DAT_006fc918,0);
           ehState = CONCAT31(ehState._1_3_,10);
           plasma::Exception::ctor_2(&local_54);
-                    /* WARNING: Subroutine does not return */
           _CxxThrowException(local_98,(ThrowInfo *)&DAT_007603f0);
         }
         if (pvVar13 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(pvVar13);
         }
         if (local_cc != (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_cc);
         }
       }
@@ -110996,7 +110337,6 @@ LAB_006828a1:
     uVar2 = (undefined1)ehState;
     ehState._0_1_ = 1;
     if (0xf < local_28) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_3c[0]);
     }
     ch = *(byte *)(*(int *)(**(int **)(self + 8) + 4) + 0xc + (int)*(int **)(self + 8));
@@ -111052,7 +110392,6 @@ void Button_deserializeProperties(void)
   widget = Button_new_instance(0,0,&nameStub);
   ehState = 0xffffffff;
   if (7 < stubVal) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameStub);
   }
   stubVal = 7;
@@ -111131,7 +110470,6 @@ LAB_00683176:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -111194,7 +110532,6 @@ void Display_deserializeProperties(void)
   display = DiscreteAttributeInt_new_instance(&displayStub);
   ehState = 0xffffffff;
   if (7 < stubCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(displayStub);
   }
   stubCap = 7;
@@ -111269,7 +110606,6 @@ LAB_00683367:
         u16string_replaceRange(fieldPtr,0,0xffffffff);
       }
       if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(strTmp[0]);
       }
       isMatch = strLen < 0x10;
@@ -111279,7 +110615,6 @@ LAB_00683367:
 LAB_006834e1:
       ehState = CONCAT31(ehState._1_3_,1);
       if (!isMatch) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(nameBuf[0]);
       }
       StreamReader_endBlockCheckPos();
@@ -111476,7 +110811,6 @@ LAB_0068345e:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -111525,7 +110859,6 @@ void deserializeWidgetOnlyObject_0064f200(void)
   movie = Edit_new_instance(0,&stubVal);
   ehState = 0xffffffff;
   if (7 < stubTail) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(stubVal);
   }
   stubTail = 7;
@@ -111551,7 +110884,6 @@ void deserializeWidgetOnlyObject_0064f200(void)
     token[0] = (void *)((uint)token[0] & 0xffffff00);
     atEnd = StreamReader_endBlockCheckPos();
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(token[0]);
 }
 
@@ -111624,7 +110956,6 @@ void GenericShape_deserializeProperties(void)
   shapePtr = (int *)GenericShape_new_instance(&wsourceStub,&sourceStub);
   shape = shapePtr;
   if (7 < stub2Cap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(wsourceStub);
   }
   stub2Cap = 7;
@@ -111632,7 +110963,6 @@ void GenericShape_deserializeProperties(void)
   wsourceStub = (void *)((uint)wsourceStub & 0xffff0000);
   ehState = 0xffffffff;
   if (7 < stubCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(sourceStub);
   }
   stubCap = 7;
@@ -111709,7 +111039,6 @@ LAB_006839e6:
         u16string_replaceRange(fieldPtr,0,0xffffffff);
       }
       if (7 < strLen) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(nameBuf[0]);
       }
 LAB_00683a87:
@@ -111720,7 +111049,6 @@ LAB_00683a87:
 LAB_00683c72:
       ehState = CONCAT31(ehState._1_3_,2);
       if (!isMatch) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(strTmp[0]);
       }
       StreamReader_endBlockCheckPos();
@@ -111817,7 +111145,6 @@ LAB_00683c60:
           u16string_replaceRange(fieldPtr,0,0xffffffff);
         }
         if (7 < strLen) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(nameBuf[0]);
         }
         goto LAB_00683a87;
@@ -111913,7 +111240,6 @@ LAB_00683c60:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -111962,7 +111288,6 @@ void deserializeWidgetOnlyObject_0064f300(void)
   listWidget = ListWidget_new_instance(0,&stubVal);
   ehState = 0xffffffff;
   if (7 < stubTail) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(stubVal);
   }
   stubTail = 7;
@@ -111988,7 +111313,6 @@ void deserializeWidgetOnlyObject_0064f300(void)
     token[0] = (void *)((uint)token[0] & 0xffffff00);
     atEnd = StreamReader_endBlockCheckPos();
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(token[0]);
 }
 
@@ -112108,7 +111432,6 @@ void Node_deserializeProperties(char isRoot)
         std_list_assign(*puVar5,puVar5);
       }
       std_list_clearNodesWithStrings();
-                    /* WARNING: Subroutine does not return */
       operator_delete(childMap);
     }
     StreamReader_readToken(token,1);
@@ -112175,7 +111498,6 @@ LAB_00684016:
       piVar8 = (int *)copy_two_words(strTmp,uVar7);
       if (&nameBuf != piVar8) {
         if (7 < stubCap) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(nameBuf);
         }
         stubCap = 7;
@@ -112197,7 +111519,6 @@ LAB_00684016:
         *(undefined2 *)piVar8 = 0;
       }
       if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(strTmp[0]);
       }
       isMatch = strLen < 0x10;
@@ -112207,7 +111528,6 @@ LAB_00684016:
       ehState._0_1_ = 3;
 LAB_00684136:
       if (!isMatch) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(nameStub[0]);
       }
       StreamReader_endBlockCheckPos();
@@ -112267,7 +111587,6 @@ LAB_00684188:
         piVar8 = (int *)StreamReader_readWString(nameStub);
         if (&nameBuf != piVar8) {
           if (7 < stubCap) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(nameBuf);
           }
           stubCap = 7;
@@ -112482,7 +111801,6 @@ LAB_00684188:
     }
     ehState = CONCAT31(ehState._1_3_,2);
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -112541,7 +111859,6 @@ void Button_deserializeProperties_0065(void)
   widget = PopUpButton_new_instance(0,&nameStub);
   ehState = 0xffffffff;
   if (7 < stubVal) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameStub);
   }
   stubVal = 7;
@@ -112620,7 +111937,6 @@ LAB_00684876:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -112679,7 +111995,6 @@ void ScrollButton_deserializeProperties(void)
   scrollButton = ScrollButton_new_instance(0,&nameStub);
   ehState = 0xffffffff;
   if (7 < stubCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameStub);
   }
   stubCap = 7;
@@ -112816,7 +112131,6 @@ LAB_00684b36:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -112875,7 +112189,6 @@ void ScrollSlider_deserializeProperties(void)
   scrollSlider = ScrollSlider_new_instance(0,&nameStub);
   ehState = 0xffffffff;
   if (7 < stubCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameStub);
   }
   stubCap = 7;
@@ -113012,7 +112325,6 @@ LAB_00684df6:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -113031,7 +112343,6 @@ LAB_00684df6:
  */
 /* Global::SmoothMeshShape_deserializeProperties @ 00684ef0 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void SmoothMeshShape_deserializeProperties(void)
 
@@ -113098,7 +112409,6 @@ void SmoothMeshShape_deserializeProperties(void)
   ehState = 0;
   shape = (int *)SmoothMeshShape_new_instance(&nameStub);
   if (7 < local_98) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameStub);
   }
   local_98 = 7;
@@ -113127,13 +112437,11 @@ void SmoothMeshShape_deserializeProperties(void)
       if (faceList != (undefined4 *)0x0) {
         while( true ) {
           if (puVar1 == faceListEnd) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(faceList);
           }
           if ((void *)*puVar1 != (void *)0x0) break;
           puVar1 = puVar1 + 3;
         }
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)*puVar1);
       }
       ExceptionList = savedExceptionList;
@@ -113201,7 +112509,6 @@ LAB_0068503d:
         u16string_replaceRange(piVar8,0,0xffffffff);
       }
       if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(strTmp[0]);
       }
       isMatch = local_30 < 0x10;
@@ -113211,7 +112518,6 @@ LAB_0068503d:
 LAB_0068510c:
       ehState._0_1_ = 2;
       if (!isMatch) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(nameBuf[0]);
       }
 LAB_0068511d:
@@ -113680,14 +112986,12 @@ LAB_0068511d:
       StreamReader_endBlockCheckPos();
       frameIndex = faceBase;
       if (local_74 != (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_74);
       }
     }
 LAB_00685a1e:
     ehState = CONCAT31(ehState._1_3_,1);
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     atEnd = StreamReader_endBlockCheckPos();
@@ -113769,7 +113073,6 @@ void TextShape_deserializeProperties(void)
   shapePtr = (int *)TextShape_new_instance(&strStub,&nameStub);
   textShape = shapePtr;
   if (7 < local_b8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(strStub);
   }
   local_b8 = 7;
@@ -113777,7 +113080,6 @@ void TextShape_deserializeProperties(void)
   strStub = (void *)((uint)strStub & 0xffff0000);
   ehState = 0xffffffff;
   if (7 < local_a0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameStub);
   }
   local_a0 = 7;
@@ -113857,7 +113159,6 @@ LAB_00685c87:
         u16string_replaceRange(piVar7,0,0xffffffff);
       }
       if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(nameBuf[0]);
       }
       isMatch = local_48 < 0x10;
@@ -113867,7 +113168,6 @@ LAB_00685c87:
 LAB_00685e0c:
       ehState = CONCAT31(ehState._1_3_,2);
       if (!isMatch) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(strTmp[0]);
       }
       StreamReader_endBlockCheckPos();
@@ -114021,7 +113321,6 @@ LAB_00685eed:
               _Dst = (undefined4 *)(shapePtr[0x2a] + (int)strokeRadius);
               if (_Dst != _Src) {
                 if (7 < (uint)_Dst[5]) {
-                    /* WARNING: Subroutine does not return */
                   operator_delete((void *)*_Dst);
                 }
                 _Dst[5] = 7;
@@ -114043,7 +113342,6 @@ LAB_00685eed:
                 *(undefined2 *)_Src = 0;
               }
               if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
                 operator_delete(strTmp[0]);
               }
               pixelSize = (float)((int)pixelSize + 1);
@@ -114111,7 +113409,6 @@ LAB_00686057:
             }
             ehState = CONCAT31(ehState._1_3_,2);
             if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(nameBuf[0]);
             }
             atEnd = StreamReader_endBlockCheckPos();
@@ -114417,7 +113714,6 @@ LAB_00686738:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -114570,7 +113866,6 @@ LAB_0068691d:
         piVar6 = (int *)copy_two_words(strTmp,uVar5);
         if (&nameBuf != piVar6) {
           if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(nameBuf);
           }
           local_30 = 7;
@@ -114592,7 +113887,6 @@ LAB_0068691d:
           *(undefined2 *)piVar6 = 0;
         }
         if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(strTmp[0]);
         }
         isMatch = local_60 < 0x10;
@@ -114602,7 +113896,6 @@ LAB_0068691d:
         ehState._0_1_ = 2;
 LAB_00686a3d:
         if (!isMatch) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(strStub[0]);
         }
 LAB_00686a4a:
@@ -114664,7 +113957,6 @@ LAB_00686a96:
           piVar6 = (int *)StreamReader_readWString(strStub);
           if (&nameBuf != piVar6) {
             if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
               operator_delete(nameBuf);
             }
             local_30 = 7;
@@ -114907,7 +114199,6 @@ LAB_00686a96:
 LAB_00686f4b:
       ehState = CONCAT31(ehState._1_3_,1);
       if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(token[0]);
       }
       atEnd = StreamReader_endBlockCheckPos();
@@ -114921,7 +114212,6 @@ LAB_00686f4b:
     }
   }
   if (pixelData != (char *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pixelData);
   }
   if (local_30 < 8) {
@@ -114929,7 +114219,6 @@ LAB_00686f4b:
     __security_check_cookie(stackCookieCopy ^ (uint)&stack0xfffffffc);
     return;
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(nameBuf);
 }
 
@@ -114989,7 +114278,6 @@ void Transformation_deserializeProperties(void)
   ehState = 0xffffffff;
   transform = transformPtr;
   if (7 < stubCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameStub);
   }
   stubCap = 7;
@@ -115066,7 +114354,6 @@ LAB_006870e7:
         u16string_replaceRange(fieldPtr2,0,0xffffffff);
       }
       if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(strTmp[0]);
       }
       isMatch = strLen < 0x10;
@@ -115076,7 +114363,6 @@ LAB_006870e7:
 LAB_00687261:
       ehState = CONCAT31(ehState._1_3_,1);
       if (!isMatch) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(nameBuf[0]);
       }
       StreamReader_endBlockCheckPos();
@@ -115246,7 +114532,6 @@ LAB_006871de:
     }
     ehState = 0xffffffff;
     if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(token[0]);
     }
     tokenCap = 0xf;
@@ -115295,7 +114580,6 @@ void deserializeWidgetOnlyObject_006503e0(void)
   transform = NamedObject_new_instance_0x160(0,&stubVal);
   ehState = 0xffffffff;
   if (7 < stubTail) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(stubVal);
   }
   stubTail = 7;
@@ -115321,7 +114605,6 @@ void deserializeWidgetOnlyObject_006503e0(void)
     token[0] = (void *)((uint)token[0] & 0xffffff00);
     atEnd = StreamReader_endBlockCheckPos();
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(token[0]);
 }
 
@@ -115395,7 +114678,6 @@ void Widget_readProperty(int widget,undefined4 *token)
       u16string_replaceRange(cmp,0,0xffffffff);
     }
     if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(strTmp[0]);
     }
     local_38 = 7;
@@ -115403,7 +114685,6 @@ void Widget_readProperty(int widget,undefined4 *token)
     strTmp[0] = (void *)((uint)strTmp[0] & 0xffff0000);
     ehState = 0xffffffff;
     if (0xf < stubCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(nameStub[0]);
     }
     StreamReader_endBlockCheckPos();
@@ -115437,7 +114718,6 @@ void Widget_readProperty(int widget,undefined4 *token)
       }
       ehState = 0xffffffff;
       if (7 < stubCap) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(nameStub[0]);
       }
       StreamReader_endBlockCheckPos();
@@ -115469,7 +114749,6 @@ void Widget_readProperty(int widget,undefined4 *token)
         Widget_updateCaption(fieldVal,0);
         ehState = 0xffffffff;
         if (7 < stubCap) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(nameStub[0]);
         }
         StreamReader_endBlockCheckPos();
@@ -115764,7 +115043,6 @@ void StreamReaderCtx_init(undefined4 stream)
  */
 /* Global::decodeScrambledBuffer @ 006880c0 */
 
-/* WARNING: Removing unreachable block (ram,0x00688164) */
 
 void decodeScrambledBuffer(char *buffer,uint length,uint *key)
 
@@ -115843,7 +115121,6 @@ void StreamReader_readTaggedBlockAppend(void)
                        basePos + length);
   newNode = map_insertVal_3x64payload(nodeList,*(undefined4 *)(nodeList + 4),&basePos);
   if (self[1] == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   self[1] = self[1] + 1;
@@ -115910,7 +115187,6 @@ void StreamReader_readToken(undefined1 *tokenOut,char useNameMap)
         strPtr = (void **)StreamReader_readString(nameBuf);
         if (tokenStr != strPtr) {
           if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(tokenStr[0]);
           }
           tokenCap = 0xf;
@@ -115919,7 +115195,6 @@ void StreamReader_readToken(undefined1 *tokenOut,char useNameMap)
           string_move(strPtr);
         }
         if (0xf < local_30) {
-                    /* WARNING: Subroutine does not return */
           operator_delete(nameBuf[0]);
         }
       }
@@ -115953,7 +115228,6 @@ void StreamReader_readToken(undefined1 *tokenOut,char useNameMap)
       length = savedLen;
       ehState = 0xffffffff;
       if (0xf < tokenCap) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(tokenStr[0]);
       }
     }
@@ -116013,7 +115287,6 @@ uint StreamReader_endBlockCheckPos(void)
   if (tailNode != nodeList) {
     *(int *)tailNode[1] = *tailNode;
     *(int *)(*tailNode + 4) = tailNode[1];
-                    /* WARNING: Subroutine does not return */
     operator_delete(tailNode);
   }
   return CONCAT31((int3)((uint)nodeList >> 8),1);
@@ -116084,7 +115357,6 @@ void StreamReader_readString(undefined1 *strOut)
   operator_delete__(strBuf);
   string_moveConstruct2(tmpStr);
   if (0xf < tmpCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(tmpStr[0]);
   }
   __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc);

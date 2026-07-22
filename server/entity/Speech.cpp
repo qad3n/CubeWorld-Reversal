@@ -578,9 +578,6 @@ void QuestTextNode_allocSentinel64(void)
   
   head = operator_new(0x40);
   if (head == (void *)0x0) {
-                    /* WARNING: Could not recover jumptable at 0x0041a03e. Too many branches */
-                    /* WARNING: Subroutine does not return */
-                    /* WARNING: Treating indirect jump as call */
     std::_Xbad_alloc();
     return;
   }
@@ -1024,7 +1021,6 @@ LAB_0041b489:
           iVar10 = std_list_insertNode1(local_30,(undefined4 *)local_30[1],&local_3c);
           if (*(int *)(iVar7 + 0x3c) == 0x15555554) {
 LAB_0041b8eb:
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           *(int *)(iVar7 + 0x3c) = *(int *)(iVar7 + 0x3c) + 1;
@@ -1685,7 +1681,6 @@ void __fastcall cube::Speech::ctor_0(undefined4 *self)
                 if (local_1c != 0) {
                   iVar9 = std_list_Speech_makeStrNode(local_14c,(undefined4 *)local_14c[1],(int *)temp_str);
                   if (local_148 == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
                     std::_Xlength_error("list<T> too long");
                   }
                   local_148 = local_148 + 1;

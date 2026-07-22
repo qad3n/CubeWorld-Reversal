@@ -511,7 +511,6 @@ LAB_0046b068:
       db_storeBlobVec(local_60,&local_e0);
       local_8 = CONCAT31(local_8._1_3_,1);
       if (0xf < local_4c) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_60[0]);
       }
       puVar9 = operator_new(0x28);
@@ -566,7 +565,6 @@ LAB_0046b2eb:
           iVar6 = (int)((int)ppuVar2 - *puVar21) >> 2;
           if (iVar6 == 0x3fffffff) {
 LAB_0046b731:
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("vector<T> too long");
           }
           refY = (int *)(iVar6 + 1);
@@ -596,7 +594,6 @@ LAB_0046b731:
       GameController_buildWorldList();
       local_8 = local_8 & 0xffffff00;
       if (local_e0 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_e0);
       }
     }
@@ -675,7 +672,6 @@ LAB_0046b4a7:
   }
   local_8 = (uint)local_8._1_3_ << 8;
   if (0xf < local_80) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_94);
   }
   if (*piVar10 == iVar6) {
@@ -703,7 +699,6 @@ LAB_0046b4a7:
     *(undefined4 *)(worldPtr + 0x20) = puVar9[4];
     *(undefined4 *)(worldPtr + 0x24) = puVar9[5];
     if (0xf < local_64) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_78);
     }
   }
@@ -730,10 +725,8 @@ LAB_0046b6a3:
   local_c8[1] = (int)local_c8;
   local_c4 = 0;
   if (piVar17 == local_c8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_c8);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(piVar17);
 }
 
@@ -761,14 +754,12 @@ void cube::WorldInfo::vfunc_0(byte flags)
     (*(code *)**(undefined4 **)pThis[1])(1,stackCookie);
   }
   if (0xf < (uint)pThis[7]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)pThis[2]);
   }
   pThis[7] = 0xf;
   pThis[6] = 0;
   *(undefined1 *)(pThis + 2) = 0;
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pThis);
   }
   ExceptionList = savedExcList;
@@ -800,7 +791,6 @@ void WorldGrid_freeCellPtr(int chunk_x,int chunk_z)
       *slot = 0;
       LeaveCriticalSection((LPCRITICAL_SECTION)(world + 0x8000d8));
       LeaveCriticalSection((LPCRITICAL_SECTION)(world + 0x8000c0));
-                    /* WARNING: Subroutine does not return */
       operator_delete(chunk);
     }
   }
@@ -897,7 +887,6 @@ void WorldGrid_destroyBlockObjectAt(uint x,uint z)
  */
 /* Global::WorldInfo_generateBiomeContent @ 005e4850 */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void WorldInfo_generateBiomeContent(float param_1,uint param_2)
 
@@ -3297,7 +3286,6 @@ LAB_005e9649:
         iVar26 = Map_InsertVec6();
         if (local_1378 == 0x7fffffe) {
 LAB_005e9764:
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         local_1378 = local_1378 + 1;
@@ -3453,7 +3441,6 @@ LAB_005e9764:
         if (local_6b4 != (void *)0x0) {
           std::_Container_base0::_Orphan_all((_Container_base0 *)&local_6b4);
           std_vector_destroy_ptr_elems_stride3(local_6b4,local_6b0,&local_130d,local_13b0);
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_6b4);
         }
       }
@@ -3747,7 +3734,6 @@ LAB_005ea7b3:
           if (local_940 != (void *)0x0) {
             std::_Container_base0::_Orphan_all((_Container_base0 *)&local_940);
             std_vector_destroy_ptr_elems_stride3(local_940,local_93c,&local_1401,local_13b0);
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_940);
           }
         }
@@ -3831,7 +3817,6 @@ LAB_005ea7b3:
         local_8._0_1_ = 3;
         if (local_1448 != (void *)0x0) {
           std::_Container_base0::_Orphan_all((_Container_base0 *)&local_1448);
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_1448);
         }
       }
@@ -4266,7 +4251,6 @@ LAB_005ebba1:
       local_8 = CONCAT31(local_8._1_3_,3);
       if (local_1410 != (void *)0x0) {
         std::_Container_base0::_Orphan_all((_Container_base0 *)&local_1410);
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_1410);
       }
       local_12cc = local_135c;
@@ -5846,7 +5830,6 @@ LAB_005f1720:
     uVar5 = map_insertVal_0x18payload();
     if (*(int *)(param_9 + 0x1c) == 0x9249248) {
 LAB_005f4ae3:
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("list<T> too long");
     }
     *(int *)(param_9 + 0x1c) = *(int *)(param_9 + 0x1c) + 1;
@@ -5861,13 +5844,11 @@ LAB_005f4ae3:
   if (local_448 != (undefined4 *)0x0) {
     while( true ) {
       if (puVar6 == local_444) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_448);
       }
       if ((void *)*puVar6 != (void *)0x0) break;
       puVar6 = puVar6 + 3;
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*puVar6);
   }
   goto LAB_005f4a7e;
@@ -5916,14 +5897,12 @@ LAB_005f1ca0:
     p_Var16 = local_2c0;
     while( true ) {
       if (p_Var16 == local_2bc) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c0);
       }
       if (*(int *)p_Var16 != 0) break;
       p_Var16 = p_Var16 + 0xc;
     }
     std::_Container_base0::_Orphan_all(p_Var16);
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)p_Var16);
   }
   goto LAB_005f4a7e;
@@ -6137,7 +6116,6 @@ LAB_005f2570:
   if (local_2c0 != (_Container_base0 *)0x0) {
     std::_Container_base0::_Orphan_all((_Container_base0 *)&local_2c0);
     std_vector_destroy_ptr_elems_stride3(local_2c0,local_2bc,&local_6c1,local_6a0);
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c0);
   }
   goto LAB_005f4a7e;
@@ -6252,7 +6230,6 @@ LAB_005f2494:
   if (local_5d0 != (void *)0x0) {
     std::_Container_base0::_Orphan_all((_Container_base0 *)&local_5d0);
     std_vector_destroy_ptr_elems_stride3(local_5d0,local_5cc,&local_6c1,local_6a0);
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_5d0);
   }
   local_8 = 0xffffffff;
@@ -6260,7 +6237,6 @@ LAB_005f2494:
   if (local_2c0 != (_Container_base0 *)0x0) {
     std::_Container_base0::_Orphan_all((_Container_base0 *)&local_2c0);
     std_vector_destroy_ptr_elems_stride3(local_2c0,local_2bc,&local_6c1,local_6a0);
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c0);
   }
   goto LAB_005f4a7e;
@@ -7181,7 +7157,6 @@ void WorldInfo_mapInsertEntry(undefined4 value)
   head = *list;
   node = map_insertVec4Node(head,*(undefined4 *)(head + 4),value);
   if (list[1] == 0xaaaaaa9) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   list[1] = list[1] + 1;
@@ -7238,7 +7213,6 @@ void WorldInfo_lookupCell(uint elem)
  */
 /* Global::WorldInfo_scatterObjectsInArea @ 005f56c0 */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void * WorldInfo_scatterObjectsInArea(undefined4 x,undefined4 z,int level,undefined4 param_4)
 
@@ -8019,7 +7993,6 @@ LAB_005f6ce4:
     return pvVar2;
   }
   std::_Container_base0::_Orphan_all((_Container_base0 *)&begin);
-                    /* WARNING: Subroutine does not return */
   operator_delete(begin);
 }
 

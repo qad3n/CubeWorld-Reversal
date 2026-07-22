@@ -23,7 +23,7 @@ void cube::AdaptionWidget::vfunc_39(void);
 void cube::AdaptionWidget::vfunc_7(void);
 void cube::AdaptionWidget::vfunc_11(void);
 void cube::AdaptionWidget::vfunc_12(void);
-/* WARNING: Type propagation algorithm not settling */ void cube::AdaptionWidget::vfunc_21(void);
+void cube::AdaptionWidget::vfunc_21(void);
 void cube::AdaptionWidget::vfunc_9(float *param_1,float *param_2);
 void cube::AdaptionWidget::vfunc_8(void);
 float * AdaptionWidget_getScrollFlag(float *param_1);

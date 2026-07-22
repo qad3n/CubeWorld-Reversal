@@ -64,7 +64,6 @@ void plasma::Widget::MemberFunctionConnection<cube::CharacterStyleWidget>::ctor_
   ExceptionList = &savedExceptionList;
   slotPtr = (undefined4 *)rbtree_findOrInsert_intKey(&param_1);
   if ((void *)*slotPtr != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*slotPtr);
   }
   connection = operator_new(0x18);
@@ -96,10 +95,8 @@ void plasma::Widget::MemberFunctionConnection<cube::CharacterStyleWidget>::ctor_
     childList[1] = (int)childList;
     listSize = 0;
     if (childNode != childList) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(childNode);
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(childList);
   }
   ExceptionList = savedExceptionList;
@@ -157,7 +154,6 @@ void cube::CharacterStyleWidget::ctor_0
   plasma::NamedObject::ctor_4(arg1,parent,nameBuf);
   trylevel._0_1_ = 2;
   if (7 < nameCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(nameBuf[0]);
   }
   nameBuf[0] = (void *)((uint)nameBuf[0] & 0xffff0000);
@@ -187,7 +183,6 @@ void cube::CharacterStyleWidget::ctor_0
   Widget_connectRecursive(&btnName,2,self,CharCreation_cycle_prev_0x18c,0,1);
   trylevel._0_1_ = 2;
   if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(btnName);
   }
   slotObj = Node_clone_subtree_v2(parent);
@@ -204,7 +199,6 @@ void cube::CharacterStyleWidget::ctor_0
   Widget_connectRecursive(&btnName,2,self,CharCreation_cycle_next_0x18c,0,1);
   trylevel._0_1_ = 2;
   if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(btnName);
   }
   slotObj = Node_clone_subtree_v2(parent);
@@ -221,7 +215,6 @@ void cube::CharacterStyleWidget::ctor_0
   Widget_connectRecursive(&btnName,2,self,CharCreation_cycle_hairstyle_prev,0,1);
   trylevel._0_1_ = 2;
   if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(btnName);
   }
   slotObj = Node_clone_subtree_v2(parent);
@@ -238,7 +231,6 @@ void cube::CharacterStyleWidget::ctor_0
   Widget_connectRecursive(&btnName,2,self,CharCreation_cycle_hairstyle_next,0,1);
   trylevel._0_1_ = 2;
   if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(btnName);
   }
   slotObj = Node_clone_subtree_v2(parent);
@@ -255,7 +247,6 @@ void cube::CharacterStyleWidget::ctor_0
   Widget_connectRecursive(&btnName,2,self,CharCreation_toggle_field_0x194,0,1);
   trylevel._0_1_ = 2;
   if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(btnName);
   }
   slotObj = Node_clone_subtree_v2(parent);
@@ -272,7 +263,6 @@ void cube::CharacterStyleWidget::ctor_0
   Widget_connectRecursive(&btnName,2,self,CharCreation_toggle_field_0x194,0,1);
   trylevel._0_1_ = 2;
   if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(btnName);
   }
   slotObj = Node_clone_subtree_v2(parent);
@@ -303,7 +293,6 @@ void cube::CharacterStyleWidget::ctor_0
     Widget_connectRecursive(&btnName,2,self,CharCreation_adjust_inc_0x198,0,1);
     trylevel._0_1_ = 2;
     if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(btnName);
     }
     slotObj = Node_clone_subtree_v2(parent);
@@ -320,7 +309,6 @@ void cube::CharacterStyleWidget::ctor_0
     Widget_connectRecursive(&btnName,2,self,CharCreation_adjust_dec_0x19c,0,1);
     trylevel._0_1_ = 2;
     if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(btnName);
     }
     slotObj = Node_clone_subtree_v2(parent);
@@ -337,7 +325,6 @@ void cube::CharacterStyleWidget::ctor_0
     Widget_connectRecursive(&btnName,2,self,CharCreation_adjust_inc_0x19c,0,1);
     trylevel._0_1_ = 2;
     if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(btnName);
     }
     btnCap = 7;
@@ -421,7 +408,6 @@ void cube::CharacterStyleWidget::ctor_0
       iVar7 = NamedObject_create_with_defaults(0,piVar6,0,parent,nameBuf);
       trylevel._0_1_ = 0xe;
       if (7 < nameCap) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(nameBuf[0]);
       }
       nameCap = 7;
@@ -435,7 +421,6 @@ void cube::CharacterStyleWidget::ctor_0
       NamedObject_new_instance_0x160(iVar7,&btnName);
       trylevel = CONCAT31(trylevel._1_3_,0xe);
       if (7 < btnCap) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(btnName);
       }
       btnCap = 7;
@@ -454,13 +439,10 @@ void cube::CharacterStyleWidget::ctor_0
         return;
       }
       std_vector_destroy_ptr_elems_stride3(local_40,local_3c,&local_41,self);
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_40);
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(btnName);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(btnName);
 }
 
@@ -845,7 +827,6 @@ void CharacterStyleWidget_buildEdgeGraph(undefined4 *result)
             vertEnd = *faceIdx;
             vertBegin = IntMap_SetScalar(vertEnd,*(undefined4 *)(vertEnd + 4),&edgeKeyB);
             if (faceIdx[1] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
               std::_Xlength_error("list<T> too long");
             }
             faceIdx[1] = faceIdx[1] + 1;
@@ -865,7 +846,6 @@ void CharacterStyleWidget_buildEdgeGraph(undefined4 *result)
   for (indices = (undefined4 *)*result; indices != *(undefined4 **)(selfCopy + 0x8dc);
       indices = indices + 3) {
     if ((void *)*indices != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete((void *)*indices);
     }
   }
@@ -874,7 +854,6 @@ void CharacterStyleWidget_buildEdgeGraph(undefined4 *result)
     if (edgeMapCount == 0) {
       ehState = 0xffffffff;
       Sprite_map_erase_range(&result,*edgeMap,edgeMap);
-                    /* WARNING: Subroutine does not return */
       operator_delete(edgeMap);
     }
     local_6c = (void *)0x0;
@@ -885,7 +864,6 @@ void CharacterStyleWidget_buildEdgeGraph(undefined4 *result)
     std_vector_push_back_move_0xc(&local_6c);
     ehState = (uint)ehState._1_3_ << 8;
     if (local_6c != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_6c);
     }
     faceIdx = (int *)*faceList;
@@ -953,7 +931,6 @@ LAB_0066b805:
       if (facePtr != (int *)*piVar9) {
         *(int *)facePtr[1] = *facePtr;
         *(int *)(*facePtr + 4) = facePtr[1];
-                    /* WARNING: Subroutine does not return */
         operator_delete(facePtr);
       }
       if (piVar9[1] == 0) {
@@ -968,7 +945,6 @@ LAB_0066b805:
           vertBegin = (int)ppiVar8 - (int)ppiVar3 >> 2;
           if (vertBegin == 0x3fffffff) {
 LAB_0066b97d:
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("vector<T> too long");
           }
           edgeKeyB = (int *)(vertBegin + 1);

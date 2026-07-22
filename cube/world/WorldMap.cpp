@@ -153,7 +153,6 @@ void cube::WorldMap::ctor_1(undefined4 param_1,undefined4 param_2,undefined4 par
   VoxelModel_load_from_file_or_buffer(local_2c,0,1);
   local_8._0_1_ = 1;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_30 = operator_new(0x60);
@@ -174,7 +173,6 @@ void cube::WorldMap::ctor_1(undefined4 param_1,undefined4 param_2,undefined4 par
     if ((puVar7 == puVar3) && ((int)puVar3 - (int)puVar7 >> 2 == 0)) {
       row = (int)((int)puVar7 - *puVar4) >> 2;
       if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_30 = (uint *)(row + 1);
@@ -200,7 +198,6 @@ LAB_005fb18a:
     if ((puVar7 == puVar2) && ((int)puVar2 - (int)puVar7 >> 2 == 0)) {
       row = (int)((int)puVar7 - *puVar4) >> 2;
       if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_30 = (uint *)(row + 1);
@@ -229,7 +226,6 @@ LAB_005fb18a:
   VoxelModel_load_from_file_or_buffer(local_2c,0,1);
   local_8._0_1_ = 1;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_30 = operator_new(0x60);
@@ -250,7 +246,6 @@ LAB_005fb18a:
     if ((puVar7 == puVar3) && ((int)puVar3 - (int)puVar7 >> 2 == 0)) {
       row = (int)((int)puVar7 - *puVar4) >> 2;
       if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_30 = (uint *)(row + 1);
@@ -276,7 +271,6 @@ LAB_005fb2eb:
     if ((puVar7 == puVar2) && ((int)puVar2 - (int)puVar7 >> 2 == 0)) {
       row = (int)((int)puVar7 - *puVar4) >> 2;
       if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_30 = (uint *)(row + 1);
@@ -305,7 +299,6 @@ LAB_005fb2eb:
   VoxelModel_load_from_file_or_buffer(local_2c,0,1);
   local_8._0_1_ = 1;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_30 = operator_new(0x60);
@@ -326,7 +319,6 @@ LAB_005fb2eb:
     if ((puVar7 == puVar3) && ((int)puVar3 - (int)puVar7 >> 2 == 0)) {
       row = (int)((int)puVar7 - *puVar4) >> 2;
       if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_30 = (uint *)(row + 1);
@@ -352,7 +344,6 @@ LAB_005fb448:
     if ((puVar7 == puVar2) && ((int)puVar2 - (int)puVar7 >> 2 == 0)) {
       row = (int)((int)puVar7 - *puVar4) >> 2;
       if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_30 = (uint *)(row + 1);
@@ -381,7 +372,6 @@ LAB_005fb448:
   VoxelModel_load_from_file_or_buffer(local_2c,0,1);
   local_8._0_1_ = 1;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_30 = operator_new(0x60);
@@ -402,7 +392,6 @@ LAB_005fb448:
     if ((puVar7 == puVar3) && ((int)puVar3 - (int)puVar7 >> 2 == 0)) {
       row = (int)((int)puVar7 - *puVar4) >> 2;
       if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_30 = (uint *)(row + 1);
@@ -428,7 +417,6 @@ LAB_005fb5a5:
     if ((puVar7 == puVar2) && ((int)puVar2 - (int)puVar7 >> 2 == 0)) {
       row = (int)((int)puVar7 - *puVar4) >> 2;
       if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("vector<T> too long");
       }
       local_30 = (uint *)(row + 1);
@@ -457,7 +445,6 @@ LAB_005fb5a5:
   VoxelModel_load_from_file_or_buffer(local_2c,0,1);
   local_8._0_1_ = 1;
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_30 = operator_new(0x60);
@@ -478,7 +465,6 @@ LAB_005fb5a5:
       if ((puVar7 == puVar3) && ((int)puVar3 - (int)puVar7 >> 2 == 0)) {
         row = (int)((int)puVar7 - *puVar4) >> 2;
         if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("vector<T> too long");
         }
         uVar10 = row + 1;
@@ -505,7 +491,6 @@ LAB_005fb5a5:
   if ((puVar7 == puVar2) && ((int)puVar2 - (int)puVar7 >> 2 == 0)) {
     row = (int)((int)puVar7 - *puVar4) >> 2;
     if (row == 0x3fffffff) {
-                    /* WARNING: Subroutine does not return */
       std::_Xlength_error("vector<T> too long");
     }
     uVar10 = row + 1;
@@ -533,7 +518,6 @@ LAB_005fb753:
   local_8 = CONCAT31(local_8._1_3_,0xe);
   VoxelModel_load_from_file_or_buffer(local_2c,0,1);
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   InitializeCriticalSectionAndSpinCount((LPCRITICAL_SECTION)(local_44 + 0x200036),0x80000400);
@@ -577,7 +561,6 @@ void cube::WorldMap::ctor_0(void)
   DeleteCriticalSection((LPCRITICAL_SECTION)(self + 0x200036));
   DeleteCriticalSection((LPCRITICAL_SECTION)(self + 0x200030));
   if ((void *)self[0x20003f] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[0x20003f]);
   }
   local_8 = 0xffffffff;
@@ -598,7 +581,6 @@ void cube::WorldMap::vfunc_0(byte flags)
   
   ctor_0();
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;
@@ -660,12 +642,10 @@ void WorldMap_ctor(void)
     local_8 = CONCAT31(local_8._1_3_,1);
     db_storeBlobVec(local_2c,&local_44);
     if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     local_8 = 0xffffffff;
     if (local_44 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_44);
     }
   }
@@ -680,7 +660,6 @@ void WorldMap_ctor(void)
         std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_16
                   (row,col);
         _eh_vector_destructor_iterator_(pvVar1,0x34,0x1000,cube::ZoneTile::ctor_0);
-                    /* WARNING: Subroutine does not return */
         operator_delete(pvVar1);
       }
       col = col + 1;

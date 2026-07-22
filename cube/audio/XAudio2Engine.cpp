@@ -63,7 +63,6 @@ void cube::XAudio2Engine::ctor_0(void)
   local_8 = CONCAT31(local_8._1_3_,4);
   db_openBlobStore(dbname_buf);
   if (0xf < dbname_cap) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(dbname_buf[0]);
   }
   ExceptionList = local_10;
@@ -147,7 +146,6 @@ void cube::XAudio2Engine::ctor_1(void)
   }
   local_8 = CONCAT31(local_8._1_3_,1);
   map_eraseRange(local_18,*(undefined4 *)self[7],(undefined4 *)self[7]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[7]);
 }
 
@@ -163,7 +161,6 @@ void cube::XAudio2Engine::Sound::vfunc_0(byte delete_flag)
   
   *self = vftable;
   if ((delete_flag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;
@@ -181,7 +178,6 @@ void cube::XAudio2Engine::vfunc_8(byte delete_flag)
   
   ctor_1();
   if ((delete_flag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;
@@ -438,7 +434,6 @@ void cube::XAudio2Engine::vfunc_0(void)
         (**(code **)(*(int *)node[2] + 0x48))((int *)node[2]);
         inserted = IntMap_SetScalar(voice_list,voice_list[1],&local_14);
         if (count == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
           std::_Xlength_error("list<T> too long");
         }
         voice_list[1] = inserted;
@@ -454,7 +449,6 @@ void cube::XAudio2Engine::vfunc_0(void)
     if (node != *(int **)(in_ECX + 0xc)) {
       *(int *)node[1] = *node;
       *(int *)(*node + 4) = node[1];
-                    /* WARNING: Subroutine does not return */
       operator_delete(node);
     }
   }
@@ -462,10 +456,8 @@ void cube::XAudio2Engine::vfunc_0(void)
   *voice_list = voice_list;
   voice_list[1] = voice_list;
   if (puVar1 != voice_list) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(puVar1);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(voice_list);
 }
 
@@ -562,7 +554,6 @@ void cube::XAudio2Engine::vfunc_6(int *param_1,float volume,undefined4 param_3,u
       sound_data = *(int *)(in_ECX + 0xc);
       inserted = IntMap_SetScalar(sound_data,*(undefined4 *)(sound_data + 4),&param_1);
       if (*(int *)(in_ECX + 0x10) == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       *(int *)(in_ECX + 0x10) = *(int *)(in_ECX + 0x10) + 1;
@@ -896,7 +887,6 @@ LAB_00623ac9:
       ppppWVar8 = (LPCWSTR ***)local_24;
       if ((LPCWSTR ***)local_24 != (LPCWSTR ***)0x0) {
 LAB_00623e29:
-                    /* WARNING: Subroutine does not return */
         operator_delete(ppppWVar8);
       }
     }

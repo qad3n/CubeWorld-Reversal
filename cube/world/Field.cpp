@@ -10,7 +10,6 @@ void cube::Field::ctor_0(void)
   
   *self = vftable;
   if ((void *)self[6] != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)self[6]);
   }
   return;
@@ -35,7 +34,6 @@ void * cube::Field::vfunc_0(uint flags)
   }
   ctor_0();
   if ((flags & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return self;

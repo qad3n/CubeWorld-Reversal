@@ -18,7 +18,6 @@ void std_wstring_Tidy(char param_1,int param_2)
     if (param_2 != 0) {
       memcpy(in_ECX,_Src,param_2 * 2);
     }
-                    /* WARNING: Subroutine does not return */
     operator_delete(_Src);
   }
   in_ECX[4] = param_2;
@@ -340,7 +339,6 @@ void cube::Interface::drawCharacterCreation(void)
     AdaptionWidget_draw_text_locked(apvStack_238,uVar3,0,0x40000000,(float)(int)fVar17,0x41f00000,0x41600000,0x40400000
                  ,&uStack_498,&uStack_4d8,&uStack_608,5,0x43340000);
     if ((void *)0x7 < pvStack_30c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvStack_320);
     }
     pvStack_30c = (void *)0x7;
@@ -348,7 +346,6 @@ void cube::Interface::drawCharacterCreation(void)
     pvStack_320 = (void *)((uint)pvStack_320 & 0xffff0000);
     local_c._0_1_ = 3;
     if (7 < uStack_224) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_238[0]);
     }
     u16string_assignCStr();
@@ -370,14 +367,12 @@ void cube::Interface::drawCharacterCreation(void)
     AdaptionWidget_draw_text_locked(apvStack_280,uVar3,0,0x40000000,(float)(int)fVar17,0x41f00000,0x41600000,0,
                  &uStack_528,&uStack_458,&uStack_478,5,0x43340000);
     if (7 < uStack_33c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvStack_350);
     }
     uStack_33c = 7;
     uStack_340 = 0;
     pvStack_350 = (void *)((uint)pvStack_350 & 0xffff0000);
     if (7 < uStack_26c) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(apvStack_280[0]);
     }
     goto LAB_004277eb;
@@ -754,7 +749,6 @@ void cube::Interface::drawCharacterCreation(void)
   uStack_58._0_1_ = 0xd;
   wostream_insertU16string(&puStack_8bc,uVar3);
   if (7 < uStack_310) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvStack_324);
   }
   uStack_310 = 7;
@@ -762,7 +756,6 @@ void cube::Interface::drawCharacterCreation(void)
   pvStack_324 = (void *)((uint)pvStack_324 & 0xffff0000);
   uStack_58._0_1_ = 0xb;
   if (0xf < uStack_480) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvStack_494);
   }
   uStack_450 = 7;
@@ -787,7 +780,6 @@ void cube::Interface::drawCharacterCreation(void)
   AdaptionWidget_draw_text_locked(&uStack_464,uVar3,0,0x40000000,0x43480000,0x41f00000,0x41600000,0x40400000,
                &uStack_5d4,&uStack_4f4,&uStack_5f4,0x10,0x43340000,1);
   if (7 < uStack_2e0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvStack_2f4);
   }
   uStack_2e0 = 7;
@@ -795,7 +787,6 @@ void cube::Interface::drawCharacterCreation(void)
   pvStack_2f4 = (void *)((uint)pvStack_2f4 & 0xffff0000);
   uStack_58._0_1_ = 0xb;
   if (7 < uStack_450) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(uStack_464);
   }
   uStack_438 = 7;
@@ -820,7 +811,6 @@ void cube::Interface::drawCharacterCreation(void)
   AdaptionWidget_draw_text_locked(&uStack_44c,uVar3,0,0x40000000,0x43480000,0x41f00000,0x41600000,0,&uStack_4b4,
                &uStack_5b4,&uStack_534,0x10,0x43340000,1);
   if (7 < uStack_2f8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvStack_30c);
   }
   uStack_2f8 = 7;
@@ -828,7 +818,6 @@ void cube::Interface::drawCharacterCreation(void)
   pvStack_30c = (void *)((uint)pvStack_30c & 0xffff0000);
   uStack_58._0_1_ = 0xb;
   if (7 < uStack_438) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(uStack_44c);
   }
   fStack_6c0 = 9.80909e-45;
@@ -837,7 +826,6 @@ void cube::Interface::drawCharacterCreation(void)
   u16string_assignPtrLen(&PTR_006fccac,0);
   uStack_58._0_1_ = 0x12;
   if ((uStack_878 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*local_8a8);
   }
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -855,7 +843,6 @@ void cube::Interface::drawCharacterCreation(void)
   strstreambuf_init(pppppuVar8,fStack_6c4,uStack_878);
   uStack_58 = CONCAT31(uStack_58._1_3_,0xb);
   if (7 < (uint)fStack_6c0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(ppppuStack_6d4);
   }
   iVar12 = *(int *)(*(int *)(iStack_898 + 0x160) + 400);
@@ -933,7 +920,6 @@ LAB_00427089:
   AdaptionWidget_draw_text_locked(&pvStack_254,uVar3,0,0x40000000,0x43480000,0x425c0000,0x41400000,0x40400000,
                &uStack_664,&uStack_514,&uStack_594,0,0xbf800000,1);
   if (7 < uStack_370) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvStack_384);
   }
   uStack_370 = 7;
@@ -941,7 +927,6 @@ LAB_00427089:
   pvStack_384 = (void *)((uint)pvStack_384 & 0xffff0000);
   uStack_58._0_1_ = 0xb;
   if (7 < uStack_240) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvStack_254);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -963,7 +948,6 @@ LAB_00427089:
   AdaptionWidget_draw_text_locked(apvStack_2b4,uVar3,0,0x40000000,0x43480000,0x425c0000,0x41400000,0,&uStack_604,
                &local_624,&uStack_644,0,0xbf800000,1);
   if (7 < uStack_3a0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_3b4[0]);
   }
   uStack_3a0 = 7;
@@ -971,7 +955,6 @@ LAB_00427089:
   apvStack_3b4[0] = (void *)((uint)apvStack_3b4[0] & 0xffff0000);
   uStack_58._0_1_ = 0xb;
   if (7 < uStack_2a0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_2b4[0]);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -984,7 +967,6 @@ LAB_00427089:
   strstreambuf_init(pppppuVar8,uStack_46c,uStack_878);
   uStack_58 = CONCAT31(uStack_58._1_3_,0xb);
   if (7 < uStack_468) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(ppppuStack_47c);
   }
   wostream_insertWide(&puStack_8bc,L"Specialization: ");
@@ -1040,7 +1022,6 @@ LAB_004274f9:
   AdaptionWidget_draw_text_locked(apvStack_250,uVar3,0,0x40000000,0x43480000,0x42960000,0x41200000,0x40400000,
                &uStack_558,&uStack_578,&uStack_598,0,0xbf800000);
   if ((void *)0x7 < pvStack_2f4) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvStack_308);
   }
   pvStack_2f4 = (void *)0x7;
@@ -1048,7 +1029,6 @@ LAB_004274f9:
   pvStack_308 = (void *)((uint)pvStack_308 & 0xffff0000);
   local_c._0_1_ = 0xb;
   if (7 < uStack_23c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_250[0]);
   }
   u16string_assignCStr();
@@ -1070,14 +1050,12 @@ LAB_004274f9:
   AdaptionWidget_draw_text_locked(apvStack_220,uVar3,0,0x40000000,0x43480000,0x42960000,0x41200000,0,&uStack_4f8,
                &uStack_518,&uStack_538,0,0xbf800000);
   if (7 < uStack_2dc) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(pvStack_2f0);
   }
   uStack_2dc = 7;
   uStack_2e0 = 0;
   pvStack_2f0 = (void *)((uint)pvStack_2f0 & 0xffff0000);
   if (7 < uStack_20c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(apvStack_220[0]);
   }
 LAB_004277eb:
@@ -1239,7 +1217,6 @@ void cube::Interface::drawCharacterStatsPanel(void)
   local_8._0_1_ = 5;
   wostream_insertU16string(local_35c,uVar3);
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   local_58 = 7;
@@ -1248,7 +1225,6 @@ void cube::Interface::drawCharacterStatsPanel(void)
   local_6c[0] = (undefined4 ***)(uVar1 << 0x10);
   local_8._0_1_ = 3;
   if (0xf < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c[0]);
   }
   local_58 = 7;
@@ -1274,7 +1250,6 @@ void cube::Interface::drawCharacterStatsPanel(void)
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41400000,0x40400000,
                &local_44,&local_24,&local_34,0x10,0x43340000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1282,7 +1257,6 @@ void cube::Interface::drawCharacterStatsPanel(void)
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   local_58 = 7;
@@ -1307,7 +1281,6 @@ void cube::Interface::drawCharacterStatsPanel(void)
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41400000,0,&local_34,
                &local_24,&local_44,0x10,0x43340000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1315,7 +1288,6 @@ void cube::Interface::drawCharacterStatsPanel(void)
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   local_50 = local_50 + 0x10;
@@ -1332,7 +1304,6 @@ void cube::Interface::drawCharacterStatsPanel(void)
   strstreambuf_init(ppppuVar5,local_3c,local_318);
   local_8 = CONCAT31(local_8._1_3_,3);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c[0]);
   }
   iVar12 = *(int *)(*(int *)(*(int *)(in_ECX + 0x160) + 0x8006d0) + 400);
@@ -1410,7 +1381,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41400000,0x40400000,
                &local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1418,7 +1388,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   local_58 = 7;
@@ -1443,7 +1412,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41400000,0,&local_34,
                &local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1451,7 +1419,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   local_50 = local_50 + 0x14;
@@ -1468,7 +1435,6 @@ LAB_004353f8:
   strstreambuf_init(ppppuVar5,local_3c,local_318);
   local_8._0_1_ = 3;
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c[0]);
   }
   wostream_insertWide(local_35c,L"Power");
@@ -1494,7 +1460,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41200000,0x40400000,
                &local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1502,7 +1467,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -1524,7 +1488,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41200000,0,&local_34,
                &local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1532,7 +1495,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -1545,7 +1507,6 @@ LAB_004353f8:
   strstreambuf_init(ppppuVar5,local_5c,local_318);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   iVar12 = stat_diminishing_returns_pct();
@@ -1570,7 +1531,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)(local_54 + 0x96),(float)local_50,0x41200000,
                0x40400000,&local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1578,7 +1538,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -1600,7 +1559,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)(local_54 + 0x96),(float)local_50,0x41200000,0,
                &local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1608,7 +1566,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   local_50 = local_50 + 0x14;
@@ -1622,7 +1579,6 @@ LAB_004353f8:
   strstreambuf_init(ppppuVar5,local_5c,local_318);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   wostream_insertWide(local_35c,&DAT_006fd6fc);
@@ -1645,7 +1601,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41200000,0x40400000,
                &local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1653,7 +1608,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -1675,7 +1629,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41200000,0,&local_34,
                &local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1683,7 +1636,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -1696,7 +1648,6 @@ LAB_004353f8:
   strstreambuf_init(ppppuVar5,local_5c,local_318);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   fVar15 = (float10)stat_calcAttackDamage();
@@ -1722,7 +1673,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)(local_54 + 0x96),(float)local_50,0x41200000,
                0x40400000,&local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1730,7 +1680,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -1752,7 +1701,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)(local_54 + 0x96),(float)local_50,0x41200000,0,
                &local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1760,7 +1708,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   local_50 = local_50 + 0x10;
@@ -1774,7 +1721,6 @@ LAB_004353f8:
   strstreambuf_init(ppppuVar5,local_5c,local_318);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   wostream_insertWide(local_35c,L"ARMOR");
@@ -1797,7 +1743,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41200000,0x40400000,
                &local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1805,7 +1750,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -1827,7 +1771,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41200000,0,&local_34,
                &local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1835,7 +1778,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -1848,7 +1790,6 @@ LAB_004353f8:
   strstreambuf_init(ppppuVar5,local_5c,local_318);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   fVar15 = (float10)stat_calcArmor();
@@ -1874,7 +1815,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)(local_54 + 0x96),(float)local_50,0x41200000,
                0x40400000,&local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1882,7 +1822,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -1904,7 +1843,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)(local_54 + 0x96),(float)local_50,0x41200000,0,
                &local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1912,7 +1850,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   local_50 = local_50 + 0x10;
@@ -1926,7 +1863,6 @@ LAB_004353f8:
   strstreambuf_init(ppppuVar5,local_5c,local_318);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   wostream_insertWide(local_35c,L"RESI");
@@ -1949,7 +1885,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41200000,0x40400000,
                &local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1957,7 +1892,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -1979,7 +1913,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)local_54,(float)local_50,0x41200000,0,&local_34,
                &local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -1987,7 +1920,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -2000,7 +1932,6 @@ LAB_004353f8:
   strstreambuf_init(ppppuVar5,local_5c,local_318);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   fVar15 = (float10)stat_calcSpirit();
@@ -2026,7 +1957,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)(local_54 + 0x96),(float)local_50,0x41200000,
                0x40400000,&local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -2034,7 +1964,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -2056,7 +1985,6 @@ LAB_004353f8:
   AdaptionWidget_draw_text_locked(local_6c,uVar3,0,0x40000000,(float)(local_54 + 0x96),(float)local_50,0x41200000,0,
                &local_34,&local_24,&local_44,0,0xbf800000,1);
   if (7 < local_70) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_84[0]);
   }
   local_70 = 7;
@@ -2064,7 +1992,6 @@ LAB_004353f8:
   local_84[0] = (void *)((uint)local_84[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_58) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_6c[0]);
   }
   local_50 = local_50 + 0x10;
@@ -3326,7 +3253,6 @@ void cube::Interface::drawMerchantDialog(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,0x41700000,0x41c80000,0x41400000,0x40400000,&local_25c,
                &local_24c,&local_1fc,0,0xbf800000,1);
   if (7 < local_210) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_224[0]);
   }
   local_210 = 7;
@@ -3334,7 +3260,6 @@ void cube::Interface::drawMerchantDialog(void)
   local_224[0] = (void *)((uint)local_224[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   local_1d8 = 7;
@@ -3359,7 +3284,6 @@ void cube::Interface::drawMerchantDialog(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,0x41700000,0x41c80000,0x41400000,0,&local_25c,&local_24c,
                &local_1fc,0,0xbf800000,1);
   if (7 < local_210) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_224[0]);
   }
   local_210 = 7;
@@ -3367,7 +3291,6 @@ void cube::Interface::drawMerchantDialog(void)
   local_224[0] = (void *)((uint)local_224[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   local_1d8 = 7;
@@ -3376,7 +3299,6 @@ void cube::Interface::drawMerchantDialog(void)
   u16string_assignPtrLen(&PTR_006fccac,0);
   local_8._0_1_ = 8;
   if ((local_2e4 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*local_314);
   }
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -3394,7 +3316,6 @@ void cube::Interface::drawMerchantDialog(void)
   strstreambuf_init(puVar10,local_1dc,local_2e4);
   local_8._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   wostream_insertNarrow(local_328,"Identify");
@@ -3433,7 +3354,6 @@ void cube::Interface::drawMerchantDialog(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,(float)local_278 / 3.0,fVar13,uVar20,uVar14,puVar15,puVar16,
                puVar10,uVar18,uVar19,uVar21);
   if (7 < local_210) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_224[0]);
   }
   local_210 = 7;
@@ -3441,7 +3361,6 @@ void cube::Interface::drawMerchantDialog(void)
   local_224[0] = (void *)((uint)local_224[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   if (local_284 == 0) {
@@ -3497,7 +3416,6 @@ void cube::Interface::drawMerchantDialog(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,(float)local_278 / 3.0,fVar13,uVar20,uVar14,puVar15,puVar16,
                puVar10,uVar18,uVar19,uVar21);
   if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_23c[0]);
   }
   local_228 = 7;
@@ -3505,7 +3423,6 @@ void cube::Interface::drawMerchantDialog(void)
   local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   local_1d8 = 7;
@@ -3514,7 +3431,6 @@ void cube::Interface::drawMerchantDialog(void)
   u16string_assignPtrLen(&PTR_006fccac,0);
   local_8._0_1_ = 0xd;
   if ((local_2e4 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)*local_314);
   }
   std::basic_streambuf<wchar_t,std::char_traits<wchar_t>_>::setg
@@ -3532,7 +3448,6 @@ void cube::Interface::drawMerchantDialog(void)
   strstreambuf_init(puVar10,local_1dc,local_2e4);
   local_8._0_1_ = 3;
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   wostream_insertNarrow(local_328,"Goodbye!");
@@ -3571,7 +3486,6 @@ void cube::Interface::drawMerchantDialog(void)
   AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,((float)local_278 * 2.0) / 3.0,fVar13,uVar20,uVar14,puVar15,
                puVar16,puVar10,uVar18,uVar19,uVar21);
   if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_23c[0]);
   }
   local_228 = 7;
@@ -3579,7 +3493,6 @@ void cube::Interface::drawMerchantDialog(void)
   local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
   local_8 = CONCAT31(local_8._1_3_,3);
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   Widget_computeBoundsFloat(&local_254);
@@ -3642,7 +3555,6 @@ LAB_0044f99d:
   AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,((float)local_278 * 2.0) / 3.0,fVar13,uVar20,uVar14,puVar15,
                puVar16,puVar10,uVar18,uVar19,uVar21);
   if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_23c[0]);
   }
   local_228 = 7;
@@ -3650,7 +3562,6 @@ LAB_0044f99d:
   local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
   local_8 = CONCAT31(local_8._1_3_,3);
   if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_1ec);
   }
   if (local_284 != 0) {
@@ -3684,7 +3595,6 @@ LAB_0044f99d:
     strstreambuf_init(puVar10,local_1dc,local_2e4);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     puVar22 = &DAT_006ffd80;
@@ -3713,7 +3623,6 @@ LAB_0044f99d:
     AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,0x435c0000,(float)iVar7,0x41200000,0x40000000,&local_1fc,
                  &local_20c,&local_21c,2,0xbf800000,1);
     if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_23c[0]);
     }
     local_228 = 7;
@@ -3721,7 +3630,6 @@ LAB_0044f99d:
     local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -3743,7 +3651,6 @@ LAB_0044f99d:
     AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,0x435c0000,(float)iVar7,0x41200000,0,&local_1fc,&local_20c,
                  &local_21c,2,0xbf800000,1);
     if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_23c[0]);
     }
     local_228 = 7;
@@ -3751,7 +3658,6 @@ LAB_0044f99d:
     local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     u16string_assignCStr(&PTR_006fccac);
@@ -3764,7 +3670,6 @@ LAB_0044f99d:
     strstreambuf_init(puVar10,local_1dc,local_2e4);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     puVar22 = &DAT_006ffd84;
@@ -3791,7 +3696,6 @@ LAB_0044f99d:
     AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,0x43340000,(float)iVar7,0x41200000,0x40000000,&local_1fc,
                  &local_20c,&local_21c,2,0xbf800000,1);
     if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_23c[0]);
     }
     local_228 = 7;
@@ -3799,7 +3703,6 @@ LAB_0044f99d:
     local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -3821,7 +3724,6 @@ LAB_0044f99d:
     AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,0x43340000,(float)iVar7,0x41200000,0,&local_1fc,&local_20c,
                  &local_21c,2,0xbf800000,1);
     if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_23c[0]);
     }
     local_228 = 7;
@@ -3829,7 +3731,6 @@ LAB_0044f99d:
     local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     u16string_assignCStr(&PTR_006fccac);
@@ -3842,7 +3743,6 @@ LAB_0044f99d:
     strstreambuf_init(puVar10,local_1dc,local_2e4);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     puVar22 = &DAT_006ffd88;
@@ -3869,7 +3769,6 @@ LAB_0044f99d:
     AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,0x430c0000,(float)iVar7,0x41200000,0x40000000,&local_1fc,
                  &local_20c,&local_21c,2,0xbf800000,1);
     if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_23c[0]);
     }
     local_228 = 7;
@@ -3877,7 +3776,6 @@ LAB_0044f99d:
     local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -3899,7 +3797,6 @@ LAB_0044f99d:
     AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,0x430c0000,(float)iVar7,0x41200000,0,&local_1fc,&local_20c,
                  &local_21c,2,0xbf800000,1);
     if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_23c[0]);
     }
     local_228 = 7;
@@ -3907,7 +3804,6 @@ LAB_0044f99d:
     local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     u16string_assignCStr(&PTR_006fccac);
@@ -3920,7 +3816,6 @@ LAB_0044f99d:
     strstreambuf_init(puVar10,local_1dc,local_2e4);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     wostream_insertNarrow(local_328,"COST:");
@@ -3943,7 +3838,6 @@ LAB_0044f99d:
     AdaptionWidget_draw_text_locked(&local_1ec,uVar17,0,0,0x41700000,(float)iVar7,0x41200000,0x40000000,&local_1fc,
                  &local_20c,&local_21c,0,0xbf800000,1);
     if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_23c[0]);
     }
     local_228 = 7;
@@ -3951,7 +3845,6 @@ LAB_0044f99d:
     local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
     local_8._0_1_ = 3;
     if (7 < local_1d8) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_1ec);
     }
     u16string_assignCStr(L"resource1.dat");
@@ -3973,14 +3866,12 @@ LAB_0044f99d:
     AdaptionWidget_draw_text_locked(local_274,uVar17,0,0,0x41700000,(float)iVar7,0x41200000,0,&local_1e4,&local_20c,
                  &local_21c,0,0xbf800000,1);
     if (7 < local_228) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_23c[0]);
     }
     local_228 = 7;
     local_22c = 0;
     local_23c[0] = (void *)((uint)local_23c[0] & 0xffff0000);
     if (7 < local_260) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_274[0]);
     }
   }
@@ -4137,7 +4028,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x41d80000,0x41400000,0x40400000,&local_24,
                &local_34,&local_5c,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4145,7 +4035,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -4173,7 +4062,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x41d80000,0x41400000,0,&local_5c,&local_34,
                &local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4182,7 +4070,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)(uVar2 << 0x10);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_38 = 7;
@@ -4219,7 +4106,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -4227,7 +4113,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_74 = (void *)((uint)local_74 & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4263,7 +4148,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -4271,7 +4155,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_74 = (void *)((uint)local_74 & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4287,7 +4170,6 @@ void cube::Interface::drawOptionsMenu(void)
   strstreambuf_init(puVar6,local_3c,local_254);
   local_8._0_1_ = 3;
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   iVar1 = *(int *)(in_ECX + 0x160);
@@ -4325,7 +4207,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x42640000,0x41400000,0x40400000,&local_5c,
                &local_34,&local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4333,7 +4214,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   local_60 = 7;
@@ -4358,7 +4238,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x42640000,0x41400000,0,&local_5c,&local_34,
                &local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4366,7 +4245,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -4400,7 +4278,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_74,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4408,7 +4285,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -4441,7 +4317,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_74,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4449,7 +4324,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -4462,7 +4336,6 @@ void cube::Interface::drawOptionsMenu(void)
   strstreambuf_init(puVar6,local_3c,local_254);
   local_8._0_1_ = 3;
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   if (*(int *)(in_ECX + 0x1e0) < 1) {
@@ -4495,7 +4368,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x42ae0000,0x41400000,0x40400000,&local_5c,
                &local_34,&local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4503,7 +4375,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"Anti-aliasing");
@@ -4525,7 +4396,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x42ae0000,0x41400000,0,&local_5c,&local_34,
                &local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4533,7 +4403,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -4567,7 +4436,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_74,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4575,7 +4443,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -4608,7 +4475,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_74,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4616,7 +4482,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -4629,7 +4494,6 @@ void cube::Interface::drawOptionsMenu(void)
   strstreambuf_init(puVar6,local_3c,local_254);
   local_8._0_1_ = 3;
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   puVar20 = &DAT_006fd728;
@@ -4656,7 +4520,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x42ea0000,0x41400000,0x40400000,&local_5c,
                &local_34,&local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4664,7 +4527,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"Render Distance");
@@ -4686,7 +4548,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x42ea0000,0x41400000,0,&local_5c,&local_34,
                &local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4694,7 +4555,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -4728,7 +4588,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_74,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4736,7 +4595,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -4769,7 +4627,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_74,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4777,7 +4634,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -4790,7 +4646,6 @@ void cube::Interface::drawOptionsMenu(void)
   strstreambuf_init(puVar6,local_3c,local_254);
   local_8._0_1_ = 3;
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   puVar20 = &DAT_006fd728;
@@ -4817,7 +4672,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x43130000,0x41400000,0x40400000,&local_5c,
                &local_34,&local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4825,7 +4679,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"Sound FX Volume");
@@ -4847,7 +4700,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x43130000,0x41400000,0,&local_5c,&local_34,
                &local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4855,7 +4707,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -4889,7 +4740,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_74,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4897,7 +4747,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -4930,7 +4779,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_74,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4938,7 +4786,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(&PTR_006fccac);
@@ -4951,7 +4798,6 @@ void cube::Interface::drawOptionsMenu(void)
   strstreambuf_init(puVar6,local_3c,local_254);
   local_8._0_1_ = 3;
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   puVar20 = &DAT_006fd728;
@@ -4978,7 +4824,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x43310000,0x41400000,0x40400000,&local_5c,
                &local_34,&local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -4986,7 +4831,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"Music Volume");
@@ -5008,7 +4852,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_4c,&local_74,0,0,0x41700000,0x43310000,0x41400000,0,&local_5c,&local_34,
                &local_24,0,0xbf800000,1);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -5016,7 +4859,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");
@@ -5050,7 +4892,6 @@ void cube::Interface::drawOptionsMenu(void)
   AdaptionWidget_draw_text_locked(&local_74,uVar4,0,0,(local_1f8 - 250.0) * 0.5 + 240.0,uVar10,uVar11,uVar13,puVar15,
                puVar16,puVar6,uVar17,uVar19,uVar23);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c);
   }
   local_38 = 7;
@@ -5058,7 +4899,6 @@ void cube::Interface::drawOptionsMenu(void)
   local_4c = (undefined4 *)((uint)local_4c & 0xffff0000);
   local_8._0_1_ = 3;
   if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_74);
   }
   u16string_assignCStr(L"resource1.dat");

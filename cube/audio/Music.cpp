@@ -34,7 +34,6 @@ void cube::Music::vfunc_0(byte delete_flag)
     (**(code **)(*sub_obj + 0x48))(sub_obj);
   }
   if ((delete_flag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

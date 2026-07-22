@@ -36,7 +36,6 @@ undefined4 * cube::SequentialBehavior::ctor_0(int source)
       list = *piVar1;
       inserted = IntMap_SetScalar(list,*(undefined4 *)(list + 4),&copy);
       if (self[2] == 0x15555554) {
-                    /* WARNING: Subroutine does not return */
         std::_Xlength_error("list<T> too long");
       }
       self[2] = self[2] + 1;
@@ -84,7 +83,6 @@ void cube::SequentialBehavior::ctor_2(void)
   *self = vftable;
   node = *(int **)self[1];
   if (node != (int *)self[1]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)node[2]);
   }
   listHead = (undefined4 *)self[1];
@@ -93,10 +91,8 @@ void cube::SequentialBehavior::ctor_2(void)
   *(undefined4 *)(self[1] + 4) = self[1];
   self[2] = 0;
   if (firstNode != (void *)self[1]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(firstNode);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[1]);
 }
 
@@ -112,7 +108,6 @@ void cube::SequentialBehavior::vfunc_2(byte param_1)
   
   ctor_2();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;

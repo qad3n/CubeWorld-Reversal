@@ -385,10 +385,6 @@ void std_list_list_const_458fd0(undefined4 *param_1)
  * Loops nearby entities: EnterCriticalSection(GC+0x8005d0), seed check GC+0x800a50==+0x800448, cube::ChunkBuffer::ctor_0, sort by distance, WorldInfo_clearUnderLock, then calls saveEntityBlob@0x487520 (edge confirmed). in_ECX holds GC* at +0. Persistence loop.
  * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
 
-/* WARNING: Removing unreachable block (ram,0x0046949b) */
-/* WARNING: Removing unreachable block (ram,0x00469417) */
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
-/* WARNING: Restarted to delay deadcode elimination for space: stack */
 
 void cube::World::updateNearbyEntities(void)
 
@@ -636,7 +632,6 @@ LAB_00469533:
  * Body: timeBeginPeriod/timeGetTime; enter/leave critical section; clears GC active-chunk std::lists 0x8006ec/f4/fc; reads Creature GC+0x8006d0 (+0x130c/0x1310); EntityState_serializeToBuffer then winsock Ordinal_19 sends on socket GC+0x8006cc. World/net chunk sync.
  * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
 
-/* WARNING: Function: __alloca_probe replaced with injection: alloca_probe */
 
 void cube::World::updateActiveChunks(void)
 
@@ -742,7 +737,6 @@ void cube::World::updateActiveChunks(void)
       if (piVar1 != piVar6) {
         *(int *)piVar1[1] = *piVar1;
         *(int *)(*piVar1 + 4) = piVar1[1];
-                    /* WARNING: Subroutine does not return */
         operator_delete(piVar1);
       }
     }
@@ -753,7 +747,6 @@ void cube::World::updateActiveChunks(void)
     *(int *)(*(int *)(iVar2 + 0x8006ec) + 4) = *(int *)(iVar2 + 0x8006ec);
     *(undefined4 *)(iVar2 + 0x8006f0) = 0;
     if (pvVar4 != *(void **)(iVar2 + 0x8006ec)) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar4);
     }
     iVar2 = *in_ECX;
@@ -763,7 +756,6 @@ void cube::World::updateActiveChunks(void)
     *(int *)(*(int *)(iVar2 + 0x8006f4) + 4) = *(int *)(iVar2 + 0x8006f4);
     *(undefined4 *)(iVar2 + 0x8006f8) = 0;
     if (pvVar4 != *(void **)(iVar2 + 0x8006f4)) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar4);
     }
     iVar2 = *in_ECX;
@@ -773,7 +765,6 @@ void cube::World::updateActiveChunks(void)
     *(int *)(*(int *)(iVar2 + 0x8006fc) + 4) = *(int *)(iVar2 + 0x8006fc);
     *(undefined4 *)(iVar2 + 0x800700) = 0;
     if (pvVar4 != *(void **)(iVar2 + 0x8006fc)) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(pvVar4);
     }
     iVar2 = *(int *)(*in_ECX + 0x8006d0);
@@ -790,7 +781,6 @@ void cube::World::updateActiveChunks(void)
     iVar2 = Ordinal_19(*(undefined4 *)(*in_ECX + 0x8006cc),&local_2474,4,0);
     if (iVar2 == -1) {
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c);
       }
       local_2c = (undefined4 *)((uint)local_2c & 0xffff0000);
@@ -801,10 +791,8 @@ void cube::World::updateActiveChunks(void)
       local_2434[1] = (int)local_2434;
       local_2430 = 0;
       if (piVar6 != local_2434) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(piVar6);
       }
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2434);
     }
     pvVar4 = local_2458;
@@ -815,7 +803,6 @@ void cube::World::updateActiveChunks(void)
     if (iVar2 == -1) {
 LAB_0046a5a2:
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c);
       }
       local_18 = 7;
@@ -825,7 +812,6 @@ LAB_0046a5a2:
       std_list_clear_4da480();
       std_list_clear_4da480();
       if (local_2458 != (void *)0x0) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2458);
       }
     }
@@ -867,7 +853,6 @@ LAB_0046a0ed:
                  (iVar2 = Ordinal_19(*(undefined4 *)(*in_ECX + 0x8006cc),piVar6 + 2,0x70,0),
                  iVar2 == -1)) {
                 if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
                   operator_delete(local_2c);
                 }
                 local_2c = (undefined4 *)((uint)local_2c & 0xffff0000);
@@ -878,10 +863,8 @@ LAB_0046a0ed:
                 local_2434[1] = (int)local_2434;
                 local_2430 = 0;
                 if (piVar6 != local_2434) {
-                    /* WARNING: Subroutine does not return */
                   operator_delete(piVar6);
                 }
-                    /* WARNING: Subroutine does not return */
                 operator_delete(local_2434);
               }
               piVar6 = (int *)*piVar6;
@@ -936,10 +919,8 @@ LAB_0046a0ed:
           local_2464[1] = (int)local_2464;
           local_2460 = 0;
           if (piVar6 != local_2464) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(piVar6);
           }
-                    /* WARNING: Subroutine does not return */
           operator_delete(local_2464);
         }
         local_2448 = 6;
@@ -1001,7 +982,6 @@ void std_vector_reserve(uint param_1)
     return;
   }
   if (0xfffffffU - (in_ECX[1] - *in_ECX >> 4) < param_1) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("vector<T> too long");
   }
   uVar1 = in_ECX[2] - *in_ECX >> 4;
@@ -1110,13 +1090,11 @@ int * std_list_Erase_node(int *param_1,int *param_2)
   *(int *)param_2[1] = *param_2;
   *(int *)(*param_2 + 4) = param_2[1];
   if (7 < (uint)param_2[7]) {
-                    /* WARNING: Subroutine does not return */
     operator_delete((void *)param_2[2]);
   }
   param_2[7] = 7;
   param_2[6] = 0;
   *(undefined2 *)(param_2 + 2) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_2);
 }
 
@@ -1912,7 +1890,6 @@ LAB_004ca59b:
   leave_critical_section_b();
   local_8 = 0xffffffff;
   std_Tree_eraseRange(local_3d4,*local_374,local_374);
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_374);
 }
 
@@ -2016,10 +1993,8 @@ void EntityState_serializeToBuffer(int *param_1,int param_2,int param_3,undefine
   *local_1c = (int)local_1c;
   local_1c[1] = (int)local_1c;
   if (piVar2 != local_1c) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar2);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(local_1c);
 }
 
@@ -2091,7 +2066,6 @@ void format_object_singular_name(undefined4 param_1,undefined4 param_2,char *ite
     u16string_replaceRange(text,0,0xffffffff);
     local_8._0_1_ = 3;
     if (7 < local_48) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_5c[0]);
     }
     local_48 = 7;
@@ -2110,7 +2084,6 @@ void format_object_singular_name(undefined4 param_1,undefined4 param_2,char *ite
           local_8._0_1_ = 5;
           std_wstring_replace(fileHandle,1,text,0,0xffffffff);
           if (7 < local_60) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_74[0]);
           }
         }
@@ -2125,7 +2098,6 @@ void format_object_singular_name(undefined4 param_1,undefined4 param_2,char *ite
       text = extraout_EDX_01;
     }
     if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c);
     }
     local_2c = (void *)((uint)local_2c & 0xffff0000);
@@ -2133,7 +2105,6 @@ void format_object_singular_name(undefined4 param_1,undefined4 param_2,char *ite
     local_18 = 7;
   }
   if (7 < local_30) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_44[0]);
   }
   ExceptionList = local_10;
@@ -2368,7 +2339,6 @@ void cube::World::ctor_1(undefined4 world,undefined1 isServer)
   std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_15(0x7b,local_2c);
   local_8 = CONCAT31(local_8._1_3_,0x12);
   if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c[0]);
   }
   local_30 = (undefined4 *)0x0;
@@ -4807,7 +4777,6 @@ void cube::World::ctor_0(void)
               puVar1 = (undefined4 *)(colY + 0x78);
               puVar4 = (undefined4 *)*puVar1;
               std_Tree_eraseRange(&colX,*puVar4,puVar4);
-                    /* WARNING: Subroutine does not return */
               operator_delete((void *)*puVar1);
             }
             if (*(char *)((int)chunkCol + 0xd) == '\0') {
@@ -4840,13 +4809,11 @@ void cube::World::ctor_0(void)
         DeleteCriticalSection((LPCRITICAL_SECTION)(selfBase + 0x200036));
         local_8 = CONCAT31(local_8._1_3_,0x11);
         std_Tree_eraseRange(&colY,*(undefined4 *)selfBase[0x200055],(undefined4 *)selfBase[0x200055]);
-                    /* WARNING: Subroutine does not return */
         operator_delete((void *)selfBase[0x200055]);
       }
       colX = 0;
     }
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)chunkCol[0x100000]);
 }
 
@@ -4901,14 +4868,12 @@ void World_MapInsertChunk(int *coords)
   node = MapNode_CreateXY(&x);
   RBTree_InsertHintXY(local_50,existing,node + 0x10,node);
   if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_2c);
   }
   local_18 = 7;
   local_1c = 0;
   local_2c = (void *)((uint)local_2c & 0xffff0000);
   if (7 < local_38) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_4c[0]);
   }
 LAB_00594490:
@@ -4968,7 +4933,6 @@ void World_MapInsertKeyed(int key)
   cmp = MapNode_CreateB(local_34);
   RBTree_InsertHintKeyed(local_38,existing,cmp + 0x10,cmp);
   if (7 < local_20) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_34[0]);
   }
 LAB_00594581:
@@ -4989,7 +4953,6 @@ void cube::World::vfunc_0(byte param_1)
   
   ctor_0();
   if ((param_1 & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
   }
   return;

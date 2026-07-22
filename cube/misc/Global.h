@@ -3,7 +3,7 @@
 #define CUBE_MISC_GLOBAL_H
 #include "../include/cube_types.h"
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */ void App_render_frame(void);
+void App_render_frame(void);
 void App_init_direct3d(void);
 void App_reset_device(void);
 void WinMain(HINSTANCE param_1);

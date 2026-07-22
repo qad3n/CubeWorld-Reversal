@@ -532,7 +532,6 @@ LAB_0041c638:
               local_e4 = 3;
               iVar6 = RandomBehavior_listEmplaceCopy(puVar4,(undefined4 *)puVar4[1],(undefined1 *)local_20c);
               if (*(int *)((int)pvVar19 + 0x1310) == 0xd4c77a) {
-                    /* WARNING: Subroutine does not return */
                 std::_Xlength_error("list<T> too long");
               }
               *(int *)((int)pvVar19 + 0x1310) = *(int *)((int)pvVar19 + 0x1310) + 1;

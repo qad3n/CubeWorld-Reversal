@@ -377,7 +377,6 @@ void buyNode40(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -407,7 +406,6 @@ void buyNode28(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -437,7 +435,6 @@ void buyNode24(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -467,7 +464,6 @@ void buyNode296(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -497,7 +493,6 @@ void buyNode64(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -527,7 +522,6 @@ void buyNode96(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 
@@ -557,7 +551,6 @@ void buyNode16(undefined4 *prev,undefined4 *next)
     }
     return;
   }
-                    /* WARNING: Subroutine does not return */
   std::_Xbad_alloc();
 }
 

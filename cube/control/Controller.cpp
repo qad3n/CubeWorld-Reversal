@@ -50,7 +50,6 @@ void cube::Controller::vfunc_0(byte deleteFlag)
   
   *self = vftable;
   if ((deleteFlag & 1) != 0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(self);
   }
   return;

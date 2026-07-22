@@ -225,7 +225,6 @@ void cube::QuestText::ctor_2(void)
   }
   local_8 = 0xffffffff;
   std_map_eraseRange_661a20(local_14,*(undefined4 *)self[2],(undefined4 *)self[2]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[2]);
 }
 
@@ -255,7 +254,6 @@ void cube::QuestText::vfunc_0(void)
   }
   local_8 = 0xffffffff;
   std_map_eraseRange_661a20(local_14,*(undefined4 *)self[2],(undefined4 *)self[2]);
-                    /* WARNING: Subroutine does not return */
   operator_delete((void *)self[2]);
 }
 
@@ -334,7 +332,6 @@ undefined2 QuestText_isPunctuation(short param_1)
  * operator_new(0x44)+cube::QuestTextNode::ctor_0 (twice), scans wide chars for 0x20(space)/0x7b('{') building an IntMap node tree (IntMap_SetScalar). Caller 004e1970=cube::Speech::ctor_1. RTTI AUQuestTextNode@cube@@. Quest-text templating, not string code.
  * Routed to its true class unit by curated_override.tsv (reconstruct2). See scratchpad/audit/verdicts.json. */
 
-/* WARNING: Type propagation algorithm not settling */
 
 void cube::QuestText::parseTemplate(undefined4 *param_1)
 
@@ -609,7 +606,6 @@ LAB_004dac89:
           local_8._0_1_ = 2;
           puVar10 = param_1;
           if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
             operator_delete(local_2c[0]);
           }
         }
@@ -635,7 +631,6 @@ LAB_004dac89:
           if (piVar7 != piVar4) {
             *(int *)piVar7[1] = *piVar7;
             *(int *)(*piVar7 + 4) = piVar7[1];
-                    /* WARNING: Subroutine does not return */
             operator_delete(piVar7);
           }
           local_30 = operator_new(0x44);
@@ -653,7 +648,6 @@ LAB_004dac89:
           iVar8 = IntMap_SetScalar(local_30,local_30[1],&local_3c);
           if (*(int *)(iVar5 + 0x3c) == 0x15555554) {
 LAB_004db0eb:
-                    /* WARNING: Subroutine does not return */
             std::_Xlength_error("list<T> too long");
           }
           *(int *)(iVar5 + 0x3c) = *(int *)(iVar5 + 0x3c) + 1;
@@ -678,14 +672,12 @@ LAB_004db0eb:
           if (piVar7 != piVar4) {
             *(int *)piVar7[1] = *piVar7;
             *(int *)(*piVar7 + 4) = piVar7[1];
-                    /* WARNING: Subroutine does not return */
             operator_delete(piVar7);
           }
           piVar7 = (int *)piVar4[1];
           if (piVar7 != piVar4) {
             *(int *)piVar7[1] = *piVar7;
             *(int *)(*piVar7 + 4) = piVar7[1];
-                    /* WARNING: Subroutine does not return */
             operator_delete(piVar7);
           }
         }
@@ -701,7 +693,6 @@ LAB_004db0eb:
           if (piVar7 != piVar4) {
             *(int *)piVar7[1] = *piVar7;
             *(int *)(*piVar7 + 4) = piVar7[1];
-                    /* WARNING: Subroutine does not return */
             operator_delete(piVar7);
           }
         }
@@ -765,10 +756,8 @@ LAB_004db094:
   *piVar4 = (int)piVar4;
   piVar4[1] = (int)piVar4;
   if (piVar7 == piVar4) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(piVar4);
   }
-                    /* WARNING: Subroutine does not return */
   operator_delete(piVar7);
 }
 
@@ -1083,7 +1072,6 @@ void cube::QuestText::ctor_0(int key)
   local_8 = CONCAT31(local_8._1_3_,3);
   ctor_2();
   if (7 < local_28) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_3c[0]);
   }
   local_28 = 7;
@@ -1119,13 +1107,11 @@ void QuestText_delete_node(void *param_1)
   local_8 = 0;
   cube::QuestText::ctor_2(DAT_0076aa78 ^ (uint)&stack0xfffffffc);
   if (7 < *(uint *)((int)param_1 + 0x24)) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(*(void **)((int)param_1 + 0x10));
   }
   *(undefined4 *)((int)param_1 + 0x24) = 7;
   *(undefined4 *)((int)param_1 + 0x20) = 0;
   *(undefined2 *)((int)param_1 + 0x10) = 0;
-                    /* WARNING: Subroutine does not return */
   operator_delete(param_1);
 }
 

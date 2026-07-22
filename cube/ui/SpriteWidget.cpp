@@ -25,7 +25,6 @@ void cube::SpriteWidget::ctor_0(undefined4 world,undefined4 name,undefined4 owne
   local_8 = 0;
   plasma::NamedObject::ctor_4(world,name,local_28);
   if (7 < local_14) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_28[0]);
   }
   self[0x5a] = owner;

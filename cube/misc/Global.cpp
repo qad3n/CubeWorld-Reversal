@@ -7,7 +7,6 @@
  */
 /* Global::App_render_frame @ 004c85f0 */
 
-/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
 
 void App_render_frame(void)
 
@@ -108,7 +107,6 @@ void App_init_direct3d(void)
       FUN_00639390(local_2c);
       local_8 = 0xffffffff;
       if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c[0]);
       }
       local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
@@ -575,7 +573,6 @@ LAB_004c9461:
   }
   Ordinal_116();
   if (0xf < local_134) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_148[0]);
   }
   local_134 = 0xf;
@@ -584,7 +581,6 @@ LAB_004c9461:
 LAB_004c9514:
   cube::XAudio2Engine::ctor_1();
   if (local_304 != (int *)0x0) {
-                    /* WARNING: Subroutine does not return */
     operator_delete(local_304);
   }
 LAB_004c9534:
@@ -653,7 +649,6 @@ LAB_004cef4a:
     uVar5 = local_1c;
     if (*(int *)((int)aiStack_d8 + *(int *)(local_e4[0] + 4)) != 0) {
       if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
         operator_delete(local_2c[0]);
       }
       goto LAB_004cef4a;
@@ -1284,7 +1279,6 @@ LAB_004ceea6:
     }
     local_8._0_1_ = 0;
     if (0xf < local_18) {
-                    /* WARNING: Subroutine does not return */
       operator_delete(local_2c[0]);
     }
     iVar1 = *(int *)((int)aiStack_d8 + *(int *)(local_e4[0] + 4));
@@ -1306,7 +1300,6 @@ void FUN_00639390(undefined4 param_1)
   iVar1 = *(int *)(in_ECX + 0x1c);
   iVar2 = map_insertVal_strKey(iVar1,*(undefined4 *)(iVar1 + 4),param_1);
   if (*(int *)(in_ECX + 0x20) == 0x7fffffe) {
-                    /* WARNING: Subroutine does not return */
     std::_Xlength_error("list<T> too long");
   }
   *(int *)(in_ECX + 0x20) = *(int *)(in_ECX + 0x20) + 1;
