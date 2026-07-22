@@ -2141,7 +2141,7 @@ void lib_fn_6ce050(int param_1);
 undefined4 lib_fn_6cead0(void);
 undefined4 lib_fn_6ceb10(void);
 undefined4 lib_fn_6ceb50(void);
-uint zlib_fn_6ceb90(int param_1);
+uint inflate(int param_1);
 uint lib_fn_6cef50(uint param_1,byte *param_2,uint param_3);
 void lib_fn_6cf090(undefined4 param_1,int param_2,int param_3);
 /* WARNING: Removing unreachable block (ram,0x006cf1ff) */ /* WARNING: Removing unreachable block (ram,0x006cf1c0) */ int lib_fn_6cf0e0(void);

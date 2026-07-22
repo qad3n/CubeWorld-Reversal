@@ -4,7 +4,7 @@ Best-effort analysis of functions automation could not name (still `FUN_`), from
 sub-agent audit: proposed name, purpose, confidence, key variables. Inline `[AUDIT]`
 comments with the same content are also written above each function in the .cpp files.
 
-**3428 functions analyzed** — confidence: high=1577, med=1172, low=679.
+**3429 functions analyzed** — confidence: high=1578, med=1172, low=679.
 
 ## audit (1121)
 
@@ -1132,7 +1132,7 @@ comments with the same content are also written above each function in the .cpp 
 | 6cf9e0 | `vorbis_validate_packet_crc` | low | Vorbis: validate/consume a packet field, signal error via bit-skip on mismatch |
 | 6d0300 | `vorbis_init_pcm_struct` | low | Vorbis: zero a 2-word (undefined8[2]) pcm/output descriptor |
 
-## other (798)
+## other (799)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -1320,6 +1320,7 @@ comments with the same content are also written above each function in the .cpp 
 | 695710 | `gray_split_cubic` | high | FreeType(smooth): de Casteljau subdivide a cubic bezier arc in place into two halves |
 | 6957c0 | `gray_cubic_is_flat` | high | FreeType(smooth): test cubic bezier flatness on both control legs, compute split points |
 | 69ad50 | `gray_split_conic` | high | FreeType(smooth): de Casteljau subdivide a conic bezier arc in place |
+| 6ceb90 | `inflate` | high | zlib 1.2.3 inflate: identified by compiler-independent string-anchor match (4 unique-owner anchors: incorrect data check, incorrect header check, invalid window size, unknown compression method) |
 | 401d70 | `oggpack_look` | med | libogg bitwise: look at in_EDX bits without advancing cursor |
 | 401e30 | `oggpack_adv` | med | libogg bitwise: advance bit cursor by in_EDX bits |
 | 401e80 | `BitReader_getBits` | med | Reads up to 32 bits from a little-endian bitstream using mask table DAT_00745d00; sets error on overrun |

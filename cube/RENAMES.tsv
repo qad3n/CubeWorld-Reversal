@@ -4668,7 +4668,7 @@ addr	old	new
 6cead0	FUN_006cead0	lib_fn_6cead0
 6ceb10	FUN_006ceb10	lib_fn_6ceb10
 6ceb50	FUN_006ceb50	lib_fn_6ceb50
-6ceb90	FUN_006ceb90	zlib_fn_6ceb90
+6ceb90	FUN_006ceb90	inflate
 6cef50	FUN_006cef50	lib_fn_6cef50
 6cf090	FUN_006cf090	lib_fn_6cf090
 6cf0e0	FUN_006cf0e0	lib_fn_6cf0e0

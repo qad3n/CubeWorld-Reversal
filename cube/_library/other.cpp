@@ -117758,9 +117758,13 @@ undefined4 lib_fn_6ceb50(void)
 
 
 
-/* Global::zlib_fn_6ceb90 @ 006ceb90 */
+/* [AUDIT] proposed: inflate  (confidence: high)
+ * purpose: zlib 1.2.3 inflate: identified by compiler-independent string-anchor match (4 unique-owner anchors: incorrect data check, incorrect header check, invalid window size, unknown compression method)
+ * vars: -
+ */
+/* Global::inflate @ 006ceb90 */
 
-uint zlib_fn_6ceb90(int param_1)
+uint inflate(int param_1)
 
 {
   byte bVar1;
@@ -118218,7 +118222,7 @@ int lib_fn_6cf330(void)
     if ((*(int *)(unaff_EDI + 0x10) == 0) && (iVar2 = lib_fn_6cf2b0(), iVar2 != 0)) {
       return iVar2;
     }
-    iVar1 = zlib_fn_6ceb90(0);
+    iVar1 = inflate(0);
     if (iVar1 == 1) {
       *(int *)(unaff_EDI + 0x2050) = *(int *)(unaff_EDI + 0x18);
       if (*(int *)(unaff_EDI + 0x18) != *(int *)(unaff_EDI + 0x204c)) {
