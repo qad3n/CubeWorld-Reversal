@@ -461,7 +461,7 @@ comments with the same content are also written above each function in the .cpp 
 | 4c5a60 | `pagerWalSyncTruncate` | low | Finalize WAL/journal: write header, sync and truncate/zero the file per commit mode |
 | 4d4f90 | `WalkPathBehavior::checkPathClear` | low | Samples random AABB volume against voxel terrain to test walkability/collision along a box region |
 
-## crtstl (377)
+## crtstl (376)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -791,7 +791,6 @@ comments with the same content are also written above each function in the .cpp 
 | 4312e0 | `std::basic_string::append` | med | Appends buffer to string; throws string-too-long |
 | 431400 | `game_loadVoxelModelsFromDb` | med | Loads .cub voxel models (cubequest4/spiribit/egg1...) from data1.db at startup (game) |
 | 45f030 | `std::list<T>::_Insert` | med | Inserts a list node; throws list-too-long |
-| 5322d0 | `GameController_updateSubsystems` | med | Server build of cube 0x60c510 GameController_updateSubsystems: top-callee call-count profile matches exactly (242/154/152/111/103/89/76/69/67/61/56/56 + CRefTime::Millisecs x53). 60129 B; was misnamed lib_fn_5322d0 and misclassified lib/other (never-game-called blind spot; fixed via curated_override.tsv). Ghidra process:timeout in full export; recovered with 3600s + 512MB payload (383s); body in gap/server/extra_bodies.c. |
 | 401000 | `assign_two_qwords` | low | Store two 8-byte values (16-byte struct/pair init) |
 | 406260 | `vec_op_self_wrapper` | low | Wrapper invoking vec op with this as both operands |
 | 408230 | `creature_spawn_projectile` | low | Charge-up gauge then push projectile onto list (game) |
@@ -1165,7 +1164,7 @@ comments with the same content are also written above each function in the .cpp 
 | 4a0960 | `StrAccumInit_or_ctor` | low | Zero a 5-word object and set its vtable pointer &DAT_00569a48 |
 | 4d9b50 | `Path::allocNodeAssign` | low | Allocates node (FUN_004dae90), zeroes color word, stores single value at node+4 |
 
-## game_misc (104)
+## game_misc (105)
 
 | addr | proposed name | conf | purpose |
 |---|---|---|---|
@@ -1266,6 +1265,7 @@ comments with the same content are also written above each function in the .cpp 
 | 4d5a80 | `World::sampleTerrainGradient` | med | Computes 2-component terrain gradient/flow from multiple value-noise samples at scaled world coords |
 | 4dafe0 | `NavGraph::reconstructPath` | med | Rebuilds a path list by walking predecessor map from goal to start, pushing waypoints; enforces list cap |
 | 4dcff0 | `NavGraph::openSetContains` | med | Tests whether a 3-int key (x,y,z) exists in the open-set map at this+0x1414 |
+| 5322d0 | `GameController_updateSubsystems` | med | Server build of cube 0x60c510 GameController_updateSubsystems: top-callee call-count profile matches exactly (242/154/152/111/103/89/76/69/67/61/56/56 + CRefTime::Millisecs x53). 60129 B; was misnamed lib_fn_5322d0 and misclassified lib/other (never-game-called blind spot; fixed via curated_override.tsv). Ghidra process:timeout in full export; recovered with 3600s + 512MB payload (383s); body in gap/server/extra_bodies.c. |
 | 4d6730 | `Creature::stepAlongPath` | low | Iterative path/raycast stepping over voxel terrain sampling walkable cells up to 500 iters |
 | 4dab60 | `Object::construct6` | low | Trivial 6-field constructor: 3 scalar params + 3 ints from *param_4 |
 | 4dd2e0 | `NavGraph::expandNeighbors` | low | A* neighbor expansion: samples random offset, iterates object grid cells, adds reachable neighbor nodes |

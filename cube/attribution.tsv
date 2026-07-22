@@ -3750,7 +3750,7 @@ addr	name	kind	target
 6240b0	vfunc_2	game	XAudio2Engine
 6240d0	FUN_006240d0	lib	other
 6240f0	ctor_0	game	Zone
-624340	FUN_00624340	lib	other
+624340	FUN_00624340	gamemisc	game_misc
 624390	ctor_1	game	Zone
 624700	vfunc_0	game	Field
 624760	vfunc_0	game	Zone
@@ -3843,14 +3843,14 @@ addr	name	kind	target
 62dc20	FUN_0062dc20	game	GameController
 62dcd0	FUN_0062dcd0	game	GameController
 62ddc0	FUN_0062ddc0	gamemisc	game_misc
-62ddf0	FUN_0062ddf0	lib	other
+62ddf0	FUN_0062ddf0	gamemisc	game_misc
 62de10	FUN_0062de10	game	SmoothMeshShape
 62de20	FUN_0062de20	gamemisc	game_misc
-62de40	FUN_0062de40	lib	other
+62de40	FUN_0062de40	gamemisc	game_misc
 62de60	FUN_0062de60	gamemisc	game_misc
 62e180	vfunc_1	game	AdaptionWidget
 62f2d0	FUN_0062f2d0	gamemisc	game_misc
-62f5d0	FUN_0062f5d0	lib	other
+62f5d0	FUN_0062f5d0	gamemisc	game_misc
 62f600	FUN_0062f600	gamemisc	game_misc
 62f630	FUN_0062f630	game	GameController
 62f660	FUN_0062f660	game	GameController
@@ -3952,8 +3952,8 @@ addr	name	kind	target
 638370	vfunc_11	lib	other
 6384f0	vfunc_12	lib	other
 638500	vfunc_21	lib	other
-638610	FUN_00638610	lib	other
-638b60	FUN_00638b60	lib	other
+638610	FUN_00638610	gamemisc	game_misc
+638b60	FUN_00638b60	gamemisc	game_misc
 638cf0	FUN_00638cf0	lib	other
 638db0	FUN_00638db0	lib	audit
 638f84	Catch_All@00638f84	lib	crtstl
@@ -4256,7 +4256,7 @@ addr	name	kind	target
 659cf0	FUN_00659cf0	game	AdaptionWidget
 659d20	vfunc_5	lib	other
 659d70	FUN_00659d70	game	Global
-659df0	FUN_00659df0	lib	other
+659df0	FUN_00659df0	gamemisc	game_misc
 659e80	FUN_00659e80	game	GameController
 659ef0	FUN_00659ef0	lib	audit
 659f50	FUN_00659f50	lib	audit
@@ -4354,7 +4354,7 @@ addr	name	kind	target
 662b10	vfunc_11	lib	other
 662b80	vfunc_21	game	ScrollSlider
 662db0	vfunc_9	game	ScrollSlider
-662dd0	FUN_00662dd0	lib	other
+662dd0	FUN_00662dd0	gamemisc	game_misc
 662e10	FUN_00662e10	lib	other
 662f00	FUN_00662f00	game	AdaptionWidget
 662fb0	FUN_00662fb0	game	GameController
@@ -4404,7 +4404,7 @@ addr	name	kind	target
 664f50	ctor_2	lib	other
 665160	ctor_0	lib	other
 665370	vfunc_0	lib	other
-6653a0	FUN_006653a0	lib	other
+6653a0	FUN_006653a0	gamemisc	game_misc
 665550	vfunc_40	lib	other
 6655d0	vfunc_7	game	Button
 6659d0	vfunc_13	lib	other
@@ -4682,7 +4682,7 @@ addr	name	kind	target
 67d580	vfunc_7	lib	other
 67d5d0	vfunc_11	lib	other
 67d700	vfunc_27	lib	other
-67d8a0	FUN_0067d8a0	lib	other
+67d8a0	FUN_0067d8a0	gamemisc	game_misc
 67d8e0	FUN_0067d8e0	lib	other
 67d9e0	FUN_0067d9e0	game	GameController
 67d9f0	ctor_0	gamemisc	game_misc
@@ -4691,7 +4691,7 @@ addr	name	kind	target
 67dae0	ctor_0	gamemisc	game_misc
 67db20	vfunc_0	lib	other
 67db50	vfunc_40	lib	other
-67dbf0	FUN_0067dbf0	lib	other
+67dbf0	FUN_0067dbf0	gamemisc	game_misc
 67dd70	vfunc_30	lib	other
 67de20	vfunc_7	lib	other
 67de60	vfunc_11	lib	other

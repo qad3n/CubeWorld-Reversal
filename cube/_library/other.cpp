@@ -1,4 +1,4 @@
-// other (_library) — cube. 9194 functions. Bodies = Ghidra pseudo-C.
+// other (_library) — cube. 9183 functions. Bodies = Ghidra pseudo-C.
 #include "other.h"
 
 /* [AUDIT] proposed: oggpack_write  (confidence: high)
@@ -56585,25 +56585,6 @@ void lib_fn_6240d0(void)
 
 
 
-/* Global::lib_fn_624340 @ 00624340 */
-
-void lib_fn_624340(void)
-
-{
-  int *in_ECX;
-  undefined1 local_5;
-  
-  if (*in_ECX != 0) {
-    Zone_DestroyObjectRange(*in_ECX,in_ECX[1],&local_5);
-                    /* WARNING: Subroutine does not return */
-    operator_delete((void *)*in_ECX);
-  }
-  return;
-}
-
-
-
-
 /* Global::lib_fn_625a30 @ 00625a30 */
 
 int lib_fn_625a30(FILE *param_1,long param_2,undefined4 param_3,int param_4)
@@ -56792,122 +56773,6 @@ void lib_fn_629280(float *param_1)
   if (param_1[1] <= fVar1 && fVar1 != param_1[1]) {
     param_1[1] = fVar1;
   }
-  return;
-}
-
-
-
-
-/* Global::lib_fn_62ddf0 @ 0062ddf0 */
-
-void lib_fn_62ddf0(undefined4 param_1)
-
-{
-  int in_ECX;
-  
-  *(undefined4 *)(in_ECX + 0x140) = param_1;
-  Widget_setAspectFitEnabled();
-  return;
-}
-
-
-
-
-/* Global::lib_fn_62de40 @ 0062de40 */
-
-void lib_fn_62de40(undefined4 param_1)
-
-{
-  int in_ECX;
-  
-  *(undefined4 *)(in_ECX + 0x144) = param_1;
-  Widget_setAspectFitEnabled();
-  return;
-}
-
-
-
-
-/* Global::lib_fn_62f5d0 @ 0062f5d0 */
-
-void lib_fn_62f5d0(void)
-
-{
-  uint uVar1;
-  int iVar2;
-  int iVar3;
-  int iVar4;
-  int in_ECX;
-  undefined4 in_EDX;
-  undefined4 extraout_EDX;
-  undefined4 extraout_EDX_00;
-  undefined4 unaff_ESI;
-  undefined8 uVar5;
-  undefined1 *puVar6;
-  float fVar7;
-  int iVar8;
-  undefined1 auStack_28 [8];
-  float afStack_20 [2];
-  undefined1 auStack_18 [8];
-  undefined1 auStack_10 [4];
-  float fStack_c;
-  uint uStack_8;
-  
-  if (*(int *)(in_ECX + 0x140) != 0) {
-    uStack_8 = 0x62f5e2;
-    Widget_layoutAspectFit();
-    in_EDX = extraout_EDX;
-  }
-  iVar2 = *(int *)(in_ECX + 0x144);
-  if (iVar2 == 0) {
-    return;
-  }
-  uStack_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  iVar8 = iVar2;
-  if (*(int *)(iVar2 + 0x24c) != 0) {
-    uVar5 = AdaptionWidget_onContentResized();
-    in_EDX = (undefined4)((ulonglong)uVar5 >> 0x20);
-    if ((int)uVar5 != 0) {
-      uVar5 = AdaptionWidget_onContentResized();
-      in_EDX = (undefined4)((ulonglong)uVar5 >> 0x20);
-      if ((int)uVar5 != 0) {
-        uVar1 = (uint)(*(int *)(iVar2 + 0x238) != 1);
-        iVar2 = AdaptionWidget_getBoundsRect(auStack_10);
-        puVar6 = auStack_18;
-        AdaptionWidget_onContentResized(puVar6,unaff_ESI);
-        iVar3 = AdaptionWidget_getBoundsRect(puVar6);
-        fStack_c = *(float *)(iVar2 + uVar1 * 4) / *(float *)(iVar3 + uVar1 * 4);
-        if (fStack_c < 1.0) {
-          fStack_c = 1.0;
-        }
-        AdaptionWidget_getBoundsRect(afStack_20);
-        puVar6 = auStack_18;
-        AdaptionWidget_onContentResized(puVar6,unaff_ESI);
-        iVar2 = AdaptionWidget_getBoundsRect(puVar6);
-        afStack_20[uVar1] = *(float *)(iVar2 + uVar1 * 4) / fStack_c;
-        AdaptionWidget_measureContent(afStack_20,1);
-        iVar2 = AdaptionWidget_getBoundsRect(auStack_18);
-        puVar6 = auStack_10;
-        AdaptionWidget_onContentResized(puVar6);
-        iVar3 = AdaptionWidget_getBoundsRect(puVar6);
-        if (*(float *)(iVar3 + uVar1 * 4) < *(float *)(iVar2 + uVar1 * 4)) {
-          iVar2 = AdaptionWidget_getContentSize(auStack_18);
-          iVar3 = AdaptionWidget_getBoundsRect(auStack_10);
-          puVar6 = auStack_28;
-          AdaptionWidget_onContentResized(puVar6);
-          iVar4 = AdaptionWidget_getBoundsRect(puVar6);
-          fVar7 = -(*(float *)(iVar2 + uVar1 * 4) /
-                   (*(float *)(iVar3 + uVar1 * 4) - *(float *)(iVar4 + uVar1 * 4)));
-        }
-        else {
-          fVar7 = 0.0;
-        }
-        Widget_applyAlignmentOffset(fVar7);
-        in_EDX = extraout_EDX_00;
-      }
-    }
-  }
-  __security_check_cookie(uStack_8 ^ (uint)&stack0xfffffffc,in_EDX,iVar8);
   return;
 }
 
@@ -57913,7 +57778,7 @@ void lib_fn_637850(void)
     *(undefined4 *)(in_ECX + 0x178) = 0;
     (**(code **)(**(int **)(in_ECX + 0x160) + 4))(1);
     lib_fn_627cb0(0x14);
-    lib_fn_638610();
+    FUN_00638610();
     return;
   }
   return;
@@ -58310,7 +58175,7 @@ LAB_00637fc9:
     }
     Node_select_glyph_by_name(local_2c);
     *(int *)(in_ECX + 0x174) = *(int *)(in_ECX + 0x174) + 1;
-    lib_fn_638610();
+    FUN_00638610();
     lib_fn_627cb0(0x14);
     if (7 < local_18) {
                     /* WARNING: Subroutine does not return */
@@ -58366,8 +58231,8 @@ void plasma::Edit::vfunc_24(short param_1)
   lib_fn_638cf0();
   *(undefined1 *)(in_ECX + 0x134) = 1;
   if (param_1 == 0xd) {
-    lib_fn_659df0(0);
-    lib_fn_638610();
+    FUN_00659df0(0);
+    FUN_00638610();
     return;
   }
   if (param_1 == 0x25) {
@@ -58376,12 +58241,12 @@ void plasma::Edit::vfunc_24(short param_1)
       cVar3 = std_map_lower_bound(0x10);
       if (cVar3 != '\0') {
         *(int *)(in_ECX + 0x178) = *(int *)(in_ECX + 0x178) + 1;
-        lib_fn_638610();
+        FUN_00638610();
         return;
       }
       *(undefined4 *)(in_ECX + 0x178) = 0;
     }
-    lib_fn_638610();
+    FUN_00638610();
     return;
   }
   if (param_1 == 0x27) {
@@ -58392,15 +58257,15 @@ void plasma::Edit::vfunc_24(short param_1)
       cVar3 = std_map_lower_bound(0x10);
       if (cVar3 != '\0') {
         *(int *)(in_ECX + 0x178) = *(int *)(in_ECX + 0x178) + -1;
-        lib_fn_638610();
+        FUN_00638610();
         return;
       }
       *(undefined4 *)(in_ECX + 0x178) = 0;
-      lib_fn_638610();
+      FUN_00638610();
       return;
     }
 LAB_00638309:
-    lib_fn_638610();
+    FUN_00638610();
     return;
   }
   if (param_1 != 0x2e) {
@@ -58410,12 +58275,12 @@ LAB_00638309:
         if (cVar3 != '\0') {
           *(int *)(in_ECX + 0x178) = *(int *)(in_ECX + 0x178) + *(int *)(in_ECX + 0x174);
           *(undefined4 *)(in_ECX + 0x174) = 0;
-          lib_fn_638610();
+          FUN_00638610();
           return;
         }
         *(undefined4 *)(in_ECX + 0x178) = 0;
         *(undefined4 *)(in_ECX + 0x174) = 0;
-        lib_fn_638610();
+        FUN_00638610();
         return;
       }
       if (param_1 != 0x23) {
@@ -58451,13 +58316,13 @@ LAB_00638309:
       std_wstring_erase_iter(&param_1,(int)puVar4 + *(int *)(in_ECX + 0x174) * 2 + -2);
       *(int *)(in_ECX + 0x174) = *(int *)(in_ECX + 0x174) + -1;
       (**(code **)(**(int **)(in_ECX + 0x160) + 4))(1);
-      lib_fn_638610();
+      FUN_00638610();
       lib_fn_627cb0(0x14);
       return;
     }
   }
   lib_fn_637850();
-  lib_fn_638610();
+  FUN_00638610();
   return;
 }
 
@@ -58478,7 +58343,7 @@ void plasma::Edit::vfunc_13(void)
          *(undefined4 *)(*(int *)(iVar1 + 0xa8) + 0x10 + *(int *)(iVar1 + 0x7c) * 0x18);
     *(int *)(in_ECX + 0x178) =
          -*(int *)(*(int *)(iVar1 + 0xa8) + 0x10 + *(int *)(iVar1 + 0x7c) * 0x18);
-    lib_fn_638610();
+    FUN_00638610();
     return;
   }
   return;
@@ -58517,12 +58382,12 @@ void plasma::Edit::vfunc_11(void)
     if (iVar4 == in_ECX) {
       cVar3 = std_map_lower_bound(0x10);
       if (cVar3 == '\0') {
-        lib_fn_638b60(&local_10);
+        FUN_00638b60(&local_10);
         *(undefined4 *)(in_ECX + 0x178) = 0;
       }
       else {
         iVar4 = *(int *)(in_ECX + 0x174);
-        lib_fn_638b60(&local_10);
+        FUN_00638b60(&local_10);
         *(int *)(in_ECX + 0x178) = *(int *)(in_ECX + 0x178) - (*(int *)(in_ECX + 0x174) + iVar4);
       }
       *(undefined1 *)(in_ECX + 0x168) = 1;
@@ -58533,10 +58398,10 @@ void plasma::Edit::vfunc_11(void)
            *(undefined4 *)(*(int *)(iVar4 + 0xa8) + 0x10 + *(int *)(iVar4 + 0x7c) * 0x18);
       *(int *)(in_ECX + 0x178) =
            -*(int *)(*(int *)(iVar4 + 0xa8) + 0x10 + *(int *)(iVar4 + 0x7c) * 0x18);
-      lib_fn_659df0(in_ECX);
+      FUN_00659df0(in_ECX);
     }
     lib_fn_638cf0();
-    lib_fn_638610();
+    FUN_00638610();
     Widget_set_flags_word(*(undefined4 *)(in_ECX + 0x148));
   }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -58586,203 +58451,13 @@ void plasma::Edit::vfunc_21(void)
                            *(float *)(iVar4 + 0xb8));
       local_c = local_c * (*(float *)(iVar4 + 0x8c) * fVar1 + *(float *)(iVar4 + 0x9c) * fVar2 +
                           *(float *)(iVar4 + 0xbc));
-      lib_fn_638b60(&local_10);
+      FUN_00638b60(&local_10);
       *(int *)(in_ECX + 0x178) = *(int *)(in_ECX + 0x178) + (iVar3 - *(int *)(in_ECX + 0x174));
       lib_fn_638cf0();
-      lib_fn_638610();
+      FUN_00638610();
     }
   }
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* Global::lib_fn_638610 @ 00638610 */
-
-void lib_fn_638610(void)
-
-{
-  int iVar1;
-  int iVar2;
-  uint uVar3;
-  undefined4 uVar4;
-  int in_ECX;
-  float fVar5;
-  float fVar6;
-  void *local_8c [5];
-  uint local_78;
-  float local_74 [2];
-  float local_6c [2];
-  float local_64;
-  float local_60;
-  float local_58;
-  float local_54;
-  float local_50;
-  float local_48;
-  float local_34;
-  float local_30;
-  float local_28;
-  float local_24;
-  float local_20;
-  float local_1c;
-  float local_18;
-  uint local_14;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_006f5a16;
-  local_10 = ExceptionList;
-  uVar3 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  ExceptionList = &local_10;
-  local_14 = uVar3;
-  if ((*(int *)(in_ECX + 0x160) == 0) || (*(int *)(*(int *)(in_ECX + 0x148) + 0x28) == 0))
-  goto LAB_00638b41;
-  lib_fn_631db0(local_74,1);
-  lib_fn_631520(local_6c,1);
-  lib_fn_639460(uVar3);
-  iVar1 = *(int *)(in_ECX + 0x160);
-  ChatWidget_measureChatText(*(int *)(iVar1 + 0xa8) + *(int *)(iVar1 + 0x7c) * 0x18,
-               *(undefined4 *)(in_ECX + 0x174),*(int *)(in_ECX + 0x148) + 0x48,
-               *(undefined4 *)(iVar1 + 0x1bc),*(undefined4 *)(iVar1 + 0x1c0),
-               *(undefined4 *)(iVar1 + 0x1c4),*(undefined4 *)(iVar1 + 0x1c8),
-               *(undefined4 *)(iVar1 + 0x1e4),&local_1c,&local_24,*(undefined4 *)(iVar1 + 0x1ec),
-               (byte)*(undefined4 *)(iVar1 + 0x1f0) & 1);
-  mat4_mulRight(&local_64,*(int *)(*(int *)(in_ECX + 0x148) + 0x38) + 0x1b0);
-  fVar5 = local_60 * local_1c;
-  fVar6 = 1.0 / (local_18 * local_48 + local_1c * local_58 + local_28);
-  local_1c = fVar6 * (local_54 * local_18 + local_64 * local_1c + local_34);
-  local_18 = fVar6 * (local_50 * local_18 + fVar5 + local_30);
-  fVar5 = local_24 * local_60;
-  local_24 = local_20 * local_54 + local_24 * local_64;
-  local_20 = local_20 * local_50 + fVar5;
-  if (local_1c + local_24 < local_6c[0]) {
-    if (local_1c < local_74[0]) {
-      uVar4 = wstring_ctorAppend(local_8c,*(int *)(*(int *)(in_ECX + 0x160) + 0xa8) +
-                                    *(int *)(*(int *)(in_ECX + 0x160) + 0x7c) * 0x18,&DAT_006fd844);
-      iVar1 = *(int *)(in_ECX + 0x160);
-      local_8 = 1;
-      ChatWidget_measureChatText(uVar4,*(int *)(in_ECX + 0x174) + -6,*(int *)(in_ECX + 0x148) + 0x48,
-                   *(undefined4 *)(iVar1 + 0x1bc),*(undefined4 *)(iVar1 + 0x1c0),
-                   *(undefined4 *)(iVar1 + 0x1c4),*(undefined4 *)(iVar1 + 0x1c8),
-                   *(undefined4 *)(iVar1 + 0x1e4),&local_1c,&local_24,*(undefined4 *)(iVar1 + 0x1ec)
-                   ,(byte)*(undefined4 *)(iVar1 + 0x1f0) & 1);
-      local_8 = 0xffffffff;
-      std_string_FreeMember();
-      local_60 = local_60 * local_1c;
-      fVar5 = 1.0 / (local_18 * local_48 + local_1c * local_58 + local_28);
-      local_1c = fVar5 * (local_64 * local_1c + local_54 * local_18 + local_34);
-      local_6c[0] = local_1c - local_74[0];
-      local_18 = fVar5 * (local_60 + local_50 * local_18 + local_30);
-      goto LAB_00638ab3;
-    }
-  }
-  else {
-    uVar4 = wstring_ctorAppend(local_8c,*(int *)(*(int *)(in_ECX + 0x160) + 0xa8) +
-                                  *(int *)(*(int *)(in_ECX + 0x160) + 0x7c) * 0x18,&DAT_006fd844);
-    iVar1 = *(int *)(in_ECX + 0x160);
-    local_8 = 0;
-    ChatWidget_measureChatText(uVar4,*(int *)(in_ECX + 0x174) + 6,*(int *)(in_ECX + 0x148) + 0x48,
-                 *(undefined4 *)(iVar1 + 0x1bc),*(undefined4 *)(iVar1 + 0x1c0),
-                 *(undefined4 *)(iVar1 + 0x1c4),*(undefined4 *)(iVar1 + 0x1c8),
-                 *(undefined4 *)(iVar1 + 0x1e4),&local_1c,&local_24,*(undefined4 *)(iVar1 + 0x1ec),
-                 (byte)*(undefined4 *)(iVar1 + 0x1f0) & 1);
-    local_8 = 0xffffffff;
-    if (7 < local_78) {
-                    /* WARNING: Subroutine does not return */
-      operator_delete(local_8c[0]);
-    }
-    local_60 = local_60 * local_1c;
-    fVar5 = 1.0 / (local_18 * local_48 + local_1c * local_58 + local_28);
-    local_1c = (local_64 * local_1c + local_54 * local_18 + local_34) * fVar5;
-    local_18 = (local_60 + local_50 * local_18 + local_30) * fVar5;
-    local_6c[0] = local_1c - local_6c[0];
-LAB_00638ab3:
-    iVar1 = *(int *)(*(int *)(in_ECX + 0x148) + 0x38);
-    iVar2 = *(int *)(iVar1 + 0x68);
-    iVar1 = *(int *)(iVar1 + 0x94);
-    *(float *)(iVar1 + iVar2 * 8) = *(float *)(iVar1 + iVar2 * 8) - (float)(int)local_6c[0];
-    if ((*(int *)(in_ECX + 0x174) == 6 || *(int *)(in_ECX + 0x174) + -6 < 0) ||
-       (iVar1 = *(int *)(*(int *)(in_ECX + 0x148) + 0x38),
-       fVar5 = *(float *)(*(int *)(iVar1 + 0x94) + *(int *)(iVar1 + 0x68) * 8),
-       *(float *)(in_ECX + 0x16c) <= fVar5 && fVar5 != *(float *)(in_ECX + 0x16c))) {
-      iVar1 = *(int *)(*(int *)(in_ECX + 0x148) + 0x38);
-      *(undefined4 *)(*(int *)(iVar1 + 0x94) + *(int *)(iVar1 + 0x68) * 8) =
-           *(undefined4 *)(in_ECX + 0x16c);
-    }
-    (**(code **)(**(int **)(*(int *)(in_ECX + 0x148) + 0x38) + 4))(1);
-  }
-  lib_fn_639a60();
-LAB_00638b41:
-  ExceptionList = local_10;
-  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
-  return;
-}
-
-
-
-
-/* Global::lib_fn_638b60 @ 00638b60 */
-
-void lib_fn_638b60(float *param_1)
-
-{
-  int iVar1;
-  int iVar2;
-  uint uVar3;
-  int in_ECX;
-  int iVar4;
-  float local_3c [2];
-  float local_34 [2];
-  void *local_2c [4];
-  int local_1c;
-  uint local_18;
-  uint local_14;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_006f5a48;
-  local_10 = ExceptionList;
-  uVar3 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  ExceptionList = &local_10;
-  local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
-  local_18 = 7;
-  local_1c = 0;
-  local_14 = uVar3;
-  u16string_replaceRange(*(int *)(*(int *)(in_ECX + 0x160) + 0xa8) +
-               *(int *)(*(int *)(in_ECX + 0x160) + 0x7c) * 0x18,0,0xffffffff);
-  iVar2 = local_1c;
-  iVar4 = 0;
-  local_8 = 0;
-  *(undefined4 *)(in_ECX + 0x174) = 0;
-  if (0 < local_1c) {
-    do {
-      lib_fn_639460(uVar3);
-      iVar1 = *(int *)(in_ECX + 0x160);
-      ChatWidget_measureChatText(local_2c,iVar4,*(int *)(in_ECX + 0x148) + 0x48,*(undefined4 *)(iVar1 + 0x1bc),
-                   *(undefined4 *)(iVar1 + 0x1c0),*(undefined4 *)(iVar1 + 0x1c4),
-                   *(undefined4 *)(iVar1 + 0x1c8),*(undefined4 *)(iVar1 + 0x1e4),local_34,local_3c,
-                   *(undefined4 *)(iVar1 + 0x1ec),*(byte *)(iVar1 + 0x1f0) & 1);
-      lib_fn_639a60();
-      if (local_3c[0] * 0.7 + local_34[0] < *param_1) {
-        *(int *)(in_ECX + 0x174) = iVar4 + 1;
-      }
-      iVar4 = iVar4 + 1;
-    } while (iVar4 < iVar2);
-  }
-  lib_fn_638cf0();
-  *(undefined1 *)(in_ECX + 0x134) = 1;
-  if (7 < local_18) {
-                    /* WARNING: Subroutine does not return */
-    operator_delete(local_2c[0]);
-  }
-  ExceptionList = local_10;
-  __security_check_cookie(local_14 ^ (uint)&stack0xfffffffc);
   return;
 }
 
@@ -61537,44 +61212,6 @@ void plasma::ContinuousAttribute<plasma::Vector<4,float>_>::vfunc_5(int param_1)
 
 
 
-/* Global::lib_fn_659df0 @ 00659df0 */
-
-void lib_fn_659df0(int param_1)
-
-{
-  int iVar1;
-  undefined4 *puVar2;
-  int iVar3;
-  int *piVar4;
-  int in_ECX;
-  
-  iVar3 = param_1;
-  iVar1 = *(int *)(in_ECX + 0xcc);
-  if (iVar1 != 0) {
-    if (param_1 == iVar1) {
-      return;
-    }
-    *(undefined1 *)(iVar1 + 0x134) = 1;
-    Widget_dispatch_event_callback(*(undefined4 *)(*(int *)(in_ECX + 0xcc) + 0x148),0x13);
-  }
-  *(int *)(in_ECX + 0xcc) = iVar3;
-  if ((((iVar3 != 0) && (iVar1 = *(int *)(iVar3 + 0x148), iVar1 != 0)) &&
-      ((~(byte)(*(uint *)(iVar1 + 200) >> 1) & 1) != 0)) &&
-     (iVar1 = *(int *)(iVar1 + 0x44), iVar1 != 0)) {
-    param_1 = 0x12;
-    piVar4 = (int *)rbtree_findOrInsert_intKey(&param_1);
-    puVar2 = (undefined4 *)*piVar4;
-    if ((puVar2 != (undefined4 *)0x0) &&
-       ((*(char *)(iVar1 + 0x15c) != '\0' || (*(char *)(puVar2 + 1) == '\0')))) {
-      (**(code **)*puVar2)();
-    }
-  }
-  return;
-}
-
-
-
-
 /* [AUDIT] proposed: makeTextureRefWrapper  (confidence: low)
  * purpose: Wraps u16string_append(1,param_3) result via u16string_moveConstruct; returns param_1 unchanged (constructs a resource handle).
  * vars: param_3=key/id passed through
@@ -62107,17 +61744,17 @@ void plasma::ScrollSlider::vfunc_7(void)
     iVar2 = lib_fn_662e10(iVar1);
     if (iVar2 == 0) {
       uVar3 = AdaptionWidget_onContentResized();
-      iVar2 = lib_fn_662dd0(uVar3);
+      iVar2 = FUN_00662dd0(uVar3);
     }
   }
   *(int *)(in_ECX + 0x24c) = iVar2;
   if (iVar2 != 0) {
     if (*(int *)(in_ECX + 0x238) == 0) {
-      lib_fn_62de40();
+      FUN_0062de40();
       Widget_layoutAspectFit();
       return;
     }
-    lib_fn_62ddf0();
+    FUN_0062ddf0();
   }
   Widget_layoutAspectFit();
   return;
@@ -62148,27 +61785,6 @@ void plasma::ScrollSlider::vfunc_11(void)
   Widget_layoutAspectFit();
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
   return;
-}
-
-
-
-
-/* Global::lib_fn_662dd0 @ 00662dd0 */
-
-int lib_fn_662dd0(int param_1)
-
-{
-  int iVar1;
-  
-  while( true ) {
-    if (param_1 == 0) {
-      return 0;
-    }
-    iVar1 = lib_fn_662e10(param_1);
-    if (iVar1 != 0) break;
-    param_1 = AdaptionWidget_onContentResized();
-  }
-  return iVar1;
 }
 
 
@@ -63098,71 +62714,6 @@ void plasma::Button::vfunc_0(byte param_1)
   if ((param_1 & 1) != 0) {
                     /* WARNING: Subroutine does not return */
     operator_delete(in_ECX);
-  }
-  return;
-}
-
-
-
-
-/* Global::lib_fn_6653a0 @ 006653a0 */
-
-void lib_fn_6653a0(char param_1,char param_2)
-
-{
-  int iVar1;
-  int iVar2;
-  int in_ECX;
-  int *piVar3;
-  
-  if ((*(char *)(in_ECX + 0x229) != param_1) && (*(int *)(in_ECX + 0x22c) != 0)) {
-    if ((*(char *)(in_ECX + 0x229) == '\0') &&
-       (((*(int *)(in_ECX + 0x22c) == 2 && (param_2 == '\0')) &&
-        (piVar3 = (int *)**(int **)(in_ECX + 0x220), piVar3 != *(int **)(in_ECX + 0x220))))) {
-      do {
-        lib_fn_6653a0(0,1);
-        piVar3 = (int *)*piVar3;
-      } while (piVar3 != (int *)*(int *)(in_ECX + 0x220));
-    }
-    *(char *)(in_ECX + 0x229) = param_1;
-    if (param_1 == '\0') {
-      AdaptionWidget_apply_to_attributes(in_ECX + 0x1f0,0);
-      AdaptionWidget_apply_to_attributes(in_ECX + 0x1c0,0);
-      AdaptionWidget_apply_to_attributes(in_ECX + 0x178,0);
-      AdaptionWidget_apply_to_attributes(in_ECX + 0x1a8,0);
-      iVar1 = AdaptionWidget_compute_max_content_width(in_ECX + 0x1f0);
-      iVar2 = AdaptionWidget_compute_max_content_width(in_ECX + 0x1c0);
-      if (iVar1 < iVar2) {
-        iVar1 = iVar2;
-      }
-      iVar2 = AdaptionWidget_compute_max_content_width(in_ECX + 0x178);
-      if (iVar1 < iVar2) {
-        iVar1 = iVar2;
-      }
-      iVar2 = in_ECX + 0x1a8;
-    }
-    else {
-      AdaptionWidget_apply_to_attributes(in_ECX + 400,0);
-      AdaptionWidget_apply_to_attributes(in_ECX + 0x160,0);
-      AdaptionWidget_apply_to_attributes(in_ECX + 0x1d8,0);
-      AdaptionWidget_apply_to_attributes(in_ECX + 0x208,0);
-      iVar1 = AdaptionWidget_compute_max_content_width(in_ECX + 400);
-      iVar2 = AdaptionWidget_compute_max_content_width(in_ECX + 0x160);
-      if (iVar1 < iVar2) {
-        iVar1 = iVar2;
-      }
-      iVar2 = AdaptionWidget_compute_max_content_width(in_ECX + 0x1d8);
-      if (iVar1 < iVar2) {
-        iVar1 = iVar2;
-      }
-      iVar2 = in_ECX + 0x208;
-    }
-    iVar2 = AdaptionWidget_compute_max_content_width(iVar2);
-    if (iVar1 < iVar2) {
-      iVar1 = iVar2;
-    }
-    AdaptionWidget_relayout(iVar1);
-    AdaptionWidget_apply_attributes_v2();
   }
   return;
 }
@@ -70177,7 +69728,7 @@ void plasma::ScrollButton::vfunc_7(void)
   iVar1 = lib_fn_67d8e0(iVar1);
   if (iVar1 == 0) {
     uVar2 = AdaptionWidget_onContentResized();
-    iVar1 = lib_fn_67d8a0(uVar2);
+    iVar1 = FUN_0067d8a0(uVar2);
   }
   *(int *)(in_ECX + 0x240) = iVar1;
   return;
@@ -70235,7 +69786,7 @@ LAB_0067d617:
   Widget_setScroll(fVar3,fVar2,uVar4);
 LAB_0067d6a6:
   AdaptionWidget_clampScrollToContent();
-  lib_fn_62f5d0();
+  FUN_0062f5d0();
   *(undefined4 *)(in_ECX + 0x244) = 0;
   (**(code **)(**(int **)(in_ECX + 0x240) + 0xa8))();
   Widget_dispatch_event_callback(*(undefined4 *)(*(int *)(in_ECX + 0x240) + 0x148),0x11);
@@ -70301,31 +69852,10 @@ LAB_0067d76a:
   Widget_setScroll(fVar4,fVar3,uVar5);
 switchD_0067d732_default:
   AdaptionWidget_clampScrollToContent();
-  lib_fn_62f5d0();
+  FUN_0062f5d0();
   (**(code **)(**(int **)(in_ECX + 0x240) + 0xa8))();
   Widget_dispatch_event_callback(*(undefined4 *)(*(int *)(in_ECX + 0x240) + 0x148),0x11);
   return;
-}
-
-
-
-
-/* Global::lib_fn_67d8a0 @ 0067d8a0 */
-
-int lib_fn_67d8a0(int param_1)
-
-{
-  int iVar1;
-  
-  while( true ) {
-    if (param_1 == 0) {
-      return 0;
-    }
-    iVar1 = lib_fn_67d8e0(param_1);
-    if (iVar1 != 0) break;
-    param_1 = AdaptionWidget_onContentResized();
-  }
-  return iVar1;
 }
 
 
@@ -70487,79 +70017,6 @@ undefined4 * plasma::PopUpButton::vfunc_40(undefined4 param_1)
 
 
 
-/* Global::lib_fn_67dbf0 @ 0067dbf0 */
-
-void lib_fn_67dbf0(void)
-
-{
-  undefined4 *puVar1;
-  undefined4 *puVar2;
-  uint uVar3;
-  int iVar4;
-  undefined4 **ppuVar5;
-  undefined4 *local_20;
-  undefined4 local_1c;
-  undefined4 *local_18;
-  undefined4 local_14;
-  void *local_10;
-  undefined1 *puStack_c;
-  undefined4 local_8;
-  
-  local_8 = 0xffffffff;
-  puStack_c = &LAB_006f89e8;
-  local_10 = ExceptionList;
-  uVar3 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  ExceptionList = &local_10;
-  tree_clear(&local_20);
-  local_8 = 0;
-  for (puVar1 = (undefined4 *)*local_20; puVar1 != local_20; puVar1 = (undefined4 *)*puVar1) {
-    if ((*(uint *)(puVar1[2] + 0x128) >> 4 & 1) != 0) goto LAB_0067dcd3;
-  }
-  iVar4 = AdaptionWidget_onContentResized(uVar3);
-  if (iVar4 != 0) {
-    ppuVar5 = &local_18;
-    AdaptionWidget_onContentResized(ppuVar5);
-    tree_clear(ppuVar5);
-    puVar1 = (undefined4 *)*local_18;
-    for (puVar2 = puVar1; puVar2 != local_18; puVar2 = (undefined4 *)*puVar2) {
-      if ((*(uint *)(puVar2[2] + 0x128) >> 4 & 1) != 0) {
-        *local_18 = local_18;
-        local_18[1] = local_18;
-        local_14 = 0;
-        if (puVar1 == local_18) {
-                    /* WARNING: Subroutine does not return */
-          operator_delete(local_18);
-        }
-                    /* WARNING: Subroutine does not return */
-        operator_delete(puVar1);
-      }
-    }
-    *local_18 = local_18;
-    local_18[1] = local_18;
-    local_14 = 0;
-    if (puVar1 == local_18) {
-                    /* WARNING: Subroutine does not return */
-      operator_delete(local_18);
-    }
-                    /* WARNING: Subroutine does not return */
-    operator_delete(puVar1);
-  }
-LAB_0067dcd3:
-  puVar1 = (undefined4 *)*local_20;
-  *local_20 = local_20;
-  local_20[1] = local_20;
-  local_1c = 0;
-  if (puVar1 == local_20) {
-                    /* WARNING: Subroutine does not return */
-    operator_delete(local_20);
-  }
-                    /* WARNING: Subroutine does not return */
-  operator_delete(puVar1);
-}
-
-
-
-
 /* plasma::PopUpButton::vfunc_30 @ 0067dd70 */
 
 void plasma::PopUpButton::vfunc_30(void)
@@ -70574,7 +70031,7 @@ void plasma::PopUpButton::vfunc_30(void)
     iVar1 = *(int *)(*(int *)(*(int *)(in_ECX + 0x238) + 0x148) + 0x3c);
     if ((*(int *)(*(int *)(iVar1 + 0x94) + *(int *)(iVar1 + 0x68) * 4) != 0) !=
         (bool)*(char *)(in_ECX + 0x229)) {
-      lib_fn_6653a0(*(int *)(*(int *)(iVar1 + 0x94) + *(int *)(iVar1 + 0x68) * 4) != 0,0);
+      FUN_006653a0(*(int *)(*(int *)(iVar1 + 0x94) + *(int *)(iVar1 + 0x68) * 4) != 0,0);
     }
   }
   if (((*(int *)(in_ECX + 0x238) != 0) && (*(char *)(in_ECX + 0x23c) != '\0')) &&
@@ -70599,7 +70056,7 @@ void plasma::PopUpButton::vfunc_7(void)
   int in_ECX;
   
   Button::vfunc_7();
-  iVar1 = lib_fn_67dbf0();
+  iVar1 = FUN_0067dbf0();
   *(int *)(in_ECX + 0x238) = iVar1;
   if (iVar1 != 0) {
     iVar1 = *(int *)(*(int *)(iVar1 + 0x148) + 0x3c);
@@ -202800,7 +202257,7 @@ void Unwind_006f5410(void)
 void Unwind_006f541b(void)
 
 {
-  lib_fn_624340();
+  FUN_00624340();
   return;
 }
 
@@ -202960,7 +202417,7 @@ void Unwind_006f54c0(void)
 void Unwind_006f54cb(void)
 
 {
-  lib_fn_624340();
+  FUN_00624340();
   return;
 }
 

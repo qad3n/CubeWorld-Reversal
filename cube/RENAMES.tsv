@@ -3211,7 +3211,6 @@ addr	old	new
 623710	FUN_00623710	XAudio2_loadSound
 623ee0	FUN_00623ee0	XAudio2_decodeStream
 6240d0	FUN_006240d0	lib_fn_6240d0
-624340	FUN_00624340	lib_fn_624340
 624790	FUN_00624790	codec_bitreaderInit
 6247f0	FUN_006247f0	codec_readBits
 624900	FUN_00624900	codec_decodeCodebook
@@ -3269,12 +3268,9 @@ addr	old	new
 62dc20	FUN_0062dc20	GameController_setWidgetBounds
 62dcd0	FUN_0062dcd0	GameController_setWidgetBounds2
 62ddc0	FUN_0062ddc0	Widget_updateCaption
-62ddf0	FUN_0062ddf0	lib_fn_62ddf0
 62de20	FUN_0062de20	get_widget_field
-62de40	FUN_0062de40	lib_fn_62de40
 62de60	FUN_0062de60	AdaptionWidget_getBoundsRect
 62f2d0	FUN_0062f2d0	Widget_applyBoundsAndRefresh
-62f5d0	FUN_0062f5d0	lib_fn_62f5d0
 62f600	FUN_0062f600	Widget_measureGuarded
 62f630	FUN_0062f630	GameController_getWidgetSize
 62f660	FUN_0062f660	GameController_getWidgetSize2
@@ -3349,8 +3345,6 @@ addr	old	new
 6372a0	FUN_006372a0	AdaptionWidget_full_layout_pass
 6374d0	FUN_006374d0	AdaptionWidget_layout_pass_child
 637850	FUN_00637850	lib_fn_637850
-638610	FUN_00638610	lib_fn_638610
-638b60	FUN_00638b60	lib_fn_638b60
 638cf0	FUN_00638cf0	lib_fn_638cf0
 638db0	FUN_00638db0	std_map_insert_hint_string
 639060	FUN_00639060	lib_fn_639060
@@ -3556,7 +3550,6 @@ addr	old	new
 659740	FUN_00659740	NamedObject_deserialize
 659940	FUN_00659940	Widget_deserialize_common_field
 659cf0	FUN_00659cf0	AdaptionWidget_clear_hover
-659df0	FUN_00659df0	lib_fn_659df0
 659e80	FUN_00659e80	istream_skipRecordByLength
 659ef0	FUN_00659ef0	std_map_findValue
 659f50	FUN_00659f50	std_string_assignFromString
@@ -3630,7 +3623,6 @@ addr	old	new
 6626b0	FUN_006626b0	Spline_resetTime
 6626d0	FUN_006626d0	Spline_advanceTime
 662860	FUN_00662860	Widget_layoutAspectFit
-662dd0	FUN_00662dd0	lib_fn_662dd0
 662e10	FUN_00662e10	lib_fn_662e10
 662f00	FUN_00662f00	Widget_applyAlignmentOffset
 662fb0	FUN_00662fb0	Widget_setAspectFitEnabled
@@ -3648,7 +3640,6 @@ addr	old	new
 664c60	FUN_00664c60	Widget_updateAnimations
 664cc0	FUN_00664cc0	Widget_resetAnimations
 664cf0	FUN_00664cf0	Container_updateChildren
-6653a0	FUN_006653a0	lib_fn_6653a0
 665bd0	FUN_00665bd0	std_list_Buynode_splice
 665c90	FUN_00665c90	std_Move_backward_0x40
 665cc0	FUN_00665cc0	std_Move_backward_8byte
@@ -3733,10 +3724,8 @@ addr	old	new
 67bd00	FUN_0067bd00	Widget_setByteField380
 67bd10	FUN_0067bd10	Widget_setClampedField388
 67bd40	FUN_0067bd40	thunk_vector_int_assign
-67d8a0	FUN_0067d8a0	lib_fn_67d8a0
 67d8e0	FUN_0067d8e0	lib_fn_67d8e0
 67d9e0	FUN_0067d9e0	setField240
-67dbf0	FUN_0067dbf0	lib_fn_67dbf0
 67dec0	FUN_0067dec0	lib_fn_67dec0
 67def0	FUN_0067def0	lib_fn_67def0
 67e0f0	FUN_0067e0f0	lib_fn_67e0f0
