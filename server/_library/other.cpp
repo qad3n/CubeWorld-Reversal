@@ -264,32 +264,32 @@ bool __thiscall check_quest_id_match(void *this,char *param_1)
  */
 /* Global::get_ability_multiplier @ 00409d10 */
 
-float10 get_ability_multiplier(undefined4 param_1)
+float get_ability_multiplier(undefined4 param_1)
 
 {
   switch(param_1) {
   case 5:
   case 0x1a:
-    return (float10)0.5;
+    return (float)0.5f;
   default:
-    return (float10)1;
+    return (float)1;
   case 0x15:
   case 0x48:
-    return (float10)0.1;
+    return (float)0.1f;
   case 0x1e:
   case 0x20:
-    return (float10)0.4;
+    return (float)0.4f;
   case 0x1f:
   case 0x21:
-    return (float10)0.6;
+    return (float)0.6f;
   case 0x25:
   case 0x2b:
   case 0x39:
   case 0x3a:
   case 0x44:
-    return (float10)2.0;
+    return (float)2.0f;
   case 0x37:
-    return (float10)0.25;
+    return (float)0.25f;
   }
 }
 
@@ -302,10 +302,10 @@ float10 get_ability_multiplier(undefined4 param_1)
  */
 /* Global::get_ability_cooldown @ 0040f8f0 */
 
-float10 __thiscall get_ability_cooldown(int param_1,undefined4 param_2)
+float __thiscall get_ability_cooldown(int param_1,undefined4 param_2)
 
 {
-  float10 fVar1;
+  float fVar1;
   
   if ((*(char *)(param_1 + 0x60) != '\x05') && (*(char *)(param_1 + 0x60) != '\x03')) {
     switch(param_2) {
@@ -313,58 +313,58 @@ float10 __thiscall get_ability_cooldown(int param_1,undefined4 param_2)
     case 2:
     case 9:
       fVar1 = Combat_computeAttackSpeed(param_1);
-      return (float10)(6.0 / (float)fVar1);
+      return (float)(6.0f / (float)fVar1);
     case 3:
     case 4:
     case 0x3e:
       fVar1 = Combat_computeAttackSpeed(param_1);
-      return (float10)(3.0 / (float)fVar1);
+      return (float)(3.0f / (float)fVar1);
     case 5:
-      return (float10)4.0;
+      return (float)4.0f;
     case 6:
     case 7:
     case 0x12:
     case 0x13:
       fVar1 = Combat_computeAttackSpeed(param_1);
-      return (float10)(3.0 / (float)fVar1);
+      return (float)(3.0f / (float)fVar1);
     default:
       fVar1 = Combat_computeAttackSpeed(param_1);
-      return (float10)(2.0 / (float)fVar1);
+      return (float)(2.0f / (float)fVar1);
     case 0xb:
     case 0x57:
-      return (float10)10.0;
+      return (float)10.0f;
     case 0xd:
     case 0xe:
     case 0xf:
       fVar1 = Combat_computeAttackSpeed(param_1);
-      return (float10)(6.0 / (float)fVar1);
+      return (float)(6.0f / (float)fVar1);
     case 0x11:
     case 0x14:
-      return (float10)6.0;
+      return (float)6.0f;
     case 0x15:
       fVar1 = Combat_getResistFactor(param_1,0x15,-1);
-      return (float10)((float)fVar1 * 30.0 + 5.0);
+      return (float)((float)fVar1 * 30.0f + 5.0f);
     case 0x1e:
     case 0x1f:
     case 0x20:
     case 0x21:
       break;
     case 0x36:
-      return (float10)5.0;
+      return (float)5.0f;
     case 0x3c:
     case 0x3d:
       fVar1 = Combat_computeAttackSpeed(param_1);
-      return (float10)(6.0 / (float)fVar1);
+      return (float)(6.0f / (float)fVar1);
     case 0x41:
     case 0x42:
       fVar1 = Combat_computeAttackSpeed(param_1);
-      return (float10)(10.0 / (float)fVar1);
+      return (float)(10.0f / (float)fVar1);
     case 0x58:
       fVar1 = Combat_getResistFactor(param_1,0x15,-1);
-      return (float10)((float)fVar1 * 30.0 + 5.0);
+      return (float)((float)fVar1 * 30.0f + 5.0f);
     }
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -376,15 +376,14 @@ float10 __thiscall get_ability_cooldown(int param_1,undefined4 param_2)
  */
 /* Global::calc_damage_value_b @ 00411ad0 */
 
-float10 __fastcall calc_damage_value_b(void *param_1)
+float __fastcall calc_damage_value_b(void *param_1)
 
 {
   ushort uVar1;
   int *piVar2;
   int *piVar3;
-  uint uVar4;
-  float10 fVar5;
-  double dVar6;
+  float fVar4;
+  double dVar5;
   int *local_24;
   int local_20;
   float local_1c;
@@ -397,41 +396,40 @@ float10 __fastcall calc_damage_value_b(void *param_1)
   local_8 = 0xffffffff;
   puStack_c = &LAB_0054bae8;
   local_10 = ExceptionList;
-  uVar4 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
-  dVar6 = 2.0;
-  libm_sse2_pow_precise(uVar4);
-  local_18 = (float)dVar6;
-  dVar6 = 2.0;
-  libm_sse2_pow_precise();
-  local_18 = *(float *)((int)param_1 + 0x180) * (float)dVar6 * local_18;
+  dVar5 = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / (((float)*(int *)((int)param_1 + 400) - 1.0) * 0.05 +
+                                               1.0)) * 3.0));
+  local_18 = (float)dVar5;
+  dVar5 = libm_sse2_pow_precise(2.0,0.0);
+  local_18 = *(float *)((int)param_1 + 0x180) * (float)dVar5 * local_18;
   local_14 = local_18;
   collect_equipped_items(param_1,&local_24);
   local_8 = 0;
   if (local_20 == 0) {
     uVar1 = *(ushort *)((int)param_1 + 0x7e);
     if ((uVar1 & 8) != 0) {
-      dVar6 = 2.0;
-      libm_sse2_pow_precise(uVar4);
-      local_1c = (float)dVar6;
-      dVar6 = 2.0;
-      libm_sse2_pow_precise();
-      local_18 = local_1c * (float)dVar6 * 2.0 + local_14;
+      dVar5 = libm_sse2_pow_precise
+                        (2.0,(double)((1.0 - 1.0 / (((float)*(int *)((int)param_1 + 400) - 1.0) *
+                                                    0.05 + 1.0)) * 3.0));
+      local_1c = (float)dVar5;
+      dVar5 = libm_sse2_pow_precise(2.0,(double)((float)*(byte *)((int)param_1 + 0x1a8) * 0.25));
+      local_18 = local_1c * (float)dVar5 * 2.0 + local_14;
       local_14 = local_18;
     }
     if ((uVar1 & 0x10) != 0) {
-      dVar6 = 2.0;
-      libm_sse2_pow_precise(uVar4);
-      local_1c = (float)dVar6;
-      dVar6 = 2.0;
-      libm_sse2_pow_precise();
-      local_18 = local_1c * (float)dVar6 * 8.0 + local_14;
+      dVar5 = libm_sse2_pow_precise
+                        (2.0,(double)((1.0 - 1.0 / (((float)*(int *)((int)param_1 + 400) - 1.0) *
+                                                    0.05 + 1.0)) * 3.0));
+      local_1c = (float)dVar5;
+      dVar5 = libm_sse2_pow_precise(2.0,(double)((float)*(byte *)((int)param_1 + 0x1a8) * 0.25));
+      local_18 = local_1c * (float)dVar5 * 8.0 + local_14;
     }
   }
   else {
     for (piVar2 = (int *)*local_24; piVar2 != local_24; piVar2 = (int *)*piVar2) {
-      fVar5 = calc_gem_bonus((char *)piVar2[2]);
-      local_1c = (float)fVar5;
+      fVar4 = calc_gem_bonus((char *)piVar2[2]);
+      local_1c = (float)fVar4;
       local_18 = local_1c + local_14;
       local_14 = local_18;
     }
@@ -446,7 +444,7 @@ float10 __fastcall calc_damage_value_b(void *param_1)
   }
   operator_delete(local_24);
   ExceptionList = local_10;
-  return (float10)local_18;
+  return (float)local_18;
 }
 
 
@@ -619,37 +617,37 @@ int __thiscall compare_3dword_eq_a(void *this,int param_1)
  */
 /* Global::calc_gem_bonus @ 00414550 */
 
-float10 __fastcall calc_gem_bonus(char *param_1)
+float __fastcall calc_gem_bonus(char *param_1)
 
 {
   char cVar1;
-  float10 fVar2;
+  float fVar2;
   
   if (*param_1 != '\x03') {
-    return (float10)0;
+    return (float)0;
   }
   cVar1 = param_1[1];
   switch(cVar1) {
   case '\x03':
   case '\x04':
     fVar2 = pow2Mul();
-    return (float10)((float)fVar2 * 2.0);
+    return (float)((float)fVar2 * 2.0f);
   case '\x05':
     fVar2 = pow2Mul();
-    return (float10)((float)fVar2 * 4.0);
+    return (float)((float)fVar2 * 4.0f);
   case '\r':
     fVar2 = pow2Mul();
-    return (float10)((float)fVar2 * 2.0);
+    return (float)((float)fVar2 * 2.0f);
   }
   if ((((((cVar1 != '\x0f') && (cVar1 != '\x10')) && (cVar1 != '\x11')) &&
        ((cVar1 != '\x05' && (cVar1 != '\n')))) &&
       ((cVar1 != '\v' && ((cVar1 != '\x12' && (cVar1 != '\b')))))) &&
      ((cVar1 != '\x06' && (cVar1 != '\a')))) {
     fVar2 = pow2Mul();
-    return (float10)((float)fVar2 * 4.0);
+    return (float)((float)fVar2 * 4.0f);
   }
   fVar2 = pow2Mul();
-  return (float10)((float)fVar2 * 8.0);
+  return (float)((float)fVar2 * 8.0f);
 }
 
 
@@ -2129,7 +2127,7 @@ int __cdecl sqlite3_value_bytes(int *param_1)
  */
 /* Global::sqlite3_value_double @ 0045f160 */
 
-float10 __cdecl sqlite3_value_double(int param_1)
+double __cdecl sqlite3_value_double(int param_1)
 
 {
   ushort uVar1;
@@ -2137,10 +2135,10 @@ float10 __cdecl sqlite3_value_double(int param_1)
   
   uVar1 = *(ushort *)(param_1 + 0x1c);
   if ((uVar1 & 8) != 0) {
-    return (float10)*(double *)(param_1 + 8);
+    return (double)*(double *)(param_1 + 8);
   }
   if ((uVar1 & 4) != 0) {
-    return (float10)*(longlong *)(param_1 + 0x10);
+    return (double)*(longlong *)(param_1 + 0x10);
   }
   local_c = 0.0;
   if ((uVar1 & 0x12) != 0) {
@@ -2148,7 +2146,7 @@ float10 __cdecl sqlite3_value_double(int param_1)
     lib_fn_48cc90(*(byte **)(param_1 + 4),&local_c,*(uint *)(param_1 + 0x18),
                  *(char *)(param_1 + 0x1f));
   }
-  return (float10)local_c;
+  return (double)local_c;
 }
 
 
@@ -3281,7 +3279,7 @@ void __cdecl sqlite3_result_numeric_as_text(int param_1,undefined4 param_2,undef
   uint uVar7;
   int iVar8;
   bool bVar9;
-  float10 fVar10;
+  float fVar10;
   int *piVar11;
   undefined4 local_4c;
   int iStack_48;
@@ -5718,7 +5716,7 @@ void __cdecl sumStep(int *param_1,undefined4 param_2,int *param_3)
   undefined8 *puVar6;
   double *pdVar7;
   int iVar8;
-  float10 fVar9;
+  double fVar9;
   ulonglong uVar10;
   
   piVar5 = (int *)param_1[0xc];
@@ -11218,7 +11216,7 @@ LAB_0046a6d1:
  */
 /* Global::sqlite3_column_double @ 0046a710 */
 
-float10 __cdecl sqlite3_column_double(int *param_1,int param_2)
+double __cdecl sqlite3_column_double(int *param_1,int param_2)
 
 {
   ushort uVar1;
@@ -11231,7 +11229,7 @@ float10 __cdecl sqlite3_column_double(int *param_1,int param_2)
     if ((uVar1 & 4) != 0) {
       local_c = (double)*(longlong *)(puVar2 + 0x10);
       sqlite3_column_apiExit(param_1);
-      return (float10)local_c;
+      return (double)local_c;
     }
     local_c = 0.0;
     if ((uVar1 & 0x12) != 0) {
@@ -11243,7 +11241,7 @@ float10 __cdecl sqlite3_column_double(int *param_1,int param_2)
     local_c = *(double *)(puVar2 + 8);
   }
   sqlite3_column_apiExit(param_1);
-  return (float10)local_c;
+  return (double)local_c;
 }
 
 
@@ -12377,7 +12375,7 @@ void __cdecl lib_fn_46f880(int *param_1)
   undefined3 extraout_var;
   int extraout_ECX;
   int *piVar5;
-  float10 fVar6;
+  float fVar6;
   double dVar7;
   double dVar8;
   double dVar9;
@@ -15860,7 +15858,7 @@ uint __cdecl lib_fn_477240(int param_1,uint param_2)
 
 /* Global::lib_fn_477290 @ 00477290 */
 
-float10 __cdecl lib_fn_477290(double param_1)
+double __cdecl lib_fn_477290(double param_1)
 
 {
   double dVar1;
@@ -15877,7 +15875,7 @@ float10 __cdecl lib_fn_477290(double param_1)
       local_c = dVar1;
     } while (dVar2 < param_1);
   }
-  return (float10)local_c;
+  return (double)local_c;
 }
 
 
@@ -32761,7 +32759,7 @@ undefined4 __cdecl lib_fn_4b75f0(int param_1)
 
 {
   int iVar1;
-  float10 fVar2;
+  float fVar2;
   
   if ((*(byte *)(param_1 + 0x1c) & 0xd) == 0) {
     iVar1 = lib_fn_48d300(*(byte **)(param_1 + 4),(uint *)(param_1 + 0x10),*(int *)(param_1 + 0x18),
@@ -32961,7 +32959,7 @@ LAB_004b8327:
 
 /* Global::lib_fn_4b8350 @ 004b8350 */
 
-float10 __cdecl lib_fn_4b8350(int param_1)
+double __cdecl lib_fn_4b8350(int param_1)
 
 {
   ushort uVar1;
@@ -32969,18 +32967,18 @@ float10 __cdecl lib_fn_4b8350(int param_1)
   
   uVar1 = *(ushort *)(param_1 + 0x1c);
   if ((uVar1 & 8) != 0) {
-    return (float10)*(double *)(param_1 + 8);
+    return (double)*(double *)(param_1 + 8);
   }
   if ((uVar1 & 4) != 0) {
-    return (float10)*(longlong *)(param_1 + 0x10);
+    return (double)*(longlong *)(param_1 + 0x10);
   }
   if ((uVar1 & 0x12) != 0) {
     local_c = 0.0;
     lib_fn_48cc90(*(byte **)(param_1 + 4),&local_c,*(uint *)(param_1 + 0x18),
                  *(char *)(param_1 + 0x1f));
-    return (float10)local_c;
+    return (double)local_c;
   }
-  return (float10)0;
+  return (double)0;
 }
 
 

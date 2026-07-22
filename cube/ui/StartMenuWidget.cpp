@@ -46,7 +46,7 @@ void cube::StartMenuWidget::vfunc_1(void)
   uint uVar1;
   int fontLoaded;
   int self;
-  float10 fVar3;
+  float fVar3;
   undefined4 uVar4;
   undefined4 uVar5;
   undefined4 uVar6;
@@ -124,9 +124,9 @@ void cube::StartMenuWidget::vfunc_1(void)
     local_20 = 0x3f800000;
     local_1c = 0x3f800000;
     local_18 = 0x3f800000;
-    if (0.0 <= mouseY) {
-      fVar3 = (float10)security_cookie_guard_b();
-      if (((mouseY < (float)fVar3) && (10.0 <= mouseX)) && (mouseX < 40.0)) {
+    if (0.0f <= mouseY) {
+      fVar3 = (float)security_cookie_guard_b();
+      if (((mouseY < (float)fVar3) && (10.0f <= mouseX)) && (mouseX < 40.0f)) {
         *(undefined4 *)(self + 0x160) = 0;
         local_24 = 0x3e4ccccd;
         local_20 = 0x3f800000;
@@ -159,9 +159,9 @@ void cube::StartMenuWidget::vfunc_1(void)
     local_2c = 0x3f800000;
     local_28 = 0x3f800000;
     uVar4 = 0x41f00000;
-    fVar3 = (float10)security_cookie_guard_b(0x41f00000,0x41900000,0x40800000,0,0,0,puVar10,puVar12,puVar11,1,1
+    fVar3 = (float)security_cookie_guard_b(0x41f00000,0x41900000,0x40800000,0,0,0,puVar10,puVar12,puVar11,1,1
                                  );
-    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
+    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5f,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
@@ -188,8 +188,8 @@ void cube::StartMenuWidget::vfunc_1(void)
     local_3c = 0;
     local_38 = 0;
     uVar4 = 0x41f00000;
-    fVar3 = (float10)security_cookie_guard_b(0x41f00000,0x41900000,0,0,0,0,puVar10,puVar12,puVar11,1,1);
-    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
+    fVar3 = (float)security_cookie_guard_b(0x41f00000,0x41900000,0,0,0,0,puVar10,puVar12,puVar11,1,1);
+    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5f,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
@@ -199,9 +199,9 @@ void cube::StartMenuWidget::vfunc_1(void)
     local_20 = 0x3f800000;
     local_1c = 0x3f800000;
     local_18 = 0x3f800000;
-    if (0.0 <= mouseY) {
-      fVar3 = (float10)security_cookie_guard_b();
-      if (((mouseY < (float)fVar3) && (60.0 <= mouseX)) && (mouseX < 90.0)) {
+    if (0.0f <= mouseY) {
+      fVar3 = (float)security_cookie_guard_b();
+      if (((mouseY < (float)fVar3) && (60.0f <= mouseX)) && (mouseX < 90.0f)) {
         *(undefined4 *)(self + 0x160) = 1;
         local_24 = 0x3e4ccccd;
         local_20 = 0x3f800000;
@@ -234,9 +234,9 @@ void cube::StartMenuWidget::vfunc_1(void)
     local_54 = 0x3f800000;
     local_50 = 0x3f800000;
     uVar4 = 0x42a00000;
-    fVar3 = (float10)security_cookie_guard_b(0x42a00000,0x41900000,0x40800000,0,0,0,puVar10,puVar12,puVar11,1,1
+    fVar3 = (float)security_cookie_guard_b(0x42a00000,0x41900000,0x40800000,0,0,0,puVar10,puVar12,puVar11,1,1
                                  );
-    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
+    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5f,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
@@ -263,8 +263,8 @@ void cube::StartMenuWidget::vfunc_1(void)
     local_3c = 0;
     local_38 = 0;
     uVar4 = 0x42a00000;
-    fVar3 = (float10)security_cookie_guard_b(0x42a00000,0x41900000,0,0,0,0,puVar10,puVar12,puVar11,1,1);
-    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
+    fVar3 = (float)security_cookie_guard_b(0x42a00000,0x41900000,0,0,0,0,puVar10,puVar12,puVar11,1,1);
+    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5f,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
@@ -274,9 +274,9 @@ void cube::StartMenuWidget::vfunc_1(void)
     local_20 = 0x3f800000;
     local_1c = 0x3f800000;
     local_18 = 0x3f800000;
-    if (0.0 <= mouseY) {
-      fVar3 = (float10)security_cookie_guard_b();
-      if (((mouseY < (float)fVar3) && (110.0 <= mouseX)) && (mouseX < 140.0)) {
+    if (0.0f <= mouseY) {
+      fVar3 = (float)security_cookie_guard_b();
+      if (((mouseY < (float)fVar3) && (110.0f <= mouseX)) && (mouseX < 140.0f)) {
         *(undefined4 *)(self + 0x160) = 2;
         local_24 = 0x3e4ccccd;
         local_20 = 0x3f800000;
@@ -309,9 +309,9 @@ void cube::StartMenuWidget::vfunc_1(void)
     local_54 = 0x3f800000;
     local_50 = 0x3f800000;
     uVar4 = 0x43020000;
-    fVar3 = (float10)security_cookie_guard_b(0x43020000,0x41900000,0x40800000,0,0,0,puVar10,puVar12,puVar11,1,1
+    fVar3 = (float)security_cookie_guard_b(0x43020000,0x41900000,0x40800000,0,0,0,puVar10,puVar12,puVar11,1,1
                                  );
-    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
+    Font_drawTextTransformed(local_74,(float)fVar3 * 0.5f,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar10,puVar12,
                  puVar11,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_60) {
@@ -338,8 +338,8 @@ void cube::StartMenuWidget::vfunc_1(void)
     local_a4 = 0;
     local_a0 = 0;
     uVar4 = 0x43020000;
-    fVar3 = (float10)security_cookie_guard_b(0x43020000,0x41900000,0,0,0,0,puVar11,puVar10,puVar12,1,1);
-    Font_drawTextTransformed(local_c4,(float)fVar3 * 0.5,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar11,puVar10,
+    fVar3 = (float)security_cookie_guard_b(0x43020000,0x41900000,0,0,0,0,puVar11,puVar10,puVar12,1,1);
+    Font_drawTextTransformed(local_c4,(float)fVar3 * 0.5f,uVar4,uVar5,uVar6,uVar7,uVar8,uVar9,puVar11,puVar10,
                  puVar12,uVar13,uVar14);
     local_8 = 0xffffffff;
     if (7 < local_b0) {

@@ -314,7 +314,7 @@ LAB_0041c1bb:
                   do {
                     iVar6 = *(int *)piVar10[2];
                     if (((iVar6 == 0x12) || ((iVar6 == 0x10 || (iVar6 == 0x44)))) &&
-                       (cVar5 = Creature_moveToward(puVar2,(uint *)(piVar10[2] + 8),'\x01',200.0),
+                       (cVar5 = Creature_moveToward(puVar2,(uint *)(piVar10[2] + 8),'\x01',200.0f),
                        cVar5 != '\0')) {
                       World_vec3i_pushBack(&local_23c,piVar10 + 3);
                     }
@@ -354,7 +354,7 @@ LAB_0041c1bb:
               iVar6 < (*(int *)(iVar8 + 0x10) - (int)puVar11) / 0x188)) &&
              (puVar11[iVar6 * 0x62 + 0x10] == 0 && puVar11[iVar6 * 0x62 + 0x11] == 0)) {
             *(undefined4 *)(self + 4) = 20000;
-            local_48 = 0.5 - *(float *)((int)creature_p + 0x88) * 0.5;
+            local_48 = 0.5f - *(float *)((int)creature_p + 0x88) * 0.5f;
             local_20d = '\x01';
             local_50 = 0;
             local_4c = 0;
@@ -519,11 +519,11 @@ LAB_0041c638:
             local_28 = uVar7 - *(uint *)((int)creature_p + 0x20);
             iStack_24 = (*(int *)(iVar8 + iVar3 + 0x1c) - *(int *)((int)creature_p + 0x24)) -
                         (uint)(uVar7 < *(uint *)((int)creature_p + 0x20));
-            local_5c = (float)CONCAT44(iStack_34,local_38) * 1.5258789e-05;
+            local_5c = (float)CONCAT44(iStack_34,local_38) * 1.5258789e-05f;
             local_218 = (uint *)(float)CONCAT44(iStack_24,local_28);
-            local_58 = (float)CONCAT44(iStack_2c,local_30) * 1.5258789e-05;
+            local_58 = (float)CONCAT44(iStack_2c,local_30) * 1.5258789e-05f;
             if (local_58 * local_58 + local_5c * local_5c +
-                (float)local_218 * 1.5258789e-05 * (float)local_218 * 1.5258789e-05 < 9.0) {
+                (float)local_218 * 1.5258789e-05f * (float)local_218 * 1.5258789e-05f < 9.0f) {
               RandomBehavior_init(local_20c);
               local_f4 = *(undefined4 *)((int)pvVar19 + 0x1478);
               puVar4 = *(undefined4 **)((int)pvVar19 + 0x130c);
@@ -577,7 +577,7 @@ LAB_0041c638:
             iVar6 < (*(int *)(iVar8 + 0x10) - (int)puVar11) / 0x188 &&
             (puVar11[iVar6 * 0x62 + 0x10] == 0 && puVar11[iVar6 * 0x62 + 0x11] == 0)))) {
           *(undefined4 *)(self + 4) = 20000;
-          local_3c = 0.5 - *(float *)((int)pvVar17 + 0x88) * 0.5;
+          local_3c = 0.5f - *(float *)((int)pvVar17 + 0x88) * 0.5f;
           local_44 = 0;
           local_40 = 0;
           Vec3i64_randomize((int)local_b0);

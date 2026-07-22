@@ -1469,7 +1469,7 @@ void proximityCheck(void)
 
 {
   int item;
-  float10 fVar2;
+  float fVar2;
   float distance;
   float height;
   uint stackCookie;
@@ -1481,12 +1481,12 @@ void proximityCheck(void)
     return;
   }
   Widget_computeBoundsFloat(&distance);
-  fVar2 = (float10)security_cookie_guard_a();
-  if ((float)fVar2 - 30.0 < height) {
-    fVar2 = (float10)security_cookie_guard_a();
+  fVar2 = (float)security_cookie_guard_a();
+  if ((float)fVar2 - 30.0f < height) {
+    fVar2 = (float)security_cookie_guard_a();
     if (height < (float)fVar2) {
-      fVar2 = (float10)security_cookie_guard_b();
-      if ((distance < (float)fVar2 * 0.5) && (0.0 < distance)) {
+      fVar2 = (float)security_cookie_guard_b();
+      if ((distance < (float)fVar2 * 0.5f) && (0.0f < distance)) {
         __security_check_cookie(stackCookie ^ (uint)&stack0xfffffffc);
         return;
       }
@@ -1505,14 +1505,13 @@ void proximityCheck(void)
  */
 /* Global::powf_f @ 00411d10 */
 
-float10 powf_f(float param_1)
+float powf_f(float param_1,float param_2)
 
 {
   double dVar1;
   
-  dVar1 = (double)param_1;
-  libm_sse2_pow_precise();
-  return (float10)(float)dVar1;
+  dVar1 = libm_sse2_pow_precise((double)param_1,(double)param_2);
+  return (float)(float)dVar1;
 }
 
 
@@ -1543,12 +1542,12 @@ void copy16bytes(undefined8 a,undefined8 b)
  */
 /* Global::vec2_dot @ 00412320 */
 
-float10 vec2_dot(float *b)
+float vec2_dot(float *b)
 
 {
   float *self;
   
-  return (float10)(b[1] * self[1] + *b * *self);
+  return (float)(b[1] * self[1] + *b * *self);
 }
 
 
@@ -1593,15 +1592,14 @@ void mat4_identity(void)
  */
 /* Global::vec2_length @ 00423ee0 */
 
-float10 vec2_length(void)
+float vec2_length(void)
 
 {
   float *self;
   double lenSq;
   
-  lenSq = (double)(*self * *self + self[1] * self[1]);
-  libm_sse2_sqrt_precise();
-  return (float10)(float)lenSq;
+  lenSq = libm_sse2_sqrt_precise((double)(*self * *self + self[1] * self[1]));
+  return (float)(float)lenSq;
 }
 
 
@@ -1621,8 +1619,7 @@ void vec2_normalize(void)
   double len;
   
   x = *self;
-  len = (double)(x * x + self[1] * self[1]);
-  libm_sse2_sqrt_precise();
+  len = libm_sse2_sqrt_precise((double)(x * x + self[1] * self[1]));
   *self = x * (1.0 / (float)len);
   self[1] = (1.0 / (float)len) * self[1];
   return;
@@ -1637,14 +1634,13 @@ void vec2_normalize(void)
  */
 /* Global::asinf_f @ 00424b30 */
 
-float10 asinf_f(float param_1)
+float asinf_f(float param_1)
 
 {
   double dVar1;
   
-  dVar1 = (double)param_1;
-  libm_sse2_asin_precise();
-  return (float10)(float)dVar1;
+  dVar1 = libm_sse2_asin_precise((double)param_1);
+  return (float)(float)dVar1;
 }
 
 
@@ -2017,8 +2013,8 @@ void vec3i64_toFloat(longlong *src)
   float *self;
   
   *self = (float)*src * 1.5258789e-05;
-  self[1] = (float)src[1] * 1.5258789e-05;
-  self[2] = (float)src[2] * 1.5258789e-05;
+  self[1] = (float)src[1] * 1.5258789e-05f;
+  self[2] = (float)src[2] * 1.5258789e-05f;
   return;
 }
 
@@ -2446,20 +2442,20 @@ undefined4 world_getRegionCell64(uint blockX,uint blockY)
  */
 /* Global::math_round_to_tenth @ 00439110 */
 
-float10 math_round_to_tenth(float param_1)
+float math_round_to_tenth(float param_1)
 
 {
-  float10 fVar1;
+  float fVar1;
   
-  if (param_1 < 0.0) {
-    fVar1 = (float10)math_round_to_tenth(-param_1);
+  if (param_1 < 0.0f) {
+    fVar1 = (float)math_round_to_tenth(-param_1);
     param_1 = -(float)fVar1;
-    if (param_1 == 0.0) {
-      param_1 = 0.0;
+    if (param_1 == 0.0f) {
+      param_1 = 0.0f;
     }
-    return (float10)param_1;
+    return (float)param_1;
   }
-  return (float10)((float)(int)(param_1 * 10.0 + 0.5) * 0.1);
+  return (float)((float)(int)(param_1 * 10.0f + 0.5f) * 0.1f);
 }
 
 
@@ -2883,13 +2879,13 @@ void list_allocNode20(undefined4 *prev,undefined4 *next)
  */
 /* Global::curve_diminishing01 @ 0043c980 */
 
-float10 curve_diminishing01(int level)
+float curve_diminishing01(int level)
 
 {
   if (level < 1) {
-    return (float10)0;
+    return (float)0;
   }
-  return (float10)(1.0 - 1.0 / ((float)level * 0.1 + 1.0));
+  return (float)(1.0f - 1.0f / ((float)level * 0.1f + 1.0f));
 }
 
 
@@ -2958,9 +2954,9 @@ void combat_updateBombFuse(void)
   
   if (((*(int *)(self + 0x128) != 0) && (*(char *)(self + 0x140) == '\x04')) &&
      (*(char *)(self + 0x141) == '\x01')) {
-    progress = *(float *)(self + 0x170) + 0.25;
+    progress = *(float *)(self + 0x170) + 0.25f;
     *(float *)(self + 0x170) = progress;
-    if (1.0 < progress) {
+    if (1.0f < progress) {
       *(undefined4 *)(self + 0x170) = 0x3f800000;
     }
     uStack_18 = 0;
@@ -2996,7 +2992,7 @@ void stat_calcWeaponDamage(void)
   ushort uVar2;
   uint uVar3;
   int self;
-  float10 fVar4;
+  float fVar4;
   float fVar5;
   double powVal;
   int *upgrades;
@@ -3013,11 +3009,11 @@ void stat_calcWeaponDamage(void)
   local_10 = ExceptionList;
   uVar3 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
-  powVal = 2.0;
-  libm_sse2_pow_precise(uVar3);
+  powVal = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 + 1.0))
+                                 * 3.0));
   cost = (float)powVal;
-  powVal = 2.0;
-  libm_sse2_pow_precise();
+  powVal = libm_sse2_pow_precise(2.0,0.0);
   cost = *(float *)(self + 0x180) * (float)powVal * cost;
   result = cost;
   equipment_getActiveElement(&upgrades);
@@ -3025,29 +3021,29 @@ void stat_calcWeaponDamage(void)
   if (hasUpgrades == 0) {
     uVar2 = *(ushort *)(self + 0x7e);
     if ((uVar2 & 8) != 0) {
-      powVal = 2.0;
-      libm_sse2_pow_precise(uVar3);
+      powVal = libm_sse2_pow_precise
+                        (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 +
+                                                   1.0)) * 3.0));
       bonus = (float)powVal;
-      powVal = 2.0;
-      libm_sse2_pow_precise();
+      powVal = libm_sse2_pow_precise(2.0,(double)((float)*(byte *)(self + 0x1a8) * 0.25));
       uVar2 = *(ushort *)(self + 0x7e);
       cost = bonus * (float)powVal * 2.0 + cost;
       result = cost;
     }
     fVar5 = cost;
     if ((uVar2 & 0x10) != 0) {
-      powVal = 2.0;
-      libm_sse2_pow_precise(uVar3);
+      powVal = libm_sse2_pow_precise
+                        (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 +
+                                                   1.0)) * 3.0));
       bonus = (float)powVal;
-      powVal = 2.0;
-      libm_sse2_pow_precise();
+      powVal = libm_sse2_pow_precise(2.0,(double)((float)*(byte *)(self + 0x1a8) * 0.25));
       result = (float)powVal * bonus * 8.0 + cost;
       fVar5 = result;
     }
   }
   else {
     for (piVar1 = (int *)*upgrades; fVar5 = cost, piVar1 != upgrades; piVar1 = (int *)*piVar1) {
-      fVar4 = (float10)item_weaponDamage();
+      fVar4 = (float)item_weaponDamage(uVar3);
       bonus = (float)fVar4;
       cost = bonus + cost;
       result = cost;
@@ -3084,13 +3080,13 @@ void stat_calcWeaponDamage(void)
  */
 /* Global::curve_diminishingx3p1 @ 0043e2c0 */
 
-float10 curve_diminishingx3p1(int level)
+float curve_diminishingx3p1(int level)
 
 {
   if (level < 1) {
-    return (float10)0;
+    return (float)0;
   }
-  return (float10)((1.0 - 1.0 / ((float)level * 0.1 + 1.0)) * 3.0 + 1.0);
+  return (float)((1.0f - 1.0f / ((float)level * 0.1f + 1.0f)) * 3.0f + 1.0f);
 }
 
 
@@ -3135,7 +3131,7 @@ bool ability_isUsable(int abilityType)
 {
   int typeSave;
   int self;
-  float10 extraout_ST0;
+  float extraout_ST0;
   float manaCost;
   
   typeSave = abilityType;
@@ -3148,7 +3144,7 @@ bool ability_isUsable(int abilityType)
         if (typeSave != 0x1c) {
           return true;
         }
-        return 0.0 < *(float *)(self + 0x170);
+        return 0.0f < *(float *)(self + 0x170);
       }
     }
   }
@@ -3164,10 +3160,10 @@ bool ability_isUsable(int abilityType)
  */
 /* Global::curve_diminishingN1 @ 0043e660 */
 
-float10 curve_diminishingN1(int level)
+float curve_diminishingN1(int level)
 
 {
-  return (float10)(1.0 - 1.0 / ((float)(level + 1) * 0.1 + 1.0));
+  return (float)(1.0f - 1.0f / ((float)(level + 1) * 0.1f + 1.0f));
 }
 
 
@@ -3179,13 +3175,13 @@ float10 curve_diminishingN1(int level)
  */
 /* Global::curve_diminishingx3p15 @ 0043f770 */
 
-float10 curve_diminishingx3p15(int level)
+float curve_diminishingx3p15(int level)
 
 {
   if (level < 1) {
-    return (float10)0;
+    return (float)0;
   }
-  return (float10)((1.0 - 1.0 / ((float)level * 0.1 + 1.0)) * 3.0 + 1.5);
+  return (float)((1.0f - 1.0f / ((float)level * 0.1f + 1.0f)) * 3.0f + 1.5f);
 }
 
 
@@ -3484,21 +3480,21 @@ LAB_00440137:
     *(undefined4 *)(item + 0x1a) = 0x14b014c;
     *(undefined2 *)(item + 0x18) = 0x14a;
     *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
-    local_14 = 0.0;
-    local_10 = -90.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = -90.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -2.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 4.0;
-    local_c = 7.0;
+    local_14 = 0.0f;
+    local_10 = 4.0f;
+    local_c = 7.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 3.0;
-    local_c = 0.0;
+    local_14 = 5.0f;
+    local_10 = 3.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x428;
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
@@ -3522,34 +3518,34 @@ LAB_00440137:
 LAB_0044244f:
     *(undefined2 *)(item + 0x1e) = uVar1;
     *(undefined4 *)(item + 0x24) = 0x3f666666;
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 1.0;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 9.0;
-    local_c = 6.0;
+    local_14 = 0.0f;
+    local_10 = 9.0f;
+    local_c = 6.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 4.0;
-    local_c = -2.5;
+    local_14 = 3.0f;
+    local_10 = 4.0f;
+    local_c = -2.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -1.0;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -1.0f;
     vec3_copy(&local_14);
 LAB_00442502:
     *(undefined4 *)(item + 0x30) = 0x3f800000;
     *(undefined4 *)(item + 0x2c) = 0x3f800000;
-    local_c = -1.0;
+    local_c = -1.0f;
 LAB_00442517:
-    local_10 = -8.0;
+    local_10 = -8.0f;
 LAB_0044251e:
-    local_14 = 0.0;
+    local_14 = 0.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x3c) = 0x3f800000;
     *(undefined4 *)(item + 0x60) = 0xc1f00000;
@@ -3560,34 +3556,34 @@ LAB_0044251e:
     *(undefined2 *)(item + 0x18) = 0x16e;
     *(undefined2 *)(item + 0x1e) = 0x170;
     *(undefined4 *)(item + 0x24) = 0x3f333333;
-    local_14 = 0.0;
-    local_10 = 12.5;
-    local_c = 3.0;
+    local_14 = 0.0f;
+    local_10 = 12.5f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 2.5;
-    local_c = -4.5;
+    local_14 = 3.0f;
+    local_10 = 2.5f;
+    local_c = -4.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -4.0;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -4.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x28) = 0x3f99999a;
-    local_14 = 0.0;
-    local_10 = -8.0;
-    local_c = -2.5;
+    local_14 = 0.0f;
+    local_10 = -8.0f;
+    local_c = -2.5f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x3c) = 0x3f800000;
     *(undefined4 *)(item + 0x60) = 0xc1f00000;
-    local_14 = 2.8;
-    local_10 = 2.8;
-    local_c = 4.0;
+    local_14 = 2.8f;
+    local_10 = 2.8f;
+    local_c = 4.0f;
     goto LAB_00443c61;
   case 0x16:
     *(undefined2 *)(item + 0x14) = 0x172;
@@ -3601,62 +3597,62 @@ LAB_0044251e:
 LAB_00442693:
     *(undefined2 *)(item + 0x18) = uVar1;
     *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
-    local_14 = 0.0;
-    local_10 = 9.0;
-    local_c = 5.0;
+    local_14 = 0.0f;
+    local_10 = 9.0f;
+    local_c = 5.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -4.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -4.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 4.0;
-    local_c = -8.5;
+    local_14 = 3.0f;
+    local_10 = 4.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -9.0;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -9.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f800000;
     *(undefined4 *)(item + 0x2c) = 0x3f800000;
     goto LAB_00443c6a;
   case 0x18:
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 1.2;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 1.2f;
     vec3_copy(&local_14);
     *(undefined2 *)(item + 0x1c) = 0x874;
-    local_10 = 0.0;
-    local_c = -1.5;
+    local_10 = 0.0f;
+    local_c = -1.5f;
     goto LAB_00440a12;
   case 0x19:
     *(undefined2 *)(item + 0x14) = 0x872;
     *(undefined4 *)(item + 0x1a) = 0x8710873;
     *(undefined2 *)(item + 0x18) = 0x873;
     *(undefined4 *)(item + 0x24) = 0x3f266666;
-    local_14 = 0.0;
-    local_10 = 13.0;
-    local_c = 0.5;
+    local_14 = 0.0f;
+    local_10 = 13.0f;
+    local_c = 0.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 3.5;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 3.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 4.0;
-    local_c = -3.5;
+    local_14 = 3.0f;
+    local_10 = 4.0f;
+    local_c = -3.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -3.5;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -3.5f;
     vec3_copy(&local_14);
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 1.0;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
-    local_c = 4.5;
+    local_c = 4.5f;
     goto LAB_00442517;
   case 0x1a:
     *(undefined2 *)(item + 0x14) = 0x17a;
@@ -3664,34 +3660,34 @@ LAB_00442693:
     *(undefined2 *)(item + 0x18) = 0x17b;
     *(undefined2 *)(item + 0x1e) = 0x17d;
     *(undefined4 *)(item + 0x24) = 0x3f666666;
-    local_14 = 0.0;
-    local_10 = 9.0;
-    local_c = -1.0;
+    local_14 = 0.0f;
+    local_10 = 9.0f;
+    local_c = -1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -5.5;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -5.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 4.0;
-    local_c = -8.5;
+    local_14 = 3.0f;
+    local_10 = 4.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.1;
-    local_c = -8.5;
+    local_14 = 3.0f;
+    local_10 = -4.1f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f800000;
     *(undefined4 *)(item + 0x2c) = 0x3f800000;
     *(undefined4 *)(item + 0x28) = 0x3f866666;
-    local_14 = 0.0;
-    local_10 = -10.0;
-    local_c = 3.0;
+    local_14 = 0.0f;
+    local_10 = -10.0f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x3c) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x60) = 0xc2f00000;
-    local_14 = 1.04;
-    local_10 = 1.04;
-    local_c = 2.34;
+    local_14 = 1.04f;
+    local_10 = 1.04f;
+    local_c = 2.34f;
     goto LAB_00443c61;
   case 0x1b:
     *(undefined2 *)(item + 0x14) = 0x17f;
@@ -3699,63 +3695,63 @@ LAB_00442693:
     *(undefined2 *)(item + 0x18) = 0x180;
     *(undefined2 *)(item + 0x1e) = 0x182;
     *(undefined4 *)(item + 0x24) = 0x3f666666;
-    local_14 = 0.0;
-    local_10 = 9.0;
-    local_c = 5.0;
+    local_14 = 0.0f;
+    local_10 = 9.0f;
+    local_c = 5.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.5;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 4.0;
-    local_c = -2.5;
+    local_14 = 3.0f;
+    local_10 = 4.0f;
+    local_c = -2.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.1;
-    local_c = -2.5;
+    local_14 = 3.0f;
+    local_10 = -4.1f;
+    local_c = -2.5f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f800000;
     *(undefined4 *)(item + 0x2c) = 0x3f800000;
     *(undefined4 *)(item + 0x28) = 0x3f866666;
-    local_14 = 0.0;
-    local_10 = -7.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = -7.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x3c) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x60) = 0xc2f00000;
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 0.7;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 0.7f;
     goto LAB_00443c61;
   case 0x1c:
     *(undefined2 *)(item + 0x14) = 0x184;
     *(undefined4 *)(item + 0x1a) = 0x1830186;
     *(undefined2 *)(item + 0x18) = 0x185;
     *(undefined2 *)(item + 0x1e) = 0x187;
-    local_14 = 0.0;
-    local_10 = 11.0;
-    local_c = -1.0;
+    local_14 = 0.0f;
+    local_10 = 11.0f;
+    local_c = -1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -3.5;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -3.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 3.0;
-    local_c = -7.5;
+    local_14 = 3.0f;
+    local_10 = 3.0f;
+    local_c = -7.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.1;
-    local_c = -7.5;
+    local_14 = 3.0f;
+    local_10 = -4.1f;
+    local_c = -7.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = -5.5;
-    local_c = -1.0;
+    local_14 = 0.0f;
+    local_10 = -5.5f;
+    local_c = -1.0f;
     vec3_copy(&local_14);
-    local_14 = 1.52;
-    local_10 = 1.52;
-    local_c = 3.23;
+    local_14 = 1.52f;
+    local_10 = 1.52f;
+    local_c = 3.23f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3f99999a;
     *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
@@ -3768,26 +3764,26 @@ LAB_00442693:
     *(undefined2 *)(item + 0x18) = 0x18a;
     *(undefined2 *)(item + 0x1e) = 0x18c;
     *(undefined4 *)(item + 0x24) = 0x3f19999a;
-    local_14 = 0.0;
-    local_10 = 14.0;
-    local_c = -1.0;
+    local_14 = 0.0f;
+    local_10 = 14.0f;
+    local_c = -1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 5.0;
-    local_c = -8.5;
+    local_14 = 3.0f;
+    local_10 = 5.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -6.0;
-    local_c = -9.0;
+    local_14 = 3.0f;
+    local_10 = -6.0f;
+    local_c = -9.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f800000;
     *(undefined4 *)(item + 0x2c) = 0x3f8ccccd;
-    local_10 = -11.0;
-    local_c = -4.0;
+    local_10 = -11.0f;
+    local_c = -4.0f;
     goto LAB_0044251e;
   case 0x1e:
     *(undefined2 *)(item + 0x14) = 0x18e;
@@ -3809,27 +3805,27 @@ LAB_00442693:
 LAB_00442c5a:
     *(undefined2 *)(item + 0x1e) = uVar1;
     *(undefined4 *)(item + 0x24) = 0x3f666666;
-    local_14 = 0.0;
-    local_10 = 9.0;
-    local_c = -1.0;
+    local_14 = 0.0f;
+    local_10 = 9.0f;
+    local_c = -1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -4.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -4.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 4.0;
-    local_c = -8.5;
+    local_14 = 3.0f;
+    local_10 = 4.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.1;
-    local_c = -8.5;
+    local_14 = 3.0f;
+    local_10 = -4.1f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f800000;
     *(undefined4 *)(item + 0x2c) = 0x3f800000;
-    local_14 = 0.0;
-    local_10 = -8.0;
-    local_c = -1.0;
+    local_14 = 0.0f;
+    local_10 = -8.0f;
+    local_c = -1.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x3c) = 0x3f8ccccd;
     *(undefined4 *)(item + 0x60) = 0xc1f00000;
@@ -3838,36 +3834,36 @@ LAB_00442c5a:
     *(undefined2 *)(item + 0x14) = 0x19d;
     *(undefined4 *)(item + 0x1a) = 0x19c019e;
     *(undefined2 *)(item + 0x18) = 0x19e;
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 0.8;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 0.8f;
     vec3_copy(&local_14);
-    local_10 = 9.0;
+    local_10 = 9.0f;
     goto LAB_00442db8;
   case 0x22:
     *(undefined2 *)(item + 0x14) = 0x1a0;
     *(undefined4 *)(item + 0x1a) = 0x19f01a1;
     *(undefined2 *)(item + 0x18) = 0x1a1;
-    local_14 = 1.2;
-    local_10 = 1.2;
-    local_c = 1.2;
+    local_14 = 1.2f;
+    local_10 = 1.2f;
+    local_c = 1.2f;
     vec3_copy(&local_14);
-    local_10 = 4.0;
+    local_10 = 4.0f;
 LAB_00442db8:
-    local_14 = 0.0;
-    local_c = 1.9;
+    local_14 = 0.0f;
+    local_c = 1.9f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 4.0;
-    local_c = -4.2;
+    local_14 = 3.0f;
+    local_10 = 4.0f;
+    local_c = -4.2f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -4.2;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -4.2f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3f99999a;
     *(undefined4 *)(item + 0x24) = 0x3f59999a;
@@ -3878,26 +3874,26 @@ LAB_00442db8:
   case 0x24:
     *(undefined4 *)(item + 0x1a) = 0x9c009d;
 LAB_0044168d:
-    local_14 = 9.0;
-    local_10 = 0.0;
-    local_c = 8.0;
+    local_14 = 9.0f;
+    local_10 = 0.0f;
+    local_c = 8.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 1.0;
-    local_c = -2.5;
+    local_14 = 5.0f;
+    local_10 = 1.0f;
+    local_c = -2.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 8.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 8.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x2c) = 0x3f666666;
-    local_14 = 1.0;
-    local_10 = 1.0;
-    local_c = 1.1;
+    local_14 = 1.0f;
+    local_10 = 1.0f;
+    local_c = 1.1f;
 LAB_00440ef2:
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x30;
@@ -3916,14 +3912,14 @@ LAB_00440ef2:
     uVar1 = 0x962;
 LAB_004419f1:
     *(undefined2 *)(item + 0x1c) = uVar1;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3fc00000;
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 0.8;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 0.8f;
 LAB_00441a32:
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x29;
@@ -3931,15 +3927,15 @@ LAB_00441a32:
     return;
   case 0x29:
     *(undefined4 *)(item + 0x14) = 0x9640963;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
     *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
-    local_14 = 1.4;
-    local_10 = 1.4;
-    local_c = 2.5;
+    local_14 = 1.4f;
+    local_10 = 1.4f;
+    local_c = 2.5f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x429;
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
@@ -3947,20 +3943,20 @@ LAB_00441a32:
   case 0x2a:
     *(undefined2 *)(item + 0x14) = 0x965;
     *(undefined2 *)(item + 0x18) = 0x966;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 6.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 6.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
     *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x2c) = 0x3f000000;
-    local_14 = 1.4;
-    local_10 = 1.4;
-    local_c = 2.5;
+    local_14 = 1.4f;
+    local_10 = 1.4f;
+    local_c = 2.5f;
     goto LAB_00440900;
   case 0x2b:
     *(undefined2 *)(item + 0x14) = 3;
@@ -3977,9 +3973,9 @@ LAB_00441a32:
     *(undefined2 *)(item + 0x14) = 5;
     *(undefined4 *)(item + 0x1a) = 0x601b0;
     *(undefined2 *)(item + 0x18) = 0x1ae;
-    local_14 = 0.0;
-    local_10 = 3.0;
-    local_c = 4.0;
+    local_14 = 0.0f;
+    local_10 = 3.0f;
+    local_c = 4.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
     break;
@@ -3994,21 +3990,21 @@ LAB_00441a32:
     *(undefined4 *)(item + 0x1a) = 0x3d003f;
     *(undefined2 *)(item + 0x18) = 0x3e;
     *(undefined4 *)(item + 0x24) = 0x3f1c28f6;
-    local_14 = 0.0;
-    local_10 = 4.0;
-    local_c = 6.0;
+    local_14 = 0.0f;
+    local_10 = 4.0f;
+    local_c = 6.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -2.0f;
     vec3_copy(&local_14);
-    local_14 = 7.5;
-    local_10 = 0.0;
-    local_c = 3.0;
+    local_14 = 7.5f;
+    local_10 = 0.0f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
-    local_14 = 2.4;
-    local_10 = 2.4;
-    local_c = 5.3999996;
+    local_14 = 2.4f;
+    local_10 = 2.4f;
+    local_c = 5.3999996f;
     vec3_copy(&local_14);
     break;
   case 0x2f:
@@ -4018,25 +4014,25 @@ LAB_00441a32:
     *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x30) = 0x3f59999a;
     *(undefined4 *)(item + 0x2c) = 0x3f59999a;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 7.5;
-    local_10 = 0.0;
-    local_c = 5.0;
+    local_14 = 7.5f;
+    local_10 = 0.0f;
+    local_c = 5.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -1.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -1.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 1.0;
-    local_c = -6.5;
+    local_14 = 3.0f;
+    local_10 = 1.0f;
+    local_c = -6.5f;
     vec3_copy(&local_14);
-    local_14 = 2.4;
-    local_10 = 2.4;
-    local_c = 3.6000001;
+    local_14 = 2.4f;
+    local_10 = 2.4f;
+    local_c = 3.6000001f;
     vec3_copy(&local_14);
     break;
   case 0x30:
@@ -4055,7 +4051,7 @@ LAB_00441a32:
 LAB_0043fe82:
     *(float *)(item + 8) = *(float *)(item + 8) / 1.2;
     *(float *)(item + 0xc) = *(float *)(item + 0xc) / 1.2;
-    fVar10 = *(float *)(item + 0x10) / 1.2;
+    fVar10 = *(float *)(item + 0x10) / 1.2f;
 LAB_0043feaf:
     *(float *)(item + 0x10) = fVar10;
     break;
@@ -4111,16 +4107,16 @@ LAB_0043feaf:
     *(undefined2 *)(item + 0x22) = 0xee;
     *(undefined2 *)(item + 0x18) = 0xed;
 LAB_00442fa2:
-    local_14 = 3.0;
-    local_10 = -1.0;
-    local_c = -7.0;
+    local_14 = 3.0f;
+    local_10 = -1.0f;
+    local_c = -7.0f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
     *(undefined4 *)(item + 0x48) = 0xc2340000;
     *(undefined4 *)(item + 0x58) = 0x41f00000;
-    local_14 = 1.0;
-    local_10 = -6.0;
-    local_c = 1.0;
+    local_14 = 1.0f;
+    local_10 = -6.0f;
+    local_c = 1.0f;
     *(undefined4 *)(item + 0x5c) = 0x42340000;
     goto LAB_00440ef2;
   case 0x37:
@@ -4132,36 +4128,36 @@ LAB_00442fa2:
     *(undefined2 *)(item + 0x14) = 0x103;
     *(undefined4 *)(item + 0x1a) = 0x1020104;
     *(undefined2 *)(item + 0x22) = 0x105;
-    local_14 = 3.0;
-    local_10 = 0.0;
-    local_c = -10.0;
+    local_14 = 3.0f;
+    local_10 = 0.0f;
+    local_c = -10.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 3.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 3.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3fa66666;
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
     *(undefined4 *)(item + 0x48) = 0;
     *(undefined4 *)(item + 0x5c) = 0x42340000;
-    local_14 = 3.0;
-    local_10 = -2.0;
-    local_c = -5.0;
+    local_14 = 3.0f;
+    local_10 = -2.0f;
+    local_c = -5.0f;
     vec3_copy(&local_14);
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 1.65;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 1.65f;
     goto LAB_00440ef2;
   case 0x39:
     *(undefined2 *)(item + 0x14) = 0x107;
     *(undefined4 *)(item + 0x1a) = 0x1060108;
     *(undefined2 *)(item + 0x22) = 0x109;
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -10.0;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -10.0f;
     vec3_copy(&local_14);
-    local_10 = 5.0;
-    local_c = 8.0;
+    local_10 = 5.0f;
+    local_c = 8.0f;
     goto LAB_0044323d;
   case 0x3a:
     uVar7 = rand();
@@ -4182,30 +4178,30 @@ LAB_00442fa2:
     }
 LAB_00443207:
     *(undefined2 *)(item + 0x22) = uVar1;
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -10.0;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -10.0f;
     vec3_copy(&local_14);
-    local_10 = 3.0;
-    local_c = 6.0;
+    local_10 = 3.0f;
+    local_c = 6.0f;
 LAB_0044323d:
-    local_14 = 0.0;
+    local_14 = 0.0f;
 LAB_00443247:
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
     *(undefined4 *)(item + 0x48) = 0xc2340000;
-    local_14 = 3.0;
-    local_10 = -5.0;
-    local_c = 0.0;
+    local_14 = 3.0f;
+    local_10 = -5.0f;
+    local_c = 0.0f;
     *(undefined4 *)(item + 0x5c) = 0x42340000;
     goto LAB_00440ef2;
   case 0x3b:
     *(undefined2 *)(item + 0x14) = 0x113;
     *(undefined4 *)(item + 0x1a) = 0x1120114;
     *(undefined2 *)(item + 0x22) = 0x115;
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -10.0;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -10.0f;
     goto LAB_00443247;
   case 0x3c:
     *(undefined2 *)(item + 0x14) = 0xf0;
@@ -4216,12 +4212,12 @@ LAB_00443247:
     *(undefined2 *)(item + 0x14) = 0xf7;
     *(undefined4 *)(item + 0x1a) = 0xf600f8;
     *(undefined2 *)(item + 0x22) = 0xf9;
-    local_14 = 3.0;
-    local_10 = -1.0;
-    local_c = -5.0;
+    local_14 = 3.0f;
+    local_10 = -1.0f;
+    local_c = -5.0f;
     vec3_copy(&local_14);
-    local_10 = -5.0;
-    local_c = -1.0;
+    local_10 = -5.0f;
+    local_c = -1.0f;
     goto LAB_00443072;
   case 0x3e:
     *(undefined2 *)(item + 0x14) = 0xfb;
@@ -4229,22 +4225,22 @@ LAB_00443247:
     uVar1 = 0xfd;
 LAB_0044303c:
     *(undefined2 *)(item + 0x22) = uVar1;
-    local_14 = 3.0;
-    local_10 = -1.0;
-    local_c = -7.0;
+    local_14 = 3.0f;
+    local_10 = -1.0f;
+    local_c = -7.0f;
     vec3_copy(&local_14);
-    local_10 = -6.0;
-    local_c = 1.0;
+    local_10 = -6.0f;
+    local_c = 1.0f;
 LAB_00443072:
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
     *(undefined4 *)(item + 0x48) = 0xc2340000;
     *(undefined4 *)(item + 0x58) = 0x41f00000;
-    local_14 = 1.0;
+    local_14 = 1.0f;
     *(undefined4 *)(item + 0x5c) = 0x42340000;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 3.0;
-    local_c = 4.0;
+    local_14 = 0.0f;
+    local_10 = 3.0f;
+    local_c = 4.0f;
     goto LAB_00440ef2;
   case 0x3f:
     *(undefined4 *)(item + 0x1a) = 0x14d014e;
@@ -4259,38 +4255,38 @@ LAB_00443072:
     *(undefined4 *)(item + 0x1a) = 0x1530154;
 LAB_0044340d:
     *(undefined2 *)(item + 0x18) = 0xffff;
-    local_14 = 0.0;
-    local_10 = 3.0;
-    local_c = 6.0;
+    local_14 = 0.0f;
+    local_10 = 3.0f;
+    local_c = 6.0f;
     vec3_copy(&local_14);
-    local_14 = 4.0;
-    local_10 = 0.0;
-    local_c = -1.5;
+    local_14 = 4.0f;
+    local_10 = 0.0f;
+    local_c = -1.5f;
     vec3_copy(&local_14);
-    local_14 = 1.2;
-    local_10 = 1.2;
-    local_c = 2.6999998;
+    local_14 = 1.2f;
+    local_10 = 1.2f;
+    local_c = 2.6999998f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3fc00000;
     goto LAB_00440909;
   case 0x43:
     *(undefined4 *)(item + 0x1a) = 0x1550156;
     *(undefined2 *)(item + 0x14) = 0x157;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 4.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 4.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 4.0;
-    local_c = 8.0;
+    local_14 = 0.0f;
+    local_10 = 4.0f;
+    local_c = 8.0f;
     vec3_copy(&local_14);
-    local_14 = 4.0;
-    local_10 = 0.0;
-    local_c = -6.0;
+    local_14 = 4.0f;
+    local_10 = 0.0f;
+    local_c = -6.0f;
     vec3_copy(&local_14);
-    local_14 = 1.2;
-    local_10 = 1.2;
-    local_c = 3.75;
+    local_14 = 1.2f;
+    local_10 = 1.2f;
+    local_c = 3.75f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3f333333;
     *(undefined4 *)(item + 0x24) = 0x3f000000;
@@ -4300,21 +4296,21 @@ LAB_0044340d:
     *(undefined2 *)(item + 0x14) = 0x73;
     *(char **)(item + 0x1a) = "p";
     *(undefined2 *)(item + 0x18) = 0x75;
-    local_14 = 8.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 8.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 1.0;
-    local_c = -8.5;
+    local_14 = 5.0f;
+    local_10 = 1.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -6.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -6.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x2c) = 0x3f99999a;
     break;
@@ -4322,21 +4318,21 @@ LAB_0044340d:
     *(undefined2 *)(item + 0x14) = 0x77;
     *(undefined4 *)(item + 0x1a) = 0x760078;
     *(undefined2 *)(item + 0x18) = 0x79;
-    local_14 = 6.0;
-    local_10 = 3.0;
-    local_c = 0.0;
+    local_14 = 6.0f;
+    local_10 = 3.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 2.0;
-    local_c = -10.0;
+    local_14 = 3.0f;
+    local_10 = 2.0f;
+    local_c = -10.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 7.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 7.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -4.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -4.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x30) = 0x3f333333;
@@ -4344,30 +4340,30 @@ LAB_0044340d:
   case 0x46:
     *(undefined **)(item + 0x1a) = &DAT_007a007b;
     *(undefined2 *)(item + 0x18) = 0x7c;
-    local_14 = 6.0;
-    local_10 = 3.0;
-    local_c = 0.0;
+    local_14 = 6.0f;
+    local_10 = 3.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 2.0;
-    local_c = -8.0;
+    local_14 = 3.0f;
+    local_10 = 2.0f;
+    local_c = -8.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 7.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 7.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 5.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 5.0f;
     vec3_copy(&local_14);
 LAB_00440d96:
-    local_14 = 1.2;
-    local_10 = 1.2;
-    local_c = 2.6999998;
+    local_14 = 1.2f;
+    local_10 = 1.2f;
+    local_c = 2.6999998f;
     vec3_copy(&local_14);
-    local_14 = -45.0;
-    local_10 = 45.0;
-    local_c = -45.0;
+    local_14 = -45.0f;
+    local_10 = 45.0f;
+    local_c = -45.0f;
     goto LAB_00440900;
   case 0x47:
     *(undefined4 *)(item + 0x1a) = 0x7d007e;
@@ -4375,63 +4371,63 @@ LAB_00440d96:
   case 0x48:
     *(undefined4 *)(item + 0x1a) = 0x7f0080;
 LAB_00440e74:
-    local_14 = 3.0;
-    local_10 = 0.0;
-    local_c = -12.0;
+    local_14 = 3.0f;
+    local_10 = 0.0f;
+    local_c = -12.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_c = 1.0;
+    local_c = 1.0f;
 LAB_00440ec3:
-    local_10 = 0.0;
-    local_14 = 0.0;
+    local_10 = 0.0f;
+    local_14 = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 1.2;
-    local_10 = 1.2;
-    local_c = 2.6999998;
+    local_14 = 1.2f;
+    local_10 = 1.2f;
+    local_c = 2.6999998f;
     goto LAB_00440ef2;
   case 0x49:
     *(undefined4 *)(item + 0x1a) = 0x810082;
-    local_14 = 3.0;
-    local_10 = 0.0;
-    local_c = -11.0;
+    local_14 = 3.0f;
+    local_10 = 0.0f;
+    local_c = -11.0f;
     vec3_copy(&local_14);
-    local_c = -12.0;
+    local_c = -12.0f;
     goto LAB_00440ec3;
   case 0x4a:
     *(undefined2 *)(item + 0x14) = 0x1a3;
     *(undefined4 *)(item + 0x1a) = 0x1a201a4;
     *(undefined2 *)(item + 0x18) = 0x1a4;
     *(undefined2 *)(item + 0x1e) = 0x1a5;
-    local_14 = 1.0;
-    local_10 = 1.0;
-    local_c = 1.0;
+    local_14 = 1.0f;
+    local_10 = 1.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 8.5;
-    local_c = 1.5;
+    local_14 = 0.0f;
+    local_10 = 8.5f;
+    local_c = 1.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.6;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.6f;
     vec3_copy(&local_14);
-    local_14 = 4.0;
-    local_10 = 1.0;
-    local_c = -3.7;
+    local_14 = 4.0f;
+    local_10 = 1.0f;
+    local_c = -3.7f;
     vec3_copy(&local_14);
-    local_14 = 4.0;
-    local_10 = -3.0;
-    local_c = -3.7;
+    local_14 = 4.0f;
+    local_10 = -3.0f;
+    local_c = -3.7f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3f666666;
     *(undefined4 *)(item + 0x24) = 0x3f3ae148;
     *(undefined4 *)(item + 0x30) = 0x3f800000;
     *(undefined4 *)(item + 0x2c) = 0x3f800000;
-    local_14 = 0.0;
-    local_10 = -8.5;
-    local_c = -2.9;
+    local_14 = 0.0f;
+    local_10 = -8.5f;
+    local_c = -2.9f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x3c) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x60) = 0xc2a00000;
@@ -4440,25 +4436,25 @@ LAB_00440ec3:
     *(undefined2 *)(item + 0x14) = 0x1a7;
     *(undefined4 *)(item + 0x1a) = 0x1a601a8;
     *(undefined2 *)(item + 0x18) = 0x1a8;
-    local_14 = 1.0;
-    local_10 = 1.0;
-    local_c = 1.0;
+    local_14 = 1.0f;
+    local_10 = 1.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 17.5;
-    local_c = 2.5;
+    local_14 = 0.0f;
+    local_10 = 17.5f;
+    local_c = 2.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = -9.0;
-    local_c = 2.6;
+    local_14 = 0.0f;
+    local_10 = -9.0f;
+    local_c = 2.6f;
     vec3_copy(&local_14);
-    local_14 = 6.0;
-    local_10 = 9.0;
-    local_c = -1.7;
+    local_14 = 6.0f;
+    local_10 = 9.0f;
+    local_c = -1.7f;
     vec3_copy(&local_14);
-    local_14 = 6.0;
-    local_10 = -9.0;
-    local_c = -1.7;
+    local_14 = 6.0f;
+    local_10 = -9.0f;
+    local_c = -1.7f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x40000000;
     *(undefined4 *)(item + 0x24) = 0x3f8ccccd;
@@ -4486,9 +4482,9 @@ LAB_00440ec3:
     uVar1 = 0xaf;
 LAB_00440934:
     *(undefined2 *)(item + 0x18) = uVar1;
-    local_14 = 6.0;
-    local_10 = 0.0;
-    local_c = -2.0;
+    local_14 = 6.0f;
+    local_10 = 0.0f;
+    local_c = -2.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3f666666;
     break;
@@ -4502,18 +4498,18 @@ LAB_00440934:
     *(undefined4 *)(item + 0x1a) = 0xc000bf;
     *(undefined2 *)(item + 0x18) = 0xc1;
     *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
-    local_14 = 0.0;
-    local_10 = 1.8;
-    local_c = 6.0;
+    local_14 = 0.0f;
+    local_10 = 1.8f;
+    local_c = 6.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
-    local_14 = 3.5;
-    local_10 = 1.0;
-    local_c = -10.8;
+    local_14 = 3.5f;
+    local_10 = 1.0f;
+    local_c = -10.8f;
     vec3_copy(&local_14);
     *(float *)(item + 8) = *(float *)(item + 8) * 1.5;
     *(float *)(item + 0xc) = *(float *)(item + 0xc) * 1.5;
-    fVar10 = *(float *)(item + 0x10) * 1.5;
+    fVar10 = *(float *)(item + 0x10) * 1.5f;
     goto LAB_0043feaf;
   case 0x52:
     *(undefined2 *)(item + 0x14) = 0xc2;
@@ -4526,25 +4522,25 @@ LAB_00440934:
     *(undefined4 *)(item + 0x2c) = 0x3f333333;
     *(undefined4 *)(item + 0x28) = 0x3f666666;
     *(undefined4 *)(item + 0x38) = 0x3f666666;
-    local_14 = 7.0;
-    local_10 = 0.0;
-    local_c = 1.5;
+    local_14 = 7.0f;
+    local_10 = 0.0f;
+    local_c = 1.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 3.0;
-    local_c = 4.5;
+    local_14 = 0.0f;
+    local_10 = 3.0f;
+    local_c = 4.5f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 1.0;
-    local_c = -7.5;
+    local_14 = 3.0f;
+    local_10 = 1.0f;
+    local_c = -7.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -2.0f;
     vec3_copy(&local_14);
-    local_14 = 3.2;
-    local_10 = 3.2;
-    local_c = 5.8;
+    local_14 = 3.2f;
+    local_10 = 3.2f;
+    local_c = 5.8f;
     vec3_copy(&local_14);
     break;
   case 0x53:
@@ -4559,21 +4555,21 @@ LAB_00440934:
 LAB_004409dd:
     *(short *)(item + 0x14) = sVar8;
     *(undefined4 *)(item + 0x1a) = 0xbb00ba;
-    local_10 = 0.8;
-    local_c = 6.0;
+    local_10 = 0.8f;
+    local_c = 6.0f;
     *(ushort *)(item + 0x18) = (*(short *)(item + 0x14) != sVar3) + 0xbc;
     *(undefined4 *)(item + 0x24) = 0x3f666666;
 LAB_00440a12:
-    local_14 = 0.0;
+    local_14 = 0.0f;
     vec3_copy(&local_14);
     break;
   case 0x55:
     *(undefined4 *)(item + 0x14) = 0xc700c8;
     *(undefined4 *)(item + 0x1a) = 0xca00c9;
     *(undefined2 *)(item + 0x18) = 0xcb;
-    local_14 = 8.0;
-    local_10 = 5.0;
-    local_c = 0.0;
+    local_14 = 8.0f;
+    local_10 = 5.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3f666666;
     *(undefined4 *)(item + 0x4c) = 0xc2b40000;
@@ -4583,17 +4579,17 @@ LAB_00440a12:
     return;
   case 0x56:
     *(undefined4 *)(item + 0x1a) = 0x9e009f;
-    local_14 = 5.0;
-    local_10 = 1.0;
-    local_c = -5.5;
+    local_14 = 5.0f;
+    local_10 = 1.0f;
+    local_c = -5.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 1.0;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x10;
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
@@ -4602,21 +4598,21 @@ LAB_00440a12:
     *(undefined2 *)(item + 0x14) = 0x84;
     *(undefined4 *)(item + 0x1a) = 0x830085;
     *(undefined2 *)(item + 0x18) = 0x86;
-    local_14 = 9.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 9.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 1.0;
-    local_c = -8.5;
+    local_14 = 5.0f;
+    local_10 = 1.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -6.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -6.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x50) = 0xc1f00000;
     *(undefined4 *)(item + 0x2c) = 0x3f666666;
@@ -4626,21 +4622,21 @@ LAB_00440a12:
     *(undefined2 *)(item + 0x14) = 0x88;
     *(undefined4 *)(item + 0x1a) = 0x870089;
     *(undefined2 *)(item + 0x18) = 0x8a;
-    local_14 = 9.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 9.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 1.0;
-    local_c = -8.5;
+    local_14 = 5.0f;
+    local_10 = 1.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 3.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -5.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -5.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x50) = 0xc1f00000;
     *(undefined4 *)(item + 0x2c) = 0x3f666666;
@@ -4649,49 +4645,49 @@ LAB_00440a12:
     *(undefined2 *)(item + 0x14) = 0x8c;
     *(undefined4 *)(item + 0x1a) = 0x8b008d;
     *(undefined2 *)(item + 0x18) = 0x8e;
-    local_14 = 9.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 9.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 1.0;
-    local_c = -8.5;
+    local_14 = 5.0f;
+    local_10 = 1.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 3.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -5.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -5.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x50) = 0xc1f00000;
     *(undefined4 *)(item + 0x2c) = 0x3f666666;
     *(undefined4 *)(item + 0x24) = 0x3f99999a;
 LAB_004412bc:
-    fVar10 = 1.1;
+    fVar10 = 1.1f;
     goto LAB_004412c4;
   case 0x5a:
     *(undefined2 *)(item + 0x14) = 0x90;
     *(undefined4 *)(item + 0x1a) = 0x8f0091;
     *(undefined2 *)(item + 0x18) = 0x92;
-    local_14 = 7.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 7.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 1.0;
-    local_c = -8.5;
+    local_14 = 5.0f;
+    local_10 = 1.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 4.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 4.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = -5.0;
-    local_c = -5.0;
+    local_14 = 0.0f;
+    local_10 = -5.0f;
+    local_c = -5.0f;
     vec3_copy(&local_14);
-    fVar10 = 0.7;
+    fVar10 = 0.7f;
     *(undefined4 *)(item + 0x50) = 0xc1f00000;
     *(undefined4 *)(item + 0x2c) = 0x3f400000;
     *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
@@ -4701,23 +4697,23 @@ LAB_004412bc:
     *(undefined2 *)(item + 0x14) = 0x94;
     *(undefined4 *)(item + 0x1a) = 0x930095;
     *(undefined2 *)(item + 0x18) = 0x96;
-    local_14 = 7.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 7.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 1.0;
-    local_c = -8.5;
+    local_14 = 5.0f;
+    local_10 = 1.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 4.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 4.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = -5.0;
-    local_c = -5.0;
+    local_14 = 0.0f;
+    local_10 = -5.0f;
+    local_c = -5.0f;
     vec3_copy(&local_14);
-    fVar10 = 0.9;
+    fVar10 = 0.9f;
     *(undefined4 *)(item + 0x50) = 0xc1f00000;
     *(undefined4 *)(item + 0x2c) = 0x3f400000;
     *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
@@ -4732,24 +4728,24 @@ LAB_004412c4:
     *(undefined2 *)(item + 0x14) = 0x97;
     *(undefined2 *)(item + 0x22) = 0x99;
     *(undefined2 *)(item + 0x1a) = 0x98;
-    local_14 = 9.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 9.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 0.0;
-    local_c = -11.5;
+    local_14 = 5.0f;
+    local_10 = 0.0f;
+    local_c = -11.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -2.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x2c) = 0x3f666666;
     *(undefined4 *)(item + 0x48) = 0xc1200000;
     *(undefined4 *)(item + 0x5c) = 0x42a00000;
-    local_14 = 3.0;
-    local_10 = -5.0;
-    local_c = 0.0;
+    local_14 = 3.0f;
+    local_10 = -5.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x2a;
     goto LAB_0043fc40;
@@ -4757,32 +4753,32 @@ LAB_004412c4:
     *(undefined2 *)(item + 0x14) = 0xcd;
     *(undefined4 *)(item + 0x1a) = 0xcc00ce;
     *(undefined2 *)(item + 0x18) = 0xcf;
-    local_14 = 8.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 8.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 5.0;
-    local_10 = 1.0;
-    local_c = -8.5;
+    local_14 = 5.0f;
+    local_10 = 1.0f;
+    local_c = -8.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -6.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -6.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x2c) = 0x3f666666;
-    local_14 = -60.0;
-    local_10 = -45.0;
-    local_c = 0.0;
+    local_14 = -60.0f;
+    local_10 = -45.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x28;
 LAB_0043fc40:
     *(float *)(item + 8) = *(float *)(item + 8) / 1.2;
     *(float *)(item + 0xc) = *(float *)(item + 0xc) / 1.2;
-    fVar10 = *(float *)(item + 0x10) / 1.2;
+    fVar10 = *(float *)(item + 0x10) / 1.2f;
 LAB_0043fc6d:
     *(float *)(item + 0x10) = fVar10;
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
@@ -4820,13 +4816,13 @@ LAB_0043fc6d:
     *(undefined2 *)(item + 0x16) = 0xffff;
     *(undefined4 *)(item + 0x1a) = 0xe200e4;
     *(undefined2 *)(item + 0x18) = 0xe5;
-    local_14 = 6.0;
-    local_10 = 3.0;
-    local_c = -2.0;
+    local_14 = 6.0f;
+    local_10 = 3.0f;
+    local_c = -2.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = -90.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = -90.0f;
+    local_c = 0.0f;
     goto LAB_00440900;
   case 0x61:
     *(undefined4 *)(item + 0x14) = 0x87c087b;
@@ -4844,31 +4840,31 @@ LAB_0043fc6d:
     *(undefined2 *)(item + 0x18) = 0x15a;
     *(undefined2 *)(item + 0x1e) = 0x15b;
     *(undefined4 *)(item + 0x24) = 0x3f4ccccd;
-    local_14 = 1.4399999;
-    local_10 = 1.4399999;
-    local_c = 1.6;
+    local_14 = 1.4399999f;
+    local_10 = 1.4399999f;
+    local_c = 1.6f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 8.0;
-    local_c = 6.0;
+    local_14 = 0.0f;
+    local_10 = 8.0f;
+    local_c = 6.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 3.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 3.0;
-    local_c = -3.25;
+    local_14 = 3.0f;
+    local_10 = 3.0f;
+    local_c = -3.25f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -5.0;
-    local_c = -3.25;
+    local_14 = 3.0f;
+    local_10 = -5.0f;
+    local_c = -3.25f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
-    local_14 = 0.0;
-    local_10 = -7.0;
-    local_c = -4.0;
+    local_14 = 0.0f;
+    local_10 = -7.0f;
+    local_c = -4.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x3c) = 0x3f800000;
     *(undefined4 *)(item + 0x28) = 0x3f666666;
@@ -4878,25 +4874,25 @@ LAB_0043fc6d:
     *(undefined4 *)(item + 0x1a) = 0x15c015e;
     *(undefined2 *)(item + 0x18) = 0x15e;
     *(undefined4 *)(item + 0x24) = 0x3f266666;
-    local_14 = 1.8;
-    local_10 = 1.8;
-    local_c = 3.0;
+    local_14 = 1.8f;
+    local_10 = 1.8f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 12.0;
-    local_c = 4.0;
+    local_14 = 0.0f;
+    local_10 = 12.0f;
+    local_c = 4.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 3.0;
-    local_c = -5.75;
+    local_14 = 3.0f;
+    local_10 = 3.0f;
+    local_c = -5.75f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -5.75;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -5.75f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f400000;
     *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
@@ -4907,25 +4903,25 @@ LAB_0043fc6d:
     *(undefined4 *)(item + 0x1a) = 0x15f0161;
     *(undefined2 *)(item + 0x18) = 0x161;
     *(undefined4 *)(item + 0x24) = 0x3f266666;
-    local_14 = 1.8;
-    local_10 = 1.8;
-    local_c = 3.0;
+    local_14 = 1.8f;
+    local_10 = 1.8f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 10.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 10.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -2.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 3.0;
-    local_c = -6.75;
+    local_14 = 3.0f;
+    local_10 = 3.0f;
+    local_c = -6.75f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = -6.75;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = -6.75f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f400000;
     *(undefined4 *)(item + 0x2c) = 0x3f4ccccd;
@@ -4937,27 +4933,27 @@ LAB_0043fc6d:
     *(undefined2 *)(item + 0x18) = 0x1ab;
     *(undefined2 *)(item + 0x1e) = 0x1ad;
     *(undefined4 *)(item + 0x24) = 0x3f028f5c;
-    local_14 = 0.0;
-    local_10 = 12.5;
-    local_c = 0.5;
+    local_14 = 0.0f;
+    local_10 = 12.5f;
+    local_c = 0.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = -2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = -2.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = 4.0;
-    local_c = 1.0;
+    local_14 = 3.0f;
+    local_10 = 4.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 3.0;
-    local_10 = -4.0;
-    local_c = 1.0;
+    local_14 = 3.0f;
+    local_10 = -4.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f800000;
     *(undefined4 *)(item + 0x2c) = 0x3fc00000;
-    local_14 = 0.0;
-    local_10 = -16.0;
-    local_c = 4.0;
+    local_14 = 0.0f;
+    local_10 = -16.0f;
+    local_c = 4.0f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x33;
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
@@ -4965,13 +4961,13 @@ LAB_0043fc6d:
   case 0x66:
     *(undefined2 *)(item + 0x14) = 0xd8;
     *(undefined2 *)(item + 0x1a) = 0xd9;
-    local_14 = 3.5;
-    local_10 = 1.0;
-    local_c = -2.5;
+    local_14 = 3.5f;
+    local_10 = 1.0f;
+    local_c = -2.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x24) = 0x3f400000;
     goto LAB_00441f6c;
@@ -4982,97 +4978,97 @@ LAB_0043fc6d:
   case 0x68:
     *(undefined2 *)(item + 0x14) = 0xdc;
     *(undefined2 *)(item + 0x1a) = 0xdd;
-    local_14 = 3.5;
-    local_10 = 1.0;
-    local_c = -2.5;
+    local_14 = 3.5f;
+    local_10 = 1.0f;
+    local_c = -2.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x24) = 0x3f666666;
-    local_14 = 1.6;
-    local_10 = 1.6;
-    local_c = 1.6;
+    local_14 = 1.6f;
+    local_10 = 1.6f;
+    local_c = 1.6f;
     goto LAB_00441a32;
   case 0x69:
     *(undefined2 *)(item + 0x14) = 0xde;
     uVar1 = 0xdf;
 LAB_00441f97:
     *(undefined2 *)(item + 0x1a) = uVar1;
-    local_14 = 3.5;
-    local_10 = 1.0;
-    local_c = -2.5;
+    local_14 = 3.5f;
+    local_10 = 1.0f;
+    local_c = -2.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x24) = 0x3f666666;
 LAB_00441f6c:
-    local_14 = 1.6;
-    local_10 = 1.6;
-    local_c = 1.6;
+    local_14 = 1.6f;
+    local_10 = 1.6f;
+    local_c = 1.6f;
     goto LAB_00443c61;
   case 0x6a:
     *(undefined2 *)(item + 0x14) = 0xd1;
     *(undefined4 *)(item + 0x1a) = 0xd000d2;
     *(undefined2 *)(item + 0x18) = 0xd3;
-    local_14 = 10.0;
-    local_10 = 0.0;
-    local_c = 8.0;
+    local_14 = 10.0f;
+    local_10 = 0.0f;
+    local_c = 8.0f;
     vec3_copy(&local_14);
-    local_14 = 6.0;
-    local_10 = 1.0;
-    local_c = -5.5;
+    local_14 = 6.0f;
+    local_10 = 1.0f;
+    local_c = -5.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 5.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 5.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 90.0;
-    local_10 = 30.0;
-    local_c = 0.0;
+    local_14 = 90.0f;
+    local_10 = 30.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x24) = 0x3f400000;
     *(undefined4 *)(item + 0x2c) = 0x3f99999a;
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 1.2;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 1.2f;
     goto LAB_00440900;
   case 0x6b:
     *(undefined2 *)(item + 0x14) = 0xd5;
     *(undefined4 *)(item + 0x1a) = 0xd400d6;
     *(undefined2 *)(item + 0x18) = 0xd7;
-    local_14 = 10.0;
-    local_10 = 0.0;
-    local_c = 8.0;
+    local_14 = 10.0f;
+    local_10 = 0.0f;
+    local_c = 8.0f;
     vec3_copy(&local_14);
-    local_14 = 6.0;
-    local_10 = 1.0;
-    local_c = -5.5;
+    local_14 = 6.0f;
+    local_10 = 1.0f;
+    local_c = -5.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 5.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 5.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 90.0;
-    local_10 = 30.0;
-    local_c = 0.0;
+    local_14 = 90.0f;
+    local_10 = 30.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x24) = 0x3f400000;
     *(undefined4 *)(item + 0x2c) = 0x3f99999a;
-    local_14 = 4.8;
-    local_10 = 4.8;
-    local_c = 7.2000003;
+    local_14 = 4.8f;
+    local_10 = 4.8f;
+    local_c = 7.2000003f;
 LAB_00440900:
     vec3_copy(&local_14);
 LAB_00440909:
@@ -5191,19 +5187,19 @@ LAB_00440245:
     *(undefined4 *)(item + 0x7c) = 0x41000000;
     *(undefined4 *)(item + 0x80) = 0x40400000;
     *(undefined4 *)(item + 0x84) = 0;
-    local_14 = 0.0;
-    local_10 = 3.0;
-    local_c = 3.0;
+    local_14 = 0.0f;
+    local_10 = 3.0f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
-    local_14 = 4.8;
-    local_10 = 4.8;
-    local_c = 10.799999;
+    local_14 = 4.8f;
+    local_10 = 4.8f;
+    local_c = 10.799999f;
     vec3_copy(&local_14);
     break;
   case 0x74:
     r0 = rand();
-    local_14 = ((float)r0 * 3.0) / 32767.0 + 7.0;
-    local_c = local_14 * 1.12;
+    local_14 = ((float)r0 * 3.0f) / 32767.0f + 7.0f;
+    local_c = local_14 * 1.12f;
     local_10 = local_14;
     vec3_copy(&local_14);
     *(undefined2 *)(item + 0x14) = 0x48;
@@ -5211,25 +5207,25 @@ LAB_00440245:
     *(undefined2 *)(item + 0x18) = 0x4a;
     *(undefined4 *)(item + 0x28) = 0x3f333333;
     *(undefined4 *)(item + 0x24) = 0x3ecccccd;
-    local_14 = 0.0;
-    local_10 = 8.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 8.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = -4.0;
-    local_c = -3.0;
+    local_14 = 0.0f;
+    local_10 = -4.0f;
+    local_c = -3.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f000000;
     *(undefined4 *)(item + 0x2c) = 0x3f000000;
-    local_14 = 3.0;
-    local_10 = 3.0;
-    local_c = -4.1;
+    local_14 = 3.0f;
+    local_10 = 3.0f;
+    local_c = -4.1f;
     vec3_copy(&local_14);
-    local_14 = 2.9;
+    local_14 = 2.9f;
     goto LAB_00443c4d;
   case 0x75:
     *(undefined2 *)(item + 0x14) = 0x117;
@@ -5237,27 +5233,27 @@ LAB_00440245:
     *(undefined2 *)(item + 0x18) = 0x118;
     *(undefined2 *)(item + 0x1a) = 0xffff;
     *(undefined2 *)(item + 0x20) = 0x119;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 3.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 3.0f;
     vec3_copy(&local_14);
-    local_14 = 6.0;
-    local_10 = 5.0;
-    local_c = 6.0;
+    local_14 = 6.0f;
+    local_10 = 5.0f;
+    local_c = 6.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 1.0;
-    local_c = 11.0;
+    local_14 = 0.0f;
+    local_10 = 1.0f;
+    local_c = 11.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x24) = 0x3ecccccd;
     *(undefined4 *)(item + 0x2c) = 0x3f400000;
-    local_14 = 0.0;
-    local_10 = -90.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = -90.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 6.4;
-    local_10 = 6.4;
-    local_c = 14.4;
+    local_14 = 6.4f;
+    local_10 = 6.4f;
+    local_c = 14.4f;
     vec3_copy(&local_14);
     break;
   case 0x76:
@@ -5272,35 +5268,35 @@ LAB_00440245:
     *(undefined4 *)(item + 0x40) = 0x3f99999a;
     *(undefined4 *)(item + 0x24) = 0x3f333333;
     *(undefined4 *)(item + 0x34) = 0x3f666666;
-    local_14 = 8.0;
-    local_10 = 0.0;
-    local_c = 5.0;
+    local_14 = 8.0f;
+    local_10 = 0.0f;
+    local_c = 5.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 4.0;
-    local_c = 8.0;
+    local_14 = 0.0f;
+    local_10 = 4.0f;
+    local_c = 8.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f4ccccd;
     *(undefined4 *)(item + 0x2c) = 0x3fc00000;
-    local_14 = 3.0;
-    local_10 = 1.0;
-    local_c = -9.5;
+    local_14 = 3.0f;
+    local_10 = 1.0f;
+    local_c = -9.5f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 2.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_14 = 4.0;
-    local_10 = 4.0;
-    local_c = 10.0;
+    local_14 = 4.0f;
+    local_10 = 4.0f;
+    local_c = 10.0f;
     vec3_copy(&local_14);
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 0x2c;
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
     return;
   case 0x77:
-    local_14 = 9.0;
-    local_10 = 9.0;
-    local_c = 10.08;
+    local_14 = 9.0f;
+    local_10 = 9.0f;
+    local_c = 10.08f;
     vec3_copy(&local_14);
     r0 = rand();
     *(short *)(item + 0x14) = (short)(r0 % 5) + 0x861;
@@ -5319,32 +5315,32 @@ LAB_00440245:
     *(undefined4 *)(item + 0x3c) = 0x3f333333;
     *(undefined4 *)(item + 0x28) = 0x3f333333;
     r0 = rand();
-    local_14 = 0.0;
-    local_10 = 8.0;
+    local_14 = 0.0f;
+    local_10 = 8.0f;
     *(float *)(item + 0x24) = ((float)r0 * 0.1) / 32767.0 + 0.4;
     r0 = rand();
-    local_c = ((float)r0 * 0.5) / 32767.0 - 1.0;
+    local_c = ((float)r0 * 0.5f) / 32767.0f - 1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = -4.0;
-    local_c = -3.0;
+    local_14 = 0.0f;
+    local_10 = -4.0f;
+    local_c = -3.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x30) = 0x3f000000;
     *(undefined4 *)(item + 0x2c) = 0x3f000000;
     r0 = rand();
-    local_14 = (float)r0 / 32767.0 + 3.0;
-    local_10 = 3.0;
-    local_c = -4.1;
+    local_14 = (float)r0 / 32767.0f + 3.0f;
+    local_10 = 3.0f;
+    local_c = -4.1f;
     vec3_copy(&local_14);
     r0 = rand();
-    local_14 = (float)r0 / 32767.0 + 3.0;
+    local_14 = (float)r0 / 32767.0f + 3.0f;
 LAB_00443c4d:
-    local_c = -4.1;
-    local_10 = -3.0;
+    local_c = -4.1f;
+    local_10 = -3.0f;
 LAB_00443c61:
     vec3_copy(&local_14);
 LAB_00443c6a:
@@ -5353,37 +5349,37 @@ switchD_0043f962_default:
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
     return;
   case 0x78:
-    local_14 = 2.0;
-    local_10 = 2.0;
-    local_c = 2.0;
+    local_14 = 2.0f;
+    local_10 = 2.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     sVar3 = 0x827;
     goto LAB_00443581;
   case 0x79:
-    local_14 = 2.0;
-    local_10 = 2.0;
-    local_c = 2.0;
+    local_14 = 2.0f;
+    local_10 = 2.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     sVar3 = 0x828;
     goto LAB_00443581;
   case 0x7a:
-    local_14 = 2.0;
-    local_10 = 2.0;
-    local_c = 2.0;
+    local_14 = 2.0f;
+    local_10 = 2.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     sVar3 = 0x82a;
     goto LAB_00443581;
   case 0x7b:
-    local_14 = 0.5;
-    local_10 = 0.5;
-    local_c = 1.5;
+    local_14 = 0.5f;
+    local_10 = 0.5f;
+    local_c = 1.5f;
     vec3_copy(&local_14);
     sVar3 = 0x86f;
     goto LAB_00443581;
   case 0x7c:
-    local_14 = 2.0;
-    local_10 = 2.0;
-    local_c = 2.0;
+    local_14 = 2.0f;
+    local_10 = 2.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     uVar7 = rand();
     uVar7 = uVar7 & 0x80000001;
@@ -5391,54 +5387,54 @@ switchD_0043f962_default:
       uVar7 = (uVar7 - 1 | 0xfffffffe) + 1;
     }
     sVar3 = 0x82e - (ushort)(uVar7 != 0);
-    local_c = 2.0;
+    local_c = 2.0f;
     goto LAB_00443588;
   case 0x7d:
-    local_14 = 0.5;
-    local_10 = 0.5;
-    local_c = 1.7;
+    local_14 = 0.5f;
+    local_10 = 0.5f;
+    local_c = 1.7f;
     vec3_copy(&local_14);
     *(undefined2 *)(item + 0x1c) = 0x829;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3fc00000;
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
     return;
   case 0x7e:
-    local_14 = 2.0;
-    local_10 = 2.0;
-    local_c = 2.0;
+    local_14 = 2.0f;
+    local_10 = 2.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     sVar3 = 0x82f;
-    local_c = 2.0;
+    local_c = 2.0f;
     goto LAB_00443588;
   case 0x7f:
-    local_14 = 1.0;
-    local_10 = 1.0;
-    local_c = 1.0;
+    local_14 = 1.0f;
+    local_10 = 1.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
     sVar3 = 0x830;
     goto LAB_00443581;
   case 0x80:
-    local_14 = 1.5;
-    local_10 = 1.5;
-    local_c = 4.0;
+    local_14 = 1.5f;
+    local_10 = 1.5f;
+    local_c = 4.0f;
     vec3_copy(&local_14);
     sVar3 = 0x906;
     goto LAB_00443581;
   case 0x81:
     *(undefined2 *)(item + 0x1c) = 0x832;
-    local_c = -4.0;
+    local_c = -4.0f;
     goto LAB_0044358c;
   case 0x82:
     *(undefined2 *)(item + 0x1c) = 0x833;
-    local_14 = 3.0;
-    local_10 = 3.0;
-    local_c = 12.0;
+    local_14 = 3.0f;
+    local_10 = 3.0f;
+    local_c = 12.0f;
     vec3_copy(&local_14);
-    local_c = -4.0;
+    local_c = -4.0f;
     goto LAB_0044358c;
   case 0x83:
     uVar1 = 0x834;
@@ -5468,48 +5464,48 @@ switchD_0043f962_default:
     uVar1 = 0x83c;
 LAB_00443898:
     *(undefined2 *)(item + 0x1c) = uVar1;
-    local_14 = 2.0;
-    local_10 = 2.0;
-    local_c = 2.0;
+    local_14 = 2.0f;
+    local_10 = 2.0f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
-    local_c = -4.0;
+    local_c = -4.0f;
 LAB_0044358c:
-    local_14 = 0.0;
-    local_10 = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
     vec3_copy(&local_14);
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
     return;
   case 0x8c:
     *(undefined2 *)(item + 0x1c) = 0x83d;
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 4.0;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 4.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x40000000;
     break;
   case 0x8d:
     uVar1 = 0x83e;
-    local_c = 2.0;
+    local_c = 2.0f;
     goto LAB_00443964;
   case 0x8e:
     uVar1 = 0x83f;
-    local_c = 2.5;
+    local_c = 2.5f;
 LAB_00443964:
     *(undefined2 *)(item + 0x1c) = uVar1;
-    local_10 = 1.5;
-    local_14 = 1.5;
+    local_10 = 1.5f;
+    local_14 = 1.5f;
     vec3_copy(&local_14);
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     goto LAB_00440a12;
   case 0x8f:
-    local_14 = 1.5;
-    local_10 = 1.5;
-    local_c = 1.25;
+    local_14 = 1.5f;
+    local_10 = 1.5f;
+    local_c = 1.25f;
     vec3_copy(&local_14);
     uVar7 = rand();
     uVar7 = uVar7 & 0x80000003;
@@ -5518,19 +5514,19 @@ LAB_00443964:
     }
     sVar3 = (short)uVar7 + 0x841;
 LAB_00443581:
-    local_c = 0.0;
+    local_c = 0.0f;
 LAB_00443588:
     *(short *)(item + 0x1c) = sVar3;
     goto LAB_0044358c;
   case 0x90:
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 0.8;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 0.8f;
     vec3_copy(&local_14);
     *(undefined2 *)(item + 0x1c) = 0x9f2;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 1.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 1.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x28) = 0x3f4ccccd;
     __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
@@ -5542,12 +5538,12 @@ LAB_00443588:
     uVar1 = 0x96b;
 LAB_00441b61:
     *(undefined2 *)(item + 0x1c) = uVar1;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
     r0 = rand();
-    local_14 = (((float)r0 * 0.5) / 32767.0 + 1.2) * 0.8;
+    local_14 = (((float)r0 * 0.5f) / 32767.0f + 1.2f) * 0.8f;
     local_10 = local_14;
     local_c = local_14;
     vec3_copy(&local_14);
@@ -5555,13 +5551,13 @@ LAB_00441b61:
     goto LAB_00441bd5;
   case 0x93:
     *(undefined2 *)(item + 0x1c) = 0x972;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 0.8;
-    local_10 = 0.8;
-    local_c = 2.0;
+    local_14 = 0.8f;
+    local_10 = 0.8f;
+    local_c = 2.0f;
     vec3_copy(&local_14);
     goto LAB_00441bd5;
   case 0x94:
@@ -5593,41 +5589,41 @@ LAB_0043fa27:
     *(undefined2 *)(item + 0x22) = 0xf4;
     *(undefined2 *)(item + 0x1a) = 0xf5;
     *(ushort *)(item + 6) = *(ushort *)(item + 6) | 2;
-    local_14 = 3.0;
-    local_10 = 4.0;
-    local_c = -8.0;
+    local_14 = 3.0f;
+    local_10 = 4.0f;
+    local_c = -8.0f;
     vec3_copy(&local_14);
     *(undefined4 *)(item + 0x48) = 0xc2340000;
     *(undefined4 *)(item + 0x5c) = 0x42340000;
     *(undefined4 *)(item + 0x24) = 0x3f99999a;
     *(undefined4 *)(item + 0x44) = 0x3f19999a;
     *(undefined4 *)(item + 0x30) = 0x3f800000;
-    local_14 = 1.0;
-    local_10 = 1.0;
-    local_c = 1.875;
+    local_14 = 1.0f;
+    local_10 = 1.0f;
+    local_c = 1.875f;
     vec3_copy(&local_14);
-    local_14 = 6.5;
-    local_10 = 3.0;
-    local_c = -1.0;
+    local_14 = 6.5f;
+    local_10 = 3.0f;
+    local_c = -1.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 3.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 3.0f;
+    local_c = 0.0f;
     goto LAB_00440ef2;
   case 0x98:
     *(undefined4 *)(item + 0x14) = 0x96e096d;
     *(undefined4 *)(item + 0x24) = 0x3f99999a;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 2.4;
-    local_10 = 2.4;
-    local_c = 6.0;
+    local_14 = 2.4f;
+    local_10 = 2.4f;
+    local_c = 6.0f;
     vec3_copy(&local_14);
     uVar2 = 0x531;
     goto LAB_00441bda;
@@ -5642,13 +5638,13 @@ LAB_0043fa27:
 LAB_00441bfe:
     *(undefined2 *)(item + 0x1c) = uVar1;
     *(undefined4 *)(item + 0x28) = 0x3f99999a;
-    local_14 = 0.0;
-    local_10 = 0.0;
-    local_c = 0.0;
+    local_14 = 0.0f;
+    local_10 = 0.0f;
+    local_c = 0.0f;
     vec3_copy(&local_14);
-    local_14 = 2.4;
-    local_10 = 2.4;
-    local_c = 6.0;
+    local_14 = 2.4f;
+    local_10 = 2.4f;
+    local_c = 6.0f;
     vec3_copy(&local_14);
 LAB_00441bd5:
     uVar2 = 0x131;
@@ -5853,20 +5849,20 @@ bool combat_rollHitChance(float chance)
     case 1:
     case 2:
     case 0xc:
-      chance = chance * 0.5;
+      chance = chance * 0.5f;
       break;
     default:
       goto switchD_004441bf_caseD_3;
     case 8:
     case 10:
-      chance = chance * 0.3;
+      chance = chance * 0.3f;
     }
   }
   else {
 switchD_004441bf_caseD_3:
   }
   roll = rand();
-  return (float)roll / 32767.0 < chance;
+  return (float)roll / 32767.0f < chance;
 }
 
 
@@ -5907,7 +5903,7 @@ int combat_getStaminaCost(uint abilityType)
 
 {
   int self;
-  float10 fVar1;
+  float fVar1;
   float base;
   float rate;
   
@@ -5920,24 +5916,24 @@ int combat_getStaminaCost(uint abilityType)
   case 0x60:
     return 100;
   default:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 500.0;
+    base = 500.0f;
     break;
   case 3:
   case 4:
   case 5:
   case 0x3e:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 7:
   case 0xe:
   case 0x12:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 10:
     return 600;
@@ -5945,14 +5941,14 @@ int combat_getStaminaCost(uint abilityType)
   case 0x3c:
   case 0x3d:
   case 0x68:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0xf:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 400.0;
+    base = 400.0f;
     break;
   case 0x16:
   case 0x1a:
@@ -5973,14 +5969,14 @@ int combat_getStaminaCost(uint abilityType)
   case 0x2e:
   case 0x5e:
   case 0x5f:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0x17:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 10.0;
+    base = 10.0f;
     break;
   case 0x30:
     return 0;
@@ -5988,27 +5984,27 @@ int combat_getStaminaCost(uint abilityType)
     return 400;
   case 0x39:
   case 0x3a:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 0x41:
   case 0x42:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 0x43:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0x44:
   case 0x45:
   case 0x5d:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 800.0;
+    base = 800.0f;
     break;
   case 0x47:
   case 0x48:
@@ -6032,22 +6028,22 @@ bool combat_rollElementProc(void)
   undefined4 *buff;
   int roll;
   int self;
-  float10 fVar3;
+  float fVar3;
   float chance;
   
   buff = (undefined4 *)**(undefined4 **)(self + 0x1178);
   do {
     if (buff == *(undefined4 **)(self + 0x1178)) {
 LAB_004444bf:
-      fVar3 = (float10)stat_calcManaRegen();
-      chance = (float)fVar3 + *(float *)(self + 0x1190) * 0.15;
+      fVar3 = (float)stat_calcManaRegen();
+      chance = (float)fVar3 + *(float *)(self + 0x1190) * 0.15f;
 LAB_004444e5:
       roll = rand();
-      return (float)roll / 32767.0 < chance;
+      return (float)roll / 32767.0f < chance;
     }
     if (*(char *)(buff + 2) == '\v') {
       if (buff != (undefined4 *)0xfffffff8) {
-        chance = 1.0;
+        chance = 1.0f;
         goto LAB_004444e5;
       }
       goto LAB_004444bf;
@@ -6203,24 +6199,23 @@ uint ability_isChanneled(void)
  */
 /* Global::stat_calcAttackDamage @ 00444db0 */
 
-float10 stat_calcAttackDamage(void)
+float stat_calcAttackDamage(void)
 
 {
   int self;
-  float10 fVar1;
+  float fVar1;
   double dVar2;
   double dVar3;
   float totalDamage;
   float damage;
   
-  dVar2 = 2.0;
-  libm_sse2_pow_precise();
-  dVar3 = 2.0;
-  libm_sse2_pow_precise();
+  dVar2 = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 + 1.0))
+                                 * 3.0));
+  dVar3 = libm_sse2_pow_precise(2.0,(double)((float)*(byte *)(self + 0x1a8) * 0.25));
   damage = (float)dVar3 * (float)dVar2 * *(float *)(self + 0x178);
   if (*(char *)(self + 0x60) == '\0') {
-    dVar3 = 2.0;
-    libm_sse2_pow_precise();
+    dVar3 = libm_sse2_pow_precise(2.0,1.0);
     damage = (float)dVar3 * (float)dVar2 * *(float *)(self + 0x178);
   }
   switch(*(char *)(self + 0x140)) {
@@ -6237,31 +6232,31 @@ float10 stat_calcAttackDamage(void)
     damage = damage * 1.25;
   }
   if (*(char *)(self + 0x990) == '\x03') {
-    fVar1 = (float10)item_computeStat_armor();
+    fVar1 = (float)item_computeStat_armor();
     damage = (float)fVar1 + damage;
   }
   if (*(char *)(self + 0xaa8) == '\x03') {
-    fVar1 = (float10)item_computeStat_armor();
+    fVar1 = (float)item_computeStat_armor();
     damage = (float)fVar1 + damage;
   }
   if (*(char *)(self + 0x530) == '\x04') {
-    fVar1 = (float10)item_computeStat_armor();
+    fVar1 = (float)item_computeStat_armor();
     damage = (float)fVar1 + damage;
   }
   if (*(char *)(self + 0x648) == '\x06') {
-    fVar1 = (float10)item_computeStat_armor();
+    fVar1 = (float)item_computeStat_armor();
     damage = (float)fVar1 + damage;
   }
   if (*(char *)(self + 0x760) == '\x05') {
-    fVar1 = (float10)item_computeStat_armor();
+    fVar1 = (float)item_computeStat_armor();
     damage = (float)fVar1 + damage;
   }
   totalDamage = damage;
   if (*(char *)(self + 0x878) == '\a') {
-    fVar1 = (float10)item_computeStat_armor();
+    fVar1 = (float)item_computeStat_armor();
     totalDamage = (float)fVar1 + damage;
   }
-  return (float10)totalDamage;
+  return (float)totalDamage;
 }
 
 
@@ -6361,7 +6356,7 @@ undefined4 combat_advanceAttackTimer(void)
   int recoverTime;
   int windup;
   int self;
-  float10 fVar5;
+  float fVar5;
   float base;
   float rate;
   
@@ -6378,24 +6373,24 @@ undefined4 combat_advanceAttackTimer(void)
     windup = 100;
     goto LAB_004455c8;
   default:
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 500.0;
+    base = 500.0f;
     break;
   case '\x03':
   case '\x04':
   case '\x05':
   case '>':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 300.0;
+    base = 300.0f;
     break;
   case '\a':
   case '\x0e':
   case '\x12':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 200.0;
+    base = 200.0f;
     break;
   case '\n':
     windup = 600;
@@ -6404,14 +6399,14 @@ undefined4 combat_advanceAttackTimer(void)
   case '<':
   case '=':
   case 'h':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 100.0;
+    base = 100.0f;
     break;
   case '\x0f':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 400.0;
+    base = 400.0f;
     break;
   case '\x16':
   case '\x1a':
@@ -6432,14 +6427,14 @@ undefined4 combat_advanceAttackTimer(void)
   case '.':
   case '^':
   case '_':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 100.0;
+    base = 100.0f;
     break;
   case '\x17':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 10.0;
+    base = 10.0f;
     break;
   case '0':
     windup = 0;
@@ -6449,27 +6444,27 @@ undefined4 combat_advanceAttackTimer(void)
     goto LAB_004455c8;
   case '9':
   case ':':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 'A':
   case 'B':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 'C':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 'D':
   case 'E':
   case ']':
-    fVar5 = (float10)combat_getEffectiveHaste();
+    fVar5 = (float)combat_getEffectiveHaste();
     rate = (float)fVar5;
-    base = 800.0;
+    base = 800.0f;
     break;
   case 'G':
   case 'H':
@@ -6502,7 +6497,7 @@ int stat_diminishing_returns_pct(void)
 {
   int in_ECX;
   
-  return (int)((1.0 - 1.0 / (((float)*(int *)(in_ECX + 400) - 1.0) * 0.05 + 1.0)) * 100.0 + 1.0);
+  return (int)((1.0f - 1.0f / (((float)*(int *)(in_ECX + 400) - 1.0f) * 0.05f + 1.0f)) * 100.0f + 1.0f);
 }
 
 
@@ -6514,17 +6509,15 @@ int stat_diminishing_returns_pct(void)
  */
 /* Global::math_pow2Mul @ 00445f60 */
 
-float10 math_pow2Mul(void)
+float math_pow2Mul(float param_1,int param_2)
 
 {
   double powA;
   double powB;
   
-  powA = 2.0;
-  libm_sse2_pow_precise();
-  powB = 2.0;
-  libm_sse2_pow_precise();
-  return (float10)((float)powA * (float)powB);
+  powA = libm_sse2_pow_precise(2.0,(double)((1.0 - 1.0 / ((param_1 - 1.0) * 0.05 + 1.0)) * 3.0));
+  powB = libm_sse2_pow_precise(2.0,(double)((float)param_2 * 0.25));
+  return (float)((float)powA * (float)powB);
 }
 
 
@@ -6536,20 +6529,17 @@ float10 math_pow2Mul(void)
  */
 /* Global::math_pow2Div @ 00445ff0 */
 
-float10 math_pow2Div(void)
+float math_pow2Div(float param_1,int param_2)
 
 {
   double powA;
   double powB;
   double powC;
   
-  powA = 2.0;
-  libm_sse2_pow_precise();
-  powB = 2.0;
-  libm_sse2_pow_precise();
-  powC = 2.0;
-  libm_sse2_pow_precise();
-  return (float10)(((float)powA * (float)powB) / (float)powC);
+  powA = libm_sse2_pow_precise(2.0,(double)((1.0 - 1.0 / ((param_1 - 1.0) * 0.05 + 1.0)) * 3.0));
+  powB = libm_sse2_pow_precise(2.0,(double)((float)param_2 * 0.25));
+  powC = libm_sse2_pow_precise(2.0,3.0);
+  return (float)(((float)powA * (float)powB) / (float)powC);
 }
 
 
@@ -6561,13 +6551,13 @@ float10 math_pow2Div(void)
  */
 /* Global::curve_diminishingP1 @ 00446aa0 */
 
-float10 curve_diminishingP1(int level)
+float curve_diminishingP1(int level)
 
 {
   if (level < 1) {
-    return (float10)0;
+    return (float)0;
   }
-  return (float10)((1.0 - 1.0 / ((float)level * 0.1 + 1.0)) + 1.0);
+  return (float)((1.0f - 1.0f / ((float)level * 0.1f + 1.0f)) + 1.0f);
 }
 
 
@@ -6619,11 +6609,9 @@ void projectile_getMuzzlePosition(uint *posOut)
   if ((*(byte *)(self + 0x7e) & 4) != 0) {
     mat4_identity();
     angleRad = *(float *)(self + 0x30) * 0.017453292;
-    dVar6 = (double)angleRad;
-    libm_sse2_cos_precise();
+    dVar6 = libm_sse2_cos_precise((double)angleRad);
     cosA = (float)dVar6;
-    dVar6 = (double)angleRad;
-    libm_sse2_sin_precise();
+    dVar6 = libm_sse2_sin_precise((double)angleRad);
     sinA = (float)dVar6;
     halfWidth = *(float *)(self + 0x84) * 0.5;
     height = *(float *)(self + 0x88) * 0.35;
@@ -6685,7 +6673,7 @@ int combat_getReloadFrames(uint abilityType)
 
 {
   int self;
-  float10 fVar1;
+  float fVar1;
   float base;
   float rate;
   
@@ -6699,16 +6687,16 @@ int combat_getReloadFrames(uint abilityType)
   case 1:
   case 2:
   case 9:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 3:
   case 4:
   case 0x3e:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 5:
   case 0xc:
@@ -6716,59 +6704,59 @@ int combat_getReloadFrames(uint abilityType)
   case 0x11:
   case 0x41:
   case 0x42:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 400.0;
+    base = 400.0f;
     break;
   case 6:
   case 7:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 150.0;
+    base = 150.0f;
     break;
   default:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
     goto LAB_00447589;
   case 10:
     return 200;
   case 0xb:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
     goto LAB_00447589;
   case 0xd:
   case 0xe:
   case 0xf:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 0x12:
   case 0x13:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 150.0;
+    base = 150.0f;
     break;
   case 0x14:
   case 0x15:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 400.0;
+    base = 400.0f;
     break;
   case 0x16:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 50.0;
+    base = 50.0f;
     break;
   case 0x17:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 50.0;
+    base = 50.0f;
     break;
   case 0x1a:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 1200.0;
+    base = 1200.0f;
     break;
   case 0x1e:
   case 0x20:
@@ -6779,15 +6767,15 @@ int combat_getReloadFrames(uint abilityType)
   case 0x21:
     return 0x4b0;
   case 0x22:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 1200.0;
+    base = 1200.0f;
     break;
   case 0x25:
   case 0x2b:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0x26:
   case 0x27:
@@ -6795,14 +6783,14 @@ int combat_getReloadFrames(uint abilityType)
   case 0x29:
   case 0x2a:
   case 0x2c:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
     goto LAB_00447589;
   case 0x2d:
   case 0x2e:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 500.0;
+    base = 500.0f;
     break;
   case 0x32:
   case 0x4c:
@@ -6813,14 +6801,14 @@ int combat_getReloadFrames(uint abilityType)
   case 0x36:
     return 100;
   case 0x37:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 500.0;
+    base = 500.0f;
     break;
   case 0x43:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 0x44:
   case 0x45:
@@ -6831,23 +6819,23 @@ int combat_getReloadFrames(uint abilityType)
   case 0x56:
     return 5000;
   case 0x4b:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
     goto LAB_00447589;
   case 0x5b:
     return 6000;
   case 0x5e:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    base = 500.0;
+    base = 500.0f;
     break;
   case 0x5f:
     return 2000;
   case 0x68:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
 LAB_00447589:
-    base = 300.0;
+    base = 300.0f;
   }
   return (int)(base / (rate * *(float *)(self + 0x17c)));
 }
@@ -6861,13 +6849,13 @@ LAB_00447589:
  */
 /* Global::curve_diminishingHalf @ 004476a0 */
 
-float10 curve_diminishingHalf(int level)
+float curve_diminishingHalf(int level)
 
 {
   if (level < 1) {
-    return (float10)0.5;
+    return (float)0.5f;
   }
-  return (float10)((1.0 - 1.0 / ((float)level * 0.1 + 1.0)) * 0.5 + 0.5);
+  return (float)((1.0f - 1.0f / ((float)level * 0.1f + 1.0f)) * 0.5f + 0.5f);
 }
 
 
@@ -7815,7 +7803,7 @@ void GameController_isNearTargetTile(void)
 
 {
   int item;
-  float10 bound;
+  float bound;
   float cursorX;
   float cursorY;
   uint cookie;
@@ -7827,12 +7815,12 @@ void GameController_isNearTargetTile(void)
     return;
   }
   Widget_computeBoundsFloat(&cursorX);
-  bound = (float10)security_cookie_guard_a();
-  if ((float)bound - 30.0 < cursorY) {
-    bound = (float10)security_cookie_guard_a();
+  bound = (float)security_cookie_guard_a();
+  if ((float)bound - 30.0f < cursorY) {
+    bound = (float)security_cookie_guard_a();
     if (cursorY < (float)bound) {
-      bound = (float10)security_cookie_guard_b();
-      if ((cursorX < (float)bound * 0.5) && (0.0 < cursorX)) {
+      bound = (float)security_cookie_guard_b();
+      if ((cursorX < (float)bound * 0.5f) && (0.0f < cursorX)) {
         __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
         return;
       }
@@ -9218,8 +9206,8 @@ float * vec3_negateSwapYZ(float *pResult)
   z = pThis[2];
   *pResult = *pResult * -1.0;
   pResult[2] = z;
-  pResult[1] = pResult[1] * -1.0;
-  pResult[2] = pResult[2] * -1.0;
+  pResult[1] = pResult[1] * -1.0f;
+  pResult[2] = pResult[2] * -1.0f;
   return pResult;
 }
 
@@ -9491,7 +9479,7 @@ void findNearestEntityDistSq(void)
   undefined8 deltaY;
   undefined8 deltaZ;
   
-  minDistSq = 25.0;
+  minDistSq = 25.0f;
   pNode = (undefined4 *)**(undefined4 **)(pThis + 0x2e8);
   while (pNode != *(undefined4 **)(pThis + 0x2e8)) {
     pCreature = pNode[6];
@@ -9512,9 +9500,9 @@ void findNearestEntityDistSq(void)
       deltaZ = CONCAT44((deltaZ._4_4_ - *(int *)(pCreature + 0x24)) -
                           (uint)((uint)deltaZ < *(uint *)(pCreature + 0x20)),
                           (uint)deltaZ - *(uint *)(pCreature + 0x20));
-      distSq = (float)deltaX * 1.5258789e-05 * (float)deltaX * 1.5258789e-05 +
-              (float)deltaY * 1.5258789e-05 * (float)deltaY * 1.5258789e-05 +
-              (float)deltaZ * 1.5258789e-05 * (float)deltaZ * 1.5258789e-05;
+      distSq = (float)deltaX * 1.5258789e-05f * (float)deltaX * 1.5258789e-05f +
+              (float)deltaY * 1.5258789e-05f * (float)deltaY * 1.5258789e-05f +
+              (float)deltaZ * 1.5258789e-05f * (float)deltaZ * 1.5258789e-05f;
       if (distSq < minDistSq) {
         minDistSq = distSq;
       }
@@ -9564,7 +9552,7 @@ void drawBillboardModelRotated(float param_1,float param_2,float *param_3,float 
   undefined4 uVar2;
   int pThis;
   int maxDim;
-  float10 fVar4;
+  float fVar4;
   float fVar5;
   double dVar6;
   float fVar7;
@@ -9653,15 +9641,13 @@ void drawBillboardModelRotated(float param_1,float param_2,float *param_3,float 
       fVar11 = local_30 * 0.0 + local_40 * 0.0 + local_20 + local_10;
       fVar8 = *param_3;
       fVar12 = local_2c * 0.0 + local_3c * 0.0 + local_1c + local_c;
-      dVar6 = (double)(fVar8 * 0.017453292);
       local_18 = fVar9;
       local_14 = fVar10;
       local_10 = fVar11;
       local_c = fVar12;
-      libm_sse2_cos_precise();
+      dVar6 = libm_sse2_cos_precise((double)(fVar8 * 0.017453292));
       fVar5 = (float)dVar6;
-      dVar6 = (double)(fVar8 * 0.017453292);
-      libm_sse2_sin_precise();
+      dVar6 = libm_sse2_sin_precise((double)(fVar8 * 0.017453292));
       fVar7 = (float)dVar6;
       fVar14 = local_38 * fVar5 + local_28 * fVar7;
       fVar18 = local_28 * fVar5 - local_38 * fVar7;
@@ -9671,12 +9657,10 @@ void drawBillboardModelRotated(float param_1,float param_2,float *param_3,float 
       fVar16 = local_30 * fVar5 + local_20 * fVar7;
       fVar17 = local_2c * fVar5 + local_1c * fVar7;
       fVar8 = param_3[1];
-      dVar6 = (double)(fVar8 * 0.017453292);
       fVar21 = local_1c * fVar5 - local_2c * fVar7;
-      libm_sse2_cos_precise();
+      dVar6 = libm_sse2_cos_precise((double)(fVar8 * 0.017453292));
       fVar5 = (float)dVar6;
-      dVar6 = (double)(fVar8 * 0.017453292);
-      libm_sse2_sin_precise();
+      dVar6 = libm_sse2_sin_precise((double)(fVar8 * 0.017453292));
       fVar7 = (float)dVar6;
       local_16c = fVar18 * fVar5 + local_48 * fVar7;
       fVar18 = local_48 * fVar5 - fVar18 * fVar7;
@@ -9686,16 +9670,14 @@ void drawBillboardModelRotated(float param_1,float param_2,float *param_3,float 
       fVar19 = local_40 * fVar5 - fVar20 * fVar7;
       fVar20 = local_3c * fVar5 - fVar21 * fVar7;
       fVar8 = param_3[2];
-      dVar6 = (double)(fVar8 * 0.017453292);
       local_168 = fVar21 * fVar5 + local_3c * fVar7;
       local_28 = local_16c;
       local_24 = local_178;
       local_20 = local_170;
       local_1c = local_168;
-      libm_sse2_cos_precise();
+      dVar6 = libm_sse2_cos_precise((double)(fVar8 * 0.017453292));
       fVar5 = (float)dVar6;
-      dVar6 = (double)(fVar8 * 0.017453292);
-      libm_sse2_sin_precise();
+      dVar6 = libm_sse2_sin_precise((double)(fVar8 * 0.017453292));
       fVar8 = (float)dVar6;
       fVar21 = fVar14 * fVar5 - fVar18 * fVar8;
       fVar7 = fVar18 * fVar5 + fVar14 * fVar8;
@@ -9710,15 +9692,13 @@ void drawBillboardModelRotated(float param_1,float param_2,float *param_3,float 
       local_34 = fVar14;
       local_30 = fVar19;
       if (*pModelName == '\t') {
-        dVar6 = 1.5707963705062866;
         local_44 = fVar18;
         local_40 = fVar13;
         local_3c = fVar15;
         local_2c = fVar8;
-        libm_sse2_cos_precise();
+        dVar6 = libm_sse2_cos_precise(1.5707963705062866);
         fVar5 = (float)dVar6;
-        dVar6 = 1.5707963705062866;
-        libm_sse2_sin_precise();
+        dVar6 = libm_sse2_sin_precise(1.5707963705062866);
         fVar20 = (float)dVar6;
         fVar16 = fVar21 * fVar5 + local_16c * fVar20;
         local_16c = local_16c * fVar5 - fVar21 * fVar20;
@@ -9727,16 +9707,14 @@ void drawBillboardModelRotated(float param_1,float param_2,float *param_3,float 
         fVar14 = fVar19 * fVar5 + local_170 * fVar20;
         local_170 = local_170 * fVar5 - fVar19 * fVar20;
         fVar21 = fVar8 * fVar5 + local_168 * fVar20;
-        dVar6 = -1.5707963705062866;
         local_168 = local_168 * fVar5 - fVar8 * fVar20;
         local_28 = local_16c;
         local_24 = local_178;
         local_20 = local_170;
         local_1c = local_168;
-        libm_sse2_cos_precise();
+        dVar6 = libm_sse2_cos_precise(-1.5707963705062866);
         fVar5 = (float)dVar6;
-        dVar6 = -1.5707963705062866;
-        libm_sse2_sin_precise();
+        dVar6 = libm_sse2_sin_precise(-1.5707963705062866);
         fVar19 = (float)dVar6;
         local_48 = fVar7 * fVar5 + fVar16 * fVar19;
         local_38 = fVar16 * fVar5 - fVar7 * fVar19;
@@ -9812,7 +9790,7 @@ void drawBillboardModelRotated(float param_1,float param_2,float *param_3,float 
       uVar2 = mat4_mulRight(local_158,local_118);
       render_uploadModelViewMatrices(&local_48,local_d8,uVar2);
       render_setVec3Uniform5c(0x3f800000);
-      fVar4 = (float10)item_hasSpecialAbility();
+      fVar4 = (float)item_hasSpecialAbility();
       render_setVec3Uniform58((float)fVar4);
       GameController_draw_mesh();
       puVar22 = &local_98;
@@ -9923,11 +9901,9 @@ void drawModelAtProjectedPos(float param_1,float param_2,float *param_3,float pa
     fVar10 = local_30 * 0.0 + local_40 * 0.0 + local_20;
     fVar11 = local_2c * 0.0 + local_3c * 0.0 + local_1c;
     fVar7 = *param_3;
-    dVar5 = (double)(fVar7 * 0.017453292);
-    libm_sse2_cos_precise();
+    dVar5 = libm_sse2_cos_precise((double)(fVar7 * 0.017453292));
     fVar4 = (float)dVar5;
-    dVar5 = (double)(fVar7 * 0.017453292);
-    libm_sse2_sin_precise();
+    dVar5 = libm_sse2_sin_precise((double)(fVar7 * 0.017453292));
     fVar6 = (float)dVar5;
     fVar13 = local_28 * fVar6 + local_38 * fVar4;
     fVar17 = local_28 * fVar4 - local_38 * fVar6;
@@ -9937,12 +9913,10 @@ void drawModelAtProjectedPos(float param_1,float param_2,float *param_3,float pa
     fVar15 = local_30 * fVar4 + local_20 * fVar6;
     fVar16 = local_2c * fVar4 + local_1c * fVar6;
     fVar7 = param_3[1];
-    dVar5 = (double)(fVar7 * 0.017453292);
     fVar20 = local_1c * fVar4 - local_2c * fVar6;
-    libm_sse2_cos_precise();
+    dVar5 = libm_sse2_cos_precise((double)(fVar7 * 0.017453292));
     fVar4 = (float)dVar5;
-    dVar5 = (double)(fVar7 * 0.017453292);
-    libm_sse2_sin_precise();
+    dVar5 = libm_sse2_sin_precise((double)(fVar7 * 0.017453292));
     fVar6 = (float)dVar5;
     local_118 = fVar17 * fVar4 + local_48 * fVar6;
     fVar17 = local_48 * fVar4 - fVar17 * fVar6;
@@ -9952,16 +9926,14 @@ void drawModelAtProjectedPos(float param_1,float param_2,float *param_3,float pa
     local_11c = fVar19 * fVar4 + local_40 * fVar6;
     fVar19 = local_3c * fVar4 - fVar20 * fVar6;
     fVar7 = param_3[2];
-    dVar5 = (double)(fVar7 * 0.017453292);
     local_110 = fVar20 * fVar4 + local_3c * fVar6;
     local_28 = local_118;
     local_24 = local_120;
     local_20 = local_11c;
     local_1c = local_110;
-    libm_sse2_cos_precise();
+    dVar5 = libm_sse2_cos_precise((double)(fVar7 * 0.017453292));
     fVar4 = (float)dVar5;
-    dVar5 = (double)(fVar7 * 0.017453292);
-    libm_sse2_sin_precise();
+    dVar5 = libm_sse2_sin_precise((double)(fVar7 * 0.017453292));
     fVar7 = (float)dVar5;
     local_48 = fVar13 * fVar7 + fVar17 * fVar4;
     local_38 = fVar13 * fVar4 - fVar17 * fVar7;
@@ -9997,8 +9969,7 @@ void drawModelAtProjectedPos(float param_1,float param_2,float *param_3,float pa
     local_10 = local_30 * fVar7 + local_40 * fVar6 + local_11c * fVar4 + fVar10 + local_10;
     local_c = local_2c * fVar7 + local_3c * fVar6 + local_110 * fVar4 + fVar11 + local_c;
     mat4_identity();
-    dVar5 = 0.39269909262657166;
-    libm_sse2_tan_precise();
+    dVar5 = libm_sse2_tan_precise(0.39269909262657166);
     fVar6 = 1.0 / (float)dVar5;
     fVar7 = fVar6 / -((float)*(int *)(pThis + 0x11c) / (float)*(int *)(pThis + 0x120));
     mat4_identity();
@@ -10334,9 +10305,9 @@ void hasNearbyAllyEntity(void)
       deltaZ = CONCAT44((deltaZ._4_4_ - *(int *)(pCreature + 0x24)) -
                           (uint)((uint)deltaZ < *(uint *)(pCreature + 0x20)),
                           (uint)deltaZ - *(uint *)(pCreature + 0x20));
-      if ((float)deltaX * 1.5258789e-05 * (float)deltaX * 1.5258789e-05 +
-          (float)deltaY * 1.5258789e-05 * (float)deltaY * 1.5258789e-05 +
-          (float)deltaZ * 1.5258789e-05 * (float)deltaZ * 1.5258789e-05 < 16.0) {
+      if ((float)deltaX * 1.5258789e-05f * (float)deltaX * 1.5258789e-05f +
+          (float)deltaY * 1.5258789e-05f * (float)deltaY * 1.5258789e-05f +
+          (float)deltaZ * 1.5258789e-05f * (float)deltaZ * 1.5258789e-05f < 16.0f) {
         __security_check_cookie(DAT_0076aa78 ^ (uint)&stack0xfffffffc ^ (uint)&stack0xfffffffc);
         return;
       }
@@ -10534,14 +10505,13 @@ uint * fixed16_vec_lengthSquared(uint *pOut)
  */
 /* Global::acosf_wrap @ 004c14f0 */
 
-float10 acosf_wrap(float cosVal)
+float acosf_wrap(float cosVal)
 
 {
   double result;
   
-  result = (double)cosVal;
-  libm_sse2_acos_precise();
-  return (float10)(float)result;
+  result = libm_sse2_acos_precise((double)cosVal);
+  return (float)(float)result;
 }
 
 
@@ -10616,41 +10586,41 @@ void GameState_addOrUpdateHitEntry(char r,char g,char b,char param_4,undefined4 
  */
 /* Global::item_computeBlockValue @ 004c6a90 */
 
-float10 item_computeBlockValue(void)
+float item_computeBlockValue(void)
 
 {
   char type;
   char *pItem;
-  float10 fVar2;
+  float fVar2;
   float base;
   float mult;
   
   type = *pItem;
   if ((((type != '\x04') && (type != '\a')) && (type != '\x05')) && (type != '\x06')) {
-    return (float10)0;
+    return (float)0;
   }
-  base = 0.5;
-  mult = 0.5;
+  base = 0.5f;
+  mult = 0.5f;
   if (type == '\x04') {
-    base = 1.0;
-    mult = 1.0;
+    base = 1.0f;
+    mult = 1.0f;
   }
   switch(pItem[0xd]) {
   case '\x12':
-    mult = base * 0.8;
+    mult = base * 0.8f;
     break;
   case '\x13':
   case '\x1a':
   case '\x1b':
-    mult = base * 0.85;
+    mult = base * 0.85f;
     break;
   case '\x17':
   case '\x19':
-    mult = base * 0.75;
+    mult = base * 0.75f;
   }
-  fVar2 = (float10)math_pow2Mul((float)*(int *)(pItem + 0x114) * 0.1 +
+  fVar2 = (float)math_pow2Mul((float)*(int *)(pItem + 0x114) * 0.1f +
                                 (float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
-  return (float10)((float)fVar2 * mult);
+  return (float)((float)fVar2 * mult);
 }
 
 
@@ -10662,13 +10632,13 @@ float10 item_computeBlockValue(void)
  */
 /* Global::item_computeStat_regen @ 004c6ba0 */
 
-float10 item_computeStat_regen(void)
+float item_computeStat_regen(void)
 
 {
   char type;
   char subtype;
   char *pItem;
-  float10 fVar3;
+  float fVar3;
   float factor;
   float mult;
   
@@ -10688,13 +10658,13 @@ float10 item_computeStat_regen(void)
     if (pItem[0xd] == '\v') {
       factor = factor + 1.0;
     }
-    fVar3 = (float10)math_pow2Div((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
+    fVar3 = (float)math_pow2Div((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
     factor = (float)fVar3 * mult * factor;
     if (0.001 <= factor) {
-      return (float10)factor;
+      return (float)factor;
     }
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -10706,19 +10676,19 @@ float10 item_computeStat_regen(void)
  */
 /* Global::Item_compute_value @ 004c78c0 */
 
-float10 Item_compute_value(void)
+float Item_compute_value(void)
 
 {
   char cVar1;
   char *in_ECX;
-  float10 fVar2;
+  float fVar2;
   float local_c;
   float local_8;
   
   cVar1 = *in_ECX;
   if ((((cVar1 != '\x03') && (cVar1 != '\x04')) && (cVar1 != '\a')) &&
      ((cVar1 != '\x05' && (cVar1 != '\x06')))) {
-    return (float10)0;
+    return (float)0;
   }
   local_c = 0.1;
   if (cVar1 == '\x04') {
@@ -10731,9 +10701,9 @@ float10 Item_compute_value(void)
   else if (in_ECX[0xd] == '\x1b') {
     local_8 = local_8 + 1.0;
   }
-  fVar2 = (float10)math_pow2Mul((float)*(int *)(in_ECX + 0x114) * 0.1 +
+  fVar2 = (float)math_pow2Mul((float)*(int *)(in_ECX + 0x114) * 0.1 +
                                 (float)(int)*(short *)(in_ECX + 0x10),in_ECX[0xc]);
-  return (float10)((float)fVar2 * local_c * local_8);
+  return (float)((float)fVar2 * local_c * local_8);
 }
 
 
@@ -10810,17 +10780,17 @@ LAB_004c7a5c:
  */
 /* Global::item_computeStat_ranged @ 004c7a90 */
 
-float10 item_computeStat_ranged(void)
+float item_computeStat_ranged(void)
 
 {
   char *item;
-  float10 base;
+  float base;
   
   if ((*item == '\x01') && ((item[1] == '\x04' || (item[1] == '\x06')))) {
-    base = (float10)math_pow2Div((float)(int)*(short *)(item + 0x10),item[0xc]);
-    return (float10)((float)base * 1.5);
+    base = (float)math_pow2Div((float)(int)*(short *)(item + 0x10),item[0xc]);
+    return (float)((float)base * 1.5f);
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -10832,37 +10802,37 @@ float10 item_computeStat_ranged(void)
  */
 /* Global::item_computeStat_variant2 @ 004c7af0 */
 
-float10 item_computeStat_variant2(void)
+float item_computeStat_variant2(void)
 
 {
   char typeByte;
   char *in_ECX;
-  float10 ratio;
+  float ratio;
   float baseMult;
   float finalMult;
   
   typeByte = *in_ECX;
   if ((((typeByte != '\x04') && (typeByte != '\a')) && (typeByte != '\x05')) && (typeByte != '\x06')) {
-    return (float10)0;
+    return (float)0;
   }
-  baseMult = 0.5;
-  finalMult = 0.5;
+  baseMult = 0.5f;
+  finalMult = 0.5f;
   if (typeByte == '\x04') {
-    baseMult = 1.0;
-    finalMult = 1.0;
+    baseMult = 1.0f;
+    finalMult = 1.0f;
   }
   switch(in_ECX[0xd]) {
   case '\x01':
   case '\x13':
-    finalMult = baseMult * 0.85;
+    finalMult = baseMult * 0.85f;
     break;
   case '\x1a':
   case '\x1b':
-    finalMult = baseMult * 0.75;
+    finalMult = baseMult * 0.75f;
   }
-  ratio = (float10)math_pow2Mul((float)*(int *)(in_ECX + 0x114) * 0.1 +
+  ratio = (float)math_pow2Mul((float)*(int *)(in_ECX + 0x114) * 0.1f +
                                 (float)(int)*(short *)(in_ECX + 0x10),in_ECX[0xc]);
-  return (float10)((float)ratio * finalMult);
+  return (float)((float)ratio * finalMult);
 }
 
 
@@ -10883,29 +10853,29 @@ uint item_rerollStackCount(float fraction,char applyCap)
   int entity;
   int minLevel;
   int maxLevel;
-  float10 fVar6;
+  float fVar6;
   
   level = *(ushort *)(entity + 0x10);
   result = (uint)level;
   if (1 < (short)level) {
-    fVar6 = (float10)curve_level05((float)(int)(short)level);
-    if ((float)fVar6 - fraction <= 0.0) {
+    fVar6 = (float)curve_level05((float)(int)(short)level);
+    if ((float)fVar6 - fraction <= 0.0f) {
       *(undefined2 *)(entity + 0x10) = 1;
       return 1;
     }
-    fVar6 = (float10)curve_inverse20p1((float)fVar6 - fraction);
+    fVar6 = (float)curve_inverse20p1((float)fVar6 - fraction);
     minLevel = (int)fVar6;
     maxLevel = (int)*(short *)(entity + 0x10);
     if (minLevel < 1) {
       minLevel = 1;
     }
     if (applyCap != '\0') {
-      fVar6 = (float10)curve_level05((float)maxLevel);
+      fVar6 = (float)curve_level05((float)maxLevel);
       fraction = (float)fVar6 + fraction;
-      if (0.9999 < fraction) {
-        fraction = 0.9999;
+      if (0.9999f < fraction) {
+        fraction = 0.9999f;
       }
-      fVar6 = (float10)curve_inverse20p1(fraction);
+      fVar6 = (float)curve_inverse20p1(fraction);
       maxLevel = (int)fVar6;
     }
     rnd = rand();
@@ -16880,7 +16850,7 @@ void CombatBehavior_applyMeleeHit(undefined4 *param_1,int attacker,float amount)
   float fVar15;
   int iVar16;
   bool bVar17;
-  float10 fVar18;
+  float fVar18;
   float fVar19;
   float fVar20;
   double dVar21;
@@ -16966,8 +16936,10 @@ void CombatBehavior_applyMeleeHit(undefined4 *param_1,int attacker,float amount)
       }
       attackerPtr = fVar15;
       if (0.0 < (float)param_1[4]) {
-        dVar21 = 2.0;
-        libm_sse2_pow_precise(uVar6);
+        dVar21 = libm_sse2_pow_precise
+                           (2.0,(double)((float)(int)(*(int *)((int)target + 400) + -1 +
+                                                     (uint)*(byte *)((int)target + 0x1a8)) * 0.25
+                                        ));
         fVar19 = *(float *)((int)fVar20 + 0x1190) - ((float)param_1[4] * 0.25) / (float)dVar21;
         *(float *)((int)fVar20 + 0x1190) = fVar19;
         if (fVar19 < 0.0) {
@@ -16985,7 +16957,7 @@ void CombatBehavior_applyMeleeHit(undefined4 *param_1,int attacker,float amount)
         *(undefined4 *)((int)fVar20 + 0x11d4) = param_1[1];
         listEnd = (float *)rbtree_findOrInsert_pairKey(param_1 + 2);
         *listEnd = *listEnd + 1.0;
-        cVar5 = creature_hasFireAffinity();
+        cVar5 = creature_hasFireAffinity(uVar6);
         if (cVar5 == '\0') {
           if (*(int *)((int)fVar15 + 100) == 0x19) {
             listEnd = (float *)rbtree_findOrInsert_pairKey(param_1);
@@ -17070,10 +17042,10 @@ LAB_00595d70:
                 if (fVar22 < 0.0) {
                   local_2e8 = (float *)(*(float *)((int)fVar20 + 0x16c) - fVar22);
                   *(float **)((int)fVar20 + 0x16c) = local_2e8;
-                  fVar18 = (float10)stat_calcAttackDamage();
+                  fVar18 = (float)stat_calcAttackDamage();
                   local_308 = (float *)(float)fVar18;
                   if ((float)local_308 < (float)local_2e8) {
-                    fVar18 = (float10)stat_calcAttackDamage();
+                    fVar18 = (float)stat_calcAttackDamage();
                     *(float *)((int)fVar20 + 0x16c) = (float)fVar18;
                   }
                   if ((*(char *)(local_2f4 + 0xb4) == '\0') &&
@@ -17185,7 +17157,7 @@ LAB_00595d70:
                     *(undefined4 *)(iVar9 + 0x16c) = 0;
                   }
                 }
-                fVar18 = (float10)curve_level05((float)(int)((uint)*(byte *)((int)fVar20 + 0x1a8) +
+                fVar18 = (float)curve_level05((float)(int)((uint)*(byte *)((int)fVar20 + 0x1a8) +
                                                            *(int *)((int)fVar20 + 400)));
                 amountCopy = (float)fVar18;
                 attackerPtr = amountCopy * 20.0;
@@ -17472,7 +17444,7 @@ LAB_005967fd:
     }
     if (local_2ed != '\0') {
       local_2e8 = (float *)(uint)local_2d4._4_1_;
-      fVar18 = (float10)curve_level05((float)((int)local_2e8 + (int)local_2d4));
+      fVar18 = (float)curve_level05((float)((int)local_2e8 + (int)local_2d4));
       amountCopy = (float)fVar18;
       fVar20 = amountCopy * 50.0;
       local_19b = 0;
@@ -17563,11 +17535,10 @@ void CombatBehavior_spawnProjectileHit(float attacker,int source,float range,cha
   int *piVar8;
   int self;
   int *piVar9;
-  float10 fVar10;
+  float fVar10;
   float fVar11;
   double dVar12;
-  undefined1 auVar13 [16];
-  float fVar14;
+  float fVar13;
   undefined1 auStack_348 [4];
   float local_344;
   float local_340;
@@ -17817,16 +17788,16 @@ void CombatBehavior_spawnProjectileHit(float attacker,int source,float range,cha
     }
     if (((param_14 != '\0') && (cVar3 = combat_canBlockNow(uVar5), cVar3 != '\0')) &&
        (0.0 < *(float *)((int)attacker + 0x174))) {
-      fVar10 = (float10)stat_calcSpellPower();
+      fVar10 = (float)stat_calcSpellPower();
       local_340 = range / (float)fVar10;
       fVar11 = *(float *)((int)attacker + 0x174) + *(float *)((int)attacker + 0x170);
-      fVar14 = *(float *)((int)attacker + 0x174) + *(float *)((int)attacker + 0x144);
+      fVar13 = *(float *)((int)attacker + 0x174) + *(float *)((int)attacker + 0x144);
       *(float *)((int)attacker + 0x170) = fVar11;
-      *(float *)((int)attacker + 0x144) = fVar14;
+      *(float *)((int)attacker + 0x144) = fVar13;
       if (1.0 < fVar11) {
         *(undefined4 *)((int)attacker + 0x170) = 0x3f800000;
       }
-      if (*(float *)((int)attacker + 0x170) < fVar14) {
+      if (*(float *)((int)attacker + 0x170) < fVar13) {
         *(float *)((int)attacker + 0x144) = *(float *)((int)attacker + 0x170);
       }
       Struct_reset_off14to46();
@@ -17920,10 +17891,10 @@ void CombatBehavior_spawnProjectileHit(float attacker,int source,float range,cha
       if (local_334 <= 0.0) goto LAB_005986d7;
     }
     if (param_11 == '\0') {
-      fVar10 = (float10)stat_calcArmor();
+      fVar10 = (float)stat_calcArmor();
     }
     else {
-      fVar10 = (float10)stat_calcSpirit();
+      fVar10 = (float)stat_calcSpirit();
     }
     local_340 = (float)fVar10;
     local_334 = local_334 - local_32c * local_340;
@@ -17940,8 +17911,7 @@ void CombatBehavior_spawnProjectileHit(float attacker,int source,float range,cha
       local_240 = param_8[1];
       fVar11 = local_240 * local_240 + local_244 * local_244 + param_8[2] * param_8[2];
       if (0.0 < fVar11) {
-        dVar12 = (double)fVar11;
-        libm_sse2_sqrt_precise();
+        dVar12 = libm_sse2_sqrt_precise((double)fVar11);
         local_240 = (1.0 / (float)dVar12) * param_8[1];
         local_244 = *param_8 * (1.0 / (float)dVar12);
       }
@@ -17987,26 +17957,26 @@ void CombatBehavior_spawnProjectileHit(float attacker,int source,float range,cha
               do {
                 switch(*(undefined1 *)(iVar6 + -1 + (int)local_32c)) {
                 case 0x80:
-                  fVar10 = (float10)curve_level05((float)*(int *)((int)local_32c + piVar9[2]));
+                  fVar10 = (float)curve_level05((float)*(int *)((int)local_32c + piVar9[2]));
                   local_344 = (float)fVar10;
                   local_334 = local_344 * local_330 * local_324 + local_334;
                   break;
                 case 0x81:
-                  fVar10 = (float10)curve_level05((float)*(int *)((int)local_32c + piVar9[2]));
+                  fVar10 = (float)curve_level05((float)*(int *)((int)local_32c + piVar9[2]));
                   local_344 = (float)fVar10;
                   fVar11 = local_344 * local_330 * local_324;
                   local_334 = fVar11 * 0.5 + local_334;
                   local_33c = fVar11 * 2.0 + local_33c;
                   break;
                 case 0x82:
-                  fVar10 = (float10)curve_level05((float)*(int *)((int)local_32c + piVar9[2]));
+                  fVar10 = (float)curve_level05((float)*(int *)((int)local_32c + piVar9[2]));
                   local_344 = (float)fVar10;
                   local_334 = local_344 * local_330 * 0.25 * local_324 + local_334;
                   *(int *)((int)attacker + 0x134) =
                        (int)(local_324 * 500.0 + (float)*(int *)((int)attacker + 0x134));
                   break;
                 case 0x83:
-                  fVar10 = (float10)curve_level05((float)*(int *)((int)local_32c + piVar9[2]));
+                  fVar10 = (float)curve_level05((float)*(int *)((int)local_32c + piVar9[2]));
                   local_344 = (float)fVar10;
                   local_334 = local_344 * local_330 * 0.25 * local_324 + local_334;
                   *(int *)(local_338 + 0x138) =
@@ -18194,16 +18164,15 @@ LAB_00597e5e:
       *(float *)((int)attacker + 0x34) * *(float *)((int)attacker + 0x34) +
       *(float *)((int)attacker + 0x38) * *(float *)((int)attacker + 0x38) +
       *(float *)((int)attacker + 0x3c) * *(float *)((int)attacker + 0x3c)) {
-    dVar12 = (double)(*(float *)((int)attacker + 0x38) * *(float *)((int)attacker + 0x38) +
-                      *(float *)((int)attacker + 0x34) * *(float *)((int)attacker + 0x34) +
-                     *(float *)((int)attacker + 0x3c) * *(float *)((int)attacker + 0x3c));
-    libm_sse2_sqrt_precise();
+    dVar12 = libm_sse2_sqrt_precise
+                       ((double)(*(float *)((int)attacker + 0x38) * *(float *)((int)attacker + 0x38) +
+                                 *(float *)((int)attacker + 0x34) * *(float *)((int)attacker + 0x34) +
+                                *(float *)((int)attacker + 0x3c) * *(float *)((int)attacker + 0x3c)));
     local_32c = 1.0 / (float)dVar12;
     local_344 = local_32c * *(float *)((int)attacker + 0x34);
     local_330 = local_32c * *(float *)((int)attacker + 0x38);
     local_32c = local_32c * *(float *)((int)attacker + 0x3c);
-    dVar12 = (double)local_340;
-    libm_sse2_sqrt_precise();
+    dVar12 = libm_sse2_sqrt_precise((double)local_340);
     local_184 = (float)dVar12;
     local_18c = local_184 * local_344;
     local_188 = local_184 * local_330;
@@ -18380,13 +18349,12 @@ switchD_0059829d_caseD_6:
       if (*(char *)((int)attacker + 0x68) == 'T') {
         param_6 = 1.0;
       }
-      fVar10 = (float10)curve_level05((float)*(int *)(local_338 + 400));
+      fVar10 = (float)curve_level05((float)*(int *)(local_338 + 400));
       local_344 = (float)fVar10;
-      fVar10 = (float10)curve_level05((float)*(int *)((int)attacker + 400));
+      fVar10 = (float)curve_level05((float)*(int *)((int)attacker + 400));
       local_340 = (float)fVar10;
-      auVar13 = ZEXT816(0x4000000000000000);
-      libm_sse2_pow_precise();
-      param_6 = (float)auVar13._0_8_ * param_6;
+      dVar12 = libm_sse2_pow_precise(2.0,(double)((local_344 - local_340) * 10.0));
+      param_6 = (float)dVar12 * param_6;
       if (1.0 < param_6) {
         param_6 = 1.0;
       }
@@ -18484,11 +18452,11 @@ undefined * VoxelChunk_cellAt(int x,int y,int z)
  */
 /* Global::Terrain_sampleHeightAtWorldXY @ 005989d0 */
 
-float10 Terrain_sampleHeightAtWorldXY(uint worldX,uint worldY)
+float Terrain_sampleHeightAtWorldXY(uint worldX,uint worldY)
 
 {
   int zone;
-  float10 fVar2;
+  float fVar2;
   int xFixed;
   uint local_10;
   int yFixed;
@@ -18501,10 +18469,10 @@ float10 Terrain_sampleHeightAtWorldXY(uint worldX,uint worldY)
     yFixed = worldY << 0x10;
     local_10 = ((int)worldX >> 0x1f) << 0x10 | worldX >> 0x10;
     xFixed = worldX << 0x10;
-    fVar2 = (float10)GameController_entityDistanceSq(&xFixed,&yFixed);
+    fVar2 = (float)GameController_entityDistanceSq(&xFixed,&yFixed);
     return fVar2;
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -18558,18 +18526,18 @@ void CombatBehavior_spawnHitParticles(undefined8 *posA,undefined8 *posB,float si
         local_2c = 0x3dcccccd;
         local_24 = 2;
         local_18 = 0x3f800000;
-        lifetime = (int)(size * 3.0 + 1.0);
+        lifetime = (int)(size * 3.0f + 1.0f);
         local_14 = 0x3f800000;
         local_10 = 0x3f800000;
         local_c = 0x3f800000;
         local_28 = lifetime;
-        puVar1 = (undefined8 *)material_toColor(local_70,*voxelPtr,&local_18,size * 0.5);
+        puVar1 = (undefined8 *)material_toColor(local_70,*voxelPtr,&local_18,size * 0.5f);
         local_3c = *puVar1;
         local_34 = puVar1[1];
         if (isBig != '\0') {
           local_28 = lifetime + 10;
-          local_48 = CONCAT44(local_48._4_4_ * 2.0,(float)local_48 * 2.0);
-          local_40 = local_40 * 2.0;
+          local_48 = CONCAT44(local_48._4_4_ * 2.0f,(float)local_48 * 2.0f);
+          local_40 = local_40 * 2.0f;
         }
         lifetime = *(int *)(list + 0x10);
         node = map_insertVal_00465e60(lifetime,*(undefined4 *)(lifetime + 4),&particlePos);
@@ -18602,7 +18570,7 @@ undefined4 Terrain_blockTypeAtTime(undefined4 xLo,undefined4 xHi,undefined8 pos)
 {
   undefined4 zFixed;
   int zone;
-  float10 dist;
+  double dist;
   undefined8 uVar4;
   
   uVar4 = ftol2();
@@ -18610,7 +18578,7 @@ undefined4 Terrain_blockTypeAtTime(undefined4 xLo,undefined4 xHi,undefined8 pos)
   zone = __alldiv(xLo,xHi,0x10000,0);
   zone = GameController_getVoxelColumn8((int)(zone + (zone >> 0x1f & 0x7ffU)) >> 0xb,zFixed);
   if ((zone != 0) && (*(int *)(zone + 0x18) != 0)) {
-    dist = (float10)vec3_distanceSquared(&xLo,&pos);
+    dist = (double)vec3_distanceSquared(&xLo,&pos);
     if ((float)dist <= 1.0) {
       return *(undefined4 *)(zone + 0x24);
     }
@@ -18634,7 +18602,7 @@ void Terrain_fillCuboid(int cx,int cy,int cz,int *size,undefined4 param_5,char c
   int wz;
   int iVar3;
   int wx;
-  float10 fVar5;
+  float fVar5;
   int z;
   undefined2 local_3c;
   undefined2 local_3a;
@@ -18676,27 +18644,27 @@ void Terrain_fillCuboid(int cx,int cy,int cz,int *size,undefined4 param_5,char c
               local_29 = 0xc0;
               tilemap_writeGlyphColumn(wx,wy,wz,&local_2c,param_5);
               if (chunk != '\0') {
-                if ((x == 0) && (fVar5 = (float10)perlinNoise2D_cosInterp(), 0.5 < (float)fVar5)) {
+                if ((x == 0) && (fVar5 = (float)perlinNoise2D_cosInterp(), 0.5 < (float)fVar5)) {
                   local_10 = 0;
                   local_30 = 0;
                   local_2e = 0xc000;
                   tilemap_writeGlyphColumn(wx + -1,wy,wz,&local_30,param_5);
                 }
-                if ((y == 0) && (fVar5 = (float10)perlinNoise2D_cosInterp(), 0.5 < (float)fVar5)) {
+                if ((y == 0) && (fVar5 = (float)perlinNoise2D_cosInterp(), 0.5 < (float)fVar5)) {
                   local_14 = 0;
                   local_34 = 0;
                   local_32 = 0xc000;
                   tilemap_writeGlyphColumn(wx,wy + -1,wz,&local_34,param_5);
                 }
                 if ((x == *size + -1) &&
-                   (fVar5 = (float10)perlinNoise2D_cosInterp(), 0.5 < (float)fVar5)) {
+                   (fVar5 = (float)perlinNoise2D_cosInterp(), 0.5 < (float)fVar5)) {
                   local_18 = 0;
                   local_38 = 0;
                   local_36 = 0xc000;
                   tilemap_writeGlyphColumn(wx + 1,wy,wz,&local_38,param_5);
                 }
                 if ((y == size[1] + -1) &&
-                   (fVar5 = (float10)perlinNoise2D_cosInterp(), 0.5 < (float)fVar5)) {
+                   (fVar5 = (float)perlinNoise2D_cosInterp(), 0.5 < (float)fVar5)) {
                   local_1c = 0;
                   local_3c = 0;
                   local_3a = 0xc000;
@@ -18782,7 +18750,7 @@ void Terrain_spawnFallingBlock(undefined4 param_1,int *origin,float angle,float 
   if (column != 0) {
     Item_copyStruct(local_160);
     height2 = rand();
-    angleDeg = ((float)height2 * 360.0) / 32767.0;
+    angleDeg = ((float)height2 * 360.0f) / 32767.0f;
     if (((int)height < 1) && ((int)height < 0)) {
       height2 = __alldiv(heightHi,height,0x10000,0);
       height2 = height2 + -1;
@@ -18862,7 +18830,7 @@ void Creature_spawnDeathEffects(int entity,undefined4 source)
   int *piVar7;
   code *randFn;
   bool bVar9;
-  float10 fVar10;
+  float fVar10;
   float fVar11;
   undefined8 uVar12;
   uint *puVar13;
@@ -18959,15 +18927,15 @@ void Creature_spawnDeathEffects(int entity,undefined4 source)
     }
     item_rerollStackCount(0x3d4ccccd,1);
     iVar5 = rand();
-    randDir[0] = 1.0 - ((float)iVar5 * 2.0) / 32767.0;
+    randDir[0] = 1.0f - ((float)iVar5 * 2.0f) / 32767.0f;
     iVar5 = rand();
-    randDir[1] = 1.0 - ((float)iVar5 * 2.0) / 32767.0;
-    randDir[2] = 0.0;
+    randDir[1] = 1.0f - ((float)iVar5 * 2.0f) / 32767.0f;
+    randDir[2] = 0.0f;
     vec3i64_setFromGen(randDir);
     uVar14 = 0x3f800000;
     uVar16 = source;
     iVar5 = rand();
-    fVar11 = ((float)iVar5 * 360.0) / 32767.0;
+    fVar11 = ((float)iVar5 * 360.0f) / 32767.0f;
     uVar4 = vec3i64_copyAdd(local_50,local_50 + 6);
     Terrain_spawnFallingBlock(local_168,uVar4,fVar11,uVar14,uVar16);
     iVar5 = rand();
@@ -18976,15 +18944,15 @@ void Creature_spawnDeathEffects(int entity,undefined4 source)
       init_struct_memset2(local_168,roll,uVar16);
       item_rerollStackCount(0x3d4ccccd,1);
       roll = rand();
-      randDir[0] = 1.0 - ((float)roll * 2.0) / 32767.0;
+      randDir[0] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
       roll = rand();
-      randDir[1] = 1.0 - ((float)roll * 2.0) / 32767.0;
-      randDir[2] = 0.0;
+      randDir[1] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
+      randDir[2] = 0.0f;
       vec3i64_setFromGen(randDir);
       uVar14 = 0x3f800000;
       uVar16 = source;
       roll = rand();
-      fVar11 = ((float)roll * 360.0) / 32767.0;
+      fVar11 = ((float)roll * 360.0f) / 32767.0f;
       uVar4 = vec3i64_copyAdd(local_50,local_50 + 6);
       Terrain_spawnFallingBlock(local_168,uVar4,fVar11,uVar14,uVar16);
     }
@@ -19109,13 +19077,13 @@ LAB_0059b924:
         scale = 0x3f4ccccd;
       }
       iVar5 = (*randFn)();
-      randDir[0] = 1.0 - ((float)iVar5 * 2.0) / 32767.0;
+      randDir[0] = 1.0f - ((float)iVar5 * 2.0f) / 32767.0f;
       iVar5 = (*randFn)();
-      randDir[2] = 0.0;
+      randDir[2] = 0.0f;
       iVar6 = 0;
-      randDir[1] = 1.0 - ((float)iVar5 * 2.0) / 32767.0;
+      randDir[1] = 1.0f - ((float)iVar5 * 2.0f) / 32767.0f;
       do {
-        statPtr = (int *)(randDir[iVar6] * 65536.0);
+        statPtr = (int *)(randDir[iVar6] * 65536.0f);
         uVar12 = ftol2();
         randFn = rand_exref;
         local_50[iVar6 * 2] = (uint)uVar12;
@@ -19134,7 +19102,7 @@ LAB_0059b924:
       uVar3 = scale;
       uVar16 = source;
       iVar5 = rand();
-      Terrain_spawnFallingBlock(local_168,local_50 + 6,((float)iVar5 * 360.0) / 32767.0,uVar3,uVar16);
+      Terrain_spawnFallingBlock(local_168,local_50 + 6,((float)iVar5 * 360.0f) / 32767.0f,uVar3,uVar16);
       iterCount = iterCount + 1;
     } while (iterCount < roll);
   }
@@ -19143,13 +19111,13 @@ LAB_0059bb28:
     roll = (*randFn)();
     if (roll % 0x32 == 0) {
       roll = (*randFn)();
-      randDir[0] = 1.0 - ((float)roll * 2.0) / 32767.0;
+      randDir[0] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
       roll = (*randFn)();
-      randDir[2] = 0.0;
+      randDir[2] = 0.0f;
       iVar5 = 0;
-      randDir[1] = 1.0 - ((float)roll * 2.0) / 32767.0;
+      randDir[1] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
       do {
-        statPtr = (int *)(randDir[iVar5] * 65536.0);
+        statPtr = (int *)(randDir[iVar5] * 65536.0f);
         uVar12 = ftol2();
         randFn = rand_exref;
         local_50[iVar5 * 2] = (uint)uVar12;
@@ -19168,7 +19136,7 @@ LAB_0059bb28:
       uVar14 = 0x3f400000;
       uVar16 = source;
       roll = rand();
-      fVar11 = ((float)roll * 360.0) / 32767.0;
+      fVar11 = ((float)roll * 360.0f) / 32767.0f;
       puVar13 = local_50 + 6;
       uVar4 = WorldInfo_vectorElementAt(*(byte *)(entity + 0x1a8) + 1,0);
       uVar4 = World_emitDecalOrParticle(local_168,*(undefined4 *)(entity + 400),uVar4);
@@ -19176,13 +19144,13 @@ LAB_0059bb28:
     }
     uVar16 = source;
     if ((*(ushort *)(entity + 0x7e) & 0x18) == 0) {
-      fVar10 = (float10)math_pow2Mul((float)*(int *)(entity + 400),*(undefined1 *)(entity + 0x1a8)
+      fVar10 = (float)math_pow2Mul((float)*(int *)(entity + 400),*(undefined1 *)(entity + 0x1a8)
                                     );
-      statPtr = (int *)((float)fVar10 * 10.0);
+      statPtr = (int *)((float)fVar10 * 10.0f);
       roll = (*randFn)();
-      fVar11 = (((float)roll * 2.0) / 32767.0 + 1.0) * (float)statPtr;
+      fVar11 = (((float)roll * 2.0f) / 32767.0f + 1.0f) * (float)statPtr;
       if ((*(ushort *)(entity + 0x7e) & 0x200) != 0) {
-        fVar11 = fVar11 * 10.0;
+        fVar11 = fVar11 * 10.0f;
       }
       roll = (int)fVar11 / 100;
       iVar5 = (int)fVar11 % 100;
@@ -19194,15 +19162,15 @@ LAB_0059bb28:
         local_15c = CONCAT11(10,(undefined1)local_15c);
         local_158 = (undefined2)iVar5;
         iVar5 = (*randFn)();
-        randDir[0] = 1.0 - ((float)iVar5 * 2.0) / 32767.0;
+        randDir[0] = 1.0f - ((float)iVar5 * 2.0f) / 32767.0f;
         iVar5 = (*randFn)();
-        randDir[1] = 1.0 - ((float)iVar5 * 2.0) / 32767.0;
-        randDir[2] = 0.0;
+        randDir[1] = 1.0f - ((float)iVar5 * 2.0f) / 32767.0f;
+        randDir[2] = 0.0f;
         vec3i64_setFromGen(randDir);
         uVar15 = 0x3f400000;
         uVar4 = source;
         iVar5 = (*randFn)(0x3f400000,source);
-        fVar11 = ((float)iVar5 * 360.0) / 32767.0;
+        fVar11 = ((float)iVar5 * 360.0f) / 32767.0f;
         uVar14 = vec3i64_copyAdd(local_50,local_50 + 6);
         Terrain_spawnFallingBlock(local_168,uVar14,fVar11,uVar15,uVar4);
       }
@@ -19212,15 +19180,15 @@ LAB_0059bb28:
         local_15c = CONCAT11(0xc,(undefined1)local_15c);
         local_158 = (undefined2)roll;
         roll = (*randFn)();
-        randDir[0] = 1.0 - ((float)roll * 2.0) / 32767.0;
+        randDir[0] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
         roll = (*randFn)();
-        randDir[1] = 1.0 - ((float)roll * 2.0) / 32767.0;
-        randDir[2] = 0.0;
+        randDir[1] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
+        randDir[2] = 0.0f;
         vec3i64_setFromGen(randDir);
         uVar15 = 0x3f400000;
         uVar4 = source;
         roll = (*randFn)(0x3f400000,source);
-        fVar11 = ((float)roll * 360.0) / 32767.0;
+        fVar11 = ((float)roll * 360.0f) / 32767.0f;
         uVar14 = vec3i64_copyAdd(local_50,local_50 + 6);
         Terrain_spawnFallingBlock(local_168,uVar14,fVar11,uVar15,uVar4);
       }
@@ -19231,14 +19199,14 @@ LAB_0059bb28:
         local_15c = CONCAT11(0xb,(undefined1)local_15c);
         local_158 = SUB42(piVar7,0);
         roll = (*randFn)();
-        randDir[0] = 1.0 - ((float)roll * 2.0) / 32767.0;
+        randDir[0] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
         roll = (*randFn)();
-        randDir[1] = 1.0 - ((float)roll * 2.0) / 32767.0;
-        randDir[2] = 0.0;
+        randDir[1] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
+        randDir[2] = 0.0f;
         vec3i64_setFromGen(randDir);
         uVar14 = 0x3f400000;
         roll = (*randFn)(0x3f400000,source);
-        fVar11 = ((float)roll * 360.0) / 32767.0;
+        fVar11 = ((float)roll * 360.0f) / 32767.0f;
         uVar4 = vec3i64_copyAdd(local_50,local_50 + 6);
 LAB_0059c156:
         Terrain_spawnFallingBlock(local_168,uVar4,fVar11,uVar14,uVar16);
@@ -19268,14 +19236,14 @@ LAB_0059c156:
         local_158 = *(undefined2 *)(entity + 400);
         local_15c = CONCAT11(local_15c._1_1_,(char)scale);
         roll = (*randFn)();
-        randDir[0] = 1.0 - ((float)roll * 2.0) / 32767.0;
+        randDir[0] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
         roll = (*randFn)();
-        randDir[1] = 1.0 - ((float)roll * 2.0) / 32767.0;
-        randDir[2] = 0.0;
+        randDir[1] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
+        randDir[2] = 0.0f;
         vec3i64_setFromGen(randDir);
         uVar14 = 0x3f400000;
         roll = (*randFn)(0x3f400000,source);
-        fVar11 = ((float)roll * 360.0) / 32767.0;
+        fVar11 = ((float)roll * 360.0f) / 32767.0f;
         uVar4 = vec3i64_copyAdd(local_50,local_50 + 6);
         goto LAB_0059c156;
       }
@@ -19297,11 +19265,11 @@ LAB_0059c156:
               do {
                 if (((char)*piVar1 != '\x01') || (*(char *)((int)piVar7 + 5) != '\x01')) {
                   roll = (*randFn)();
-                  randDir[0] = 1.0 - ((float)roll * 2.0) / 32767.0;
+                  randDir[0] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
                   roll = (*randFn)();
-                  randDir[2] = 0.0;
+                  randDir[2] = 0.0f;
                   iVar5 = 0;
-                  randDir[1] = 1.0 - ((float)roll * 2.0) / 32767.0;
+                  randDir[1] = 1.0f - ((float)roll * 2.0f) / 32767.0f;
                   do {
                     uVar12 = ftol2();
                     randFn = rand_exref;
@@ -19321,7 +19289,7 @@ LAB_0059c156:
                   uVar4 = 0x3f400000;
                   uVar16 = source;
                   roll = rand();
-                  Terrain_spawnFallingBlock(piVar1,local_50 + 6,((float)roll * 360.0) / 32767.0,uVar4,uVar16);
+                  Terrain_spawnFallingBlock(piVar1,local_50 + 6,((float)roll * 360.0f) / 32767.0f,uVar4,uVar16);
                   piVar7 = statPtr;
                 }
                 local_18c = local_18c + 1;
@@ -19387,7 +19355,7 @@ void Terrain_paintDisk(int cx,int cy,int z,float radius,byte *color,undefined4 p
   int y;
   int iVar12;
   int x;
-  float10 fVar14;
+  float fVar14;
   float fVar15;
   float fVar16;
   float fVar17;
@@ -19468,7 +19436,7 @@ void Terrain_paintDisk(int cx,int cy,int z,float radius,byte *color,undefined4 p
                 blendedColor[5] = 60.0;
                 local_14 = CONCAT44(120.0 - (float)bVar2,50.0 - (float)bVar1);
                 local_c = 60.0 - (float)bVar3;
-                fVar14 = (float10)noise2d_sample(local_4c,iVar12,z,local_3c);
+                fVar14 = (float)noise2d_sample(local_4c,iVar12,z,local_3c);
                 fVar17 = (float)fVar14;
                 local_20 = local_14;
                 uVar8 = local_20;
@@ -19535,7 +19503,7 @@ void Terrain_paintSphere(int cx,int cy,int cz,float radius,byte *color,undefined
   int z;
   int y;
   int x;
-  float10 fVar16;
+  float fVar16;
   float fVar17;
   float fVar18;
   float fVar19;
@@ -19618,7 +19586,7 @@ void Terrain_paintSphere(int cx,int cy,int cz,float radius,byte *color,undefined
                     blendedColor[5] = 60.0;
                     local_14 = CONCAT44(120.0 - (float)bVar2,50.0 - (float)bVar1);
                     local_c = 60.0 - (float)bVar3;
-                    fVar16 = (float10)noise2d_sample(x,y,z,local_3c);
+                    fVar16 = (float)noise2d_sample(x,y,z,local_3c);
                     fVar18 = (float)fVar16;
                     local_20 = local_14;
                     uVar7 = local_20;
@@ -19671,7 +19639,7 @@ void Terrain_paintSphere(int cx,int cy,int cz,float radius,byte *color,undefined
 void Entity_stepToward(uint *fromPos,uint *toPos,undefined4 param_3,float range)
 
 {
-  float10 fVar1;
+  float fVar1;
   double dVar2;
   float distSq;
   float fz;
@@ -19709,13 +19677,12 @@ void Entity_stepToward(uint *fromPos,uint *toPos,undefined4 param_3,float range)
     __security_check_cookie(local_c ^ (uint)&fz);
     return;
   }
-  dVar2 = (double)distSq;
-  libm_sse2_sqrt_precise();
+  dVar2 = libm_sse2_sqrt_precise((double)distSq);
   dist = (float)dVar2;
   fx = fx / dist;
   fy = fy / dist;
   local_2c = fz / dist;
-  fVar1 = (float10)World_raycastVoxels(local_3c,&fx,dist,0,param_3);
+  fVar1 = (float)World_raycastVoxels(local_3c,&fx,dist,0,param_3);
   local_40 = (float)fVar1;
   __security_check_cookie(local_c ^ (uint)&fz);
   return;
@@ -19759,8 +19726,8 @@ double * Terrain_sampleHeightNoise(double *param_1,int x,int y)
   int iVar1;
   int iVar2;
   int world;
-  float10 fVar3;
-  float10 fVar4;
+  float fVar3;
+  float fVar4;
   double nx2;
   double nx;
   double nz;
@@ -19770,16 +19737,16 @@ double * Terrain_sampleHeightNoise(double *param_1,int x,int y)
   nz2 = (double)y * 0.0005;
   nx = (double)x * 0.01;
   nx2 = (double)x * 0.0005;
-  fVar3 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800204) + nx,
+  fVar3 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800204) + nx,
                                 (double)*(int *)(world + 0x800208) + nz);
-  fVar4 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001fc) + nx2,
+  fVar4 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001fc) + nx2,
                                 (double)*(int *)(world + 0x800200) + nz2);
   iVar1 = *(int *)(world + 0x800218);
   iVar2 = *(int *)(world + 0x800214);
   *param_1 = ((double)(float)fVar3 * 0.1 + (double)(float)fVar4) * 500.0 * 6.103515625e-05 +
              (double)x * 6.103515625e-05;
-  fVar3 = (float10)perlinNoise2D_cosInterp((double)iVar2 + nx,(double)iVar1 + nz);
-  fVar4 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x80020c) + nx2,
+  fVar3 = (float)perlinNoise2D_cosInterp((double)iVar2 + nx,(double)iVar1 + nz);
+  fVar4 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x80020c) + nx2,
                                 (double)*(int *)(world + 0x800210) + nz2);
   param_1[1] = ((double)(float)fVar3 * 0.1 + (double)(float)fVar4) * 500.0 * 6.103515625e-05 +
                (double)y * 6.103515625e-05;
@@ -19795,7 +19762,7 @@ double * Terrain_sampleHeightNoise(double *param_1,int x,int y)
  */
 /* Global::Terrain_sampleBlockBrightness @ 0059fea0 */
 
-float10 Terrain_sampleBlockBrightness(undefined4 *pos_fixed)
+float Terrain_sampleBlockBrightness(undefined4 *pos_fixed)
 
 {
   undefined4 cell_z;
@@ -19821,7 +19788,7 @@ float10 Terrain_sampleBlockBrightness(undefined4 *pos_fixed)
   else {
     block_val = 0;
   }
-  return (float10)((float)block_val / 255.0);
+  return (float)((float)block_val / 255.0f);
 }
 
 
@@ -19889,10 +19856,10 @@ void Entity_onStateChangeEmitEffect(int *entity,int event_list,char new_state)
     }
     local_10 = 0x3f800000;
     local_c = 0x3f800000;
-    x = (float)*(longlong *)(entity + 2) * 1.5258789e-05;
-    y = (float)*(longlong *)(entity + 4) * 1.5258789e-05;
+    x = (float)*(longlong *)(entity + 2) * 1.5258789e-05f;
+    y = (float)*(longlong *)(entity + 4) * 1.5258789e-05f;
     timer = *(int *)(event_list + 8);
-    z = (float)*(longlong *)(entity + 6) * 1.5258789e-05;
+    z = (float)*(longlong *)(entity + 6) * 1.5258789e-05f;
     node = Map_InsertVec6(timer,*(undefined4 *)(timer + 4),&x);
     if (*(int *)(event_list + 0xc) == 0x7fffffe) {
       std::_Xlength_error("list<T> too long");
@@ -19982,16 +19949,16 @@ undefined4 getField_0x6c(void)
 
 /* [AUDIT] proposed: vec2_lengthSquared  (confidence: high)
  * purpose: Return squared magnitude x*x+y*y of a 2D double vector at self
- * vars: self[0]/[1]=x/y doubles; returns float10
+ * vars: self[0]/[1]=x/y doubles; returns float
  */
 /* Global::vec2_lengthSquared @ 005a5b10 */
 
-float10 vec2_lengthSquared(void)
+double vec2_lengthSquared(void)
 
 {
   double *vec;
   
-  return (float10)(*vec * *vec + vec[1] * vec[1]);
+  return (double)(*vec * *vec + vec[1] * vec[1]);
 }
 
 
@@ -20045,15 +20012,15 @@ void transformCoordsByRotation(int *px,int *py)
  */
 /* Global::terrainNoiseDensityAt @ 005a5bc0 */
 
-float10 terrainNoiseDensityAt(int x,float y)
+float terrainNoiseDensityAt(int x,float y)
 
 {
   int world;
-  float10 fVar1;
+  float fVar1;
   float noise;
   undefined4 height;
   
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)x * 0.008 + (double)*(int *)(world + 0x8001f4),
+  fVar1 = (float)perlinNoise2D_cosInterp((double)x * 0.008 + (double)*(int *)(world + 0x8001f4),
                                 (double)(int)y * 0.008 + (double)*(int *)(world + 0x8001f8));
   noise = (float)fVar1 * 1.2;
   height = 0.0;
@@ -20067,12 +20034,12 @@ float10 terrainNoiseDensityAt(int x,float y)
       height = 1.0;
     }
   }
-  fVar1 = (float10)getTemperatureAt();
+  fVar1 = (float)getTemperatureAt();
   y = (float)fVar1 * 0.2 * (float)fVar1 + 0.02 + height;
   if (1.0 < y) {
     y = 1.0;
   }
-  return (float10)y;
+  return (float)y;
 }
 
 
@@ -20087,13 +20054,13 @@ float10 terrainNoiseDensityAt(int x,float y)
 float * randomizeVec3(float *out_color)
 
 {
-  float10 fVar1;
+  double fVar1;
   undefined8 uVar2;
   undefined8 rnd;
   
   rnd = ftol2();
   rnd = ftol2((double)rnd * 1.52587890625e-05);
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)rnd * 1.52587890625e-05);
+  fVar1 = (double)perlinNoise2D_cosInterp((double)rnd * 1.52587890625e-05);
   *out_color = (float)fVar1 * 2.0;
   uVar2 = ftol2();
   rnd = CONCAT44(-(uint)(0x20f60000 < (uint)uVar2) - (int)((ulonglong)uVar2 >> 0x20),
@@ -20101,7 +20068,7 @@ float * randomizeVec3(float *out_color)
   uVar2 = ftol2((double)rnd * 1.52587890625e-05);
   rnd = CONCAT44(-(uint)(0xd7f0000 < (uint)uVar2) - (int)((ulonglong)uVar2 >> 0x20),
                       0xd7f0000 - (uint)uVar2);
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)rnd * 1.52587890625e-05);
+  fVar1 = (double)perlinNoise2D_cosInterp((double)rnd * 1.52587890625e-05);
   out_color[1] = (float)fVar1 * 2.0;
   uVar2 = ftol2();
   rnd = CONCAT44(-(uint)(0x14e10000 < (uint)uVar2) - (int)((ulonglong)uVar2 >> 0x20),
@@ -20109,7 +20076,7 @@ float * randomizeVec3(float *out_color)
   uVar2 = ftol2((double)rnd * 1.52587890625e-05);
   rnd = CONCAT44(-(uint)(0x108a0000 < (uint)uVar2) - (int)((ulonglong)uVar2 >> 0x20),
                       0x108a0000 - (uint)uVar2);
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)rnd * 1.52587890625e-05);
+  fVar1 = (double)perlinNoise2D_cosInterp((double)rnd * 1.52587890625e-05);
   out_color[2] = (float)fVar1 + 0.5;
   return out_color;
 }
@@ -20633,7 +20600,7 @@ void Creature_expandNeighbors(int self)
   AStar_pushOpenNode(cell[3],cell[4],cell[5],cell + 6);
   std_list_clear_67e480();
   local_14 = 0x3f0000003f000000;
-  local_c = *(float *)(self + 0x88) * 0.5;
+  local_c = *(float *)(self + 0x88) * 0.5f;
   count = 0;
   do {
     uVar21 = ftol2();
@@ -20735,7 +20702,7 @@ void Creature_expandNeighbors(int self)
   }
   local_14 = 0x3f0000003f000000;
   count = 0;
-  local_c = *(float *)(self + 0x88) * 0.5;
+  local_c = *(float *)(self + 0x88) * 0.5f;
   do {
     uVar21 = ftol2();
     cell[count * 2] = (uint)uVar21;
@@ -22651,7 +22618,7 @@ void Region_scatterProps(int zone,uint *bounds)
   uint uVar9;
   int iVar10;
   undefined4 *puVar11;
-  float10 fVar12;
+  double fVar12;
   undefined8 uVar13;
   uint ix;
   uint iy;
@@ -22725,7 +22692,7 @@ void Region_scatterProps(int zone,uint *bounds)
   local_14 = uVar5;
   uVar6 = __alldiv(bounds[2],bounds[3],0x10000,0);
   uVar7 = __alldiv(*bounds,bounds[1],0x10000,0);
-  fVar12 = (float10)WorldInfo_sampleTerrainHeight(uVar7,uVar6,zone);
+  fVar12 = (double)WorldInfo_sampleTerrainHeight(uVar7,uVar6,zone);
   if (0.0 <= 1.0 - (float)fVar12 * 50.0) goto LAB_005adafe;
   Struct_InitDefaults(uVar5);
   local_8 = 0;
@@ -23087,7 +23054,7 @@ void Chunk_generateObjects(int zone,undefined4 *params)
   int iVar21;
   uint uVar22;
   bool bVar23;
-  float10 fVar24;
+  float fVar24;
   float fVar25;
   undefined8 uVar26;
   undefined1 *puVar27;
@@ -23670,7 +23637,7 @@ void Chunk_generateObjects(int zone,undefined4 *params)
               uVar22 = (int)local_5c70 + (int)(local_5c58 + *(int *)(zone + 0x60) * 0x40);
               local_5dc4 = ((int)uVar22 >> 0x1f) << 0x10 | uVar22 >> 0x10;
               local_5dc8 = uVar22 * 0x10000;
-              fVar24 = (float10)GameController_entityDistanceSq(&local_5dc8,&local_5dc0);
+              fVar24 = (float)GameController_entityDistanceSq(&local_5dc8,&local_5dc0);
               local_5c84 = (int *)(float)fVar24;
               local_5ca4 = (int *)((uint)local_5ca4 & 0xff);
               if (0.1 < (float)local_5c84) {
@@ -23754,7 +23721,7 @@ void Chunk_generateObjects(int zone,undefined4 *params)
         uVar4 = (int)(local_5c70 + *(int *)(local_5c74 + 0x60) * 0x40) + (int)local_5cb0;
         local_5dcc = ((int)uVar4 >> 0x1f) << 0x10 | uVar4 >> 0x10;
         local_5dd0 = uVar4 * 0x10000;
-        fVar24 = (float10)GameController_entityDistanceSq(&local_5dd0,&local_5dd8);
+        fVar24 = (float)GameController_entityDistanceSq(&local_5dd0,&local_5dd8);
         *(float *)((int)piVar18 + local_5cc4 + 0x18) = (float)fVar24;
         if ((local_1c._4_1_ == '\0') && ((char)local_5ca4 != '\0')) {
           if (local_5cb8._4_1_ == '\0') {
@@ -25941,7 +25908,7 @@ LAB_005b381d:
                         if (((local_5c60 == local_5c68) || (local_5c60 == local_5c58)) ||
                            ((local_5c64 == local_5c7c || (local_5c64 == local_5c70)))) {
                           uVar32 = setVec3(0x42200000,0x42200000,0x42200000);
-                          fVar24 = (float10)perlinNoise2D_cosInterp((double)(int)local_5c60 * 0.05 + 843.0,
+                          fVar24 = (float)perlinNoise2D_cosInterp((double)(int)local_5c60 * 0.05 + 843.0,
                                                          (double)(int)local_5c64 * 0.05 + 984.0,
                                                          uVar32);
                           uVar32 = vec3_scale(local_63c,(float)fVar24);
@@ -28607,11 +28574,11 @@ LAB_005ba2a6:
             iVar5 = *(int *)(local_5c98 + 4 + local_5c9c * 4) + 0x42;
             fVar25 = (float)(*(int *)(local_5c98 + 0x14 + local_5c9c * 4) + 2) * 3.1415927 * 0.5;
             local_5ce4._4_4_ = (int *)fVar25;
-            fVar24 = (float10)sinf_f(fVar25,iVar5);
+            fVar24 = (float)sinf_f(fVar25,iVar5);
             local_5c50 = (double)CONCAT44((float)fVar24,(undefined4)local_5c50);
             iVar6 = (int)((float)fVar24 * 19.0 +
                          (float)((int)(local_5cf0 + *local_5cf8 * 0x40) + (int)local_5cb0));
-            fVar24 = (float10)cosf_f(local_5ce4._4_4_,iVar6);
+            fVar24 = (float)cosf_f(local_5ce4._4_4_,iVar6);
             local_5c50 = (double)CONCAT44((float)fVar24,(undefined4)local_5c50);
             uVar32 = vec3_set((int)((float)fVar24 * 19.0 +
                                        (float)((int)local_5cf0 + local_5cf4 + *local_5cfc * 0x100)),
@@ -28620,10 +28587,10 @@ LAB_005ba2a6:
             uVar32 = 0x42c80000;
             local_5ce4._4_4_ =
                  (int *)((-*(float *)((int)local_5ccc._4_4_ + 0x50) * 3.1415927) / 180.0);
-            fVar24 = (float10)cosf_f(local_5ce4._4_4_,0x42c80000);
+            fVar24 = (float)cosf_f(local_5ce4._4_4_,0x42c80000);
             local_5c50 = (double)CONCAT44((float)fVar24,(undefined4)local_5c50);
             fVar25 = (float)fVar24 * -100.0;
-            fVar24 = (float10)sinf_f(local_5ce4._4_4_,fVar25);
+            fVar24 = (float)sinf_f(local_5ce4._4_4_,fVar25);
             local_5c50 = (double)CONCAT44((float)fVar24,(undefined4)local_5c50);
             uVar32 = setVec3((float)fVar24 * -100.0,fVar25,uVar32);
             vec3i64_setFromGen(uVar32);
@@ -29079,7 +29046,7 @@ LAB_005bac15:
               local_5cac = piVar18;
               int_toFixed16(piVar18);
               int_toFixed16(local_5cb0);
-              fVar24 = (float10)GameController_entityDistanceSq(local_5de0,local_5e44);
+              fVar24 = (float)GameController_entityDistanceSq(local_5de0,local_5e44);
               local_5c50 = (double)CONCAT44((float)fVar24,(undefined4)local_5c50);
               if (0.72 <= (float)fVar24) {
                 world_getChunkCell256(local_5cb0,piVar18,iVar21);
@@ -29111,7 +29078,7 @@ LAB_005bac15:
                           do {
                             copy16bytes(SUB84(local_5ce4,0),(int)((ulonglong)local_5ce4 >> 0x20),
                                          local_1c - (double)(int)local_5c7c);
-                            fVar24 = (float10)vec2_lengthSquared();
+                            fVar24 = (float)vec2_lengthSquared();
                             local_5c50 = (double)fVar24;
                             if (local_5c50 <= 64.0) {
                               world_getChunkCell256(local_5ccc._4_4_,local_5c7c,iVar21);
@@ -29150,7 +29117,7 @@ LAB_005bac15:
                           do {
                             copy16bytes(SUB84(local_5d10,0),(int)((ulonglong)local_5d10 >> 0x20),
                                          local_5d34 - (double)(int)piVar19);
-                            fVar24 = (float10)vec2_lengthSquared();
+                            fVar24 = (float)vec2_lengthSquared();
                             local_5ccc = (double)fVar24;
                             if (local_5ccc <= 64.0) {
                               world_getChunkCell256(local_5c8c,local_1c._4_4_,iVar21);
@@ -29165,9 +29132,9 @@ LAB_005bac15:
                                 cVar3 = block_isSolidType();
                                 dVar2 = local_1c;
                               }
-                              fVar24 = (float10)GameController_sampleTemperatureGrid(local_5c8c,uVar32);
+                              fVar24 = (float)GameController_sampleTemperatureGrid(local_5c8c,uVar32);
                               local_5ce4 = (double)CONCAT44((float)fVar24,(undefined4)local_5ce4);
-                              fVar24 = (float10)GameController_sampleHumidityGrid(local_5c8c,local_1c._4_4_);
+                              fVar24 = (float)GameController_sampleHumidityGrid(local_5c8c,local_1c._4_4_);
                               local_5c50 = (double)CONCAT44((float)fVar24,(undefined4)local_5c50);
                               local_5c7c = (int *)((int)local_5c84 + -1);
                               if ((int)local_5c7c <= (int)local_5c70) {
@@ -29203,7 +29170,7 @@ LAB_005bac15:
                   }
                 }
                 local_5ca5 = '\x01';
-                fVar24 = (float10)getHumidityAt(local_5cb0,local_5cac,iVar21);
+                fVar24 = (float)getHumidityAt(local_5cb0,local_5cac,iVar21);
                 local_5c50 = (double)CONCAT44((float)fVar24,(undefined4)local_5c50);
                 uVar32 = 5;
                 if (0.8 < (float)fVar24) {
@@ -30543,10 +30510,10 @@ LAB_005bea31:
                 }
                 local_5c68 = local_5c80;
                 puVar9 = (undefined4 *)int64_addFixed16(local_67e4,1);
-                fVar24 = (float10)sinf_f(local_5c84);
+                fVar24 = (float)sinf_f(local_5c84);
                 local_5c50 = (double)CONCAT44((float)fVar24,(undefined4)local_5c50);
                 puVar13 = (undefined4 *)int64_addFn(local_67f4,(float)fVar24 * 2.0);
-                fVar24 = (float10)cosf_f(local_5c84);
+                fVar24 = (float)cosf_f(local_5c84);
                 local_5c50 = (double)CONCAT44((float)fVar24,(undefined4)local_5c50);
                 puVar14 = (undefined4 *)int64_addFn(local_6804,(float)fVar24 * 2.0);
                 local_5c50 = (double)CONCAT44(local_5c68 + 4,(undefined4)local_5c50);
@@ -30829,7 +30796,7 @@ undefined4 * spawnRandomObject7(undefined4 *out_obj,undefined4 *pos,undefined4 z
   case 1:
     *out_obj = 0x19;
     roll = rand();
-    fVar2 = (((float)roll * 0.5) / 32767.0 + 1.0) * 1.5;
+    fVar2 = (((float)roll * 0.5f) / 32767.0f + 1.0f) * 1.5f;
     out_obj[9] = fVar2;
     out_obj[10] = fVar2;
     out_obj[0xb] = fVar2;
@@ -30837,11 +30804,11 @@ undefined4 * spawnRandomObject7(undefined4 *out_obj,undefined4 *pos,undefined4 z
   case 2:
     *out_obj = 0x1a;
     roll = rand();
-    fVar3 = ((float)roll * 0.5) / 32767.0 + 1.0;
-    fVar2 = fVar3 * 1.5;
+    fVar3 = ((float)roll * 0.5f) / 32767.0f + 1.0f;
+    fVar2 = fVar3 * 1.5f;
     out_obj[9] = fVar2;
     out_obj[10] = fVar2;
-    out_obj[0xb] = fVar3 * 0.75;
+    out_obj[0xb] = fVar3 * 0.75f;
     return out_obj;
   case 3:
     *out_obj = 0x1b;
@@ -31158,7 +31125,7 @@ undefined4 * spawnRandomObject4(undefined4 *out_obj,undefined4 *pos,undefined4 z
   case 1:
     *out_obj = 0x19;
     rnd = rand();
-    fVar3 = (((float)rnd * 0.5) / 32767.0 + 1.0) * 1.5;
+    fVar3 = (((float)rnd * 0.5f) / 32767.0f + 1.0f) * 1.5f;
     out_obj[9] = fVar3;
     out_obj[10] = fVar3;
     out_obj[0xb] = fVar3;
@@ -31166,11 +31133,11 @@ undefined4 * spawnRandomObject4(undefined4 *out_obj,undefined4 *pos,undefined4 z
   case 2:
     *out_obj = 0x1a;
     rnd = rand();
-    fVar4 = ((float)rnd * 0.5) / 32767.0 + 1.0;
-    fVar3 = fVar4 * 1.5;
+    fVar4 = ((float)rnd * 0.5f) / 32767.0f + 1.0f;
+    fVar3 = fVar4 * 1.5f;
     out_obj[9] = fVar3;
     out_obj[10] = fVar3;
-    out_obj[0xb] = fVar4 * 0.75;
+    out_obj[0xb] = fVar4 * 0.75f;
     return out_obj;
   case 3:
     *out_obj = 0x1b;
@@ -32456,16 +32423,16 @@ float * terrain_biomeColorFromNoise(float *out_rgb,int x,int z)
 
 {
   int world;
-  float10 fVar1;
-  float10 fVar2;
+  float fVar1;
+  float fVar2;
   float fVar3;
   float fVar4;
   float fVar5;
   float fVar6;
   
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800274) + (double)x * 0.03,
+  fVar1 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800274) + (double)x * 0.03,
                                 (double)*(int *)(world + 0x800278) + (double)z * 0.03);
-  fVar2 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x80027c) + (double)x * 0.01,
+  fVar2 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x80027c) + (double)x * 0.01,
                                 (double)*(int *)(world + 0x800280) + (double)z * 0.01);
   fVar5 = ((float)fVar1 + 1.0) * 0.5 * 80.0;
   fVar4 = ((float)fVar2 + 1.0) * 0.5;
@@ -32551,25 +32518,25 @@ float * clampRGB(float *out,float *in)
   *out = fVar1;
   out[1] = fVar2;
   out[2] = fVar3;
-  if (0.0 <= fVar1) {
-    if (255.0 < fVar1) {
+  if (0.0f <= fVar1) {
+    if (255.0f < fVar1) {
       *out = 255.0;
     }
   }
   else {
     *out = 0.0;
   }
-  if (fVar2 < 0.0) {
-    out[1] = 0.0;
+  if (fVar2 < 0.0f) {
+    out[1] = 0.0f;
   }
-  if (255.0 < out[1]) {
-    out[1] = 255.0;
+  if (255.0f < out[1]) {
+    out[1] = 255.0f;
   }
-  if (fVar3 < 0.0) {
-    out[2] = 0.0;
+  if (fVar3 < 0.0f) {
+    out[2] = 0.0f;
   }
-  if (255.0 < out[2]) {
-    out[2] = 255.0;
+  if (255.0f < out[2]) {
+    out[2] = 255.0f;
   }
   return out;
 }
@@ -32791,7 +32758,7 @@ void terrain_surfaceColor_blend(undefined4 *out_rgb,uint x,uint z,int level,floa
   float *pfVar1;
   int iVar2;
   int iVar3;
-  float10 fVar4;
+  float fVar4;
   float fVar5;
   float fVar6;
   float local_40;
@@ -32816,7 +32783,7 @@ void terrain_surfaceColor_blend(undefined4 *out_rgb,uint x,uint z,int level,floa
   rgb[0] = local_40;
   rgb[1] = local_30;
   rgb[2] = local_28;
-  fVar4 = (float10)WorldInfo_sampleTerrainHeight();
+  fVar4 = (float)WorldInfo_sampleTerrainHeight();
   local_2c = ((float)fVar4 * 10.0 - 0.3) * 1.5;
   if (0.0 <= local_2c) {
     if (1.0 < local_2c) {
@@ -32831,7 +32798,7 @@ void terrain_surfaceColor_blend(undefined4 *out_rgb,uint x,uint z,int level,floa
     if (1.0 < local_24) {
       local_24 = 1.0;
     }
-    fVar4 = (float10)perlinNoise2D_cosInterp((double)(int)x * 0.03,(double)(int)z * 0.03);
+    fVar4 = (float)perlinNoise2D_cosInterp((double)(int)x * 0.03,(double)(int)z * 0.03);
     fVar5 = (float)fVar4;
     if (fVar5 <= 1.0) {
       if (fVar5 < 0.0) {
@@ -32873,7 +32840,7 @@ void terrain_surfaceColor_blend(undefined4 *out_rgb,uint x,uint z,int level,floa
       local_38 = z << 0x10;
       local_18 = ((int)x >> 0x1f) << 0x10 | x >> 0x10;
       local_1c = x << 0x10;
-      fVar4 = (float10)vec3_distanceSquared(&local_1c,&local_38);
+      fVar4 = (float)vec3_distanceSquared(&local_1c,&local_38);
       fVar6 = (float)fVar4 - 0.5;
       fVar5 = 0.0;
       if ((0.0 <= fVar6) && (fVar5 = fVar6, 1.0 < fVar6)) {
@@ -32903,7 +32870,7 @@ void terrain_surfaceColor_blend(undefined4 *out_rgb,uint x,uint z,int level,floa
     rgb[1] = local_30;
     rgb[2] = local_28;
   }
-  fVar4 = (float10)perlinNoise2D_cosInterp((double)(int)x * 0.01 + 854.0,
+  fVar4 = (float)perlinNoise2D_cosInterp((double)(int)x * 0.01 + 854.0,
                                 (double)(int)z * 0.01 + 985.0);
   local_34 = (float)fVar4;
   fVar5 = (local_34 + (float)(0xf - level) / 10.0) - 0.5;
@@ -32955,7 +32922,7 @@ void terrain_surfaceColor_blend(undefined4 *out_rgb,uint x,uint z,int level,floa
   }
   iVar2 = world_getChunkCell256();
   if (iVar2 == 0) {
-    fVar4 = (float10)World_getRegionCellPtr(x,z);
+    fVar4 = (float)World_getRegionCellPtr(x,z);
     local_2c = (float)fVar4;
     local_34 = local_2c;
   }
@@ -33009,7 +32976,7 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
   uint uVar8;
   int iVar9;
   int iVar10;
-  float10 fVar11;
+  float fVar11;
   double dVar12;
   float fVar13;
   float fVar14;
@@ -33089,27 +33056,27 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
   local_130 = (float)x;
   local_124 = z;
   local_ec = param_3;
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x80018c) + local_108,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x80018c) + local_108,
                                  (double)*(int *)(world + 0x800190) + local_100);
   local_164 = (float)fVar11;
   local_14c = (local_164 + 1.0) * 0.5;
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800194) + local_108,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800194) + local_108,
                                  (double)*(int *)(world + 0x800198) + local_100);
   local_164 = (float)fVar11;
   local_100 = local_110 * 0.001;
   local_148 = (local_164 + 1.0) * 0.5;
   local_108 = local_118 * 0.001;
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x80019c) + local_108,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x80019c) + local_108,
                                  (double)*(int *)(world + 0x8001a0) + local_100);
   local_164 = (float)fVar11;
   local_160 = (local_164 + 1.0) * 0.5;
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001a4) + local_108,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001a4) + local_108,
                                  (double)*(int *)(world + 0x8001a8) + local_100);
   local_164 = (float)fVar11;
   local_b8 = local_110 * 0.002;
   local_158 = (local_164 + 1.0) * 0.5;
   local_120 = local_118 * 0.002;
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001ac) + local_120,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001ac) + local_120,
                                  (double)*(int *)(world + 0x8001b0) + local_b8);
   local_164 = (float)fVar11;
   local_14c = local_14c * local_14c;
@@ -33118,7 +33085,7 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
   local_140._0_4_ = local_140._0_4_ * local_140._0_4_;
   local_160 = local_160 * local_160;
   local_158 = local_158 * local_158;
-  fVar11 = (float10)WorldInfo_sampleTerrainHeight();
+  fVar11 = (float)WorldInfo_sampleTerrainHeight();
   fVar13 = (float)fVar11 * 4.0;
   if (1.0 < fVar13) {
     fVar13 = 1.0;
@@ -33136,11 +33103,11 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
   local_170 = (float)iVar9;
   local_158 = (float)((int)((local_124 - 0x4000) + ((int)(local_124 - 0x4000) >> 0x1f & 0x3fffU)) >>
                      0xe);
-  fVar11 = (float10)perlinNoise2D_cosInterp(local_110 * 0.0005,0x40aabe0000000000);
+  fVar11 = (float)perlinNoise2D_cosInterp(local_110 * 0.0005,0x40aabe0000000000);
   local_140._0_4_ = (float)fVar11;
   local_4c = local_140._0_4_ * 3.0 * 256.0;
   local_f8 = (double)CONCAT44(local_f8._4_4_,local_4c);
-  fVar11 = (float10)perlinNoise2D_cosInterp(local_118 * 0.0005,0x40d6df4000000000);
+  fVar11 = (float)perlinNoise2D_cosInterp(local_118 * 0.0005,0x40d6df4000000000);
   local_15c = (uint *)((float)fVar11 * 3.0 * 256.0);
   local_140._0_4_ = local_f8._0_4_ * 65536.0;
   local_134 = ((int)x >> 0x1f) << 0x10 | x >> 0x10;
@@ -33246,17 +33213,17 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
   }
   local_140 = local_110 * 0.0002;
   local_f8 = local_118 * 0.0002;
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001bc) + local_f8,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001bc) + local_f8,
                                  (double)*(int *)(world + 0x8001c0) + local_140);
   local_168 = (float)fVar11;
   local_154 = (local_168 + 1.0) * 100.0 * local_148;
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001b4) + local_f8,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001b4) + local_f8,
                                  (double)*(int *)(world + 0x8001b8) + local_140);
   uVar7 = local_124;
   fVar13 = local_130;
   local_168 = (float)fVar11;
   local_154 = (local_154 + (local_168 + 1.0) * 100.0 * local_14c) * (float)local_15c + local_164;
-  fVar11 = (float10)Terrain_sampleHeightAtWorldXY(local_130,local_124);
+  fVar11 = (float)Terrain_sampleHeightAtWorldXY(local_130,local_124);
   local_130 = (float)fVar11;
   if (0.5 < local_130) {
     fVar16 = (local_130 - 0.5) * 2.0;
@@ -33265,7 +33232,7 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
     }
     local_150 = (1.0 - (fVar16 * 3.0 * fVar16 - fVar16 * 2.0 * fVar16 * fVar16)) * local_150;
   }
-  fVar11 = (float10)WorldInfo_rotateAndPlace();
+  fVar11 = (float)WorldInfo_rotateAndPlace();
   local_130 = (float)fVar11;
   fVar16 = local_130;
   if (local_130 < 0.02) {
@@ -33305,7 +33272,7 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
         local_d4 = local_12c;
         local_e0 = local_128;
         local_dc = local_134;
-        fVar11 = (float10)vec3_distanceSquared(&local_e0,&local_d8);
+        fVar11 = (float)vec3_distanceSquared(&local_e0,&local_d8);
         local_174 = (float)fVar11;
         fVar13 = 1.0 - local_174;
         if (0.0 < fVar13) {
@@ -33324,15 +33291,15 @@ void terrain_generateColumnColor(uint x,uint z,undefined4 param_3)
   }
   puVar3 = (uint *)0x0;
 LAB_005c6a63:
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001cc) + local_120,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001cc) + local_120,
                                  (double)*(int *)(world + 0x8001d0) + local_b8);
   local_174 = (float)fVar11;
   local_170 = (local_174 + 1.0) * 50.0 * local_14c;
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001c4) + local_120,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001c4) + local_120,
                                  (double)*(int *)(world + 0x8001c8) + local_b8);
   local_174 = (float)fVar11;
   local_170 = local_170 + (local_174 + 1.0) * 50.0 * local_148;
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001d4) + local_118 * 0.01,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x8001d4) + local_118 * 0.01,
                                  (double)*(int *)(world + 0x8001d8) + local_110 * 0.01);
   local_174 = (float)fVar11;
   local_170 = local_170 + (local_174 + 1.0) * 20.0 * local_150 + local_154;
@@ -33345,7 +33312,7 @@ LAB_005c6a63:
     if ((iVar6 != 0) && ((iVar6 = *(int *)(iVar6 + 0x18), iVar6 < 0 && (puVar3[6] != 0xb)))) {
       local_110 = local_110 * 0.0025;
       local_118 = local_118 * 0.0025;
-      fVar11 = (float10)perlinNoise2D_cosInterp(local_118 + 8432984.0,local_110 + 90493.0);
+      fVar11 = (float)perlinNoise2D_cosInterp(local_118 + 8432984.0,local_110 + 90493.0);
       local_174 = (float)fVar11 * 100.0 * 65536.0;
       uVar19 = ftol2();
       uVar7 = local_128;
@@ -33355,7 +33322,7 @@ LAB_005c6a63:
                                    (uint)CARRY4(uVar8,local_128),uVar8 + local_128);
       local_174 = (float)(longlong)local_120;
       local_a8 = local_174 * 1.5258789e-05;
-      fVar11 = (float10)perlinNoise2D_cosInterp(local_118 + 3423.0,local_110 + 112.0);
+      fVar11 = (float)perlinNoise2D_cosInterp(local_118 + 3423.0,local_110 + 112.0);
       local_174 = ((float)fVar11 * 100.0 + (float)(int)local_124) * 65536.0;
       uVar19 = ftol2();
       local_120 = (double)CONCAT44(((int)((ulonglong)uVar19 >> 0x20) - puVar3[3]) -
@@ -33382,12 +33349,11 @@ LAB_005c6a63:
       local_bc = local_12c;
       local_ac = local_134;
       local_b0 = uVar7;
-      fVar11 = (float10)vec3_distanceSquared(&local_b0,&local_c0);
+      fVar11 = (float)vec3_distanceSquared(&local_b0,&local_c0);
       local_174 = (float)fVar11;
       if (0.25 < local_174) {
         if (local_174 < 1.0) {
-          dVar12 = (double)local_174;
-          libm_sse2_sqrt_precise();
+          dVar12 = libm_sse2_sqrt_precise((double)local_174);
           fVar13 = ((float)dVar12 - 0.5) * 2.0;
           fVar13 = 1.0 - fVar13 * fVar13;
           local_170 = (((float)puVar3[5] - 25.0) - local_170) * fVar13 * fVar13 + local_170;
@@ -33406,12 +33372,11 @@ LAB_005c6a63:
       local_cc = local_12c;
       local_c4 = local_134;
       local_c8 = uVar7;
-      fVar11 = (float10)vec3_distanceSquared(&local_c8,&local_d0);
+      fVar11 = (float)vec3_distanceSquared(&local_c8,&local_d0);
       local_174 = (float)fVar11;
       if (0.25 < local_174) {
         if (local_174 < 1.0) {
-          dVar12 = (double)local_174;
-          libm_sse2_sqrt_precise();
+          dVar12 = libm_sse2_sqrt_precise((double)local_174);
           fVar13 = ((float)dVar12 - 0.5) * 2.0;
           fVar13 = 1.0 - fVar13 * fVar13;
           local_170 = fVar13 * fVar13 * 10.0 + local_170;
@@ -33432,12 +33397,11 @@ LAB_005c6a63:
     if (uVar8 == 0xd) {
       local_108 = (double)CONCAT44(local_12c,local_160);
       local_100 = (double)CONCAT44(local_134,uVar7);
-      fVar11 = (float10)vec3_distanceSquared(&local_100,&local_108);
+      fVar11 = (float)vec3_distanceSquared(&local_100,&local_108);
       local_174 = (float)fVar11;
       if (0.010000001 < local_174) {
         if (local_174 < 1.0) {
-          dVar12 = (double)local_174;
-          libm_sse2_sqrt_precise();
+          dVar12 = libm_sse2_sqrt_precise((double)local_174);
           fVar13 = ((float)dVar12 - 0.1) / 0.9;
           fVar13 = 1.0 - fVar13 * fVar13;
           local_16c = fVar13 * fVar13 * fVar13 * fVar13 * 150.0 + local_170;
@@ -33471,11 +33435,11 @@ void terrain_rockColor_blend(float *out_rgb,int x,int z,int level,undefined4 par
   float *pfVar5;
   float *pfVar6;
   int in_ECX;
-  float10 fVar7;
-  float10 fVar8;
-  float10 fVar9;
-  float10 fVar10;
-  float10 fVar11;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
+  float fVar11;
   float fVar12;
   float fVar13;
   float fVar14;
@@ -33490,21 +33454,21 @@ void terrain_rockColor_blend(float *out_rgb,int x,int z,int level,undefined4 par
   
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   local_10 = (double)z;
-  fVar7 = (float10)perlinNoise2D_cosInterp(local_10 * 0.1 + 98984.0,(double)level * 0.4 + 8437.0);
-  fVar8 = (float10)perlinNoise2D_cosInterp((double)x * 0.1,(double)level * 0.4);
+  fVar7 = (float)perlinNoise2D_cosInterp(local_10 * 0.1 + 98984.0,(double)level * 0.4 + 8437.0);
+  fVar8 = (float)perlinNoise2D_cosInterp((double)x * 0.1,(double)level * 0.4);
   local_10 = local_10 * 0.01;
   dVar17 = (double)x * 0.01;
   fVar12 = (((float)fVar7 + (float)fVar8) * 0.5 + 1.0) * 0.5;
-  fVar7 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80025c) + dVar17,
+  fVar7 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80025c) + dVar17,
                                 (double)*(int *)(in_ECX + 0x800260) + local_10);
-  fVar8 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800264) + dVar17,
+  fVar8 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800264) + dVar17,
                                 (double)*(int *)(in_ECX + 0x800268) + local_10);
-  fVar9 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80026c) + dVar17,
+  fVar9 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80026c) + dVar17,
                                 (double)*(int *)(in_ECX + 0x800270) + local_10);
   fVar15 = fVar12 * 60.0;
-  fVar10 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80024c) + dVar17,
+  fVar10 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80024c) + dVar17,
                                  (double)*(int *)(in_ECX + 0x800250) + local_10);
-  fVar11 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800254) + dVar17,
+  fVar11 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800254) + dVar17,
                                  (double)*(int *)(in_ECX + 0x800258) + local_10);
   fVar12 = fVar12 * 0.0 + 60.0 + (float)fVar9 * 20.0;
   fVar18 = fVar15 + (float)fVar10 * 20.0 + 180.0 + (float)fVar7 * 20.0;
@@ -33534,7 +33498,7 @@ void terrain_rockColor_blend(float *out_rgb,int x,int z,int level,undefined4 par
   }
   iVar4 = world_getChunkCell256();
   if (iVar4 == 0) {
-    fVar7 = (float10)GameController_sampleHumidityGrid(x,z);
+    fVar7 = (float)GameController_sampleHumidityGrid(x,z);
     local_28 = (float)fVar7;
   }
   else {
@@ -33575,7 +33539,7 @@ void terrain_rockColor_blend(float *out_rgb,int x,int z,int level,undefined4 par
   }
   iVar4 = world_getChunkCell256();
   if (iVar4 == 0) {
-    fVar7 = (float10)World_getRegionCellPtr(x,z);
+    fVar7 = (float)World_getRegionCellPtr(x,z);
     fVar12 = (float)fVar7;
   }
   else {
@@ -34046,9 +34010,9 @@ LAB_005c8021:
     *(undefined4 *)(iVar2 + 0xf68) = 0x41200000;
   }
   if ((*(ushort *)(iVar2 + 0x7a) & 0x200) != 0) {
-    fVar9 = *(float *)(iVar2 + 0xf58) * 15.0;
+    fVar9 = *(float *)(iVar2 + 0xf58) * 15.0f;
     *(float *)(iVar2 + 0xf58) = fVar9;
-    if (10000.0 < fVar9) {
+    if (10000.0f < fVar9) {
       *(undefined4 *)(iVar2 + 0xf58) = 0x461c4000;
     }
     *(float *)(iVar2 + 0xf60) = *(float *)(iVar2 + 0xf60) * 3.0;
@@ -34102,17 +34066,17 @@ LAB_005c81a6:
  */
 /* Global::getTemperatureAt @ 005c8310 */
 
-float10 getTemperatureAt(undefined4 x,undefined4 y,undefined4 z)
+float getTemperatureAt(undefined4 x,undefined4 y,undefined4 z)
 
 {
   int cached;
-  float10 fVar2;
+  float fVar2;
   
   cached = world_getChunkCell256(x,y,z);
   if (cached != 0) {
-    return (float10)*(float *)(cached + 4);
+    return (float)*(float *)(cached + 4);
   }
-  fVar2 = (float10)GameController_sampleTemperatureGrid(x,y);
+  fVar2 = (float)GameController_sampleTemperatureGrid(x,y);
   return fVar2;
 }
 
@@ -34125,17 +34089,17 @@ float10 getTemperatureAt(undefined4 x,undefined4 y,undefined4 z)
  */
 /* Global::getHumidityAt @ 005c8350 */
 
-float10 getHumidityAt(undefined4 x,undefined4 y,undefined4 z)
+float getHumidityAt(undefined4 x,undefined4 y,undefined4 z)
 
 {
   int cached;
-  float10 fVar2;
+  float fVar2;
   
   cached = world_getChunkCell256(x,y,z);
   if (cached != 0) {
-    return (float10)*(float *)(cached + 8);
+    return (float)*(float *)(cached + 8);
   }
-  fVar2 = (float10)GameController_sampleHumidityGrid(x,y);
+  fVar2 = (float)GameController_sampleHumidityGrid(x,y);
   return fVar2;
 }
 
@@ -34160,8 +34124,8 @@ void loot_generateItemTable(void)
   undefined2 uVar6;
   int iVar7;
   byte bVar8;
-  float10 fVar9;
-  float10 fVar10;
+  float fVar9;
+  float fVar10;
   int local_144;
   int local_130;
   undefined1 local_12c;
@@ -34186,8 +34150,8 @@ void loot_generateItemTable(void)
   local_14 = uVar1;
   do {
     local_8 = 0xffffffff;
-    fVar9 = (float10)curve_inverse20p1((float)local_144 / 30.0,uVar1);
-    fVar10 = (float10)curve_inverse20p1(((float)local_144 + 0.99999) / 30.0);
+    fVar9 = (float)curve_inverse20p1((float)local_144 / 30.0f,uVar1);
+    fVar10 = (float)curve_inverse20p1(((float)local_144 + 0.99999f) / 30.0f);
     iVar2 = rand();
     iVar2 = (int)fVar9 + iVar2 % (((int)fVar10 - (int)fVar9) + 1);
     if (iVar2 < 1) {
@@ -34761,8 +34725,8 @@ void World_generateMonsterSpawnList(void)
   uint uVar5;
   undefined4 uVar6;
   bool bVar7;
-  float10 fVar8;
-  float10 fVar9;
+  float fVar8;
+  float fVar9;
   int local_35c;
   int local_358;
   undefined1 local_350 [280];
@@ -34780,8 +34744,8 @@ void World_generateMonsterSpawnList(void)
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   local_35c = 0;
   do {
-    fVar8 = (float10)curve_inverse20p1((float)local_35c / 30.0);
-    fVar9 = (float10)curve_inverse20p1(((float)local_35c + 0.99999) / 30.0);
+    fVar8 = (float)curve_inverse20p1((float)local_35c / 30.0f);
+    fVar9 = (float)curve_inverse20p1(((float)local_35c + 0.99999f) / 30.0f);
     iVar2 = rand();
     local_358 = (int)fVar8 + iVar2 % (((int)fVar9 - (int)fVar8) + 1);
     if (local_358 < 1) {
@@ -34984,8 +34948,8 @@ void World_generateNpcSpawnList(void)
   undefined2 uVar6;
   int iVar7;
   byte bVar8;
-  float10 fVar9;
-  float10 fVar10;
+  float fVar9;
+  float fVar10;
   int local_144;
   int local_130;
   undefined1 local_12c;
@@ -35010,8 +34974,8 @@ void World_generateNpcSpawnList(void)
   local_14 = uVar1;
   do {
     local_8 = 0xffffffff;
-    fVar9 = (float10)curve_inverse20p1((float)local_144 / 30.0,uVar1);
-    fVar10 = (float10)curve_inverse20p1(((float)local_144 + 0.99999) / 30.0);
+    fVar9 = (float)curve_inverse20p1((float)local_144 / 30.0f,uVar1);
+    fVar10 = (float)curve_inverse20p1(((float)local_144 + 0.99999f) / 30.0f);
     iVar2 = rand();
     iVar2 = (int)fVar9 + iVar2 % (((int)fVar10 - (int)fVar9) + 1);
     if (iVar2 < 1) {
@@ -35351,8 +35315,8 @@ void World_findNearestObjectAtLevel(undefined8 *out_cell,int x,int z)
   int iVar11;
   int world;
   int iVar12;
-  float10 fVar13;
-  float10 fVar14;
+  float fVar13;
+  float fVar14;
   uint *best;
   int best_dist;
   undefined8 local_18;
@@ -35362,8 +35326,8 @@ void World_findNearestObjectAtLevel(undefined8 *out_cell,int x,int z)
   iVar6 = (int)(z + -0x4000 + (z + -0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
   iVar7 = (int)(x + 0x4000 + (x + 0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
   iVar12 = (int)((x + -0x4000 >> 0x1f & 0x3fffU) + x + -0x4000) >> 0xe;
-  fVar13 = (float10)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
-  fVar14 = (float10)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
+  fVar13 = (float)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
+  fVar14 = (float)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
   best = (uint *)0x0;
   uVar8 = (uint)((float)x + (float)fVar13 * 3.0 * 256.0);
   *(undefined4 *)out_cell = 0xffffffff;
@@ -35433,8 +35397,8 @@ void World_findNearestObjectRegion2(int x,int z)
   uint uVar12;
   int iVar13;
   int world;
-  float10 fVar14;
-  float10 fVar15;
+  float fVar14;
+  float fVar15;
   uint *best;
   int best_dist;
   undefined8 local_18;
@@ -35444,8 +35408,8 @@ void World_findNearestObjectRegion2(int x,int z)
   iVar8 = (int)(x + -0x4000 + (x + -0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
   iVar9 = (int)(z + -0x4000 + (z + -0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
   iVar10 = (int)(x + 0x4000 + (x + 0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
-  fVar14 = (float10)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
-  fVar15 = (float10)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
+  fVar14 = (float)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
+  fVar15 = (float)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
   uVar11 = (uint)((float)x + (float)fVar14 * 3.0 * 256.0);
   uVar12 = (uint)((float)z + (float)fVar15 * 3.0 * 256.0);
   best = (uint *)0x0;
@@ -35648,7 +35612,7 @@ void World_carveTerrainFeatureA(int cx,int cy,int base_h,int rx,int ry,int heigh
   float fVar12;
   int iVar13;
   float fVar14;
-  float10 fVar15;
+  float fVar15;
   double dVar16;
   undefined8 local_a4;
   undefined4 *local_9c;
@@ -35706,7 +35670,7 @@ void World_carveTerrainFeatureA(int cx,int cy,int base_h,int rx,int ry,int heigh
             local_8c = (double)(int)fVar14;
             local_64 = *(int *)(iVar4 + 0x10);
             local_a4 = (double)(int)uVar11;
-            fVar15 = (float10)perlinNoise2D_cosInterp(local_a4 * 0.01 + 4394.0,local_8c * 0.01 + 8974.0);
+            fVar15 = (float)perlinNoise2D_cosInterp(local_a4 * 0.01 + 4394.0,local_8c * 0.01 + 8974.0);
             local_5c = (float)fVar15;
             iVar4 = (int)(local_5c * (float)height + (float)(height + base_h));
             uVar11 = local_50;
@@ -35717,10 +35681,10 @@ void World_carveTerrainFeatureA(int cx,int cy,int base_h,int rx,int ry,int heigh
               local_98 = (double)CONCAT44((float)(int)local_54 / (float)local_74,
                                           (undefined4)local_98);
               do {
-                fVar15 = (float10)perlinNoise2D_cosInterp(local_8c,(double)iVar4 * 0.05);
+                fVar15 = (float)perlinNoise2D_cosInterp(local_8c,(double)iVar4 * 0.05);
                 local_5c = (float)fVar15;
                 local_78 = local_5c * 0.4 + local_7c;
-                fVar15 = (float10)perlinNoise2D_cosInterp(local_a4,(double)iVar4 * 0.05 + 9898.0);
+                fVar15 = (float)perlinNoise2D_cosInterp(local_a4,(double)iVar4 * 0.05 + 9898.0);
                 local_5c = (float)fVar15;
                 fVar12 = local_5c * 0.4 + local_98._4_4_;
                 if (fVar12 * fVar12 + local_78 * local_78 <= 1.0) {
@@ -35773,7 +35737,7 @@ void World_carveTerrainFeatureA(int cx,int cy,int base_h,int rx,int ry,int heigh
         local_60 = iVar4 - local_70;
         local_5c = fVar12;
         do {
-          fVar15 = (float10)perlinNoise2D_cosInterp(dVar16 * 0.01 + 4394.0,(double)iVar4 * 0.01 + 8974.0);
+          fVar15 = (float)perlinNoise2D_cosInterp(dVar16 * 0.01 + 4394.0,(double)iVar4 * 0.01 + 8974.0);
           local_4c = (float)fVar15;
           local_6c = (int)(local_4c * (float)height + (float)(int)fVar12);
           iVar6 = world_getChunkCell256();
@@ -35806,10 +35770,10 @@ void World_carveTerrainFeatureA(int cx,int cy,int base_h,int rx,int ry,int heigh
               if ((((((bVar2 & 0x1f) == 0) || (bVar3 == 2)) || (bVar3 == 4)) ||
                   ((bVar3 == 9 || (bVar3 == 5)))) && ((bVar2 & 0x40) == 0)) {
                 local_98 = (double)iVar6 * 0.02;
-                fVar15 = (float10)perlinNoise2D_cosInterp((double)iVar4 * 0.05,local_98);
+                fVar15 = (float)perlinNoise2D_cosInterp((double)iVar4 * 0.05,local_98);
                 local_4c = (float)fVar15;
                 local_68 = local_4c * 0.5 + (float)local_64 / (float)local_90;
-                fVar15 = (float10)perlinNoise2D_cosInterp((double)(int)local_48 * 0.05 + 4374.0,
+                fVar15 = (float)perlinNoise2D_cosInterp((double)(int)local_48 * 0.05 + 4374.0,
                                                local_98 + 9898.0);
                 local_4c = (float)fVar15;
                 fVar12 = local_4c * 0.5 + (float)local_60 / (float)local_74;
@@ -35818,7 +35782,7 @@ void World_carveTerrainFeatureA(int cx,int cy,int base_h,int rx,int ry,int heigh
                   if (iVar6 == local_6c) {
                     iVar7 = world_getChunkCell256();
                     if (iVar7 == 0) {
-                      fVar15 = (float10)GameController_sampleHumidityGrid(local_48,iVar4);
+                      fVar15 = (float)GameController_sampleHumidityGrid(local_48,iVar4);
                       local_54 = (float)fVar15;
                       local_4c = local_54;
                     }
@@ -35827,7 +35791,7 @@ void World_carveTerrainFeatureA(int cx,int cy,int base_h,int rx,int ry,int heigh
                     }
                     iVar7 = world_getChunkCell256();
                     if (iVar7 == 0) {
-                      fVar15 = (float10)GameController_sampleTemperatureGrid(local_48,iVar4);
+                      fVar15 = (float)GameController_sampleTemperatureGrid(local_48,iVar4);
                       fVar12 = (float)fVar15;
                       local_4c = fVar12;
                     }
@@ -35919,7 +35883,7 @@ void World_carveTerrainFeatureB(int cx,int cy,int base_h,int rx,int ry,int heigh
   uint uVar8;
   int iVar9;
   float fVar10;
-  float10 fVar11;
+  float fVar11;
   float fVar12;
   double dVar13;
   float local_64;
@@ -35971,7 +35935,7 @@ void World_carveTerrainFeatureB(int cx,int cy,int base_h,int rx,int ry,int heigh
             dVar13 = (double)(int)local_18;
             local_38 = *(float *)(iVar3 + 0x10);
             local_10 = (double)iVar7;
-            fVar11 = (float10)perlinNoise2D_cosInterp(local_10 * 0.01 + 4394.0,dVar13 * 0.01 + 8974.0);
+            fVar11 = (float)perlinNoise2D_cosInterp(local_10 * 0.01 + 4394.0,dVar13 * 0.01 + 8974.0);
             local_3c = (float)fVar11;
             iVar3 = (int)(local_3c * 20.0 + (float)(height + base_h));
             iVar7 = local_24;
@@ -35982,10 +35946,10 @@ void World_carveTerrainFeatureB(int cx,int cy,int base_h,int rx,int ry,int heigh
               local_4c = 10.0 / (float)local_44;
               local_50 = (float)local_30 / (float)local_44;
               do {
-                fVar11 = (float10)perlinNoise2D_cosInterp(dVar13 * 0.05,(double)iVar3 * 0.05);
+                fVar11 = (float)perlinNoise2D_cosInterp(dVar13 * 0.05,(double)iVar3 * 0.05);
                 local_3c = (float)fVar11;
                 local_58 = local_3c * local_64 + local_54;
-                fVar11 = (float10)perlinNoise2D_cosInterp(local_10,(double)iVar3 * 0.05 + 9898.0);
+                fVar11 = (float)perlinNoise2D_cosInterp(local_10,(double)iVar3 * 0.05 + 9898.0);
                 local_3c = (float)fVar11;
                 fVar12 = local_3c * local_4c + local_50;
                 if (fVar12 * fVar12 + local_58 * local_58 <= 1.0) {
@@ -36062,7 +36026,7 @@ void World_carveTerrainFeatureB(int cx,int cy,int base_h,int rx,int ry,int heigh
         fVar12 = local_54;
         local_4c = fVar10;
         do {
-          fVar11 = (float10)perlinNoise2D_cosInterp(dVar13 * 0.01 + 4394.0,(double)(int)fVar12 * 0.01 + 8974.0)
+          fVar11 = (float)perlinNoise2D_cosInterp(dVar13 * 0.01 + 4394.0,(double)(int)fVar12 * 0.01 + 8974.0)
           ;
           local_20 = (float)fVar11;
           local_34 = (int)(local_20 * 20.0 + (float)(int)fVar10);
@@ -36094,10 +36058,10 @@ void World_carveTerrainFeatureB(int cx,int cy,int base_h,int rx,int ry,int heigh
               bVar2 = bVar1 & 0x1f;
               if (((((bVar1 & 0x1f) == 0) || (bVar2 == 2)) ||
                   ((bVar2 == 4 || ((bVar2 == 9 || (bVar2 == 5)))))) && ((bVar1 & 0x40) == 0)) {
-                fVar11 = (float10)perlinNoise2D_cosInterp((double)(int)fVar12 * 0.05,(double)iVar7 * 0.05);
+                fVar11 = (float)perlinNoise2D_cosInterp((double)(int)fVar12 * 0.05,(double)iVar7 * 0.05);
                 local_20 = (float)fVar11;
                 local_58 = local_20 * (10.0 / (float)rx) + (float)local_30 / (float)rx;
-                fVar11 = (float10)perlinNoise2D_cosInterp((double)local_1c * 0.05 + 4374.0,
+                fVar11 = (float)perlinNoise2D_cosInterp((double)local_1c * 0.05 + 4374.0,
                                                (double)iVar7 * 0.05 + 9898.0);
                 local_20 = (float)fVar11;
                 fVar10 = local_20 * (10.0 / (float)local_44) + (float)local_2c / (float)local_44;
@@ -36106,7 +36070,7 @@ void World_carveTerrainFeatureB(int cx,int cy,int base_h,int rx,int ry,int heigh
                   if (iVar7 == local_34) {
                     iVar3 = world_getChunkCell256();
                     if (iVar3 == 0) {
-                      fVar11 = (float10)GameController_sampleHumidityGrid(local_1c,fVar12);
+                      fVar11 = (float)GameController_sampleHumidityGrid(local_1c,fVar12);
                       local_38 = (float)fVar11;
                       local_20 = local_38;
                     }
@@ -36115,7 +36079,7 @@ void World_carveTerrainFeatureB(int cx,int cy,int base_h,int rx,int ry,int heigh
                     }
                     iVar3 = world_getChunkCell256();
                     if (iVar3 == 0) {
-                      fVar11 = (float10)GameController_sampleTemperatureGrid(local_1c,fVar12);
+                      fVar11 = (float)GameController_sampleTemperatureGrid(local_1c,fVar12);
                       fVar10 = (float)fVar11;
                       local_20 = fVar10;
                     }
@@ -36195,7 +36159,7 @@ void World_populateRegionDecorations(int zone,undefined4 param_2,int *param_3,in
   code *pcVar22;
   int *piVar23;
   bool bVar24;
-  float10 fVar25;
+  float fVar25;
   double dVar26;
   undefined8 uVar27;
   undefined1 local_2c28 [4];
@@ -38072,7 +38036,7 @@ LAB_005cfeac:
                 iVar19 = -3;
                 goto LAB_005cfeac;
               }
-              fVar25 = (float10)perlinNoise2D_cosInterp();
+              fVar25 = (float)perlinNoise2D_cosInterp();
               local_2b60 = (int *)(float)fVar25;
               if ((0.0 < (float)local_2b60) &&
                  ((iVar19 = world_getColumnData(), (*(byte *)(iVar19 + 3) & 0x1f) == 0 ||
@@ -39148,7 +39112,7 @@ LAB_005d2328:
                                           break;
                                         case 3:
                                           (*pcVar22)();
-                                          fVar25 = (float10)powf_f();
+                                          fVar25 = (float)powf_f();
                                           local_2b28 = (int *)(float)fVar25;
                                           iVar19 = (*pcVar22)();
                                           local_c28 = CONCAT11(local_c28._1_1_,0xc);
@@ -39552,10 +39516,10 @@ switchD_005d4574_default:
                 local_358 = (double)(int)local_2b5c * 0.1;
                 do {
                   local_2b30 = (int *)world_getChunkCell256();
-                  fVar25 = (float10)perlinNoise2D_cosInterp();
+                  fVar25 = (float)perlinNoise2D_cosInterp();
                   local_2b28 = (int *)(float)fVar25;
                   local_2b24 = (uint *)((float)local_2b28 * 2.0);
-                  fVar25 = (float10)perlinNoise2D_cosInterp();
+                  fVar25 = (float)perlinNoise2D_cosInterp();
                   local_2b28 = (int *)(float)fVar25;
                   local_2b24 = (uint *)((float)local_2b24 + (float)local_2b28 * 8.0);
                   if (0.0 < (float)local_2b24) {
@@ -39944,10 +39908,10 @@ switchD_005d4574_default:
                     }
                     local_2b48 = (int *)pcVar8;
                     int_toFixed16();
-                    fVar25 = (float10)sinf_f();
+                    fVar25 = (float)sinf_f();
                     local_2b30 = (int *)(float)fVar25;
                     int64_setFromGen();
-                    fVar25 = (float10)cosf_f();
+                    fVar25 = (float)cosf_f();
                     local_2b30 = (int *)(float)fVar25;
                     int64_setFromGen();
                     vec6_set();
@@ -40082,10 +40046,10 @@ switchD_005d4574_default:
                       }
                       local_2b40 = piVar6;
                       int_toFixed16();
-                      fVar25 = (float10)sinf_f();
+                      fVar25 = (float)sinf_f();
                       local_2b30 = (int *)(float)fVar25;
                       int64_setFromGen();
-                      fVar25 = (float10)cosf_f();
+                      fVar25 = (float)cosf_f();
                       local_2b30 = (int *)(float)fVar25;
                       int64_setFromGen();
                       vec6_set();
@@ -41079,8 +41043,7 @@ LAB_005d719c:
     }
     std_vector_push_back_4byte(&local_1b0);
     iVar10 = rand();
-    dVar25 = (double)((float)iVar10 / 32767.0);
-    libm_sse2_pow_precise();
+    dVar25 = libm_sse2_pow_precise((double)((float)iVar10 / 32767.0),2.0);
     local_218[2] = (uint)((float)dVar25 * 4.0);
     if (0 < (int)local_218[2]) {
       local_1c0 = 1;
@@ -41302,7 +41265,7 @@ void World_generateFoliageBlob(int cx,int cy,int cz,float rxy,float rz,undefined
   int iVar16;
   int iVar17;
   bool bVar18;
-  float10 fVar19;
+  float fVar19;
   double dVar20;
   float fVar21;
   double dVar22;
@@ -41372,11 +41335,11 @@ void World_generateFoliageBlob(int cx,int cy,int cz,float rxy,float rz,undefined
         iVar15 = iVar12;
         local_70 = iVar17;
         do {
-          fVar19 = (float10)perlinNoise2D_cosInterp(dVar31 * 0.04 + (double)iVar7,
+          fVar19 = (float)perlinNoise2D_cosInterp(dVar31 * 0.04 + (double)iVar7,
                                          local_80 * 0.04 + (double)iVar8);
           local_6c = (float)fVar19;
           local_88 = (double)local_6c * 0.5;
-          fVar19 = (float10)perlinNoise2D_cosInterp(dVar31 * 0.1 + (double)iVar7,local_80 * 0.1 + (double)iVar8
+          fVar19 = (float)perlinNoise2D_cosInterp(dVar31 * 0.1 + (double)iVar7,local_80 * 0.1 + (double)iVar8
                                         );
           dVar28 = (double)iVar16;
           fVar29 = (float)(local_88 + (double)((float)fVar19 * 0.3));
@@ -41605,7 +41568,7 @@ void World_generateVegetationCluster(uint chunk_x,uint chunk_z,int list)
   int *piVar15;
   int iVar16;
   bool bVar17;
-  float10 fVar18;
+  float fVar18;
   float fVar19;
   undefined8 uVar20;
   int local_e0;
@@ -41996,10 +41959,10 @@ LAB_005d8c5a:
               local_d4 = ((int)local_94 >> 0x1f) << 0x10 | (uint)local_94 >> 0x10;
               local_d8 = (int)local_94 << 0x10;
               iStack_18 = (int)local_84;
-              fVar18 = (float10)vec3_distanceSquared(&local_e0,&local_d8);
+              fVar18 = (float)vec3_distanceSquared(&local_e0,&local_d8);
               local_a4 = (float)fVar18;
-              fVar19 = 1.0 - local_a4;
-              if ((0.0 < fVar19) && (local_a4 = fVar19 * fVar19, 0.0 < local_a4)) {
+              fVar19 = 1.0f - local_a4;
+              if ((0.0f < fVar19) && (local_a4 = fVar19 * fVar19, 0.0f < local_a4)) {
                 if ((local_7c == (int *)0xc) || (local_7c == (int *)0xd)) {
                   uVar6 = (int)local_84 + (int)local_80 & 0x80000001;
                   bVar17 = uVar6 == 0;
@@ -42007,7 +41970,7 @@ LAB_005d8c5a:
                     bVar17 = (uVar6 - 1 | 0xfffffffe) == 0xffffffff;
                   }
                   if (!bVar17) {
-                    local_a4 = local_a4 * 2.0;
+                    local_a4 = local_a4 * 2.0f;
                   }
                 }
                 uVar20 = CONCAT44(iStack_18,local_1c);
@@ -42663,15 +42626,15 @@ LAB_005d9d2f:
           fVar1 = *(float *)(iVar8 + 0x10);
           local_70 = 1;
           iVar13 = 10;
-          if (fVar1 < 0.2) {
+          if (fVar1 < 0.2f) {
             local_70 = 10;
             iVar13 = 0x14;
           }
-          if ((*(float *)(iVar8 + 0xc) < 0.2) && (0.8 < fVar1)) {
+          if ((*(float *)(iVar8 + 0xc) < 0.2f) && (0.8f < fVar1)) {
             local_70 = 0xf;
             iVar13 = 0x19;
           }
-          if ((0.8 < *(float *)(iVar8 + 0xc)) && (0.8 < fVar1)) {
+          if ((0.8f < *(float *)(iVar8 + 0xc)) && (0.8f < fVar1)) {
             local_70 = 10;
             iVar13 = 0x14;
           }
@@ -42860,7 +42823,7 @@ void World_buildPropInstance(int zone,undefined4 *pos,int *out)
   undefined4 *puVar16;
   code *pcVar17;
   bool bVar18;
-  float10 fVar19;
+  float fVar19;
   float fVar20;
   double dVar21;
   undefined8 uVar22;
@@ -43710,7 +43673,7 @@ LAB_005dcf95:
   if (0 < (int)local_404) {
     iVar10 = iVar3 + 8;
     do {
-      fVar19 = (float10)vec3_distanceSquared(iVar3,iVar10);
+      fVar19 = (float)vec3_distanceSquared(iVar3,iVar10);
       local_478[0] = (float)fVar19;
       fVar20 = 1.0 - local_478[0];
       if (0.0 < fVar20) {
@@ -44422,14 +44385,12 @@ LAB_005de6d3:
               *(undefined4 *)(iVar3 + 0x28) = 1;
               *(ushort *)(iVar3 + 0x7a) = *(ushort *)(iVar3 + 0x7a) | 0x1000;
               *(float *)(iVar3 + 0x54) = (local_40c * 180.0) / 3.1415927 + 90.0;
-              dVar21 = (double)local_40c;
               local_65c[0] = iVar3;
-              libm_sse2_sin_precise();
+              dVar21 = libm_sse2_sin_precise((double)local_40c);
               local_62c = (float)dVar21 * 3.0 * 65536.0;
               lVar23 = ftol2();
-              dVar21 = (double)local_40c;
               lVar23 = lVar23 + CONCAT44(local_448,local_444);
-              libm_sse2_cos_precise();
+              dVar21 = libm_sse2_cos_precise((double)local_40c);
               local_634 = (float)dVar21 * 3.0 * 65536.0;
               lVar24 = ftol2();
               lVar24 = lVar24 + CONCAT44(local_44c,local_438);
@@ -44606,7 +44567,7 @@ void World_fillVoxelColumnTyped(int x,int y,int z,int *size,byte *color,float pa
   uint uVar7;
   int iVar8;
   int iVar9;
-  float10 fVar10;
+  float fVar10;
   int iy;
   undefined2 local_ac;
   undefined1 local_aa;
@@ -44664,8 +44625,8 @@ void World_fillVoxelColumnTyped(int x,int y,int z,int *size,byte *color,float pa
               bVar2 = color[1];
               local_88 = (float)(int)((uint)*color + iVar4);
               local_80 = (float)(int)((uint)color[2] + iVar4);
-              fVar10 = (float10)noise2d_sample(ix + x,local_90,iVar9,local_98);
-              fStack_84 = (float)fVar10 * (120.0 - (float)(int)((uint)bVar2 + iVar4)) +
+              fVar10 = (float)noise2d_sample(ix + x,local_90,iVar9,local_98);
+              fStack_84 = (float)fVar10 * (120.0f - (float)(int)((uint)bVar2 + iVar4)) +
                           (float)(int)((uint)bVar2 + iVar4);
               iVar4 = world_getChunkCell256(ix + x,local_90,local_98);
               if (((iVar4 != 0) && (iVar6 = *(int *)(iVar4 + 0x10), iVar6 <= iVar9)) &&
@@ -44673,16 +44634,16 @@ void World_fillVoxelColumnTyped(int x,int y,int z,int *size,byte *color,float pa
                 array_atChecked4(iVar9 - iVar6);
               }
               iVar4 = rand();
-              if (param_6 < (float)iVar4 / 32767.0) {
+              if (param_6 < (float)iVar4 / 32767.0f) {
                 local_68 = local_80;
                 local_70 = CONCAT44(fStack_84,local_88);
                 iVar4 = 0;
                 do {
                   pfVar1 = (float *)((int)&local_70 + iVar4 * 4);
-                  if (*pfVar1 <= 0.0 && *pfVar1 != 0.0) {
+                  if (*pfVar1 <= 0.0f && *pfVar1 != 0.0f) {
                     *(undefined4 *)((int)&local_70 + iVar4 * 4) = 0;
                   }
-                  if (255.0 < *(float *)((int)&local_70 + iVar4 * 4)) {
+                  if (255.0f < *(float *)((int)&local_70 + iVar4 * 4)) {
                     *(undefined4 *)((int)&local_70 + iVar4 * 4) = 0x437f0000;
                   }
                   iVar4 = iVar4 + 1;
@@ -44705,10 +44666,10 @@ void World_fillVoxelColumnTyped(int x,int y,int z,int *size,byte *color,float pa
                 iVar4 = 0;
                 do {
                   pfVar1 = (float *)((int)&local_7c + iVar4 * 4);
-                  if (*pfVar1 <= 0.0 && *pfVar1 != 0.0) {
+                  if (*pfVar1 <= 0.0f && *pfVar1 != 0.0f) {
                     *(undefined4 *)((int)&local_7c + iVar4 * 4) = 0;
                   }
-                  if (255.0 < *(float *)((int)&local_7c + iVar4 * 4)) {
+                  if (255.0f < *(float *)((int)&local_7c + iVar4 * 4)) {
                     *(undefined4 *)((int)&local_7c + iVar4 * 4) = 0x437f0000;
                   }
                   iVar4 = iVar4 + 1;
@@ -44776,7 +44737,7 @@ void World_generateWaterOrPathFeature(uint x,uint z,float scale,int param_4,int 
   code *pcVar16;
   uint uVar17;
   bool bVar18;
-  float10 fVar19;
+  double fVar19;
   float fVar20;
   double dVar21;
   float fVar22;
@@ -45174,7 +45135,7 @@ void World_generateWaterOrPathFeature(uint x,uint z,float scale,int param_4,int 
   local_668 = (double)CONCAT44(local_61c,local_5ec);
   iVar2 = world_getChunkCell256(local_5d8,local_5dc,param_7);
   if (iVar2 == 0) {
-    fVar19 = (float10)GameController_sampleHumidityGrid(local_5d8,uVar6);
+    fVar19 = (double)GameController_sampleHumidityGrid(local_5d8,uVar6);
     local_5fc = (float)fVar19;
     local_594 = local_5fc;
   }
@@ -45347,7 +45308,7 @@ LAB_005dfd5c:
   else {
     iVar2 = world_getChunkCell256(local_5d8,local_5dc,param_7);
     if (iVar2 == 0) {
-      fVar19 = (float10)GameController_sampleTemperatureGrid(local_5d8,local_5dc);
+      fVar19 = (double)GameController_sampleTemperatureGrid(local_5d8,local_5dc);
       fVar23 = (float)fVar19;
       local_594 = fVar23;
     }
@@ -45598,10 +45559,10 @@ LAB_005dfd5c:
                   local_638 = (double)(longlong)local_630;
                   local_6dc = local_638 * 1.52587890625e-05;
                   local_6ec = (double)(int)fVar20 * 0.025;
-                  fVar19 = (float10)perlinNoise2D_cosInterp((double)(int)local_5b4 * 0.025,local_6ec);
+                  fVar19 = (double)perlinNoise2D_cosInterp((double)(int)local_5b4 * 0.025,local_6ec);
                   local_638 = (double)CONCAT44((float)fVar19,(undefined4)local_638);
                   local_6dc = (double)((float)fVar19 * local_5e0) + local_6dc / (double)local_59c;
-                  fVar19 = (float10)perlinNoise2D_cosInterp((double)(int)fVar23 * 0.025);
+                  fVar19 = (double)perlinNoise2D_cosInterp((double)(int)fVar23 * 0.025);
                   local_638 = (double)CONCAT44((float)fVar19,(undefined4)local_638);
                   local_220 = (double)((float)fVar19 * local_5e0) + local_5e8 / (double)local_59c;
                   local_4c4 = local_6dc;
@@ -45678,7 +45639,7 @@ LAB_005dfd5c:
                   local_1e0 = 0x42700000;
                   _local_bc = CONCAT44(120.0 - local_620,50.0 - local_59c);
                   local_b4 = 60.0 - local_5e0;
-                  fVar19 = (float10)noise2d_sample(fVar23,local_5b0,fVar20,local_5a0);
+                  fVar19 = (double)noise2d_sample(fVar23,local_5b0,fVar20,local_5a0);
                   local_120 = (float)fVar19;
                   local_638 = (double)CONCAT44(local_120,(undefined4)local_638);
                   local_128 = (float)_local_bc;
@@ -45761,11 +45722,9 @@ LAB_005dfd5c:
       do {
         local_5d4 = (float)(((double)(int)local_5c0 * 3.141592653589793 * 2.0) / local_6dc +
                            (double)fVar23);
-        dVar21 = (double)local_5d4;
-        libm_sse2_sin_precise();
+        dVar21 = libm_sse2_sin_precise((double)local_5d4);
         local_5bc = (float)dVar21;
-        dVar21 = (double)local_5d4;
-        libm_sse2_cos_precise();
+        dVar21 = libm_sse2_cos_precise((double)local_5d4);
         local_200 = (float)dVar21;
         fStack_1fc = local_5bc;
         fVar23 = local_5bc * local_5cc;
@@ -46090,11 +46049,9 @@ LAB_005e21cc:
           local_5e8 = (double)(longlong)local_668 * 1.52587890625e-05;
           local_6dc = (double)((float)local_5ac * local_648 + (float)(int)local_5d0);
           local_618 = (float)(int)local_5b4 * 3.1415927 * 0.25 + local_5d4;
-          dVar21 = (double)local_618;
-          libm_sse2_sin_precise();
+          dVar21 = libm_sse2_sin_precise((double)local_618);
           local_5e0 = (float)dVar21;
-          dVar21 = (double)local_618;
-          libm_sse2_cos_precise();
+          dVar21 = libm_sse2_cos_precise((double)local_618);
           local_17c = (float)dVar21;
           local_174 = 0;
           fStack_178 = local_5e0;
@@ -46393,12 +46350,10 @@ LAB_005e2882:
         local_70c = (double)(fVar23 * (float)local_5ac + (float)(int)local_5d0);
         fVar23 = ((float)(int)local_5ec * 3.1415927 * 2.0) / (float)(int)local_5e0 + local_630._4_4_
         ;
-        dVar21 = (double)fVar23;
         local_604._4_4_ = fVar23;
-        libm_sse2_sin_precise();
+        dVar21 = libm_sse2_sin_precise((double)fVar23);
         local_5c8 = (float)dVar21;
-        dVar21 = (double)local_604._4_4_;
-        libm_sse2_cos_precise();
+        dVar21 = libm_sse2_cos_precise((double)local_604._4_4_);
         local_1f4 = (float)dVar21;
         fStack_1f0 = local_5c8;
         local_8c = CONCAT44(local_5c8 * local_5cc,local_1f4 * local_5cc);
@@ -46514,19 +46469,15 @@ LAB_005e2882:
         local_70c = (double)((float)local_5ac * fVar23 + (float)(int)local_5d0);
         local_594 = ((float)(int)local_5bc * 3.1415927 * 2.0) / (float)(int)local_5e0 +
                     local_604._4_4_;
-        dVar21 = (double)local_594;
-        libm_sse2_sin_precise();
+        dVar21 = libm_sse2_sin_precise((double)local_594);
         local_644 = (float)dVar21;
-        dVar21 = (double)local_594;
-        libm_sse2_cos_precise();
+        dVar21 = libm_sse2_cos_precise((double)local_594);
         local_1a0 = (float)dVar21;
         fStack_19c = local_644;
         local_630 = (double)CONCAT44(local_594 + 1.5707964,(undefined4)local_630);
-        dVar21 = (double)(local_594 + 1.5707964);
-        libm_sse2_sin_precise();
+        dVar21 = libm_sse2_sin_precise((double)(local_594 + 1.5707964));
         local_5c0 = (float)dVar21;
-        dVar21 = (double)local_630._4_4_;
-        libm_sse2_cos_precise();
+        dVar21 = libm_sse2_cos_precise((double)local_630._4_4_);
         local_5f0 = (float)dVar21;
         local_74 = CONCAT44(fStack_19c * local_5cc,local_1a0 * local_5cc);
         local_1c8 = local_198 * local_5cc;
@@ -46704,11 +46655,9 @@ LAB_005e2882:
       local_654 = local_654 + 0.9424778;
       local_604 = (double)CONCAT44(((float)(int)local_628 * 0.7) / 30.0 + 0.3,(undefined4)local_604)
       ;
-      dVar21 = (double)local_654;
-      libm_sse2_cos_precise();
+      dVar21 = libm_sse2_cos_precise((double)local_654);
       local_630 = (double)CONCAT44((float)dVar21 * local_594,(undefined4)local_630);
-      dVar21 = (double)local_654;
-      libm_sse2_sin_precise();
+      dVar21 = libm_sse2_sin_precise((double)local_654);
       fVar20 = (1.0 - local_604._4_4_) * 2.0;
       local_614 = (double)(local_604._4_4_ * (float)local_5ac + (float)(int)local_5d0);
       local_6e4 = (double)(int)local_5d8 + (double)(fVar20 * local_630._4_4_);
@@ -47059,25 +47008,25 @@ LAB_005ee430:
 float * World_getColumnDataAt(float *out_rgb,int x,int z)
 
 {
-  float10 fVar1;
-  float10 fVar2;
+  float fVar1;
+  float fVar2;
   float fVar3;
   float fVar4;
   float fVar5;
   float fVar6;
   float r;
   
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)x * 0.04,(double)z * 0.04);
+  fVar1 = (float)perlinNoise2D_cosInterp((double)x * 0.04,(double)z * 0.04);
   fVar3 = ((float)fVar1 + 1.0) * 0.5;
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)x * 0.005 + 45645.0,(double)z * 0.005 + 456456.0
+  fVar1 = (float)perlinNoise2D_cosInterp((double)x * 0.005 + 45645.0,(double)z * 0.005 + 456456.0
                                );
   r = -((float)fVar1 * 120.0);
   if (0.0 < r) {
     r = 0.0;
   }
-  fVar2 = (float10)perlinNoise2D_cosInterp((double)x * 0.02 + 89648.0,(double)z * 0.02 + 1649.0);
+  fVar2 = (float)perlinNoise2D_cosInterp((double)x * 0.02 + 89648.0,(double)z * 0.02 + 1649.0);
   fVar4 = (float)fVar2 * 80.0 + 1.0;
-  fVar2 = (float10)perlinNoise2D_cosInterp((double)x * 0.005 + 342.0,(double)z * 0.005 + 23423.0);
+  fVar2 = (float)perlinNoise2D_cosInterp((double)x * 0.005 + 342.0,(double)z * 0.005 + 23423.0);
   fVar6 = 1.0 - fVar3;
   fVar5 = fVar4 * fVar3;
   r = fVar5 + fVar6 * 200.0 + r;
@@ -47127,7 +47076,7 @@ void World_appendMeshBatch(undefined4 x,undefined4 y,int owner)
   int iVar4;
   int iVar5;
   int world;
-  float10 fVar6;
+  float fVar6;
   void *local_14;
   void *local_10;
   undefined1 *puStack_c;
@@ -47211,7 +47160,7 @@ void World_appendMeshBatch(undefined4 x,undefined4 y,int owner)
     }
     *(undefined4 *)(iVar4 + 0x198) = x;
     *(undefined4 *)(iVar4 + 0x19c) = y;
-    fVar6 = (float10)curve_diminishing01(*(undefined4 *)(behavior_list + 0x1138));
+    fVar6 = (float)curve_diminishing01(*(undefined4 *)(behavior_list + 0x1138));
     *(float *)(iVar4 + 0x178) = ((float)fVar6 * 0.5 + 1.0) * *(float *)(iVar4 + 0x178);
     *(undefined4 *)(behavior_list + 0x11c8) = *(undefined4 *)(iVar4 + 8);
     *(undefined4 *)(behavior_list + 0x11cc) = *(undefined4 *)(iVar4 + 0xc);
@@ -47260,7 +47209,7 @@ void World_findNearestObject(int x,int z)
   int extraout_ECX;
   int extraout_ECX_00;
   int iVar3;
-  float10 fVar4;
+  float fVar4;
   double dVar5;
   double dVar6;
   double dVar7;
@@ -47290,14 +47239,14 @@ void World_findNearestObject(int x,int z)
     iVar3 = cell_x + -1;
     if ((-1 < iVar3) &&
        ((iVar3 < 0x400 && (*(int *)(world + 0x4000bc + (iVar3 * 0x400 + cell_z) * 4) != 0)))) {
-      fVar4 = (float10)vec3_dot_or_distance();
+      fVar4 = (float)vec3_dot_or_distance();
       best = (float)fVar4;
       cell_x = extraout_ECX;
     }
     iVar3 = cell_x + 1;
     if (((-1 < iVar3) && (iVar3 < 0x400)) &&
        (*(int *)(world + 0x4000bc + (iVar3 * 0x400 + cell_z) * 4) != 0)) {
-      fVar4 = (float10)vec3_dot_or_distance();
+      fVar4 = (float)vec3_dot_or_distance();
       if ((best < 0.0) || ((float)fVar4 < best)) {
         best = (float)fVar4;
       }
@@ -47305,7 +47254,7 @@ void World_findNearestObject(int x,int z)
     iVar3 = cell_z + -1;
     if (((-1 < iVar3) && (iVar3 < 0x400)) &&
        (*(int *)(world + 0x4000bc + (iVar3 + iVar2) * 4) != 0)) {
-      fVar4 = (float10)vec3_dot_or_distance();
+      fVar4 = (float)vec3_dot_or_distance();
       iVar2 = extraout_ECX_00;
       if ((best < 0.0) || ((float)fVar4 < best)) {
         best = (float)fVar4;
@@ -47314,7 +47263,7 @@ void World_findNearestObject(int x,int z)
     iVar3 = cell_z + 1;
     if (((-1 < iVar3) && (iVar3 < 0x400)) &&
        (*(int *)(world + 0x4000bc + (iVar2 + iVar3) * 4) != 0)) {
-      fVar4 = (float10)vec3_dot_or_distance();
+      fVar4 = (float)vec3_dot_or_distance();
       if ((best < 0.0) || ((float)fVar4 < best)) {
         best = (float)fVar4;
       }
@@ -47356,8 +47305,8 @@ void World_getRegionCellPtr(int x,int z)
   int iVar13;
   int iVar14;
   uint *puVar15;
-  float10 fVar16;
-  float10 fVar17;
+  float fVar16;
+  float fVar17;
   float fVar18;
   float fVar19;
   uint *best;
@@ -47396,8 +47345,8 @@ joined_r0x005ef0e4:
       iVar10 = iVar5;
     } while (iVar14 <= iVar6);
     if (bVar3) {
-      fVar16 = (float10)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
-      fVar17 = (float10)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
+      fVar16 = (float)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
+      fVar17 = (float)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
       uVar7 = (uint)((float)x + (float)fVar16 * 3.0 * 256.0);
       puVar15 = (uint *)0x0;
       best = (uint *)0x0;
@@ -47480,12 +47429,12 @@ LAB_005ef58b:
 
 
 /* [AUDIT] proposed: vec3_dot_or_distance  (confidence: med)
- * purpose: Computes a scalar (dot/distance) from three double* vectors, returns float10
+ * purpose: Computes a scalar (dot/distance) from three double* vectors, returns float
  * vars: x/2/3 double* vecs; no callees
  */
 /* Global::vec3_dot_or_distance @ 005ef5a0 */
 
-float10 vec3_dot_or_distance(double *p,double *a,double *b)
+float vec3_dot_or_distance(double *p,double *a,double *b)
 
 {
   double dVar1;
@@ -47500,20 +47449,20 @@ float10 vec3_dot_or_distance(double *p,double *a,double *b)
   dVar2 = b[1] - p[1];
   dVar1 = dVar4 * dVar4 + dVar5 * dVar5;
   if (dVar1 < 9.999999682655225e-21) {
-    return (float10)(float)(dVar2 * dVar2 + dVar3 * dVar3);
+    return (float)(float)(dVar2 * dVar2 + dVar3 * dVar3);
   }
   dVar1 = (dVar2 * dVar5 + dVar3 * dVar4) / dVar1;
   if (dVar1 <= 0.0) {
-    return (float10)(float)(dVar2 * dVar2 + dVar3 * dVar3);
+    return (float)(float)(dVar2 * dVar2 + dVar3 * dVar3);
   }
   if (1.0 <= dVar1) {
     dVar1 = b[1] - a[1];
     dVar2 = *b - *a;
-    return (float10)(float)(dVar1 * dVar1 + dVar2 * dVar2);
+    return (float)(float)(dVar1 * dVar1 + dVar2 * dVar2);
   }
   dVar3 = dVar3 - dVar4 * dVar1;
   dVar2 = dVar2 - dVar5 * dVar1;
-  return (float10)(float)(dVar2 * dVar2 + dVar3 * dVar3);
+  return (float)(float)(dVar2 * dVar2 + dVar3 * dVar3);
 }
 
 
@@ -47628,65 +47577,65 @@ void World_copyCellRecord(int *a,int *b)
 
 
 /* [AUDIT] proposed: noise2d_sample  (confidence: med)
- * purpose: Returns a noise/height sample (float10) for integer coords via GameController_sampleTemperatureGrid
+ * purpose: Returns a noise/height sample (float) for integer coords via GameController_sampleTemperatureGrid
  * vars: a..3 coords; GameController_sampleTemperatureGrid noise base
  */
 /* Global::noise2d_sample @ 005efdb0 */
 
-float10 noise2d_sample(int x,int y,int z)
+float noise2d_sample(int x,int y,int z)
 
 {
   int cell;
-  float10 fVar2;
-  float10 fVar3;
+  float fVar2;
+  float fVar3;
   float fVar4;
   float fVar5;
   
   cell = world_getChunkCell256();
   if (cell == 0) {
-    fVar2 = (float10)GameController_sampleTemperatureGrid(x,y);
+    fVar2 = (float)GameController_sampleTemperatureGrid(x,y);
     fVar5 = (float)fVar2;
   }
   else {
     fVar5 = *(float *)(cell + 4);
   }
-  fVar2 = (float10)perlinNoise2D_cosInterp((double)((float)y * 0.2 + 534.0),
+  fVar2 = (float)perlinNoise2D_cosInterp((double)((float)y * 0.2 + 534.0),
                                 (double)((float)z * 0.2 + 13.0));
-  fVar3 = (float10)perlinNoise2D_cosInterp((double)x * 0.05 + 4343.0,(double)z * 0.1 + 84734.0);
+  fVar3 = (float)perlinNoise2D_cosInterp((double)x * 0.05 + 4343.0,(double)z * 0.1 + 84734.0);
   fVar4 = ((float)fVar2 * 0.1 + (float)fVar3) * 0.7 + 0.2;
   if (fVar4 * fVar5 <= 1.0) {
     cell = world_getChunkCell256();
     if (cell == 0) {
-      fVar2 = (float10)GameController_sampleTemperatureGrid(x,y);
+      fVar2 = (float)GameController_sampleTemperatureGrid(x,y);
       fVar5 = (float)fVar2;
     }
     else {
       fVar5 = *(float *)(cell + 4);
     }
     if (fVar4 * fVar5 < 0.0) {
-      return (float10)0.0;
+      return (float)0.0;
     }
   }
   cell = world_getChunkCell256();
   if (cell == 0) {
-    fVar2 = (float10)GameController_sampleTemperatureGrid(x,y);
+    fVar2 = (float)GameController_sampleTemperatureGrid(x,y);
     fVar5 = (float)fVar2;
   }
   else {
     fVar5 = *(float *)(cell + 4);
   }
   if (1.0 < fVar4 * fVar5) {
-    return (float10)1.0;
+    return (float)1.0;
   }
   cell = world_getChunkCell256();
   if (cell == 0) {
-    fVar2 = (float10)GameController_sampleTemperatureGrid(x,y);
+    fVar2 = (float)GameController_sampleTemperatureGrid(x,y);
     fVar5 = (float)fVar2;
   }
   else {
     fVar5 = *(float *)(cell + 4);
   }
-  return (float10)(fVar4 * fVar5);
+  return (float)(fVar4 * fVar5);
 }
 
 
@@ -47704,7 +47653,7 @@ void World_placeObjectWithSpacing(uint x,uint z,float base)
   int iVar1;
   longlong *plVar2;
   uint uVar3;
-  float10 fVar4;
+  float fVar4;
   double dVar5;
   float fVar6;
   undefined1 auStack_90 [4];
@@ -47740,18 +47689,18 @@ void World_placeObjectWithSpacing(uint x,uint z,float base)
   local_6c = x;
   local_84 = z;
   local_68 = base;
-  fVar4 = (float10)perlinNoise2D_cosInterp(local_58,local_60);
+  fVar4 = (float)perlinNoise2D_cosInterp(local_58,local_60);
   local_80 = (float)fVar4;
   local_8c = 1.0 - local_80 * local_80;
-  fVar4 = (float10)perlinNoise2D_cosInterp((double)*(int *)(local_78 + 0x8001dc) + local_58 + 843.0,
+  fVar4 = (float)perlinNoise2D_cosInterp((double)*(int *)(local_78 + 0x8001dc) + local_58 + 843.0,
                                 (double)*(int *)(local_78 + 0x8001e0) + local_60 + 984.0);
   local_80 = (float)fVar4 * 0.1;
-  fVar4 = (float10)perlinNoise2D_cosInterp((double)(int)x * 0.0025 +
+  fVar4 = (float)perlinNoise2D_cosInterp((double)(int)x * 0.0025 +
                                 (double)*(int *)(local_78 + 0x8001dc),
                                 (double)(int)z * 0.0025 +
                                 (double)*(int *)(local_78 + 0x8001e0));
   local_88 = 1.0 - ABS(local_80 + (float)fVar4) * ((1.0 - local_8c * local_8c) * 1.3 + 2.0);
-  fVar4 = (float10)perlinNoise2D_cosInterp((double)(int)x * 0.005 + 94.0,
+  fVar4 = (float)perlinNoise2D_cosInterp((double)(int)x * 0.005 + 94.0,
                                 (double)(int)z * 0.005 + 874.0);
   local_8c = (float)fVar4;
   local_88 = local_88 * (local_8c * 0.4 + 0.6);
@@ -47762,7 +47711,7 @@ void World_placeObjectWithSpacing(uint x,uint z,float base)
     local_4c = ((int)local_84 >> 0x1f) << 0x10 | local_84 >> 0x10;
     local_50 = local_84 << 0x10;
     local_58 = (double)CONCAT44(uVar3 << 0x10 | x >> 0x10,x << 0x10);
-    fVar4 = (float10)vec3_distanceSquared(&local_58,&local_50);
+    fVar4 = (float)vec3_distanceSquared(&local_58,&local_50);
     local_8c = (float)fVar4;
     local_80 = 0.5;
     if (local_88 < 1.0) {
@@ -47775,8 +47724,7 @@ void World_placeObjectWithSpacing(uint x,uint z,float base)
     }
     if (0.36 < local_8c) {
       if (local_8c < 1.0) {
-        dVar5 = (double)local_8c;
-        libm_sse2_sqrt_precise();
+        dVar5 = libm_sse2_sqrt_precise((double)local_8c);
         fVar6 = ((float)dVar5 - 0.6) / 0.39999998;
         fVar6 = 1.0 - fVar6 * fVar6;
         local_88 = fVar6 * fVar6 * local_80 + local_88;
@@ -47791,21 +47739,21 @@ void World_placeObjectWithSpacing(uint x,uint z,float base)
     }
   }
   if (0.0 <= local_88) {
-    fVar4 = (float10)WorldInfo_sampleTerrainHeight();
+    fVar4 = (float)WorldInfo_sampleTerrainHeight();
     local_8c = (float)fVar4;
     fVar6 = local_8c * 2.0;
     if (1.0 < fVar6) {
       fVar6 = 1.0;
     }
     local_80 = (fVar6 * 3.0 * fVar6 - fVar6 * 2.0 * fVar6 * fVar6) * local_88;
-    fVar4 = (float10)WorldInfo_rotateAndPlace();
+    fVar4 = (float)WorldInfo_rotateAndPlace();
     local_8c = (float)fVar4;
     fVar6 = local_8c;
     if (1.0 < local_8c) {
       fVar6 = 1.0;
     }
     local_68 = (fVar6 * 3.0 * fVar6 - fVar6 * 2.0 * fVar6 * fVar6) * local_80;
-    fVar4 = (float10)Terrain_sampleHeightAtWorldXY(x,local_84);
+    fVar4 = (float)Terrain_sampleHeightAtWorldXY(x,local_84);
     local_8c = (float)fVar4;
     fVar6 = local_8c * 2.0;
     if (1.0 < local_8c * 2.0) {
@@ -47824,7 +47772,7 @@ void World_placeObjectWithSpacing(uint x,uint z,float base)
       local_68 = (float)(local_84 << 0x10);
       local_7c = uVar3 << 0x10 | x >> 0x10;
       local_80 = (float)(x << 0x10);
-      fVar4 = (float10)vec3_distanceSquared(&local_80,&local_68);
+      fVar4 = (float)vec3_distanceSquared(&local_80,&local_68);
       fVar6 = 1.0 - (float)fVar4;
       local_8c = 0.0;
       if (0.0 < fVar6) {
@@ -47858,13 +47806,12 @@ void World_placeObjectWithSpacing(uint x,uint z,float base)
       local_74 = ((int)local_84 >> 0x1f) << 0x10 | local_84 >> 0x10;
       local_78 = local_84 << 0x10;
       local_60 = (double)CONCAT44(((int)x >> 0x1f) << 0x10 | x >> 0x10,x << 0x10);
-      fVar4 = (float10)vec3_distanceSquared(&local_60,&local_78);
+      fVar4 = (float)vec3_distanceSquared(&local_60,&local_78);
       local_8c = (float)fVar4;
       if (0.25 < local_8c) {
         fVar6 = local_88;
         if (local_8c < 1.0) {
-          dVar5 = (double)local_8c;
-          libm_sse2_sqrt_precise();
+          dVar5 = libm_sse2_sqrt_precise((double)local_8c);
           fVar6 = ((float)dVar5 - 0.5) * 2.0;
           fVar6 = 1.0 - fVar6 * fVar6;
           fVar6 = (1.0 - fVar6 * fVar6) * local_88;
@@ -48533,13 +48480,13 @@ undefined4 dtor_listBuffer(int cx,int cz,int level)
       (tile = *(int *)(world + 0x4000bc + (cx * 0x400 + cz) * 4), tile != 0)))) {
     local_8 = 0;
     cx = 0x6c;
-    if (*(float *)(tile + 0x10) <= 0.2) {
+    if (*(float *)(tile + 0x10) <= 0.2f) {
       cx = 0x72;
     }
     ExceptionList = &local_10;
     std_vector_push_back_4byte(&cx);
     cx = 0x77;
-    if (*(float *)(tile + 0x10) <= 0.2) {
+    if (*(float *)(tile + 0x10) <= 0.2f) {
       cx = 0x74;
     }
     std_vector_push_back_4byte(&cx);
@@ -48553,7 +48500,7 @@ undefined4 dtor_listBuffer(int cx,int cz,int level)
       std_vector_push_back_4byte(&cx);
     }
     if (0x32 < iVar2) {
-      if (0.2 < *(float *)(tile + 0x10) || *(float *)(tile + 0x10) == 0.2) {
+      if (0.2f < *(float *)(tile + 0x10) || *(float *)(tile + 0x10) == 0.2f) {
         cx = 0x70;
         if (*(char *)(tile + 8) != '\x01') {
           cx = 0x6f;
@@ -49156,13 +49103,14 @@ void World_buildParticleBatch(undefined4 param_1,undefined4 param_2,int count)
  */
 /* Global::Item_generateStats @ 005f8750 */
 
-undefined2 * Item_generateStats(undefined2 *out_item,undefined2 count)
+undefined2 * Item_generateStats(undefined2 *out_item,int count)
 
 {
   uint uVar1;
   int roll;
-  bool bVar3;
-  double dVar4;
+  undefined2 uVar3;
+  bool bVar4;
+  double dVar5;
   
   out_item[8] = 1;
   *out_item = 0;
@@ -49174,48 +49122,51 @@ undefined2 * Item_generateStats(undefined2 *out_item,undefined2 count)
   memset(out_item + 10,0,0x100);
   uVar1 = rand();
   uVar1 = uVar1 & 0x80000001;
-  bVar3 = uVar1 == 0;
+  bVar4 = uVar1 == 0;
   if ((int)uVar1 < 0) {
-    bVar3 = (uVar1 - 1 | 0xfffffffe) == 0xffffffff;
+    bVar4 = (uVar1 - 1 | 0xfffffffe) == 0xffffffff;
   }
-  if (!bVar3) {
-    rand();
-    dVar4 = 2.0;
-    libm_sse2_pow_precise();
+  if (!bVar4) {
+    roll = rand();
+    dVar5 = libm_sse2_pow_precise
+                      (2.0,(double)((((float)roll * 2.0) / 32767.0 + 1.0) * (float)count * 0.25))
+    ;
     roll = rand();
     *(undefined1 *)out_item = 0xc;
     *(undefined1 *)((int)out_item + 0xd) = 10;
-    out_item[8] = (short)(roll % ((int)dVar4 * 2 + 2));
+    out_item[8] = (short)(roll % ((int)dVar5 * 2 + 2));
     return out_item;
   }
-  out_item[8] = count;
+  uVar3 = (undefined2)count;
+  out_item[8] = uVar3;
   roll = rand();
   if (roll % 6 == 0) {
     roll = rand();
     switch(roll % 5) {
     case 0:
-      out_item[8] = count;
+      out_item[8] = uVar3;
       *out_item = 0x101;
       return out_item;
     case 1:
       *out_item = 0x401;
-      out_item[8] = count;
+      out_item[8] = uVar3;
     case 2:
-      rand();
-      dVar4 = 2.0;
-      libm_sse2_pow_precise();
+      roll = rand();
+      dVar5 = libm_sse2_pow_precise
+                        (2.0,(double)((((float)roll * 2.0) / 32767.0 + 1.0) * (float)count * 0.25
+                                     ));
       roll = rand();
       *(undefined1 *)out_item = 0xc;
       *(undefined1 *)((int)out_item + 0xd) = 0xc;
-      out_item[8] = (short)(roll % ((int)dVar4 * 2 + 2));
+      out_item[8] = (short)(roll % ((int)dVar5 * 2 + 2));
       return out_item;
     case 3:
-      out_item[8] = count;
+      out_item[8] = uVar3;
       *out_item = 0x701;
       return out_item;
     case 4:
       *out_item = 0x501;
-      out_item[8] = count;
+      out_item[8] = uVar3;
     }
   }
   else {
@@ -49256,9 +49207,9 @@ float * vec3_store4(float *out_rgb,int x,int z,int level)
   float fVar1;
   int iVar2;
   int in_ECX;
-  float10 fVar3;
-  float10 fVar4;
-  float10 fVar5;
+  float fVar3;
+  float fVar4;
+  float fVar5;
   float fVar6;
   float fVar7;
   float fVar8;
@@ -49268,11 +49219,11 @@ float * vec3_store4(float *out_rgb,int x,int z,int level)
   float local_18;
   float local_8;
   
-  fVar3 = (float10)perlinNoise2D_cosInterp((double)z * 0.1 + 98984.0,(double)level * 0.4);
-  fVar4 = (float10)perlinNoise2D_cosInterp((double)x * 0.1,(double)level * 0.4);
+  fVar3 = (float)perlinNoise2D_cosInterp((double)z * 0.1 + 98984.0,(double)level * 0.4);
+  fVar4 = (float)perlinNoise2D_cosInterp((double)x * 0.1,(double)level * 0.4);
   iVar2 = world_getChunkCell256();
   if (iVar2 == 0) {
-    fVar5 = (float10)GameController_sampleHumidityGrid(x,z);
+    fVar5 = (float)GameController_sampleHumidityGrid(x,z);
     fVar8 = (float)fVar5;
   }
   else {
@@ -49288,7 +49239,7 @@ float * vec3_store4(float *out_rgb,int x,int z,int level)
   if (0.5 <= fVar8) {
     if (0.75 < fVar8) {
       fVar8 = (fVar8 - 0.75) * 4.0;
-      fVar5 = (float10)perlinNoise2D_cosInterp((double)fVar8 * 0.001 + 6544.0,(double)z * 0.001 + 123.0);
+      fVar5 = (float)perlinNoise2D_cosInterp((double)fVar8 * 0.001 + 6544.0,(double)z * 0.001 + 123.0);
       local_18 = (1.0 - fVar8) * 120.0;
       local_8 = (1.0 - fVar8) * 130.0 + fVar8 * 100.0;
       local_28 = local_18 + fVar8 * 200.0;
@@ -49302,7 +49253,7 @@ float * vec3_store4(float *out_rgb,int x,int z,int level)
     local_18 = fVar9 * 20.0 + fVar8 * 160.0;
     local_8 = fVar9 * 50.0 + fVar8 * 170.0;
   }
-  fVar5 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80022c) + (double)x * 0.005,
+  fVar5 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80022c) + (double)x * 0.005,
                                 (double)*(int *)(in_ECX + 0x800230) + (double)z * 0.005);
   fVar8 = (((float)fVar3 + (float)fVar4) * 0.5 + 1.0) * 0.5 * 160.0;
   fVar10 = fVar8 + local_28 + 0.0;
@@ -49333,15 +49284,15 @@ float * vec3_store4(float *out_rgb,int x,int z,int level)
   }
   iVar2 = world_getChunkCell256();
   if (iVar2 == 0) {
-    fVar3 = (float10)World_getRegionCellPtr(x,z);
+    fVar3 = (float)World_getRegionCellPtr(x,z);
     fVar8 = (float)fVar3;
   }
   else {
     fVar8 = *(float *)(iVar2 + 0xc);
   }
   if (0.0 < fVar8) {
-    fVar3 = (float10)perlinNoise2D_cosInterp((double)x * 0.05,(double)z * 0.05);
-    fVar4 = (float10)perlinNoise2D_cosInterp((double)x * 0.02,(double)z * 0.02);
+    fVar3 = (float)perlinNoise2D_cosInterp((double)x * 0.05,(double)z * 0.05);
+    fVar4 = (float)perlinNoise2D_cosInterp((double)x * 0.02,(double)z * 0.02);
     fVar9 = (float)fVar3 * 0.1 + (float)fVar4;
     if (1.0 < fVar9) {
       fVar9 = 1.0;
@@ -49352,7 +49303,7 @@ float * vec3_store4(float *out_rgb,int x,int z,int level)
     fVar6 = 1.0 - fVar8;
     fVar7 = fVar7 * fVar7 * fVar7 * fVar7 * fVar7;
     fVar9 = *out_rgb;
-    fVar3 = (float10)perlinNoise2D_cosInterp((double)x * 0.1,(double)z * 0.1);
+    fVar3 = (float)perlinNoise2D_cosInterp((double)x * 0.1,(double)z * 0.1);
     *out_rgb = fVar9 * fVar6 + (fVar7 * 200.0 + 10.0) * fVar8;
     out_rgb[1] = fVar10 * fVar6 + (((float)fVar3 + 1.0) * fVar7 * 50.0 + 10.0) * fVar8;
     out_rgb[2] = fVar1 * fVar6 + fVar8 * 10.0;
@@ -49373,21 +49324,21 @@ float * vec3_computeNoiseOffset(float *out_rgb,int x,int z)
 
 {
   int in_ECX;
-  float10 fVar1;
-  float10 fVar2;
+  float fVar1;
+  float fVar2;
   float fVar3;
   float fVar4;
   float fVar5;
   float fVar6;
   float fVar7;
   
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800274) + (double)x * 0.03,
+  fVar1 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800274) + (double)x * 0.03,
                                 (double)*(int *)(in_ECX + 0x800278) + (double)z * 0.03);
-  fVar2 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80027c) + (double)x * 0.003,
+  fVar2 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80027c) + (double)x * 0.003,
                                 (double)*(int *)(in_ECX + 0x800280) + (double)z * 0.003);
   fVar4 = ((float)fVar1 + 1.0) * 0.5 * 80.0;
   fVar3 = ((float)fVar2 + 1.0) * 0.5;
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)x * 0.01 + 493.0,(double)z * 0.01 + 789.0);
+  fVar1 = (float)perlinNoise2D_cosInterp((double)x * 0.01 + 493.0,(double)z * 0.01 + 789.0);
   fVar5 = 1.0 - fVar3;
   fVar6 = fVar5 * 255.0 + fVar3 * 255.0 + fVar4;
   fVar7 = fVar5 * ((float)fVar1 * 40.0 + 200.0) + fVar3 * 150.0 + fVar4;
@@ -49484,13 +49435,13 @@ undefined4 get_const_dword_b(void)
 float * vec2_store(float *out_rgb,int x,int z)
 
 {
-  float10 fVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
   float fVar5;
   
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)x * 0.04,(double)z * 0.04);
+  fVar1 = (float)perlinNoise2D_cosInterp((double)x * 0.04,(double)z * 0.04);
   fVar3 = ((float)fVar1 + 1.0) * 0.5;
   fVar2 = 1.0 - fVar3;
   fVar4 = fVar3 * 190.0 + fVar2 * 100.0;
@@ -49535,26 +49486,26 @@ float * vec3_store4_b(float *out_rgb,int x,int z,int depth)
 
 {
   int in_ECX;
-  float10 fVar1;
-  float10 fVar2;
-  float10 fVar3;
-  float10 fVar4;
-  float10 fVar5;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
   double dVar6;
   double dVar7;
   float fVar8;
   float fVar9;
   float fVar10;
   
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)z * 0.01 + 98984.0,(double)depth * 0.3 + 8437.0);
-  fVar2 = (float10)perlinNoise2D_cosInterp((double)x * 0.01,(double)depth * 0.3);
+  fVar1 = (float)perlinNoise2D_cosInterp((double)z * 0.01 + 98984.0,(double)depth * 0.3 + 8437.0);
+  fVar2 = (float)perlinNoise2D_cosInterp((double)x * 0.01,(double)depth * 0.3);
   dVar7 = (double)x * 0.005;
   dVar6 = (double)z * 0.005;
-  fVar3 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800234) + dVar7,
+  fVar3 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800234) + dVar7,
                                 (double)*(int *)(in_ECX + 0x800238) + dVar6);
-  fVar4 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80023c) + dVar7,
+  fVar4 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x80023c) + dVar7,
                                 (double)*(int *)(in_ECX + 0x800240) + dVar6);
-  fVar5 = (float10)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800244) + dVar7,
+  fVar5 = (float)perlinNoise2D_cosInterp((double)*(int *)(in_ECX + 0x800244) + dVar7,
                                 (double)*(int *)(in_ECX + 0x800248) + dVar6);
   fVar8 = (((float)fVar1 + (float)fVar2) * 0.5 + 1.0) * 0.5 * 200.0 + 50.0;
   fVar9 = fVar8 + (float)fVar3 * 20.0;
@@ -49683,18 +49634,18 @@ void copy_two_int_ptrs(int *px,int *py)
  */
 /* Global::GameController_entityDistanceSq @ 005fa4c0 */
 
-float10 GameController_entityDistanceSq(undefined4 x,undefined4 y)
+float GameController_entityDistanceSq(undefined4 x,undefined4 y)
 
 {
-  float10 fVar1;
+  float fVar1;
   float inv;
   
-  fVar1 = (float10)vec3_distanceSquared(x,y);
-  inv = 1.0 - (float)fVar1;
-  if (inv <= 0.0) {
-    return (float10)0;
+  fVar1 = (float)vec3_distanceSquared(x,y);
+  inv = 1.0f - (float)fVar1;
+  if (inv <= 0.0f) {
+    return (float)0;
   }
-  return (float10)(inv * inv);
+  return (float)(inv * inv);
 }
 
 
@@ -50935,13 +50886,11 @@ LAB_006095eb:
   local_200 = local_2b4;
   fStack_1fc = local_2b0;
   if (2500.0 < fVar23) {
-    dVar22 = (double)fVar23;
-    libm_sse2_sqrt_precise();
+    dVar22 = libm_sse2_sqrt_precise((double)fVar23);
     local_124 = (1.0 / (float)dVar22) * local_2c4 * 50.0;
     local_120 = (1.0 / (float)dVar22) * local_2c8 * 50.0;
   }
-  dVar22 = (double)(local_120 * local_120 + local_124 * local_124 + 0.5625);
-  libm_sse2_sqrt_precise();
+  dVar22 = libm_sse2_sqrt_precise((double)(local_120 * local_120 + local_124 * local_124 + 0.5625));
   lVar26 = CONCAT44(local_2a8,local_290);
   lVar25 = CONCAT44(local_2c8,local_278);
   local_2c4 = 0.0;
@@ -50985,8 +50934,7 @@ LAB_006095eb:
       local_1ec[1] = local_2c8;
       fVar23 = local_2c8 * local_2c8 + local_1ec[0] * local_1ec[0] + local_21c;
       if (0.0 < fVar23) {
-        dVar22 = (double)fVar23;
-        libm_sse2_sqrt_precise();
+        dVar22 = libm_sse2_sqrt_precise((double)fVar23);
         lVar26 = CONCAT44(local_2a8,local_290);
         local_1ec[0] = (1.0 / (float)dVar22) * local_1ec[0];
         local_1ec[1] = (1.0 / (float)dVar22) * local_2c8;
@@ -51963,11 +51911,9 @@ LAB_0060b060:
           local_b4 = fVar19 + fVar21 + 1.0;
           local_2c0 = *(float *)((int)fVar20 + 0x98);
           local_294 = -local_2c0 * 0.017453292;
-          dVar18 = (double)local_294;
-          libm_sse2_cos_precise();
+          dVar18 = libm_sse2_cos_precise((double)local_294);
           local_2bc = (float)dVar18;
-          dVar18 = (double)local_294;
-          libm_sse2_sin_precise();
+          dVar18 = libm_sse2_sin_precise((double)local_294);
           local_ec = (float)dVar18;
           fVar19 = local_ec * 0.0;
           local_150 = local_2d8 - *(uint *)((int)fVar20 + 0x80U);
@@ -52322,11 +52268,9 @@ LAB_0060c2a7:
   piVar12 = piVar2;
   if (0.0 <= fVar19) {
     local_2c0 = local_2c0 * 0.017453292;
-    dVar18 = (double)local_2c0;
-    libm_sse2_cos_precise();
+    dVar18 = libm_sse2_cos_precise((double)local_2c0);
     local_2bc = (float)dVar18;
-    dVar18 = (double)local_2c0;
-    libm_sse2_sin_precise();
+    dVar18 = libm_sse2_sin_precise((double)local_2c0);
     fVar22 = (float)dVar18;
     fVar19 = fVar22 * 0.0;
     iVar13 = 0;
@@ -52400,8 +52344,6 @@ LAB_0060baa3:
 }
 
 
-
- */
 
 
 /* Global::FUN_00624340 @ 00624340 */
@@ -54481,13 +54423,13 @@ void Widget_computeBoundsFloat(float *out_point)
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   matrix = (float *)AdaptionWidget_computeLayoutBounds(matrix_buf);
   fVar1 = matrix[5];
-  inv_w = 1.0 / (matrix[7] * 0.0 + matrix[3] * 0.0 + matrix[0xf]);
+  inv_w = 1.0f / (matrix[7] * 0.0f + matrix[3] * 0.0f + matrix[0xf]);
   fVar2 = matrix[1];
   fVar3 = matrix[0xd];
   fVar4 = *(float *)(*(int *)(self + 4) + 0xd8);
   *out_point = *(float *)(*(int *)(self + 4) + 0xd4) -
-             inv_w * (matrix[4] * 0.0 + *matrix * 0.0 + matrix[0xc]);
-  out_point[1] = fVar4 - inv_w * (fVar1 * 0.0 + fVar2 * 0.0 + fVar3);
+             inv_w * (matrix[4] * 0.0f + *matrix * 0.0f + matrix[0xc]);
+  out_point[1] = fVar4 - inv_w * (fVar1 * 0.0f + fVar2 * 0.0f + fVar3);
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
   return;
 }
@@ -54693,14 +54635,14 @@ void AdaptionWidget_getBoundsRect(float *out_size)
   fVar9 = (*(float *)(self + 0x74) + fVar10) - *(float *)(self + 100);
   fVar11 = (*(float *)(self + 0x7c) + fVar10) - *(float *)(self + 100);
   fVar6 = (*(float *)(self + 0x70) + fVar7) - fVar8;
-  if (fVar12 < 0.0) {
-    fVar12 = 0.0;
+  if (fVar12 < 0.0f) {
+    fVar12 = 0.0f;
   }
   if (fVar6 < fVar12) {
     fVar6 = fVar12;
   }
-  if (fVar11 < 0.0) {
-    fVar11 = 0.0;
+  if (fVar11 < 0.0f) {
+    fVar11 = 0.0f;
   }
   if (fVar9 < fVar11) {
     fVar9 = fVar11;
@@ -54738,9 +54680,9 @@ LAB_0062df4b:
     if (*(int *)(child + 0x40) != 0) {
       if (*(int *)(child + 0x40) != 0) {
         pfVar5 = (float *)AdaptionWidget_computeBoundsUnion(inv_matrix);
-        fVar8 = 1.0 / (pfVar5[7] * 0.0 + pfVar5[3] * 0.0 + pfVar5[0xf]);
-        fVar6 = (pfVar5[4] * 0.0 + *pfVar5 * 0.0 + pfVar5[0xc]) * fVar8 * -1.0;
-        fVar8 = (pfVar5[5] * 0.0 + pfVar5[1] * 0.0 + pfVar5[0xd]) * fVar8 * -1.0;
+        fVar8 = 1.0f / (pfVar5[7] * 0.0f + pfVar5[3] * 0.0f + pfVar5[0xf]);
+        fVar6 = (pfVar5[4] * 0.0f + *pfVar5 * 0.0f + pfVar5[0xc]) * fVar8 * -1.0f;
+        fVar8 = (pfVar5[5] * 0.0f + pfVar5[1] * 0.0f + pfVar5[0xd]) * fVar8 * -1.0f;
         local_cc = local_38 * fVar8 + local_48 * fVar6 + local_18;
         local_d0 = local_34 * fVar8 + local_44 * fVar6 + local_14;
         goto LAB_0062df4b;
@@ -54799,10 +54741,10 @@ void Widget_applyBoundsAndRefresh(void)
     }
     matrix = (float *)AdaptionWidget_computeLayoutBounds(local_50);
     clip_region = 0;
-    fVar7 = 1.0 / (matrix[7] * 0.0 + matrix[3] * 0.0 + matrix[0xf]);
-    fVar10 = (matrix[4] * 0.0 + *matrix * 0.0 + matrix[0xc]) * fVar7;
+    fVar7 = 1.0f / (matrix[7] * 0.0f + matrix[3] * 0.0f + matrix[0xf]);
+    fVar10 = (matrix[4] * 0.0f + *matrix * 0.0f + matrix[0xc]) * fVar7;
     pfVar6 = (float *)(self + 0x40);
-    fVar7 = (matrix[5] * 0.0 + matrix[1] * 0.0 + matrix[0xd]) * fVar7;
+    fVar7 = (matrix[5] * 0.0f + matrix[1] * 0.0f + matrix[0xd]) * fVar7;
     pos[0] = fVar10;
     pos[1] = fVar7;
     do {
@@ -54822,14 +54764,14 @@ void Widget_applyBoundsAndRefresh(void)
     fVar11 = (*(float *)(self + 0x70) + fVar7) - *(float *)(self + 0x60);
     fVar13 = (*(float *)(self + 0x74) + fVar10) - fVar12;
     fVar8 = (*(float *)(self + 0x7c) + fVar10) - fVar12;
-    if (fVar9 < 0.0) {
-      fVar9 = 0.0;
+    if (fVar9 < 0.0f) {
+      fVar9 = 0.0f;
     }
     if (fVar11 < fVar9) {
       fVar11 = fVar9;
     }
-    if (fVar8 < 0.0) {
-      fVar8 = 0.0;
+    if (fVar8 < 0.0f) {
+      fVar8 = 0.0f;
     }
     if (fVar13 < fVar8) {
       fVar13 = fVar8;
@@ -54845,14 +54787,14 @@ void Widget_applyBoundsAndRefresh(void)
     fVar12 = (*(float *)(self + 0x7c) + fVar2) - *(float *)(self + 100);
     fVar10 = (*(float *)(self + 0x70) + fVar9) - fVar1;
     fVar7 = (*(float *)(self + 0x74) + fVar2) - *(float *)(self + 100);
-    if (fVar11 < 0.0) {
-      fVar11 = 0.0;
+    if (fVar11 < 0.0f) {
+      fVar11 = 0.0f;
     }
     if (fVar10 < fVar11) {
       fVar10 = fVar11;
     }
-    if (fVar12 < 0.0) {
-      fVar12 = 0.0;
+    if (fVar12 < 0.0f) {
+      fVar12 = 0.0f;
     }
     if (fVar7 < fVar12) {
       fVar7 = fVar12;
@@ -55376,7 +55318,7 @@ void Widget_render_subtree(uint param_1)
   undefined4 unaff_EDI;
   int iVar13;
   double dVar14;
-  undefined1 auVar15 [16];
+  double dVar15;
   int *******pppppppiStack_12c;
   int ******ppppppiStack_128;
   int *******pppppppiStack_124;
@@ -55604,15 +55546,13 @@ LAB_006329ea:
   fStack_c0 = 1.0;
   if (cVar16 != '\0') {
     pppppiVar6 = self[0xf];
-    dVar14 = (double)(fStack_44 * fStack_44 + afStack_54[0] * afStack_54[0]);
     pppppppiStack_124 = (int *******)0x632f89;
-    libm_sse2_sqrt_precise();
-    auVar15._0_8_ = (double)(fStack_48 * fStack_48 + fStack_58 * fStack_58);
-    auVar15._8_8_ = 0;
+    dVar14 = libm_sse2_sqrt_precise((double)(fStack_44 * fStack_44 + afStack_54[0] * afStack_54[0]))
+    ;
     pppppppiStack_124 = (int *******)0x632fb9;
-    libm_sse2_sqrt_precise();
-    fVar18 = (((float)dVar14 + (float)auVar15._0_8_) * 0.5 *
-             (float)pppppiVar6[0x7d][(int)pppppiVar6[0x72]]) / 1.4;
+    dVar15 = libm_sse2_sqrt_precise((double)(fStack_48 * fStack_48 + fStack_58 * fStack_58));
+    fVar18 = (((float)dVar14 + (float)dVar15) * 0.5 * (float)pppppiVar6[0x7d][(int)pppppiVar6[0x72]]
+             ) / 1.4;
     fStack_c0 = fVar18;
     if (8.0 < fVar18) {
       fStack_f8 = 8.0 / fVar18;
@@ -56301,11 +56241,10 @@ void Node_project_bounds_recursive(float *out_min,float *out_max,float *matrix,c
     local_94 = (float *)(matrix[5] * 0.0 + matrix[1]);
     fVar9 = *matrix * 0.0 + matrix[4];
     fVar10 = matrix[1] * 0.0 + matrix[5];
-    dVar28 = (double)(fVar10 * fVar10 + fVar9 * fVar9);
-    libm_sse2_sqrt_precise();
+    dVar28 = libm_sse2_sqrt_precise((double)(fVar10 * fVar10 + fVar9 * fVar9));
     local_8c = (float *)(float)dVar28;
-    dVar28 = (double)((float)local_94 * (float)local_94 + local_90 * local_90);
-    libm_sse2_sqrt_precise();
+    dVar28 = libm_sse2_sqrt_precise
+                       ((double)((float)local_94 * (float)local_94 + local_90 * local_90));
     fVar10 = ((float)local_8c + (float)dVar28) *
              *(float *)(*(int *)(iVar1 + 500) + *(int *)(iVar1 + 0x1c8) * 4) * 0.5;
     local_70 = local_98 - fVar10;
@@ -56400,20 +56339,20 @@ void Node_transform_pair_to_screen(float *quad_a,float *quad_b)
   fVar3 = *quad_a;
   pfVar7 = quad_a + 1;
   pfVar1 = quad_b + 1;
-  local_24 = 1.0 / (local_4c * fVar2 + local_5c * fVar3 + local_2c);
+  local_24 = 1.0f / (local_4c * fVar2 + local_5c * fVar3 + local_2c);
   local_28 = (local_58 * fVar2 + bounds * fVar3 + local_38) * local_24;
   local_24 = (local_54 * fVar2 + local_64 * fVar3 + local_34) * local_24;
   fVar3 = *quad_b;
-  local_1c = 1.0 / (fVar2 * local_4c + fVar3 * local_5c + local_2c);
+  local_1c = 1.0f / (fVar2 * local_4c + fVar3 * local_5c + local_2c);
   local_20 = (fVar2 * local_58 + fVar3 * bounds + local_38) * local_1c;
   local_1c = (fVar2 * local_54 + fVar3 * local_64 + local_34) * local_1c;
   fVar2 = *pfVar1;
-  local_14 = 1.0 / (fVar2 * local_4c + fVar3 * local_5c + local_2c);
+  local_14 = 1.0f / (fVar2 * local_4c + fVar3 * local_5c + local_2c);
   local_18 = (fVar2 * local_58 + fVar3 * bounds + local_38) * local_14;
   local_14 = (fVar2 * local_54 + fVar3 * local_64 + local_34) * local_14;
   fVar3 = *quad_a;
   fVar4 = *quad_a;
-  local_c = 1.0 / (fVar2 * local_4c + *quad_a * local_5c + local_2c);
+  local_c = 1.0f / (fVar2 * local_4c + *quad_a * local_5c + local_2c);
   *quad_a = local_28;
   local_10 = (fVar2 * local_58 + fVar3 * bounds + local_38) * local_c;
   local_c = (fVar2 * local_54 + fVar4 * local_64 + local_34) * local_c;
@@ -56554,11 +56493,9 @@ void Node_compute_screen_aabb_recursive(float *out_min,float *out_max,float *mat
     fVar10 = local_40 * 0.0 + matrix_buf[0];
     local_98[2] = matrix_buf[1] * 0.0 + local_3c;
     local_98[0] = matrix_buf[0] * 0.0 + local_40;
-    dVar8 = (double)(fVar9 * fVar9 + fVar10 * fVar10);
-    libm_sse2_sqrt_precise();
+    dVar8 = libm_sse2_sqrt_precise((double)(fVar9 * fVar9 + fVar10 * fVar10));
     local_ac = (float)dVar8;
-    dVar8 = (double)(local_98[2] * local_98[2] + local_98[0] * local_98[0]);
-    libm_sse2_sqrt_precise();
+    dVar8 = libm_sse2_sqrt_precise((double)(local_98[2] * local_98[2] + local_98[0] * local_98[0]));
     local_ac = (local_ac + (float)dVar8) *
                *(float *)(*(int *)((int)(float)local_a0 + 500) +
                          *(int *)((int)(float)local_a0 + 0x1c8) * 4) * 0.5;
@@ -57100,7 +57037,7 @@ void Node_frustum_visibility_test(void)
   }
   style = *(int *)(self + 0x3c);
   if (((*(byte *)(style + 0x200) & 1) != 0) &&
-     (fVar11 = *(float *)(*(int *)(style + 500) + *(int *)(style + 0x1c8) * 4), 0.0 < fVar11)) {
+     (fVar11 = *(float *)(*(int *)(style + 500) + *(int *)(style + 0x1c8) * 4), 0.0f < fVar11)) {
     aabb_min = aabb_min - fVar11;
     local_c = local_c - fVar11;
     aabb_max = aabb_max + fVar11;
@@ -57116,14 +57053,14 @@ void Node_frustum_visibility_test(void)
   fVar17 = *(float *)(self + 0x5c) * local_c;
   local_1c = *(float *)(self + 0x7c);
   fVar19 = *(float *)(self + 0x5c) * local_14;
-  fVar6 = 1.0 / (fVar12 + fVar18 + fVar11);
+  fVar6 = 1.0f / (fVar12 + fVar18 + fVar11);
   fVar13 = (fVar4 + fVar3 + *(float *)(self + 0x78)) * fVar6;
   fVar6 = (fVar17 + fVar5 + local_1c) * fVar6;
   fVar7 = *(float *)(self + 0x54) * aabb_max;
   fVar14 = *(float *)(self + 100) * local_14;
   fVar8 = *(float *)(self + 0x48) * aabb_max;
   fVar9 = *(float *)(self + 0x4c) * aabb_max;
-  fVar10 = 1.0 / (fVar14 + fVar7 + *(float *)(self + 0x84));
+  fVar10 = 1.0f / (fVar14 + fVar7 + *(float *)(self + 0x84));
   fVar15 = (fVar8 + fVar20 + *(float *)(self + 0x78)) * fVar10;
   fVar10 = (fVar19 + fVar9 + *(float *)(self + 0x7c)) * fVar10;
   fVar16 = fVar15;
@@ -57136,7 +57073,7 @@ void Node_frustum_visibility_test(void)
     fVar15 = fVar6;
     fVar6 = fVar10;
   }
-  fVar10 = 1.0 / (fVar14 + fVar18 + fVar11);
+  fVar10 = 1.0f / (fVar14 + fVar18 + fVar11);
   fVar4 = (fVar20 + fVar4 + *(float *)(self + 0x78)) * fVar10;
   fVar10 = (fVar19 + fVar5 + *(float *)(self + 0x7c)) * fVar10;
   if (fVar4 < fVar13) {
@@ -57151,7 +57088,7 @@ void Node_frustum_visibility_test(void)
   if (fVar15 < fVar10) {
     fVar15 = fVar10;
   }
-  fVar4 = 1.0 / (fVar7 + fVar12 + fVar11);
+  fVar4 = 1.0f / (fVar7 + fVar12 + fVar11);
   fVar11 = fVar4 * (fVar8 + fVar3 + *(float *)(self + 0x78));
   fVar4 = fVar4 * (fVar9 + fVar17 + local_1c);
   if (fVar11 < fVar13) {
@@ -57166,8 +57103,8 @@ void Node_frustum_visibility_test(void)
   if (fVar15 < fVar4) {
     fVar15 = fVar4;
   }
-  if ((((0.0 <= fVar16) && (fVar13 < (float)*(int *)(*(int *)(self + 4) + 0x10c))) &&
-      (0.0 <= fVar15)) && (fVar6 < (float)*(int *)(*(int *)(self + 4) + 0x110))) {
+  if ((((0.0f <= fVar16) && (fVar13 < (float)*(int *)(*(int *)(self + 4) + 0x10c))) &&
+      (0.0f <= fVar15)) && (fVar6 < (float)*(int *)(*(int *)(self + 4) + 0x110))) {
     __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
     return;
   }
@@ -57719,7 +57656,7 @@ void FUN_00638610(void)
                (byte)*(undefined4 *)(iVar1 + 0x1f0) & 1);
   mat4_mulRight(&local_64,*(int *)(*(int *)(in_ECX + 0x148) + 0x38) + 0x1b0);
   fVar5 = local_60 * local_1c;
-  fVar6 = 1.0 / (local_18 * local_48 + local_1c * local_58 + local_28);
+  fVar6 = 1.0f / (local_18 * local_48 + local_1c * local_58 + local_28);
   local_1c = fVar6 * (local_54 * local_18 + local_64 * local_1c + local_34);
   local_18 = fVar6 * (local_50 * local_18 + fVar5 + local_30);
   fVar5 = local_24 * local_60;
@@ -57739,7 +57676,7 @@ void FUN_00638610(void)
       local_8 = 0xffffffff;
       std_string_FreeMember();
       local_60 = local_60 * local_1c;
-      fVar5 = 1.0 / (local_18 * local_48 + local_1c * local_58 + local_28);
+      fVar5 = 1.0f / (local_18 * local_48 + local_1c * local_58 + local_28);
       local_1c = fVar5 * (local_64 * local_1c + local_54 * local_18 + local_34);
       local_6c[0] = local_1c - local_74[0];
       local_18 = fVar5 * (local_60 + local_50 * local_18 + local_30);
@@ -57761,7 +57698,7 @@ void FUN_00638610(void)
       operator_delete(local_8c[0]);
     }
     local_60 = local_60 * local_1c;
-    fVar5 = 1.0 / (local_18 * local_48 + local_1c * local_58 + local_28);
+    fVar5 = 1.0f / (local_18 * local_48 + local_1c * local_58 + local_28);
     local_1c = (local_64 * local_1c + local_54 * local_18 + local_34) * fVar5;
     local_18 = (local_60 + local_50 * local_18 + local_30) * fVar5;
     local_6c[0] = local_1c - local_6c[0];
@@ -57834,7 +57771,7 @@ void FUN_00638b60(float *param_1)
                    *(undefined4 *)(iVar1 + 0x1c8),*(undefined4 *)(iVar1 + 0x1e4),local_34,local_3c,
                    *(undefined4 *)(iVar1 + 0x1ec),*(byte *)(iVar1 + 0x1f0) & 1);
       lib_fn_639a60();
-      if (local_3c[0] * 0.7 + local_34[0] < *param_1) {
+      if (local_3c[0] * 0.7f + local_34[0] < *param_1) {
         *(int *)(in_ECX + 0x174) = iVar4 + 1;
       }
       iVar4 = iVar4 + 1;
@@ -58067,9 +58004,8 @@ void AdaptionWidget_draw_text_locked(undefined4 font_name,undefined4 param_2,und
 void plasma::SmoothMeshShape::ctor_0(undefined4 param_1,undefined4 name)
 
 {
-  uint uVar1;
   undefined4 *self;
-  double lod_base;
+  double dVar1;
   void *local_14;
   undefined1 *puStack_10;
   undefined4 local_c;
@@ -58077,7 +58013,6 @@ void plasma::SmoothMeshShape::ctor_0(undefined4 param_1,undefined4 name)
   local_c = 0xffffffff;
   puStack_10 = &LAB_006f5c78;
   local_14 = ExceptionList;
-  uVar1 = DAT_0076aa78 ^ (uint)&stack0xffffffe0;
   ExceptionList = &local_14;
   DiscreteAttribute<int>::ctor_1(param_1,name);
   local_c = 0;
@@ -58114,7 +58049,6 @@ void plasma::SmoothMeshShape::ctor_0(undefined4 param_1,undefined4 name)
   self[0x2e4] = 0;
   self[0x2e5] = 0;
   self[0x2e6] = 0;
-  lod_base = 2.0;
   self[0x2e7] = 0;
   self[0x2e8] = 0;
   self[0x2e9] = 0;
@@ -58142,10 +58076,10 @@ void plasma::SmoothMeshShape::ctor_0(undefined4 param_1,undefined4 name)
   self[0x2ff] = 0;
   self[0x300] = 0;
   self[0x301] = 0;
-  libm_sse2_sqrt_precise(uVar1);
+  dVar1 = libm_sse2_sqrt_precise(2.0);
   self[0x303] = 0xf;
   self[0x304] = 0;
-  self[0x302] = ((float)lod_base - 1.0) / ((float)lod_base * 0.5);
+  self[0x302] = ((float)dVar1 - 1.0) / ((float)dVar1 * 0.5);
   self[0x305] = 0;
   self[0x306] = 0;
   self[0x12] = 2;
@@ -58244,10 +58178,9 @@ void FUN_0063e020(int param_1,int param_2,float param_3,int param_4,int param_5)
   fStack_50 = -local_6c;
   local_74 = *(float *)(iVar7 + (int)local_e4 * 8) * param_3 +
              local_d4 * *(float *)(iVar7 + param_2 * 8);
-  dVar10 = (double)(fStack_50 * fStack_50 + fStack_68 * fStack_68);
   local_e8 = in_ECX;
   local_54 = fStack_68;
-  libm_sse2_sqrt_precise();
+  dVar10 = libm_sse2_sqrt_precise((double)(fStack_50 * fStack_50 + fStack_68 * fStack_68));
   fVar9 = local_e4;
   fVar12 = (*(float *)(iVar1 + 8 + param_2 * 8) + *(float *)(iVar1 + param_2 * 8)) * 0.5 -
            (*(float *)(iVar1 + 8 + (int)local_e4 * 8) + *(float *)(iVar1 + (int)local_e4 * 8)) * 0.5
@@ -58257,8 +58190,7 @@ void FUN_0063e020(int param_1,int param_2,float param_3,int param_4,int param_5)
            * 0.5;
   local_d8 = (*(float *)(iVar7 + (int)local_e4 * 8) - *(float *)(iVar7 + param_2 * 8)) *
              (float)dVar10;
-  dVar10 = (double)(fVar12 * fVar12 + fVar11 * fVar11);
-  libm_sse2_sqrt_precise();
+  dVar10 = libm_sse2_sqrt_precise((double)(fVar12 * fVar12 + fVar11 * fVar11));
   local_64 = -(local_d8 / (float)dVar10);
   iVar1 = *(int *)((int)local_e0 + *(int *)(local_e8 + 0xbd8));
   pfVar6 = (float *)((int)fVar9 * 0x10 + iVar1);
@@ -58279,11 +58211,9 @@ void FUN_0063e020(int param_1,int param_2,float param_3,int param_4,int param_5)
     local_d0 = (float)param_5 + 0.5;
     do {
       local_e4 = (((float)(int)local_d4 + 0.5) * 1.5707964) / local_d0 + local_d8;
-      dVar10 = (double)local_e4;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_e4);
       local_e0 = (float)dVar10;
-      dVar10 = (double)local_e4;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_e4);
       uVar13 = CONCAT44(fStack_78,local_7c);
       local_e4 = (float)dVar10;
       local_4c = CONCAT44(fStack_68,local_6c);
@@ -58544,10 +58474,9 @@ void FUN_0063ea00(int param_1,int param_2,float param_3,int param_4)
   local_34[0] = *(float *)(iVar2 + (int)local_58 * 8) * param_3 +
                 local_50 * *(float *)(iVar2 + param_2 * 8);
   local_3c = -local_24;
-  dVar8 = (double)(local_3c * local_3c + local_48 * local_48);
   local_4c = in_ECX;
   local_34[2] = local_48;
-  libm_sse2_sqrt_precise();
+  dVar8 = libm_sse2_sqrt_precise((double)(local_3c * local_3c + local_48 * local_48));
   fVar7 = (*(float *)(iVar1 + 0xc + param_2 * 8) + *(float *)(iVar1 + 4 + param_2 * 8)) * 0.5 -
           (*(float *)(iVar1 + 0xc + (int)local_58 * 8) + *(float *)(iVar1 + 4 + (int)local_58 * 8))
           * 0.5;
@@ -58555,8 +58484,7 @@ void FUN_0063ea00(int param_1,int param_2,float param_3,int param_4)
           (*(float *)(iVar1 + (int)local_58 * 8) + *(float *)(iVar1 + 8 + (int)local_58 * 8)) * 0.5;
   local_5c = (*(float *)(iVar2 + (int)local_58 * 8) - *(float *)(iVar2 + param_2 * 8)) *
              (float)dVar8;
-  dVar8 = (double)(fVar9 * fVar9 + fVar7 * fVar7);
-  libm_sse2_sqrt_precise();
+  dVar8 = libm_sse2_sqrt_precise((double)(fVar9 * fVar9 + fVar7 * fVar7));
   iVar1 = local_4c;
   local_5c = -(local_5c / (float)dVar8);
   if (param_4 != 0) {
@@ -58695,7 +58623,7 @@ void FUN_0063ef20(int param_1,int param_2,float param_3)
   iVar1 = *(int *)(in_ECX + 0xbcc);
   uVar6 = (param_2 + 2U) % (uint)(*(int *)(param_1 + 4 + iVar1) - *(int *)(param_1 + iVar1) >> 3);
   iVar2 = *(int *)(param_1 + iVar1);
-  fVar11 = 1.0 - param_3;
+  fVar11 = 1.0f - param_3;
   iVar9 = param_2 * 8;
   iVar1 = uVar6 * 8;
   local_10 = *(float *)(iVar9 + iVar2) * fVar11 + *(float *)(iVar1 + iVar2) * param_3;
@@ -58824,7 +58752,9 @@ void FUN_0063f3b0(int param_1,float param_2,float param_3)
   undefined8 *puVar12;
   int iVar13;
   int iVar14;
-  double dVar15;
+  float fVar15;
+  double dVar16;
+  float fVar17;
   undefined8 *local_6c;
   int local_68;
   uint local_64;
@@ -58868,13 +58798,12 @@ void FUN_0063f3b0(int param_1,float param_2,float param_3)
         uVar1 = *local_6c;
         local_14._0_4_ = (float)uVar1;
         local_14._4_4_ = (float)((ulonglong)uVar1 >> 0x20);
-        local_14._4_4_ = local_14._4_4_ - *(float *)(*(int *)(iVar14 + local_5c) + 4 + uVar9 * 8);
-        local_14._0_4_ = (float)local_14 - *(float *)(*(int *)(iVar14 + local_5c) + uVar9 * 8);
-        dVar15 = (double)(local_14._4_4_ * local_14._4_4_ + (float)local_14 * (float)local_14);
+        fVar15 = local_14._4_4_ - *(float *)(*(int *)(iVar14 + local_5c) + 4 + uVar9 * 8);
+        fVar17 = (float)local_14 - *(float *)(*(int *)(iVar14 + local_5c) + uVar9 * 8);
         local_14 = uVar1;
-        libm_sse2_sqrt_precise();
+        dVar16 = libm_sse2_sqrt_precise((double)(fVar15 * fVar15 + fVar17 * fVar17));
         local_6c = local_6c + 1;
-        local_38 = ((float)dVar15 * 2.0) /
+        local_38 = ((float)dVar16 * 2.0) /
                    (*(float *)(local_2c + local_48[1] * 4) + *(float *)(local_2c + uVar9 * 4)) +
                    local_38;
         local_48[1] = uVar10;
@@ -60074,8 +60003,7 @@ FUN_006414c0(int param_1,int param_2,float param_3,float param_4,int *param_5,fl
   iVar1 = *(int *)(*(int *)(in_ECX + 0xba8) + param_1 * 0xc);
   fVar4 = *(float *)(iVar1 + 4 + param_2 * 8) - *(float *)(iVar1 + 4 + uVar3 * 8);
   fVar6 = *(float *)(iVar1 + param_2 * 8) - *(float *)(iVar1 + uVar3 * 8);
-  dVar5 = (double)(fVar4 * fVar4 + fVar6 * fVar6);
-  libm_sse2_sqrt_precise();
+  dVar5 = libm_sse2_sqrt_precise((double)(fVar4 * fVar4 + fVar6 * fVar6));
   iVar1 = *(int *)(*(int *)(in_ECX + 0xb9c) + param_1 * 0xc);
   fVar4 = *(float *)(iVar1 + uVar3 * 4);
   fVar6 = *(float *)(iVar1 + param_2 * 4);
@@ -63998,26 +63926,26 @@ void Font_drawTextTransformed(undefined4 text,undefined4 arg2,undefined4 arg3,fl
         srcRow = srcRow + 1;
         dstRow = dstRow + 1;
       }
-      if (scaleX != 1.0) {
+      if (scaleX != 1.0f) {
         scaledMatrix[0] = matrix[0] * scaleX;
         scaledMatrix[1] = scaledMatrix[1] * scaleX;
         scaledMatrix[2] = scaledMatrix[2] * scaleX;
         scaledMatrix[3] = scaledMatrix[3] * scaleX;
       }
-      if (size != 1.0) {
+      if (size != 1.0f) {
         local_44 = local_44 * size;
         local_40 = local_40 * size;
         local_3c = local_3c * size;
         local_38 = local_38 * size;
       }
-      local_24 = (float)(int)(local_24 + 0.5);
-      local_20 = (float)(int)(local_20 + 0.5);
+      local_24 = (float)(int)(local_24 + 0.5f);
+      local_20 = (float)(int)(local_20 + 0.5f);
       (**(code **)(**(int **)(self + 4) + 0x3c))(scaledMatrix);
       goto LAB_0065bf1b;
     }
     mat4_identity();
-    roundVal = (float)(int)(local_7c + 0.5);
-    scaleX = (float)(int)(local_78 + 0.5);
+    roundVal = (float)(int)(local_7c + 0.5f);
+    scaleX = (float)(int)(local_78 + 0.5f);
     local_24 = scaledMatrix[0] * roundVal + local_44 * scaleX + local_24;
     local_20 = scaledMatrix[1] * roundVal + local_40 * scaleX + local_20;
     local_1c = scaledMatrix[2] * roundVal + local_3c * scaleX + local_1c;
@@ -64149,12 +64077,12 @@ void Font_measureTextLine(undefined4 *text,float *minOut,float *maxOut,uint flag
   minPtr = minOut + 1;
   minOut[1] = -fVar13;
   *maxOut = 0.0;
-  maxOut[1] = 0.0;
+  maxOut[1] = 0.0f;
   maxPtr = maxOut + 1;
-  lineWidth = 0.0;
-  penX = 0.0;
-  penY = 0.0;
-  scaleY = 1.0;
+  lineWidth = 0.0f;
+  penX = 0.0f;
+  penY = 0.0f;
+  scaleY = 1.0f;
   if (*(int *)(self + 0xf4) != 0) {
     scaleY = *(float *)(self + 0xe4) / (*(float *)(self + 0x104) - *(float *)(self + 0xfc));
   }
@@ -64218,7 +64146,7 @@ LAB_0065d6d8:
           glyph = (float *)charPtr[5];
         }
       }
-      if (0.0 < *(float *)(self + 0xe8)) {
+      if (0.0f < *(float *)(self + 0xe8)) {
         charPtr = text;
         if (7 < (uint)text[5]) {
           charPtr = (undefined4 *)*text;
@@ -64247,25 +64175,25 @@ LAB_0065d6d8:
           if (*(short *)((int)charPtr + lineStart * 2) != 0xd) {
             if (*(int *)(self + 0xf4) == 0) {
               if (firstFlag == '\0') {
-                local_cc = lineWidth + *glyph + 1.0;
+                local_cc = lineWidth + *glyph + 1.0f;
                 pfVar10 = &local_cc;
                 if (*savedMin <= local_cc) {
                   pfVar10 = savedMin;
                 }
                 *savedMin = *pfVar10;
-                local_a4 = penY + glyph[1] + 1.0;
+                local_a4 = penY + glyph[1] + 1.0f;
                 pfVar10 = &local_a4;
                 if (*minPtr <= local_a4) {
                   pfVar10 = minPtr;
                 }
                 *minPtr = *pfVar10;
-                local_c4 = (lineWidth + *glyph + glyph[2]) - 1.0;
+                local_c4 = (lineWidth + *glyph + glyph[2]) - 1.0f;
                 pfVar10 = &local_c4;
                 if (local_c4 < *savedMax || local_c4 == *savedMax) {
                   pfVar10 = savedMax;
                 }
                 *savedMax = *pfVar10;
-                local_bc = (penY + glyph[1] + glyph[3]) - 1.0;
+                local_bc = (penY + glyph[1] + glyph[3]) - 1.0f;
                 pfVar10 = &local_bc;
                 if (local_bc < *maxPtr || local_bc == *maxPtr) {
                   pfVar10 = maxPtr;
@@ -64275,13 +64203,13 @@ LAB_0065d6d8:
               else {
                 firstFlag = '\0';
                 _local_28 = CONCAT44(penY + glyph[1],penX + *glyph);
-                local_30 = CONCAT44(penY + glyph[1] + 1.0,penX + *glyph + 1.0);
+                local_30 = CONCAT44(penY + glyph[1] + 1.0f,penX + *glyph + 1.0f);
                 *(undefined8 *)savedMin = local_30;
                 _local_20 = CONCAT44(penY + glyph[1],penX + *glyph);
                 fVar13 = glyph[2] + penX + *glyph;
                 fVar14 = glyph[3] + penY + glyph[1];
                 _local_40 = CONCAT44(fVar14,fVar13);
-                local_48 = CONCAT44(fVar14 - 1.0,fVar13 - 1.0);
+                local_48 = CONCAT44(fVar14 - 1.0f,fVar13 - 1.0f);
                 *(undefined8 *)savedMax = local_48;
               }
             }
@@ -64347,7 +64275,7 @@ LAB_0065db55:
         local_88 = (undefined4 *)*text;
       }
       if (*(short *)((int)local_88 + lineStart * 2) == 10) {
-        penX = 0.0;
+        penX = 0.0f;
         penY = *(float *)(self + 0xf0) + *(float *)(self + 0xe4) + penY;
 LAB_0065ddb7:
         lineWidth = penX;
@@ -64426,7 +64354,7 @@ LAB_0065ddb7:
     }
   }
   else {
-    local_50 = (local_50 + local_68) * 0.5;
+    local_50 = (local_50 + local_68) * 0.5f;
     *savedMin = *savedMin - local_50;
     local_50 = *savedMax - local_50;
 LAB_0065de58:
@@ -64438,7 +64366,7 @@ LAB_0065de58:
     local_4c = *maxPtr - local_4c;
   }
   else {
-    local_4c = (local_4c + local_64) * 0.5;
+    local_4c = (local_4c + local_64) * 0.5f;
     *minPtr = *minPtr - local_4c;
     local_4c = *maxPtr - local_4c;
   }
@@ -64483,7 +64411,7 @@ void Font_measureTextBlock(undefined4 *text,int lineIndex,float *minOut,float *m
   
   stackCookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   savedMaxOut = maxOut;
-  scaleY = 1.0;
+  scaleY = 1.0f;
   if (*(int *)(self + 0xf4) != 0) {
     scaleY = *(float *)(self + 0xe4) / (*(float *)(self + 0x104) - *(float *)(self + 0xfc));
   }
@@ -64506,7 +64434,7 @@ void Font_measureTextBlock(undefined4 *text,int lineIndex,float *minOut,float *m
     }
   }
   else {
-    advance2 = (((curMax[0] - penX) - lineMax[0]) + lineMin[0]) * 0.5;
+    advance2 = (((curMax[0] - penX) - lineMax[0]) + lineMin[0]) * 0.5f;
 LAB_0065dfdd:
     *minOut = *minOut - advance2;
   }
@@ -64529,7 +64457,7 @@ LAB_0065dfdd:
           }
         }
         else {
-          advance2 = (((curMin[0] - curMin2) - lineMax[0]) + lineMin[0]) * 0.5;
+          advance2 = (((curMin[0] - curMin2) - lineMax[0]) + lineMin[0]) * 0.5f;
 LAB_0065e085:
           *minOut = *minOut - advance2;
         }
@@ -64621,7 +64549,7 @@ LAB_0065e085:
     }
   }
   else {
-    advance = *minOut - (advance + curMin2) * 0.5;
+    advance = *minOut - (advance + curMin2) * 0.5f;
 LAB_0065e2f4:
     *minOut = advance;
   }
@@ -64630,7 +64558,7 @@ LAB_0065e2f4:
     advance2 = minOut[1] - (float)savedMaxOut;
   }
   else {
-    advance2 = minOut[1] - ((float)savedMaxOut + local_24) * 0.5;
+    advance2 = minOut[1] - ((float)savedMaxOut + local_24) * 0.5f;
   }
   minOut[1] = advance2;
 LAB_0065e328:
@@ -65649,11 +65577,11 @@ LAB_0066240a:
                 if (endTime <= lastKey) {
                   return 0;
                 }
-                invT = 1.0 - t;
+                invT = 1.0f - t;
                 (**(code **)(*self + 0x18))
                           (*prevKey,*key,*nextKey,lastKey,key[2],nextKey[2],t,
-                           invT * invT * invT,t * 3.0 * invT * invT,
-                           t * 3.0 * t * invT,t * t * t);
+                           invT * invT * invT,t * 3.0f * invT * invT,
+                           t * 3.0f * t * invT,t * t * t);
                 self[0x10] = keyCount;
                 *(undefined1 *)(self + 0x12) = 1;
                 return 1;
@@ -67554,7 +67482,7 @@ void FUN_0066ed80(int *param_1)
   pfVar13 = (float *)param_1[4];
   *pfVar13 = (**(float **)*param_1 + **(float **)param_1[1] + **(float **)param_1[2] +
              **(float **)param_1[3]) * 0.25;
-  pfVar13[1] = (fVar4 + fVar3 + fVar1 + fVar2) * 0.25;
+  pfVar13[1] = (fVar4 + fVar3 + fVar1 + fVar2) * 0.25f;
   pfVar13 = *(float **)(param_1[1] + 4);
   fVar1 = pfVar13[1];
   pfVar14 = *(float **)(*param_1 + 4);
@@ -67572,10 +67500,10 @@ void FUN_0066ed80(int *param_1)
   fVar11 = *pfVar16;
   fVar12 = pfVar16[3];
   pfVar17 = (float *)param_1[5];
-  pfVar17[2] = (pfVar16[2] + pfVar15[2] + pfVar13[2] + pfVar14[2]) * 0.25;
+  pfVar17[2] = (pfVar16[2] + pfVar15[2] + pfVar13[2] + pfVar14[2]) * 0.25f;
   *pfVar17 = (fVar3 + fVar6 + fVar8 + fVar11) * 0.25;
-  pfVar17[3] = (fVar12 + fVar9 + fVar4 + fVar5) * 0.25;
-  pfVar17[1] = (fVar10 + fVar7 + fVar1 + fVar2) * 0.25;
+  pfVar17[3] = (fVar12 + fVar9 + fVar4 + fVar5) * 0.25f;
+  pfVar17[1] = (fVar10 + fVar7 + fVar1 + fVar2) * 0.25f;
   fVar1 = (*(float **)(param_1[1] + 8))[1];
   fVar2 = (*(float **)(*param_1 + 8))[1];
   fVar3 = (*(float **)(param_1[2] + 8))[1];
@@ -67584,7 +67512,7 @@ void FUN_0066ed80(int *param_1)
   *pfVar13 = (**(float **)(param_1[3] + 8) +
              **(float **)(*param_1 + 8) + **(float **)(param_1[1] + 8) +
              **(float **)(param_1[2] + 8)) * 0.25;
-  pfVar13[1] = (fVar4 + fVar3 + fVar1 + fVar2) * 0.25;
+  pfVar13[1] = (fVar4 + fVar3 + fVar1 + fVar2) * 0.25f;
   return;
 }
 
@@ -67637,7 +67565,7 @@ void FUN_0066eef0(int *param_1)
     fVar6 = *pfVar19;
     pfVar21 = (float *)param_1[4];
     *pfVar21 = ((*pfVar17 + *pfVar18) * *pfVar20 + (*pfVar15 + *pfVar16) * *pfVar19) * 0.5;
-    pfVar21[1] = ((fVar3 + fVar4) * fVar5 + (fVar1 + fVar2) * fVar6) * 0.5;
+    pfVar21[1] = ((fVar3 + fVar4) * fVar5 + (fVar1 + fVar2) * fVar6) * 0.5f;
     fVar1 = *pfVar19;
     pfVar15 = *(float **)(param_1[1] + 0x14);
     fVar2 = pfVar15[1];
@@ -67658,9 +67586,9 @@ void FUN_0066eef0(int *param_1)
     pfVar21 = (float *)param_1[5];
     fVar14 = *pfVar20;
     *pfVar21 = ((*pfVar16 + *pfVar15) * fVar1 + (*pfVar18 + *pfVar17) * fVar14) * 0.5;
-    pfVar21[1] = ((fVar2 + fVar4) * fVar1 + (fVar12 + fVar13) * fVar14) * 0.5;
-    pfVar21[2] = ((fVar3 + fVar5) * fVar1 + (fVar8 + fVar10) * fVar14) * 0.5;
-    pfVar21[3] = ((fVar6 + fVar7) * fVar1 + (fVar9 + fVar11) * fVar14) * 0.5;
+    pfVar21[1] = ((fVar2 + fVar4) * fVar1 + (fVar12 + fVar13) * fVar14) * 0.5f;
+    pfVar21[2] = ((fVar3 + fVar5) * fVar1 + (fVar8 + fVar10) * fVar14) * 0.5f;
+    pfVar21[3] = ((fVar6 + fVar7) * fVar1 + (fVar9 + fVar11) * fVar14) * 0.5f;
     fVar1 = (*(float **)(param_1[1] + 0x18))[1];
     fVar2 = (*(float **)(*param_1 + 0x18))[1];
     fVar3 = (*(float **)(param_1[3] + 8))[1];
@@ -67669,14 +67597,14 @@ void FUN_0066eef0(int *param_1)
     fVar6 = *pfVar20;
     pfVar15 = (float *)param_1[6];
     *pfVar15 = ((**(float **)(param_1[3] + 8) + **(float **)(param_1[2] + 8)) * *pfVar20 +
-               (**(float **)(*param_1 + 0x18) + **(float **)(param_1[1] + 0x18)) * *pfVar19) * 0.5;
-    pfVar15[1] = ((fVar3 + fVar4) * fVar6 + (fVar1 + fVar2) * fVar5) * 0.5;
+               (**(float **)(*param_1 + 0x18) + **(float **)(param_1[1] + 0x18)) * *pfVar19) * 0.5f;
+    pfVar15[1] = ((fVar3 + fVar4) * fVar6 + (fVar1 + fVar2) * fVar5) * 0.5f;
     return;
   }
   fVar1 = **(float **)param_1[2];
   fVar2 = **(float **)param_1[3];
   pfVar15 = (float *)param_1[4];
-  pfVar15[1] = ((*(float **)param_1[3])[1] + (*(float **)param_1[2])[1]) * 0.5;
+  pfVar15[1] = ((*(float **)param_1[3])[1] + (*(float **)param_1[2])[1]) * 0.5f;
   *pfVar15 = (fVar1 + fVar2) * 0.5;
   pfVar15 = *(float **)(param_1[3] + 4);
   pfVar16 = *(float **)(param_1[2] + 4);
@@ -67687,14 +67615,14 @@ void FUN_0066eef0(int *param_1)
   fVar5 = pfVar15[1];
   fVar6 = pfVar16[1];
   pfVar17 = (float *)param_1[5];
-  pfVar17[2] = (pfVar15[2] + pfVar16[2]) * 0.5;
-  pfVar17[3] = (fVar1 + fVar2) * 0.5;
+  pfVar17[2] = (pfVar15[2] + pfVar16[2]) * 0.5f;
+  pfVar17[3] = (fVar1 + fVar2) * 0.5f;
   *pfVar17 = (fVar3 + fVar4) * 0.5;
-  pfVar17[1] = (fVar5 + fVar6) * 0.5;
+  pfVar17[1] = (fVar5 + fVar6) * 0.5f;
   fVar1 = **(float **)(param_1[2] + 8);
   fVar2 = **(float **)(param_1[3] + 8);
   pfVar15 = (float *)param_1[6];
-  pfVar15[1] = ((*(float **)(param_1[3] + 8))[1] + (*(float **)(param_1[2] + 8))[1]) * 0.5;
+  pfVar15[1] = ((*(float **)(param_1[3] + 8))[1] + (*(float **)(param_1[2] + 8))[1]) * 0.5f;
   *pfVar15 = (fVar1 + fVar2) * 0.5;
   if (((*(byte *)(param_1[2] + 0x30) & 4) != 0) || ((*(byte *)(param_1[3] + 0x30) & 4) != 0)) {
     *(byte *)(param_1 + 0x10) = *(byte *)(param_1 + 0x10) | 4;
@@ -67766,7 +67694,7 @@ void FUN_0066f280(int *param_1)
     fVar2 = pfVar7[1];
     pfVar9 = (float *)param_1[4];
     *pfVar9 = (*pfVar8 + *pfVar7) * 0.5;
-    pfVar9[1] = (fVar1 + fVar2) * 0.5;
+    pfVar9[1] = (fVar1 + fVar2) * 0.5f;
     pfVar7 = *(float **)(param_1[3] + 4);
     pfVar8 = *(float **)(param_1[2] + 4);
     fVar1 = pfVar7[3];
@@ -67776,14 +67704,14 @@ void FUN_0066f280(int *param_1)
     fVar5 = pfVar7[1];
     fVar6 = pfVar8[1];
     pfVar9 = (float *)param_1[5];
-    pfVar9[2] = (pfVar7[2] + pfVar8[2]) * 0.5;
-    pfVar9[3] = (fVar1 + fVar2) * 0.5;
+    pfVar9[2] = (pfVar7[2] + pfVar8[2]) * 0.5f;
+    pfVar9[3] = (fVar1 + fVar2) * 0.5f;
     *pfVar9 = (fVar3 + fVar4) * 0.5;
-    pfVar9[1] = (fVar5 + fVar6) * 0.5;
+    pfVar9[1] = (fVar5 + fVar6) * 0.5f;
     fVar1 = **(float **)(param_1[2] + 8);
     fVar2 = **(float **)(param_1[3] + 8);
     pfVar7 = (float *)param_1[6];
-    pfVar7[1] = ((*(float **)(param_1[3] + 8))[1] + (*(float **)(param_1[2] + 8))[1]) * 0.5;
+    pfVar7[1] = ((*(float **)(param_1[3] + 8))[1] + (*(float **)(param_1[2] + 8))[1]) * 0.5f;
     *pfVar7 = (fVar1 + fVar2) * 0.5;
     *(byte *)(param_1 + 0x10) = *(byte *)(param_1 + 0x10) & 0xfb | 2;
   }
@@ -67836,7 +67764,7 @@ void FUN_0066f380(int *param_1)
         pfVar6[1] = pfVar6[1] * fVar2 + fVar1 * fVar8;
         return;
       }
-      fVar8 = 1.0 / fVar8;
+      fVar8 = 1.0f / fVar8;
       fVar1 = (float)param_1[4];
       pfVar6 = (float *)*param_1;
       *pfVar6 = (float)param_1[3] * fVar8;
@@ -67855,22 +67783,22 @@ void FUN_0066f380(int *param_1)
       *pfVar6 = fVar1 * fVar8;
       return;
     }
-    fVar8 = 0.75 / fVar8;
+    fVar8 = 0.75f / fVar8;
     pfVar6 = (float *)*param_1;
     fVar1 = (float)param_1[4];
     *pfVar6 = *pfVar6 * 0.25 + (float)param_1[3] * fVar8;
-    pfVar6[1] = pfVar6[1] * 0.25 + fVar1 * fVar8;
+    pfVar6[1] = pfVar6[1] * 0.25f + fVar1 * fVar8;
     pfVar6 = (float *)param_1[1];
     fVar1 = (float)param_1[5];
     fVar2 = (float)param_1[7];
     fVar3 = (float)param_1[8];
-    pfVar6[1] = pfVar6[1] * 0.25 + (float)param_1[6] * fVar8;
-    pfVar6[2] = pfVar6[2] * 0.25 + fVar2 * fVar8;
+    pfVar6[1] = pfVar6[1] * 0.25f + (float)param_1[6] * fVar8;
+    pfVar6[2] = pfVar6[2] * 0.25f + fVar2 * fVar8;
     *pfVar6 = *pfVar6 * 0.25 + fVar1 * fVar8;
-    pfVar6[3] = pfVar6[3] * 0.25 + fVar3 * fVar8;
+    pfVar6[3] = pfVar6[3] * 0.25f + fVar3 * fVar8;
     pfVar6 = (float *)param_1[2];
     fVar1 = (float)param_1[9];
-    pfVar6[1] = pfVar6[1] * 0.25 + (float)param_1[10] * fVar8;
+    pfVar6[1] = pfVar6[1] * 0.25f + (float)param_1[10] * fVar8;
     *pfVar6 = *pfVar6 * 0.25 + fVar1 * fVar8;
   }
   return;
@@ -68530,8 +68458,7 @@ void FUN_006721d0(int param_1,int param_2,int param_3,undefined4 param_4,undefin
       local_88 = local_88 - fVar10;
       fVar10 = local_84 * local_84 + local_88 * local_88;
       if (0.0 < fVar10) {
-        dVar9 = (double)fVar10;
-        libm_sse2_sqrt_precise();
+        dVar9 = libm_sse2_sqrt_precise((double)fVar10);
         local_88 = local_88 * (1.0 / (float)dVar9);
         local_84 = local_84 * (1.0 / (float)dVar9);
       }
@@ -68566,8 +68493,7 @@ void FUN_006721d0(int param_1,int param_2,int param_3,undefined4 param_4,undefin
       local_74 = fVar12;
       local_4c = uVar6;
       if (0.0 < fVar11) {
-        dVar9 = (double)fVar11;
-        libm_sse2_sqrt_precise();
+        dVar9 = libm_sse2_sqrt_precise((double)fVar11);
         fVar10 = local_88 * (1.0 / (float)dVar9);
         fVar12 = local_74 * (1.0 / (float)dVar9);
       }
@@ -68672,8 +68598,7 @@ void FUN_00672600(int param_1,int param_2,int param_3,int *param_4)
     local_78 = local_78 - fVar11;
     fVar9 = local_78 * local_78 + local_80 * local_80;
     if (0.0 < fVar9) {
-      dVar8 = (double)fVar9;
-      libm_sse2_sqrt_precise();
+      dVar8 = libm_sse2_sqrt_precise((double)fVar9);
       local_80 = local_80 * (1.0 / (float)dVar8);
       local_78 = local_78 * (1.0 / (float)dVar8);
     }
@@ -68707,8 +68632,7 @@ void FUN_00672600(int param_1,int param_2,int param_3,int *param_4)
     local_78 = fVar9;
     local_4c = uVar6;
     if (0.0 < fVar10) {
-      dVar8 = (double)fVar10;
-      libm_sse2_sqrt_precise();
+      dVar8 = libm_sse2_sqrt_precise((double)fVar10);
       fVar9 = local_78 * (1.0 / (float)dVar8);
       fVar11 = local_80 * (1.0 / (float)dVar8);
     }
@@ -70849,11 +70773,11 @@ uint istream_readValue(void)
 
 /* [AUDIT] proposed: istream::readFloat  (confidence: high)
  * purpose: Reads a float from the object's istream (at +8) and returns it
- * vars: returns float10; istream at (int)self+8
+ * vars: returns float; istream at (int)self+8
  */
 /* Global::istream_readFloat @ 00681240 */
 
-float10 istream_readFloat(void)
+float istream_readFloat(void)
 
 {
   float self;
@@ -70861,7 +70785,7 @@ float10 istream_readFloat(void)
   std::basic_istream<char,std::char_traits<char>_>::read
             (*(basic_istream<char,std::char_traits<char>_> **)((int)self + 8),&stack0xfffffff8,
              (ulonglong)(uint)self << 0x20);
-  return (float10)self;
+  return (float)self;
 }
 
 
@@ -71577,7 +71501,7 @@ ulonglong ftol2(void)
   ulonglong rounded;
   uint adjust;
   float lowWord;
-  float10 in_ST0;
+  float in_ST0;
   undefined4 lowBits;
   undefined4 highBits;
   
@@ -71587,10 +71511,10 @@ ulonglong ftol2(void)
   lowWord = (float)in_ST0;
   if ((lowBits != 0) || (lowWord = highBits, (rounded & 0x7fffffff00000000) != 0)) {
     if ((int)lowWord < 0) {
-      rounded = rounded + (0x80000000 < (uint)-(float)(in_ST0 - (float10)(longlong)rounded));
+      rounded = rounded + (0x80000000 < (uint)-(float)(in_ST0 - (float)(longlong)rounded));
     }
     else {
-      adjust = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float10)(longlong)rounded));
+      adjust = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float)(longlong)rounded));
       rounded = CONCAT44((int)highBits - (uint)(lowBits < adjust),lowBits - adjust);
     }
   }

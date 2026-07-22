@@ -4491,8 +4491,8 @@ void World_streamChunksAroundPlayer(void)
     iVar7 = *in_ECX;
     local_28 = (int)*(undefined8 *)(iVar7 + 700);
     iStack_24 = (int)((ulonglong)*(undefined8 *)(iVar7 + 700) >> 0x20);
-    iVar4 = (int)(*(float *)(iVar7 + 0x1000e4c) * 0.00390625 + (float)local_28);
-    iVar5 = (int)(*(float *)(iVar7 + 0x1000e50) * 0.00390625 + (float)iStack_24);
+    iVar4 = (int)(*(float *)(iVar7 + 0x1000e4c) * 0.00390625f + (float)local_28);
+    iVar5 = (int)(*(float *)(iVar7 + 0x1000e50) * 0.00390625f + (float)iStack_24);
     if (*(int *)(iVar7 + 0x800a50) == *(int *)(iVar7 + 0x800448)) {
       uVar20 = *(uint *)(iVar7 + 0x388);
       piVar16 = (int *)(iVar7 + 0x378);
@@ -5569,7 +5569,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   int iVar2;
   undefined4 uVar3;
   undefined4 *puVar4;
-  float10 fVar5;
+  float fVar5;
   float fVar6;
   undefined *puVar7;
   int iStack_584;
@@ -5711,18 +5711,18 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   if (7 < local_18) {
     operator_delete(local_2c);
   }
-  fVar5 = (float10)curve_diminishing01(param_2);
+  fVar5 = (float)curve_diminishing01(param_2);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar6 = (float)local_4c8 * 50.0;
-  if (0.0 <= fVar6) {
-    fVar6 = (float)(int)(fVar6 * 100.0 + 0.5) * 0.01;
+  fVar6 = (float)local_4c8 * 50.0f;
+  if (0.0f <= fVar6) {
+    fVar6 = (float)(int)(fVar6 * 100.0f + 0.5f) * 0.01f;
   }
   else {
-    fVar5 = (float10)math_round_to_hundredths(-fVar6);
+    fVar5 = (float)math_round_to_hundredths(-fVar6);
     local_4c8 = (undefined4 *)(float)fVar5;
     fVar6 = -(float)local_4c8;
-    if (fVar6 == 0.0) {
-      fVar6 = 0.0;
+    if (fVar6 == 0.0f) {
+      fVar6 = 0.0f;
     }
   }
   puVar7 = &DAT_007020e0;
@@ -5771,18 +5771,18 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   if (7 < local_18) {
     operator_delete(local_2c);
   }
-  fVar5 = (float10)curve_diminishingP1(param_2);
+  fVar5 = (float)curve_diminishingP1(param_2);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar6 = (float)local_4c8 * 100.0;
-  if (0.0 <= fVar6) {
-    fVar6 = (float)(int)(fVar6 * 100.0 + 0.5) * 0.01;
+  fVar6 = (float)local_4c8 * 100.0f;
+  if (0.0f <= fVar6) {
+    fVar6 = (float)(int)(fVar6 * 100.0f + 0.5f) * 0.01f;
   }
   else {
-    fVar5 = (float10)math_round_to_hundredths(-fVar6);
+    fVar5 = (float)math_round_to_hundredths(-fVar6);
     local_4c8 = (undefined4 *)(float)fVar5;
     fVar6 = -(float)local_4c8;
-    if (fVar6 == 0.0) {
-      fVar6 = 0.0;
+    if (fVar6 == 0.0f) {
+      fVar6 = 0.0f;
     }
   }
   puVar7 = &DAT_007020e0;
@@ -5831,18 +5831,18 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   if (7 < local_18) {
     operator_delete(local_2c);
   }
-  fVar5 = (float10)curve_diminishingN1(param_2);
+  fVar5 = (float)curve_diminishingN1(param_2);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar6 = (float)local_4c8 * 100.0;
-  if (0.0 <= fVar6) {
-    fVar6 = (float)(int)(fVar6 * 100.0 + 0.5) * 0.01;
+  fVar6 = (float)local_4c8 * 100.0f;
+  if (0.0f <= fVar6) {
+    fVar6 = (float)(int)(fVar6 * 100.0f + 0.5f) * 0.01f;
   }
   else {
-    fVar5 = (float10)math_round_to_hundredths(-fVar6);
+    fVar5 = (float)math_round_to_hundredths(-fVar6);
     local_4c8 = (undefined4 *)(float)fVar5;
     fVar6 = -(float)local_4c8;
-    if (fVar6 == 0.0) {
-      fVar6 = 0.0;
+    if (fVar6 == 0.0f) {
+      fVar6 = 0.0f;
     }
   }
   puVar7 = &DAT_007020e0;
@@ -5891,9 +5891,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   if (7 < local_18) {
     operator_delete(local_2c);
   }
-  fVar5 = (float10)curve_diminishingx3p15(param_2,&DAT_007020e0);
+  fVar5 = (float)curve_diminishingx3p15(param_2,&DAT_007020e0);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertNarrow(pbVar1);
@@ -5933,9 +5933,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   if (7 < local_18) {
     operator_delete(local_2c);
   }
-  fVar5 = (float10)curve_diminishingHalf(param_2,&DAT_007020e0);
+  fVar5 = (float)curve_diminishingHalf(param_2,&DAT_007020e0);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertNarrow(pbVar1);
@@ -5975,9 +5975,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   if (7 < local_18) {
     operator_delete(local_2c);
   }
-  fVar5 = (float10)curve_diminishingx3p1(param_2,&DAT_007020e0);
+  fVar5 = (float)curve_diminishingx3p1(param_2,&DAT_007020e0);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertNarrow(pbVar1);
@@ -6018,7 +6018,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     operator_delete(local_2c);
   }
   iVar2 = ability_getManaCost(0x36,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@smashcooldown");
@@ -6050,7 +6050,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     operator_delete(local_2c);
   }
   iVar2 = ability_getManaCost(0x56,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@cyclonecooldown");
@@ -6082,7 +6082,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     operator_delete(local_2c);
   }
   iVar2 = combat_getReloadFrames(0x56);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@cycloneduration");
@@ -6114,7 +6114,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     operator_delete(local_2c);
   }
   iVar2 = ability_getManaCost(0x65,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@bulwarkcooldown");
@@ -6146,9 +6146,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     operator_delete(local_2c);
   }
   puVar7 = &DAT_007020e0;
-  fVar5 = (float10)ability_getPowerFactor(0x65,param_2);
+  fVar5 = (float)ability_getPowerFactor(0x65,param_2);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths(((float)local_4c8 * 0.3 + 0.25) * 100.0,puVar7);
+  fVar5 = (float)math_round_to_hundredths(((float)local_4c8 * 0.3f + 0.25f) * 100.0f,puVar7);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertNarrow(pbVar1);
@@ -6202,7 +6202,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x66,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@warfrenzycooldown");
@@ -6235,9 +6235,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   puVar7 = &DAT_007020e0;
-  fVar5 = (float10)ability_getPowerFactor(0x66,param_2);
+  fVar5 = (float)ability_getPowerFactor(0x66,param_2);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths(((float)local_4c8 * 9.0 + 1.0) * 100.0,puVar7);
+  fVar5 = (float)math_round_to_hundredths(((float)local_4c8 * 9.0f + 1.0f) * 100.0f,puVar7);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertNarrow(pbVar1);
@@ -6256,7 +6256,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x15,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@rangerkickcooldown");
@@ -6273,9 +6273,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   strstreambuf_initWrap(local_bc);
   local_8._0_1_ = 3;
   std_string_FreeMember();
-  fVar5 = (float10)curve_diminishing01(param_2,&DAT_006fd728);
+  fVar5 = (float)curve_diminishing01(param_2,&DAT_006fd728);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertWide(pbVar1);
@@ -6294,7 +6294,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x32,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@retreatcooldown");
@@ -6311,9 +6311,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   strstreambuf_initWrap(local_ec);
   local_8._0_1_ = 3;
   std_string_FreeMember();
-  fVar5 = (float10)curve_diminishing01(param_2,&DAT_006fd728);
+  fVar5 = (float)curve_diminishing01(param_2,&DAT_006fd728);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertWide(pbVar1);
@@ -6332,7 +6332,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(99,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@aimcooldown");
@@ -6349,9 +6349,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   strstreambuf_initWrap(local_11c);
   local_8._0_1_ = 3;
   std_string_FreeMember();
-  fVar5 = (float10)curve_diminishing01(param_2,&DAT_006fd728);
+  fVar5 = (float)curve_diminishing01(param_2,&DAT_006fd728);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertWide(pbVar1);
@@ -6370,7 +6370,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(100,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@swiftnesscooldown");
@@ -6387,9 +6387,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   strstreambuf_initWrap(local_14c);
   local_8._0_1_ = 3;
   std_string_FreeMember();
-  fVar5 = (float10)curve_diminishing01(param_2,&DAT_006fd728);
+  fVar5 = (float)curve_diminishing01(param_2,&DAT_006fd728);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertWide(pbVar1);
@@ -6423,7 +6423,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x58,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@fireexplosioncooldown");
@@ -6440,9 +6440,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   strstreambuf_initWrap(local_74);
   local_8._0_1_ = 3;
   std_string_FreeMember();
-  fVar5 = (float10)curve_diminishing01(param_2,&DAT_006fd728);
+  fVar5 = (float)curve_diminishing01(param_2,&DAT_006fd728);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertWide(pbVar1);
@@ -6476,7 +6476,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x67,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@manashieldcooldown");
@@ -6493,9 +6493,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   strstreambuf_initWrap(local_104);
   local_8._0_1_ = 3;
   std_string_FreeMember();
-  fVar5 = (float10)ability_getPowerFactor(0x67,param_2);
+  fVar5 = (float)ability_getPowerFactor(0x67,param_2);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertWide(pbVar1);
@@ -6514,7 +6514,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x31,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@teleportcooldown");
@@ -6531,9 +6531,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   strstreambuf_initWrap(local_164);
   local_8._0_1_ = 3;
   std_string_FreeMember();
-  fVar5 = (float10)ability_getResourceCost(0x22,param_2);
+  fVar5 = (float)ability_getResourceCost(0x22,param_2);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0 * 8.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f * 8.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@healingstreamcost");
@@ -6551,7 +6551,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x30,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@interceptcooldown");
@@ -6569,7 +6569,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x60,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@shurikencooldown");
@@ -6587,7 +6587,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x61,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@camouflagecooldown");
@@ -6604,9 +6604,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   strstreambuf_initWrap(local_224);
   local_8._0_1_ = 3;
   std_string_FreeMember();
-  fVar5 = (float10)ability_getPowerFactor(0x61,0xffffffff);
+  fVar5 = (float)ability_getPowerFactor(0x61,0xffffffff);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths(((float)local_4c8 * 12000.0 + 8000.0) / 1000.0);
+  fVar5 = (float)math_round_to_hundredths(((float)local_4c8 * 12000.0f + 8000.0f) / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@camouflageduration");
@@ -6624,7 +6624,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   iVar2 = ability_getManaCost(0x4f,param_2);
-  fVar5 = (float10)math_round_to_hundredths((float)iVar2 / 1000.0);
+  fVar5 = (float)math_round_to_hundredths((float)iVar2 / 1000.0f);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
             ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   u16string_assignCStr(L"@sneakcooldown");
@@ -6642,9 +6642,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   puVar7 = &DAT_007020e0;
-  fVar5 = (float10)ability_getPowerFactor(0x4f,param_2);
+  fVar5 = (float)ability_getPowerFactor(0x4f,param_2);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 0.4 * 100.0);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 0.4f * 100.0f);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertNarrow(pbVar1,puVar7);
@@ -6663,9 +6663,9 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   local_8._0_1_ = 3;
   std_string_FreeMember();
   puVar7 = &DAT_007020e0;
-  fVar5 = (float10)ability_getPowerFactor(0x4f,param_2);
+  fVar5 = (float)ability_getPowerFactor(0x4f,param_2);
   local_4c8 = (undefined4 *)(float)fVar5;
-  fVar5 = (float10)math_round_to_hundredths((float)local_4c8 * 100.0,puVar7);
+  fVar5 = (float)math_round_to_hundredths((float)local_4c8 * 100.0f,puVar7);
   pbVar1 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                      ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_570,(float)fVar5);
   wostream_insertNarrow(pbVar1);
@@ -8540,7 +8540,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
       fVar1 = *(float *)(iVar3 + 4 + iVar5 * 8);
       (**(code **)(**(int **)(in_ECX + 4) + 0x40))(*(int *)(in_ECX + 0x148));
       GameController_load_skill_tooltip(*(undefined4 *)(in_ECX + 0x168),*(undefined4 *)(in_ECX + 0x16c),
-                   (int)(fVar15 + 14.0),(int)(fVar1 + 25.0),0x3f800000,0x113);
+                   (int)(fVar15 + 14.0f),(int)(fVar1 + 25.0f),0x3f800000,0x113);
       (**(code **)(**(int **)(in_ECX + 4) + 0x44))(*(undefined4 *)(in_ECX + 0x148));
     }
   }
@@ -8750,7 +8750,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
       iVar6 = *(int *)(*(int *)(iVar3 + 0x38) + 0x19c);
       fVar15 = *(float *)(iVar6 + 4 + iVar5 * 8);
       fVar1 = *(float *)(iVar6 + iVar5 * 8);
-      fVar14 = 1.0 / (*(float *)(iVar3 + 0x54) * fVar1 + *(float *)(iVar3 + 100) * fVar15 +
+      fVar14 = 1.0f / (*(float *)(iVar3 + 0x54) * fVar1 + *(float *)(iVar3 + 100) * fVar15 +
                      *(float *)(iVar3 + 0x84));
       drawBillboardModelRotated((*(float *)(iVar3 + 0x58) * fVar15 + *(float *)(iVar3 + 0x48) * fVar1 +
                    *(float *)(iVar3 + 0x78)) * fVar14 + 150.0,
@@ -8765,7 +8765,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     iVar3 = *(int *)(iVar3 + 0x19c);
     fVar15 = *(float *)(iVar3 + 4 + iVar5 * 8);
     fVar1 = *(float *)(iVar3 + iVar5 * 8);
-    ctor_0(*(undefined4 *)(in_ECX + 0x160),(int)(fVar1 + 14.0),(int)(fVar15 + 25.0),0x3f800000,0x118
+    ctor_0(*(undefined4 *)(in_ECX + 0x160),(int)(fVar1 + 14.0f),(int)(fVar15 + 25.0f),0x3f800000,0x118
            ,1,1,0);
     cVar2 = GameController_validate_selected_zone();
     if (cVar2 != '\0') {
@@ -8793,8 +8793,8 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
       local_70 = 0;
       local_8._0_1_ = 0x1b;
       local_8._1_3_ = 0;
-      iVar12 = (int)(fVar1 + 290.0);
-      iVar6 = (int)(fVar15 + 280.0);
+      iVar12 = (int)(fVar1 + 290.0f);
+      iVar6 = (int)(fVar15 + 280.0f);
       if (iVar3 % 100 != 0) {
         u16string_assignCStr(&PTR_006fccac);
         local_8._0_1_ = 0x1c;
@@ -9041,7 +9041,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
       uStack_20c = 0x3f800000;
       local_208 = 0x3f800000;
       local_8._0_1_ = 0x2c;
-      AdaptionWidget_draw_text_locked(local_24c,local_234,0,0,fVar1 - 190.0,fVar15 + 20.0,0x41000000,0x40400000,
+      AdaptionWidget_draw_text_locked(local_24c,local_234,0,0,fVar1 - 190.0f,fVar15 + 20.0f,0x41000000,0x40400000,
                    &local_214,&local_1fc,&local_1e4,0,0xbf800000,1);
       local_8._0_1_ = 0x2b;
       if (7 < local_238) {
@@ -9061,19 +9061,19 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
       uStack_20c = 0x3f800000;
       local_208 = 0x3f800000;
       local_8._0_1_ = 0x2d;
-      AdaptionWidget_draw_text_locked(local_24c,local_234,0,0,fVar1 - 190.0,fVar15 + 20.0,0x41000000,0,&local_214,
+      AdaptionWidget_draw_text_locked(local_24c,local_234,0,0,fVar1 - 190.0f,fVar15 + 20.0f,0x41000000,0,&local_214,
                    &local_1fc,&local_1e4,0,0xbf800000,1);
       local_8 = CONCAT31(local_8._1_3_,0x2b);
       if (7 < local_238) {
         operator_delete(local_24c[0]);
       }
-      fVar15 = fVar15 + 10.0;
+      fVar15 = fVar15 + 10.0f;
       piVar13 = (int *)**(int **)(in_ECX + 0x174);
       if (piVar13 != *(int **)(in_ECX + 0x174)) {
         do {
-          ctor_0(piVar13[2],(int)(fVar1 - 240.0),(int)(fVar15 + 30.0),0x3f800000,0xe6,1,1,
+          ctor_0(piVar13[2],(int)(fVar1 - 240.0f),(int)(fVar15 + 30.0f),0x3f800000,0xe6,1,1,
                  *(undefined1 *)(in_ECX + 0x164));
-          fVar15 = fVar15 + 130.0;
+          fVar15 = fVar15 + 130.0f;
           piVar13 = (int *)*piVar13;
         } while (piVar13 != (int *)*(int *)(in_ECX + 0x174));
       }
@@ -9296,7 +9296,7 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   int iVar7;
   int iVar8;
   int iVar9;
-  float10 fVar10;
+  float fVar10;
   float fVar11;
   undefined4 uVar12;
   undefined4 uVar13;
@@ -9547,16 +9547,16 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
   } while (iVar8 < 0x1164);
   local_ac = (float)(uint)local_a5;
   if (*(uint *)(in_ECX + 0x18c) != (uint)*(byte *)(iVar7 + 0x141)) {
-    local_ac = 1.4013e-45;
+    local_ac = 1.4013e-45f;
   }
   iVar7 = GameController_computeQuestScore();
   local_a5 = iVar7 <= *(int *)(*(int *)(*(int *)(in_ECX + 400) + 0x8006d0) + 0x1304);
   if (0 < iVar7) {
     local_b8 = (iVar7 / 100) / 100;
     local_b4 = (iVar7 / 100) % 100;
-    fVar10 = (float10)security_cookie_guard_a();
+    fVar10 = (float)security_cookie_guard_a();
     local_b0 = (undefined4 *)(float)fVar10;
-    iVar8 = (int)((float)local_b0 - 65.0);
+    iVar8 = (int)((float)local_b0 - 65.0f);
     if (local_a5 == '\0') {
       local_18 = 7;
       local_1c = 0;
@@ -10072,12 +10072,12 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     uVar13 = 0x40400000;
     local_8._0_1_ = 0x2d;
     uVar12 = 0x41400000;
-    fVar10 = (float10)security_cookie_guard_a(0x41400000,0x40400000,puVar14,puVar15,puVar6,1,0xbf800000,1);
+    fVar10 = (float)security_cookie_guard_a(0x41400000,0x40400000,puVar14,puVar15,puVar6,1,0xbf800000,1);
     local_ac = (float)fVar10;
-    fVar11 = local_ac - 20.0;
-    fVar10 = (float10)security_cookie_guard_b(fVar11);
+    fVar11 = local_ac - 20.0f;
+    fVar10 = (float)security_cookie_guard_b(fVar11);
     local_ac = (float)fVar10;
-    AdaptionWidget_draw_text_locked(local_8c,uVar2,0,0,local_ac / 3.0,fVar11,uVar12,uVar13,puVar14,puVar15,puVar6,
+    AdaptionWidget_draw_text_locked(local_8c,uVar2,0,0,local_ac / 3.0f,fVar11,uVar12,uVar13,puVar14,puVar15,puVar6,
                  uVar16,uVar17,uVar19);
     if (7 < local_18) {
       operator_delete(local_2c);
@@ -10131,12 +10131,12 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     uVar13 = 0;
     uVar12 = 0x41400000;
     puVar14 = local_b0;
-    fVar10 = (float10)security_cookie_guard_a(0x41400000,0,local_b0,puVar15,puVar6,1,0xbf800000,1);
+    fVar10 = (float)security_cookie_guard_a(0x41400000,0,local_b0,puVar15,puVar6,1,0xbf800000,1);
     local_ac = (float)fVar10;
-    fVar11 = local_ac - 20.0;
-    fVar10 = (float10)security_cookie_guard_b(fVar11);
+    fVar11 = local_ac - 20.0f;
+    fVar10 = (float)security_cookie_guard_b(fVar11);
     local_ac = (float)fVar10;
-    AdaptionWidget_draw_text_locked(local_a4,uVar2,0,0,local_ac / 3.0,fVar11,uVar12,uVar13,puVar14,puVar15,puVar6,
+    AdaptionWidget_draw_text_locked(local_a4,uVar2,0,0,local_ac / 3.0f,fVar11,uVar12,uVar13,puVar14,puVar15,puVar6,
                  uVar16,uVar17,uVar19);
     if (7 < local_78) {
       operator_delete(local_8c[0]);
@@ -10185,12 +10185,12 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     uVar13 = 0x40400000;
     local_8._0_1_ = 0x32;
     uVar12 = 0x41400000;
-    fVar10 = (float10)security_cookie_guard_a(0x41400000,0x40400000,puVar14,puVar15,puVar6,1,0xbf800000,1);
+    fVar10 = (float)security_cookie_guard_a(0x41400000,0x40400000,puVar14,puVar15,puVar6,1,0xbf800000,1);
     local_ac = (float)fVar10;
-    fVar11 = local_ac - 20.0;
-    fVar10 = (float10)security_cookie_guard_b(fVar11);
+    fVar11 = local_ac - 20.0f;
+    fVar10 = (float)security_cookie_guard_b(fVar11);
     local_ac = (float)fVar10;
-    AdaptionWidget_draw_text_locked(local_a4,uVar2,0,0,(local_ac * 2.0) / 3.0,fVar11,uVar12,uVar13,puVar14,puVar15,
+    AdaptionWidget_draw_text_locked(local_a4,uVar2,0,0,(local_ac * 2.0f) / 3.0f,fVar11,uVar12,uVar13,puVar14,puVar15,
                  puVar6,uVar16,uVar17,uVar19);
     if (7 < local_78) {
       operator_delete(local_8c[0]);
@@ -10237,12 +10237,12 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
     uVar13 = 0;
     uVar12 = 0x41400000;
     puVar14 = local_b0;
-    fVar10 = (float10)security_cookie_guard_a(0x41400000,0,local_b0,puVar15,puVar6,1,0xbf800000,1);
+    fVar10 = (float)security_cookie_guard_a(0x41400000,0,local_b0,puVar15,puVar6,1,0xbf800000,1);
     local_ac = (float)fVar10;
-    fVar11 = local_ac - 20.0;
-    fVar10 = (float10)security_cookie_guard_b(fVar11);
+    fVar11 = local_ac - 20.0f;
+    fVar10 = (float)security_cookie_guard_b(fVar11);
     local_ac = (float)fVar10;
-    AdaptionWidget_draw_text_locked(local_a4,uVar2,0,0,(local_ac * 2.0) / 3.0,fVar11,uVar12,uVar13,puVar14,puVar15,
+    AdaptionWidget_draw_text_locked(local_a4,uVar2,0,0,(local_ac * 2.0f) / 3.0f,fVar11,uVar12,uVar13,puVar14,puVar15,
                  puVar6,uVar16,uVar17,uVar19);
     if (7 < local_78) {
       operator_delete(local_8c[0]);
@@ -14502,8 +14502,8 @@ void std::basic_stringbuf<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar
       iVar2 = (iVar2 + 1) - (iVar3 + -1);
       local_44 = CONCAT44(iVar4,iVar2);
       local_8c = local_44;
-      fVar7 = 1.0 / (float)*(int *)(local_c0 + 0x44);
-      fVar6 = 1.0 / (float)*(int *)(local_c0 + 0x48);
+      fVar7 = 1.0f / (float)*(int *)(local_c0 + 0x44);
+      fVar6 = 1.0f / (float)*(int *)(local_c0 + 0x48);
       iVar2 = iVar2 + 1;
       local_98 = (float)iVar5;
       local_a4 = (float)iVar2;
@@ -14636,7 +14636,7 @@ void lib_fn_64fda0(int param_1,undefined4 param_2)
         fStack_38 = *(float *)(iVar1 + 0x1b4) * fVar9 + *(float *)(iVar1 + 0x1c4) * fVar8 +
                     *(float *)(iVar1 + 0x1e4);
         iVar2 = *(int *)(piVar7[2] + 0x38);
-        fVar8 = 1.0 / (*(float *)(iVar1 + 0x1bc) * fVar9 + *(float *)(iVar1 + 0x1cc) * fVar8 +
+        fVar8 = 1.0f / (*(float *)(iVar1 + 0x1bc) * fVar9 + *(float *)(iVar1 + 0x1cc) * fVar8 +
                       *(float *)(iVar1 + 0x1ec));
         _local_1c = CONCAT44(fStack_38 * fVar8,local_3c * fVar8);
         pfVar5 = (float *)(**(code **)(**(int **)(piVar7[2] + 0x34) + 0x1c))(local_6c);
@@ -14646,7 +14646,7 @@ void lib_fn_64fda0(int param_1,undefined4 param_2)
                    *(float *)(iVar2 + 0x1e0);
         fStack_58 = *(float *)(iVar2 + 0x1b4) * fVar9 + *(float *)(iVar2 + 0x1c4) * fVar8 +
                     *(float *)(iVar2 + 0x1e4);
-        fVar8 = 1.0 / (*(float *)(iVar2 + 0x1bc) * fVar9 + *(float *)(iVar2 + 0x1cc) * fVar8 +
+        fVar8 = 1.0f / (*(float *)(iVar2 + 0x1bc) * fVar9 + *(float *)(iVar2 + 0x1cc) * fVar8 +
                       *(float *)(iVar2 + 0x1ec));
         fVar9 = local_5c * fVar8;
         _local_2c = CONCAT44(fStack_58 * fVar8,fVar9);
@@ -15180,16 +15180,16 @@ LAB_00651289:
               iVar9 = iVar9 + 1;
             } while (iVar9 < *(int *)(iVar6 + 0x15c) - *(int *)(iVar6 + 0x158) >> 2);
           }
-          local_10c = (float)*(int *)(*(int *)(local_1b0 + 0x54) + 100) * 0.015625;
+          local_10c = (float)*(int *)(*(int *)(local_1b0 + 0x54) + 100) * 0.015625f;
           *(ulonglong *)**(undefined4 **)(*(int *)(iVar6 + 0xa8) + *(int *)(iVar6 + 0x7c) * 4) =
                CONCAT44(uStack_108,local_10c);
-          local_e4 = (float)*(int *)(*(int *)(local_1b0 + 0x54) + 0x40) * 0.015625;
+          local_e4 = (float)*(int *)(*(int *)(local_1b0 + 0x54) + 0x40) * 0.015625f;
           *(ulonglong *)(**(int **)(*(int *)(iVar6 + 0xa8) + *(int *)(iVar6 + 0x7c) * 4) + 8) =
                CONCAT44(uStack_e0,local_e4);
-          local_154 = (float)*(int *)(*(int *)(local_1b0 + 0x54) + 0x40) * 0.015625;
+          local_154 = (float)*(int *)(*(int *)(local_1b0 + 0x54) + 0x40) * 0.015625f;
           *(ulonglong *)(**(int **)(*(int *)(iVar6 + 0xa8) + *(int *)(iVar6 + 0x7c) * 4) + 0x10) =
                CONCAT44(uStack_150,local_154);
-          local_124 = (float)*(int *)(*(int *)(local_1b0 + 0x54) + 100) * 0.015625;
+          local_124 = (float)*(int *)(*(int *)(local_1b0 + 0x54) + 100) * 0.015625f;
           *(ulonglong *)(**(int **)(*(int *)(iVar6 + 0xa8) + *(int *)(iVar6 + 0x7c) * 4) + 0x18) =
                CONCAT44(uStack_120,local_124);
           puVar3 = (undefined8 *)**(int **)(*(int *)(iVar6 + 0x158) + *(int *)(iVar6 + 300) * 4);
@@ -15283,16 +15283,16 @@ LAB_00651289:
             do {
               iVar6 = *local_1b8;
               iVar9 = (int)*(short *)(*(int *)(iVar6 + 0x78) + local_1f0 * 2);
-              fVar20 = 0.0;
-              fVar19 = -(float)*(int *)(*(int *)(iVar6 + 0x70) + 4 + iVar9 * 8) * 0.015625;
-              local_208 = (float)*(int *)(*(int *)(iVar6 + 0x70) + iVar9 * 8) * 0.015625;
-              fVar21 = 0.0;
+              fVar20 = 0.0f;
+              fVar19 = -(float)*(int *)(*(int *)(iVar6 + 0x70) + 4 + iVar9 * 8) * 0.015625f;
+              local_208 = (float)*(int *)(*(int *)(iVar6 + 0x70) + iVar9 * 8) * 0.015625f;
+              fVar21 = 0.0f;
               local_1bd = ~*(byte *)(*(int *)(iVar6 + 0x74) + iVar9) & 1;
               piVar18 = (int *)0x0;
               piVar13 = (int *)0x0;
               piVar14 = (int *)0x0;
-              local_21c = 0.0;
-              local_214 = 0.0;
+              local_21c = 0.0f;
+              local_214 = 0.0f;
               local_1d4 = (int *)0x0;
               local_1d0 = (int *)0x0;
               local_1cc = (int *)0x0;
@@ -15303,14 +15303,14 @@ LAB_00651289:
                 do {
                   iVar6 = local_1dc;
                   local_64 = (float)*(int *)(*(int *)((int)local_1b8 + 0x70) + local_1d8 * 8) *
-                             0.015625;
+                             0.015625f;
                   fStack_60 = -(float)*(int *)(*(int *)((int)local_1b8 + 0x70) + 4 + local_1d8 * 8)
                               * 0.015625;
                   local_1b4 = (basic_streambuf<char,std::char_traits<char>_> *)
                               (local_64 - local_208);
                   local_220 = fStack_60 - fVar19;
                   local_5c = CONCAT44(local_220,local_1b4);
-                  if (0.001 <= local_220 * local_220 + (float)local_1b4 * (float)local_1b4) {
+                  if (0.001f <= local_220 * local_220 + (float)local_1b4 * (float)local_1b4) {
                     if ((*(byte *)(local_1d8 + *(int *)((int)local_1b8 + 0x74)) & 2) != 0) {
                       p_Var22 = endl_exref;
                       this = (basic_ostream<char,std::char_traits<char>_> *)
@@ -15322,8 +15322,8 @@ LAB_00651289:
                       fVar20 = local_21c;
                       fVar21 = local_214;
                     }
-                    if (((float)local_1b4 * fVar21 - local_220 * fVar20 == 0.0) &&
-                       (local_220 * fVar21 + (float)local_1b4 * fVar20 < 0.0)) {
+                    if (((float)local_1b4 * fVar21 - local_220 * fVar20 == 0.0f) &&
+                       (local_220 * fVar21 + (float)local_1b4 * fVar20 < 0.0f)) {
                       lib_fn_642770((((int *)**(int **)(iVar6 + 0xa8))[1] -
                                     *(int *)**(int **)(iVar6 + 0xa8) >> 3) + -1);
                       lib_fn_642770(((int *)**(int **)(iVar6 + 0xa8))[1] -
@@ -15410,8 +15410,8 @@ LAB_00652013:
                       }
                       local_1d0 = piVar14 + 1;
                       _local_54 = CONCAT44(local_1f8 + fStack_60,local_208 + local_64);
-                      _local_4c = CONCAT44((local_1f8 + fStack_60) * 0.5,
-                                           (local_208 + local_64) * 0.5);
+                      _local_4c = CONCAT44((local_1f8 + fStack_60) * 0.5f,
+                                           (local_208 + local_64) * 0.5f);
                       lib_fn_64e8f0(&local_4c);
                       local_16c = 0x3f800000;
                       local_168 = 0x3f800000;
@@ -16160,7 +16160,7 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_6(undefined4 *param_
             fVar3 = *pfVar10;
             local_90 = *(float *)(iVar6 + 0x1c0) * fVar2 + *(float *)(iVar6 + 0x1b0) * fVar3 +
                        *(float *)(iVar6 + 0x1e0);
-            local_cc = 1.0 / (*(float *)(iVar6 + 0x1bc) * fVar3 + *(float *)(iVar6 + 0x1cc) * fVar2
+            local_cc = 1.0f / (*(float *)(iVar6 + 0x1bc) * fVar3 + *(float *)(iVar6 + 0x1cc) * fVar2
                              + *(float *)(iVar6 + 0x1ec));
             fStack_8c = *(float *)(iVar6 + 0x1b4) * fVar3 + *(float *)(iVar6 + 0x1c4) * fVar2 +
                         *(float *)(iVar6 + 0x1e4);
@@ -16171,7 +16171,7 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_6(undefined4 *param_
             pfVar10 = (float *)(**(code **)(**(int **)(piVar14[2] + 0x34) + 0x1c))(&local_64);
             fVar2 = pfVar10[1];
             fVar3 = *pfVar10;
-            fVar16 = 1.0 / (*(float *)(iVar6 + 0x1bc) * fVar3 + *(float *)(iVar6 + 0x1cc) * fVar2 +
+            fVar16 = 1.0f / (*(float *)(iVar6 + 0x1bc) * fVar3 + *(float *)(iVar6 + 0x1cc) * fVar2 +
                            *(float *)(iVar6 + 0x1ec));
             fStack_7c = *(float *)(iVar6 + 0x1b4) * fVar3 + *(float *)(iVar6 + 0x1c4) * fVar2 +
                         *(float *)(iVar6 + 0x1e4);
@@ -16201,7 +16201,7 @@ void std::basic_filebuf<char,std::char_traits<char>_>::ctor_6(undefined4 *param_
             fStack_30 = fStack_38 - local_cc;
             puVar11[1] = CONCAT44(fStack_30,local_34);
             fStack_84 = local_c0;
-            local_1c = CONCAT44(local_c0 * -1.0,local_c4 * -1.0);
+            local_1c = CONCAT44(local_c0 * -1.0f,local_c4 * -1.0f);
             *puVar11 = local_1c;
             *(int *)((int)puVar11 + 0x2c) = iVar6;
             *(undefined4 *)(puVar11 + 3) = local_78;

@@ -43,8 +43,8 @@ void plasma::ScrollSlider::vfunc_21(void)
     local_18[2] = *(float *)(iVar2 + 0xd4) - *(float *)(iVar2 + 0xdc);
     local_18[3] = *(float *)(iVar2 + 0xd8) - *(float *)(iVar2 + 0xe0);
     local_18[uVar6] = local_18[uVar6 + 2] + local_18[uVar6];
-    if (local_18[uVar6] <= 0.0 && local_18[uVar6] != 0.0) {
-      local_18[uVar6] = 0.0;
+    if (local_18[uVar6] <= 0.0f && local_18[uVar6] != 0.0f) {
+      local_18[uVar6] = 0.0f;
     }
     if (local_1c < local_18[uVar6]) {
       local_18[uVar6] = local_1c;

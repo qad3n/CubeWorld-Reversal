@@ -90,7 +90,7 @@ cube::CompanionBehavior::vfunc_0(CompanionBehavior *this,void *creature,void *wo
   uint uVar9;
   int iVar10;
   bool bVar11;
-  float10 fVar12;
+  float fVar12;
   double dVar13;
   float fVar14;
   float fVar15;
@@ -218,8 +218,7 @@ cube::CompanionBehavior::vfunc_0(CompanionBehavior *this,void *creature,void *wo
         local_148 = (uint *)fVar16;
         local_12c = fVar17;
         if (900.0 < fVar14) {
-          dVar13 = (double)fVar14;
-          libm_sse2_sqrt_precise();
+          dVar13 = libm_sse2_sqrt_precise((double)fVar14);
           fVar14 = 1.0 / (float)dVar13;
           fVar16 = (float)local_148 * fVar14 * 30.0;
           fVar17 = local_12c * fVar14 * 30.0;

@@ -74,7 +74,7 @@ void cube::SpawnLocationBehavior::vfunc_0(int self,int region)
     randOffset[6] = 0;
     randOffset[7] = 0;
     spawnEnd = 0;
-    halfSize = 0.5 - *(float *)(self + 0x88) * 0.5;
+    halfSize = 0.5f - *(float *)(self + 0x88) * 0.5f;
     do {
       uVar15 = ftol2();
       randOffset[spawnEnd * 2] = (uint)uVar15;
@@ -144,7 +144,7 @@ LAB_004dfcb4:
   }
   if (*(int *)(self + 0x1484) == *(int *)(self + 0x1488)) goto LAB_004dfcb4;
   spawnPtr = *(int **)(region + 4);
-  fVar14 = 40000.0;
+  fVar14 = 40000.0f;
   piVar8 = (int *)*spawnPtr;
   if (piVar8 != spawnPtr) {
     do {
@@ -165,9 +165,9 @@ LAB_004dfcb4:
         local_10 = CONCAT44((local_10._4_4_ - *(int *)(self + 0x24)) -
                             (uint)((uint)local_10 < *(uint *)(self + 0x20)),
                             (uint)local_10 - *(uint *)(self + 0x20));
-        local_2c = (float)local_20 * 1.5258789e-05;
-        local_28 = (float)local_18 * 1.5258789e-05;
-        local_24 = (float)local_10 * 1.5258789e-05;
+        local_2c = (float)local_20 * 1.5258789e-05f;
+        local_28 = (float)local_18 * 1.5258789e-05f;
+        local_24 = (float)local_10 * 1.5258789e-05f;
         fVar13 = local_28 * local_28 + local_2c * local_2c + local_24 * local_24;
         if (fVar13 < fVar14) {
           fVar14 = fVar13;
@@ -197,7 +197,7 @@ LAB_004dfcb4:
         }
       }
     } while (piVar8 != spawnPtr);
-    if (65536.0 <= fVar14) goto LAB_004e002f;
+    if (65536.0f <= fVar14) goto LAB_004e002f;
   }
   if (*(int *)(self + 0x1410) != 0) {
     local_7c = 0;

@@ -27088,8 +27088,8 @@ void __thiscall WalkPathBehavior_checkPathClear(void *this,uint *param_1,float *
   uint local_8;
   
   local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  local_14 = CONCAT44(param_2[1] * 0.5,*param_2 * 0.5);
-  local_c = param_2[2] * 0.5;
+  local_14 = CONCAT44(param_2[1] * 0.5f,*param_2 * 0.5f);
+  local_c = param_2[2] * 0.5f;
   iVar15 = 0;
   do {
     uVar21 = ftol2();
@@ -27109,8 +27109,8 @@ void __thiscall WalkPathBehavior_checkPathClear(void *this,uint *param_1,float *
   uVar23 = __alldiv(uVar14,iVar15 - (uint)bVar19,0x10000,0);
   uVar24 = __alldiv(uVar13,iVar7 - (uint)bVar20,0x10000,0);
   iVar15 = 0;
-  local_14 = CONCAT44(param_2[1] * 0.5,*param_2 * 0.5);
-  local_c = param_2[2] * 0.5;
+  local_14 = CONCAT44(param_2[1] * 0.5f,*param_2 * 0.5f);
+  local_c = param_2[2] * 0.5f;
   do {
     uVar21 = ftol2();
     local_2c[iVar15 * 2] = (uint)uVar21;
@@ -29064,7 +29064,7 @@ ulonglong ftol2(void)
   ulonglong uVar1;
   uint uVar2;
   float fVar3;
-  float10 in_ST0;
+  float in_ST0;
   undefined4 local_20;
   undefined4 uStack_1c;
   
@@ -29074,10 +29074,10 @@ ulonglong ftol2(void)
   fVar3 = (float)in_ST0;
   if ((local_20 != 0) || (fVar3 = uStack_1c, (uVar1 & 0x7fffffff00000000) != 0)) {
     if ((int)fVar3 < 0) {
-      uVar1 = uVar1 + (0x80000000 < (uint)-(float)(in_ST0 - (float10)(longlong)uVar1));
+      uVar1 = uVar1 + (0x80000000 < (uint)-(float)(in_ST0 - (float)(longlong)uVar1));
     }
     else {
-      uVar2 = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float10)(longlong)uVar1));
+      uVar2 = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float)(longlong)uVar1));
       uVar1 = CONCAT44((int)uStack_1c - (uint)(local_20 < uVar2),local_20 - uVar2);
     }
   }

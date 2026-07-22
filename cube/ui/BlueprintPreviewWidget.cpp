@@ -106,8 +106,8 @@ void cube::BlueprintPreviewWidget::vfunc_10(void)
 {
   int child;
   int self;
-  float10 fVar2;
-  float10 fVar3;
+  float fVar2;
+  float fVar3;
   float width;
   float height;
   undefined4 argA;
@@ -120,29 +120,29 @@ void cube::BlueprintPreviewWidget::vfunc_10(void)
     }
     argB = 1;
     argA = 0x42b40000;
-    fVar2 = (float10)Widget_measureGuarded(0x42b40000,1);
-    fVar3 = (float10)Widget_measureGuarded();
-    Widget_setScroll(((float)fVar2 - (float)fVar3) * 0.5,argA,argB);
+    fVar2 = (float)Widget_measureGuarded(0x42b40000,1);
+    fVar3 = (float)Widget_measureGuarded();
+    Widget_setScroll(((float)fVar2 - (float)fVar3) * 0.5f,argA,argB);
   }
   if (*(int *)(self + 0x29c) != 0) {
     argA = 1;
-    fVar2 = (float10)Widget_measure(1);
-    fVar3 = (float10)Widget_measure();
-    width = ((float)fVar2 - (float)fVar3) - 20.0;
-    fVar2 = (float10)Widget_measureGuarded(width);
-    fVar3 = (float10)Widget_measureGuarded();
-    Widget_setScroll(((float)fVar2 - (float)fVar3) - 20.0,width,argA);
+    fVar2 = (float)Widget_measure(1);
+    fVar3 = (float)Widget_measure();
+    width = ((float)fVar2 - (float)fVar3) - 20.0f;
+    fVar2 = (float)Widget_measureGuarded(width);
+    fVar3 = (float)Widget_measureGuarded();
+    Widget_setScroll(((float)fVar2 - (float)fVar3) - 20.0f,width,argA);
   }
   if ((*(int *)(self + 0x2a0) != 0) && (*(int *)(self + 0x29c) != 0)) {
     argA = 1;
-    fVar2 = (float10)Widget_measure(1);
+    fVar2 = (float)Widget_measure(1);
     width = (float)fVar2;
-    fVar2 = (float10)Widget_measureGuarded(width);
-    fVar3 = (float10)Widget_measureGuarded();
-    height = (((float)fVar2 - (float)fVar3) - 40.0) - 10.0;
-    fVar2 = (float10)Widget_measure(height);
-    fVar3 = (float10)Widget_measure();
-    Widget_layoutChildrenGuarded(0x41a00000,((float)fVar2 - (float)fVar3) - 20.0,height,width,argA);
+    fVar2 = (float)Widget_measureGuarded(width);
+    fVar3 = (float)Widget_measureGuarded();
+    height = (((float)fVar2 - (float)fVar3) - 40.0f) - 10.0f;
+    fVar2 = (float)Widget_measure(height);
+    fVar3 = (float)Widget_measure();
+    Widget_layoutChildrenGuarded(0x41a00000,((float)fVar2 - (float)fVar3) - 20.0f,height,width,argA);
   }
   return;
 }

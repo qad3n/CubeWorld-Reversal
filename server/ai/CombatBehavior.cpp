@@ -158,7 +158,7 @@ cube::CombatBehavior::vfunc_0
   int iVar22;
   void *pvVar23;
   bool bVar24;
-  float10 fVar25;
+  float fVar25;
   float fVar26;
   double dVar27;
   float fVar28;
@@ -449,8 +449,9 @@ LAB_00403256:
             local_2ec = (int *)(local_1f4 * local_1f4 + local_1f8 * local_1f8 +
                                local_1f0 * local_1f0);
             if (0.0 < *(float *)((int)pvVar5 + 0x1190)) {
-              dVar27 = 1.5;
-              libm_sse2_pow_precise();
+              dVar27 = libm_sse2_pow_precise
+                                 (1.5,(double)(*(int *)((int)pvVar5 + 400) -
+                                              *(int *)((int)creature_p + 400)));
               fVar28 = 1.0 - (float)dVar27 * *(float *)((int)pvVar5 + 0x1190);
               if (fVar28 < 0.1) {
                 fVar28 = 0.1;
@@ -628,8 +629,7 @@ LAB_00403847:
       fVar29 = local_20c;
       fVar26 = local_210;
       if (0.0 < fVar28) {
-        dVar27 = (double)fVar28;
-        libm_sse2_sqrt_precise();
+        dVar27 = libm_sse2_sqrt_precise((double)fVar28);
         fVar29 = 1.0 / (float)dVar27;
         fVar26 = fVar29 * local_210;
         piVar21 = (int *)(fVar29 * (float)local_2ec);
@@ -1040,11 +1040,9 @@ LAB_004041dc:
     fVar29 = fStack_21c;
     if ((*(char *)((int)pvVar23 + 0x68) == '\x1c') && (25.0 < (float)world_p)) {
       fStack_2e4 = (float)*(int *)((int)pvVar23 + 0x6c) * 0.005;
-      dVar27 = (double)fStack_2e4;
-      libm_sse2_cos_precise();
+      dVar27 = libm_sse2_cos_precise((double)fStack_2e4);
       fStack_2d0 = (float)dVar27 * 1.5 + fStack_21c;
-      dVar27 = (double)fStack_2e4;
-      libm_sse2_sin_precise();
+      dVar27 = libm_sse2_sin_precise((double)fStack_2e4);
       fVar28 = (float)dVar27 * 1.5 + fStack_218;
       fVar29 = fStack_2d0;
     }
@@ -1111,10 +1109,12 @@ LAB_004041dc:
                   *(float *)((int)pvVar23 + 0x38) * *(float *)((int)pvVar23 + 0x38) +
                   *(float *)((int)pvVar23 + 0x3c) * *(float *)((int)pvVar23 + 0x3c)) {
           fStack_2e4 = *(float *)((int)pvVar23 + 0x34);
-          dVar27 = (double)(fStack_2e4 * fStack_2e4 +
-                            *(float *)((int)pvVar23 + 0x38) * *(float *)((int)pvVar23 + 0x38) +
-                           *(float *)((int)pvVar23 + 0x3c) * *(float *)((int)pvVar23 + 0x3c));
-          libm_sse2_sqrt_precise();
+          dVar27 = libm_sse2_sqrt_precise
+                             ((double)(fStack_2e4 * fStack_2e4 +
+                                       *(float *)((int)pvVar23 + 0x38) *
+                                       *(float *)((int)pvVar23 + 0x38) +
+                                      *(float *)((int)pvVar23 + 0x3c) *
+                                      *(float *)((int)pvVar23 + 0x3c)));
 LAB_00404420:
           fVar28 = 1.0 / (float)dVar27;
           *(float *)((int)pvVar23 + 0x34) = fStack_2e4 * fVar28;
@@ -1171,10 +1171,12 @@ LAB_00404420:
                   *(float *)((int)pvVar23 + 0x38) * *(float *)((int)pvVar23 + 0x38) +
                   *(float *)((int)pvVar23 + 0x3c) * *(float *)((int)pvVar23 + 0x3c)) {
           fStack_2e4 = *(float *)((int)pvVar23 + 0x34);
-          dVar27 = (double)(fStack_2e4 * fStack_2e4 +
-                            *(float *)((int)pvVar23 + 0x38) * *(float *)((int)pvVar23 + 0x38) +
-                           *(float *)((int)pvVar23 + 0x3c) * *(float *)((int)pvVar23 + 0x3c));
-          libm_sse2_sqrt_precise();
+          dVar27 = libm_sse2_sqrt_precise
+                             ((double)(fStack_2e4 * fStack_2e4 +
+                                       *(float *)((int)pvVar23 + 0x38) *
+                                       *(float *)((int)pvVar23 + 0x38) +
+                                      *(float *)((int)pvVar23 + 0x3c) *
+                                      *(float *)((int)pvVar23 + 0x3c)));
           goto LAB_00404420;
         }
       }
@@ -1206,8 +1208,7 @@ LAB_00404420:
                   fVar28 = fStack_218;
                   fVar29 = fStack_21c;
                   if (0.0 < fVar26) {
-                    dVar27 = (double)fVar26;
-                    libm_sse2_sqrt_precise();
+                    dVar27 = libm_sse2_sqrt_precise((double)fVar26);
                     fVar28 = 1.0 / (float)dVar27;
                     local_2fc = (CombatBehavior *)(fStack_1ec * fVar28);
                     local_2f4 = (uint *)(fStack_1e8 * fVar28);
@@ -1447,8 +1448,7 @@ LAB_00404ddb:
   fVar28 = fStack_218;
   fVar29 = fStack_21c;
   if (fVar26 <= 0.0) goto LAB_00404f21;
-  dVar27 = (double)fVar26;
-  libm_sse2_sqrt_precise();
+  dVar27 = libm_sse2_sqrt_precise((double)fVar26);
   fVar28 = 1.0 / (float)dVar27;
   local_2fc = (CombatBehavior *)(fStack_204 * fVar28);
   local_2f4 = (uint *)(fStack_200 * fVar28);
@@ -1558,7 +1558,7 @@ undefined4 * __fastcall cube::CombatBehavior::vfunc_1(int src)
 int __thiscall Combat_getAbilityCooldown(void *this,uint ability)
 
 {
-  float10 fVar1;
+  float fVar1;
   float base_ms;
   float speed;
   
@@ -1583,52 +1583,52 @@ int __thiscall Combat_getAbilityCooldown(void *this,uint ability)
   case 9:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 2:
   case 3:
   case 4:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 5:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 6:
   case 7:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 50.0;
+    base_ms = 50.0f;
     break;
   case 10:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0xc:
   case 0x10:
   case 0x43:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0xd:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0xe:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0xf:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0x11:
   case 0x12:
@@ -1637,7 +1637,7 @@ int __thiscall Combat_getAbilityCooldown(void *this,uint ability)
   case 0x15:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0x16:
     fVar1 = Combat_computeAttackSpeed((int)this);
@@ -1645,7 +1645,7 @@ int __thiscall Combat_getAbilityCooldown(void *this,uint ability)
   case 0x17:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 50.0;
+    base_ms = 50.0f;
     break;
   case 0x18:
   case 0x19:
@@ -1656,35 +1656,35 @@ int __thiscall Combat_getAbilityCooldown(void *this,uint ability)
   case 0x40:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 50.0;
+    base_ms = 50.0f;
     break;
   case 0x1a:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   default:
     fVar1 = Combat_computeAttackSpeed((int)this);
 LAB_00408115:
     speed = (float)fVar1;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     break;
   case 0x1e:
   case 0x20:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 0x1f:
   case 0x21:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 1600.0;
+    base_ms = 1600.0f;
     break;
   case 0x22:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 1600.0;
+    base_ms = 1600.0f;
     break;
   case 0x25:
   case 0x2b:
@@ -1692,19 +1692,19 @@ LAB_00408115:
     if (*(char *)((int)this + 0xaa9) == '\f') {
       fVar1 = Combat_computeAttackSpeed((int)this);
       speed = (float)fVar1;
-      base_ms = 600.0;
+      base_ms = 600.0f;
     }
     else {
       fVar1 = Combat_computeAttackSpeed((int)this);
       speed = (float)fVar1;
-      base_ms = 1200.0;
+      base_ms = 1200.0f;
     }
     break;
   case 0x26:
   case 0x2c:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 0x27:
   case 0x28:
@@ -1712,13 +1712,13 @@ LAB_00408115:
   case 0x2a:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0x2d:
   case 0x2e:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 1200.0;
+    base_ms = 1200.0f;
     break;
   case 0x30:
   case 0x65:
@@ -1729,13 +1729,13 @@ LAB_00408115:
   case 0x3a:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 0x41:
   case 0x42:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 0x44:
   case 0x45:
@@ -1748,7 +1748,7 @@ LAB_00408115:
   case 0x4e:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 0x47:
   case 0x48:
@@ -1756,27 +1756,27 @@ LAB_00408115:
   case 0x57:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 5000.0;
+    base_ms = 5000.0f;
     break;
   case 0x5b:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 1000.0;
+    base_ms = 1000.0f;
     break;
   case 0x5d:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 0x5e:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 0x5f:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 1000.0;
+    base_ms = 1000.0f;
     break;
   case 0x69:
     return 5000;
@@ -1798,7 +1798,7 @@ int __fastcall Combat_getWindupAndRecovery(int creature)
 {
   int cast_ms;
   int recover_ms;
-  float10 fVar3;
+  float fVar3;
   float base_ms;
   float speed;
   
@@ -1821,52 +1821,52 @@ int __fastcall Combat_getWindupAndRecovery(int creature)
   case 9:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 2:
   case 3:
   case 4:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 5:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 6:
   case 7:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 50.0;
+    base_ms = 50.0f;
     break;
   case 10:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0xc:
   case 0x10:
   case 0x43:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0xd:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0xe:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0xf:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0x11:
   case 0x12:
@@ -1875,7 +1875,7 @@ int __fastcall Combat_getWindupAndRecovery(int creature)
   case 0x15:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0x16:
     fVar3 = Combat_computeAttackSpeed(creature);
@@ -1883,7 +1883,7 @@ int __fastcall Combat_getWindupAndRecovery(int creature)
   case 0x17:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 50.0;
+    base_ms = 50.0f;
     break;
   case 0x18:
   case 0x19:
@@ -1894,35 +1894,35 @@ int __fastcall Combat_getWindupAndRecovery(int creature)
   case 0x40:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 50.0;
+    base_ms = 50.0f;
     break;
   case 0x1a:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   default:
     fVar3 = Combat_computeAttackSpeed(creature);
 LAB_00408808:
     speed = (float)fVar3;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     break;
   case 0x1e:
   case 0x20:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 0x1f:
   case 0x21:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 1600.0;
+    base_ms = 1600.0f;
     break;
   case 0x22:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 1600.0;
+    base_ms = 1600.0f;
     break;
   case 0x25:
   case 0x2b:
@@ -1930,19 +1930,19 @@ LAB_00408808:
     if (*(char *)(creature + 0xaa9) == '\f') {
       fVar3 = Combat_computeAttackSpeed(creature);
       speed = (float)fVar3;
-      base_ms = 600.0;
+      base_ms = 600.0f;
     }
     else {
       fVar3 = Combat_computeAttackSpeed(creature);
       speed = (float)fVar3;
-      base_ms = 1200.0;
+      base_ms = 1200.0f;
     }
     break;
   case 0x26:
   case 0x2c:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 0x27:
   case 0x28:
@@ -1950,13 +1950,13 @@ LAB_00408808:
   case 0x2a:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0x2d:
   case 0x2e:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 1200.0;
+    base_ms = 1200.0f;
     break;
   case 0x30:
   case 0x65:
@@ -1969,13 +1969,13 @@ LAB_00408808:
   case 0x3a:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 0x41:
   case 0x42:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 0x44:
   case 0x45:
@@ -1988,7 +1988,7 @@ LAB_00408808:
   case 0x4e:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 0x47:
   case 0x48:
@@ -1997,27 +1997,27 @@ LAB_00408808:
   case 0x57:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 5000.0;
+    base_ms = 5000.0f;
     break;
   case 0x5b:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 1000.0;
+    base_ms = 1000.0f;
     break;
   case 0x5d:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 0x5e:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 0x5f:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 1000.0;
+    base_ms = 1000.0f;
     break;
   case 0x69:
     cast_ms = 5000;
@@ -2035,14 +2035,14 @@ LAB_00408820:
   case 9:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     goto LAB_00408b04;
   case 3:
   case 4:
   case 0x3e:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     goto LAB_00408b04;
   case 5:
   case 0xc:
@@ -2052,13 +2052,13 @@ LAB_00408820:
   case 0x42:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     goto LAB_00408b04;
   case 6:
   case 7:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 150.0;
+    base_ms = 150.0f;
     goto LAB_00408b04;
   default:
     fVar3 = Combat_computeAttackSpeed(creature);
@@ -2076,31 +2076,31 @@ LAB_00408820:
   case 0xf:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     goto LAB_00408b04;
   case 0x12:
   case 0x13:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 150.0;
+    base_ms = 150.0f;
     goto LAB_00408b04;
   case 0x14:
   case 0x15:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     goto LAB_00408b04;
   case 0x16:
     fVar3 = Combat_computeAttackSpeed(creature);
-    recover_ms = (int)(50.0 / ((float)fVar3 * *(float *)(creature + 0x17c)));
+    recover_ms = (int)(50.0f / ((float)fVar3 * *(float *)(creature + 0x17c)));
     break;
   case 0x17:
     fVar3 = Combat_computeAttackSpeed(creature);
-    recover_ms = (int)(50.0 / ((float)fVar3 * *(float *)(creature + 0x17c)));
+    recover_ms = (int)(50.0f / ((float)fVar3 * *(float *)(creature + 0x17c)));
     break;
   case 0x1a:
     fVar3 = Combat_computeAttackSpeed(creature);
-    recover_ms = (int)(1200.0 / ((float)fVar3 * *(float *)(creature + 0x17c)));
+    recover_ms = (int)(1200.0f / ((float)fVar3 * *(float *)(creature + 0x17c)));
     break;
   case 0x1e:
   case 0x20:
@@ -2114,13 +2114,13 @@ LAB_00408820:
     break;
   case 0x22:
     fVar3 = Combat_computeAttackSpeed(creature);
-    recover_ms = (int)(1200.0 / ((float)fVar3 * *(float *)(creature + 0x17c)));
+    recover_ms = (int)(1200.0f / ((float)fVar3 * *(float *)(creature + 0x17c)));
     break;
   case 0x25:
   case 0x2b:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     goto LAB_00408b04;
   case 0x26:
   case 0x27:
@@ -2135,7 +2135,7 @@ LAB_00408820:
   case 0x2e:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     goto LAB_00408b04;
   case 0x32:
   case 0x4c:
@@ -2150,12 +2150,12 @@ LAB_00408820:
   case 0x37:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     goto LAB_00408b04;
   case 0x43:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     goto LAB_00408b04;
   case 0x44:
   case 0x45:
@@ -2178,7 +2178,7 @@ LAB_00408820:
   case 0x5e:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     goto LAB_00408b04;
   case 0x5f:
     recover_ms = 2000;
@@ -2187,7 +2187,7 @@ LAB_00408820:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
 LAB_00408afc:
-    base_ms = 300.0;
+    base_ms = 300.0f;
 LAB_00408b04:
     recover_ms = (int)(base_ms / (speed * *(float *)(creature + 0x17c)));
   }
@@ -2199,7 +2199,7 @@ LAB_00408b04:
   default:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 3:
   case 4:
@@ -2207,14 +2207,14 @@ LAB_00408b04:
   case 0x3e:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 7:
   case 0xe:
   case 0x12:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 10:
     return recover_ms + 600 + cast_ms;
@@ -2224,12 +2224,12 @@ LAB_00408b04:
   case 0x68:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0xf:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     break;
   case 0x16:
   case 0x1a:
@@ -2252,11 +2252,11 @@ LAB_00408b04:
   case 0x5f:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0x17:
     fVar3 = Combat_computeAttackSpeed(creature);
-    return (int)(10.0 / ((float)fVar3 * *(float *)(creature + 0x17c))) + recover_ms + cast_ms;
+    return (int)(10.0f / ((float)fVar3 * *(float *)(creature + 0x17c))) + recover_ms + cast_ms;
   case 0x30:
     return recover_ms + cast_ms;
   case 0x36:
@@ -2265,25 +2265,25 @@ LAB_00408b04:
   case 0x3a:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 0x41:
   case 0x42:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0x43:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0x44:
   case 0x45:
   case 0x5d:
     fVar3 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar3;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 0x47:
   case 0x48:
@@ -2305,7 +2305,7 @@ bool __thiscall Combat_canCastAbility(void *this,int ability)
 
 {
   int ability_save;
-  float10 fVar2;
+  float fVar2;
   void *range;
   
   ability_save = ability;
@@ -2320,7 +2320,7 @@ bool __thiscall Combat_canCastAbility(void *this,int ability)
         if (ability_save != 0x1c) {
           return true;
         }
-        return 0.0 < *(float *)((int)this + 0x170);
+        return 0.0f < *(float *)((int)this + 0x170);
       }
     }
   }
@@ -2379,7 +2379,7 @@ void __thiscall Combat_mapLowerBound(void *this,int *out,int *key)
 int __thiscall Combat_getAbilityCastTime(void *this,uint ability)
 
 {
-  float10 fVar1;
+  float fVar1;
   float base_ms;
   float speed;
   
@@ -2394,7 +2394,7 @@ int __thiscall Combat_getAbilityCastTime(void *this,uint ability)
   default:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 3:
   case 4:
@@ -2402,14 +2402,14 @@ int __thiscall Combat_getAbilityCastTime(void *this,uint ability)
   case 0x3e:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 7:
   case 0xe:
   case 0x12:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 10:
     return 600;
@@ -2419,12 +2419,12 @@ int __thiscall Combat_getAbilityCastTime(void *this,uint ability)
   case 0x68:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0xf:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     break;
   case 0x16:
   case 0x1a:
@@ -2447,12 +2447,12 @@ int __thiscall Combat_getAbilityCastTime(void *this,uint ability)
   case 0x5f:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0x17:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 10.0;
+    base_ms = 10.0f;
     break;
   case 0x30:
     return 0;
@@ -2462,25 +2462,25 @@ int __thiscall Combat_getAbilityCastTime(void *this,uint ability)
   case 0x3a:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 0x41:
   case 0x42:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0x43:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0x44:
   case 0x45:
   case 0x5d:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 0x47:
   case 0x48:
@@ -2616,20 +2616,20 @@ uint __fastcall Combat_isMeleeSwingOpcode(int creature)
  */
 /* Global::Combat_getAbilityResourceCost @ 0040fb20 */
 
-float10 __thiscall Combat_getAbilityResourceCost(int creature,undefined4 ability,int stacks)
+float __thiscall Combat_getAbilityResourceCost(int creature,undefined4 ability,int stacks)
 
 {
   int *buff_head;
   int *buff;
-  float10 fVar3;
+  float fVar3;
   
   switch(ability) {
   case 3:
   case 4:
-    return (float10)0.1;
+    return (float)0.1f;
   default:
 switchD_0040fb39_caseD_5:
-    return (float10)0;
+    return (float)0;
   case 0x1f:
   case 0x21:
   case 0x25:
@@ -2640,7 +2640,7 @@ switchD_0040fb39_caseD_5:
     break;
   case 0x22:
     fVar3 = Combat_getResistFactor(creature,0x22,stacks);
-    return (float10)((1.0 - (float)fVar3 * 0.75) * 0.125);
+    return (float)((1.0f - (float)fVar3 * 0.75f) * 0.125f);
   }
   buff_head = *(int **)(creature + 0x1178);
   buff = (int *)*buff_head;
@@ -2648,12 +2648,12 @@ switchD_0040fb39_caseD_5:
     while ((char)buff[2] != '\t') {
       buff = (int *)*buff;
       if (buff == buff_head) {
-        return (float10)0.3;
+        return (float)0.3f;
       }
     }
     if (buff != (int *)0xfffffff8) goto switchD_0040fb39_caseD_5;
   }
-  return (float10)0.3;
+  return (float)0.3f;
 }
 
 
@@ -2679,7 +2679,7 @@ undefined8 __fastcall Combat_findTopThreatTarget(int creature)
   
   list_head = *(int **)(creature + 0x13a4);
   node = (int *)*list_head;
-  max_priority = 0.0;
+  max_priority = 0.0f;
   if (node != list_head) {
     res_hi = 0;
     res_lo = 0;
@@ -2735,7 +2735,7 @@ undefined4 __fastcall Combat_updateAttackState(int creature)
   int cooldown;
   int cost;
   undefined3 extraout_var;
-  float10 fVar4;
+  float fVar4;
   float base_ms;
   float speed;
   
@@ -2755,7 +2755,7 @@ undefined4 __fastcall Combat_updateAttackState(int creature)
   default:
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case '\x03':
   case '\x04':
@@ -2763,14 +2763,14 @@ undefined4 __fastcall Combat_updateAttackState(int creature)
   case '>':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case '\a':
   case '\x0e':
   case '\x12':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case '\n':
     cost = 600;
@@ -2781,12 +2781,12 @@ undefined4 __fastcall Combat_updateAttackState(int creature)
   case 'h':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case '\x0f':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     break;
   case '\x16':
   case '\x1a':
@@ -2809,12 +2809,12 @@ undefined4 __fastcall Combat_updateAttackState(int creature)
   case '_':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case '\x17':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 10.0;
+    base_ms = 10.0f;
     break;
   case '0':
     cost = 0;
@@ -2826,25 +2826,25 @@ undefined4 __fastcall Combat_updateAttackState(int creature)
   case ':':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 'A':
   case 'B':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 'C':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 'D':
   case 'E':
   case ']':
     fVar4 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar4;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 'G':
   case 'H':
@@ -2886,7 +2886,7 @@ undefined4 __fastcall Combat_updateAbilityAndProc(int creature)
   int *piVar7;
   char cVar8;
   bool bVar9;
-  float10 fVar10;
+  float fVar10;
   float base_ms;
   float speed;
   
@@ -2901,7 +2901,7 @@ undefined4 __fastcall Combat_updateAbilityAndProc(int creature)
   default:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 3:
   case 4:
@@ -2909,14 +2909,14 @@ undefined4 __fastcall Combat_updateAbilityAndProc(int creature)
   case 0x3e:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 7:
   case 0xe:
   case 0x12:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 10:
     cost = 600;
@@ -2927,12 +2927,12 @@ undefined4 __fastcall Combat_updateAbilityAndProc(int creature)
   case 0x68:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0xf:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     break;
   case 0x16:
   case 0x1a:
@@ -2955,12 +2955,12 @@ undefined4 __fastcall Combat_updateAbilityAndProc(int creature)
   case 0x5f:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0x17:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 10.0;
+    base_ms = 10.0f;
     break;
   case 0x30:
     cost = 0;
@@ -2972,25 +2972,25 @@ undefined4 __fastcall Combat_updateAbilityAndProc(int creature)
   case 0x3a:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 300.0;
+    base_ms = 300.0f;
     break;
   case 0x41:
   case 0x42:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0x43:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0x44:
   case 0x45:
   case 0x5d:
     fVar10 = Combat_computeAttackSpeed(creature);
     speed = (float)fVar10;
-    base_ms = 800.0;
+    base_ms = 800.0f;
     break;
   case 0x47:
   case 0x48:
@@ -3049,51 +3049,51 @@ LAB_004108c7:
         case 9:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 300.0;
+          base_ms = 300.0f;
           break;
         case 2:
         case 3:
         case 4:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 100.0;
+          base_ms = 100.0f;
           break;
         case 5:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 100.0;
+          base_ms = 100.0f;
           break;
         case 6:
         case 7:
           fVar10 = Combat_computeAttackSpeed(creature);
-          piVar7 = (int *)(int)(50.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+          piVar7 = (int *)(int)(50.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           goto LAB_00410d39;
         case 10:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 100.0;
+          base_ms = 100.0f;
           break;
         case 0xc:
         case 0x10:
         case 0x43:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 200.0;
+          base_ms = 200.0f;
           break;
         case 0xd:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 200.0;
+          base_ms = 200.0f;
           break;
         case 0xe:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 100.0;
+          base_ms = 100.0f;
           break;
         case 0xf:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 200.0;
+          base_ms = 200.0f;
           break;
         case 0x11:
         case 0x12:
@@ -3102,14 +3102,14 @@ LAB_004108c7:
         case 0x15:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 100.0;
+          base_ms = 100.0f;
           break;
         case 0x16:
           fVar10 = Combat_computeAttackSpeed(creature);
           goto LAB_00410d21;
         case 0x17:
           fVar10 = Combat_computeAttackSpeed(creature);
-          piVar7 = (int *)(int)(50.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+          piVar7 = (int *)(int)(50.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           goto LAB_00410d39;
         case 0x18:
         case 0x19:
@@ -3119,51 +3119,51 @@ LAB_004108c7:
         case 0x3f:
         case 0x40:
           fVar10 = Combat_computeAttackSpeed(creature);
-          piVar7 = (int *)(int)(50.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+          piVar7 = (int *)(int)(50.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           goto LAB_00410d39;
         case 0x1a:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 300.0;
+          base_ms = 300.0f;
           break;
         default:
           fVar10 = Combat_computeAttackSpeed(creature);
 LAB_00410d21:
           speed = (float)fVar10;
-          base_ms = 400.0;
+          base_ms = 400.0f;
           break;
         case 0x1e:
         case 0x20:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 800.0;
+          base_ms = 800.0f;
           break;
         case 0x1f:
         case 0x21:
           fVar10 = Combat_computeAttackSpeed(creature);
-          piVar7 = (int *)(int)(1600.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+          piVar7 = (int *)(int)(1600.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           goto LAB_00410d39;
         case 0x22:
           fVar10 = Combat_computeAttackSpeed(creature);
-          piVar7 = (int *)(int)(1600.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+          piVar7 = (int *)(int)(1600.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           goto LAB_00410d39;
         case 0x25:
         case 0x2b:
         case 0x59:
           if (*(char *)(creature + 0xaa9) == '\f') {
             fVar10 = Combat_computeAttackSpeed(creature);
-            piVar7 = (int *)(int)(600.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+            piVar7 = (int *)(int)(600.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           }
           else {
             fVar10 = Combat_computeAttackSpeed(creature);
-            piVar7 = (int *)(int)(1200.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+            piVar7 = (int *)(int)(1200.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           }
           goto LAB_00410d39;
         case 0x26:
         case 0x2c:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 500.0;
+          base_ms = 500.0f;
           break;
         case 0x27:
         case 0x28:
@@ -3171,12 +3171,12 @@ LAB_00410d21:
         case 0x2a:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 200.0;
+          base_ms = 200.0f;
           break;
         case 0x2d:
         case 0x2e:
           fVar10 = Combat_computeAttackSpeed(creature);
-          piVar7 = (int *)(int)(1200.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+          piVar7 = (int *)(int)(1200.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           goto LAB_00410d39;
         case 0x30:
         case 0x65:
@@ -3189,13 +3189,13 @@ LAB_00410d21:
         case 0x3a:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 800.0;
+          base_ms = 800.0f;
           break;
         case 0x41:
         case 0x42:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 300.0;
+          base_ms = 300.0f;
           break;
         case 0x44:
         case 0x45:
@@ -3208,7 +3208,7 @@ LAB_00410d21:
         case 0x4e:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 300.0;
+          base_ms = 300.0f;
           break;
         case 0x47:
         case 0x48:
@@ -3216,25 +3216,25 @@ LAB_00410d21:
           goto LAB_00410d39;
         case 0x57:
           fVar10 = Combat_computeAttackSpeed(creature);
-          piVar7 = (int *)(int)(5000.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+          piVar7 = (int *)(int)(5000.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           goto LAB_00410d39;
         case 0x5b:
           fVar10 = Combat_computeAttackSpeed(creature);
-          piVar7 = (int *)(int)(1000.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+          piVar7 = (int *)(int)(1000.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           goto LAB_00410d39;
         case 0x5d:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 800.0;
+          base_ms = 800.0f;
           break;
         case 0x5e:
           fVar10 = Combat_computeAttackSpeed(creature);
           speed = (float)fVar10;
-          base_ms = 500.0;
+          base_ms = 500.0f;
           break;
         case 0x5f:
           fVar10 = Combat_computeAttackSpeed(creature);
-          piVar7 = (int *)(int)(1000.0 / ((float)fVar10 * *(float *)(creature + 0x17c)));
+          piVar7 = (int *)(int)(1000.0f / ((float)fVar10 * *(float *)(creature + 0x17c)));
           goto LAB_00410d39;
         case 0x69:
           piVar7 = (int *)0x1388;
@@ -3305,11 +3305,9 @@ void __thiscall Combat_getProjectileSpawnPos(void *this,uint *out_pos)
   if ((*(byte *)((int)this + 0x7e) & 4) != 0) {
     Matrix4_setIdentity(&local_6c);
     fVar4 = *(float *)((int)this + 0x30) * 0.017453292;
-    dVar6 = (double)fVar4;
-    libm_sse2_cos_precise();
+    dVar6 = libm_sse2_cos_precise((double)fVar4);
     fVar5 = (float)dVar6;
-    dVar6 = (double)fVar4;
-    libm_sse2_sin_precise();
+    dVar6 = libm_sse2_sin_precise((double)fVar4);
     fVar7 = (float)dVar6;
     fVar9 = *(float *)((int)this + 0x84) * 0.5;
     fVar8 = *(float *)((int)this + 0x88) * 0.35;
@@ -3370,7 +3368,7 @@ void __thiscall Combat_getProjectileSpawnPos(void *this,uint *out_pos)
 int __thiscall Combat_getAbilityRecovery(void *this,uint ability)
 
 {
-  float10 fVar1;
+  float fVar1;
   float base_ms;
   float speed;
   
@@ -3386,14 +3384,14 @@ int __thiscall Combat_getAbilityRecovery(void *this,uint ability)
   case 9:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 3:
   case 4:
   case 0x3e:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 5:
   case 0xc:
@@ -3403,13 +3401,13 @@ int __thiscall Combat_getAbilityRecovery(void *this,uint ability)
   case 0x42:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     break;
   case 6:
   case 7:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 150.0;
+    base_ms = 150.0f;
     break;
   default:
     fVar1 = Combat_computeAttackSpeed((int)this);
@@ -3426,34 +3424,34 @@ int __thiscall Combat_getAbilityRecovery(void *this,uint ability)
   case 0xf:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0x12:
   case 0x13:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 150.0;
+    base_ms = 150.0f;
     break;
   case 0x14:
   case 0x15:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 400.0;
+    base_ms = 400.0f;
     break;
   case 0x16:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 50.0;
+    base_ms = 50.0f;
     break;
   case 0x17:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 50.0;
+    base_ms = 50.0f;
     break;
   case 0x1a:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 1200.0;
+    base_ms = 1200.0f;
     break;
   case 0x1e:
   case 0x20:
@@ -3466,13 +3464,13 @@ int __thiscall Combat_getAbilityRecovery(void *this,uint ability)
   case 0x22:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 1200.0;
+    base_ms = 1200.0f;
     break;
   case 0x25:
   case 0x2b:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 100.0;
+    base_ms = 100.0f;
     break;
   case 0x26:
   case 0x27:
@@ -3487,7 +3485,7 @@ int __thiscall Combat_getAbilityRecovery(void *this,uint ability)
   case 0x2e:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 0x32:
   case 0x4c:
@@ -3500,12 +3498,12 @@ int __thiscall Combat_getAbilityRecovery(void *this,uint ability)
   case 0x37:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 0x43:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 200.0;
+    base_ms = 200.0f;
     break;
   case 0x44:
   case 0x45:
@@ -3524,7 +3522,7 @@ int __thiscall Combat_getAbilityRecovery(void *this,uint ability)
   case 0x5e:
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
-    base_ms = 500.0;
+    base_ms = 500.0f;
     break;
   case 0x5f:
     return 2000;
@@ -3532,7 +3530,7 @@ int __thiscall Combat_getAbilityRecovery(void *this,uint ability)
     fVar1 = Combat_computeAttackSpeed((int)this);
     speed = (float)fVar1;
 LAB_00411fd9:
-    base_ms = 300.0;
+    base_ms = 300.0f;
   }
   return (int)(base_ms / (speed * *(float *)((int)this + 0x17c)));
 }
@@ -3546,41 +3544,41 @@ LAB_00411fd9:
  */
 /* Global::Combat_computeAttackSpeed @ 00412150 */
 
-float10 __fastcall Combat_computeAttackSpeed(int creature)
+float __fastcall Combat_computeAttackSpeed(int creature)
 
 {
   char cVar1;
   int *piVar2;
   int maxhp;
   int *piVar4;
-  float10 fVar5;
+  float fVar5;
   float ratio;
   float speed;
   
-  speed = 1.0;
+  speed = 1.0f;
   if (*(char *)(creature + 0x60) != '\0') {
-    speed = (float)*(byte *)(creature + 0x1a8) * 0.0625 + 0.75;
+    speed = (float)*(byte *)(creature + 0x1a8) * 0.0625f + 0.75f;
   }
   cVar1 = *(char *)(creature + 0x140);
   if ((cVar1 == '\x01') && (*(char *)(creature + 0x141) == '\0')) {
     maxhp = Combat_getStaminaRegenRate(creature);
-    if ((float)*(int *)(creature + 0x70) / (float)maxhp <= 1.0) {
+    if ((float)*(int *)(creature + 0x70) / (float)maxhp <= 1.0f) {
       maxhp = Combat_getStaminaRegenRate(creature);
       ratio = (float)*(int *)(creature + 0x70) / (float)maxhp;
     }
     else {
-      ratio = 1.0;
+      ratio = 1.0f;
     }
-    speed = ratio * 0.5 + speed;
+    speed = ratio * 0.5f + speed;
   }
   if ((cVar1 == '\x03') && (*(char *)(creature + 0x141) == '\x01')) {
     maxhp = Combat_getStaminaRegenRate(creature);
-    if ((float)*(int *)(creature + 0x70) / (float)maxhp <= 1.0) {
+    if ((float)*(int *)(creature + 0x70) / (float)maxhp <= 1.0f) {
       maxhp = Combat_getStaminaRegenRate(creature);
       ratio = (float)*(int *)(creature + 0x70) / (float)maxhp;
     }
     else {
-      ratio = 1.0;
+      ratio = 1.0f;
     }
     speed = ratio + speed;
   }
@@ -3592,7 +3590,7 @@ float10 __fastcall Combat_computeAttackSpeed(int creature)
     while ((char)piVar4[2] != '\f') {
       piVar4 = (int *)*piVar4;
       if (piVar4 == piVar2) {
-        return (float10)speed;
+        return (float)speed;
       }
     }
     if (piVar4 != (int *)0xfffffff8) {
@@ -3600,10 +3598,10 @@ float10 __fastcall Combat_computeAttackSpeed(int creature)
       if ((maxhp == 0) && (*(char *)(creature + 0x60) != '\0')) {
         maxhp = *(int *)(creature + 400) / 2 + *(byte *)(creature + 0x1a8) + 1;
       }
-      speed = ((1.0 - 1.0 / ((float)maxhp * 0.1 + 1.0)) + 1.0) * speed;
+      speed = ((1.0f - 1.0f / ((float)maxhp * 0.1f + 1.0f)) + 1.0f) * speed;
     }
   }
-  return (float10)speed;
+  return (float)speed;
 }
 
 
@@ -3615,22 +3613,21 @@ float10 __fastcall Combat_computeAttackSpeed(int creature)
  */
 /* Global::Combat_sumEquipAttackBonus @ 00412300 */
 
-float10 __fastcall Combat_sumEquipAttackBonus(int creature)
+float __fastcall Combat_sumEquipAttackBonus(int creature)
 
 {
-  float10 fVar1;
+  float fVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   undefined4 result;
   undefined4 sum;
   
-  dVar2 = 2.0;
-  libm_sse2_pow_precise();
-  dVar3 = 2.0;
-  libm_sse2_pow_precise();
-  dVar4 = 2.0;
-  libm_sse2_pow_precise();
+  dVar2 = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(creature + 400) - 1.0) * 0.05 + 1.0)
+                                  ) * 3.0));
+  dVar3 = libm_sse2_pow_precise(2.0,0.0);
+  dVar4 = libm_sse2_pow_precise(2.0,3.0);
   sum = (((float)dVar2 * (float)dVar3) / (float)dVar4) * 0.1;
   if (*(char *)(creature + 0x990) == '\x03') {
     fVar1 = Combat_equipSpeedBonus((char *)(creature + 0x990));
@@ -3669,7 +3666,7 @@ float10 __fastcall Combat_sumEquipAttackBonus(int creature)
     fVar1 = Combat_equipSpeedBonus((char *)(creature + 0xcd8));
     result = (float)fVar1 + sum;
   }
-  return (float10)result;
+  return (float)result;
 }
 
 
@@ -3681,12 +3678,12 @@ float10 __fastcall Combat_sumEquipAttackBonus(int creature)
  */
 /* Global::Combat_equipSpeedBonus @ 00414350 */
 
-float10 __fastcall Combat_equipSpeedBonus(char *item)
+float __fastcall Combat_equipSpeedBonus(char *item)
 
 {
   char cVar1;
   char cVar2;
-  float10 fVar3;
+  float fVar3;
   float value;
   float multiplier;
   
@@ -3709,10 +3706,10 @@ float10 __fastcall Combat_equipSpeedBonus(char *item)
     fVar3 = pow2MulDiv();
     value = (float)fVar3 * multiplier * value;
     if (0.001 <= value) {
-      return (float10)value;
+      return (float)value;
     }
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -3884,11 +3881,11 @@ void CombatBehavior_alertNearbyAllies(int attacker,int target,int param_3)
           local_10 = CONCAT44((local_10._4_4_ - *(int *)(target + 0x24)) -
                               (uint)((uint)local_10 < *(uint *)(target + 0x20)),
                               (uint)local_10 - *(uint *)(target + 0x20));
-          dx = (float)local_20 * 1.5258789e-05;
+          dx = (float)local_20 * 1.5258789e-05f;
           local_30 = (float)local_10;
-          dy = (float)local_18 * 1.5258789e-05;
-          dz = local_30 * 1.5258789e-05;
-          if ((dy * dy + dx * dx + dz * dz < 64.0) &&
+          dy = (float)local_18 * 1.5258789e-05f;
+          dz = local_30 * 1.5258789e-05f;
+          if ((dy * dy + dx * dx + dz * dz < 64.0f) &&
              (pfVar9 = (float *)RBTree_findOrInsert((void *)(iVar3 + 0x13a4),puVar11), iVar7 = local_34,
              *pfVar9 == 0.0)) {
             puVar6 = RBTree_findOrInsert((void *)(creature_iter[6] + 0x13a4),puVar11);

@@ -115,7 +115,7 @@ void cube::WalkPathBehavior::vfunc_0(int self,undefined4 param_2,int dt)
   do {
     local_98 = local_4c;
     waypointIdx = 0;
-    local_c = *(float *)(self + 0x88) * 0.5;
+    local_c = *(float *)(self + 0x88) * 0.5f;
     timer = iStack_48;
     do {
       uVar11 = ftol2();
@@ -177,7 +177,7 @@ LAB_0058d5ff:
     if (0x14 < attempt) break;
 LAB_0058d260:
     waypointIdx = 0;
-    local_c = *(float *)(self + 0x88) * 0.5;
+    local_c = *(float *)(self + 0x88) * 0.5f;
     do {
       uVar11 = ftol2();
       randOffset[waypointIdx * 2] = (uint)uVar11;
@@ -193,7 +193,7 @@ LAB_0058d260:
                          local_4c + randOffset[4]);
     blocked = WalkPathBehavior_isAreaWalkable(randOffset + 6,self + 0x80,0);
     if (blocked == '\0') {
-      local_c = *(float *)(self + 0x88) * 0.5;
+      local_c = *(float *)(self + 0x88) * 0.5f;
       local_14 = 0;
       vec3i64_setFromGen(&local_14);
       puVar13 = &waypoint;
@@ -205,7 +205,7 @@ LAB_0058d260:
           *pfVar4 * *pfVar4 + pfVar4[1] * pfVar4[1] + pfVar4[2] * pfVar4[2]) {
         if (*(int *)(self + 0x1464) == 0) {
           GameController_clearContainers();
-          local_c = 0.1 - *(float *)(self + 0x88) * 0.5;
+          local_c = 0.1f - *(float *)(self + 0x88) * 0.5f;
           local_14 = 0;
           vec3i64_setFromGen(&local_14);
           uVar3 = vec3i64_copyAdd(local_74,randOffset);

@@ -589,7 +589,7 @@ undefined4 uivm_pop_int(void)
  */
 /* Global::uivm_pop_float @ 00402fd0 */
 
-float10 uivm_pop_float(void)
+float uivm_pop_float(void)
 
 {
   float fVar1;
@@ -604,7 +604,7 @@ float10 uivm_pop_float(void)
     }
     *(int *)(in_ECX + 0x30) = *(int *)(in_ECX + 0x30) + -0xc;
   }
-  return (float10)fVar1;
+  return (float)fVar1;
 }
 
 
@@ -1491,7 +1491,8 @@ undefined4 uivm_op_store_state(undefined4 param_1,int param_2)
 void widget_caption_format_cos(undefined4 param_1,int param_2)
 
 {
-  double dVar1;
+  uint uVar1;
+  double dVar2;
   void *local_2c [4];
   undefined4 local_1c;
   uint local_18;
@@ -1503,17 +1504,17 @@ void widget_caption_format_cos(undefined4 param_1,int param_2)
   local_8 = 0xffffffff;
   puStack_c = &LAB_006e1408;
   local_10 = ExceptionList;
-  local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
+  uVar1 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
-  dVar1 = (double)((float)param_2 * 0.1);
-  libm_sse2_cos_precise(local_14);
+  local_14 = uVar1;
+  dVar2 = libm_sse2_cos_precise((double)((float)param_2 * 0.1));
   local_18 = 0xf;
   local_1c = 0;
   local_2c[0] = (void *)((uint)local_2c[0] & 0xffffff00);
   string_assignPtrLen("caption",7);
   local_8 = 0;
   std::basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>::ctor_0
-            (local_2c,(float)dVar1);
+            (local_2c,(float)dVar2,uVar1);
   uivm_map_lookup_pop(param_2);
   if (0xf < local_18) {
     operator_delete(local_2c[0]);
@@ -3432,7 +3433,7 @@ undefined4 uivm_op_less_dispatch(int param_1,int param_2)
   void *pvVar1;
   bool bVar2;
   int iVar3;
-  float10 fVar4;
+  float fVar4;
   uint *local_20;
   undefined4 local_1c;
   undefined4 local_18;
@@ -3456,13 +3457,13 @@ undefined4 uivm_op_less_dispatch(int param_1,int param_2)
     ExceptionList = local_10;
     return 0;
   case 5:
-    fVar4 = (float10)uivm_pop_float(DAT_0076aa78 ^ (uint)&stack0xfffffffc);
-    uivm_push_int((float)fVar4 / 3.51);
+    fVar4 = (float)uivm_pop_float(DAT_0076aa78 ^ (uint)&stack0xfffffffc);
+    uivm_push_int((float)fVar4 / 3.51f);
     ExceptionList = local_10;
     return 0;
   case 6:
-    fVar4 = (float10)uivm_pop_float(DAT_0076aa78 ^ (uint)&stack0xfffffffc);
-    uivm_push_int((float)fVar4 / 7.02);
+    fVar4 = (float)uivm_pop_float(DAT_0076aa78 ^ (uint)&stack0xfffffffc);
+    uivm_push_int((float)fVar4 / 7.02f);
     ExceptionList = local_10;
     return 0;
   }
@@ -3562,7 +3563,7 @@ undefined4 uivm_op_cmp_range(int param_1)
  */
 /* Global::uivm_fold_add_helper @ 00407e00 */
 
-float10 uivm_fold_add_helper(int param_1,double param_2)
+double uivm_fold_add_helper(int param_1,double param_2)
 
 {
   while( true ) {
@@ -3571,7 +3572,7 @@ float10 uivm_fold_add_helper(int param_1,double param_2)
     if (-1 < param_1) break;
     param_1 = -param_1;
   }
-  return (float10)((double)param_1 + param_2);
+  return (double)((double)param_1 + param_2);
 }
 
 
@@ -3624,7 +3625,7 @@ undefined4 uivm_op_push_int_identity(undefined4 param_1,int param_2)
 undefined4 uivm_op_push_folded(undefined4 param_1,int param_2)
 
 {
-  float10 fVar1;
+  float fVar1;
   void *local_10;
   undefined1 *puStack_c;
   undefined4 local_8;
@@ -3633,7 +3634,7 @@ undefined4 uivm_op_push_folded(undefined4 param_1,int param_2)
   puStack_c = &LAB_006e1488;
   local_10 = ExceptionList;
   ExceptionList = &local_10;
-  fVar1 = (float10)uivm_fold_add_helper(2,(double)param_2,DAT_0076aa78 ^ (uint)&stack0xfffffffc);
+  fVar1 = (float)uivm_fold_add_helper(2,(double)param_2,DAT_0076aa78 ^ (uint)&stack0xfffffffc);
   Vector_Resize();
   _DAT_00000000 = (int)fVar1;
   local_8 = 0;
@@ -7876,32 +7877,32 @@ void container_clear(void)
  */
 /* Global::lookup_float_by_id @ 0043ec90 */
 
-float10 lookup_float_by_id(undefined4 param_1)
+float lookup_float_by_id(undefined4 param_1)
 
 {
   switch(param_1) {
   case 5:
   case 0x1a:
-    return (float10)0.5;
+    return (float)0.5f;
   default:
-    return (float10)1;
+    return (float)1;
   case 0x15:
   case 0x48:
-    return (float10)0.1;
+    return (float)0.1f;
   case 0x1e:
   case 0x20:
-    return (float10)0.4;
+    return (float)0.4f;
   case 0x1f:
   case 0x21:
-    return (float10)0.6;
+    return (float)0.6f;
   case 0x25:
   case 0x2b:
   case 0x39:
   case 0x3a:
   case 0x44:
-    return (float10)2.0;
+    return (float)2.0f;
   case 0x37:
-    return (float10)0.25;
+    return (float)0.25f;
   }
 }
 
@@ -7914,70 +7915,70 @@ float10 lookup_float_by_id(undefined4 param_1)
  */
 /* Global::Ability_get_cooldown @ 00444860 */
 
-float10 Ability_get_cooldown(undefined4 param_1)
+float Ability_get_cooldown(undefined4 param_1)
 
 {
   int in_ECX;
-  float10 fVar1;
+  float fVar1;
   
   if ((*(char *)(in_ECX + 0x60) != '\x05') && (*(char *)(in_ECX + 0x60) != '\x03')) {
     switch(param_1) {
     case 1:
     case 2:
     case 9:
-      fVar1 = (float10)combat_getEffectiveHaste();
-      return (float10)(6.0 / (float)fVar1);
+      fVar1 = (float)combat_getEffectiveHaste();
+      return (float)(6.0f / (float)fVar1);
     case 3:
     case 4:
     case 0x3e:
-      fVar1 = (float10)combat_getEffectiveHaste();
-      return (float10)(3.0 / (float)fVar1);
+      fVar1 = (float)combat_getEffectiveHaste();
+      return (float)(3.0f / (float)fVar1);
     case 5:
-      return (float10)4.0;
+      return (float)4.0f;
     case 6:
     case 7:
     case 0x12:
     case 0x13:
-      fVar1 = (float10)combat_getEffectiveHaste();
-      return (float10)(3.0 / (float)fVar1);
+      fVar1 = (float)combat_getEffectiveHaste();
+      return (float)(3.0f / (float)fVar1);
     default:
-      fVar1 = (float10)combat_getEffectiveHaste();
-      return (float10)(2.0 / (float)fVar1);
+      fVar1 = (float)combat_getEffectiveHaste();
+      return (float)(2.0f / (float)fVar1);
     case 0xb:
     case 0x57:
-      return (float10)10.0;
+      return (float)10.0f;
     case 0xd:
     case 0xe:
     case 0xf:
-      fVar1 = (float10)combat_getEffectiveHaste();
-      return (float10)(6.0 / (float)fVar1);
+      fVar1 = (float)combat_getEffectiveHaste();
+      return (float)(6.0f / (float)fVar1);
     case 0x11:
     case 0x14:
-      return (float10)6.0;
+      return (float)6.0f;
     case 0x15:
-      fVar1 = (float10)ability_getPowerFactor(0x15,0xffffffff);
-      return (float10)((float)fVar1 * 30.0 + 5.0);
+      fVar1 = (float)ability_getPowerFactor(0x15,0xffffffff);
+      return (float)((float)fVar1 * 30.0f + 5.0f);
     case 0x1e:
     case 0x1f:
     case 0x20:
     case 0x21:
       break;
     case 0x36:
-      return (float10)5.0;
+      return (float)5.0f;
     case 0x3c:
     case 0x3d:
-      fVar1 = (float10)combat_getEffectiveHaste();
-      return (float10)(6.0 / (float)fVar1);
+      fVar1 = (float)combat_getEffectiveHaste();
+      return (float)(6.0f / (float)fVar1);
     case 0x41:
     case 0x42:
-      fVar1 = (float10)combat_getEffectiveHaste();
-      return (float10)(10.0 / (float)fVar1);
+      fVar1 = (float)combat_getEffectiveHaste();
+      return (float)(10.0f / (float)fVar1);
     case 0x58:
-      fVar1 = (float10)ability_getPowerFactor(0x15,0xffffffff);
-      return (float10)((float)fVar1 * 30.0 + 5.0);
+      fVar1 = (float)ability_getPowerFactor(0x15,0xffffffff);
+      return (float)((float)fVar1 * 30.0f + 5.0f);
     }
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -8043,7 +8044,7 @@ void Creature_compute_stat_pow(void)
   int *piVar2;
   uint uVar3;
   int in_ECX;
-  float10 fVar4;
+  float fVar4;
   double dVar5;
   int *local_24;
   int local_20;
@@ -8059,11 +8060,11 @@ void Creature_compute_stat_pow(void)
   local_10 = ExceptionList;
   uVar3 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
-  dVar5 = 2.0;
-  libm_sse2_pow_precise(uVar3);
+  dVar5 = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(in_ECX + 400) - 1.0) * 0.05 + 1.0))
+                                 * 3.0));
   local_18 = (float)dVar5;
-  dVar5 = 2.0;
-  libm_sse2_pow_precise();
+  dVar5 = libm_sse2_pow_precise(2.0,0.0);
   local_18 = *(float *)(in_ECX + 0x180) * (float)dVar5 * local_18;
   local_14 = local_18;
   equipment_getActiveElement(&local_24);
@@ -8071,26 +8072,26 @@ void Creature_compute_stat_pow(void)
   if (local_20 == 0) {
     uVar1 = *(ushort *)(in_ECX + 0x7e);
     if ((uVar1 & 8) != 0) {
-      dVar5 = 2.0;
-      libm_sse2_pow_precise(uVar3);
+      dVar5 = libm_sse2_pow_precise
+                        (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(in_ECX + 400) - 1.0) * 0.05 +
+                                                   1.0)) * 3.0));
       local_1c = (float)dVar5;
-      dVar5 = 2.0;
-      libm_sse2_pow_precise();
+      dVar5 = libm_sse2_pow_precise(2.0,(double)((float)*(byte *)(in_ECX + 0x1a8) * 0.25));
       local_18 = local_1c * (float)dVar5 * 2.0 + local_14;
       local_14 = local_18;
     }
     if ((uVar1 & 0x10) != 0) {
-      dVar5 = 2.0;
-      libm_sse2_pow_precise(uVar3);
+      dVar5 = libm_sse2_pow_precise
+                        (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(in_ECX + 400) - 1.0) * 0.05 +
+                                                   1.0)) * 3.0));
       local_1c = (float)dVar5;
-      dVar5 = 2.0;
-      libm_sse2_pow_precise();
+      dVar5 = libm_sse2_pow_precise(2.0,(double)((float)*(byte *)(in_ECX + 0x1a8) * 0.25));
       local_18 = local_1c * (float)dVar5 * 8.0 + local_14;
     }
   }
   else {
     for (piVar2 = (int *)*local_24; piVar2 != local_24; piVar2 = (int *)*piVar2) {
-      fVar4 = (float10)item_weaponDamage();
+      fVar4 = (float)item_weaponDamage(uVar3);
       local_1c = (float)fVar4;
       local_18 = local_1c + local_14;
       local_14 = local_18;
@@ -11992,7 +11993,7 @@ void GameController_set_camera_transform(undefined8 *param_1)
   *(undefined8 *)(in_ECX + 400) = param_1[4];
   *(undefined8 *)(in_ECX + 0x198) = param_1[5];
   Options_saveToCfg();
-  (**(code **)(**(int **)(in_ECX + 0x800714) + 0x14))((float)*(int *)(param_1 + 3) * 0.01,0);
+  (**(code **)(**(int **)(in_ECX + 0x800714) + 0x14))((float)*(int *)(param_1 + 3) * 0.01f,0);
   leave_critical_section();
   return;
 }
@@ -12463,7 +12464,7 @@ void GameController_load_or_new_character(void)
   void *pvVar2;
   undefined4 uVar3;
   int in_ECX;
-  float10 fVar4;
+  float fVar4;
   undefined4 local_2c;
   undefined4 local_1c;
   uint local_18;
@@ -12505,7 +12506,7 @@ void GameController_load_or_new_character(void)
     *(undefined4 *)(*(int *)(in_ECX + 0x8006d0) + 0x5c) = 0;
     *(undefined4 *)(*(int *)(in_ECX + 0x8006d0) + 0x180) = 0x3f800000;
     *(undefined4 *)(*(int *)(in_ECX + 0x8006d0) + 400) = 1;
-    fVar4 = (float10)stat_calcAttackDamage();
+    fVar4 = (float)stat_calcAttackDamage();
     *(float *)(*(int *)(in_ECX + 0x8006d0) + 0x16c) = (float)fVar4;
     *(undefined1 *)(*(int *)(in_ECX + 0x8006d0) + 0xaa8) = 3;
     *(undefined1 *)(*(int *)(in_ECX + 0x8006d0) + 0xaa9) = 0;
@@ -12835,20 +12836,20 @@ int std_vector_resize_487250(uint param_1)
  */
 /* Global::math_round_to_hundredths @ 004874a0 */
 
-float10 math_round_to_hundredths(float param_1)
+float math_round_to_hundredths(float param_1)
 
 {
-  float10 fVar1;
+  float fVar1;
   
-  if (param_1 < 0.0) {
-    fVar1 = (float10)math_round_to_hundredths(-param_1);
+  if (param_1 < 0.0f) {
+    fVar1 = (float)math_round_to_hundredths(-param_1);
     param_1 = -(float)fVar1;
-    if (param_1 == 0.0) {
-      param_1 = 0.0;
+    if (param_1 == 0.0f) {
+      param_1 = 0.0f;
     }
-    return (float10)param_1;
+    return (float)param_1;
   }
-  return (float10)((float)(int)(param_1 * 100.0 + 0.5) * 0.01);
+  return (float)((float)(int)(param_1 * 100.0f + 0.5f) * 0.01f);
 }
 
 
@@ -14585,15 +14586,13 @@ void render_build_projectile_mesh(uint *param_1,undefined8 *param_2,undefined8 *
     iVar3 = param_4 % 10000;
     do {
       fVar5 = (float)(param_4 % 2000) / 2000.0;
-      dVar7 = (double)(fVar5 * 3.1415927);
-      libm_sse2_cos_precise();
-      dVar8 = (double)(fVar5 * 3.1415927);
-      libm_sse2_sin_precise();
+      dVar7 = libm_sse2_cos_precise((double)(fVar5 * 3.1415927));
+      dVar8 = libm_sse2_sin_precise((double)(fVar5 * 3.1415927));
       fVar6 = (fVar5 - 0.5) * 2.0;
-      dVar9 = (double)((float)local_a4 +
-                      ((float)(int)(CONCAT44(iVar2 >> 0x1f,iVar2 >> 3) % 500) / 500.0) * 2.0 *
-                      3.1415927);
-      libm_sse2_cos_precise();
+      dVar9 = libm_sse2_cos_precise
+                        ((double)((float)local_a4 +
+                                 ((float)(int)(CONCAT44(iVar2 >> 0x1f,iVar2 >> 3) % 500) / 500.0) *
+                                 2.0 * 3.1415927));
       fVar10 = 1.0 - fVar5;
       fVar13 = ((float)dVar9 * 0.5 + 1.0) * param_8 * (1.0 - fVar6 * fVar6);
       fVar6 = ((float)iVar4 / 10.0 + (float)iVar3 * 0.0001) * 2.0 * 3.1415927;
@@ -14612,11 +14611,9 @@ void render_build_projectile_mesh(uint *param_1,undefined8 *param_2,undefined8 *
       _local_28 = CONCAT44(fStack_14 + fStack_74 * fVar5,local_18 + local_78 * fVar5);
       _local_20 = CONCAT44(fStack_c + fStack_6c * fVar5,local_10 + local_70 * fVar5);
       render_setUniform30(&local_28);
-      dVar9 = (double)fVar6;
-      libm_sse2_cos_precise();
+      dVar9 = libm_sse2_cos_precise((double)fVar6);
       fVar10 = (float)dVar9 * (float)dVar8 * param_7;
-      dVar9 = (double)fVar6;
-      libm_sse2_sin_precise();
+      dVar9 = libm_sse2_sin_precise((double)fVar6);
       fVar14 = (float)dVar9 * (float)dVar8 * param_7;
       fVar11 = fVar14 * 0.0;
       fVar15 = (float)dVar7 * param_7 * 0.0;
@@ -14638,26 +14635,22 @@ void render_build_projectile_mesh(uint *param_1,undefined8 *param_2,undefined8 *
               fVar20 + (float)dVar7 * param_7 + 0.0;
       fVar19 = fVar18 + fVar12 + fVar20 + fVar15 + 1.0;
       fVar10 = fVar5 * 40.0 * 0.017453292;
-      dVar7 = (double)fVar10;
       local_38 = fVar24;
       local_34 = fVar22;
       local_30 = fVar6;
       local_2c = fVar19;
-      libm_sse2_cos_precise();
+      dVar7 = libm_sse2_cos_precise((double)fVar10);
       fVar11 = (float)dVar7;
-      dVar7 = (double)fVar10;
-      libm_sse2_sin_precise();
+      dVar7 = libm_sse2_sin_precise((double)fVar10);
       fVar18 = (float)dVar7;
       fVar10 = fVar11 * 0.0;
       fVar15 = fVar18 * 0.0;
       fVar20 = fVar10 + fVar15;
       fVar21 = fVar10 - fVar15;
       fVar12 = fVar5 * 30.0 * 0.017453292;
-      dVar7 = (double)fVar12;
-      libm_sse2_cos_precise();
+      dVar7 = libm_sse2_cos_precise((double)fVar12);
       fVar14 = (float)dVar7;
-      dVar7 = (double)fVar12;
-      libm_sse2_sin_precise();
+      dVar7 = libm_sse2_sin_precise((double)fVar12);
       fVar12 = (float)dVar7;
       fVar16 = fVar14 - fVar21 * fVar12;
       fVar25 = fVar14 * 0.0;
@@ -14670,15 +14663,13 @@ void render_build_projectile_mesh(uint *param_1,undefined8 *param_2,undefined8 *
       fVar26 = (fVar11 - fVar15) * fVar14 + local_90;
       local_90 = fVar21 * fVar14 + local_90;
       fVar5 = fVar5 * 10.0 * 0.017453292;
-      dVar7 = (double)fVar5;
       local_48 = local_84;
       local_44 = local_9c;
       local_40 = fVar26;
       local_3c = local_90;
-      libm_sse2_cos_precise();
+      dVar7 = libm_sse2_cos_precise((double)fVar5);
       fVar12 = (float)dVar7;
-      dVar7 = (double)fVar5;
-      libm_sse2_sin_precise();
+      dVar7 = libm_sse2_sin_precise((double)fVar5);
       fVar5 = (float)dVar7;
       local_68 = fVar20 * fVar5 + fVar16 * fVar12;
       local_58 = fVar20 * fVar12 - fVar16 * fVar5;
@@ -14786,7 +14777,7 @@ void GameController_navigate_next_tab(void)
   basic_ostream<char,std::char_traits<char>_> *pbVar1;
   basic_ostream<char,struct_std::char_traits<char>_> *pbVar2;
   int in_ECX;
-  float10 fVar3;
+  float fVar3;
   int iVar4;
   int iVar5;
   _func_basic_ostream<char,struct_std::char_traits<char>_>_ptr_basic_ostream<char,struct_std::char_traits<char>_>_ptr
@@ -14812,11 +14803,11 @@ void GameController_navigate_next_tab(void)
       *(undefined4 *)(in_ECX + 400) = 0xffffffff;
     }
     else {
-      fVar3 = (float10)Widget_measureGuarded();
+      fVar3 = (float)Widget_measureGuarded();
       iVar5 = *(int *)(*(int *)(in_ECX + 0x198) + *(int *)(in_ECX + 0x1b4) * 4);
       *(int *)(in_ECX + 0x18c) = *(int *)(in_ECX + 0x1b4);
       *(int *)(in_ECX + 400) =
-           iVar5 * (int)(((float)fVar3 - 10.0) / (float)(*(int *)(in_ECX + 0x1a8) + 5));
+           iVar5 * (int)(((float)fVar3 - 10.0f) / (float)(*(int *)(in_ECX + 0x1a8) + 5));
     }
     InventoryWidget_handleSlotHover(0);
     InventoryWidget_drawScrollbar();
@@ -14844,7 +14835,7 @@ void GameController_set_slider_from_mouse(void)
   basic_ostream<char,std::char_traits<char>_> *this;
   int in_ECX;
   int iVar4;
-  float10 fVar5;
+  float fVar5;
   undefined4 *puVar6;
   _func_basic_ostream<char,struct_std::char_traits<char>_>_ptr_basic_ostream<char,struct_std::char_traits<char>_>_ptr
   *p_Var7;
@@ -14855,8 +14846,8 @@ void GameController_set_slider_from_mouse(void)
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   if (((*(int *)(in_ECX + 0x160) != 0) && ((*(byte *)(*(int *)(in_ECX + 4) + 0xf4) & 1) != 0)) &&
      (0 < *(int *)(in_ECX + 0x1a4))) {
-    fVar5 = (float10)Widget_measure();
-    iVar4 = (int)((float)fVar5 - 70.0);
+    fVar5 = (float)Widget_measure();
+    iVar4 = (int)((float)fVar5 - 70.0f);
     iVar1 = iVar4 / *(int *)(in_ECX + 0x1a4);
     iVar2 = AdaptionWidget_getContentSize(local_10);
     puVar6 = &DAT_006fcfbc;
@@ -14945,10 +14936,10 @@ int Creature_roll_random_stat(void)
   int unaff_EBP;
   int iVar3;
   int unaff_EDI;
-  float10 fVar4;
+  float fVar4;
   float fVar5;
   
-  fVar4 = (float10)curve_inverse20p1();
+  fVar4 = (float)curve_inverse20p1();
   *(float *)(unaff_EBP + -4) = (float)fVar4;
   iVar2 = (int)*(float *)(unaff_EBP + -4);
   iVar3 = (int)*(short *)(unaff_EDI + 0x10);
@@ -14956,13 +14947,13 @@ int Creature_roll_random_stat(void)
     iVar2 = 1;
   }
   if (*(char *)(unaff_EBP + 0xc) != '\0') {
-    fVar4 = (float10)curve_level05((float)iVar3);
+    fVar4 = (float)curve_level05((float)iVar3);
     *(float *)(unaff_EBP + 0xc) = (float)fVar4;
     fVar5 = *(float *)(unaff_EBP + 0xc) + *(float *)(unaff_EBP + 8);
-    if (0.9999 < fVar5) {
-      fVar5 = 0.9999;
+    if (0.9999f < fVar5) {
+      fVar5 = 0.9999f;
     }
-    fVar4 = (float10)curve_inverse20p1(fVar5);
+    fVar4 = (float)curve_inverse20p1(fVar5);
     *(float *)(unaff_EBP + 0xc) = (float)fVar4;
     iVar3 = (int)*(float *)(unaff_EBP + 0xc);
   }
@@ -18068,7 +18059,7 @@ int sqlite3_value_bytes(int param_1)
  */
 /* Global::sqlite3VdbeRealValue @ 0051c7a0 */
 
-float10 sqlite3VdbeRealValue(int param_1)
+double sqlite3VdbeRealValue(int param_1)
 
 {
   ushort uVar1;
@@ -18076,10 +18067,10 @@ float10 sqlite3VdbeRealValue(int param_1)
   
   uVar1 = *(ushort *)(param_1 + 0x1c);
   if ((uVar1 & 8) != 0) {
-    return (float10)*(double *)(param_1 + 8);
+    return (double)*(double *)(param_1 + 8);
   }
   if ((uVar1 & 4) != 0) {
-    return (float10)*(longlong *)(param_1 + 0x10);
+    return (double)*(longlong *)(param_1 + 0x10);
   }
   local_c = 0.0;
   if ((uVar1 & 0x12) != 0) {
@@ -18087,7 +18078,7 @@ float10 sqlite3VdbeRealValue(int param_1)
     computeYMD(*(undefined4 *)(param_1 + 4),&local_c,*(undefined4 *)(param_1 + 0x18),
                  *(undefined1 *)(param_1 + 0x1f));
   }
-  return (float10)local_c;
+  return (double)local_c;
 }
 
 
@@ -19225,7 +19216,7 @@ void sqlite3_quoteFunc(int param_1,undefined4 param_2,int *param_3)
   uint uVar9;
   int iVar10;
   bool bVar11;
-  float10 fVar12;
+  float fVar12;
   undefined4 uStack_4c;
   int local_48;
   undefined8 uStack_44;
@@ -19241,7 +19232,7 @@ void sqlite3_quoteFunc(int param_1,undefined4 param_2,int *param_3)
     __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
     return;
   case 2:
-    fVar12 = (float10)sqlite3VdbeRealValue();
+    fVar12 = (float)sqlite3VdbeRealValue();
     uStack_44 = (double)fVar12;
     sqlite3_str_appendf(0x32,acStack_3c,"%!.15g",uStack_44);
     computeYMD(acStack_3c,&uStack_4c,0x14,1);
@@ -21639,7 +21630,7 @@ void sumStep(undefined4 *param_1,undefined4 param_2,int *param_3)
   undefined8 *puVar5;
   double *pdVar6;
   int iVar7;
-  float10 fVar8;
+  double fVar8;
   longlong lVar9;
   
   iVar7 = param_1[0xc];
@@ -21695,7 +21686,7 @@ void sumStep(undefined4 *param_1,undefined4 param_2,int *param_3)
       }
     }
     else {
-      fVar8 = (float10)sqlite3VdbeRealValue(*param_3);
+      fVar8 = (double)sqlite3VdbeRealValue(*param_3);
       *(undefined1 *)((int)pdVar6 + 0x19) = 1;
       *pdVar6 = (double)fVar8 + *pdVar6;
     }
@@ -27163,7 +27154,7 @@ LAB_00527d11:
  */
 /* Global::sqlite3_column_int64 @ 00527d50 */
 
-float10 sqlite3_column_int64(undefined4 param_1,undefined4 param_2)
+double sqlite3_column_int64(undefined4 param_1,undefined4 param_2)
 
 {
   ushort uVar1;
@@ -27176,7 +27167,7 @@ float10 sqlite3_column_int64(undefined4 param_1,undefined4 param_2)
     if ((uVar1 & 4) != 0) {
       local_c = (double)*(longlong *)(iVar2 + 0x10);
       sqlite3_stmt_api_exit(param_1);
-      return (float10)local_c;
+      return (double)local_c;
     }
     local_c = 0.0;
     if ((uVar1 & 0x12) != 0) {
@@ -27189,7 +27180,7 @@ float10 sqlite3_column_int64(undefined4 param_1,undefined4 param_2)
     local_c = *(double *)(iVar2 + 8);
   }
   sqlite3_stmt_api_exit(param_1);
-  return (float10)local_c;
+  return (double)local_c;
 }
 
 
@@ -28360,7 +28351,7 @@ void sqlite3WhereEstimateFullScanCost(int *param_1)
   int extraout_ECX;
   uint unaff_ESI;
   uint uVar4;
-  float10 fVar5;
+  float fVar5;
   double dVar6;
   double dVar7;
   double dVar8;
@@ -28376,7 +28367,7 @@ void sqlite3WhereEstimateFullScanCost(int *param_1)
      ((*(byte *)(iVar2 + 0x24) & 7) == 0)) {
     iVar3 = *(int *)(*(int *)(iVar2 + 0x10) + 0x1c);
     dVar7 = (double)iVar3 + *(double *)(&DAT_00745f30 + (iVar3 >> 0x1f) * -8);
-    fVar5 = (float10)sqlite3_estLog10(dVar7);
+    fVar5 = (float)sqlite3_estLog10(dVar7);
     dVar6 = (double)fVar5;
     dVar8 = (dVar7 / dVar8 + dVar9) * dVar6 * 2.0;
     if (dVar8 < *(double *)(param_1 + 0x14)) {
@@ -31894,7 +31885,7 @@ int sqlite3_dupedExprSize(int param_1,uint param_2)
  */
 /* Global::sqlite3_estLog10 @ 00534920 */
 
-float10 sqlite3_estLog10(double param_1)
+double sqlite3_estLog10(double param_1)
 
 {
   double dVar1;
@@ -31911,7 +31902,7 @@ float10 sqlite3_estLog10(double param_1)
       local_c = dVar1;
     } while (dVar2 < param_1);
   }
-  return (float10)local_c;
+  return (double)local_c;
 }
 
 
@@ -49143,7 +49134,7 @@ undefined4 lib_fn_574c50(int param_1)
 
 {
   int iVar1;
-  float10 fVar2;
+  float fVar2;
   
   if ((*(byte *)(param_1 + 0x1c) & 0xd) == 0) {
     iVar1 = sqlite3Atoi64(*(undefined4 *)(param_1 + 4),param_1 + 0x10,*(undefined4 *)(param_1 + 0x18)
@@ -49153,7 +49144,7 @@ undefined4 lib_fn_574c50(int param_1)
       *(ushort *)(param_1 + 0x1c) = *(ushort *)(param_1 + 0x1c) & 0xffed;
       return 0;
     }
-    fVar2 = (float10)lib_fn_5759b0(param_1);
+    fVar2 = (float)lib_fn_5759b0(param_1);
     *(double *)(param_1 + 8) = (double)fVar2;
     *(ushort *)(param_1 + 0x1c) = *(ushort *)(param_1 + 0x1c) & 0xbe08 | 8;
     lib_fn_573cb0(param_1);
@@ -49343,7 +49334,7 @@ LAB_00575987:
 
 /* Global::lib_fn_5759b0 @ 005759b0 */
 
-float10 lib_fn_5759b0(int param_1)
+double lib_fn_5759b0(int param_1)
 
 {
   ushort uVar1;
@@ -49351,18 +49342,18 @@ float10 lib_fn_5759b0(int param_1)
   
   uVar1 = *(ushort *)(param_1 + 0x1c);
   if ((uVar1 & 8) != 0) {
-    return (float10)*(double *)(param_1 + 8);
+    return (double)*(double *)(param_1 + 8);
   }
   if ((uVar1 & 4) != 0) {
-    return (float10)*(longlong *)(param_1 + 0x10);
+    return (double)*(longlong *)(param_1 + 0x10);
   }
   if ((uVar1 & 0x12) != 0) {
     local_c = 0.0;
     computeYMD(*(undefined4 *)(param_1 + 4),&local_c,*(undefined4 *)(param_1 + 0x18),
                  *(undefined1 *)(param_1 + 0x1f));
-    return (float10)local_c;
+    return (double)local_c;
   }
-  return (float10)0;
+  return (double)0;
 }
 
 
@@ -54991,7 +54982,7 @@ void lib_fn_595850(int param_1,undefined4 param_2)
   int *piVar3;
   undefined4 *puVar4;
   undefined4 uVar5;
-  float10 fVar6;
+  float fVar6;
   undefined4 uStack_48;
   undefined4 uStack_44;
   undefined4 uStack_40;
@@ -55014,7 +55005,7 @@ void lib_fn_595850(int param_1,undefined4 param_2)
   }
   local_20 = local_20 & 0xffffff00;
   uVar2 = local_20;
-  local_1c = 0.0;
+  local_1c = 0.0f;
   local_18 = 0;
   local_10 = 0;
   local_38 = (local_38 >> 8 & 0xffffff) << 8;
@@ -55024,22 +55015,22 @@ void lib_fn_595850(int param_1,undefined4 param_2)
   switch(param_2) {
   case 0x61:
     local_20 = CONCAT31(local_20._1_3_,3);
-    fVar6 = (float10)ability_getPowerFactor(0x61,0xffffffff);
-    local_18 = (int)((float)fVar6 * 12000.0 + 8000.0);
+    fVar6 = (float)ability_getPowerFactor(0x61,0xffffffff);
+    local_18 = (int)((float)fVar6 * 12000.0f + 8000.0f);
     break;
   default:
     goto LAB_00595a19;
   case 100:
     local_20 = CONCAT31(local_20._1_3_,0xc);
     local_18 = 10000;
-    fVar6 = (float10)ability_getPowerFactor(100,0xffffffff);
-    local_1c = (float)fVar6 + 1.0;
+    fVar6 = (float)ability_getPowerFactor(100,0xffffffff);
+    local_1c = (float)fVar6 + 1.0f;
     break;
   case 0x65:
     local_20 = CONCAT31(local_20._1_3_,1);
     local_18 = 10000;
-    fVar6 = (float10)ability_getPowerFactor(0x65,0xffffffff);
-    local_1c = 0.75 - (float)fVar6 * 0.3;
+    fVar6 = (float)ability_getPowerFactor(0x65,0xffffffff);
+    local_1c = 0.75f - (float)fVar6 * 0.3f;
     statusList_upsert(&local_20);
     if (0 < *(int *)(param_1 + 300)) {
       *(undefined4 *)(param_1 + 300) = 0;
@@ -55052,10 +55043,10 @@ void lib_fn_595850(int param_1,undefined4 param_2)
   case 0x67:
     local_20 = CONCAT31(local_20._1_3_,6);
     local_18 = 30000;
-    fVar6 = (float10)ability_getPowerFactor(0x67,0xffffffff);
-    fStack_8 = (float)fVar6 + 1.0;
-    fVar6 = (float10)Creature_compute_stat_pow();
-    local_1c = (float)fVar6 * 2.0 * fStack_8;
+    fVar6 = (float)ability_getPowerFactor(0x67,0xffffffff);
+    fStack_8 = (float)fVar6 + 1.0f;
+    fVar6 = (float)Creature_compute_stat_pow();
+    local_1c = (float)fVar6 * 2.0f * fStack_8;
   }
   statusList_upsert(&local_20);
 LAB_005959da:
@@ -55415,11 +55406,11 @@ void lib_fn_5a5f60(int *param_1,uint *param_2)
   uVar6 = param_2[2];
   iVar9 = (int)((iVar9 >> 0x1f & 7U) + iVar9) >> 3;
   iVar10 = __alldiv(uVar6,uVar5,0x10000,0);
-  fVar19 = -1.0;
+  fVar19 = -1.0f;
   uVar16 = iVar9 - 1;
   iVar9 = iVar9 + 1;
   iVar10 = (int)(iVar10 + (iVar10 >> 0x1f & 7U)) >> 3;
-  local_30 = -1.0;
+  local_30 = -1.0f;
   local_2c = 0;
   iStack_28 = 0;
   local_24 = -1;
@@ -55467,7 +55458,7 @@ void lib_fn_5a5f60(int *param_1,uint *param_2)
                 lVar22 = __alldiv(uVar20,0x10000,0);
                 uVar20 = __allmul(local_18 - uVar6,iVar17,local_18 - uVar6,iVar17);
                 lVar23 = __alldiv(uVar20,0x10000,0);
-                fVar19 = (float)(lVar21 + lVar22 + lVar23) * 1.5258789e-05;
+                fVar19 = (float)(lVar21 + lVar22 + lVar23) * 1.5258789e-05f;
                 if ((local_24 < 0) || (fVar19 < local_30)) {
                   local_2c = piVar15[3];
                   iStack_28 = piVar15[4];
@@ -55485,7 +55476,7 @@ void lib_fn_5a5f60(int *param_1,uint *param_2)
       uVar16 = uVar16 + 1;
       uVar7 = uVar1;
     } while ((int)uVar16 <= iVar9);
-    if ((0.0 <= fVar19) && (fVar19 <= 16.0)) {
+    if ((0.0f <= fVar19) && (fVar19 <= 16.0f)) {
       *param_1 = local_2c;
       param_1[2] = iVar17;
       param_1[1] = iStack_28;
@@ -56261,14 +56252,14 @@ void lib_fn_629280(float *param_1)
   param_1[1] = fVar2 - *(float *)(in_ECX + 100);
   fVar2 = (*(float *)(in_ECX + 0x50) + *(float *)(in_ECX + 0x78)) - *(float *)(in_ECX + 0x60);
   fVar1 = (*(float *)(in_ECX + 0x54) + *(float *)(in_ECX + 0x7c)) - *(float *)(in_ECX + 100);
-  if (fVar2 < 0.0) {
-    fVar2 = 0.0;
+  if (fVar2 < 0.0f) {
+    fVar2 = 0.0f;
   }
   if (*param_1 <= fVar2 && fVar2 != *param_1) {
     *param_1 = fVar2;
   }
-  if (fVar1 < 0.0) {
-    fVar1 = 0.0;
+  if (fVar1 < 0.0f) {
+    fVar1 = 0.0f;
   }
   if (param_1[1] <= fVar1 && fVar1 != param_1[1]) {
     param_1[1] = fVar1;
@@ -56532,8 +56523,8 @@ void lib_fn_631520(float *param_1,uint param_2)
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   iVar1 = *(int *)(in_ECX + 0x38);
   pfVar8 = (float *)(iVar1 + 0x1b0);
-  local_74 = 0.0;
-  local_70 = 0.0;
+  local_74 = 0.0f;
+  local_70 = 0.0f;
   bVar2 = true;
   if (*(int **)(in_ECX + 0x34) == (int *)0x0) {
     if ((*(int **)(in_ECX + 0x40) == (int *)0x0) ||
@@ -56543,12 +56534,12 @@ void lib_fn_631520(float *param_1,uint param_2)
          (*(int *)(in_ECX + 0x30) == 0)) {
         fVar14 = *(float *)(iVar1 + 0x1c4);
         fVar10 = *(float *)(iVar1 + 0x1b4);
-        fVar17 = 1.0 / (*(float *)(iVar1 + 0x1cc) * 0.0 + *(float *)(iVar1 + 0x1bc) * 0.0 +
+        fVar17 = 1.0f / (*(float *)(iVar1 + 0x1cc) * 0.0f + *(float *)(iVar1 + 0x1bc) * 0.0f +
                        *(float *)(iVar1 + 0x1ec));
         fVar9 = *(float *)(iVar1 + 0x1e4);
         *param_1 = fVar17 * (*(float *)(iVar1 + 0x1c0) * 0.0 + *pfVar8 * 0.0 +
                             *(float *)(iVar1 + 0x1e0));
-        param_1[1] = fVar17 * (fVar14 * 0.0 + fVar10 * 0.0 + fVar9);
+        param_1[1] = fVar17 * (fVar14 * 0.0f + fVar10 * 0.0f + fVar9);
         goto LAB_00631d9b;
       }
     }
@@ -56556,7 +56547,7 @@ void lib_fn_631520(float *param_1,uint param_2)
       pfVar5 = (float *)(**(code **)(**(int **)(in_ECX + 0x40) + 0xc))(&local_30);
       fVar14 = pfVar5[1];
       fVar10 = *pfVar5;
-      local_70 = 1.0 / (*(float *)(iVar1 + 0x1bc) * fVar10 + *(float *)(iVar1 + 0x1cc) * fVar14 +
+      local_70 = 1.0f / (*(float *)(iVar1 + 0x1bc) * fVar10 + *(float *)(iVar1 + 0x1cc) * fVar14 +
                        *(float *)(iVar1 + 0x1ec));
       local_74 = (*(float *)(iVar1 + 0x1c0) * fVar14 + *pfVar8 * fVar10 + *(float *)(iVar1 + 0x1e0))
                  * local_70;
@@ -56583,7 +56574,7 @@ void lib_fn_631520(float *param_1,uint param_2)
     local_7c = local_14;
     local_78 = local_18;
     if (((*(byte *)(iVar6 + 0x200) & 1) != 0) &&
-       (fVar9 = *(float *)(*(int *)(iVar6 + 500) + *(int *)(iVar6 + 0x1c8) * 4), 0.0 < fVar9)) {
+       (fVar9 = *(float *)(*(int *)(iVar6 + 500) + *(int *)(iVar6 + 0x1c8) * 4), 0.0f < fVar9)) {
       local_78 = local_18 + fVar9;
       local_7c = local_14 + fVar9;
       fVar14 = (float)local_10 - fVar9;
@@ -56594,14 +56585,14 @@ void lib_fn_631520(float *param_1,uint param_2)
     fVar17 = *(float *)(iVar1 + 0x1bc) * fVar14;
     fVar15 = *(float *)(iVar1 + 0x1b4) * fVar14;
     fVar10 = *(float *)(iVar1 + 0x1c4) * fVar10;
-    local_70 = 1.0 / (fVar12 + fVar17 + *(float *)(iVar1 + 0x1ec));
+    local_70 = 1.0f / (fVar12 + fVar17 + *(float *)(iVar1 + 0x1ec));
     bVar2 = false;
     local_74 = local_70 * (*pfVar8 * fVar14 + fVar9 + *(float *)(iVar1 + 0x1e0));
     local_70 = local_70 * (fVar10 + fVar15 + *(float *)(iVar1 + 0x1e4));
     fVar11 = *(float *)(iVar1 + 0x1cc) * local_7c;
     fVar13 = *(float *)(iVar1 + 0x1c0) * local_7c;
     local_7c = *(float *)(iVar1 + 0x1c4) * local_7c;
-    fVar17 = 1.0 / (fVar17 + fVar11 + *(float *)(iVar1 + 0x1ec));
+    fVar17 = 1.0f / (fVar17 + fVar11 + *(float *)(iVar1 + 0x1ec));
     fVar14 = fVar17 * (*pfVar8 * fVar14 + fVar13 + *(float *)(iVar1 + 0x1e0));
     fVar17 = fVar17 * (fVar15 + local_7c + *(float *)(iVar1 + 0x1e4));
     if (local_74 < fVar14) {
@@ -56612,7 +56603,7 @@ void lib_fn_631520(float *param_1,uint param_2)
     }
     fVar15 = *(float *)(iVar1 + 0x1bc) * local_78;
     fVar17 = *(float *)(iVar1 + 0x1b4) * local_78;
-    fVar14 = 1.0 / (fVar15 + fVar11 + *(float *)(iVar1 + 0x1ec));
+    fVar14 = 1.0f / (fVar15 + fVar11 + *(float *)(iVar1 + 0x1ec));
     fVar11 = fVar14 * (fVar17 + local_7c + *(float *)(iVar1 + 0x1e4));
     fVar14 = fVar14 * (*pfVar8 * local_78 + fVar13 + *(float *)(iVar1 + 0x1e0));
     if (local_74 < fVar14) {
@@ -56621,7 +56612,7 @@ void lib_fn_631520(float *param_1,uint param_2)
     if (local_70 < fVar11) {
       local_70 = fVar11;
     }
-    fVar11 = 1.0 / (fVar12 + fVar15 + *(float *)(iVar1 + 0x1ec));
+    fVar11 = 1.0f / (fVar12 + fVar15 + *(float *)(iVar1 + 0x1ec));
     fVar14 = fVar11 * (fVar9 + *pfVar8 * local_78 + *(float *)(iVar1 + 0x1e0));
     fVar11 = fVar11 * (fVar10 + fVar17 + *(float *)(iVar1 + 0x1e4));
     if (local_74 < fVar14) {
@@ -56655,7 +56646,7 @@ void lib_fn_631520(float *param_1,uint param_2)
             fVar12 = *(float *)(iVar1 + 0x1c0) * local_48[3];
             local_14 = *(float *)(iVar1 + 0x1b4) * local_48[2];
             fVar13 = *(float *)(iVar1 + 0x1c4) * local_48[3];
-            fVar9 = 1.0 / (fVar14 + fVar11 + *(float *)(iVar1 + 0x1ec));
+            fVar9 = 1.0f / (fVar14 + fVar11 + *(float *)(iVar1 + 0x1ec));
             fVar17 = (fVar10 + fVar12 + *(float *)(iVar1 + 0x1e0)) * fVar9;
             fVar9 = (local_14 + fVar13 + *(float *)(iVar1 + 0x1e4)) * fVar9;
             if (bVar2) {
@@ -56673,7 +56664,7 @@ LAB_00631b07:
             fVar9 = *(float *)(iVar1 + 0x1bc) * local_48[0];
             fVar16 = *(float *)(iVar1 + 0x1b4) * local_48[0];
             fVar17 = *pfVar8 * local_48[0];
-            fVar15 = 1.0 / (fVar9 + fVar11 + *(float *)(iVar1 + 0x1ec));
+            fVar15 = 1.0f / (fVar9 + fVar11 + *(float *)(iVar1 + 0x1ec));
             fVar11 = (fVar17 + fVar12 + *(float *)(iVar1 + 0x1e0)) * fVar15;
             fVar15 = (fVar16 + fVar13 + *(float *)(iVar1 + 0x1e4)) * fVar15;
             _local_28 = CONCAT44(fVar15,fVar11);
@@ -56686,7 +56677,7 @@ LAB_00631b07:
             fVar15 = *(float *)(iVar1 + 0x1c0) * local_48[1];
             fVar13 = *(float *)(iVar1 + 0x1cc) * local_48[1];
             fVar11 = *(float *)(iVar1 + 0x1c4) * local_48[1];
-            fVar12 = 1.0 / (fVar13 + fVar9 + *(float *)(iVar1 + 0x1ec));
+            fVar12 = 1.0f / (fVar13 + fVar9 + *(float *)(iVar1 + 0x1ec));
             fVar9 = (fVar15 + fVar17 + *(float *)(iVar1 + 0x1e0)) * fVar12;
             fVar12 = (fVar16 + fVar11 + *(float *)(iVar1 + 0x1e4)) * fVar12;
             _local_20 = CONCAT44(fVar12,fVar9);
@@ -56698,7 +56689,7 @@ LAB_00631b07:
             }
             fStack_2c = local_14 + fVar11 + *(float *)(iVar1 + 0x1e4);
             local_30 = fVar15 + fVar10 + *(float *)(iVar1 + 0x1e0);
-            fVar9 = 1.0 / (fVar13 + fVar14 + *(float *)(iVar1 + 0x1ec));
+            fVar9 = 1.0f / (fVar13 + fVar14 + *(float *)(iVar1 + 0x1ec));
             fVar14 = local_30 * fVar9;
             fVar9 = fStack_2c * fVar9;
             local_38 = CONCAT44(fVar9,fVar14);
@@ -56775,8 +56766,8 @@ void lib_fn_631db0(float *param_1,uint param_2)
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   iVar1 = *(int *)(in_ECX + 0x38);
   pfVar8 = (float *)(iVar1 + 0x1b0);
-  local_74 = 0.0;
-  local_70 = 0.0;
+  local_74 = 0.0f;
+  local_70 = 0.0f;
   bVar2 = true;
   if (*(int **)(in_ECX + 0x34) == (int *)0x0) {
     if ((*(int **)(in_ECX + 0x40) == (int *)0x0) ||
@@ -56786,12 +56777,12 @@ void lib_fn_631db0(float *param_1,uint param_2)
          (*(int *)(in_ECX + 0x30) == 0)) {
         fVar14 = *(float *)(iVar1 + 0x1c4);
         fVar10 = *(float *)(iVar1 + 0x1b4);
-        fVar17 = 1.0 / (*(float *)(iVar1 + 0x1cc) * 0.0 + *(float *)(iVar1 + 0x1bc) * 0.0 +
+        fVar17 = 1.0f / (*(float *)(iVar1 + 0x1cc) * 0.0f + *(float *)(iVar1 + 0x1bc) * 0.0f +
                        *(float *)(iVar1 + 0x1ec));
         fVar9 = *(float *)(iVar1 + 0x1e4);
         *param_1 = fVar17 * (*(float *)(iVar1 + 0x1c0) * 0.0 + *pfVar8 * 0.0 +
                             *(float *)(iVar1 + 0x1e0));
-        param_1[1] = fVar17 * (fVar14 * 0.0 + fVar10 * 0.0 + fVar9);
+        param_1[1] = fVar17 * (fVar14 * 0.0f + fVar10 * 0.0f + fVar9);
         goto LAB_0063262b;
       }
     }
@@ -56799,7 +56790,7 @@ void lib_fn_631db0(float *param_1,uint param_2)
       pfVar5 = (float *)(**(code **)(**(int **)(in_ECX + 0x40) + 8))(&local_30);
       fVar14 = pfVar5[1];
       fVar10 = *pfVar5;
-      local_70 = 1.0 / (*(float *)(iVar1 + 0x1bc) * fVar10 + *(float *)(iVar1 + 0x1cc) * fVar14 +
+      local_70 = 1.0f / (*(float *)(iVar1 + 0x1bc) * fVar10 + *(float *)(iVar1 + 0x1cc) * fVar14 +
                        *(float *)(iVar1 + 0x1ec));
       local_74 = (*(float *)(iVar1 + 0x1c0) * fVar14 + *pfVar8 * fVar10 + *(float *)(iVar1 + 0x1e0))
                  * local_70;
@@ -56826,7 +56817,7 @@ void lib_fn_631db0(float *param_1,uint param_2)
     local_7c = local_14;
     local_78 = local_18;
     if (((*(byte *)(iVar6 + 0x200) & 1) != 0) &&
-       (fVar9 = *(float *)(*(int *)(iVar6 + 500) + *(int *)(iVar6 + 0x1c8) * 4), 0.0 < fVar9)) {
+       (fVar9 = *(float *)(*(int *)(iVar6 + 500) + *(int *)(iVar6 + 0x1c8) * 4), 0.0f < fVar9)) {
       local_78 = local_18 + fVar9;
       local_7c = local_14 + fVar9;
       fVar14 = (float)local_10 - fVar9;
@@ -56837,14 +56828,14 @@ void lib_fn_631db0(float *param_1,uint param_2)
     fVar17 = *(float *)(iVar1 + 0x1bc) * fVar14;
     fVar15 = *(float *)(iVar1 + 0x1b4) * fVar14;
     fVar10 = *(float *)(iVar1 + 0x1c4) * fVar10;
-    local_70 = 1.0 / (fVar12 + fVar17 + *(float *)(iVar1 + 0x1ec));
+    local_70 = 1.0f / (fVar12 + fVar17 + *(float *)(iVar1 + 0x1ec));
     bVar2 = false;
     local_74 = local_70 * (*pfVar8 * fVar14 + fVar9 + *(float *)(iVar1 + 0x1e0));
     local_70 = local_70 * (fVar10 + fVar15 + *(float *)(iVar1 + 0x1e4));
     fVar11 = *(float *)(iVar1 + 0x1cc) * local_7c;
     fVar13 = *(float *)(iVar1 + 0x1c0) * local_7c;
     local_7c = *(float *)(iVar1 + 0x1c4) * local_7c;
-    fVar17 = 1.0 / (fVar17 + fVar11 + *(float *)(iVar1 + 0x1ec));
+    fVar17 = 1.0f / (fVar17 + fVar11 + *(float *)(iVar1 + 0x1ec));
     fVar14 = fVar17 * (*pfVar8 * fVar14 + fVar13 + *(float *)(iVar1 + 0x1e0));
     fVar17 = fVar17 * (fVar15 + local_7c + *(float *)(iVar1 + 0x1e4));
     if (fVar14 < local_74) {
@@ -56855,7 +56846,7 @@ void lib_fn_631db0(float *param_1,uint param_2)
     }
     fVar15 = *(float *)(iVar1 + 0x1bc) * local_78;
     fVar17 = *(float *)(iVar1 + 0x1b4) * local_78;
-    fVar14 = 1.0 / (fVar15 + fVar11 + *(float *)(iVar1 + 0x1ec));
+    fVar14 = 1.0f / (fVar15 + fVar11 + *(float *)(iVar1 + 0x1ec));
     fVar11 = fVar14 * (fVar17 + local_7c + *(float *)(iVar1 + 0x1e4));
     fVar14 = fVar14 * (*pfVar8 * local_78 + fVar13 + *(float *)(iVar1 + 0x1e0));
     if (fVar14 < local_74) {
@@ -56864,7 +56855,7 @@ void lib_fn_631db0(float *param_1,uint param_2)
     if (fVar11 < local_70) {
       local_70 = fVar11;
     }
-    fVar11 = 1.0 / (fVar12 + fVar15 + *(float *)(iVar1 + 0x1ec));
+    fVar11 = 1.0f / (fVar12 + fVar15 + *(float *)(iVar1 + 0x1ec));
     fVar14 = fVar11 * (fVar9 + *pfVar8 * local_78 + *(float *)(iVar1 + 0x1e0));
     fVar11 = fVar11 * (fVar10 + fVar17 + *(float *)(iVar1 + 0x1e4));
     if (fVar14 < local_74) {
@@ -56898,7 +56889,7 @@ void lib_fn_631db0(float *param_1,uint param_2)
             fVar12 = *(float *)(iVar1 + 0x1c0) * local_48[3];
             local_14 = *(float *)(iVar1 + 0x1b4) * local_48[2];
             fVar13 = *(float *)(iVar1 + 0x1c4) * local_48[3];
-            fVar9 = 1.0 / (fVar14 + fVar11 + *(float *)(iVar1 + 0x1ec));
+            fVar9 = 1.0f / (fVar14 + fVar11 + *(float *)(iVar1 + 0x1ec));
             fVar17 = (fVar10 + fVar12 + *(float *)(iVar1 + 0x1e0)) * fVar9;
             fVar9 = (local_14 + fVar13 + *(float *)(iVar1 + 0x1e4)) * fVar9;
             if (bVar2) {
@@ -56916,7 +56907,7 @@ LAB_00632397:
             fVar9 = *(float *)(iVar1 + 0x1bc) * local_48[0];
             fVar16 = *(float *)(iVar1 + 0x1b4) * local_48[0];
             fVar17 = *pfVar8 * local_48[0];
-            fVar15 = 1.0 / (fVar9 + fVar11 + *(float *)(iVar1 + 0x1ec));
+            fVar15 = 1.0f / (fVar9 + fVar11 + *(float *)(iVar1 + 0x1ec));
             fVar11 = (fVar17 + fVar12 + *(float *)(iVar1 + 0x1e0)) * fVar15;
             fVar15 = (fVar16 + fVar13 + *(float *)(iVar1 + 0x1e4)) * fVar15;
             _local_28 = CONCAT44(fVar15,fVar11);
@@ -56929,7 +56920,7 @@ LAB_00632397:
             fVar15 = *(float *)(iVar1 + 0x1c0) * local_48[1];
             fVar13 = *(float *)(iVar1 + 0x1cc) * local_48[1];
             fVar11 = *(float *)(iVar1 + 0x1c4) * local_48[1];
-            fVar12 = 1.0 / (fVar13 + fVar9 + *(float *)(iVar1 + 0x1ec));
+            fVar12 = 1.0f / (fVar13 + fVar9 + *(float *)(iVar1 + 0x1ec));
             fVar9 = (fVar15 + fVar17 + *(float *)(iVar1 + 0x1e0)) * fVar12;
             fVar12 = (fVar16 + fVar11 + *(float *)(iVar1 + 0x1e4)) * fVar12;
             _local_20 = CONCAT44(fVar12,fVar9);
@@ -56941,7 +56932,7 @@ LAB_00632397:
             }
             fStack_2c = local_14 + fVar11 + *(float *)(iVar1 + 0x1e4);
             local_30 = fVar15 + fVar10 + *(float *)(iVar1 + 0x1e0);
-            fVar9 = 1.0 / (fVar13 + fVar14 + *(float *)(iVar1 + 0x1ec));
+            fVar9 = 1.0f / (fVar13 + fVar14 + *(float *)(iVar1 + 0x1ec));
             fVar14 = local_30 * fVar9;
             fVar9 = fStack_2c * fVar9;
             local_38 = CONCAT44(fVar9,fVar14);
@@ -57324,7 +57315,7 @@ void plasma::Edit::vfunc_1(void)
     local_10 = local_14;
     local_c = *(uint *)(*(int *)(in_ECX + 0x160) + 0x1bc) ^ 0x80000000;
     local_20 = local_20 - local_14;
-    local_1c = *(float *)(*(int *)(in_ECX + 0x160) + 0x1bc) * 1.25;
+    local_1c = *(float *)(*(int *)(in_ECX + 0x160) + 0x1bc) * 1.25f;
     (**(code **)(**(int **)(in_ECX + 4) + 0x10))(&local_10,&local_20);
     iVar1 = *(int *)(in_ECX + 0x174);
     if ((-1 < iVar1) &&
@@ -57337,7 +57328,7 @@ void plasma::Edit::vfunc_1(void)
                    *(undefined4 *)(iVar3 + 0x1ec),*(byte *)(iVar3 + 0x1f0) & 1);
       local_24 = *(uint *)(*(int *)(in_ECX + 0x160) + 0x1bc) ^ 0x80000000;
       local_18 = 0x3f800000;
-      local_14 = *(float *)(*(int *)(in_ECX + 0x160) + 0x1bc) * 1.25;
+      local_14 = *(float *)(*(int *)(in_ECX + 0x160) + 0x1bc) * 1.25f;
       local_38 = 0x3f800000;
       local_34 = 0;
       local_30 = 0;
@@ -57847,7 +57838,7 @@ void plasma::Edit::vfunc_11(void)
     *(undefined1 *)(in_ECX + 0x168) = 0;
     fVar1 = *(float *)(*(int *)(in_ECX + 4) + 0xd4);
     fVar2 = *(float *)(*(int *)(in_ECX + 4) + 0xd8);
-    local_c = 1.0 / (*(float *)(iVar4 + 0x94) * fVar1 + *(float *)(iVar4 + 0xa4) * fVar2 +
+    local_c = 1.0f / (*(float *)(iVar4 + 0x94) * fVar1 + *(float *)(iVar4 + 0xa4) * fVar2 +
                     *(float *)(iVar4 + 0xc4));
     local_10 = local_c * (*(float *)(iVar4 + 0x98) * fVar2 + fVar1 * *(float *)(iVar4 + 0x88) +
                          *(float *)(iVar4 + 0xb8));
@@ -57920,7 +57911,7 @@ void plasma::Edit::vfunc_21(void)
       fVar2 = *(float *)(*(int *)(in_ECX + 4) + 0xd8);
       iVar4 = *(int *)(in_ECX + 0x148);
       iVar3 = *(int *)(in_ECX + 0x174);
-      local_c = 1.0 / (*(float *)(iVar4 + 0x94) * fVar1 + *(float *)(iVar4 + 0xa4) * fVar2 +
+      local_c = 1.0f / (*(float *)(iVar4 + 0x94) * fVar1 + *(float *)(iVar4 + 0xa4) * fVar2 +
                       *(float *)(iVar4 + 0xc4));
       local_10 = local_c * (*(float *)(iVar4 + 0x98) * fVar2 + fVar1 * *(float *)(iVar4 + 0x88) +
                            *(float *)(iVar4 + 0xb8));
@@ -59400,8 +59391,8 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<4,float>_>::vfunc_6
   local_160 = 0;
   piVar3 = *(int **)(*(int *)(in_ECX + 0x4c) + param_2 * 4);
   if (0 < (int)(piVar3[1] - *piVar3 & 0xfffffff0U)) {
-    fVar15 = 1.0 - param_5;
-    fVar10 = 1.0 - param_6;
+    fVar15 = 1.0f - param_5;
+    fVar10 = 1.0f - param_6;
     local_15c = 0;
     do {
       iVar4 = *(int *)(in_ECX + 0x4c);
@@ -59423,10 +59414,10 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<4,float>_>::vfunc_6
       fStack_74 = (float)((ulonglong)*puVar9 >> 0x20);
       local_70 = (float)puVar9[1];
       fStack_6c = (float)((ulonglong)puVar9[1] >> 0x20);
-      fVar11 = (local_78 - *pfVar8) * 0.25;
-      fVar12 = (fStack_74 - pfVar8[1]) * 0.25;
-      fVar13 = (local_70 - pfVar8[2]) * 0.25;
-      fVar14 = (fStack_6c - pfVar8[3]) * 0.25;
+      fVar11 = (local_78 - *pfVar8) * 0.25f;
+      fVar12 = (fStack_74 - pfVar8[1]) * 0.25f;
+      fVar13 = (local_70 - pfVar8[2]) * 0.25f;
+      fVar14 = (fStack_6c - pfVar8[3]) * 0.25f;
       local_38 = (float)*(undefined8 *)pfVar8;
       fStack_34 = (float)((ulonglong)*(undefined8 *)pfVar8 >> 0x20);
       local_30 = (float)*(undefined8 *)(pfVar8 + 2);
@@ -59445,26 +59436,26 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<4,float>_>::vfunc_6
       fStack_3c = (float)((ulonglong)*(undefined8 *)(pfVar8 + 2) >> 0x20);
       iVar4 = **(int **)(iVar4 + *(int *)(in_ECX + 0x20) * 4);
       local_a8 = CONCAT44(fStack_44 * param_8 +
-                          (fStack_34 + (fStack_54 - pfVar7[1]) * 0.25 * param_5 + fVar15 * fVar12) *
+                          (fStack_34 + (fStack_54 - pfVar7[1]) * 0.25f * param_5 + fVar15 * fVar12) *
                           param_9 + (fStack_d4 -
-                                    ((fStack_c4 - pfVar8[1]) * 0.25 * param_6 + fVar10 * fVar12)) *
+                                    ((fStack_c4 - pfVar8[1]) * 0.25f * param_6 + fVar10 * fVar12)) *
                                     param_10 + fStack_154 * param_11,
                           local_48 * param_8 +
-                          (local_38 + (local_58 - *pfVar7) * 0.25 * param_5 + fVar15 * fVar11) *
+                          (local_38 + (local_58 - *pfVar7) * 0.25f * param_5 + fVar15 * fVar11) *
                           param_9 + (local_d8 -
-                                    ((local_c8 - *pfVar8) * 0.25 * param_6 + fVar10 * fVar11)) *
+                                    ((local_c8 - *pfVar8) * 0.25f * param_6 + fVar10 * fVar11)) *
                                     param_10 + local_158 * param_11);
       local_160 = local_160 + 1;
       local_15c = local_15c + 0x10;
       local_a0 = CONCAT44(fStack_3c * param_8 +
-                          (fStack_2c + (fStack_4c - pfVar7[3]) * 0.25 * param_5 + fVar15 * fVar14) *
+                          (fStack_2c + (fStack_4c - pfVar7[3]) * 0.25f * param_5 + fVar15 * fVar14) *
                           param_9 + (fStack_cc -
-                                    ((fStack_bc - pfVar8[3]) * 0.25 * param_6 + fVar10 * fVar14)) *
+                                    ((fStack_bc - pfVar8[3]) * 0.25f * param_6 + fVar10 * fVar14)) *
                                     param_10 + fStack_14c * param_11,
                           local_40 * param_8 +
-                          (local_30 + (local_50 - pfVar7[2]) * 0.25 * param_5 + fVar15 * fVar13) *
+                          (local_30 + (local_50 - pfVar7[2]) * 0.25f * param_5 + fVar15 * fVar13) *
                           param_9 + (local_d0 -
-                                    ((local_c0 - pfVar8[2]) * 0.25 * param_6 + fVar10 * fVar13)) *
+                                    ((local_c0 - pfVar8[2]) * 0.25f * param_6 + fVar10 * fVar13)) *
                                     param_10 + local_150 * param_11);
       *(undefined8 *)(iVar4 + -0x10 + local_15c) = local_a8;
       *(undefined8 *)(iVar4 + -8 + local_15c) = local_a0;
@@ -60451,33 +60442,33 @@ void plasma::ContinuousAttribute<plasma::Vector<4,float>_>::vfunc_6
   fVar11 = pfVar20[3];
   fVar12 = pfVar20[2];
   fVar13 = pfVar21[2];
-  fVar27 = (*pfVar19 - fVar7) * 0.25;
-  fVar23 = (pfVar19[1] - fVar10) * 0.25;
-  fVar24 = (pfVar19[2] - fVar13) * 0.25;
-  fVar25 = (pfVar19[3] - fVar8) * 0.25;
-  fVar22 = 1.0 - param_5;
-  fVar26 = 1.0 - param_6;
+  fVar27 = (*pfVar19 - fVar7) * 0.25f;
+  fVar23 = (pfVar19[1] - fVar10) * 0.25f;
+  fVar24 = (pfVar19[2] - fVar13) * 0.25f;
+  fVar25 = (pfVar19[3] - fVar8) * 0.25f;
+  fVar22 = 1.0f - param_5;
+  fVar26 = 1.0f - param_6;
   fVar14 = pfVar19[2];
   fVar15 = pfVar19[1];
   fVar16 = pfVar19[3];
   fVar17 = pfVar19[1];
   pfVar21 = (float *)(*(int *)(in_ECX + 0x20) * 0x10 + iVar18);
   *pfVar21 = fVar7 * param_8 +
-             (fVar7 + (*pfVar19 - *(float *)(param_1 + iVar18)) * 0.25 * param_5 + fVar27 * fVar22)
+             (fVar7 + (*pfVar19 - *(float *)(param_1 + iVar18)) * 0.25f * param_5 + fVar27 * fVar22)
              * param_9 +
-             (*pfVar19 - ((*pfVar20 - fVar7) * 0.25 * param_6 + fVar27 * fVar26)) * param_10 +
+             (*pfVar19 - ((*pfVar20 - fVar7) * 0.25f * param_6 + fVar27 * fVar26)) * param_10 +
              *pfVar19 * param_11;
   pfVar21[2] = fVar13 * param_8 +
-               (fVar13 + (fVar5 - fVar6) * 0.25 * param_5 + fVar24 * fVar22) * param_9 +
-               (fVar14 - ((fVar12 - fVar13) * 0.25 * param_6 + fVar24 * fVar26)) * param_10 +
+               (fVar13 + (fVar5 - fVar6) * 0.25f * param_5 + fVar24 * fVar22) * param_9 +
+               (fVar14 - ((fVar12 - fVar13) * 0.25f * param_6 + fVar24 * fVar26)) * param_10 +
                fVar14 * param_11;
   pfVar21[1] = fVar10 * param_8 +
-               (fVar10 + (fVar1 - fVar2) * 0.25 * param_5 + fVar23 * fVar22) * param_9 +
-               (fVar15 - ((fVar9 - fVar10) * 0.25 * param_6 + fVar23 * fVar26)) * param_10 +
+               (fVar10 + (fVar1 - fVar2) * 0.25f * param_5 + fVar23 * fVar22) * param_9 +
+               (fVar15 - ((fVar9 - fVar10) * 0.25f * param_6 + fVar23 * fVar26)) * param_10 +
                fVar17 * param_11;
   pfVar21[3] = fVar8 * param_8 +
-               (fVar8 + (fVar3 - fVar4) * 0.25 * param_5 + fVar25 * fVar22) * param_9 +
-               (fVar16 - ((fVar11 - fVar8) * 0.25 * param_6 + fVar25 * fVar26)) * param_10 +
+               (fVar8 + (fVar3 - fVar4) * 0.25f * param_5 + fVar25 * fVar22) * param_9 +
+               (fVar16 - ((fVar11 - fVar8) * 0.25f * param_6 + fVar25 * fVar26)) * param_10 +
                fVar16 * param_11;
   return;
 }
@@ -60493,7 +60484,7 @@ void plasma::DiscreteAttribute<int>::vfunc_6(undefined4 param_1,int param_2,int 
   int in_ECX;
   float in_stack_0000001c;
   
-  if (in_stack_0000001c < 1.0) {
+  if (in_stack_0000001c < 1.0f) {
     *(undefined4 *)(*(int *)(in_ECX + 0x4c) + *(int *)(in_ECX + 0x20) * 4) =
          *(undefined4 *)(*(int *)(in_ECX + 0x4c) + param_2 * 4);
     return;
@@ -61579,7 +61570,7 @@ void plasma::
   local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
   uVar5 = 0;
-  bVar2 = 1.0 <= in_stack_0000001c;
+  bVar2 = 1.0f <= in_stack_0000001c;
   if (bVar2) {
     local_18 = 7;
     local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
@@ -61668,7 +61659,7 @@ void plasma::TextShape::vfunc_3(float *param_1,float param_2,float *param_3,floa
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   fVar10 = *param_1;
   fVar2 = param_1[1];
-  fVar8 = 1.0 / (param_4[3] * fVar10 + param_4[7] * fVar2 + param_4[0xf]);
+  fVar8 = 1.0f / (param_4[3] * fVar10 + param_4[7] * fVar2 + param_4[0xf]);
   local_38[3] = fVar8 * (param_4[1] * fVar10 + param_4[5] * fVar2 + param_4[0xd]);
   local_38[2] = fVar8 * (param_4[4] * fVar2 + fVar10 * *param_4 + param_4[0xc]);
   cVar4 = (**(code **)(*in_ECX + 0x10))(local_38 + 2);
@@ -61677,18 +61668,18 @@ void plasma::TextShape::vfunc_3(float *param_1,float param_2,float *param_3,floa
     fVar2 = (float)in_ECX[0x7d];
     fVar8 = (float)in_ECX[0x7f];
     fVar3 = param_3[0xd];
-    fVar9 = 1.0 / (param_3[3] * fVar2 + param_3[7] * fVar10 + param_3[0xf]);
+    fVar9 = 1.0f / (param_3[3] * fVar2 + param_3[7] * fVar10 + param_3[0xf]);
     local_28[0] = fVar9 * (*param_3 * fVar2 + param_3[4] * fVar10 + param_3[0xc]);
     local_28[1] = fVar9 * (param_3[1] * fVar2 + param_3[5] * fVar10 + fVar3);
-    fVar9 = 1.0 / (fVar10 * param_3[7] + param_3[3] * fVar8 + param_3[0xf]);
+    fVar9 = 1.0f / (fVar10 * param_3[7] + param_3[3] * fVar8 + param_3[0xf]);
     fVar2 = (float)in_ECX[0x80];
     local_28[2] = fVar9 * (fVar10 * param_3[4] + *param_3 * fVar8 + param_3[0xc]);
     local_28[3] = fVar9 * (param_3[5] * fVar10 + param_3[1] * fVar8 + fVar3);
-    fVar10 = 1.0 / (fVar8 * param_3[3] + fVar2 * param_3[7] + param_3[0xf]);
+    fVar10 = 1.0f / (fVar8 * param_3[3] + fVar2 * param_3[7] + param_3[0xf]);
     local_28[4] = fVar10 * (fVar8 * *param_3 + fVar2 * param_3[4] + param_3[0xc]);
     local_28[5] = fVar10 * (param_3[1] * fVar8 + param_3[5] * fVar2 + fVar3);
     fVar10 = (float)in_ECX[0x7d];
-    fVar8 = 1.0 / (fVar10 * param_3[3] + fVar2 * param_3[7] + param_3[0xf]);
+    fVar8 = 1.0f / (fVar10 * param_3[3] + fVar2 * param_3[7] + param_3[0xf]);
     local_28[7] = fVar8 * (param_3[1] * fVar10 + param_3[5] * fVar2 + fVar3);
     local_28[6] = fVar8 * (fVar10 * *param_3 + fVar2 * param_3[4] + param_3[0xc]);
     uVar6 = 0;
@@ -61715,8 +61706,8 @@ void plasma::TextShape::vfunc_3(float *param_1,float param_2,float *param_3,floa
       fVar10 = local_38[1] * local_38[1] + local_38[0] * local_38[0];
       if (1e-20 <= fVar10) {
         fVar10 = (local_38[3] * local_38[1] + local_38[2] * local_38[0]) / fVar10;
-        if (0.0 < fVar10) {
-          if (fVar10 < 1.0) {
+        if (0.0f < fVar10) {
+          if (fVar10 < 1.0f) {
             local_40 = local_38[2] - local_38[0] * fVar10;
             fStack_3c = local_38[3] - local_38[1] * fVar10;
           }
@@ -63071,7 +63062,7 @@ void plasma::SmoothMeshShape::vfunc_9(float *param_1,float *param_2,float *param
       iVar4 = **(int **)(*(int *)(in_ECX + 0xa8) + *(int *)(in_ECX + 0x7c) * 4);
       fVar2 = *(float *)(iVar4 + iVar6 * 8);
       fVar3 = *(float *)(iVar4 + 4 + iVar6 * 8);
-      fVar7 = 1.0 / (param_3[3] * fVar2 + param_3[7] * fVar3 + param_3[0xf]);
+      fVar7 = 1.0f / (param_3[3] * fVar2 + param_3[7] * fVar3 + param_3[0xf]);
       fVar8 = fVar7 * (*param_3 * fVar2 + param_3[4] * fVar3 + param_3[0xc]);
       fVar7 = fVar7 * (param_3[1] * fVar2 + param_3[5] * fVar3 + param_3[0xd]);
       local_10 = CONCAT44(fVar7,fVar8);
@@ -63257,12 +63248,12 @@ void plasma::ContinuousArrayAttribute<float>::vfunc_6
       iVar4 = *(int *)(in_ECX + 0x4c);
       fVar1 = *(float *)(**(int **)(iVar4 + param_2 * 4) + local_8 * 4);
       fVar2 = *(float *)(**(int **)(iVar4 + param_3 * 4) + local_8 * 4);
-      fVar5 = (fVar2 - fVar1) * 0.25;
+      fVar5 = (fVar2 - fVar1) * 0.25f;
       *(float *)(**(int **)(iVar4 + *(int *)(in_ECX + 0x20) * 4) + local_8 * 4) =
-           (fVar2 - ((*(float *)(**(int **)(iVar4 + param_4 * 4) + local_8 * 4) - fVar1) * 0.25 *
-                     param_6 + (1.0 - param_6) * fVar5)) * param_10 +
-           ((fVar2 - *(float *)(**(int **)(iVar4 + param_1 * 4) + local_8 * 4)) * 0.25 * param_5 +
-            (1.0 - param_5) * fVar5 + fVar1) * param_9 + fVar1 * param_8 + fVar2 * param_11;
+           (fVar2 - ((*(float *)(**(int **)(iVar4 + param_4 * 4) + local_8 * 4) - fVar1) * 0.25f *
+                     param_6 + (1.0f - param_6) * fVar5)) * param_10 +
+           ((fVar2 - *(float *)(**(int **)(iVar4 + param_1 * 4) + local_8 * 4)) * 0.25f * param_5 +
+            (1.0f - param_5) * fVar5 + fVar1) * param_9 + fVar1 * param_8 + fVar2 * param_11;
       piVar3 = *(int **)(*(int *)(in_ECX + 0x4c) + param_2 * 4);
       local_8 = local_8 + 1;
     } while (local_8 < piVar3[1] - *piVar3 >> 2);
@@ -63323,8 +63314,8 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<2,float>_>::vfunc_6
       fStack_5c = (float)((ulonglong)uVar1 >> 0x20);
       local_38 = (float)*puVar8;
       fStack_34 = (float)((ulonglong)*puVar8 >> 0x20);
-      fVar9 = (local_38 - *pfVar6) * 0.25;
-      fVar10 = (fStack_34 - pfVar6[1]) * 0.25;
+      fVar9 = (local_38 - *pfVar6) * 0.25f;
+      fVar10 = (fStack_34 - pfVar6[1]) * 0.25f;
       local_18 = (float)*(undefined8 *)pfVar6;
       fStack_14 = (float)((ulonglong)*(undefined8 *)pfVar6 >> 0x20);
       local_10 = (float)*puVar8;
@@ -63333,17 +63324,17 @@ void plasma::ContinuousArrayAttribute<plasma::Vector<2,float>_>::vfunc_6
       fStack_9c = (float)((ulonglong)*puVar8 >> 0x20);
       local_50 = CONCAT44(fStack_14 * param_8 +
                           (fStack_14 +
-                          (fStack_24 - *(float *)(iVar4 + 4 + iVar7)) * 0.25 * param_5 +
-                          fVar10 * (1.0 - param_5)) * param_9 +
+                          (fStack_24 - *(float *)(iVar4 + 4 + iVar7)) * 0.25f * param_5 +
+                          fVar10 * (1.0f - param_5)) * param_9 +
                           (fStack_c -
-                          ((fStack_5c - pfVar6[1]) * 0.25 * param_6 + fVar10 * (1.0 - param_6))) *
+                          ((fStack_5c - pfVar6[1]) * 0.25f * param_6 + fVar10 * (1.0f - param_6))) *
                           param_10 + fStack_9c * param_11,
                           local_18 * param_8 +
                           (local_18 +
-                          (local_28 - *(float *)(iVar4 + iVar7)) * 0.25 * param_5 +
-                          fVar9 * (1.0 - param_5)) * param_9 +
+                          (local_28 - *(float *)(iVar4 + iVar7)) * 0.25f * param_5 +
+                          fVar9 * (1.0f - param_5)) * param_9 +
                           (local_10 -
-                          ((local_60 - *pfVar6) * 0.25 * param_6 + fVar9 * (1.0 - param_6))) *
+                          ((local_60 - *pfVar6) * 0.25f * param_6 + fVar9 * (1.0f - param_6))) *
                           param_10 + local_a0 * param_11);
       *(undefined8 *)(**(int **)(iVar3 + *(int *)(in_ECX + 0x20) * 4) + iVar7) = local_50;
       piVar2 = *(int **)(*(int *)(in_ECX + 0x4c) + param_2 * 4);
@@ -63374,12 +63365,12 @@ void plasma::ContinuousAttribute<float>::vfunc_6
   iVar4 = *(int *)(in_ECX + 0x4c);
   fVar1 = *(float *)(iVar4 + param_2 * 4);
   fVar2 = *(float *)(iVar4 + param_3 * 4);
-  fVar5 = (fVar2 - fVar1) * 0.25;
+  fVar5 = (fVar2 - fVar1) * 0.25f;
   fVar3 = *(float *)(iVar4 + param_3 * 4);
   *(float *)(iVar4 + *(int *)(in_ECX + 0x20) * 4) =
-       (fVar2 - ((*(float *)(iVar4 + param_4 * 4) - fVar1) * 0.25 * param_6 +
-                (1.0 - param_6) * fVar5)) * param_10 +
-       ((fVar3 - *(float *)(iVar4 + param_1 * 4)) * 0.25 * param_5 + (1.0 - param_5) * fVar5 + fVar1
+       (fVar2 - ((*(float *)(iVar4 + param_4 * 4) - fVar1) * 0.25f * param_6 +
+                (1.0f - param_6) * fVar5)) * param_10 +
+       ((fVar3 - *(float *)(iVar4 + param_1 * 4)) * 0.25f * param_5 + (1.0f - param_5) * fVar5 + fVar1
        ) * param_9 + fVar1 * param_8 + fVar3 * param_11;
   return;
 }
@@ -63438,14 +63429,14 @@ void plasma::ContinuousAttribute<plasma::Matrix<float>_>::vfunc_6
   iVar3 = 0;
   do {
     iVar1 = iVar3 + 8;
-    afStack_128[iVar1] = afStack_128[iVar3 + 8] * 0.25;
-    afStack_128[iVar3 + 9] = afStack_128[iVar3 + 9] * 0.25;
-    afStack_128[iVar3 + 10] = afStack_128[iVar3 + 10] * 0.25;
-    afStack_128[iVar3 + 0xb] = afStack_128[iVar3 + 0xb] * 0.25;
-    afStack_128[iVar3 + 0xc] = afStack_128[iVar3 + 0xc] * 0.25;
-    afStack_128[iVar3 + 0xd] = afStack_128[iVar3 + 0xd] * 0.25;
-    afStack_128[iVar3 + 0xe] = afStack_128[iVar3 + 0xe] * 0.25;
-    afStack_128[iVar3 + 0xf] = afStack_128[iVar3 + 0xf] * 0.25;
+    afStack_128[iVar1] = afStack_128[iVar3 + 8] * 0.25f;
+    afStack_128[iVar3 + 9] = afStack_128[iVar3 + 9] * 0.25f;
+    afStack_128[iVar3 + 10] = afStack_128[iVar3 + 10] * 0.25f;
+    afStack_128[iVar3 + 0xb] = afStack_128[iVar3 + 0xb] * 0.25f;
+    afStack_128[iVar3 + 0xc] = afStack_128[iVar3 + 0xc] * 0.25f;
+    afStack_128[iVar3 + 0xd] = afStack_128[iVar3 + 0xd] * 0.25f;
+    afStack_128[iVar3 + 0xe] = afStack_128[iVar3 + 0xe] * 0.25f;
+    afStack_128[iVar3 + 0xf] = afStack_128[iVar3 + 0xf] * 0.25f;
     iVar3 = iVar1;
   } while (iVar1 < 0x10);
   pfVar6 = (float *)(param_4 * 0x40 + iVar4);
@@ -63466,14 +63457,14 @@ void plasma::ContinuousAttribute<plasma::Matrix<float>_>::vfunc_6
   iVar4 = 0;
   do {
     iVar3 = iVar4 + 8;
-    afStack_e8[iVar3] = afStack_e8[iVar4 + 8] * 0.25;
-    afStack_e8[iVar4 + 9] = afStack_e8[iVar4 + 9] * 0.25;
-    afStack_e8[iVar4 + 10] = afStack_e8[iVar4 + 10] * 0.25;
-    afStack_e8[iVar4 + 0xb] = afStack_e8[iVar4 + 0xb] * 0.25;
-    afStack_e8[iVar4 + 0xc] = afStack_e8[iVar4 + 0xc] * 0.25;
-    afStack_e8[iVar4 + 0xd] = afStack_e8[iVar4 + 0xd] * 0.25;
-    afStack_e8[iVar4 + 0xe] = afStack_e8[iVar4 + 0xe] * 0.25;
-    afStack_e8[iVar4 + 0xf] = afStack_e8[iVar4 + 0xf] * 0.25;
+    afStack_e8[iVar3] = afStack_e8[iVar4 + 8] * 0.25f;
+    afStack_e8[iVar4 + 9] = afStack_e8[iVar4 + 9] * 0.25f;
+    afStack_e8[iVar4 + 10] = afStack_e8[iVar4 + 10] * 0.25f;
+    afStack_e8[iVar4 + 0xb] = afStack_e8[iVar4 + 0xb] * 0.25f;
+    afStack_e8[iVar4 + 0xc] = afStack_e8[iVar4 + 0xc] * 0.25f;
+    afStack_e8[iVar4 + 0xd] = afStack_e8[iVar4 + 0xd] * 0.25f;
+    afStack_e8[iVar4 + 0xe] = afStack_e8[iVar4 + 0xe] * 0.25f;
+    afStack_e8[iVar4 + 0xf] = afStack_e8[iVar4 + 0xf] * 0.25f;
     iVar4 = iVar3;
   } while (iVar3 < 0x10);
   pfVar6 = pfVar5;
@@ -63494,14 +63485,14 @@ void plasma::ContinuousAttribute<plasma::Matrix<float>_>::vfunc_6
   iVar4 = 0;
   do {
     iVar3 = iVar4 + 8;
-    afStack_168[iVar3] = afStack_168[iVar4 + 8] * 0.25;
-    afStack_168[iVar4 + 9] = afStack_168[iVar4 + 9] * 0.25;
-    afStack_168[iVar4 + 10] = afStack_168[iVar4 + 10] * 0.25;
-    afStack_168[iVar4 + 0xb] = afStack_168[iVar4 + 0xb] * 0.25;
-    afStack_168[iVar4 + 0xc] = afStack_168[iVar4 + 0xc] * 0.25;
-    afStack_168[iVar4 + 0xd] = afStack_168[iVar4 + 0xd] * 0.25;
-    afStack_168[iVar4 + 0xe] = afStack_168[iVar4 + 0xe] * 0.25;
-    afStack_168[iVar4 + 0xf] = afStack_168[iVar4 + 0xf] * 0.25;
+    afStack_168[iVar3] = afStack_168[iVar4 + 8] * 0.25f;
+    afStack_168[iVar4 + 9] = afStack_168[iVar4 + 9] * 0.25f;
+    afStack_168[iVar4 + 10] = afStack_168[iVar4 + 10] * 0.25f;
+    afStack_168[iVar4 + 0xb] = afStack_168[iVar4 + 0xb] * 0.25f;
+    afStack_168[iVar4 + 0xc] = afStack_168[iVar4 + 0xc] * 0.25f;
+    afStack_168[iVar4 + 0xd] = afStack_168[iVar4 + 0xd] * 0.25f;
+    afStack_168[iVar4 + 0xe] = afStack_168[iVar4 + 0xe] * 0.25f;
+    afStack_168[iVar4 + 0xf] = afStack_168[iVar4 + 0xf] * 0.25f;
     iVar4 = iVar3;
   } while (iVar3 < 0x10);
   pfVar6 = afStack_168 + 8;
@@ -63511,7 +63502,7 @@ void plasma::ContinuousAttribute<plasma::Matrix<float>_>::vfunc_6
     pfVar6 = pfVar6 + 1;
     pfVar7 = pfVar7 + 1;
   }
-  fVar8 = 1.0 - param_5;
+  fVar8 = 1.0f - param_5;
   iVar4 = 0;
   do {
     iVar3 = iVar4 + 8;
@@ -63568,7 +63559,7 @@ void plasma::ContinuousAttribute<plasma::Matrix<float>_>::vfunc_6
     pfVar6 = pfVar6 + 1;
     pfVar7 = pfVar7 + 1;
   }
-  fVar8 = 1.0 - param_6;
+  fVar8 = 1.0f - param_6;
   iVar4 = 0;
   do {
     iVar3 = iVar4 + 8;
@@ -63762,21 +63753,21 @@ void plasma::ContinuousAttribute<plasma::Vector<2,float>_>::vfunc_6
   fVar4 = *(float *)(iVar9 + 4 + param_2 * 8);
   fVar5 = *(float *)(iVar9 + 4 + param_4 * 8);
   fVar6 = *(float *)(iVar9 + 4 + param_1 * 8);
-  fVar11 = (fVar2 - fVar3) * 0.25;
-  fVar12 = (fVar1 - fVar4) * 0.25;
+  fVar11 = (fVar2 - fVar3) * 0.25f;
+  fVar12 = (fVar1 - fVar4) * 0.25f;
   fVar7 = *(float *)(iVar9 + 4 + param_3 * 8);
   fVar8 = *(float *)(iVar9 + param_3 * 8);
   iVar10 = *(int *)(in_ECX + 0x20);
   *(float *)(iVar9 + iVar10 * 8) =
        fVar3 * param_8 +
-       (fVar3 + (fVar2 - *(float *)(iVar9 + param_1 * 8)) * 0.25 * param_5 +
-                fVar11 * (1.0 - param_5)) * param_9 +
-       (fVar8 - ((*(float *)(iVar9 + param_4 * 8) - fVar3) * 0.25 * param_6 +
-                (1.0 - param_6) * fVar11)) * param_10 + fVar8 * param_11;
+       (fVar3 + (fVar2 - *(float *)(iVar9 + param_1 * 8)) * 0.25f * param_5 +
+                fVar11 * (1.0f - param_5)) * param_9 +
+       (fVar8 - ((*(float *)(iVar9 + param_4 * 8) - fVar3) * 0.25f * param_6 +
+                (1.0f - param_6) * fVar11)) * param_10 + fVar8 * param_11;
   *(float *)(iVar9 + 4 + iVar10 * 8) =
        fVar4 * param_8 +
-       (fVar4 + (fVar1 - fVar6) * 0.25 * param_5 + fVar12 * (1.0 - param_5)) * param_9 +
-       (fVar7 - ((fVar5 - fVar4) * 0.25 * param_6 + (1.0 - param_6) * fVar12)) * param_10 +
+       (fVar4 + (fVar1 - fVar6) * 0.25f * param_5 + fVar12 * (1.0f - param_5)) * param_9 +
+       (fVar7 - ((fVar5 - fVar4) * 0.25f * param_6 + (1.0f - param_6) * fVar12)) * param_10 +
        fVar7 * param_11;
   return;
 }
@@ -63824,27 +63815,27 @@ void plasma::ContinuousAttribute<plasma::Vector<3,float>_>::vfunc_6
   fVar8 = *(float *)(iVar14 + 4 + param_2 * 0xc);
   fVar9 = *(float *)(iVar14 + 8 + param_4 * 0xc);
   fVar10 = *(float *)(iVar14 + 4 + param_4 * 0xc);
-  fVar18 = (fVar1 - fVar2) * 0.25;
-  fVar19 = (*(float *)(iVar14 + 4 + param_3 * 0xc) - fVar8) * 0.25;
-  fVar20 = (*(float *)(iVar14 + 8 + param_3 * 0xc) - fVar7) * 0.25;
-  fVar16 = 1.0 - param_5;
+  fVar18 = (fVar1 - fVar2) * 0.25f;
+  fVar19 = (*(float *)(iVar14 + 4 + param_3 * 0xc) - fVar8) * 0.25f;
+  fVar20 = (*(float *)(iVar14 + 8 + param_3 * 0xc) - fVar7) * 0.25f;
+  fVar16 = 1.0f - param_5;
   iVar15 = *(int *)(in_ECX + 0x20);
-  fVar17 = 1.0 - param_6;
+  fVar17 = 1.0f - param_6;
   fVar11 = *(float *)(iVar14 + 8 + param_3 * 0xc);
   fVar12 = *(float *)(iVar14 + param_3 * 0xc);
   fVar13 = *(float *)(iVar14 + 4 + param_3 * 0xc);
   *(float *)(iVar14 + iVar15 * 0xc) =
        fVar2 * param_8 +
-       (fVar2 + (fVar1 - *(float *)(iVar14 + param_1 * 0xc)) * 0.25 * param_5 + fVar16 * fVar18) *
-       param_9 + (fVar12 - ((*(float *)(iVar14 + param_4 * 0xc) - fVar2) * 0.25 * param_6 +
+       (fVar2 + (fVar1 - *(float *)(iVar14 + param_1 * 0xc)) * 0.25f * param_5 + fVar16 * fVar18) *
+       param_9 + (fVar12 - ((*(float *)(iVar14 + param_4 * 0xc) - fVar2) * 0.25f * param_6 +
                            fVar18 * fVar17)) * param_10 + fVar12 * param_11;
   *(float *)(iVar14 + 8 + iVar15 * 0xc) =
-       fVar7 * param_8 + (fVar7 + (fVar3 - fVar4) * 0.25 * param_5 + fVar16 * fVar20) * param_9 +
-       (fVar11 - ((fVar9 - fVar7) * 0.25 * param_6 + fVar20 * fVar17)) * param_10 +
+       fVar7 * param_8 + (fVar7 + (fVar3 - fVar4) * 0.25f * param_5 + fVar16 * fVar20) * param_9 +
+       (fVar11 - ((fVar9 - fVar7) * 0.25f * param_6 + fVar20 * fVar17)) * param_10 +
        fVar11 * param_11;
   *(float *)(iVar14 + 4 + iVar15 * 0xc) =
-       fVar8 * param_8 + (fVar8 + (fVar5 - fVar6) * 0.25 * param_5 + fVar16 * fVar19) * param_9 +
-       (fVar13 - ((fVar10 - fVar8) * 0.25 * param_6 + fVar19 * fVar17)) * param_10 +
+       fVar8 * param_8 + (fVar8 + (fVar5 - fVar6) * 0.25f * param_5 + fVar16 * fVar19) * param_9 +
+       (fVar13 - ((fVar10 - fVar8) * 0.25f * param_6 + fVar19 * fVar17)) * param_10 +
        fVar13 * param_11;
   return;
 }
@@ -64188,31 +64179,31 @@ void plasma::SmoothMeshShape::vfunc_12
           fVar1 = *pfVar7;
           fVar2 = pfVar7[1];
           fVar3 = *param_1;
-          fVar8 = 1.0 / (param_5[3] * fVar1 + param_5[7] * fVar2 + param_5[0xf]);
+          fVar8 = 1.0f / (param_5[3] * fVar1 + param_5[7] * fVar2 + param_5[0xf]);
           fVar9 = (fVar1 * *param_5 + fVar2 * param_5[4] + param_5[0xc]) * fVar8;
           fVar8 = (fVar1 * param_5[1] + fVar2 * param_5[5] + param_5[0xd]) * fVar8;
           if (fVar3 <= fVar9) {
             if (*param_2 + fVar3 <= fVar9) {
-              local_18 = 1.0;
+              local_18 = 1.0f;
             }
             else {
               local_18 = (fVar9 - fVar3) / *param_2;
             }
           }
           else {
-            local_18 = 0.0;
+            local_18 = 0.0f;
           }
           fVar1 = param_1[1];
           if (fVar1 <= fVar8) {
             if (param_2[1] + fVar1 <= fVar8) {
-              fStack_14 = 1.0;
+              fStack_14 = 1.0f;
             }
             else {
               fStack_14 = (fVar8 - fVar1) / param_2[1];
             }
           }
           else {
-            fStack_14 = 0.0;
+            fStack_14 = 0.0f;
           }
           local_64 = local_64 + 1;
           local_58 = (float)*param_4;
@@ -64222,7 +64213,7 @@ void plasma::SmoothMeshShape::vfunc_12
           fVar1 = param_6[5];
           fVar2 = param_6[1];
           fVar3 = param_6[0xd];
-          fVar10 = 1.0 / (fVar8 * param_6[7] + fVar9 * param_6[3] + param_6[0xf]);
+          fVar10 = 1.0f / (fVar8 * param_6[7] + fVar9 * param_6[3] + param_6[0xf]);
           *pfVar7 = (*param_6 * fVar9 + fVar8 * param_6[4] + param_6[0xc]) * fVar10;
           pfVar7[1] = (fVar8 * fVar1 + fVar9 * fVar2 + fVar3) * fVar10;
           pfVar7 = pfVar7 + 2;
@@ -64589,7 +64580,7 @@ void lib_fn_674690(float *param_1,float *param_2,float *param_3,char *param_4)
     do {
       fVar2 = *(float *)(*(int *)(in_ECX + 4) + iVar5 * 8);
       fVar3 = *(float *)(*(int *)(in_ECX + 4) + 4 + iVar5 * 8);
-      fVar6 = 1.0 / (fVar2 * param_3[3] + fVar3 * param_3[7] + param_3[0xf]);
+      fVar6 = 1.0f / (fVar2 * param_3[3] + fVar3 * param_3[7] + param_3[0xf]);
       fVar7 = fVar6 * (param_3[4] * fVar3 + *param_3 * fVar2 + param_3[0xc]);
       fVar6 = fVar6 * (param_3[1] * fVar2 + param_3[5] * fVar3 + param_3[0xd]);
       local_10 = CONCAT44(fVar6,fVar7);
@@ -64756,12 +64747,11 @@ void lib_fn_674970(float *param_1,float param_2,float *param_3,float *param_4)
   fVar11 = *param_4 * 0.0 + param_4[4];
   local_70 = (int *)(param_4[5] * 0.0 + param_4[1]);
   fVar8 = param_4[1] * 0.0 + param_4[5];
-  dVar10 = (double)(fVar8 * fVar8 + fVar11 * fVar11);
   local_68 = in_ECX;
-  libm_sse2_sqrt_precise();
+  dVar10 = libm_sse2_sqrt_precise((double)(fVar8 * fVar8 + fVar11 * fVar11));
   local_74 = (int *)(float)dVar10;
-  dVar10 = (double)((float)local_70 * (float)local_70 + local_6c * local_6c);
-  libm_sse2_sqrt_precise();
+  dVar10 = libm_sse2_sqrt_precise((double)((float)local_70 * (float)local_70 + local_6c * local_6c))
+  ;
   local_70 = (int *)(float)dVar10;
   ppiVar5 = &local_74;
   if ((float)local_74 <= (float)dVar10) {
@@ -65013,22 +65003,22 @@ void lib_fn_6751d0(undefined4 param_1,int param_2,float *param_3,int *param_4,in
   
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   puVar1 = (uint *)(param_5 + 0x28);
-  fVar16 = 0.0;
+  fVar16 = 0.0f;
   puVar2 = (uint *)(param_5 + 0x10);
   puVar3 = (uint *)(param_5 + 4);
   param_2 = param_2 - (int)param_3;
   uVar13 = *puVar3;
-  fVar15 = 0.0;
-  local_90 = 0.0;
-  local_94 = 0.0;
-  local_8c = 0.0;
-  local_88 = 0.0;
-  local_18[0] = 0.0;
-  local_18[1] = 0.0;
-  local_18[2] = 0.0;
-  local_18[3] = 0.0;
-  fVar17 = 0.0;
-  local_30[1] = 0.0;
+  fVar15 = 0.0f;
+  local_90 = 0.0f;
+  local_94 = 0.0f;
+  local_8c = 0.0f;
+  local_88 = 0.0f;
+  local_18[0] = 0.0f;
+  local_18[1] = 0.0f;
+  local_18[2] = 0.0f;
+  local_18[3] = 0.0f;
+  fVar17 = 0.0f;
+  local_30[1] = 0.0f;
   local_6c = 4;
   do {
     iVar12 = *(int *)(param_2 + (int)param_3);
@@ -65387,10 +65377,10 @@ void lib_fn_6758f0(void)
   iVar20 = local_10c;
   iVar14 = 0;
   if (0 < (int)(*(int *)(in_ECX + 0xec) - *puVar18 & 0xfffffff0)) {
-    local_48[0] = 0.0;
-    local_48[1] = 0.0;
-    local_48[2] = 0.0;
-    local_48[3] = 0.0;
+    local_48[0] = 0.0f;
+    local_48[1] = 0.0f;
+    local_48[2] = 0.0f;
+    local_48[3] = 0.0f;
     iVar12 = 0;
     do {
       uVar16 = *puVar18;
@@ -65407,11 +65397,11 @@ void lib_fn_6758f0(void)
   std_vector_assignRange(piVar13);
   if (*(int *)(iVar20 + 0x100) != *(int *)(iVar20 + 0x104)) {
     iVar14 = 0;
-    fVar23 = 0.0;
-    local_154 = 0.0;
+    fVar23 = 0.0f;
+    local_154 = 0.0f;
     if (0 < (int)(*(int *)(iVar20 + 0x38) - *piVar13 & 0xfffffffcU)) {
       iVar12 = *local_144;
-      local_6c = 0.0;
+      local_6c = 0.0f;
       local_18 = (int *)0x0;
       piVar15 = (int *)(*piVar13 + 8);
       do {
@@ -65423,9 +65413,9 @@ void lib_fn_6758f0(void)
         local_20 = *(int **)(iVar12 + *piVar15 * 8);
         piStack_1c = *(int **)(iVar12 + 4 + *piVar15 * 8);
         local_38 = CONCAT44(piStack_1c,local_20);
-        local_30 = 0.0;
+        local_30 = 0.0f;
         local_2c = CONCAT44(fStack_70,local_74);
-        local_24 = 0.0;
+        local_24 = 0.0f;
         fVar23 = fVar23 + ((local_74 - fVar21) * ((float)piStack_1c - fVar22) -
                           ((float)local_20 - fVar21) * (fStack_70 - fVar22));
         piVar15 = piVar15 + 3;
@@ -65448,7 +65438,7 @@ void lib_fn_6758f0(void)
           if (0 < (int)(*(int *)(local_108 + 4 + iVar14) - *(int *)(local_108 + iVar14) &
                        0xfffffffcU)) {
             fVar23 = -local_154;
-            local_158 = 0.0;
+            local_158 = 0.0f;
             do {
               local_11c = *(int **)(local_10c + 0x100);
               uVar16 = ((*(int *)(local_108 + 4 + (int)local_11c) -
@@ -65483,11 +65473,11 @@ void lib_fn_6758f0(void)
               local_c4._0_4_ = (float)local_c4 - *(float *)(*local_144 + iVar20 * 8);
               local_118 = (undefined4 *)(local_158 - (float)local_c4 * fVar23);
               local_148 = local_c4._4_4_ * fVar23 - local_158;
-              local_24 = (float)local_c4 * 0.0 - local_c4._4_4_ * 0.0;
+              local_24 = (float)local_c4 * 0.0f - local_c4._4_4_ * 0.0f;
               local_2c = CONCAT44(local_118,local_148);
               fVar21 = (float)local_118 * (float)local_118 + local_148 * local_148 +
                        local_24 * local_24;
-              for (local_138 = 0.0;
+              for (local_138 = 0.0f;
                   ((fVar21 < 1e-12 && (uVar16 != local_128)) && ((int)local_138 < 10));
                   local_138 = (float)((int)local_138 + 1)) {
                 uVar16 = ((*(int *)(local_108 + 4 + (int)local_11c) -
@@ -65503,7 +65493,7 @@ void lib_fn_6758f0(void)
                 local_148 = local_bc._4_4_ * fVar23 - local_158;
                 local_118 = (undefined4 *)(local_158 - (float)local_bc * fVar23);
                 local_2c = CONCAT44(local_118,local_148);
-                local_24 = (float)local_bc * 0.0 - local_bc._4_4_ * 0.0;
+                local_24 = (float)local_bc * 0.0f - local_bc._4_4_ * 0.0f;
                 fVar21 = (float)local_118 * (float)local_118 + local_148 * local_148 +
                          local_24 * local_24;
                 local_bc = uVar2;
@@ -65520,7 +65510,7 @@ void lib_fn_6758f0(void)
               local_a4._4_4_ = local_a4._4_4_ - *(float *)(*local_144 + 4 + iVar20 * 8);
               local_15c = local_a4._4_4_ * local_154 - local_158;
               local_138 = local_158 - (float)local_a4 * local_154;
-              local_30 = (float)local_a4 * 0.0 - local_a4._4_4_ * 0.0;
+              local_30 = (float)local_a4 * 0.0f - local_a4._4_4_ * 0.0f;
               local_38 = CONCAT44(local_138,local_15c);
               fVar21 = local_138 * local_138 + local_15c * local_15c + local_30 * local_30;
               for (local_14c = 0; ((fVar21 < 1e-12 && (uVar17 != local_128)) && (local_14c < 10));
@@ -65535,7 +65525,7 @@ void lib_fn_6758f0(void)
                 fVar21 = local_6c - *(float *)(*local_144 + 4 + iVar20 * 8);
                 local_138 = local_158 - fVar22 * fVar23;
                 local_15c = fVar21 * fVar23 - local_158;
-                local_30 = fVar22 * 0.0 - fVar21 * 0.0;
+                local_30 = fVar22 * 0.0f - fVar21 * 0.0f;
                 local_38 = CONCAT44(local_138,local_15c);
                 fVar21 = local_138 * local_138 + local_15c * local_15c + local_30 * local_30;
                 local_9c = local_15c;
@@ -65543,7 +65533,7 @@ void lib_fn_6758f0(void)
                 local_94 = local_30;
               }
               if ((float)local_118 * (float)local_118 + local_148 * local_148 + local_24 * local_24
-                  <= 0.0) {
+                  <= 0.0f) {
                 local_2c._4_4_ = (undefined4 *)((ulonglong)local_38 >> 0x20);
                 local_2c._0_4_ = (float)local_38;
                 local_118 = local_2c._4_4_;
@@ -65551,7 +65541,7 @@ void lib_fn_6758f0(void)
                 local_2c = local_38;
                 local_24 = local_30;
               }
-              if (local_138 * local_138 + local_15c * local_15c + local_30 * local_30 <= 0.0) {
+              if (local_138 * local_138 + local_15c * local_15c + local_30 * local_30 <= 0.0f) {
                 local_38 = local_2c;
                 uVar7 = local_38;
                 local_38._4_4_ = (float)((ulonglong)local_2c >> 0x20);
@@ -65568,7 +65558,7 @@ void lib_fn_6758f0(void)
               local_168 = piStack_1c;
               local_c4 = uVar1;
               local_a4 = uVar2;
-              if (0.0 <= local_138 * (float)local_118 + local_15c * local_148 + local_30 * local_24)
+              if (0.0f <= local_138 * (float)local_118 + local_15c * local_148 + local_30 * local_24)
               {
                 std_vector_push_back_4byte(piVar13);
                 local_140 = CONCAT44(*(int *)(local_10c + 200) - *(int *)(local_10c + 0xc4) >> 3,
@@ -65577,7 +65567,7 @@ void lib_fn_6758f0(void)
                 FUN_00642590(local_134);
                 local_f4 = *puVar8;
                 fStack_e8 = (float)((ulonglong)puVar8[1] >> 0x20);
-                _local_ec = CONCAT44(fStack_e8 * 0.0,(int)puVar8[1]);
+                _local_ec = CONCAT44(fStack_e8 * 0.0f,(int)puVar8[1]);
                 std_vector_push_back_16(&local_f4);
                 FUN_00642590(local_120);
                 local_e4 = local_148;
@@ -65585,10 +65575,10 @@ void lib_fn_6758f0(void)
                 puStack_e0 = local_118;
                 fStack_d8 = local_138;
                 pfVar10 = local_48;
-                local_48[1] = (float)local_118 * -1.0;
-                local_48[0] = local_148 * -1.0;
-                local_48[3] = local_138 * -1.0;
-                local_48[2] = local_15c * -1.0;
+                local_48[1] = (float)local_118 * -1.0f;
+                local_48[0] = local_148 * -1.0f;
+                local_48[3] = local_138 * -1.0f;
+                local_48[2] = local_15c * -1.0f;
               }
               else {
                 if ((piVar13 < piStack_1c) && (local_20 <= piVar13)) {
@@ -65748,7 +65738,7 @@ LAB_0067659b:
                 local_140 = *puVar8;
                 local_7c._4_4_ = (float)((ulonglong)puVar8[1] >> 0x20);
                 puVar3 = (undefined8 *)local_130[1];
-                local_7c = CONCAT44(local_7c._4_4_ * 0.0,(int)puVar8[1]);
+                local_7c = CONCAT44(local_7c._4_4_ * 0.0f,(int)puVar8[1]);
                 local_84 = local_140;
                 if ((&local_84 < puVar3) && ((undefined8 *)*local_130 <= &local_84)) {
                   local_110 = (undefined4 *)((int)&local_84 - (int)*local_130 >> 4);
@@ -65863,8 +65853,8 @@ LAB_006768a0:
                 puStack_d0 = local_118;
                 puStack_c8 = local_118;
                 puVar3 = (undefined8 *)local_12c[1];
-                local_58 = CONCAT44((float)local_118 * -1.0,local_148 * -1.0);
-                local_50 = CONCAT44((float)local_118 * -1.0,local_148 * -1.0);
+                local_58 = CONCAT44((float)local_118 * -1.0f,local_148 * -1.0f);
+                local_50 = CONCAT44((float)local_118 * -1.0f,local_148 * -1.0f);
                 if ((&local_58 < puVar3) && ((undefined8 *)*local_12c <= &local_58)) {
                   local_118 = (undefined4 *)((int)&local_58 - (int)*local_12c >> 4);
                   puVar4 = *(undefined8 **)(local_10c + 0xf0);
@@ -66069,7 +66059,7 @@ LAB_00676d85:
                 FUN_00642590(local_134);
                 local_104 = *puVar8;
                 fStack_f8 = (float)((ulonglong)puVar8[1] >> 0x20);
-                _local_fc = CONCAT44(fStack_f8 * 0.0,(int)puVar8[1]);
+                _local_fc = CONCAT44(fStack_f8 * 0.0f,(int)puVar8[1]);
                 std_vector_push_back_16(&local_104);
                 FUN_00642590(local_120);
                 local_b4 = local_15c;
@@ -66077,8 +66067,8 @@ LAB_00676d85:
                 fStack_b0 = local_138;
                 fStack_a8 = local_138;
                 pfVar10 = &local_68;
-                _local_68 = CONCAT44(local_138 * -1.0,local_15c * -1.0);
-                _local_60 = CONCAT44(local_138 * -1.0,local_15c * -1.0);
+                _local_68 = CONCAT44(local_138 * -1.0f,local_15c * -1.0f);
+                _local_60 = CONCAT44(local_138 * -1.0f,local_15c * -1.0f);
               }
               std_vector_push_back_16(pfVar10);
               local_128 = local_114;
@@ -66534,11 +66524,9 @@ void plasma::Transformation::vfunc_1(void)
        *(float *)(in_ECX + 0x1bc) * fVar6 + *(float *)(in_ECX + 0x1cc) * fVar7 +
        *(float *)(in_ECX + 0x1ec);
   fVar6 = *(float *)(*(int *)(in_ECX + 0x144) + *(int *)(in_ECX + 0x118) * 0xc) * 0.017453292;
-  dVar8 = (double)fVar6;
-  libm_sse2_cos_precise();
+  dVar8 = libm_sse2_cos_precise((double)fVar6);
   fVar7 = (float)dVar8;
-  dVar8 = (double)fVar6;
-  libm_sse2_sin_precise();
+  dVar8 = libm_sse2_sin_precise((double)fVar6);
   fVar6 = *(float *)(in_ECX + 0x1c0);
   fVar9 = (float)dVar8;
   *(float *)(in_ECX + 0x1c0) = *(float *)(in_ECX + 0x1d0) * fVar9 + fVar6 * fVar7;
@@ -66553,11 +66541,9 @@ void plasma::Transformation::vfunc_1(void)
   *(float *)(in_ECX + 0x1cc) = *(float *)(in_ECX + 0x1dc) * fVar9 + fVar6 * fVar7;
   *(float *)(in_ECX + 0x1dc) = *(float *)(in_ECX + 0x1dc) * fVar7 - fVar6 * fVar9;
   fVar6 = *(float *)(*(int *)(in_ECX + 0x144) + 4 + *(int *)(in_ECX + 0x118) * 0xc) * 0.017453292;
-  dVar8 = (double)fVar6;
-  libm_sse2_cos_precise();
+  dVar8 = libm_sse2_cos_precise((double)fVar6);
   fVar7 = (float)dVar8;
-  dVar8 = (double)fVar6;
-  libm_sse2_sin_precise();
+  dVar8 = libm_sse2_sin_precise((double)fVar6);
   fVar6 = *pfVar5;
   fVar9 = (float)dVar8;
   *pfVar5 = fVar6 * fVar7 - *(float *)(in_ECX + 0x1d0) * fVar9;
@@ -66572,11 +66558,9 @@ void plasma::Transformation::vfunc_1(void)
   *(float *)(in_ECX + 0x1bc) = fVar6 * fVar7 - *(float *)(in_ECX + 0x1dc) * fVar9;
   *(float *)(in_ECX + 0x1dc) = *(float *)(in_ECX + 0x1dc) * fVar7 + fVar6 * fVar9;
   fVar6 = *(float *)(*(int *)(in_ECX + 0x144) + 8 + *(int *)(in_ECX + 0x118) * 0xc) * 0.017453292;
-  dVar8 = (double)fVar6;
-  libm_sse2_cos_precise();
+  dVar8 = libm_sse2_cos_precise((double)fVar6);
   fVar7 = (float)dVar8;
-  dVar8 = (double)fVar6;
-  libm_sse2_sin_precise();
+  dVar8 = libm_sse2_sin_precise((double)fVar6);
   fVar6 = *pfVar5;
   fVar9 = (float)dVar8;
   *pfVar5 = *(float *)(in_ECX + 0x1c0) * fVar9 + fVar6 * fVar7;
@@ -66775,9 +66759,8 @@ void lib_fn_679570(int *param_1,void *param_2,int param_3,undefined4 param_4,uin
                     (int)(((longlong)local_10 / (longlong)param_6 & 0xffffffffU) %
                          (ulonglong)(uint)(param_3 - (int)param_2 >> 2)) * 4) & 2) == 0)) {
         if ((DAT_0076df00 & 1) == 0) {
-          dVar5 = 2.0;
           DAT_0076df00 = DAT_0076df00 | 1;
-          libm_sse2_sqrt_precise();
+          dVar5 = libm_sse2_sqrt_precise(2.0);
           fVar6 = ((float)dVar5 - 1.0) / ((float)dVar5 * 0.5);
           DAT_0076defc = fVar6;
         }
@@ -66874,9 +66857,8 @@ void lib_fn_679740(int *param_1,void *param_2,int param_3,undefined4 param_4,uin
                     (int)(((longlong)local_40 / (longlong)param_6 & 0xffffffffU) %
                          (ulonglong)(uint)(param_3 - (int)param_2 >> 2)) * 4) & 2) == 0)) {
         if ((DAT_0076def0 & 1) == 0) {
-          dVar10 = 2.0;
           DAT_0076def0 = DAT_0076def0 | 1;
-          libm_sse2_sqrt_precise();
+          dVar10 = libm_sse2_sqrt_precise(2.0);
           fVar7 = ((float)dVar10 - 1.0) / ((float)dVar10 * 0.5);
           DAT_0076deec = fVar7;
         }
@@ -67004,9 +66986,8 @@ void lib_fn_679a40(int *param_1,void *param_2,int param_3,undefined4 param_4,uin
                     (int)(((longlong)local_60 / (longlong)param_6 & 0xffffffffU) %
                          (ulonglong)(uint)(param_3 - (int)param_2 >> 2)) * 4) & 2) == 0)) {
         if ((DAT_0076def8 & 1) == 0) {
-          dVar14 = 2.0;
           DAT_0076def8 = DAT_0076def8 | 1;
-          libm_sse2_sqrt_precise();
+          dVar14 = libm_sse2_sqrt_precise(2.0);
           fVar9 = ((float)dVar14 - 1.0) / ((float)dVar14 * 0.5);
           DAT_0076def4 = fVar9;
         }
@@ -67249,10 +67230,10 @@ void lib_fn_67aa70(int param_1,undefined8 *param_2)
             (*(float *)(param_1 + (iVar1 % 3) * 8) - *(float *)(param_1 + iVar2 * 8)) +
             (local_10 - *(float *)(param_1 + iVar2 * 8)) *
             (*(float *)(param_1 + 4 + iVar2 * 8) - *(float *)(param_1 + (iVar1 % 3) * 8 + 4));
-    if (0.0 < fVar5) {
+    if (0.0f < fVar5) {
       iVar4 = iVar4 + 1;
     }
-    if (fVar5 < 0.0) {
+    if (fVar5 < 0.0f) {
       iVar3 = iVar3 + 1;
     }
     iVar2 = iVar1;
@@ -68252,8 +68233,8 @@ void plasma::CurveShape::vfunc_1(void)
     pfVar4 = (float *)**(undefined4 **)(*(int *)(in_ECX + 0xa8) + *(int *)(in_ECX + 0x7c) * 4);
     local_90 = (int *)(*pfVar4 - pfVar4[2]);
     local_94 = pfVar4[1] - pfVar4[3];
-    dVar17 = (double)(local_94 * local_94 + (float)local_90 * (float)local_90);
-    libm_sse2_sqrt_precise();
+    dVar17 = libm_sse2_sqrt_precise
+                       ((double)(local_94 * local_94 + (float)local_90 * (float)local_90));
     fStack_78 = *(float *)**(undefined4 **)(*(int *)(in_ECX + 0x100) + *(int *)(in_ECX + 0xd4) * 4)
                 * 0.5;
     iVar13 = 0;
@@ -68264,17 +68245,15 @@ void plasma::CurveShape::vfunc_1(void)
     if (0 < *(int *)(in_ECX + 0x38c)) {
       do {
         local_90 = (int *)(((float)iVar13 * 3.1415927) / ((float)*(int *)(in_ECX + 0x38c) - 1.0));
-        dVar17 = (double)(float)local_90;
-        libm_sse2_sin_precise();
+        dVar17 = libm_sse2_sin_precise((double)(float)local_90);
         local_74 = local_6c;
         uVar6 = local_74;
         local_74._0_4_ = (float)local_6c;
         local_94 = (float)local_74 * (float)dVar17;
         local_74._4_4_ = (float)(local_6c >> 0x20);
         local_88 = local_74._4_4_ * (float)dVar17;
-        dVar17 = (double)(float)local_90;
         local_74 = uVar6;
-        libm_sse2_cos_precise();
+        dVar17 = libm_sse2_cos_precise((double)(float)local_90);
         local_54 = CONCAT44(fStack_78,local_7c);
         uVar1 = *(undefined8 *)
                  **(undefined4 **)(*(int *)(in_ECX + 0xa8) + *(int *)(in_ECX + 0x7c) * 4);
@@ -68293,8 +68272,8 @@ void plasma::CurveShape::vfunc_1(void)
     local_90 = (int *)(*(float *)(iVar13 + -8 + iVar9 * 8) - *(float *)(iVar13 + -0x10 + iVar14 * 8)
                       );
     local_94 = *(float *)(iVar13 + -4 + iVar9 * 8) - *(float *)(iVar13 + -0xc + iVar14 * 8);
-    dVar17 = (double)(local_94 * local_94 + (float)local_90 * (float)local_90);
-    libm_sse2_sqrt_precise();
+    dVar17 = libm_sse2_sqrt_precise
+                       ((double)(local_94 * local_94 + (float)local_90 * (float)local_90));
     in_ECX = local_8c;
     iVar13 = 0;
     fStack_78 = *(float *)(**(int **)(*(int *)(local_8c + 0x100) + *(int *)(local_8c + 0xd4) * 4) +
@@ -68307,17 +68286,15 @@ void plasma::CurveShape::vfunc_1(void)
     if (0 < *(int *)(local_8c + 0x38c)) {
       do {
         local_90 = (int *)(((float)iVar13 * 3.1415927) / ((float)*(int *)(in_ECX + 0x38c) - 1.0));
-        dVar17 = (double)(float)local_90;
-        libm_sse2_sin_precise();
+        dVar17 = libm_sse2_sin_precise((double)(float)local_90);
         local_74 = local_6c;
         uVar6 = local_74;
         local_74._0_4_ = (float)local_6c;
         local_94 = (float)dVar17 * (float)local_74;
         local_74._4_4_ = (float)(local_6c >> 0x20);
         local_88 = (float)dVar17 * local_74._4_4_;
-        dVar17 = (double)(float)local_90;
         local_74 = uVar6;
-        libm_sse2_cos_precise();
+        dVar17 = libm_sse2_cos_precise((double)(float)local_90);
         local_54 = CONCAT44(fStack_78,local_7c);
         uVar1 = *(undefined8 *)
                  (**(int **)(*(int *)(in_ECX + 0xa8) + *(int *)(in_ECX + 0x7c) * 4) + -8 +
@@ -68472,9 +68449,8 @@ void plasma::CurveShape::vfunc_1(void)
           fStack_18 = (float)local_2c - *(float *)(iVar13 + iVar9 * 8);
           local_1c = -(local_2c._4_4_ - *(float *)(iVar13 + 4 + iVar9 * 8));
           local_84 = CONCAT44(fStack_18,local_1c);
-          dVar17 = (double)(fStack_18 * fStack_18 + local_1c * local_1c);
           local_2c = uVar1;
-          libm_sse2_sqrt_precise();
+          dVar17 = libm_sse2_sqrt_precise((double)(fStack_18 * fStack_18 + local_1c * local_1c));
           fVar18 = (float)local_84 * (1.0 / (float)dVar17);
           fVar20 = local_84._4_4_ * (1.0 / (float)dVar17);
           goto LAB_0067c9f8;
@@ -68486,9 +68462,8 @@ void plasma::CurveShape::vfunc_1(void)
         fStack_38 = (float)local_5c - *(float *)(plVar5 + 1);
         local_3c = -(local_5c._4_4_ - *(float *)((int)plVar5 + 0xc));
         local_84 = CONCAT44(fStack_38,local_3c);
-        dVar17 = (double)(fStack_38 * fStack_38 + local_3c * local_3c);
         local_5c = lVar2;
-        libm_sse2_sqrt_precise();
+        dVar17 = libm_sse2_sqrt_precise((double)(fStack_38 * fStack_38 + local_3c * local_3c));
         fVar16 = **(float **)(in_ECX + 0x3dc);
         fVar18 = (float)local_84 * (1.0 / (float)dVar17);
         fVar20 = local_84._4_4_ * (1.0 / (float)dVar17);
@@ -68509,23 +68484,21 @@ LAB_0067c7f6:
         local_54 = CONCAT44(local_54._4_4_,(float)local_24 - *(float *)(iVar14 + uVar8 * 8));
         local_24._4_4_ = (float)((ulonglong)uVar3 >> 0x20);
         local_94 = -(local_24._4_4_ - *(float *)(iVar14 + 4 + uVar8 * 8));
-        dVar17 = (double)(fVar18 * fVar18 + local_7c * local_7c);
         local_34 = uVar1;
         local_24 = uVar3;
         local_74._0_4_ = fVar18;
-        libm_sse2_sqrt_precise();
+        dVar17 = libm_sse2_sqrt_precise((double)(fVar18 * fVar18 + local_7c * local_7c));
         local_7c = local_7c * (1.0 / (float)dVar17);
         fStack_10 = (float)local_74 * (1.0 / (float)dVar17);
         local_74 = CONCAT44(local_74._4_4_,fStack_10);
-        dVar17 = (double)((float)local_54 * (float)local_54 + local_94 * local_94);
         local_14 = local_7c;
-        libm_sse2_sqrt_precise();
+        dVar17 = libm_sse2_sqrt_precise
+                           ((double)((float)local_54 * (float)local_54 + local_94 * local_94));
         fVar18 = local_94 * (1.0 / (float)dVar17) + local_14;
         fVar20 = (float)local_54 * (1.0 / (float)dVar17) + fStack_10;
         local_6c = CONCAT44(fVar20,fVar18);
         local_84 = local_6c;
-        dVar17 = (double)(fVar20 * fVar20 + fVar18 * fVar18);
-        libm_sse2_sqrt_precise();
+        dVar17 = libm_sse2_sqrt_precise((double)(fVar20 * fVar20 + fVar18 * fVar18));
         fVar18 = (float)local_84 * (1.0 / (float)dVar17);
         fVar20 = local_84._4_4_ * (1.0 / (float)dVar17);
         _local_64 = CONCAT44(fStack_60,iVar9 / (int)local_88);
@@ -68681,38 +68654,38 @@ void plasma::CurveShape::vfunc_12
       fVar7 = *(float *)(iVar2 + iVar4 * 8);
       fVar6 = *(float *)(iVar2 + 4 + iVar4 * 8);
       fVar8 = *param_1;
-      fVar5 = 1.0 / (param_5[3] * fVar7 + param_5[7] * fVar6 + param_5[0xf]);
+      fVar5 = 1.0f / (param_5[3] * fVar7 + param_5[7] * fVar6 + param_5[0xf]);
       fVar9 = (*param_5 * fVar7 + param_5[4] * fVar6 + param_5[0xc]) * fVar5;
       fVar5 = (param_5[1] * fVar7 + param_5[5] * fVar6 + param_5[0xd]) * fVar5;
       if (fVar8 <= fVar9) {
         if (*param_2 + fVar8 <= fVar9) {
-          local_18 = 1.0;
+          local_18 = 1.0f;
         }
         else {
           local_18 = (fVar9 - fVar8) / *param_2;
         }
       }
       else {
-        local_18 = 0.0;
+        local_18 = 0.0f;
       }
       fVar7 = param_1[1];
       if (fVar7 <= fVar5) {
         if (param_2[1] + fVar7 <= fVar5) {
-          fStack_14 = 1.0;
+          fStack_14 = 1.0f;
         }
         else {
           fStack_14 = (fVar5 - fVar7) / param_2[1];
         }
       }
       else {
-        fStack_14 = 0.0;
+        fStack_14 = 0.0f;
       }
       iVar4 = iVar4 + 1;
       local_48 = (float)*param_4;
       fStack_44 = (float)((ulonglong)*param_4 >> 0x20);
       fVar6 = *param_3 + (fVar9 - fVar8) + local_18 * (local_48 - *param_2);
       fVar7 = (fVar5 - fVar7) + param_3[1] + fStack_14 * (fStack_44 - param_2[1]);
-      fVar8 = 1.0 / (fVar7 * param_6[7] + fVar6 * param_6[3] + param_6[0xf]);
+      fVar8 = 1.0f / (fVar7 * param_6[7] + fVar6 * param_6[3] + param_6[0xf]);
       local_28 = CONCAT44((fVar7 * param_6[5] + fVar6 * param_6[1] + param_6[0xd]) * fVar8,
                           (*param_6 * fVar6 + fVar7 * param_6[4] + param_6[0xc]) * fVar8);
       *(undefined8 *)(iVar2 + -8 + iVar4 * 8) = local_28;
@@ -69006,7 +68979,7 @@ void plasma::ScrollButton::vfunc_11(void)
 
 {
   int in_ECX;
-  float10 fVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   undefined4 uVar4;
@@ -69018,30 +68991,30 @@ void plasma::ScrollButton::vfunc_11(void)
   switch(*(undefined4 *)(in_ECX + 0x238)) {
   case 0:
     uVar4 = 1;
-    fVar1 = (float10)GameController_getWidgetSize2(1);
-    fVar2 = (float)fVar1 + 20.0;
+    fVar1 = (float)GameController_getWidgetSize2(1);
+    fVar2 = (float)fVar1 + 20.0f;
     goto LAB_0067d617;
   case 1:
     uVar4 = 1;
-    fVar1 = (float10)GameController_getWidgetSize2(1);
-    fVar2 = (float)fVar1 - 20.0;
+    fVar1 = (float)GameController_getWidgetSize2(1);
+    fVar2 = (float)fVar1 - 20.0f;
 LAB_0067d617:
-    fVar1 = (float10)GameController_getWidgetSize(fVar2);
+    fVar1 = (float)GameController_getWidgetSize(fVar2);
     fVar3 = (float)fVar1;
     break;
   case 2:
     uVar4 = 1;
-    fVar1 = (float10)GameController_getWidgetSize2(1);
+    fVar1 = (float)GameController_getWidgetSize2(1);
     fVar2 = (float)fVar1;
-    fVar1 = (float10)GameController_getWidgetSize(fVar2);
-    fVar3 = (float)fVar1 + 20.0;
+    fVar1 = (float)GameController_getWidgetSize(fVar2);
+    fVar3 = (float)fVar1 + 20.0f;
     break;
   case 3:
     uVar4 = 1;
-    fVar1 = (float10)GameController_getWidgetSize2(1);
+    fVar1 = (float)GameController_getWidgetSize2(1);
     fVar2 = (float)fVar1;
-    fVar1 = (float10)GameController_getWidgetSize(fVar2);
-    fVar3 = (float)fVar1 - 20.0;
+    fVar1 = (float)GameController_getWidgetSize(fVar2);
+    fVar3 = (float)fVar1 - 20.0f;
     break;
   default:
     goto LAB_0067d6a6;
@@ -69066,7 +69039,7 @@ void plasma::ScrollButton::vfunc_27(void)
 {
   int iVar1;
   int in_ECX;
-  float10 fVar2;
+  float fVar2;
   float fVar3;
   float fVar4;
   undefined4 uVar5;
@@ -69081,33 +69054,33 @@ void plasma::ScrollButton::vfunc_27(void)
   case 0:
     uVar5 = 1;
     iVar1 = *(int *)(*(int *)(in_ECX + 4) + 0xe4);
-    fVar2 = (float10)GameController_getWidgetSize2(1);
-    fVar3 = (float)fVar2 + (float)(iVar1 * 0x14) * 0.01;
+    fVar2 = (float)GameController_getWidgetSize2(1);
+    fVar3 = (float)fVar2 + (float)(iVar1 * 0x14) * 0.01f;
     goto LAB_0067d76a;
   case 1:
     uVar5 = 1;
     iVar1 = *(int *)(*(int *)(in_ECX + 4) + 0xe4);
-    fVar2 = (float10)GameController_getWidgetSize2(1);
-    fVar3 = (float)fVar2 - (float)(iVar1 * 0x14) * 0.01;
+    fVar2 = (float)GameController_getWidgetSize2(1);
+    fVar3 = (float)fVar2 - (float)(iVar1 * 0x14) * 0.01f;
 LAB_0067d76a:
-    fVar2 = (float10)GameController_getWidgetSize(fVar3);
+    fVar2 = (float)GameController_getWidgetSize(fVar3);
     fVar4 = (float)fVar2;
     break;
   case 2:
     uVar5 = 1;
     iVar1 = *(int *)(*(int *)(in_ECX + 4) + 0xe4);
-    fVar2 = (float10)GameController_getWidgetSize2(1);
+    fVar2 = (float)GameController_getWidgetSize2(1);
     fVar3 = (float)fVar2;
-    fVar2 = (float10)GameController_getWidgetSize(fVar3);
-    fVar4 = (float)fVar2 + (float)(iVar1 * 0x14) * 0.01;
+    fVar2 = (float)GameController_getWidgetSize(fVar3);
+    fVar4 = (float)fVar2 + (float)(iVar1 * 0x14) * 0.01f;
     break;
   case 3:
     uVar5 = 1;
     iVar1 = *(int *)(*(int *)(in_ECX + 4) + 0xe4);
-    fVar2 = (float10)GameController_getWidgetSize2(1);
+    fVar2 = (float)GameController_getWidgetSize2(1);
     fVar3 = (float)fVar2;
-    fVar2 = (float10)GameController_getWidgetSize(fVar3);
-    fVar4 = (float)fVar2 - (float)(iVar1 * 0x14) * 0.01;
+    fVar2 = (float)GameController_getWidgetSize(fVar3);
+    fVar4 = (float)fVar2 - (float)(iVar1 * 0x14) * 0.01f;
     break;
   default:
     goto switchD_0067d732_default;
@@ -69655,7 +69628,7 @@ void plasma::PlasmaFont::vfunc_4(float *param_1)
   fVar1 = *(float *)(in_ECX + 0x6c);
   fVar2 = *(float *)(in_ECX + 0x4c);
   *param_1 = *(float *)(in_ECX + 0x68) * 0.005 * fVar2;
-  param_1[1] = fVar1 * 0.005 * fVar2;
+  param_1[1] = fVar1 * 0.005f * fVar2;
   return;
 }
 
@@ -69674,7 +69647,7 @@ void plasma::PlasmaFont::vfunc_3(float *param_1)
   fVar1 = *(float *)(in_ECX + 100);
   fVar2 = *(float *)(in_ECX + 0x4c);
   *param_1 = *(float *)(in_ECX + 0x60) * 0.005 * fVar2;
-  param_1[1] = fVar1 * 0.005 * fVar2;
+  param_1[1] = fVar1 * 0.005f * fVar2;
   return;
 }
 
@@ -69697,7 +69670,7 @@ void plasma::PlasmaFont::vfunc_5
   float *pfVar6;
   undefined4 *puVar7;
   int iVar8;
-  float10 fVar9;
+  float fVar9;
   float fVar10;
   float local_4c;
   float local_44;
@@ -69742,13 +69715,13 @@ void plasma::PlasmaFont::vfunc_5
     *(undefined4 *)(iVar1 + 0x178) = param_4[3];
     (**(code **)(*in_ECX + 8))(param_1,&local_28,local_40,0);
     (**(code **)(*in_ECX + 8))(param_1,&local_20,local_40,param_5);
-    fVar10 = ((float)in_ECX[0x13] * 2.0) / ((float)in_ECX[0x1b] - (float)in_ECX[0x19]);
+    fVar10 = ((float)in_ECX[0x13] * 2.0f) / ((float)in_ECX[0x1b] - (float)in_ECX[0x19]);
     iVar1 = param_1[4];
     local_20 = *param_2 + (local_20 - local_28);
     iVar8 = 0;
     fStack_1c = param_2[1] + (fStack_1c - local_24);
-    local_44 = 0.0;
-    local_4c = 0.0;
+    local_44 = 0.0f;
+    local_4c = 0.0f;
     if (0 < iVar1) {
       do {
         puVar5 = param_1;
@@ -69756,7 +69729,7 @@ void plasma::PlasmaFont::vfunc_5
           puVar5 = (undefined4 *)*param_1;
         }
         if (*(short *)((int)puVar5 + iVar8 * 2) == 10) {
-          local_44 = 0.0;
+          local_44 = 0.0f;
           local_4c = local_4c + ((float)in_ECX[0x1b] - (float)in_ECX[0x19]);
         }
         else {
@@ -69779,7 +69752,7 @@ void plasma::PlasmaFont::vfunc_5
             mat4_identity();
             pfVar6 = (float *)(*(int *)(*(int *)((int)pfVar2[5] + 0x38) + 0xc0) * 0x40 +
                               *(int *)(*(int *)((int)pfVar2[5] + 0x38) + 0xec));
-            if (fVar10 != 1.0) {
+            if (fVar10 != 1.0f) {
               *pfVar6 = *pfVar6 * fVar10;
               pfVar6[1] = pfVar6[1] * fVar10;
               pfVar6[2] = pfVar6[2] * fVar10;
@@ -69799,7 +69772,7 @@ void plasma::PlasmaFont::vfunc_5
                 puVar7 = (undefined4 *)*param_1;
                 puVar5 = (undefined4 *)*param_1;
               }
-              fVar9 = (float10)lib_fn_687fd0(*(undefined2 *)((int)puVar7 + iVar8 * 2),
+              fVar9 = (float)lib_fn_687fd0(*(undefined2 *)((int)puVar7 + iVar8 * 2),
                                             *(undefined2 *)((int)puVar5 + iVar8 * 2 + 2));
               local_44 = (float)fVar9 + local_44;
             }
@@ -69864,7 +69837,7 @@ void plasma::PlasmaFont::vfunc_2(undefined4 *param_1,float *param_2,float *param
   undefined4 *puVar11;
   int iVar12;
   int iVar13;
-  float10 fVar14;
+  float fVar14;
   float fVar15;
   float fVar16;
   float fVar17;
@@ -69884,18 +69857,18 @@ void plasma::PlasmaFont::vfunc_2(undefined4 *param_1,float *param_2,float *param
   
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   *param_2 = 0.0;
-  param_2[1] = 0.0;
+  param_2[1] = 0.0f;
   *param_3 = 0.0;
-  param_3[1] = 0.0;
+  param_3[1] = 0.0f;
   pfVar1 = param_3 + 1;
   local_2c = param_1[4];
-  fVar15 = 0.0;
+  fVar15 = 0.0f;
   iVar13 = 0;
   local_1c = param_2;
   local_24 = param_3;
-  fVar17 = 0.0;
-  local_28 = 0.0;
-  local_34 = (*(float *)(in_ECX + 0x4c) * 2.0) /
+  fVar17 = 0.0f;
+  local_28 = 0.0f;
+  local_34 = (*(float *)(in_ECX + 0x4c) * 2.0f) /
              (*(float *)(in_ECX + 0x6c) - *(float *)(in_ECX + 100));
   local_20 = in_ECX;
   if (0 < local_2c) {
@@ -69906,7 +69879,7 @@ void plasma::PlasmaFont::vfunc_2(undefined4 *param_1,float *param_2,float *param
         puVar6 = (undefined4 *)*param_1;
       }
       if (*(short *)((int)puVar6 + iVar13 * 2) == 10) {
-        fVar17 = 0.0;
+        fVar17 = 0.0f;
         local_28 = fVar15 + (*(float *)(in_ECX + 0x6c) - *(float *)(in_ECX + 100));
         iVar12 = in_ECX;
         fVar15 = local_28;
@@ -69988,7 +69961,7 @@ void plasma::PlasmaFont::vfunc_2(undefined4 *param_1,float *param_2,float *param
               puVar11 = (undefined4 *)*param_1;
               puVar6 = (undefined4 *)*param_1;
             }
-            fVar14 = (float10)lib_fn_687fd0(*(undefined2 *)((int)puVar11 + iVar13 * 2),
+            fVar14 = (float)lib_fn_687fd0(*(undefined2 *)((int)puVar11 + iVar13 * 2),
                                            *(undefined2 *)((int)puVar6 + iVar13 * 2 + 2));
             local_38 = (float)fVar14;
             fVar17 = (float)fVar14 + fVar17;
@@ -70013,19 +69986,19 @@ void plasma::PlasmaFont::vfunc_2(undefined4 *param_1,float *param_2,float *param
     }
   }
   else {
-    fVar15 = (fVar15 + *param_2) * 0.5;
+    fVar15 = (fVar15 + *param_2) * 0.5f;
     *param_2 = *param_2 - fVar15;
     *local_24 = *local_24 - fVar15;
   }
   if ((param_4 & 4) == 0) {
     if ((param_4 & 8) != 0) {
       param_2[1] = param_2[1] - local_24[1];
-      local_24[1] = 0.0;
+      local_24[1] = 0.0f;
     }
     __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
     return;
   }
-  fVar15 = (param_2[1] + local_24[1]) * 0.5;
+  fVar15 = (param_2[1] + local_24[1]) * 0.5f;
   param_2[1] = param_2[1] - fVar15;
   local_24[1] = local_24[1] - fVar15;
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -70056,7 +70029,7 @@ void plasma::PlasmaFont::vfunc_1
   undefined4 ****ppppuVar12;
   int iVar13;
   int iVar14;
-  float10 fVar15;
+  float fVar15;
   float fVar16;
   float fVar17;
   float fVar18;
@@ -70095,7 +70068,7 @@ void plasma::PlasmaFont::vfunc_1
   local_70 = param_4;
   local_50 = in_ECX;
   wstring_ctorAppend(local_3c,param_1,&DAT_006fd844,local_14);
-  local_58 = (*(float *)(in_ECX + 0x4c) * 2.0) /
+  local_58 = (*(float *)(in_ECX + 0x4c) * 2.0f) /
              (*(float *)(in_ECX + 0x6c) - *(float *)(in_ECX + 100));
   if (param_2 < 0) {
     param_2 = 0;
@@ -70104,16 +70077,16 @@ void plasma::PlasmaFont::vfunc_1
   if (local_5c < param_2) {
     param_2 = local_5c;
   }
-  local_4c._0_4_ = 0.0;
-  local_4c._4_4_ = 0.0;
-  fVar20 = 0.0;
+  local_4c._0_4_ = 0.0f;
+  local_4c._4_4_ = 0.0f;
+  fVar20 = 0.0f;
   iVar13 = 0;
   local_8 = 0;
   local_4c = 0;
-  local_44 = 0.0;
-  fStack_40 = 0.0;
-  fVar19 = 0.0;
-  local_54 = 0.0;
+  local_44 = 0.0f;
+  fStack_40 = 0.0f;
+  fVar19 = 0.0f;
+  local_54 = 0.0f;
   uVar11 = local_28;
   ppppuVar12 = (undefined4 ****)local_3c[0];
   if (-1 < param_2) {
@@ -70124,7 +70097,7 @@ void plasma::PlasmaFont::vfunc_1
         ppppuVar8 = ppppuVar12;
       }
       if (*(short *)((int)ppppuVar8 + iVar13 * 2) == 10) {
-        fVar19 = 0.0;
+        fVar19 = 0.0f;
         local_54 = fVar20 + (*(float *)(in_ECX + 0x6c) - *(float *)(in_ECX + 100));
         iVar14 = in_ECX;
         fVar20 = local_54;
@@ -70181,7 +70154,7 @@ void plasma::PlasmaFont::vfunc_1
             if (7 < local_28) {
               ppppuVar10 = ppppuVar12;
             }
-            fVar15 = (float10)lib_fn_687fd0(*(undefined2 *)((int)ppppuVar10 + iVar13 * 2),
+            fVar15 = (float)lib_fn_687fd0(*(undefined2 *)((int)ppppuVar10 + iVar13 * 2),
                                            *(undefined2 *)((int)ppppuVar8 + iVar13 * 2 + 2));
             local_64 = (float)fVar15;
             fVar19 = local_64 + local_6c;
@@ -70202,22 +70175,22 @@ void plasma::PlasmaFont::vfunc_1
   if ((param_5 & 1) == 0) {
     if ((param_5 & 2) != 0) {
       fVar19 = fVar19 - fVar18;
-      fVar18 = 0.0;
+      fVar18 = 0.0f;
     }
   }
   else {
-    fVar16 = (fVar18 + fVar19) * 0.5;
+    fVar16 = (fVar18 + fVar19) * 0.5f;
     fVar19 = fVar19 - fVar16;
     fVar18 = fVar18 - fVar16;
   }
   if ((param_5 & 4) == 0) {
     if ((param_5 & 8) != 0) {
       fVar20 = fVar20 - fVar17;
-      fVar17 = 0.0;
+      fVar17 = 0.0f;
     }
   }
   else {
-    fVar16 = (fVar17 + fVar20) * 0.5;
+    fVar16 = (fVar17 + fVar20) * 0.5f;
     fVar20 = fVar20 - fVar16;
     fVar17 = fVar17 - fVar16;
   }
@@ -70367,7 +70340,7 @@ void plasma::PixelFont::vfunc_2(undefined4 *param_1,float *param_2,float *param_
   undefined4 *puVar10;
   int iVar11;
   int iVar12;
-  float10 fVar13;
+  float fVar13;
   float fVar14;
   float fVar15;
   float fVar16;
@@ -70395,12 +70368,12 @@ void plasma::PixelFont::vfunc_2(undefined4 *param_1,float *param_2,float *param_
   *param_3 = 0.0;
   *local_30 = 0.0;
   local_34 = param_1[4];
-  fVar14 = 0.0;
+  fVar14 = 0.0f;
   iVar12 = 0;
   local_24 = param_2;
   local_1c = param_3;
-  fVar16 = 0.0;
-  local_28 = 0.0;
+  fVar16 = 0.0f;
+  local_28 = 0.0f;
   local_20 = in_ECX;
   if (0 < local_34) {
     do {
@@ -70410,7 +70383,7 @@ void plasma::PixelFont::vfunc_2(undefined4 *param_1,float *param_2,float *param_
         puVar4 = (undefined4 *)*param_1;
       }
       if (*(short *)((int)puVar4 + iVar12 * 2) == 10) {
-        fVar16 = 0.0;
+        fVar16 = 0.0f;
         local_28 = fVar14 + (*(float *)(in_ECX + 0x70) - *(float *)(in_ECX + 0x68));
         iVar11 = in_ECX;
         fVar14 = local_28;
@@ -70493,7 +70466,7 @@ void plasma::PixelFont::vfunc_2(undefined4 *param_1,float *param_2,float *param_
               puVar10 = (undefined4 *)*param_1;
               puVar4 = (undefined4 *)*param_1;
             }
-            fVar13 = (float10)lib_fn_687fd0(*(undefined2 *)((int)puVar10 + iVar12 * 2),
+            fVar13 = (float)lib_fn_687fd0(*(undefined2 *)((int)puVar10 + iVar12 * 2),
                                            *(undefined2 *)((int)puVar4 + iVar12 * 2 + 2));
             local_3c = (float)fVar13;
             fVar16 = local_3c + local_38;
@@ -70513,7 +70486,7 @@ void plasma::PixelFont::vfunc_2(undefined4 *param_1,float *param_2,float *param_
     }
   }
   else {
-    fVar14 = (*local_24 + *param_3) * 0.5;
+    fVar14 = (*local_24 + *param_3) * 0.5f;
     *local_24 = *local_24 - fVar14;
     *param_3 = *param_3 - fVar14;
   }
@@ -70525,7 +70498,7 @@ void plasma::PixelFont::vfunc_2(undefined4 *param_1,float *param_2,float *param_
     __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
     return;
   }
-  fVar14 = (*local_30 + *local_2c) * 0.5;
+  fVar14 = (*local_30 + *local_2c) * 0.5f;
   *local_2c = *local_2c - fVar14;
   *local_30 = *local_30 - fVar14;
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -70555,7 +70528,7 @@ void plasma::PixelFont::vfunc_1
   undefined4 ****ppppuVar11;
   int iVar12;
   int *piVar13;
-  float10 fVar14;
+  float fVar14;
   float fVar15;
   float fVar16;
   float fVar17;
@@ -70596,9 +70569,9 @@ void plasma::PixelFont::vfunc_1
   local_8 = 0;
   if (local_2c == 0) {
     *param_3 = 0.0;
-    param_3[1] = 0.0;
+    param_3[1] = 0.0f;
     *local_60 = 0.0;
-    local_60[1] = 0.0;
+    local_60[1] = 0.0f;
   }
   else {
     if (param_2 < 0) {
@@ -70608,11 +70581,11 @@ void plasma::PixelFont::vfunc_1
     if (iVar5 < param_2) {
       param_2 = iVar5;
     }
-    fVar17 = 0.0;
+    fVar17 = 0.0f;
     iVar12 = 0;
-    local_5c = 0.0;
+    local_5c = 0.0f;
     piVar13 = in_ECX;
-    fVar15 = 0.0;
+    fVar15 = 0.0f;
     if (-1 < param_2) {
       do {
         in_ECX = local_58;
@@ -70623,7 +70596,7 @@ void plasma::PixelFont::vfunc_1
         if (*(short *)((int)puVar6 + iVar12 * 2) == 10) {
           local_5c = fVar17 + ((float)piVar13[0x1c] - (float)piVar13[0x1a]);
           in_ECX = piVar13;
-          fVar16 = 0.0;
+          fVar16 = 0.0f;
           fVar17 = local_5c;
         }
         else {
@@ -70677,7 +70650,7 @@ void plasma::PixelFont::vfunc_1
               if (7 < local_28) {
                 ppppuVar11 = (undefined4 ****)local_3c[0];
               }
-              fVar14 = (float10)lib_fn_687fd0(*(undefined2 *)((int)ppppuVar11 + iVar12 * 2),
+              fVar14 = (float)lib_fn_687fd0(*(undefined2 *)((int)ppppuVar11 + iVar12 * 2),
                                              *(undefined2 *)((int)ppppuVar9 + iVar12 * 2 + 2));
               local_68 = (float)fVar14;
               fVar16 = local_68 + local_6c;
@@ -70976,7 +70949,7 @@ undefined4 * lib_fn_687f80(ushort *param_1)
 
 /* Global::lib_fn_687fd0 @ 00687fd0 */
 
-float10 lib_fn_687fd0(ushort param_1,ushort param_2)
+float lib_fn_687fd0(ushort param_1,ushort param_2)
 
 {
   int iVar1;
@@ -70996,9 +70969,9 @@ float10 lib_fn_687fd0(ushort param_1,ushort param_2)
     _param_1 = iVar4;
   }
   if (_param_1 != iVar1) {
-    return (float10)*(float *)(_param_1 + 0x14);
+    return (float)*(float *)(_param_1 + 0x14);
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -71274,33 +71247,33 @@ void plasma::D3D9Engine::vfunc_16(int param_1)
     }
   }
   local_18[0] = (float)uVar3;
-  local_18[1] = 0.0;
-  local_18[2] = 0.0;
-  local_18[3] = 0.0;
+  local_18[1] = 0.0f;
+  local_18[2] = 0.0f;
+  local_18[3] = 0.0f;
   (**(code **)(**(int **)(local_64 + 0x2c0) + 0x1b4))
             (*(int **)(local_64 + 0x2c0),*(undefined4 *)(local_64 + 0x1f8),local_18,1);
-  local_18[0] = 1.0;
-  local_18[1] = 0.0;
-  local_18[2] = 0.0;
-  local_18[3] = 0.0;
+  local_18[0] = 1.0f;
+  local_18[1] = 0.0f;
+  local_18[2] = 0.0f;
+  local_18[3] = 0.0f;
   (**(code **)(**(int **)(local_64 + 0x2c0) + 0x1b4))
             (*(int **)(local_64 + 0x2c0),*(undefined4 *)(local_64 + 0x1fc),local_18,1);
-  local_18[0] = 1.0;
-  local_18[1] = 0.0;
-  local_18[2] = 0.0;
-  local_18[3] = 0.0;
+  local_18[0] = 1.0f;
+  local_18[1] = 0.0f;
+  local_18[2] = 0.0f;
+  local_18[3] = 0.0f;
   (**(code **)(**(int **)(local_64 + 0x2c0) + 0x1b4))
             (*(int **)(local_64 + 0x2c0),*(undefined4 *)(local_64 + 0x200),local_18,1);
-  local_18[0] = 1.0;
-  local_18[1] = 0.0;
-  local_18[2] = 0.0;
-  local_18[3] = 0.0;
+  local_18[0] = 1.0f;
+  local_18[1] = 0.0f;
+  local_18[2] = 0.0f;
+  local_18[3] = 0.0f;
   (**(code **)(**(int **)(local_64 + 0x2c0) + 0x1b4))
             (*(int **)(local_64 + 0x2c0),*(undefined4 *)(local_64 + 0x204),local_18,1);
-  local_18[0] = 1.0;
-  local_18[1] = 0.0;
-  local_18[2] = 0.0;
-  local_18[3] = 0.0;
+  local_18[0] = 1.0f;
+  local_18[1] = 0.0f;
+  local_18[2] = 0.0f;
+  local_18[3] = 0.0f;
   (**(code **)(**(int **)(local_64 + 0x2c0) + 0x1b4))
             (*(int **)(local_64 + 0x2c0),*(undefined4 *)(local_64 + 0x208),local_18,1);
   (**(code **)(**(int **)(local_64 + 0x2c0) + 0x15c))
@@ -71312,10 +71285,10 @@ void plasma::D3D9Engine::vfunc_16(int param_1)
   local_60 = 0;
   (**(code **)(**(int **)(local_64 + 0x2c0) + 0x188))
             (*(int **)(local_64 + 0x2c0),*(undefined4 *)(local_64 + 0x1bc),&local_60,1);
-  local_18[0] = 1.0;
-  local_18[1] = 1.0;
-  local_18[2] = 1.0;
-  local_18[3] = 1.0;
+  local_18[0] = 1.0f;
+  local_18[1] = 1.0f;
+  local_18[2] = 1.0f;
+  local_18[3] = 1.0f;
   (**(code **)(**(int **)(local_64 + 0x2c0) + 0x178))
             (*(int **)(local_64 + 0x2c0),*(undefined4 *)(local_64 + 0x1f0),local_18,1);
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -71370,7 +71343,7 @@ void plasma::D3D9Engine::vfunc_25
     *(undefined4 *)(in_ECX + 0x26c) = 0;
     *(undefined4 *)(in_ECX + 0x270) = 0;
     *(undefined4 *)(in_ECX + 0x274) = 0;
-    fVar7 = 2.0 / (fVar5 - fVar6);
+    fVar7 = 2.0f / (fVar5 - fVar6);
     *(float *)(in_ECX + 0x278) = fVar7;
     *(undefined4 *)(in_ECX + 0x27c) = 0;
     *(undefined4 *)(in_ECX + 0x280) = 0;
@@ -71382,7 +71355,7 @@ void plasma::D3D9Engine::vfunc_25
     *(float *)(in_ECX + 0x298) = (fVar6 + fVar5) / (fVar6 - fVar5);
     *(undefined4 *)(in_ECX + 0x29c) = 0x33d6bf93;
     *(undefined4 *)(in_ECX + 0x2a0) = 0x3f800000;
-    if (param_4 == 1.0) goto LAB_0068964a;
+    if (param_4 == 1.0f) goto LAB_0068964a;
     *pfVar1 = *pfVar1 * param_4;
     *(float *)(in_ECX + 0x268) = *(float *)(in_ECX + 0x268) * param_4;
     *(float *)(in_ECX + 0x26c) = *(float *)(in_ECX + 0x26c) * param_4;
@@ -71403,9 +71376,9 @@ void plasma::D3D9Engine::vfunc_25
     } while (iVar3 < 8);
     local_1c = local_10[0] - (float)local_18;
     local_14 = local_10[1] - (float)(int)local_14;
-    if (param_4 == 1.0) {
-      local_1c = 0.0;
-      local_14 = 0.0;
+    if (param_4 == 1.0f) {
+      local_1c = 0.0f;
+      local_14 = 0.0f;
     }
     local_10[1] = *(float *)(in_ECX + 0x2a8);
     pfVar1 = (float *)(in_ECX + 0x264);
@@ -71416,7 +71389,7 @@ void plasma::D3D9Engine::vfunc_25
     *(int *)(in_ECX + 0x2ac) = *(int *)(in_ECX + 0x2ac) + 1;
     *(int *)((int)local_10[1] + 4) = iVar2;
     **(int **)(iVar2 + 4) = iVar2;
-    fVar4 = (1.0 - param_4) * 0.5;
+    fVar4 = (1.0f - param_4) * 0.5f;
     fVar7 = *param_2 - *param_3 * fVar4;
     fVar8 = param_2[1] - param_3[1] * fVar4;
     fVar4 = *param_3 + fVar7;
@@ -71451,7 +71424,7 @@ void plasma::D3D9Engine::vfunc_25
     *(float *)(in_ECX + 0x2a0) =
          *(float *)(in_ECX + 0x280) * fVar4 + *(float *)(in_ECX + 0x270) * local_1c +
          *(float *)(in_ECX + 0x290) * 0.0 + *(float *)(in_ECX + 0x2a0);
-    if (param_4 == 1.0) goto LAB_0068964a;
+    if (param_4 == 1.0f) goto LAB_0068964a;
     *pfVar1 = param_4 * *pfVar1;
     *(float *)(in_ECX + 0x268) = *(float *)(in_ECX + 0x268) * param_4;
     *(float *)(in_ECX + 0x26c) = *(float *)(in_ECX + 0x26c) * param_4;
@@ -71737,25 +71710,25 @@ void plasma::D3D9Engine::vfunc_5
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   if ((*(int *)(in_ECX + 0x2c4) != 0) && (*(int *)(in_ECX + 0x2c8) != 0)) {
     fVar1 = param_1[1];
-    local_c4 = fVar1 + 0.0;
-    local_c8 = *param_1 + 0.0;
+    local_c4 = fVar1 + 0.0f;
+    local_c8 = *param_1 + 0.0f;
     local_b8 = param_5[2];
     local_9c = param_3[1];
     local_c0 = *param_5;
     local_a0 = *param_3;
     local_bc = param_5[1];
-    local_98 = *param_2 + *param_1 + 0.0;
-    local_94 = fVar1 + 0.0;
+    local_98 = *param_2 + *param_1 + 0.0f;
+    local_94 = fVar1 + 0.0f;
     local_b4 = param_5[3];
     local_90 = *param_5;
     local_8c = param_5[1];
     local_70 = local_a0 + *param_4;
-    local_64 = param_2[1] + fVar1 + 0.0;
-    local_68 = *param_2 + *param_1 + 0.0;
+    local_64 = param_2[1] + fVar1 + 0.0f;
+    local_68 = *param_2 + *param_1 + 0.0f;
     local_5c = param_5[1];
     local_60 = *param_5;
     local_3c = param_4[1] + local_9c;
-    local_38 = *param_1 + 0.0;
+    local_38 = *param_1 + 0.0f;
     local_58 = param_5[2];
     local_b0 = 0;
     local_ac = 0;
@@ -71769,7 +71742,7 @@ void plasma::D3D9Engine::vfunc_5
     local_4c = 0;
     local_48 = 0;
     local_44 = 0;
-    local_34 = param_2[1] + fVar1 + 0.0;
+    local_34 = param_2[1] + fVar1 + 0.0f;
     local_30 = *param_5;
     local_20 = 0;
     local_1c = 0;
@@ -71922,61 +71895,61 @@ void lib_fn_689f30(float *param_1,float *param_2,float *param_3,float *param_4,f
     (**(code **)(*piVar3 + 0x2c))(piVar3,0,0xc0,&local_4c,0x2000);
     fVar1 = param_1[1];
     *local_4c = *param_1 + 0.0;
-    local_4c[1] = fVar1 + 0.0;
+    local_4c[1] = fVar1 + 0.0f;
     local_4c[2] = *param_5;
     local_4c[3] = param_5[1];
     local_4c[4] = param_5[2];
     local_4c[5] = param_5[3];
-    local_4c[6] = 0.0;
-    local_4c[7] = 0.0;
-    local_4c[8] = 0.0;
-    local_4c[9] = 0.0;
+    local_4c[6] = 0.0f;
+    local_4c[7] = 0.0f;
+    local_4c[8] = 0.0f;
+    local_4c[9] = 0.0f;
     local_4c[10] = *param_3;
     local_4c[0xb] = param_3[1];
     fVar1 = *param_1;
     fVar2 = *param_2;
-    local_4c[0xd] = param_1[1] + 0.0;
-    local_4c[0xc] = fVar1 + fVar2 + 0.0;
+    local_4c[0xd] = param_1[1] + 0.0f;
+    local_4c[0xc] = fVar1 + fVar2 + 0.0f;
     local_4c[0xe] = *param_5;
     local_4c[0xf] = param_5[1];
     local_4c[0x10] = param_5[2];
     local_4c[0x11] = param_5[3];
-    local_4c[0x12] = 0.0;
-    local_4c[0x13] = 0.0;
-    local_4c[0x14] = 0.0;
-    local_4c[0x15] = 0.0;
+    local_4c[0x12] = 0.0f;
+    local_4c[0x13] = 0.0f;
+    local_4c[0x14] = 0.0f;
+    local_4c[0x15] = 0.0f;
     fVar1 = *param_3;
     fVar2 = *param_4;
     local_4c[0x17] = param_3[1];
     local_4c[0x16] = fVar1 + fVar2;
     fVar1 = param_1[1];
     fVar2 = param_2[1];
-    local_4c[0x18] = *param_1 + *param_2 + 0.0;
-    local_4c[0x19] = fVar1 + fVar2 + 0.0;
+    local_4c[0x18] = *param_1 + *param_2 + 0.0f;
+    local_4c[0x19] = fVar1 + fVar2 + 0.0f;
     local_4c[0x1a] = *param_5;
     local_4c[0x1b] = param_5[1];
     local_4c[0x1c] = param_5[2];
     local_4c[0x1d] = param_5[3];
-    local_4c[0x1e] = 0.0;
-    local_4c[0x1f] = 0.0;
-    local_4c[0x20] = 0.0;
-    local_4c[0x21] = 0.0;
+    local_4c[0x1e] = 0.0f;
+    local_4c[0x1f] = 0.0f;
+    local_4c[0x20] = 0.0f;
+    local_4c[0x21] = 0.0f;
     fVar1 = param_4[1];
     fVar2 = param_3[1];
     local_4c[0x22] = *param_3 + *param_4;
     local_4c[0x23] = fVar1 + fVar2;
     fVar1 = param_1[1];
     fVar2 = param_2[1];
-    local_4c[0x24] = *param_1 + 0.0;
-    local_4c[0x25] = fVar1 + fVar2 + 0.0;
+    local_4c[0x24] = *param_1 + 0.0f;
+    local_4c[0x25] = fVar1 + fVar2 + 0.0f;
     local_4c[0x26] = *param_5;
     local_4c[0x27] = param_5[1];
     local_4c[0x28] = param_5[2];
     local_4c[0x29] = param_5[3];
-    local_4c[0x2a] = 0.0;
-    local_4c[0x2b] = 0.0;
-    local_4c[0x2c] = 0.0;
-    local_4c[0x2d] = 0.0;
+    local_4c[0x2a] = 0.0f;
+    local_4c[0x2b] = 0.0f;
+    local_4c[0x2c] = 0.0f;
+    local_4c[0x2d] = 0.0f;
     fVar1 = param_4[1];
     fVar2 = param_3[1];
     local_4c[0x2e] = *param_3;
@@ -72529,7 +72502,7 @@ void plasma::D3D9Drawing::vfunc_2(int param_1,float *param_2)
     (**(code **)(*piVar1 + 0xe4))(piVar1,7,0);
   }
   else {
-    fVar11 = (float)DAT_0076df44 * -2.0;
+    fVar11 = (float)DAT_0076df44 * -2.0f;
     *(float *)(iVar6 + 0x254) =
          *(float *)(iVar6 + 0x234) * 0.0 + *(float *)(iVar6 + 0x224) * 0.0 +
          *(float *)(iVar6 + 0x244) * fVar11 + *(float *)(iVar6 + 0x254);
@@ -72572,14 +72545,14 @@ void plasma::D3D9Drawing::vfunc_2(int param_1,float *param_2)
   lib_fn_68a910(*(undefined4 *)(*(int *)(in_ECX + 0x124) + 0x1d8),local_b8,2);
   iVar6 = *(int *)(in_ECX + 0x124);
   if ((*(byte *)(iVar6 + 0x18c) & 1) == 0) {
-    local_28 = 0.0;
+    local_28 = 0.0f;
   }
   else {
     local_28 = *(float *)(iVar6 + 0x2a4);
   }
-  local_24 = 0.0;
-  local_20 = 0.0;
-  local_1c = 0.0;
+  local_24 = 0.0f;
+  local_20 = 0.0f;
+  local_1c = 0.0f;
   (**(code **)(**(int **)(iVar6 + 0x2c0) + 0x178))
             (*(int **)(iVar6 + 0x2c0),*(undefined4 *)(iVar6 + 0x1ec),&local_28,1);
   iVar6 = local_17c;
@@ -72719,15 +72692,15 @@ LAB_0068b27c:
             (piVar1,*(undefined4 *)(*(int *)(in_ECX + 0x124) + 0x208),&local_18,1);
   mat4_identity();
   iVar6 = *(int *)(in_ECX + 0x124);
-  fVar12 = 1.0 / (float)*(int *)(iVar6 + 0x10c);
-  fVar11 = 1.0 / (float)*(int *)(iVar6 + 0x110);
-  if (fVar12 != 1.0) {
+  fVar12 = 1.0f / (float)*(int *)(iVar6 + 0x10c);
+  fVar11 = 1.0f / (float)*(int *)(iVar6 + 0x110);
+  if (fVar12 != 1.0f) {
     local_78 = local_78 * fVar12;
     local_74 = local_74 * fVar12;
     local_70 = local_70 * fVar12;
     local_6c = local_6c * fVar12;
   }
-  if (fVar11 != 1.0) {
+  if (fVar11 != 1.0f) {
     local_68 = fVar11 * local_68;
     local_64 = fVar11 * local_64;
     local_60 = fVar11 * local_60;
@@ -73281,19 +73254,19 @@ void plasma::D3D9RenderSurface::vfunc_8(float *param_1,float *param_2,char param
     (**(code **)(*piVar1 + 0x38))(&local_78);
     fVar10 = param_1[1];
     fVar9 = *param_1;
-    local_28[0] = 1.0 / (local_5c * fVar10 + local_6c * fVar9 + local_3c);
+    local_28[0] = 1.0f / (local_5c * fVar10 + local_6c * fVar9 + local_3c);
     fVar5 = fVar9 + *param_2;
     local_28[1] = local_28[0] * (local_64 * fVar10 + local_74 * fVar9 + local_44);
     local_28[0] = local_28[0] * (local_68 * fVar10 + local_78 * fVar9 + local_48);
-    fVar9 = 1.0 / (fVar10 * local_5c + fVar5 * local_6c + local_3c);
+    fVar9 = 1.0f / (fVar10 * local_5c + fVar5 * local_6c + local_3c);
     fVar7 = param_2[1] + fVar10;
     local_28[2] = fVar9 * (fVar10 * local_68 + fVar5 * local_78 + local_48);
     local_28[3] = fVar9 * (fVar10 * local_64 + fVar5 * local_74 + local_44);
-    fVar10 = 1.0 / (fVar7 * local_5c + fVar5 * local_6c + local_3c);
+    fVar10 = 1.0f / (fVar7 * local_5c + fVar5 * local_6c + local_3c);
     local_28[4] = fVar10 * (fVar7 * local_68 + fVar5 * local_78 + local_48);
     local_28[5] = fVar10 * (fVar7 * local_64 + fVar5 * local_74 + local_44);
     fVar10 = *param_1;
-    fVar9 = 1.0 / (fVar7 * local_5c + fVar10 * local_6c + local_3c);
+    fVar9 = 1.0f / (fVar7 * local_5c + fVar10 * local_6c + local_3c);
     iVar2 = 1;
     local_28[7] = fVar9 * (fVar7 * local_64 + fVar10 * local_74 + local_44);
     local_28[6] = fVar9 * (fVar7 * local_68 + fVar10 * local_78 + local_48);
@@ -73318,34 +73291,34 @@ void plasma::D3D9RenderSurface::vfunc_8(float *param_1,float *param_2,char param
       }
       iVar2 = iVar2 + 1;
     } while (iVar2 < 4);
-    fVar8 = 1.0 / (local_9c * fVar10 + local_b8[3] * fVar5 + local_7c);
+    fVar8 = 1.0f / (local_9c * fVar10 + local_b8[3] * fVar5 + local_7c);
     fVar6 = fVar8 * (fVar10 * local_a4 + fVar5 * local_b8[1] + local_84);
-    fVar13 = 1.0 / (local_9c * fVar9 + local_b8[3] * fVar7 + local_7c);
+    fVar13 = 1.0f / (local_9c * fVar9 + local_b8[3] * fVar7 + local_7c);
     iVar2 = *(int *)(in_ECX + 0x30);
     fVar11 = (float)*(int *)(in_ECX + 0x2c);
     fVar12 = fVar13 * (local_a8 * fVar9 + local_b8[0] * fVar7 + local_88);
     fVar13 = fVar13 * (fVar7 * local_b8[1] + fVar9 * local_a4 + local_84);
-    local_38 = (int)((fVar8 * (local_a8 * fVar10 + local_b8[0] * fVar5 + local_88) + 1.0) * 0.5 *
+    local_38 = (int)((fVar8 * (local_a8 * fVar10 + local_b8[0] * fVar5 + local_88) + 1.0f) * 0.5f *
                     fVar11) + -1;
   }
   else {
     fVar10 = param_1[1];
     fVar9 = *param_1;
     iVar2 = *(int *)(in_ECX + 0x30);
-    fVar5 = 1.0 / (local_b8[3] * fVar9 + local_9c * fVar10 + local_7c);
+    fVar5 = 1.0f / (local_b8[3] * fVar9 + local_9c * fVar10 + local_7c);
     fVar6 = fVar5 * (fVar9 * local_b8[1] + fVar10 * local_a4 + local_84);
     fVar8 = *param_2 + fVar9;
     fVar7 = param_2[1] + fVar10;
-    fVar13 = 1.0 / (local_b8[3] * fVar8 + local_9c * fVar7 + local_7c);
+    fVar13 = 1.0f / (local_b8[3] * fVar8 + local_9c * fVar7 + local_7c);
     fVar11 = (float)*(int *)(in_ECX + 0x2c);
     fVar12 = fVar13 * (local_a8 * fVar7 + local_b8[0] * fVar8 + local_88);
     fVar13 = fVar13 * (fVar8 * local_b8[1] + fVar7 * local_a4 + local_84);
-    local_38 = (int)(((local_b8[0] * fVar9 + local_a8 * fVar10 + local_88) * fVar5 + 1.0) * 0.5 *
+    local_38 = (int)(((local_b8[0] * fVar9 + local_a8 * fVar10 + local_88) * fVar5 + 1.0f) * 0.5f *
                     fVar11);
   }
-  local_34 = (int)((fVar6 - 1.0) * 0.5 * (float)-iVar2);
-  local_30 = (int)((fVar12 + 1.0) * 0.5 * fVar11) + 2;
-  local_2c = (int)((fVar13 - 1.0) * 0.5 * (float)-iVar2) + 2;
+  local_34 = (int)((fVar6 - 1.0f) * 0.5f * (float)-iVar2);
+  local_30 = (int)((fVar12 + 1.0f) * 0.5f * fVar11) + 2;
+  local_2c = (int)((fVar13 - 1.0f) * 0.5f * (float)-iVar2) + 2;
   piVar1 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
   (**(code **)(*piVar1 + 0xac))(piVar1,1,&local_38,7,0,0,0);
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -73366,10 +73339,10 @@ void plasma::D3D9RenderSurface::vfunc_9(void)
   piVar1 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
   (**(code **)(*piVar1 + 0xac))
             (piVar1,0,0,7,
-             (((int)(*(float *)(in_ECX + 0x18) * 255.0) & 0xffU |
-              (int)(*(float *)(in_ECX + 0x24) * 255.0) << 8) << 8 |
-             (int)(*(float *)(in_ECX + 0x1c) * 255.0) & 0xffU) << 8 |
-             (int)(*(float *)(in_ECX + 0x20) * 255.0) & 0xffU,0,0);
+             (((int)(*(float *)(in_ECX + 0x18) * 255.0f) & 0xffU |
+              (int)(*(float *)(in_ECX + 0x24) * 255.0f) << 8) << 8 |
+             (int)(*(float *)(in_ECX + 0x1c) * 255.0f) & 0xffU) << 8 |
+             (int)(*(float *)(in_ECX + 0x20) * 255.0f) & 0xffU,0,0);
   return;
 }
 
@@ -73434,9 +73407,9 @@ void plasma::D3D9RenderSurface::vfunc_5(int *param_1,float *param_2,float *param
   } while (iVar4 < 8);
   local_b4 = local_40 * param_4 - (float)local_10[0];
   local_14 = local_3c * param_4 - (float)local_10[1];
-  if (param_4 == 1.0) {
-    local_b4 = 0.0;
-    local_14 = 0.0;
+  if (param_4 == 1.0f) {
+    local_b4 = 0.0f;
+    local_14 = 0.0f;
   }
   mat4_identity();
   (**(code **)(**(int **)(in_ECX + 0x34) + 0x3c))(local_b0);
@@ -73445,22 +73418,22 @@ void plasma::D3D9RenderSurface::vfunc_5(int *param_1,float *param_2,float *param
   fVar1 = *param_2;
   fVar7 = param_2[1];
   local_30[2] = fVar1;
-  if (fVar1 < 0.0) {
+  if (fVar1 < 0.0f) {
     local_30[2] = (float)*(int *)(in_ECX + 0x2c);
   }
-  if (fVar7 < 0.0) {
+  if (fVar7 < 0.0f) {
     fVar7 = (float)*(int *)(in_ECX + 0x30);
   }
   fVar8 = (float)*(int *)(in_ECX + 0x2c);
-  fVar5 = (1.0 - param_4) * 0.5;
+  fVar5 = (1.0f - param_4) * 0.5f;
   fVar6 = fVar5 * (float)*(int *)(in_ECX + 0x30);
   fVar5 = fVar5 * fVar8;
-  if (param_4 < 0.0) {
+  if (param_4 < 0.0f) {
     param_4 = fVar8 / fVar1;
-    local_b4 = 0.0;
-    fVar6 = 0.0;
-    local_14 = 0.0;
-    fVar5 = 0.0;
+    local_b4 = 0.0f;
+    fVar6 = 0.0f;
+    local_14 = 0.0f;
+    fVar5 = 0.0f;
   }
   fVar1 = *param_3;
   piVar2 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
@@ -73533,9 +73506,9 @@ void plasma::D3D9RenderSurface::vfunc_6
   } while (iVar5 < 8);
   local_bc = local_48 * param_5 - (float)(int)local_30[6];
   local_30[9] = local_44 * param_5 - (float)(int)local_30[7];
-  if (param_5 == 1.0) {
-    local_bc = 0.0;
-    local_30[9] = 0.0;
+  if (param_5 == 1.0f) {
+    local_bc = 0.0f;
+    local_30[9] = 0.0f;
   }
   mat4_identity();
   (**(code **)(**(int **)(in_ECX + 0x34) + 0x3c))(local_b8);
@@ -73544,11 +73517,11 @@ void plasma::D3D9RenderSurface::vfunc_6
   fVar2 = *param_2;
   fVar3 = param_2[1];
   fVar7 = (float)*(int *)(in_ECX + 0x2c);
-  fVar9 = (1.0 - param_5) * 0.5;
+  fVar9 = (1.0f - param_5) * 0.5f;
   fVar8 = (float)*(int *)(in_ECX + 0x30);
   piVar6 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
-  local_34 = (local_30[5] * param_5 + (fVar7 * fVar9 - local_bc) + 0.5) / fVar7;
-  local_30[7] = (fVar1 * param_5 + (fVar8 * fVar9 - local_30[9]) + 0.5) / fVar8;
+  local_34 = (local_30[5] * param_5 + (fVar7 * fVar9 - local_bc) + 0.5f) / fVar7;
+  local_30[7] = (fVar1 * param_5 + (fVar8 * fVar9 - local_30[9]) + 0.5f) / fVar8;
   local_30[9] = (fVar2 * param_5) / fVar7;
   (**(code **)(*piVar6 + 0x104))(piVar6,0,*(undefined4 *)(in_ECX + 0x38));
   piVar6 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
@@ -73569,10 +73542,10 @@ void plasma::D3D9RenderSurface::vfunc_6
     piVar6 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
     uVar10 = *(undefined4 *)(*(int *)(in_ECX + 0x34) + 0x21c);
   }
-  local_30[0] = (param_3 * 0.25) / (float)iVar4;
-  local_30[3] = 0.0;
-  local_30[2] = 0.0;
-  local_30[1] = 0.0;
+  local_30[0] = (param_3 * 0.25f) / (float)iVar4;
+  local_30[3] = 0.0f;
+  local_30[2] = 0.0f;
+  local_30[1] = 0.0f;
   (**(code **)(*piVar6 + 0x1b4))(piVar6,uVar10,local_30,1);
   piVar6 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
   (**(code **)(*piVar6 + 0xe4))(piVar6,0x1b,0);
@@ -73590,10 +73563,10 @@ void plasma::D3D9RenderSurface::vfunc_6
   local_38 = local_34;
   local_34 = local_30[7];
   local_30[4] = local_30[5];
-  local_30[0] = 1.0;
-  local_30[1] = 1.0;
-  local_30[2] = 1.0;
-  local_30[3] = 1.0;
+  local_30[0] = 1.0f;
+  local_30[1] = 1.0f;
+  local_30[2] = 1.0f;
+  local_30[3] = 1.0f;
   local_30[5] = fVar1;
   local_30[6] = fVar2;
   local_30[7] = fVar3;
@@ -73682,9 +73655,9 @@ void plasma::D3D9RenderSurface::vfunc_7
   case 2:
     piVar5 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
     (**(code **)(*piVar5 + 0x1ac))(piVar5,*(undefined4 *)(*(int *)(in_ECX + 0x34) + 0x1a8));
-    fStack_38 = 1.0 / (float)*(int *)(in_ECX + 0x2c);
+    fStack_38 = 1.0f / (float)*(int *)(in_ECX + 0x2c);
     piVar5 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
-    fStack_34 = 1.0 / (float)*(int *)(in_ECX + 0x30);
+    fStack_34 = 1.0f / (float)*(int *)(in_ECX + 0x30);
     pfVar7 = &fStack_38;
     uStack_30 = 0;
     uStack_2c = 0;
@@ -73693,9 +73666,9 @@ void plasma::D3D9RenderSurface::vfunc_7
   case 3:
     piVar5 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
     (**(code **)(*piVar5 + 0x1ac))(piVar5,*(undefined4 *)(*(int *)(in_ECX + 0x34) + 0x1ac));
-    fStack_48 = 1.0 / (float)*(int *)(in_ECX + 0x2c);
+    fStack_48 = 1.0f / (float)*(int *)(in_ECX + 0x2c);
     piVar5 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
-    fStack_44 = 1.0 / (float)*(int *)(in_ECX + 0x30);
+    fStack_44 = 1.0f / (float)*(int *)(in_ECX + 0x30);
     pfVar7 = &fStack_48;
     uStack_40 = 0;
     uStack_3c = 0;
@@ -73704,9 +73677,9 @@ void plasma::D3D9RenderSurface::vfunc_7
   case 4:
     piVar5 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
     (**(code **)(*piVar5 + 0x1ac))(piVar5,*(undefined4 *)(*(int *)(in_ECX + 0x34) + 0x1b0));
-    fStack_58 = 1.0 / (float)*(int *)(in_ECX + 0x2c);
+    fStack_58 = 1.0f / (float)*(int *)(in_ECX + 0x2c);
     piVar5 = *(int **)(*(int *)(in_ECX + 0x34) + 0x2c0);
-    fStack_54 = 1.0 / (float)*(int *)(in_ECX + 0x30);
+    fStack_54 = 1.0f / (float)*(int *)(in_ECX + 0x30);
     pfVar7 = &fStack_58;
     uStack_50 = 0;
     uStack_4c = 0;
@@ -118671,7 +118644,7 @@ void lib_fn_6d4490(int param_1,float *param_2,int param_3,int param_4,undefined4
         pfVar1 = (float *)((param_1 - (int)param_2) + (int)pfVar5);
         if (0.0 < *pfVar1 || *pfVar1 == 0.0) {
           *(undefined4 *)((int)&uStack_60 + iVar3 + 4) = 0x6d458b;
-          libm_sse2_sqrt_precise();
+          dVar9 = libm_sse2_sqrt_precise(dVar9);
           *(double *)((int)&uStack_60 + iVar3) = dVar9 + 0.5;
           asStack_6c[2 - param_7] = 0x6d45a6;
           floor(*(double *)((int)&uStack_60 + iVar3));
@@ -118680,7 +118653,7 @@ void lib_fn_6d4490(int param_1,float *param_2,int param_3,int param_4,undefined4
         }
         else {
           *(undefined4 *)((int)&uStack_60 + iVar3 + 4) = 0x6d4552;
-          libm_sse2_sqrt_precise();
+          dVar9 = libm_sse2_sqrt_precise(dVar9);
           *(double *)((int)&uStack_60 + iVar3) = dVar9 + 0.5;
           asStack_6c[2 - param_7] = 0x6d456d;
           dVar9 = floor(*(double *)((int)&uStack_60 + iVar3));
@@ -118703,11 +118676,10 @@ void lib_fn_6d4490(int param_1,float *param_2,int param_3,int param_4,undefined4
          ) {
         fVar11 = *(float *)(iVar7 + (int)piVar6) / *(float *)((param_3 - param_8) + (int)piVar6);
         if ((0.25 <= fVar11) || ((param_4 != 0 && (local_14 < in_EDX - param_6)))) {
-          dVar9 = (double)fVar11;
           pfVar5 = (float *)((param_1 - param_8) + (int)piVar6);
           if (0.0 < *pfVar5 || *pfVar5 == 0.0) {
             *(undefined4 *)((int)&uStack_60 + iVar3 + 4) = 0x6d46a9;
-            libm_sse2_sqrt_precise();
+            dVar9 = libm_sse2_sqrt_precise((double)fVar11);
             *(double *)((int)&uStack_60 + iVar3) = dVar9 + 0.5;
             asStack_6c[2 - param_7] = 0x6d46c4;
             floor(*(double *)((int)&uStack_60 + iVar3));
@@ -118716,7 +118688,7 @@ void lib_fn_6d4490(int param_1,float *param_2,int param_3,int param_4,undefined4
           }
           else {
             *(undefined4 *)((int)&uStack_60 + iVar3 + 4) = 0x6d4670;
-            libm_sse2_sqrt_precise();
+            dVar9 = libm_sse2_sqrt_precise((double)fVar11);
             *(double *)((int)&uStack_60 + iVar3) = dVar9 + 0.5;
             asStack_6c[2 - param_7] = 0x6d468b;
             dVar9 = floor(*(double *)((int)&uStack_60 + iVar3));
@@ -119406,7 +119378,7 @@ void lib_fn_6d54c0(int param_1)
                      in_ECX[7]) {
         fVar3 = *(float *)(in_EDX + 4 + iVar5 * 4);
         iVar5 = iVar5 + 1;
-        if (((-9999.0 < fVar3) && (fVar3 < fVar2)) || (fVar2 == -9999.0)) {
+        if (((-9999.0f < fVar3) && (fVar3 < fVar2)) || (fVar2 == -9999.0f)) {
           fVar2 = fVar3;
         }
       }
@@ -119458,8 +119430,8 @@ void lib_fn_6d55d0(int param_1)
   float afStack_3c [2];
   int local_c;
   
-  afStack_3c[1] = 1.0040898e-38;
-  afStack_3c[1 - param_1] = 1.0040914e-38;
+  afStack_3c[1] = 1.0040898e-38f;
+  afStack_3c[1 - param_1] = 1.0040914e-38f;
   iVar5 = 0;
   iVar8 = 0;
   local_c = 0;
@@ -119930,25 +119902,22 @@ void * lib_fn_6d59d0(float param_1)
     local_48 = malloc(*(size_t *)((int)&uStack_7f68 + iVar1 + 4));
     local_58 = (double)(int)pfVar4 * 0.5;
     *(void **)((int)local_44 + (int)pfVar4 * 4) = local_48;
-    dVar14 = (local_58 + 5.965784072875977) * 0.6931470036506653;
     *(undefined4 *)((int)&uStack_7f68 + iVar1) = 0x6d5e2b;
-    libm_sse2_exp_precise();
+    dVar14 = libm_sse2_exp_precise((local_58 + 5.965784072875977) * 0.6931470036506653);
     *(undefined4 *)((int)&uStack_7f68 + iVar1) = extraout_ECX;
     local_70 = dVar14 / (double)local_1c;
     *(double *)((int)&uStack_7f68 + iVar1) = dVar14 / (double)local_1c;
     aiStack_7f74[2 - (int)in_EDX] = 0x6d5e48;
     local_38 = floor(*(double *)((int)&uStack_7f68 + iVar1));
     iVar9 = (int)local_38;
-    dVar14 = (double)((float)iVar9 * local_1c + 1.0);
     aiStack_7f74[2 - (int)in_EDX] = 0x6d5e6c;
-    libm_sse2_log_precise();
+    dVar14 = libm_sse2_log_precise((double)((float)iVar9 * local_1c + 1.0));
     *(double *)((int)&uStack_7f68 + iVar1) = (dVar14 * 1.4426950216293335 - 5.965784072875977) * 2.0
     ;
     aiStack_7f74[2 - (int)in_EDX] = 0x6d5e8f;
     local_40 = ceil(*(double *)((int)&uStack_7f68 + iVar1));
-    dVar14 = (double)((float)(iVar9 + 1) * local_1c);
     aiStack_7f74[2 - (int)in_EDX] = 0x6d5ea9;
-    libm_sse2_log_precise();
+    dVar14 = libm_sse2_log_precise((double)((float)(iVar9 + 1) * local_1c));
     local_60 = (dVar14 * 1.4426950216293335 - 5.965784072875977) * 2.0;
     *(double *)((int)&uStack_7f68 + iVar1) = local_60;
     aiStack_7f74[2 - (int)in_EDX] = 0x6d5ed1;
@@ -119993,13 +119962,13 @@ void * lib_fn_6d59d0(float param_1)
           local_10 = fVar13;
           do {
             local_68 = (double)(int)local_20 * 0.125 + local_50;
-            dVar14 = ((local_68 - 2.0625) + 5.965784072875977) * 0.6931470036506653;
             *(undefined4 *)((int)&uStack_7f68 + iVar1 + 4) = 0x6d5fc6;
-            libm_sse2_exp_precise();
+            dVar14 = libm_sse2_exp_precise
+                               (((local_68 - 2.0625) + 5.965784072875977) * 0.6931470036506653);
             fVar13 = (float)(int)(dVar14 / (double)local_1c);
-            dVar14 = ((local_68 - 1.9375) + 5.965784072875977) * 0.6931470036506653;
             *(undefined4 *)((int)&uStack_7f68 + iVar1 + 4) = 0x6d5ff8;
-            libm_sse2_exp_precise();
+            dVar14 = libm_sse2_exp_precise
+                               (((local_68 - 1.9375) + 5.965784072875977) * 0.6931470036506653);
             if ((int)fVar13 < 0) {
               fVar13 = 0.0;
             }
@@ -120044,13 +120013,13 @@ void * lib_fn_6d59d0(float param_1)
         local_14 = (float *)0x0;
         do {
           local_50 = (double)(int)local_14 * 0.125 + local_58;
-          dVar14 = ((local_50 - 2.0625) + 5.965784072875977) * 0.6931470036506653;
           *(undefined4 *)((int)&uStack_7f68 + iVar1 + 4) = 0x6d6107;
-          libm_sse2_exp_precise();
+          dVar14 = libm_sse2_exp_precise
+                             (((local_50 - 2.0625) + 5.965784072875977) * 0.6931470036506653);
           fVar12 = (float)(int)(dVar14 / (double)local_1c);
-          dVar14 = ((local_50 - 1.9375) + 5.965784072875977) * 0.6931470036506653;
           *(undefined4 *)((int)&uStack_7f68 + iVar1 + 4) = 0x6d6139;
-          libm_sse2_exp_precise();
+          dVar14 = libm_sse2_exp_precise
+                             (((local_50 - 1.9375) + 5.965784072875977) * 0.6931470036506653);
           if ((int)fVar12 < 0) {
             fVar12 = 0.0;
           }
@@ -120091,10 +120060,10 @@ void * lib_fn_6d59d0(float param_1)
       local_10 = 0.0;
       iVar9 = 8;
       do {
-        dVar14 = ((((double)(int)local_10 * 0.125 + local_58) - 2.0) + 5.965784072875977) *
-                 0.6931470036506653;
         *(undefined4 *)((int)&uStack_7f68 + iVar1 + 4) = 0x6d6242;
-        libm_sse2_exp_precise();
+        dVar14 = libm_sse2_exp_precise
+                           (((((double)(int)local_10 * 0.125 + local_58) - 2.0) + 5.965784072875977)
+                            * 0.6931470036506653);
         iVar5 = (int)(dVar14 / (double)local_1c);
         if (iVar5 < 0) {
           *(undefined4 *)(iVar9 + (int)local_2c) = 0xc479c000;
@@ -120177,9 +120146,9 @@ void lib_fn_6d6550(int *param_1,int param_2,int param_3)
   int iVar6;
   int iVar7;
   double dVar8;
-  float fVar9;
+  double dVar9;
   float fVar10;
-  double dVar11;
+  float fVar11;
   float fVar12;
   float fVar13;
   double dVar14;
@@ -120192,20 +120161,16 @@ void lib_fn_6d6550(int *param_1,int param_2,int param_3)
   local_18 = -99;
   memset(in_ECX,0,0x34);
   in_ECX[9] = *param_1;
-  dVar8 = (double)((float)*param_1 * 8.0);
-  libm_sse2_log_precise();
-  dVar11 = 2.0;
-  libm_sse2_log_precise();
-  dVar14 = floor(dVar8 / dVar11 + 0.5);
-  dVar11 = (double)param_2;
+  dVar8 = libm_sse2_log_precise((double)((float)*param_1 * 8.0));
+  dVar9 = libm_sse2_log_precise(2.0);
+  dVar14 = floor(dVar8 / dVar9 + 0.5);
+  dVar9 = (double)param_2;
   in_ECX[8] = (int)(dVar14 - 1.0);
-  dVar8 = ((double)((float)param_3 * 0.25) * 0.5) / dVar11;
-  libm_sse2_log_precise();
+  dVar8 = libm_sse2_log_precise(((double)((float)param_3 * 0.25) * 0.5) / dVar9);
   iVar6 = (int)((dVar8 * 1.4426950216293335 - 5.965784072875977) *
                 (double)(1 << ((char)(int)(dVar14 - 1.0) + 1U & 0x1f)) - (double)*param_1);
   in_ECX[7] = iVar6;
-  dVar8 = ((double)(((float)param_2 + 0.25) * (float)param_3) * 0.5) / dVar11;
-  libm_sse2_log_precise();
+  dVar8 = libm_sse2_log_precise(((double)(((float)param_2 + 0.25) * (float)param_3) * 0.5) / dVar9);
   in_ECX[10] = ((int)((dVar8 * 1.4426950216293335 - 5.965784072875977) *
                       (double)(1 << ((char)in_ECX[8] + 1U & 0x1f)) + 0.5) - iVar6) + 1;
   pvVar1 = malloc(param_2 * 4);
@@ -120231,44 +120196,44 @@ void lib_fn_6d6550(int *param_1,int param_2,int param_3)
   iVar6 = 0;
   do {
     iVar2 = (int)param_1 + 1;
-    dVar8 = (((double)iVar2 * 0.125 - 2.0) + 5.965784072875977) * 0.6931470036506653;
-    libm_sse2_exp_precise();
-    dVar8 = floor((dVar8 * 2.0 * dVar11) / (double)param_3 + 0.5);
+    dVar8 = libm_sse2_exp_precise
+                      ((((double)iVar2 * 0.125 - 2.0) + 5.965784072875977) * 0.6931470036506653);
+    dVar8 = floor((dVar8 * 2.0 * dVar9) / (double)param_3 + 0.5);
     iVar4 = (int)dVar8;
-    fVar10 = (float)(&DAT_00737960)[(int)param_1];
+    fVar11 = (float)(&DAT_00737960)[(int)param_1];
     if (iVar6 < iVar4) {
-      fVar12 = ((float)(&DAT_00737964)[(int)param_1] - fVar10) / (float)(iVar4 - iVar6);
+      fVar12 = ((float)(&DAT_00737964)[(int)param_1] - fVar11) / (float)(iVar4 - iVar6);
       if (3 < iVar4 - iVar6) {
         iVar3 = iVar6 + 2;
         do {
           if (param_2 <= iVar6) goto LAB_006d68d8;
-          *(float *)(in_ECX[4] + iVar6 * 4) = fVar10 + 100.0;
+          *(float *)(in_ECX[4] + iVar6 * 4) = fVar11 + 100.0;
           if (param_2 <= iVar3 + -1) {
             iVar6 = iVar6 + 1;
             goto LAB_006d68d8;
           }
-          fVar9 = fVar12 + fVar12 + fVar10;
-          *(float *)(in_ECX[4] + 4 + iVar6 * 4) = fVar12 + fVar10 + 100.0;
+          fVar10 = fVar12 + fVar12 + fVar11;
+          *(float *)(in_ECX[4] + 4 + iVar6 * 4) = fVar12 + fVar11 + 100.0;
           if (param_2 <= iVar3) {
             iVar6 = iVar6 + 2;
             goto LAB_006d68d8;
           }
-          fVar13 = fVar12 + fVar9;
-          *(float *)(in_ECX[4] + 8 + iVar6 * 4) = fVar9 + 100.0;
+          fVar13 = fVar12 + fVar10;
+          *(float *)(in_ECX[4] + 8 + iVar6 * 4) = fVar10 + 100.0;
           if (param_2 <= iVar3 + 1) {
             iVar6 = iVar6 + 3;
             goto LAB_006d68d8;
           }
           iVar6 = iVar6 + 4;
           iVar3 = iVar3 + 4;
-          fVar10 = fVar12 + fVar13;
+          fVar11 = fVar12 + fVar13;
           *(float *)(in_ECX[4] + -4 + iVar6 * 4) = fVar13 + 100.0;
         } while (iVar6 < iVar4 + -3);
       }
       while ((iVar6 < iVar4 && (iVar6 < param_2))) {
         iVar6 = iVar6 + 1;
-        *(float *)(in_ECX[4] + -4 + iVar6 * 4) = fVar10 + 100.0;
-        fVar10 = fVar10 + fVar12;
+        *(float *)(in_ECX[4] + -4 + iVar6 * 4) = fVar11 + 100.0;
+        fVar11 = fVar11 + fVar12;
       }
     }
 LAB_006d68d8:
@@ -120299,23 +120264,19 @@ LAB_006d68d8:
     local_28 = 0;
     iVar6 = 1;
     do {
-      dVar8 = (double)((float)(local_28 * local_10) * 1.85e-08);
-      libm_sse2_atan_precise();
-      dVar14 = (double)((float)local_1c * 0.00074);
-      libm_sse2_atan_precise();
+      dVar8 = libm_sse2_atan_precise((double)((float)(local_28 * local_10) * 1.85e-08));
+      dVar14 = libm_sse2_atan_precise((double)((float)local_1c * 0.00074));
       local_20 = *(int *)(in_EDX + 0x78) + local_18;
-      fVar10 = (float)(dVar8 * 2.240000009536743 + dVar14 * 13.100000381469727 +
+      fVar11 = (float)(dVar8 * 2.240000009536743 + dVar14 * 13.100000381469727 +
                       (double)((float)local_1c * 0.0001));
       if (local_20 < local_10) {
         fVar12 = *(float *)(in_EDX + 0x70);
         iVar3 = iVar2 * local_18;
         iVar7 = iVar4 * local_18;
         do {
-          dVar8 = (double)((float)(iVar7 * local_18) * 1.85e-08);
-          libm_sse2_atan_precise();
-          dVar14 = (double)((float)iVar3 * 0.00074);
-          libm_sse2_atan_precise();
-          if ((double)(fVar10 - fVar12) <=
+          dVar8 = libm_sse2_atan_precise((double)((float)(iVar7 * local_18) * 1.85e-08));
+          dVar14 = libm_sse2_atan_precise((double)((float)iVar3 * 0.00074));
+          if ((double)(fVar11 - fVar12) <=
               dVar8 * 2.240000009536743 + dVar14 * 13.100000381469727 +
               (double)((float)iVar3 * 0.0001)) break;
           iVar7 = iVar7 + iVar4;
@@ -120330,11 +120291,9 @@ LAB_006d68d8:
         iVar7 = iVar4 * iVar6;
         do {
           if (iVar3 + local_10 <= iVar6) {
-            dVar8 = (double)((float)(iVar6 * iVar7) * 1.85e-08);
-            libm_sse2_atan_precise();
-            dVar14 = (double)((float)iVar5 * 0.00074);
-            libm_sse2_atan_precise();
-            if ((double)(*(float *)(in_EDX + 0x74) + fVar10) <=
+            dVar8 = libm_sse2_atan_precise((double)((float)(iVar6 * iVar7) * 1.85e-08));
+            dVar14 = libm_sse2_atan_precise((double)((float)iVar5 * 0.00074));
+            if ((double)(*(float *)(in_EDX + 0x74) + fVar11) <=
                 dVar8 * 2.240000009536743 + dVar14 * 13.100000381469727 +
                 (double)((float)iVar5 * 0.0001)) break;
           }
@@ -120352,8 +120311,8 @@ LAB_006d68d8:
   iVar6 = 0;
   if (0 < param_2) {
     do {
-      dVar8 = ((double)((float)iVar6 + 0.25) * 0.5 * (double)param_3) / dVar11;
-      libm_sse2_log_precise();
+      dVar8 = libm_sse2_log_precise(((double)((float)iVar6 + 0.25) * 0.5 * (double)param_3) / dVar9)
+      ;
       iVar6 = iVar6 + 1;
       *(int *)(in_ECX[5] + -4 + iVar6 * 4) =
            (int)((dVar8 * 1.4426950216293335 - 5.965784072875977) *
@@ -120374,26 +120333,25 @@ LAB_006d68d8:
   iVar6 = 0;
   if (0 < param_2) {
     do {
-      dVar8 = (((double)iVar6 + 0.5) * (double)param_3) / (dVar11 * 2.0);
-      libm_sse2_log_precise();
+      dVar8 = libm_sse2_log_precise((((double)iVar6 + 0.5) * (double)param_3) / (dVar9 * 2.0));
       fVar12 = (float)((dVar8 * 1.4426950216293335 - 5.965784072875977) * 2.0);
-      fVar10 = 0.0;
-      if ((fVar12 < 0.0) || (fVar10 = 16.0, 16.0 <= fVar12)) {
-        fVar12 = fVar10;
+      fVar11 = 0.0;
+      if ((fVar12 < 0.0) || (fVar11 = 16.0, 16.0 <= fVar12)) {
+        fVar12 = fVar11;
       }
       iVar2 = (int)fVar12;
       iVar6 = iVar6 + 1;
       fVar12 = fVar12 - (float)iVar2;
-      fVar10 = 1.0 - fVar12;
+      fVar11 = 1.0 - fVar12;
       *(float *)(*(int *)in_ECX[3] + -4 + iVar6 * 4) =
            *(float *)(in_ECX[1] + 0x88 + iVar2 * 4) * fVar12 +
-           *(float *)(in_ECX[1] + 0x84 + iVar2 * 4) * fVar10;
+           *(float *)(in_ECX[1] + 0x84 + iVar2 * 4) * fVar11;
       *(float *)(*(int *)(in_ECX[3] + 4) + -4 + iVar6 * 4) =
            *(float *)(in_ECX[1] + 0xcc + iVar2 * 4) * fVar12 +
-           *(float *)(in_ECX[1] + 200 + iVar2 * 4) * fVar10;
+           *(float *)(in_ECX[1] + 200 + iVar2 * 4) * fVar11;
       *(float *)(*(int *)(in_ECX[3] + 8) + -4 + iVar6 * 4) =
            *(float *)(in_ECX[1] + 0x110 + iVar2 * 4) * fVar12 +
-           *(float *)(in_ECX[1] + 0x10c + iVar2 * 4) * fVar10;
+           *(float *)(in_ECX[1] + 0x10c + iVar2 * 4) * fVar11;
     } while (iVar6 < param_2);
   }
   return;
@@ -120539,7 +120497,7 @@ void lib_fn_6d70c0(int param_1,float *param_2,float *param_3,float *param_4,int 
   float *pfVar23;
   float *pfVar24;
   double dVar25;
-  undefined1 auVar26 [16];
+  double dVar26;
   float fVar27;
   float fVar28;
   float fVar29;
@@ -120554,11 +120512,8 @@ void lib_fn_6d70c0(int param_1,float *param_2,float *param_3,float *param_4,int 
   float *local_20;
   int local_1c;
   
-  dVar25 = (double)(6.2831855 / (float)in_EDX);
-  libm_sse2_cos_precise();
-  auVar26._0_8_ = (double)(6.2831855 / (float)in_EDX);
-  auVar26._8_8_ = 0;
-  libm_sse2_sin_precise();
+  dVar25 = libm_sse2_cos_precise((double)(6.2831855 / (float)in_EDX));
+  dVar26 = libm_sse2_sin_precise((double)(6.2831855 / (float)in_EDX));
   local_48 = in_EDX + 1 >> 1;
   iVar2 = in_ECX + -1 >> 1;
   iVar19 = in_ECX * param_1;
@@ -120863,8 +120818,8 @@ void lib_fn_6d70c0(int param_1,float *param_2,float *param_3,float *param_4,int 
     iVar21 = local_48 + -1;
     pfVar18 = param_7;
     do {
-      fVar31 = fVar30 * (float)auVar26._0_8_;
-      fVar30 = fVar30 * (float)dVar25 - fVar28 * (float)auVar26._0_8_;
+      fVar31 = fVar30 * (float)dVar26;
+      fVar30 = fVar30 * (float)dVar25 - fVar28 * (float)dVar26;
       pfVar18 = pfVar18 + (int)param_2;
       pfVar6 = pfVar6 + -(int)param_2;
       iVar5 = 0;
@@ -121334,8 +121289,8 @@ void lib_fn_6d7fc0(int param_1,float *param_2,int param_3,int param_4,float *par
       do {
         fVar9 = *local_50;
         local_50 = local_50 + in_ECX;
-        fVar11 = (fVar9 - *pfVar6) * 0.70710677;
-        fVar10 = (fVar9 + *pfVar6) * -0.70710677;
+        fVar11 = (fVar9 - *pfVar6) * 0.70710677f;
+        fVar10 = (fVar9 + *pfVar6) * -0.70710677f;
         pfVar6 = pfVar6 + in_ECX;
         pfVar3[-1] = *pfVar8 + fVar11;
         fVar9 = *pfVar8;
@@ -121567,11 +121522,9 @@ void lib_fn_6d8670(int *param_1)
                   do {
                     fVar11 = fVar11 + 1.0;
                     fVar12 = fVar11 * (float)iVar5 * (6.2831855 / (float)in_ECX);
-                    dVar13 = (double)fVar12;
-                    libm_sse2_cos_precise();
+                    dVar13 = libm_sse2_cos_precise((double)fVar12);
                     *pfVar10 = (float)dVar13;
-                    dVar13 = (double)fVar12;
-                    libm_sse2_sin_precise();
+                    dVar13 = libm_sse2_sin_precise((double)fVar12);
                     pfVar10[1] = (float)dVar13;
                     iVar8 = iVar8 + -1;
                     pfVar10 = pfVar10 + 2;
@@ -121790,9 +121743,9 @@ void lib_fn_6d8d10(void)
     fVar12 = *(float *)(iVar2 + 4 + iVar4 * 4) - fVar11;
     fVar10 = fVar9 + fVar3;
     fVar13 = *local_8 * fVar10 + local_8[1] * fVar12;
-    fVar11 = (fVar11 + *(float *)(iVar2 + 4 + iVar4 * 4)) * 0.5;
+    fVar11 = (fVar11 + *(float *)(iVar2 + 4 + iVar4 * 4)) * 0.5f;
     fVar10 = local_8[1] * fVar10 - *local_8 * fVar12;
-    fVar9 = (fVar9 - fVar3) * 0.5;
+    fVar9 = (fVar9 - fVar3) * 0.5f;
     *(float *)(iVar5 + (int)piVar7) = fVar13 + fVar11;
     pfVar6[-5] = fVar11 - fVar13;
     piVar8 = piVar7 + 4;
@@ -121805,10 +121758,10 @@ void lib_fn_6d8d10(void)
     fVar12 = *(float *)(iVar2 + 4 + iVar4 * 4) - fVar11;
     fVar10 = fVar9 + fVar3;
     fVar13 = local_8[3] * fVar10 - local_8[2] * fVar12;
-    fVar11 = (fVar11 + *(float *)(iVar2 + 4 + iVar4 * 4)) * 0.5;
+    fVar11 = (fVar11 + *(float *)(iVar2 + 4 + iVar4 * 4)) * 0.5f;
     fVar10 = local_8[3] * fVar12 + local_8[2] * fVar10;
     local_8 = local_8 + 4;
-    fVar9 = (fVar9 - fVar3) * 0.5;
+    fVar9 = (fVar9 - fVar3) * 0.5f;
     *local_c = fVar10 + fVar11;
     pfVar6[-7] = fVar11 - fVar10;
     local_c[1] = fVar13 + fVar9;
@@ -122058,22 +122011,22 @@ void lib_fn_6d94c0(void)
   fVar3 = in_ECX[0x1c] - in_ECX[0xc];
   in_ECX[0x1d] = in_ECX[0xd] + in_ECX[0x1d];
   in_ECX[0x1c] = in_ECX[0xc] + in_ECX[0x1c];
-  in_ECX[0xc] = fVar3 * 0.9238795 - fVar1 * 0.38268343;
+  in_ECX[0xc] = fVar3 * 0.9238795f - fVar1 * 0.38268343f;
   fVar4 = in_ECX[0x1a] - in_ECX[10];
-  in_ECX[0xd] = fVar1 * 0.9238795 + fVar3 * 0.38268343;
+  in_ECX[0xd] = fVar1 * 0.9238795f + fVar3 * 0.38268343f;
   fVar1 = in_ECX[0x1b] - in_ECX[0xb];
   in_ECX[0x1a] = in_ECX[10] + in_ECX[0x1a];
   in_ECX[0x1e] = fVar2 + in_ECX[0x1e];
   in_ECX[0x1b] = in_ECX[0xb] + in_ECX[0x1b];
   fVar3 = in_ECX[6];
   fVar5 = in_ECX[0x18] - in_ECX[8];
-  in_ECX[10] = (fVar4 - fVar1) * 0.70710677;
-  in_ECX[0xb] = (fVar1 + fVar4) * 0.70710677;
+  in_ECX[10] = (fVar4 - fVar1) * 0.70710677f;
+  in_ECX[0xb] = (fVar1 + fVar4) * 0.70710677f;
   fVar2 = in_ECX[0x19] - in_ECX[9];
   in_ECX[0x19] = in_ECX[9] + in_ECX[0x19];
   in_ECX[0x18] = in_ECX[8] + in_ECX[0x18];
-  in_ECX[8] = fVar5 * 0.38268343 - fVar2 * 0.9238795;
-  in_ECX[9] = fVar2 * 0.38268343 + fVar5 * 0.9238795;
+  in_ECX[8] = fVar5 * 0.38268343f - fVar2 * 0.9238795f;
+  in_ECX[9] = fVar2 * 0.38268343f + fVar5 * 0.9238795f;
   in_ECX[6] = in_ECX[7] - in_ECX[0x17];
   in_ECX[0x17] = in_ECX[0x17] + in_ECX[7];
   fVar2 = in_ECX[5] - in_ECX[0x15];
@@ -122082,20 +122035,20 @@ void lib_fn_6d94c0(void)
   in_ECX[0x15] = in_ECX[0x15] + in_ECX[5];
   in_ECX[0x16] = fVar3 + in_ECX[0x16];
   in_ECX[0x14] = in_ECX[0x14] + in_ECX[4];
-  in_ECX[4] = fVar2 * 0.9238795 + fVar1 * 0.38268343;
+  in_ECX[4] = fVar2 * 0.9238795f + fVar1 * 0.38268343f;
   fVar3 = in_ECX[3] - in_ECX[0x13];
   fVar4 = in_ECX[2] - in_ECX[0x12];
-  in_ECX[5] = fVar2 * 0.38268343 - fVar1 * 0.9238795;
+  in_ECX[5] = fVar2 * 0.38268343f - fVar1 * 0.9238795f;
   in_ECX[0x13] = in_ECX[0x13] + in_ECX[3];
   in_ECX[0x12] = in_ECX[0x12] + in_ECX[2];
-  in_ECX[3] = (fVar3 - fVar4) * 0.70710677;
-  in_ECX[2] = (fVar3 + fVar4) * 0.70710677;
+  in_ECX[3] = (fVar3 - fVar4) * 0.70710677f;
+  in_ECX[2] = (fVar3 + fVar4) * 0.70710677f;
   fVar2 = in_ECX[1] - in_ECX[0x11];
   fVar3 = *in_ECX - in_ECX[0x10];
   in_ECX[0x11] = in_ECX[0x11] + in_ECX[1];
   in_ECX[0x10] = in_ECX[0x10] + *in_ECX;
-  fVar1 = fVar2 * 0.38268343 + fVar3 * 0.9238795;
-  fVar5 = fVar2 * 0.9238795 - fVar3 * 0.38268343;
+  fVar1 = fVar2 * 0.38268343f + fVar3 * 0.9238795f;
+  fVar5 = fVar2 * 0.9238795f - fVar3 * 0.38268343f;
   fVar2 = fVar1 - in_ECX[8];
   fVar1 = fVar1 + in_ECX[8];
   fVar4 = fVar5 - in_ECX[9];
@@ -122103,7 +122056,7 @@ void lib_fn_6d94c0(void)
   fVar3 = in_ECX[3];
   in_ECX[9] = fVar5 + in_ECX[9];
   *in_ECX = (fVar2 + fVar4) * 0.70710677;
-  in_ECX[1] = (fVar4 - fVar2) * 0.70710677;
+  in_ECX[1] = (fVar4 - fVar2) * 0.70710677f;
   fVar2 = in_ECX[10];
   in_ECX[10] = in_ECX[2] + fVar2;
   in_ECX[3] = fVar2 - in_ECX[2];
@@ -122115,8 +122068,8 @@ void lib_fn_6d94c0(void)
   in_ECX[0xd] = in_ECX[5] + in_ECX[0xd];
   in_ECX[0xc] = in_ECX[4] + in_ECX[0xc];
   in_ECX[0xe] = in_ECX[0xe] + in_ECX[6];
-  fVar5 = (fVar3 + fVar2) * 0.70710677;
-  in_ECX[4] = (fVar2 - fVar3) * 0.70710677;
+  fVar5 = (fVar3 + fVar2) * 0.70710677f;
+  in_ECX[4] = (fVar2 - fVar3) * 0.70710677f;
   fVar8 = in_ECX[0xf] - in_ECX[7];
   in_ECX[0xf] = in_ECX[0xf] + in_ECX[7];
   fVar2 = in_ECX[2] + fVar4;
@@ -122156,9 +122109,9 @@ void lib_fn_6d94c0(void)
   fVar4 = in_ECX[0x11] - in_ECX[0x19];
   in_ECX[0x18] = in_ECX[0x18] + in_ECX[0x10];
   in_ECX[0x19] = in_ECX[0x19] + in_ECX[0x11];
-  in_ECX[0x10] = (fVar1 + fVar4) * 0.70710677;
+  in_ECX[0x10] = (fVar1 + fVar4) * 0.70710677f;
   fVar2 = in_ECX[0x12];
-  in_ECX[0x11] = (fVar4 - fVar1) * 0.70710677;
+  in_ECX[0x11] = (fVar4 - fVar1) * 0.70710677f;
   in_ECX[0x12] = in_ECX[0x13] - in_ECX[0x1b];
   in_ECX[0x1b] = in_ECX[0x1b] + in_ECX[0x13];
   in_ECX[0x1a] = fVar2 + fVar3;
@@ -122167,9 +122120,9 @@ void lib_fn_6d94c0(void)
   fVar3 = in_ECX[0x1d] - in_ECX[0x15];
   in_ECX[0x1d] = in_ECX[0x15] + in_ECX[0x1d];
   in_ECX[0x1c] = in_ECX[0x14] + in_ECX[0x1c];
-  in_ECX[0x14] = (fVar2 - fVar3) * 0.70710677;
+  in_ECX[0x14] = (fVar2 - fVar3) * 0.70710677f;
   fVar8 = in_ECX[0x1f] - in_ECX[0x17];
-  in_ECX[0x15] = (fVar3 + fVar2) * 0.70710677;
+  in_ECX[0x15] = (fVar3 + fVar2) * 0.70710677f;
   fVar5 = in_ECX[0x1e] - in_ECX[0x16];
   in_ECX[0x1f] = in_ECX[0x17] + in_ECX[0x1f];
   fVar3 = in_ECX[0x14] + in_ECX[0x10];
@@ -122231,7 +122184,7 @@ void lib_fn_6d9c20(void)
   in_ECX[9] = in_ECX[9] + in_ECX[1];
   fVar4 = in_ECX[0xf];
   *in_ECX = (fVar2 + fVar5) * 0.70710677;
-  in_ECX[1] = (fVar5 - fVar2) * 0.70710677;
+  in_ECX[1] = (fVar5 - fVar2) * 0.70710677f;
   fVar2 = in_ECX[3];
   in_ECX[10] = in_ECX[2] + in_ECX[10];
   in_ECX[3] = fVar1 - in_ECX[2];
@@ -122241,12 +122194,12 @@ void lib_fn_6d9c20(void)
   fVar2 = in_ECX[0xc] - in_ECX[4];
   in_ECX[0xd] = in_ECX[5] + in_ECX[0xd];
   in_ECX[0xc] = in_ECX[4] + in_ECX[0xc];
-  in_ECX[4] = (fVar2 - fVar5) * 0.70710677;
+  in_ECX[4] = (fVar2 - fVar5) * 0.70710677f;
   fVar3 = in_ECX[0xe] - in_ECX[6];
   fVar1 = in_ECX[4] + *in_ECX;
   fVar6 = in_ECX[4] - *in_ECX;
   in_ECX[0xe] = in_ECX[0xe] + in_ECX[6];
-  in_ECX[5] = (fVar5 + fVar2) * 0.70710677;
+  in_ECX[5] = (fVar5 + fVar2) * 0.70710677f;
   fVar5 = in_ECX[2] + fVar3;
   fVar3 = fVar3 - in_ECX[2];
   in_ECX[0xf] = in_ECX[7] + in_ECX[0xf];
@@ -122348,7 +122301,7 @@ void lib_fn_6d9f50(int param_1)
   iVar6 = iVar3 >> 2;
   iVar7 = iVar3 >> 3;
   iVar12 = iVar3 >> 1;
-  afStack_3c[1] = 1.0067293e-38;
+  afStack_3c[1] = 1.0067293e-38f;
   pfVar11 = (float *)(&stack0xffffffcc + iVar3 * -4);
   iVar2 = iVar12 * 4;
   iVar10 = in_EDX + (iVar12 + iVar6) * 4;
@@ -122396,9 +122349,9 @@ void lib_fn_6d9f50(int param_1)
     iVar8 = iVar8 + 2;
   }
   afStack_3c[1 - iVar3] = (float)iVar12;
-  afStack_3c[-iVar3] = 1.0067892e-38;
+  afStack_3c[-iVar3] = 1.0067892e-38f;
   lib_fn_6d8ec0();
-  afStack_3c[1 - iVar3] = 1.0067909e-38;
+  afStack_3c[1 - iVar3] = 1.0067909e-38f;
   lib_fn_6d8d10();
   pfVar13 = (float *)(in_ECX[2] + iVar2);
   pfVar4 = (float *)(iVar2 + param_1);
@@ -124408,8 +124361,8 @@ undefined4 lib_fn_6dc2b0(int *param_1,int *param_2)
         do {
           fVar1 = *pfVar12;
           fVar2 = *(float *)(iVar10 + (int)pfVar12);
-          if (fVar1 <= 0.0) {
-            if (fVar2 <= 0.0) {
+          if (fVar1 <= 0.0f) {
+            if (fVar2 <= 0.0f) {
               *(float *)(iVar10 + (int)pfVar12) = fVar1;
               *pfVar12 = fVar1 - fVar2;
             }
@@ -124417,7 +124370,7 @@ undefined4 lib_fn_6dc2b0(int *param_1,int *param_2)
               *(float *)(iVar10 + (int)pfVar12) = fVar2 + fVar1;
             }
           }
-          else if (fVar2 <= 0.0) {
+          else if (fVar2 <= 0.0f) {
             *(float *)(iVar10 + (int)pfVar12) = fVar1;
             *pfVar12 = fVar2 + fVar1;
           }
@@ -125581,7 +125534,7 @@ bool lib_fn_6ddde0(int param_1,int param_2,int param_3,int param_4,int param_5)
   }
   iVar10 = 0;
   fVar1 = *(float *)(param_3 + in_ECX * 4);
-  iVar4 = (int)(fVar1 * 7.3142858 + 1023.5);
+  iVar4 = (int)(fVar1 * 7.3142858f + 1023.5f);
   if (iVar4 < 0x400) {
     if (iVar4 < 0) {
       iVar4 = 0;
@@ -125611,7 +125564,7 @@ bool lib_fn_6ddde0(int param_1,int param_2,int param_3,int param_4,int param_5)
         iVar5 = iVar3;
       }
       param_1 = param_1 + iVar5;
-      iVar5 = (int)(*pfVar7 * 7.3142858 + 1023.5);
+      iVar5 = (int)(*pfVar7 * 7.3142858f + 1023.5f);
       if (iVar5 < 0x400) {
         if (iVar5 < 0) {
           iVar5 = 0;
@@ -125782,7 +125735,7 @@ int lib_fn_6de2c0(int param_1,int param_2,int *param_3,int param_4,int param_5)
     pfVar3 = (float *)(in_ECX + param_1 * 4);
     iVar2 = 0;
     do {
-      iVar1 = (int)(*pfVar3 * 7.3142858 + 1023.5);
+      iVar1 = (int)(*pfVar3 * 7.3142858f + 1023.5f);
       if (iVar1 < 0x400) {
         if ((-1 < iVar1) && (iVar1 != 0)) goto LAB_006de37c;
       }
@@ -127103,7 +127056,7 @@ int lib_fn_6dfc30(int param_1,float param_2)
     iVar7 = BitReader_getBits();
     if ((iVar7 != -1) && (iVar7 < *(int *)(iVar1 + 0x14))) {
       iVar1 = *(int *)(iVar1 + 0x18 + iVar7 * 4);
-      param_2 = 0.0;
+      param_2 = 0.0f;
       iVar7 = *(int *)(*(int *)(*(int *)(*(int *)(param_1 + 0x40) + 4) + 0x1c) + 0xb20);
       iVar8 = vorbis_temp_bump_alloc();
       iVar9 = lib_fn_6d2d60(param_1 + 4,*(undefined4 *)(iVar4 + 4));
@@ -127182,10 +127135,8 @@ void lib_fn_6dfdb0(int *param_1)
   if (*(int *)(param_1[2] + iVar1 * 4) == 0) {
     iVar5 = *(int *)(*(int *)(*(int *)(*(int *)(in_ECX + 0x40) + 4) + 0x1c) + iVar1 * 4) / 2;
     fVar11 = (float)*(int *)(in_EDX + 4) * 0.5;
-    dVar7 = (double)(fVar11 * fVar11 * 1.85e-08);
-    libm_sse2_atan_precise();
-    dVar8 = (double)(fVar11 * 0.00074);
-    libm_sse2_atan_precise();
+    dVar7 = libm_sse2_atan_precise((double)(fVar11 * fVar11 * 1.85e-08));
+    dVar8 = libm_sse2_atan_precise((double)(fVar11 * 0.00074));
     iVar2 = *param_1;
     pvVar3 = malloc(iVar5 * 4 + 4);
     *(void **)(param_1[2] + iVar1 * 4) = pvVar3;
@@ -127193,10 +127144,8 @@ void lib_fn_6dfdb0(int *param_1)
     if (0 < iVar5) {
       do {
         fVar12 = (((float)*(int *)(in_EDX + 4) * 0.5) / (float)iVar5) * (float)iVar6;
-        dVar9 = (double)(fVar12 * fVar12 * 1.85e-08);
-        libm_sse2_atan_precise();
-        dVar10 = (double)(fVar12 * 0.00074);
-        libm_sse2_atan_precise();
+        dVar9 = libm_sse2_atan_precise((double)(fVar12 * fVar12 * 1.85e-08));
+        dVar10 = libm_sse2_atan_precise((double)(fVar12 * 0.00074));
         dVar9 = floor((dVar9 * 2.240000009536743 + dVar10 * 13.100000381469727 +
                       (double)(fVar12 * 0.0001)) *
                       (double)(float)((double)iVar2 /
@@ -127367,8 +127316,7 @@ void lib_fn_6e0150(int param_1,int param_2,undefined8 *param_3,uint param_4,floa
       } while (iVar5 < (int)(param_4 - uVar2));
     }
     while (iVar5 < (int)param_4) {
-      dVar7 = (double)*(float *)((int)param_3 + iVar5 * 4);
-      libm_sse2_cos_precise();
+      dVar7 = libm_sse2_cos_precise((double)*(float *)((int)param_3 + iVar5 * 4));
       iVar5 = iVar5 + 1;
       *(float *)((int)param_3 + iVar5 * 4 + -4) = (float)(dVar7 * 2.0);
     }
@@ -127379,8 +127327,7 @@ void lib_fn_6e0150(int param_1,int param_2,undefined8 *param_3,uint param_4,floa
     iVar3 = *in_EDX;
     do {
       local_20 = 0.5;
-      dVar7 = (double)((float)iVar3 * (3.1415927 / (float)param_2));
-      libm_sse2_cos_precise();
+      dVar7 = libm_sse2_cos_precise((double)((float)iVar3 * (3.1415927 / (float)param_2)));
       uVar2 = 1;
       fVar10 = (float)(dVar7 * 2.0);
       if ((int)param_4 < 2) {
@@ -127407,10 +127354,9 @@ void lib_fn_6e0150(int param_1,int param_2,undefined8 *param_3,uint param_4,floa
         fVar11 = 2.0;
         fVar9 = (fVar10 + 2.0) * fVar12 * fVar12;
       }
-      dVar7 = (double)(fVar9 + (fVar11 - fVar10) * local_20 * local_20);
-      libm_sse2_sqrt_precise();
-      dVar7 = ((double)param_5 / dVar7 - (double)param_6) * 0.1151292473077774;
-      libm_sse2_exp_precise();
+      dVar7 = libm_sse2_sqrt_precise((double)(fVar9 + (fVar11 - fVar10) * local_20 * local_20));
+      dVar7 = libm_sse2_exp_precise
+                        (((double)param_5 / dVar7 - (double)param_6) * 0.1151292473077774);
       iVar5 = iVar5 + 1;
       *(float *)(iVar6 + in_ECX) = (float)dVar7 * *(float *)(iVar6 + in_ECX);
       iVar1 = in_EDX[iVar5];
@@ -127424,7 +127370,6 @@ void lib_fn_6e0150(int param_1,int param_2,undefined8 *param_3,uint param_4,floa
   }
   return;
 }
-
 
 
 
@@ -127547,32 +127492,32 @@ uint lib_fn_6e0bd0(undefined4 param_1,uint param_2,double *param_3)
   int iVar3;
   int iVar4;
   uint uVar5;
-  float10 fVar6;
-  float10 fVar7;
-  float10 fVar8;
+  double fVar6;
+  double fVar7;
+  double fVar8;
   undefined8 uVar9;
   uint uStack_6c;
   undefined2 uStack_68;
   uint uStack_5c;
   undefined2 uStack_58;
   undefined8 local_30;
-  float10 local_28;
+  double local_28;
   
   if ((int)param_2 < 0x7ff00000) {
     if (param_2 < 0x40ff4000) {
-      uVar5 = (int)ROUND(_DAT_0076f770 * (float10)(double)CONCAT44(param_2,param_1)) | 1;
-      fVar6 = (float10)(int)uVar5;
-      local_28 = ((((float10)(double)CONCAT44(param_2,param_1) - (float10)1.570796325802803 * fVar6)
-                  - (float10)9.920935739593517e-10 * fVar6) - (float10)5.721188709663575e-18 * fVar6
-                 ) - (float10)1.6446256936324258e-26 * fVar6;
+      uVar5 = (int)ROUND(_DAT_0076f770 * (double)(double)CONCAT44(param_2,param_1)) | 1;
+      fVar6 = (double)(int)uVar5;
+      local_28 = ((((double)(double)CONCAT44(param_2,param_1) - (double)1.570796325802803 * fVar6)
+                  - (double)9.920935739593517e-10 * fVar6) - (double)5.721188709663575e-18 * fVar6
+                 ) - (double)1.6446256936324258e-26 * fVar6;
     }
     else {
       uVar5 = param_2 >> 0x14 & 0x7ff;
-      fVar7 = (float10)(double)CONCAT44(param_2 + 0xf3800000,param_1);
+      fVar7 = (double)(double)CONCAT44(param_2 + 0xf3800000,param_1);
       uStack_6c = (uint)((unkuint10)fVar7 >> 0x20);
       uStack_68 = (undefined2)((unkuint10)fVar7 >> 0x40);
       iVar4 = (int)(uVar5 - 0x41c) / 0x19;
-      fVar6 = (float10)CONCAT28(uStack_68,((ulonglong)uStack_6c & 0xffffffc0) << 0x20);
+      fVar6 = (double)CONCAT28(uStack_68,((ulonglong)uStack_6c & 0xffffffc0) << 0x20);
       fVar7 = fVar7 - fVar6;
       if ((int)(iVar4 * -0x19 + -0x41c + uVar5) < 0x11) {
         local_28 = _DAT_0076f740;
@@ -127581,36 +127526,36 @@ uint lib_fn_6e0bd0(undefined4 param_1,uint param_2,double *param_3)
         iVar3 = iVar4 * 8;
         iVar1 = iVar4 * 8;
         iVar4 = iVar4 + 1;
-        local_28 = (float10)*(double *)(&DAT_0076f408 + iVar1) * fVar6 +
-                   fVar7 * (float10)*(double *)(&DAT_0076f400 + iVar3);
+        local_28 = (double)*(double *)(&DAT_0076f408 + iVar1) * fVar6 +
+                   fVar7 * (double)*(double *)(&DAT_0076f400 + iVar3);
         uStack_5c = (uint)((unkuint10)local_28 >> 0x20);
         uStack_58 = (undefined2)((unkuint10)local_28 >> 0x40);
         local_28 = local_28 -
-                   (float10)CONCAT28(uStack_58,((ulonglong)uStack_5c & 0xffffffc0) << 0x20);
+                   (double)CONCAT28(uStack_58,((ulonglong)uStack_5c & 0xffffffc0) << 0x20);
       }
-      fVar8 = (float10)*(double *)(&DAT_0076f408 + iVar4 * 8) * fVar7 +
-              (float10)*(double *)(&DAT_0076f410 + iVar4 * 8) * fVar6;
+      fVar8 = (double)*(double *)(&DAT_0076f408 + iVar4 * 8) * fVar7 +
+              (double)*(double *)(&DAT_0076f410 + iVar4 * 8) * fVar6;
       local_28 = local_28 +
-                 fVar6 * (float10)*(double *)(&DAT_0076f408 + iVar4 * 8) +
-                 (float10)*(double *)(&DAT_0076f400 + iVar4 * 8) * fVar7;
+                 fVar6 * (double)*(double *)(&DAT_0076f408 + iVar4 * 8) +
+                 (double)*(double *)(&DAT_0076f400 + iVar4 * 8) * fVar7;
       dVar2 = (double)(local_28 + fVar8);
       iVar3 = 0x433 - ((uint)((ulonglong)dVar2 >> 0x34) & 0x7ff);
       uVar9 = ___common_srl(dVar2,iVar3);
       uVar5 = (uint)uVar9 | 1;
       local_30 = (double)___common_sll(uVar5,(int)((ulonglong)uVar9 >> 0x20),iVar3);
-      fVar6 = (float10)CONCAT28(uStack_68,((ulonglong)uStack_6c & 0xffffffc0) << 0x20);
+      fVar6 = (double)CONCAT28(uStack_68,((ulonglong)uStack_6c & 0xffffffc0) << 0x20);
       local_28 = _DAT_0076f760 *
-                 ((float10)*(double *)(&DAT_0076f438 + iVar4 * 8) * fVar6 +
-                  fVar7 * (float10)*(double *)(&DAT_0076f430 + iVar4 * 8) +
-                 (float10)*(double *)(&DAT_0076f430 + iVar4 * 8) * fVar6 +
-                 (float10)*(double *)(&DAT_0076f428 + iVar4 * 8) * fVar7 +
-                 (float10)*(double *)(&DAT_0076f420 + iVar4 * 8) * fVar7 +
-                 (float10)*(double *)(&DAT_0076f428 + iVar4 * 8) * fVar6 +
-                 (float10)*(double *)(&DAT_0076f420 + iVar4 * 8) * fVar6 +
-                 (float10)*(double *)(&DAT_0076f418 + iVar4 * 8) * fVar7 +
-                 (float10)*(double *)(&DAT_0076f410 + iVar4 * 8) * fVar7 +
-                 (float10)*(double *)(&DAT_0076f418 + iVar4 * 8) * fVar6 +
-                 fVar8 + (local_28 - (float10)local_30));
+                 ((double)*(double *)(&DAT_0076f438 + iVar4 * 8) * fVar6 +
+                  fVar7 * (double)*(double *)(&DAT_0076f430 + iVar4 * 8) +
+                 (double)*(double *)(&DAT_0076f430 + iVar4 * 8) * fVar6 +
+                 (double)*(double *)(&DAT_0076f428 + iVar4 * 8) * fVar7 +
+                 (double)*(double *)(&DAT_0076f420 + iVar4 * 8) * fVar7 +
+                 (double)*(double *)(&DAT_0076f428 + iVar4 * 8) * fVar6 +
+                 (double)*(double *)(&DAT_0076f420 + iVar4 * 8) * fVar6 +
+                 (double)*(double *)(&DAT_0076f418 + iVar4 * 8) * fVar7 +
+                 (double)*(double *)(&DAT_0076f410 + iVar4 * 8) * fVar7 +
+                 (double)*(double *)(&DAT_0076f418 + iVar4 * 8) * fVar6 +
+                 fVar8 + (local_28 - (double)local_30));
     }
     *param_3 = (double)local_28;
     return ~(uVar5 << 0x1e) & 0x80000000;
@@ -127634,16 +127579,16 @@ int lib_fn_6e0ec0(undefined4 param_1,uint param_2,double *param_3)
   int iVar3;
   uint uVar4;
   int iVar5;
-  float10 fVar6;
-  float10 fVar7;
-  float10 fVar8;
+  double fVar6;
+  double fVar7;
+  double fVar8;
   longlong lVar9;
   uint uStack_6c;
   undefined2 uStack_68;
   uint uStack_5c;
   undefined2 uStack_58;
   undefined8 local_40;
-  float10 local_38;
+  double local_38;
   
   if (0x7fefffff < (int)param_2) {
     *(undefined4 *)param_3 = 0xffffffff;
@@ -127651,20 +127596,20 @@ int lib_fn_6e0ec0(undefined4 param_1,uint param_2,double *param_3)
     return 0;
   }
   if (param_2 < 0x40ff4000) {
-    uVar4 = (int)ROUND(_DAT_0076f7b0 * (float10)(double)CONCAT44(param_2,param_1)) + 1U & 0xfffffffe
+    uVar4 = (int)ROUND(_DAT_0076f7b0 * (double)(double)CONCAT44(param_2,param_1)) + 1U & 0xfffffffe
     ;
-    fVar6 = (float10)(int)uVar4;
-    local_38 = ((((float10)(double)CONCAT44(param_2,param_1) - (float10)0.7853981629014015 * fVar6)
-                - (float10)4.960467869796759e-10 * fVar6) - (float10)2.8605943548317875e-18 * fVar6)
-               - fVar6 * (float10)8.223128468162129e-27;
+    fVar6 = (double)(int)uVar4;
+    local_38 = ((((double)(double)CONCAT44(param_2,param_1) - (double)0.7853981629014015 * fVar6)
+                - (double)4.960467869796759e-10 * fVar6) - (double)2.8605943548317875e-18 * fVar6)
+               - fVar6 * (double)8.223128468162129e-27;
   }
   else {
     uVar4 = param_2 >> 0x14 & 0x7ff;
-    fVar7 = (float10)(double)CONCAT44(param_2 + 0xf3800000,param_1);
+    fVar7 = (double)(double)CONCAT44(param_2 + 0xf3800000,param_1);
     uStack_6c = (uint)((unkuint10)fVar7 >> 0x20);
     uStack_68 = (undefined2)((unkuint10)fVar7 >> 0x40);
     iVar5 = (int)(uVar4 - 0x41c) / 0x19;
-    fVar6 = (float10)CONCAT28(uStack_68,((ulonglong)uStack_6c & 0xffffffc0) << 0x20);
+    fVar6 = (double)CONCAT28(uStack_68,((ulonglong)uStack_6c & 0xffffffc0) << 0x20);
     fVar7 = fVar7 - fVar6;
     if ((int)(iVar5 * -0x19 + -0x41c + uVar4) < 0x11) {
       local_38 = _DAT_0076f750;
@@ -127673,35 +127618,35 @@ int lib_fn_6e0ec0(undefined4 param_1,uint param_2,double *param_3)
       iVar3 = iVar5 * 8;
       iVar1 = iVar5 * 8;
       iVar5 = iVar5 + 1;
-      local_38 = (float10)*(double *)(&DAT_0076f5a8 + iVar1) * fVar6 +
-                 fVar7 * (float10)*(double *)(&DAT_0076f5a0 + iVar3);
+      local_38 = (double)*(double *)(&DAT_0076f5a8 + iVar1) * fVar6 +
+                 fVar7 * (double)*(double *)(&DAT_0076f5a0 + iVar3);
       uStack_5c = (uint)((unkuint10)local_38 >> 0x20);
       uStack_58 = (undefined2)((unkuint10)local_38 >> 0x40);
-      local_38 = local_38 - (float10)CONCAT28(uStack_58,((ulonglong)uStack_5c & 0xffffffc0) << 0x20)
+      local_38 = local_38 - (double)CONCAT28(uStack_58,((ulonglong)uStack_5c & 0xffffffc0) << 0x20)
       ;
     }
-    fVar8 = fVar6 * (float10)*(double *)(&DAT_0076f5b0 + iVar5 * 8) +
-            fVar7 * (float10)*(double *)(&DAT_0076f5a8 + iVar5 * 8);
+    fVar8 = fVar6 * (double)*(double *)(&DAT_0076f5b0 + iVar5 * 8) +
+            fVar7 * (double)*(double *)(&DAT_0076f5a8 + iVar5 * 8);
     local_38 = local_38 +
-               fVar6 * (float10)*(double *)(&DAT_0076f5a8 + iVar5 * 8) +
-               (float10)*(double *)(&DAT_0076f5a0 + iVar5 * 8) * fVar7;
+               fVar6 * (double)*(double *)(&DAT_0076f5a8 + iVar5 * 8) +
+               (double)*(double *)(&DAT_0076f5a0 + iVar5 * 8) * fVar7;
     dVar2 = (double)(local_38 + fVar8);
     iVar3 = 0x433 - ((uint)((ulonglong)dVar2 >> 0x34) & 0x7ff);
     lVar9 = ___common_srl(dVar2,iVar3);
     uVar4 = (uint)(lVar9 + 1) & 0xfffffffe;
     local_40 = (double)___common_sll(uVar4,(int)((ulonglong)(lVar9 + 1) >> 0x20),iVar3);
-    fVar6 = (float10)CONCAT28(uStack_68,((ulonglong)uStack_6c & 0xffffffc0) << 0x20);
-    local_38 = (fVar6 * (float10)*(double *)(&DAT_0076f5d0 + iVar5 * 8) +
-                (float10)*(double *)(&DAT_0076f5c8 + iVar5 * 8) * fVar7 +
-                fVar6 * (float10)*(double *)(&DAT_0076f5c8 + iVar5 * 8) +
-                (float10)*(double *)(&DAT_0076f5c0 + iVar5 * 8) * fVar7 +
-                fVar6 * (float10)*(double *)(&DAT_0076f5c0 + iVar5 * 8) +
-                (float10)*(double *)(&DAT_0076f5b8 + iVar5 * 8) * fVar7 +
-                (float10)*(double *)(&DAT_0076f5b0 + iVar5 * 8) * fVar7 +
-                (float10)*(double *)(&DAT_0076f5b8 + iVar5 * 8) * fVar6 +
-                (local_38 - (float10)local_40) + fVar8 +
-               (float10)*(double *)(&DAT_0076f5d0 + iVar5 * 8) * fVar7 +
-               fVar6 * (float10)*(double *)(&DAT_0076f5d8 + iVar5 * 8)) * _DAT_0076f7a0;
+    fVar6 = (double)CONCAT28(uStack_68,((ulonglong)uStack_6c & 0xffffffc0) << 0x20);
+    local_38 = (fVar6 * (double)*(double *)(&DAT_0076f5d0 + iVar5 * 8) +
+                (double)*(double *)(&DAT_0076f5c8 + iVar5 * 8) * fVar7 +
+                fVar6 * (double)*(double *)(&DAT_0076f5c8 + iVar5 * 8) +
+                (double)*(double *)(&DAT_0076f5c0 + iVar5 * 8) * fVar7 +
+                fVar6 * (double)*(double *)(&DAT_0076f5c0 + iVar5 * 8) +
+                (double)*(double *)(&DAT_0076f5b8 + iVar5 * 8) * fVar7 +
+                (double)*(double *)(&DAT_0076f5b0 + iVar5 * 8) * fVar7 +
+                (double)*(double *)(&DAT_0076f5b8 + iVar5 * 8) * fVar6 +
+                (local_38 - (double)local_40) + fVar8 +
+               (double)*(double *)(&DAT_0076f5d0 + iVar5 * 8) * fVar7 +
+               fVar6 * (double)*(double *)(&DAT_0076f5d8 + iVar5 * 8)) * _DAT_0076f7a0;
   }
   iVar5 = (int)uVar4 >> 1;
   if (_DAT_0076f7a0 < local_38) {

@@ -52,8 +52,8 @@ void cube::SpriteWidget::vfunc_1(void)
   undefined8 *puVar5;
   int zeroCount;
   int iVar7;
-  float10 fVar8;
-  float10 fVar9;
+  float fVar8;
+  float fVar9;
   float screenX;
   float invW;
   float camX;
@@ -96,20 +96,20 @@ void cube::SpriteWidget::vfunc_1(void)
     local_1d0 = 0x3f800000;
     uStack_1cc = 0x3f800000;
     render_setUniform30(&local_1d8);
-    fVar8 = (float10)security_cookie_guard_b();
-    fVar9 = (float10)security_cookie_guard_a();
+    fVar8 = (float)security_cookie_guard_b();
+    fVar9 = (float)security_cookie_guard_a();
     zeroCount = *(int *)(self + 0x148);
     iVar3 = *(int *)(*(int *)(zeroCount + 0x38) + 0x170);
     iVar7 = *(int *)(*(int *)(zeroCount + 0x38) + 0x19c);
     camX = *(float *)(iVar7 + iVar3 * 8);
     depth = *(float *)(iVar7 + 4 + iVar3 * 8);
-    invW = 1.0 / (*(float *)(zeroCount + 0x54) * camX + *(float *)(zeroCount + 100) * depth +
+    invW = 1.0f / (*(float *)(zeroCount + 0x54) * camX + *(float *)(zeroCount + 100) * depth +
                    *(float *)(zeroCount + 0x84));
     modelName = *(char **)(self + 0x164);
-    screenX = (float)fVar8 * 0.5 +
+    screenX = (float)fVar8 * 0.5f +
              invW * (*(float *)(zeroCount + 0x58) * depth + camX * *(float *)(zeroCount + 0x48) +
                       *(float *)(zeroCount + 0x78));
-    camX = (float)fVar9 * 0.5 +
+    camX = (float)fVar9 * 0.5f +
              invW * (*(float *)(zeroCount + 0x4c) * camX + *(float *)(zeroCount + 0x5c) * depth +
                       *(float *)(zeroCount + 0x7c));
     if (modelName == (char *)0x0) {
@@ -123,15 +123,15 @@ void cube::SpriteWidget::vfunc_1(void)
       if (iVar7 < *(int *)(zeroCount + 0x4c)) {
         iVar7 = *(int *)(zeroCount + 0x4c);
       }
-      fVar8 = (float10)security_cookie_guard_b(zeroCount,0);
-      drawModelAtProjectedPos(screenX,camX,iVar3 + 0x800a1c,((float)fVar8 * 0.0006) / (float)iVar7,zeroCount,
+      fVar8 = (float)security_cookie_guard_b(zeroCount,0);
+      drawModelAtProjectedPos(screenX,camX,iVar3 + 0x800a1c,((float)fVar8 * 0.0006f) / (float)iVar7,zeroCount,
                    uVar14);
     }
     else if (*modelName != '\0') {
       zeroCount = *(int *)(self + 0x168);
       uVar14 = 0;
-      fVar8 = (float10)security_cookie_guard_b(modelName,0);
-      drawBillboardModelRotated(screenX,camX,zeroCount + 0x800a1c,(float)fVar8 * 0.0006,modelName,uVar14);
+      fVar8 = (float)security_cookie_guard_b(modelName,0);
+      drawBillboardModelRotated(screenX,camX,zeroCount + 0x800a1c,(float)fVar8 * 0.0006f,modelName,uVar14);
     }
     piVar2 = *(int **)(*(int *)(self + 0x168) + 0x134);
     (**(code **)(*piVar2 + 0xe4))(piVar2,7,0);

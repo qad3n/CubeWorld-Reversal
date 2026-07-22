@@ -139,7 +139,7 @@ void cube::SpeechWidget::vfunc_1(void)
   undefined4 *puVar6;
   int in_ECX;
   int charIndex;
-  float10 fVar8;
+  float fVar8;
   float posX;
   float fVar10;
   int cursorX;
@@ -206,7 +206,7 @@ void cube::SpeechWidget::vfunc_1(void)
     if (*(int *)(in_ECX + 0x174) / 3 != *(int *)(in_ECX + 0x1d0) / 3) {
       iVar5 = *(int *)(*(int *)(in_ECX + 0x1d8) + 0x8006d0);
       iVar3 = rand();
-      playHitSoundAtPos(0x32,iVar5 + 0x10,0x3f800000,((float)iVar3 * 0.5) / 32767.0 + 1.0);
+      playHitSoundAtPos(0x32,iVar5 + 0x10,0x3f800000,((float)iVar3 * 0.5f) / 32767.0f + 1.0f);
     }
     iVar5 = *(int *)(in_ECX + 0x170);
     *(undefined4 *)(in_ECX + 0x174) = *(undefined4 *)(in_ECX + 0x1d0);
@@ -227,7 +227,7 @@ void cube::SpeechWidget::vfunc_1(void)
     }
     if ((charIndex <= *(int *)(in_ECX + 0x16c)) &&
        (*(int *)(in_ECX + 0x178) != *(int *)(in_ECX + 0x17c))) {
-      fVar8 = (float10)security_cookie_guard_a();
+      fVar8 = (float)security_cookie_guard_a();
       cursorX = 0xf;
       iVar5 = FontCache_find_or_create_scalable(in_ECX + 0x1a8);
       if (iVar5 != 0) {
@@ -238,7 +238,7 @@ void cube::SpeechWidget::vfunc_1(void)
         fontSize = *(float *)(iVar5 + iVar3 * 8);
         charIndex = 0;
         if (0 < (*(int *)(in_ECX + 0x17c) - *(int *)(in_ECX + 0x178)) / 0x18) {
-          posX = (float)(int)((float)fVar8 - 75.0) + *(float *)(iVar5 + 4 + iVar3 * 8);
+          posX = (float)(int)((float)fVar8 - 75.0f) + *(float *)(iVar5 + 4 + iVar3 * 8);
           iVar5 = 0;
           do {
             local_2c[0] = (void *)((uint)local_2c[0] & 0xffff0000);
@@ -331,7 +331,7 @@ void SpeechWidget_render_text(int charSprite,undefined4 param_2,char *isSpace)
   int iVar9;
   undefined4 uVar10;
   int in_ECX;
-  float10 fVar11;
+  float fVar11;
   undefined1 local_a4 [64];
   float advance [2];
   float startX [2];
@@ -389,8 +389,8 @@ LAB_004e6722:
   matched = wstring_equalsCI(charSprite,&DAT_007020bc);
   *isSpace = matched != '\0';
   if ((!isPunct) &&
-     (iVar9 = *(int *)(in_ECX + 0x1c8), fVar11 = (float10)security_cookie_guard_b(),
-     (float)fVar11 - 30.0 < (float)(iVar9 + (int)(advance[0] - startX[0])))) {
+     (iVar9 = *(int *)(in_ECX + 0x1c8), fVar11 = (float)security_cookie_guard_b(),
+     (float)fVar11 - 30.0f < (float)(iVar9 + (int)(advance[0] - startX[0])))) {
     *(undefined4 *)(in_ECX + 0x1c8) = 0;
     *(int *)(in_ECX + 0x1cc) = *(int *)(in_ECX + 0x1cc) + 0x12;
   }

@@ -73,7 +73,7 @@ void cube::SpawnLocationBehavior::vfunc_0(void *creature,void *world)
     rnd[6] = 0;
     rnd[7] = 0;
     count = 0;
-    local_30 = 0.5 - *(float *)((int)creature + 0x88) * 0.5;
+    local_30 = 0.5f - *(float *)((int)creature + 0x88) * 0.5f;
     do {
       uVar16 = ftol2();
       rnd[count * 2] = (uint)uVar16;
@@ -148,7 +148,7 @@ LAB_00428b24:
   }
   if (*(int *)((int)creature + 0x1484) == *(int *)((int)creature + 0x1488)) goto LAB_00428b24;
   piVar8 = *(int **)((int)world + 4);
-  fVar15 = 40000.0;
+  fVar15 = 40000.0f;
   piVar9 = (int *)*piVar8;
   if (piVar9 != piVar8) {
     do {
@@ -169,9 +169,9 @@ LAB_00428b24:
         local_10 = CONCAT44((local_10._4_4_ - *(int *)((int)creature + 0x24)) -
                             (uint)((uint)local_10 < *(uint *)((int)creature + 0x20)),
                             (uint)local_10 - *(uint *)((int)creature + 0x20));
-        local_2c = (float)local_20 * 1.5258789e-05;
-        local_28 = (float)local_18 * 1.5258789e-05;
-        local_24 = (float)local_10 * 1.5258789e-05;
+        local_2c = (float)local_20 * 1.5258789e-05f;
+        local_28 = (float)local_18 * 1.5258789e-05f;
+        local_24 = (float)local_10 * 1.5258789e-05f;
         fVar14 = local_28 * local_28 + local_2c * local_2c + local_24 * local_24;
         if (fVar14 < fVar15) {
           fVar15 = fVar14;
@@ -201,7 +201,7 @@ LAB_00428b24:
         }
       }
     } while (piVar9 != piVar8);
-    if (65536.0 <= fVar15) goto LAB_00428e9f;
+    if (65536.0f <= fVar15) goto LAB_00428e9f;
   }
   if (*(int *)((int)creature + 0x1410) != 0) {
     local_7c = 0;

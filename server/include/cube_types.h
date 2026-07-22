@@ -7,7 +7,7 @@ typedef unsigned char   undefined;
 typedef unsigned char    bool;
 typedef unsigned char    byte;
 typedef unsigned int    dword;
-float10
+typedef long double float10;
 typedef unsigned long long    GUID;
 typedef pointer32 ImageBaseOffset32;
 

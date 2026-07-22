@@ -35,12 +35,12 @@ void cube::LookAtPlayerBehavior::vfunc_0(int creature,int world)
   undefined8 local_10;
   
   uVar9 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  best_dist = 64.0;
+  best_dist = 64.0f;
   puVar2 = (undefined4 *)**(undefined4 **)(world + 4);
   closest = 0;
   while (puVar2 != *(undefined4 **)(world + 4)) {
     entity = puVar2[6];
-    if (((entity != 0) && (*(char *)(entity + 0x60) == '\0')) && (0.0 <= *(float *)(entity + 0x16c))) {
+    if (((entity != 0) && (*(char *)(entity + 0x60) == '\0')) && (0.0f <= *(float *)(entity + 0x16c))) {
       local_20._0_4_ = (uint)*(undefined8 *)(entity + 0x10);
       local_20._4_4_ = (int)((ulonglong)*(undefined8 *)(entity + 0x10) >> 0x20);
       local_20 = CONCAT44((local_20._4_4_ - *(int *)(creature + 0x14)) -
@@ -56,9 +56,9 @@ void cube::LookAtPlayerBehavior::vfunc_0(int creature,int world)
       local_10 = CONCAT44((local_10._4_4_ - *(int *)(creature + 0x24)) -
                           (uint)((uint)local_10 < *(uint *)(creature + 0x20)),
                           (uint)local_10 - *(uint *)(creature + 0x20));
-      dist = (float)local_18 * 1.5258789e-05 * (float)local_18 * 1.5258789e-05 +
-               (float)local_20 * 1.5258789e-05 * (float)local_20 * 1.5258789e-05 +
-               (float)local_10 * 1.5258789e-05 * (float)local_10 * 1.5258789e-05;
+      dist = (float)local_18 * 1.5258789e-05f * (float)local_18 * 1.5258789e-05f +
+               (float)local_20 * 1.5258789e-05f * (float)local_20 * 1.5258789e-05f +
+               (float)local_10 * 1.5258789e-05f * (float)local_10 * 1.5258789e-05f;
       if (dist < best_dist) {
         closest = entity;
         best_dist = dist;
@@ -102,11 +102,11 @@ void cube::LookAtPlayerBehavior::vfunc_0(int creature,int world)
     *(float *)(creature + 0x164) =
          (float)CONCAT44((iVar6 - *(int *)(creature + 0x1c)) -
                          (uint)(uVar5 < *(uint *)(creature + 0x18)),uVar5 - *(uint *)(creature + 0x18)
-                        ) * 1.5258789e-05;
+                        ) * 1.5258789e-05f;
     *(float *)(creature + 0x168) =
          (float)CONCAT44((entity - *(int *)(creature + 0x24)) -
                          (uint)(uVar7 < *(uint *)(creature + 0x20)),uVar7 - *(uint *)(creature + 0x20)
-                        ) * 1.5258789e-05;
+                        ) * 1.5258789e-05f;
     *(undefined4 *)(creature + 0x40) = 0;
     *(undefined4 *)(creature + 0x44) = 0;
     *(undefined4 *)(creature + 0x48) = 0;

@@ -307,7 +307,7 @@ void cube::InventoryWidget::vfunc_10(void)
   undefined4 uVar8;
   int pThis;
   int *pNode;
-  float10 fVar10;
+  float fVar10;
   float fVar11;
   undefined4 uVar12;
   int count;
@@ -324,10 +324,10 @@ void cube::InventoryWidget::vfunc_10(void)
   }
   ExceptionList = &savedExcList;
   InventoryWidget_updateScroll(DAT_0076aa78 ^ (uint)&stack0xfffffffc);
-  fVar10 = (float10)Widget_measureGuarded();
-  cols = (int)(((float)fVar10 - 10.0) / (float)(*(int *)(pThis + 0x1a8) + 5));
-  fVar10 = (float10)Widget_measure();
-  rows = (int)(((float)fVar10 - 40.0) / (float)(*(int *)(pThis + 0x1ac) + 5));
+  fVar10 = (float)Widget_measureGuarded();
+  cols = (int)(((float)fVar10 - 10.0f) / (float)(*(int *)(pThis + 0x1a8) + 5));
+  fVar10 = (float)Widget_measure();
+  rows = (int)(((float)fVar10 - 40.0f) / (float)(*(int *)(pThis + 0x1ac) + 5));
   count = 0;
   pList = (undefined4 *)list_buyNode_0c(0,0);
   ehState = 0;
@@ -386,15 +386,15 @@ void cube::InventoryWidget::vfunc_10(void)
   if (*(int *)(pThis + 0x170) != 0) {
     uVar12 = 1;
     uVar8 = 0x41200000;
-    fVar10 = (float10)Widget_measureGuarded(0x41200000,1);
-    Widget_setScroll((float)fVar10 - 30.0,uVar8,uVar12);
+    fVar10 = (float)Widget_measureGuarded(0x41200000,1);
+    Widget_setScroll((float)fVar10 - 30.0f,uVar8,uVar12);
   }
   if (*(int *)(pThis + 0x174) != 0) {
     uVar8 = 1;
-    fVar10 = (float10)Widget_measure(1);
-    fVar11 = (float)fVar10 - 30.0;
-    fVar10 = (float10)Widget_measureGuarded(fVar11);
-    Widget_setScroll((float)fVar10 - 30.0,fVar11,uVar8);
+    fVar10 = (float)Widget_measure(1);
+    fVar11 = (float)fVar10 - 30.0f;
+    fVar10 = (float)Widget_measureGuarded(fVar11);
+    Widget_setScroll((float)fVar10 - 30.0f,fVar11,uVar8);
   }
   InventoryWidget_drawScrollbar();
   puVar2 = (undefined4 *)*pList;

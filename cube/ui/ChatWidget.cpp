@@ -163,7 +163,7 @@ void cube::ChatWidget::vfunc_1(void)
   int *segNode;
   int *msgNode;
   bool bVar7;
-  float10 fVar8;
+  float fVar8;
   undefined4 uVar9;
   undefined4 uVar10;
   undefined4 uVar11;
@@ -246,23 +246,23 @@ void cube::ChatWidget::vfunc_1(void)
   msgNode = (int *)**(int **)(self + 0x160);
   if (msgNode != *(int **)(self + 0x160)) {
     do {
-      xPos = 3.0;
+      xPos = 3.0f;
       segNode = *(int **)msgNode[2];
       if (segNode != (int *)msgNode[2]) {
         do {
           hasColor = u16string_compare(0,segNode[6],&DAT_006fd844,1);
           if (hasColor == 0) {
-            xPos = xPos + 5.0;
+            xPos = xPos + 5.0f;
           }
           else {
-            colR = (float)*(byte *)(segNode + 8) / 255.0;
-            colG = (float)*(byte *)((int)segNode + 0x21) / 255.0;
-            colB = (float)*(byte *)((int)segNode + 0x22) / 255.0;
+            colR = (float)*(byte *)(segNode + 8) / 255.0f;
+            colG = (float)*(byte *)((int)segNode + 0x21) / 255.0f;
+            colB = (float)*(byte *)((int)segNode + 0x22) / 255.0f;
             uStack_78 = 0x3f800000;
             Font_measureTextScaled(segNode + 2,*(int *)(self + 0x148) + 0x48,0x41200000,0x40000000,0,0,0,
                          bounds0,bounds1,0,1,0xffffffff,0);
-            _local_5c = CONCAT44(colG * 0.0,colR * 0.0);
-            _local_54 = CONCAT44(uStack_78,colB * 0.0);
+            _local_5c = CONCAT44(colG * 0.0f,colR * 0.0f);
+            _local_54 = CONCAT44(uStack_78,colB * 0.0f);
             local_6c = 0;
             local_68 = 0;
             local_64 = 0;
@@ -315,8 +315,8 @@ void cube::ChatWidget::vfunc_1(void)
   local_30 = 0;
   hasColor = self + 0x168;
   uVar9 = 0x41200000;
-  fVar8 = (float10)security_cookie_guard_a(0x41200000,0x40000000,0,0,0,puVar14,puVar15,puVar16,0,1);
-  Font_drawTextTransformed(hasColor,0x40400000,(float)fVar8 - 12.0,uVar9,uVar10,uVar11,uVar12,uVar13,puVar14,
+  fVar8 = (float)security_cookie_guard_a(0x41200000,0x40000000,0,0,0,puVar14,puVar15,puVar16,0,1);
+  Font_drawTextTransformed(hasColor,0x40400000,(float)fVar8 - 12.0f,uVar9,uVar10,uVar11,uVar12,uVar13,puVar14,
                puVar15,puVar16,uVar17,uVar18);
   uVar18 = 1;
   uVar17 = 0;
@@ -340,8 +340,8 @@ void cube::ChatWidget::vfunc_1(void)
   local_34 = 0x3f800000;
   local_30 = 0x3f800000;
   uVar9 = 0x41200000;
-  fVar8 = (float10)security_cookie_guard_a(0x41200000,0x40000000,0,0,0,puVar14,puVar15,puVar16,0,1);
-  Font_drawTextTransformed(hasColor,0x40400000,(float)fVar8 - 12.0,uVar9,uVar10,uVar11,uVar12,uVar13,puVar14,
+  fVar8 = (float)security_cookie_guard_a(0x41200000,0x40000000,0,0,0,puVar14,puVar15,puVar16,0,1);
+  Font_drawTextTransformed(hasColor,0x40400000,(float)fVar8 - 12.0f,uVar9,uVar10,uVar11,uVar12,uVar13,puVar14,
                puVar15,puVar16,uVar17,uVar18);
   if (*(char *)(self + 0x180) != '\0') {
     msgCount = *(int *)(*(int *)(self + 4) + 0xe8) / 500 & 0x80000001;
@@ -393,8 +393,8 @@ void cube::ChatWidget::vfunc_1(void)
       local_34 = 0;
       local_30 = 0;
       uVar9 = 0x41200000;
-      fVar8 = (float10)security_cookie_guard_a(0x41200000,0x40000000,0,0,0,puVar14,puVar15,puVar16,0,1);
-      Font_drawTextTransformed(local_74,local_1c + 3.0,(float)fVar8 - 12.0,uVar9,uVar10,uVar11,uVar12,uVar13,
+      fVar8 = (float)security_cookie_guard_a(0x41200000,0x40000000,0,0,0,puVar14,puVar15,puVar16,0,1);
+      Font_drawTextTransformed(local_74,local_1c + 3.0f,(float)fVar8 - 12.0f,uVar9,uVar10,uVar11,uVar12,uVar13,
                    puVar14,puVar15,puVar16,uVar17,uVar18);
       local_8 = 0xffffffff;
       if (7 < local_60) {
@@ -427,8 +427,8 @@ void cube::ChatWidget::vfunc_1(void)
       local_a4 = 0x3f800000;
       local_a0 = 0x3f800000;
       uVar9 = 0x41200000;
-      fVar8 = (float10)security_cookie_guard_a(0x41200000,0x40000000,0,0,0,puVar14,puVar15,puVar16,0,1);
-      Font_drawTextTransformed(&local_9c,local_1c + 3.0,(float)fVar8 - 12.0,uVar9,uVar10,uVar11,uVar12,uVar13,
+      fVar8 = (float)security_cookie_guard_a(0x41200000,0x40000000,0,0,0,puVar14,puVar15,puVar16,0,1);
+      Font_drawTextTransformed(&local_9c,local_1c + 3.0f,(float)fVar8 - 12.0f,uVar9,uVar10,uVar11,uVar12,uVar13,
                    puVar14,puVar15,puVar16,uVar17,uVar18);
       local_8 = 0xffffffff;
       if (7 < local_88) {
@@ -626,11 +626,11 @@ void TextRender_setTransform(float size,float arg2,float *matrix)
   dx = *matrix * 0.0 + matrix[4];
   faceSizeY = (undefined4 *)(matrix[5] * 0.0 + matrix[1]);
   dy = matrix[1] * 0.0 + matrix[5];
-  len = (double)(dy * dy + dx * dx);
-  libm_sse2_sqrt_precise(stackCookie);
+  len = libm_sse2_sqrt_precise((double)(dy * dy + dx * dx));
   metric = (undefined4 *)(float)len;
-  len = (double)((float)faceSizeY * (float)faceSizeY + (float)faceSizeX * (float)faceSizeX);
-  libm_sse2_sqrt_precise();
+  len = libm_sse2_sqrt_precise
+                    ((double)((float)faceSizeY * (float)faceSizeY + (float)faceSizeX * (float)faceSizeX)
+                    );
   faceSizeX = (undefined4 *)(float)len;
   ppuVar3 = &metric;
   if ((float)len <= (float)metric) {
@@ -639,7 +639,7 @@ void TextRender_setTransform(float size,float arg2,float *matrix)
   *(float *)(self + 0xe8) = (float)*ppuVar3 * arg2;
   roundedSize = (undefined4 *)(int)(size * 64.0 + 0.5);
   metric = roundedSize;
-  FT_Set_Pixel_Sizes(*(undefined4 *)(self + 0xd8),roundedSize,roundedSize,0,0);
+  FT_Set_Pixel_Sizes(*(undefined4 *)(self + 0xd8),roundedSize,roundedSize,0,0,stackCookie);
   ChatWidget_setBindTransform(*(undefined4 *)(self + 0xd8),matrixPtr,0);
   charData = (int *)0x0;
   local_3c = 0;
@@ -767,10 +767,8 @@ void TextRender_computeScaledSize(float *matrix,float size,float arg3,float arg4
   basisY = matrix[4] * 0.0 + *matrix;
   basisX2 = matrix[1] * 0.0 + matrix[5];
   basisY2 = *matrix * 0.0 + matrix[4];
-  lenX = (double)(basisX * basisX + basisY * basisY);
-  libm_sse2_sqrt_precise();
-  lenY = (double)(basisX2 * basisX2 + basisY2 * basisY2);
-  libm_sse2_sqrt_precise();
+  lenX = libm_sse2_sqrt_precise((double)(basisX * basisX + basisY * basisY));
+  lenY = libm_sse2_sqrt_precise((double)(basisX2 * basisX2 + basisY2 * basisY2));
   basisY = (float)(int)((float)lenX * size * 64.0 + 0.5) * 0.015625;
   basisX = (float)(int)((float)lenY * size * 64.0 + 0.5) * 0.015625;
   *outSizeVec = basisY;
@@ -830,17 +828,17 @@ void TextRender_layoutAndWrap(undefined4 *text,float maxWidth)
   
   textStr = text;
   charCount = text[4];
-  lineWidth = 0.0;
-  wordStart = 0.0;
+  lineWidth = 0.0f;
+  wordStart = 0.0f;
   lastSpace = -1;
-  scaleY = 1.0;
+  scaleY = 1.0f;
   if (*(int *)(self + 0xf4) != 0) {
     scaleY = *(float *)(self + 0xe4) / (*(float *)(self + 0x104) - *(float *)(self + 0xfc));
   }
   charIndex = 0;
   if (0 < charCount) {
     do {
-      nextWidth = 0.0;
+      nextWidth = 0.0f;
       strFlag = textStr[5];
       charPtr = textStr;
       if (7 < strFlag) {
@@ -884,7 +882,7 @@ LAB_00660e03:
       }
       if (*(short *)((int)charPtr + charIndex * 2) == 10) {
 LAB_00661027:
-        wordStart = 0.0;
+        wordStart = 0.0f;
       }
       else {
         charPtr = textStr;

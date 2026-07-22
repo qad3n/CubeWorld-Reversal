@@ -50,7 +50,7 @@ void cube::CompanionBehavior::vfunc_0(int creature,int target,int deltaMs)
   uint uVar9;
   int iVar10;
   bool inRange;
-  float10 fVar12;
+  float fVar12;
   double dist2;
   float invLen;
   float velY;
@@ -136,13 +136,13 @@ void cube::CompanionBehavior::vfunc_0(int creature,int target,int deltaMs)
       *(ushort *)(iVar2 + 0x124) = *(ushort *)(iVar2 + 0x124) & 0xffbf;
     }
     if (*(char *)(iVar2 + 0x60) == '\x05') {
-      fVar12 = (float10)stat_calcAttackDamage();
+      fVar12 = (float)stat_calcAttackDamage();
       dist = (float)fVar12 * (float)deltaMs * 0.001 * 0.1 + *(float *)(iVar2 + 0x16c);
       *(float *)(iVar2 + 0x16c) = dist;
-      fVar12 = (float10)stat_calcAttackDamage();
+      fVar12 = (float)stat_calcAttackDamage();
       local_12c = (float)fVar12;
       if (local_12c < dist) {
-        fVar12 = (float10)stat_calcAttackDamage();
+        fVar12 = (float)stat_calcAttackDamage();
         *(float *)(iVar2 + 0x16c) = (float)fVar12;
       }
     }
@@ -177,8 +177,7 @@ void cube::CompanionBehavior::vfunc_0(int creature,int target,int deltaMs)
         targetPos = (uint *)velX;
         local_12c = velZ;
         if (900.0 < invLen) {
-          dist2 = (double)invLen;
-          libm_sse2_sqrt_precise();
+          dist2 = libm_sse2_sqrt_precise((double)invLen);
           invLen = 1.0 / (float)dist2;
           velX = (float)targetPos * invLen * 30.0;
           velZ = local_12c * invLen * 30.0;

@@ -64,17 +64,17 @@ void cube::EnchantWidget::vfunc_10(void)
 
 {
   int self;
-  float10 full;
-  float10 used;
+  float full;
+  float used;
   undefined4 uVar3;
   undefined4 uVar4;
   
   if (*(int *)(self + 0x170) != 0) {
     uVar4 = 1;
     uVar3 = 0x42480000;
-    full = (float10)security_cookie_guard_b(0x42480000,1);
-    used = (float10)Widget_measureGuarded();
-    Widget_setScroll(((float)full - (float)used) * 0.5,uVar3,uVar4);
+    full = (float)security_cookie_guard_b(0x42480000,1);
+    used = (float)Widget_measureGuarded();
+    Widget_setScroll(((float)full - (float)used) * 0.5f,uVar3,uVar4);
   }
   return;
 }

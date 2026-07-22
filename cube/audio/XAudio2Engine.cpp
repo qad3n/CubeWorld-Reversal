@@ -539,7 +539,7 @@ void cube::XAudio2Engine::vfunc_6(int *param_1,float volume,undefined4 param_3,u
   int inserted;
   int in_ECX;
   
-  if (0.0 < volume) {
+  if (0.0f < volume) {
     sound = (int *)rbtree_findOrInsert_intKey(&param_1);
     sound_data = *sound;
     if (sound_data != 0) {

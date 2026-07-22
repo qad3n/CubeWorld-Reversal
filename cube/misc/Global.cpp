@@ -405,7 +405,7 @@ LAB_004c8d73:
                 ,"Cube World",0);
   }
   else {
-    cube::XAudio2Engine::vfunc_5((float)DAT_0076b1f0 * 0.01,0);
+    cube::XAudio2Engine::vfunc_5((float)DAT_0076b1f0 * 0.01f,0);
     iVar5 = DirectInput8Create(param_1,0x800,&DAT_0071e290,&local_320,0);
     if (iVar5 == 0) {
       (**(code **)(*local_320 + 0xc))(local_320,&DAT_0071e2f0,&local_314);

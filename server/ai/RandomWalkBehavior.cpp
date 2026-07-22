@@ -111,10 +111,10 @@ cube::RandomWalkBehavior::vfunc_0
       local_5c = (float)CONCAT44(iStack_2c,local_30);
       *(float *)(creature_p + 0x44) = (float)CONCAT44(iStack_34,local_38) * 1.5258789e-05;
       *(undefined4 *)(creature_p + 0x48) = 0;
-      dVar8 = (double)(*(float *)(creature_p + 0x40) * *(float *)(creature_p + 0x40) +
-                       *(float *)(creature_p + 0x44) * *(float *)(creature_p + 0x44) +
-                      *(float *)(creature_p + 0x48) * *(float *)(creature_p + 0x48));
-      libm_sse2_sqrt_precise();
+      dVar8 = libm_sse2_sqrt_precise
+                        ((double)(*(float *)(creature_p + 0x40) * *(float *)(creature_p + 0x40) +
+                                  *(float *)(creature_p + 0x44) * *(float *)(creature_p + 0x44) +
+                                 *(float *)(creature_p + 0x48) * *(float *)(creature_p + 0x48)));
       fVar9 = 1.0 / (float)dVar8;
       *(float *)(iVar6 + 0x40) = fVar9 * *(float *)(iVar6 + 0x40) * 10.0;
       *(float *)(iVar6 + 0x44) = *(float *)(iVar6 + 0x44) * fVar9 * 10.0;

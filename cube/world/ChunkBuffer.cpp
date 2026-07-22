@@ -1988,8 +1988,9 @@ LAB_0049f443:
   fStack_4cc = (float)CONCAT44(iStack_70c,iStack_710) * 1.5258789e-05;
   local_900 = (double)CONCAT44(local_900._4_4_,(float)CONCAT44(iStack_704,iStack_708));
   fVar23 = (float)CONCAT44(iStack_704,iStack_708) * 1.5258789e-05;
-  dVar21 = (double)(fStack_4cc * fStack_4cc + fStack_4d0 * fStack_4d0 + fVar23 * fVar23);
-  libm_sse2_sqrt_precise();
+  dVar21 = libm_sse2_sqrt_precise
+                     ((double)(fStack_4cc * fStack_4cc + fStack_4d0 * fStack_4d0 + fVar23 * fVar23))
+  ;
   iVar10 = local_8b8[1];
   *(float *)(local_8b8[1] + 0x68) = (float)dVar21 * 1.5;
   *(int *)(local_8b8[1] + 0x20) = local_8f8;

@@ -66,7 +66,7 @@ void cube::CombatBehavior::vfunc_0(float creature,float param_2,int param_3,unde
   float in_ECX;
   int iVar18;
   bool bVar19;
-  float10 fVar20;
+  float fVar20;
   float fVar21;
   double dVar22;
   float fVar23;
@@ -198,7 +198,7 @@ void cube::CombatBehavior::vfunc_0(float creature,float param_2,int param_3,unde
       (local_228 = CONCAT44(local_228._4_4_,(undefined4)local_228),
       *(int *)((int)creature + 0x6c) < 3000)))) goto LAB_0042eec0;
   distance = *(int **)((int)creature + 0x16c);
-  fVar20 = (float10)stat_calcAttackDamage(uVar10);
+  fVar20 = (float)stat_calcAttackDamage(uVar10);
   local_308 = (int *)(float)fVar20;
   if (((float)distance < (float)local_308 * 0.25) &&
      (cooldown = combat_getAttackTiming(), cooldown < *(int *)((int)creature + 0x6c))) {
@@ -275,7 +275,7 @@ void cube::CombatBehavior::vfunc_0(float creature,float param_2,int param_3,unde
 LAB_0042ce7c:
     cooldown = local_30c;
     distance = *(int **)((int)creature + 0x16c);
-    fVar20 = (float10)stat_calcAttackDamage();
+    fVar20 = (float)stat_calcAttackDamage();
     local_308 = (int *)(float)fVar20;
     if (((float)distance < (float)local_308 * 0.5) && (*(char *)((int)creature + 0x60) == '\x03')) {
       *(undefined1 *)((int)creature + 0x68) = 0x50;
@@ -343,8 +343,9 @@ LAB_0042ce36:
             local_2ec = (int *)(local_1f4 * local_1f4 + local_1f8 * local_1f8 +
                                local_1f0 * local_1f0);
             if (0.0 < *(float *)((int)fVar23 + 0x1190)) {
-              dVar22 = 1.5;
-              libm_sse2_pow_precise();
+              dVar22 = libm_sse2_pow_precise
+                                 (1.5,(double)(*(int *)((int)fVar23 + 400) -
+                                              *(int *)((int)local_2e8 + 400)));
               fVar23 = 1.0 - (float)dVar22 * *(float *)((int)fVar23 + 0x1190);
               if (fVar23 < 0.1) {
                 fVar23 = 0.1;
@@ -521,8 +522,7 @@ LAB_0042d427:
       fVar24 = local_20c;
       fVar21 = local_210;
       if (0.0 < fVar27) {
-        dVar22 = (double)fVar27;
-        libm_sse2_sqrt_precise();
+        dVar22 = libm_sse2_sqrt_precise((double)fVar27);
         fVar24 = 1.0 / (float)dVar22;
         fVar21 = fVar24 * local_210;
         itemEntry = (int *)(fVar24 * (float)local_2ec);
@@ -918,11 +918,9 @@ LAB_0042ddbc:
     fVar24 = fStack_21c;
     if ((*(char *)((int)fVar27 + 0x68) == '\x1c') && (25.0 < param2Saved)) {
       fStack_2e4 = (float)*(int *)((int)fVar27 + 0x6c) * 0.005;
-      dVar22 = (double)fStack_2e4;
-      libm_sse2_cos_precise();
+      dVar22 = libm_sse2_cos_precise((double)fStack_2e4);
       fStack_2d0 = (float)dVar22 * 1.5 + fStack_21c;
-      dVar22 = (double)fStack_2e4;
-      libm_sse2_sin_precise();
+      dVar22 = libm_sse2_sin_precise((double)fStack_2e4);
       fVar23 = (float)dVar22 * 1.5 + fStack_218;
       fVar24 = fStack_2d0;
     }
@@ -988,10 +986,12 @@ LAB_0042ddbc:
                   *(float *)((int)fVar27 + 0x38) * *(float *)((int)fVar27 + 0x38) +
                   *(float *)((int)fVar27 + 0x3c) * *(float *)((int)fVar27 + 0x3c)) {
           fStack_2e4 = *(float *)((int)fVar27 + 0x34);
-          dVar22 = (double)(fStack_2e4 * fStack_2e4 +
-                            *(float *)((int)fVar27 + 0x38) * *(float *)((int)fVar27 + 0x38) +
-                           *(float *)((int)fVar27 + 0x3c) * *(float *)((int)fVar27 + 0x3c));
-          libm_sse2_sqrt_precise();
+          dVar22 = libm_sse2_sqrt_precise
+                             ((double)(fStack_2e4 * fStack_2e4 +
+                                       *(float *)((int)fVar27 + 0x38) *
+                                       *(float *)((int)fVar27 + 0x38) +
+                                      *(float *)((int)fVar27 + 0x3c) *
+                                      *(float *)((int)fVar27 + 0x3c)));
 LAB_0042e000:
           fVar23 = 1.0 / (float)dVar22;
           *(float *)((int)fVar27 + 0x34) = fStack_2e4 * fVar23;
@@ -1047,10 +1047,12 @@ LAB_0042e000:
                   *(float *)((int)fVar27 + 0x38) * *(float *)((int)fVar27 + 0x38) +
                   *(float *)((int)fVar27 + 0x3c) * *(float *)((int)fVar27 + 0x3c)) {
           fStack_2e4 = *(float *)((int)fVar27 + 0x34);
-          dVar22 = (double)(fStack_2e4 * fStack_2e4 +
-                            *(float *)((int)fVar27 + 0x38) * *(float *)((int)fVar27 + 0x38) +
-                           *(float *)((int)fVar27 + 0x3c) * *(float *)((int)fVar27 + 0x3c));
-          libm_sse2_sqrt_precise();
+          dVar22 = libm_sse2_sqrt_precise
+                             ((double)(fStack_2e4 * fStack_2e4 +
+                                       *(float *)((int)fVar27 + 0x38) *
+                                       *(float *)((int)fVar27 + 0x38) +
+                                      *(float *)((int)fVar27 + 0x3c) *
+                                      *(float *)((int)fVar27 + 0x3c)));
           goto LAB_0042e000;
         }
       }
@@ -1081,8 +1083,7 @@ LAB_0042e000:
                   fVar23 = fStack_218;
                   fVar24 = fStack_21c;
                   if (0.0 < fVar21) {
-                    dVar22 = (double)fVar21;
-                    libm_sse2_sqrt_precise();
+                    dVar22 = libm_sse2_sqrt_precise((double)fVar21);
                     param2Saved = 1.0 / (float)dVar22;
                     deltaTime = fStack_1ec * param2Saved;
                     local_2f4 = (uint *)(fStack_1e8 * param2Saved);
@@ -1322,8 +1323,7 @@ LAB_0042e9bb:
   fVar23 = fStack_218;
   fVar24 = fStack_21c;
   if (fVar21 <= 0.0) goto LAB_0042eb01;
-  dVar22 = (double)fVar21;
-  libm_sse2_sqrt_precise();
+  dVar22 = libm_sse2_sqrt_precise((double)fVar21);
   param2Saved = 1.0 / (float)dVar22;
   deltaTime = fStack_204 * param2Saved;
   local_2f4 = (uint *)(fStack_200 * param2Saved);
@@ -1445,7 +1445,7 @@ undefined8 combat_findTopThreat(void)
   
   treeRoot = *(int **)(self + 0x13a4);
   node = (int *)*treeRoot;
-  bestScore = 0.0;
+  bestScore = 0.0f;
   if (node != treeRoot) {
     bestHi = 0;
     bestLo = 0;
@@ -1503,8 +1503,8 @@ undefined4 CombatBehavior_chooseAttack(void)
   int windup;
   int *buff;
   int self;
-  float10 fVar7;
-  float10 extraout_ST0;
+  float fVar7;
+  float extraout_ST0;
   float base;
   float rate;
   
@@ -1517,24 +1517,24 @@ undefined4 CombatBehavior_chooseAttack(void)
     windup = 100;
     goto LAB_0044582e;
   default:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 500.0;
+    base = 500.0f;
     break;
   case 3:
   case 4:
   case 5:
   case 0x3e:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 7:
   case 0xe:
   case 0x12:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 10:
     windup = 600;
@@ -1543,14 +1543,14 @@ undefined4 CombatBehavior_chooseAttack(void)
   case 0x3c:
   case 0x3d:
   case 0x68:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0xf:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 400.0;
+    base = 400.0f;
     break;
   case 0x16:
   case 0x1a:
@@ -1571,14 +1571,14 @@ undefined4 CombatBehavior_chooseAttack(void)
   case 0x2e:
   case 0x5e:
   case 0x5f:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0x17:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 10.0;
+    base = 10.0f;
     break;
   case 0x30:
     windup = 0;
@@ -1588,27 +1588,27 @@ undefined4 CombatBehavior_chooseAttack(void)
     goto LAB_0044582e;
   case 0x39:
   case 0x3a:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 0x41:
   case 0x42:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 0x43:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0x44:
   case 0x45:
   case 0x5d:
-    fVar7 = (float10)combat_getEffectiveHaste();
+    fVar7 = (float)combat_getEffectiveHaste();
     rate = (float)fVar7;
-    base = 800.0;
+    base = 800.0f;
     break;
   case 0x47:
   case 0x48:
@@ -1662,69 +1662,69 @@ LAB_004458d7:
           goto LAB_00445d49;
         case '\x01':
         case '\t':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 300.0;
+          base = 300.0f;
           break;
         case '\x02':
         case '\x03':
         case '\x04':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 100.0;
+          base = 100.0f;
           break;
         case '\x05':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 100.0;
+          base = 100.0f;
           break;
         case '\x06':
         case '\a':
-          fVar7 = (float10)combat_getEffectiveHaste();
-          recoverTime = (int)(50.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+          fVar7 = (float)combat_getEffectiveHaste();
+          recoverTime = (int)(50.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           goto LAB_00445d49;
         case '\n':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 100.0;
+          base = 100.0f;
           break;
         case '\f':
         case '\x10':
         case 'C':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 200.0;
+          base = 200.0f;
           break;
         case '\r':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 200.0;
+          base = 200.0f;
           break;
         case '\x0e':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 100.0;
+          base = 100.0f;
           break;
         case '\x0f':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 200.0;
+          base = 200.0f;
           break;
         case '\x11':
         case '\x12':
         case '\x13':
         case '\x14':
         case '\x15':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 100.0;
+          base = 100.0f;
           break;
         case '\x16':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           goto LAB_00445d31;
         case '\x17':
-          fVar7 = (float10)combat_getEffectiveHaste();
-          recoverTime = (int)(50.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+          fVar7 = (float)combat_getEffectiveHaste();
+          recoverTime = (int)(50.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           goto LAB_00445d49;
         case '\x18':
         case '\x19':
@@ -1733,65 +1733,65 @@ LAB_004458d7:
         case ';':
         case '?':
         case '@':
-          fVar7 = (float10)combat_getEffectiveHaste();
-          recoverTime = (int)(50.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+          fVar7 = (float)combat_getEffectiveHaste();
+          recoverTime = (int)(50.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           goto LAB_00445d49;
         case '\x1a':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 300.0;
+          base = 300.0f;
           break;
         default:
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
 LAB_00445d31:
           rate = (float)fVar7;
-          base = 400.0;
+          base = 400.0f;
           break;
         case '\x1e':
         case ' ':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 800.0;
+          base = 800.0f;
           break;
         case '\x1f':
         case '!':
-          fVar7 = (float10)combat_getEffectiveHaste();
-          recoverTime = (int)(1600.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+          fVar7 = (float)combat_getEffectiveHaste();
+          recoverTime = (int)(1600.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           goto LAB_00445d49;
         case '\"':
-          fVar7 = (float10)combat_getEffectiveHaste();
-          recoverTime = (int)(1600.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+          fVar7 = (float)combat_getEffectiveHaste();
+          recoverTime = (int)(1600.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           goto LAB_00445d49;
         case '%':
         case '+':
         case 'Y':
           if (*(char *)(self + 0xaa9) == '\f') {
-            fVar7 = (float10)combat_getEffectiveHaste();
-            recoverTime = (int)(600.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+            fVar7 = (float)combat_getEffectiveHaste();
+            recoverTime = (int)(600.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           }
           else {
-            fVar7 = (float10)combat_getEffectiveHaste();
-            recoverTime = (int)(1200.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+            fVar7 = (float)combat_getEffectiveHaste();
+            recoverTime = (int)(1200.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           }
           goto LAB_00445d49;
         case '&':
         case ',':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 500.0;
+          base = 500.0f;
           break;
         case '\'':
         case '(':
         case ')':
         case '*':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 200.0;
+          base = 200.0f;
           break;
         case '-':
         case '.':
-          fVar7 = (float10)combat_getEffectiveHaste();
-          recoverTime = (int)(1200.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+          fVar7 = (float)combat_getEffectiveHaste();
+          recoverTime = (int)(1200.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           goto LAB_00445d49;
         case '0':
         case 'e':
@@ -1802,15 +1802,15 @@ LAB_00445d31:
           goto LAB_00445d49;
         case '9':
         case ':':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 800.0;
+          base = 800.0f;
           break;
         case 'A':
         case 'B':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 300.0;
+          base = 300.0f;
           break;
         case 'D':
         case 'E':
@@ -1821,35 +1821,35 @@ LAB_00445d31:
         case 'L':
         case 'M':
         case 'N':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 300.0;
+          base = 300.0f;
           break;
         case 'G':
         case 'H':
           recoverTime = 200;
           goto LAB_00445d49;
         case 'W':
-          fVar7 = (float10)combat_getEffectiveHaste();
-          recoverTime = (int)(5000.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+          fVar7 = (float)combat_getEffectiveHaste();
+          recoverTime = (int)(5000.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           goto LAB_00445d49;
         case '[':
-          fVar7 = (float10)combat_getEffectiveHaste();
-          recoverTime = (int)(1000.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+          fVar7 = (float)combat_getEffectiveHaste();
+          recoverTime = (int)(1000.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           goto LAB_00445d49;
         case ']':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 800.0;
+          base = 800.0f;
           break;
         case '^':
-          fVar7 = (float10)combat_getEffectiveHaste();
+          fVar7 = (float)combat_getEffectiveHaste();
           rate = (float)fVar7;
-          base = 500.0;
+          base = 500.0f;
           break;
         case '_':
-          fVar7 = (float10)combat_getEffectiveHaste();
-          recoverTime = (int)(1000.0 / ((float)fVar7 * *(float *)(self + 0x17c)));
+          fVar7 = (float)combat_getEffectiveHaste();
+          recoverTime = (int)(1000.0f / ((float)fVar7 * *(float *)(self + 0x17c)));
           goto LAB_00445d49;
         case 'i':
           recoverTime = 5000;
@@ -2041,12 +2041,12 @@ void CombatController_acquireNearbyTargets(int attacker,int target,int behavior)
           local_10 = CONCAT44((local_10._4_4_ - *(int *)(target + 0x24)) -
                               (uint)((uint)local_10 < *(uint *)(target + 0x20)),
                               (uint)local_10 - *(uint *)(target + 0x20));
-          dx = (float)local_20 * 1.5258789e-05;
+          dx = (float)local_20 * 1.5258789e-05f;
           local_30 = (float)local_10;
-          dy = (float)local_18 * 1.5258789e-05;
-          dz = local_30 * 1.5258789e-05;
-          if ((dy * dy + dx * dx + dz * dz < 64.0) &&
-             (pfVar6 = (float *)rbtree_findOrInsert_pairKey(puVar9), iVar7 = local_34, *pfVar6 == 0.0)) {
+          dy = (float)local_18 * 1.5258789e-05f;
+          dz = local_30 * 1.5258789e-05f;
+          if ((dy * dy + dx * dx + dz * dz < 64.0f) &&
+             (pfVar6 = (float *)rbtree_findOrInsert_pairKey(puVar9), iVar7 = local_34, *pfVar6 == 0.0f)) {
             puVar4 = (undefined4 *)rbtree_findOrInsert_pairKey(puVar9);
             *puVar4 = 0x3f000000;
             local_64 = *puVar9;

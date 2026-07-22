@@ -21,7 +21,7 @@ uint FUN_006423f0(void);
 uint FUN_00642400(void);
 void FUN_00642570(void);
 void FUN_00642590(undefined4 *param_1);
-float10 FUN_006426d0(float param_1,float param_2,float param_3);
+float FUN_006426d0(float param_1,float param_2,float param_3);
 uint FUN_00642a90(void);
 void FUN_00642ad0(int param_1,int param_2,int param_3);
 void plasma::SmoothMeshShape::rebuild(char param_1);

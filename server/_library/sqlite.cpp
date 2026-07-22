@@ -27828,7 +27828,7 @@ void sqlite3VdbeExec(uint *param_1)
   undefined8 *puVar37;
   uint uVar38;
   uint uVar39;
-  float10 fVar40;
+  double fVar40;
   longlong lVar41;
   ulonglong uVar42;
   int local_130;

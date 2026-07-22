@@ -75,17 +75,17 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
 {
   float fVar1;
   int iVar2;
-  int iVar3;
-  int *piVar4;
-  char cVar5;
+  int *piVar3;
+  char cVar4;
+  int iVar5;
   int targetEntity;
-  int iVar7;
-  undefined8 *puVar8;
-  basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_> *pbVar9;
-  undefined4 *puVar10;
+  undefined8 *puVar7;
+  basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_> *pbVar8;
+  undefined4 *puVar9;
   undefined4 *self;
-  undefined8 *puVar11;
-  float10 fVar12;
+  undefined8 *puVar10;
+  int iVar11;
+  float fVar12;
   double dVar13;
   float fVar14;
   undefined4 uVar15;
@@ -157,30 +157,30 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   ExceptionList = &savedExceptionList;
   coinPtr = (float *)0x0;
   selfSaved = self;
-  targetEntity = getTargetEntity(stackCookie);
-  local_3a0 = targetEntity;
-  if (targetEntity == 0) {
-    targetEntity = *(int *)(*(int *)((int)self + 0x174) + 0x3c);
-    *(undefined4 *)(*(int *)(targetEntity + 0x94) + *(int *)(targetEntity + 0x68) * 4) = 0;
+  iVar5 = getTargetEntity(stackCookie);
+  local_3a0 = iVar5;
+  if (iVar5 == 0) {
+    iVar5 = *(int *)(*(int *)((int)self + 0x174) + 0x3c);
+    *(undefined4 *)(*(int *)(iVar5 + 0x94) + *(int *)(iVar5 + 0x68) * 4) = 0;
   }
   else {
-    iVar7 = *(int *)((int)self + 0x148);
-    iVar2 = *(int *)(*(int *)(iVar7 + 0x38) + 0x170);
-    iVar3 = *(int *)(*(int *)(iVar7 + 0x38) + 0x19c);
-    fVar14 = *(float *)(iVar3 + 4 + iVar2 * 8);
-    fVar1 = *(float *)(iVar3 + iVar2 * 8);
-    screenY = 1.0 / (fVar1 * *(float *)(iVar7 + 0x54) + fVar14 * *(float *)(iVar7 + 100) +
-                      *(float *)(iVar7 + 0x84));
+    targetEntity = *(int *)((int)self + 0x148);
+    iVar11 = *(int *)(*(int *)(targetEntity + 0x38) + 0x170);
+    iVar2 = *(int *)(*(int *)(targetEntity + 0x38) + 0x19c);
+    fVar14 = *(float *)(iVar2 + 4 + iVar11 * 8);
+    fVar1 = *(float *)(iVar2 + iVar11 * 8);
+    screenY = 1.0 / (fVar1 * *(float *)(targetEntity + 0x54) + fVar14 * *(float *)(targetEntity + 100) +
+                      *(float *)(targetEntity + 0x84));
     screenX = screenY *
-                (fVar1 * *(float *)(iVar7 + 0x48) + fVar14 * *(float *)(iVar7 + 0x58) +
-                *(float *)(iVar7 + 0x78));
+                (fVar1 * *(float *)(targetEntity + 0x48) + fVar14 * *(float *)(targetEntity + 0x58) +
+                *(float *)(targetEntity + 0x78));
     screenY = screenY *
-                (fVar14 * *(float *)(iVar7 + 0x5c) + fVar1 * *(float *)(iVar7 + 0x4c) +
-                *(float *)(iVar7 + 0x7c));
-    iVar7 = GameController_item_icon_id(targetEntity);
-    if (iVar7 != 0) {
-      piVar4 = *(int **)(*(int *)((int)self + 0x16c) + 0x134);
-      (**(code **)(*piVar4 + 0xe4))(piVar4,7,1);
+                (fVar14 * *(float *)(targetEntity + 0x5c) + fVar1 * *(float *)(targetEntity + 0x4c) +
+                *(float *)(targetEntity + 0x7c));
+    targetEntity = GameController_item_icon_id(iVar5);
+    if (targetEntity != 0) {
+      piVar3 = *(int **)(*(int *)((int)self + 0x16c) + 0x134);
+      (**(code **)(*piVar3 + 0xe4))(piVar3,7,1);
       local_20c = 0;
       uStack_208 = 0;
       local_204 = 0;
@@ -188,18 +188,18 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
       local_1f8 = 0;
       uStack_1f4 = 0;
       local_1f0 = 0;
-      puVar8 = local_d4;
-      puVar11 = local_1d4;
-      targetEntity = 0x10;
+      puVar7 = local_d4;
+      puVar10 = local_1d4;
+      iVar5 = 0x10;
       do {
-        *puVar11 = 0;
-        *puVar8 = 0;
-        puVar11[1] = 0;
-        *(undefined4 *)(puVar8 + 1) = 0;
-        puVar11 = puVar11 + 2;
-        puVar8 = (undefined8 *)((int)puVar8 + 0xc);
-        targetEntity = targetEntity + -1;
-      } while (targetEntity != 0);
+        *puVar10 = 0;
+        *puVar7 = 0;
+        puVar10[1] = 0;
+        *(undefined4 *)(puVar7 + 1) = 0;
+        puVar10 = puVar10 + 2;
+        puVar7 = (undefined8 *)((int)puVar7 + 0xc);
+        iVar5 = iVar5 + -1;
+      } while (iVar5 != 0);
       render_bindNodeTransformA();
       render_uploadBoneMatrices(local_1d4,local_d4);
       local_1fc = 0x3f800000;
@@ -208,33 +208,33 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
       local_1f0 = 0x3f800000;
       render_setUniform30(&local_1fc);
       local_39c = (float)(*(int *)((int)self + 0x16c) + 0x800a1c);
-      targetEntity = AdaptionWidget_getContentSize(&local_204);
+      iVar5 = AdaptionWidget_getContentSize(&local_204);
       coinPtr = (float *)AdaptionWidget_getContentSize(&uStack_1f4);
       uVar21 = 0;
       uVar18 = 0x3d75c28f;
-      iVar7 = local_3a0;
-      fVar12 = (float10)Widget_measure(local_39c,0x3d75c28f,local_3a0,0);
-      fVar14 = (float)fVar12 * 0.5 + *(float *)(targetEntity + 4) + screenY;
-      targetEntity = (int)local_39c;
-      local_39c = (float)fVar12;
-      fVar12 = (float10)Widget_measureGuarded(fVar14);
-      screenY = (float)fVar12;
-      drawBillboardModelRotated(screenY * 0.5 + screenX + *coinPtr,fVar14,targetEntity,uVar18,iVar7,uVar21);
-      self = selfSaved;
       targetEntity = local_3a0;
+      fVar12 = (float)Widget_measure(local_39c,0x3d75c28f,local_3a0,0);
+      fVar14 = (float)fVar12 * 0.5 + *(float *)(iVar5 + 4) + screenY;
+      iVar5 = (int)local_39c;
+      local_39c = (float)fVar12;
+      fVar12 = (float)Widget_measureGuarded(fVar14);
+      screenY = (float)fVar12;
+      drawBillboardModelRotated(screenY * 0.5 + screenX + *coinPtr,fVar14,iVar5,uVar18,targetEntity,uVar21);
+      self = selfSaved;
+      iVar5 = local_3a0;
     }
-    piVar4 = *(int **)(*(int *)((int)self + 0x16c) + 0x134);
-    (**(code **)(*piVar4 + 0xe4))(piVar4,7,0);
+    piVar3 = *(int **)(*(int *)((int)self + 0x16c) + 0x134);
+    (**(code **)(*piVar3 + 0xe4))(piVar3,7,0);
     cube::GameController::drawItemTooltip
-              (targetEntity,0xf,0xb4,0x3f800000,300,1,0,0);
-    entityState_copy(targetEntity);
+              (iVar5,0xf,0xb4,0x3f800000,300,1,0,0);
+    entityState_copy(iVar5);
     local_37c = *(undefined2 *)(*(int *)(*(int *)((int)self + 0x16c) + 0x8006d0) + 400);
-    fVar12 = (float10)security_cookie_guard_b(0xb4,0x3f800000,300,0,0,0);
+    fVar12 = (float)security_cookie_guard_b(0xb4,0x3f800000,300,0,0,0);
     coinPtr = (float *)(float)fVar12;
     cube::GameController::drawItemTooltip
               (local_38c,(int)((float)coinPtr * 0.5 + 50.0));
-    targetEntity = *(int *)(*(int *)((int)self + 0x174) + 0x3c);
-    *(undefined4 *)(*(int *)(targetEntity + 0x94) + *(int *)(targetEntity + 0x68) * 4) = 1;
+    iVar5 = *(int *)(*(int *)((int)self + 0x174) + 0x3c);
+    *(undefined4 *)(*(int *)(iVar5 + 0x94) + *(int *)(iVar5 + 0x68) * 4) = 1;
   }
   local_450[0] = &PTR_006fcd00;
   local_440[0] = &DAT_006fcd08;
@@ -336,12 +336,12 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
             ((basic_streambuf<wchar_t,std::char_traits<wchar_t>_> *)local_438,(wchar_t *)0x0,
              (wchar_t *)0x0);
   local_3fc = local_3fc & 0xfffffffe;
-  puVar10 = &local_1ec;
+  puVar9 = &local_1ec;
   if (7 < local_1d8) {
-    puVar10 = local_1ec;
+    puVar9 = local_1ec;
   }
   local_400 = 0;
-  strstreambuf_init(puVar10,local_1dc,local_3fc);
+  strstreambuf_init(puVar9,local_1dc,local_3fc);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
     operator_delete(local_1ec);
@@ -368,19 +368,19 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_240 = 0x3f800000;
   local_23c = 1.0;
   screenX = 1.0;
-  puVar10 = &local_1fc;
+  puVar9 = &local_1fc;
   puVar17 = &local_20c;
   puVar16 = &local_244;
   uVar15 = 0x40400000;
   trylevel._0_1_ = 10;
   uVar21 = 0x41400000;
-  fVar12 = (float10)security_cookie_guard_a(0x41400000,0x40400000,puVar16,puVar17,puVar10,1,0xbf800000,1);
+  fVar12 = (float)security_cookie_guard_a(0x41400000,0x40400000,puVar16,puVar17,puVar9,1,0xbf800000,1);
   coinPtr = (float *)(float)fVar12;
   fVar14 = (float)coinPtr - 20.0;
-  fVar12 = (float10)security_cookie_guard_b(fVar14);
+  fVar12 = (float)security_cookie_guard_b(fVar14);
   coinPtr = (float *)(float)fVar12;
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,(float)coinPtr / 3.0,fVar14,uVar21,uVar15,puVar16,puVar17,
-               puVar10,uVar19,uVar20,uVar22);
+               puVar9,uVar19,uVar20,uVar22);
   if (7 < local_210) {
     operator_delete(local_224[0]);
   }
@@ -399,12 +399,12 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
     selfSaved = &local_1fc;
   }
   else {
-    cVar5 = proximityCheck();
+    cVar4 = proximityCheck();
     uStack_208 = 0x3f800000;
     local_204 = 0x3f800000;
     uStack_200 = 0x3f800000;
     local_20c = 0;
-    if (cVar5 == '\0') {
+    if (cVar4 == '\0') {
       local_20c = 0x3f800000;
     }
     local_244 = local_20c;
@@ -430,19 +430,19 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_218 = 0;
   local_214 = 0;
   local_210 = 0;
-  puVar10 = &local_234;
+  puVar9 = &local_234;
   puVar17 = &local_21c;
   trylevel._0_1_ = 0xc;
   uVar15 = 0;
   uVar21 = 0x41400000;
   puVar16 = selfSaved;
-  fVar12 = (float10)security_cookie_guard_a(0x41400000,0,selfSaved,puVar17,puVar10,1,0xbf800000,1);
+  fVar12 = (float)security_cookie_guard_a(0x41400000,0,selfSaved,puVar17,puVar9,1,0xbf800000,1);
   coinPtr = (float *)(float)fVar12;
   fVar14 = (float)coinPtr - 20.0;
-  fVar12 = (float10)security_cookie_guard_b(fVar14);
+  fVar12 = (float)security_cookie_guard_b(fVar14);
   coinPtr = (float *)(float)fVar12;
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,(float)coinPtr / 3.0,fVar14,uVar21,uVar15,puVar16,puVar17,
-               puVar10,uVar19,uVar20,uVar22);
+               puVar9,uVar19,uVar20,uVar22);
   if (7 < local_248) {
     operator_delete(local_25c[0]);
   }
@@ -468,12 +468,12 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
             ((basic_streambuf<wchar_t,std::char_traits<wchar_t>_> *)local_438,(wchar_t *)0x0,
              (wchar_t *)0x0);
   local_3fc = local_3fc & 0xfffffffe;
-  puVar10 = &local_1ec;
+  puVar9 = &local_1ec;
   if (7 < local_1d8) {
-    puVar10 = local_1ec;
+    puVar9 = local_1ec;
   }
   local_400 = 0;
-  strstreambuf_init(puVar10,local_1dc,local_3fc);
+  strstreambuf_init(puVar9,local_1dc,local_3fc);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
     operator_delete(local_1ec);
@@ -500,19 +500,19 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
   local_1f8 = 0x3f800000;
   uStack_1f4 = 0x3f800000;
   local_1f0 = 0x3f800000;
-  puVar10 = &local_21c;
+  puVar9 = &local_21c;
   puVar17 = &local_234;
   puVar16 = &local_1fc;
   uVar15 = 0x40400000;
   trylevel._0_1_ = 0xf;
   uVar21 = 0x41400000;
-  fVar12 = (float10)security_cookie_guard_a(0x41400000,0x40400000,puVar16,puVar17,puVar10,1,0xbf800000,1);
+  fVar12 = (float)security_cookie_guard_a(0x41400000,0x40400000,puVar16,puVar17,puVar9,1,0xbf800000,1);
   coinPtr = (float *)(float)fVar12;
   fVar14 = (float)coinPtr - 20.0;
-  fVar12 = (float10)security_cookie_guard_b(fVar14);
+  fVar12 = (float)security_cookie_guard_b(fVar14);
   coinPtr = (float *)(float)fVar12;
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,((float)coinPtr * 2.0) / 3.0,fVar14,uVar21,uVar15,puVar16,
-               puVar17,puVar10,uVar19,uVar20,uVar22);
+               puVar17,puVar9,uVar19,uVar20,uVar22);
   if (7 < local_248) {
     operator_delete(local_25c[0]);
   }
@@ -524,16 +524,16 @@ void cube::AdaptionWidget::vfunc_1_0040f8f0(void)
     operator_delete(local_1ec);
   }
   Widget_computeBoundsFloat(&local_23c);
-  fVar12 = (float10)security_cookie_guard_a();
+  fVar12 = (float)security_cookie_guard_a();
   coinPtr = (float *)(float)fVar12;
   if ((float)coinPtr - 30.0 < screenX) {
-    fVar12 = (float10)security_cookie_guard_a();
+    fVar12 = (float)security_cookie_guard_a();
     coinPtr = (float *)(float)fVar12;
     if (screenX < (float)coinPtr) {
-      fVar12 = (float10)security_cookie_guard_b();
+      fVar12 = (float)security_cookie_guard_b();
       coinPtr = (float *)(float)fVar12;
       if ((float)coinPtr * 0.5 < local_23c) {
-        fVar12 = (float10)security_cookie_guard_b();
+        fVar12 = (float)security_cookie_guard_b();
         coinPtr = (float *)(float)fVar12;
         if (local_23c < (float)coinPtr) {
           local_21c = 0;
@@ -569,19 +569,19 @@ LAB_00410902:
   uStack_208 = 0;
   local_204 = 0;
   uStack_200 = 0;
-  puVar10 = &local_1fc;
+  puVar9 = &local_1fc;
   puVar17 = &local_20c;
   trylevel._0_1_ = 0x11;
   uVar15 = 0;
   uVar21 = 0x41400000;
   puVar16 = selfSaved;
-  fVar12 = (float10)security_cookie_guard_a(0x41400000,0,selfSaved,puVar17,puVar10,1,0xbf800000,1);
+  fVar12 = (float)security_cookie_guard_a(0x41400000,0,selfSaved,puVar17,puVar9,1,0xbf800000,1);
   coinPtr = (float *)(float)fVar12;
   fVar14 = (float)coinPtr - 20.0;
-  fVar12 = (float10)security_cookie_guard_b(fVar14);
+  fVar12 = (float)security_cookie_guard_b(fVar14);
   coinPtr = (float *)(float)fVar12;
   AdaptionWidget_draw_text_locked(&local_1ec,uVar18,0,0,((float)coinPtr * 2.0) / 3.0,fVar14,uVar21,uVar15,puVar16,
-               puVar17,puVar10,uVar19,uVar20,uVar22);
+               puVar17,puVar9,uVar19,uVar20,uVar22);
   if (7 < local_248) {
     operator_delete(local_25c[0]);
   }
@@ -592,7 +592,7 @@ LAB_00410902:
   if (7 < local_1d8) {
     operator_delete(local_1ec);
   }
-  fVar12 = (float10)security_cookie_guard_a();
+  fVar12 = (float)security_cookie_guard_a();
   coinPtr = (float *)(float)fVar12;
   fVar14 = (float)coinPtr - 50.0;
   local_1d8 = 7;
@@ -611,37 +611,37 @@ LAB_00410902:
             ((basic_streambuf<wchar_t,std::char_traits<wchar_t>_> *)local_438,(wchar_t *)0x0,
              (wchar_t *)0x0);
   local_3fc = local_3fc & 0xfffffffe;
-  puVar10 = &local_1ec;
+  puVar9 = &local_1ec;
   if (7 < local_1d8) {
-    puVar10 = local_1ec;
+    puVar9 = local_1ec;
   }
   local_400 = 0;
-  strstreambuf_init(puVar10,local_1dc,local_3fc);
+  strstreambuf_init(puVar9,local_1dc,local_3fc);
   trylevel = CONCAT31(trylevel._1_3_,3);
   if (7 < local_1d8) {
     operator_delete(local_1ec);
   }
-  targetEntity = getTargetEntity();
-  iVar7 = 0;
+  iVar5 = getTargetEntity();
+  targetEntity = 0;
   fVar14 = (float)(int)fVar14;
-  if (targetEntity != 0) {
-    targetEntity = (int)*(short *)(targetEntity + 0x10);
+  if (iVar5 != 0) {
+    iVar11 = (int)*(short *)(iVar5 + 0x10);
     coinPtr = *(float **)(*(int *)((int)self + 0x16c) + 0x8006d0);
     fVar14 = screenX;
-    if (targetEntity < *(int *)((int)coinPtr + 400)) {
-      dVar13 = 2.0;
-      libm_sse2_pow_precise();
+    if (iVar11 < *(int *)((int)coinPtr + 400)) {
+      dVar13 = libm_sse2_pow_precise
+                         (2.0,(double)((float)(int)((*(byte *)(iVar5 + 0xc) - 1) + iVar11) * 0.25));
       do {
-        targetEntity = targetEntity + 1;
-        iVar7 = (int)((float)iVar7 + (float)dVar13 * 2.0);
+        iVar11 = iVar11 + 1;
+        targetEntity = (int)((float)targetEntity + (float)dVar13 * 2.0);
         fVar14 = screenX;
-      } while (targetEntity < *(int *)((int)coinPtr + 400));
+      } while (iVar11 < *(int *)((int)coinPtr + 400));
     }
   }
   pcVar23 = " Platinum Coins ";
-  pbVar9 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
-                     ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_440,iVar7);
-  wostream_insertNarrow(pbVar9,pcVar23);
+  pbVar8 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
+                     ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)local_440,targetEntity);
+  wostream_insertNarrow(pbVar8,pcVar23);
   local_1d8 = 7;
   local_1dc = 0;
   local_1ec = (undefined4 *)((uint)local_1ec & 0xffff0000);
@@ -704,11 +704,11 @@ LAB_00410902:
   u16string_assignCStr(&PTR_006fccac);
   trylevel._0_1_ = 0x17;
   strstreambuf_tidy();
-  puVar10 = &local_1ec;
+  puVar9 = &local_1ec;
   if (7 < local_1d8) {
-    puVar10 = local_1ec;
+    puVar9 = local_1ec;
   }
-  strstreambuf_init(puVar10,local_1dc,local_3fc);
+  strstreambuf_init(puVar9,local_1dc,local_3fc);
   trylevel._0_1_ = 3;
   if (7 < local_1d8) {
     operator_delete(local_1ec);
@@ -795,23 +795,23 @@ void cube::AdaptionWidget::vfunc_10(void)
 
 {
   int self;
-  float10 width;
-  float10 elemW;
+  float width;
+  float elemW;
   undefined4 uVar3;
   undefined4 uVar4;
   
   if (*(int *)(self + 0x170) != 0) {
     uVar4 = 1;
     uVar3 = 0x42480000;
-    width = (float10)security_cookie_guard_b(0x42480000,1);
-    elemW = (float10)Widget_measureGuarded();
-    Widget_setScroll(((float)width - (float)elemW) * 0.5,uVar3,uVar4);
+    width = (float)security_cookie_guard_b(0x42480000,1);
+    elemW = (float)Widget_measureGuarded();
+    Widget_setScroll(((float)width - (float)elemW) * 0.5f,uVar3,uVar4);
   }
   if (*(int *)(self + 0x174) != 0) {
     uVar4 = 1;
     uVar3 = 0x43660000;
-    width = (float10)security_cookie_guard_b(0x43660000,1);
-    Widget_setScroll((float)width * 0.5 - 10.0,uVar3,uVar4);
+    width = (float)security_cookie_guard_b(0x43660000,1);
+    Widget_setScroll((float)width * 0.5f - 10.0f,uVar3,uVar4);
   }
   return;
 }
@@ -1210,8 +1210,8 @@ void AdaptionWidget_clampScrollToContent(void)
       }
     }
     AdaptionWidget_getContentSize(&offset_x);
-    if (0.0 < offset_x) {
-      offset_x = 0.0;
+    if (0.0f < offset_x) {
+      offset_x = 0.0f;
     }
     fVar2 = offset_x;
     pfVar3 = (float *)AdaptionWidget_getBoundsRect(local_18);
@@ -1235,8 +1235,8 @@ void AdaptionWidget_clampScrollToContent(void)
         offset_x = fVar1 - *pfVar3;
       }
     }
-    if (0.0 < offset_y) {
-      offset_y = 0.0;
+    if (0.0f < offset_y) {
+      offset_y = 0.0f;
     }
     fVar2 = offset_y;
     child = AdaptionWidget_getBoundsRect(local_20);
@@ -1267,7 +1267,7 @@ void AdaptionWidget_clampScrollToContent(void)
     }
     pfVar3 = (float *)AdaptionWidget_getBoundsRect(local_18);
     if (fVar1 < *pfVar3) {
-      offset_x = 0.0;
+      offset_x = 0.0f;
     }
     child = AdaptionWidget_getBoundsRect(local_20);
     fVar1 = *(float *)(child + 4);
@@ -1276,7 +1276,7 @@ void AdaptionWidget_clampScrollToContent(void)
     }
     child = AdaptionWidget_getBoundsRect(local_18);
     if (fVar1 < *(float *)(child + 4)) {
-      offset_y = 0.0;
+      offset_y = 0.0f;
     }
     AdaptionWidget_applyScrollLayout(&offset_x,1);
     if (self[0x50] != 0) {
@@ -1429,16 +1429,16 @@ void cube::AdaptionWidget::vfunc_0_00627e40(float *out_point,float *in_point,int
   local_60[2] = fVar28;
   fVar55 = (*(float *)(self + 0x30) + *(float *)(self + 0x58)) - *(float *)(self + 0x40);
   local_60[3] = fVar48;
-  if (fVar56 < 0.0) {
-    fVar56 = 0.0;
+  if (fVar56 < 0.0f) {
+    fVar56 = 0.0f;
   }
   local_cc = local_10[0];
   if (local_10[0] < fVar56) {
     local_10[0] = fVar56;
     local_cc = fVar56;
   }
-  if (fVar55 < 0.0) {
-    fVar55 = 0.0;
+  if (fVar55 < 0.0f) {
+    fVar55 = 0.0f;
   }
   local_c8 = local_10[1];
   if (local_10[1] < fVar55) {
@@ -1640,7 +1640,7 @@ LAB_00627fb9:
   local_60[3] = *(float *)(self + 0xf4) * local_a0[3] + fVar15 * local_84 + fVar16 * local_74 +
                 local_64 * fVar14;
   fVar23 = in_point[1];
-  fVar38 = 1.0 / (fVar22 * (fVar65 + fVar37 + fVar38 + fVar39) +
+  fVar38 = 1.0f / (fVar22 * (fVar65 + fVar37 + fVar38 + fVar39) +
                   fVar23 * (fVar40 + fVar41 + fVar42 + fVar43) + fVar44 + fVar54 + fVar52 + fVar50);
   fVar37 = *(float *)(self + 0x24);
   fVar56 = fVar38 * (fVar22 * (fVar57 * fVar47 + fVar58 * fVar56 + fVar59 * fVar3 + fVar60 * fVar4)
@@ -1652,30 +1652,30 @@ LAB_00627fb9:
   if (fVar37 <= fVar56) {
     fVar55 = *(float *)(self + 0x2c);
     if (fVar37 + fVar55 <= fVar56) {
-      fVar57 = 1.0;
+      fVar57 = 1.0f;
     }
     else {
       fVar57 = (fVar56 - fVar37) / fVar55;
     }
   }
   else {
-    fVar57 = 0.0;
+    fVar57 = 0.0f;
   }
   fVar60 = *(float *)(self + 0x28);
   if (fVar60 <= fVar38) {
     if (fVar60 + *(float *)(self + 0x30) <= fVar38) {
-      fVar47 = 1.0;
+      fVar47 = 1.0f;
     }
     else {
       fVar47 = (fVar38 - fVar60) / *(float *)(self + 0x30);
     }
   }
   else {
-    fVar47 = 0.0;
+    fVar47 = 0.0f;
   }
   fVar55 = ((fVar56 + fVar28) - *(float *)(self + 0x24)) + fVar57 * (local_cc - fVar55);
   fVar28 = ((fVar38 + fVar48) - fVar60) + fVar47 * (local_c8 - *(float *)(self + 0x30));
-  fVar48 = 1.0 / ((*(float *)(self + 0xd4) * local_a0[3] + local_84 * *(float *)(self + 0xd8) +
+  fVar48 = 1.0f / ((*(float *)(self + 0xd4) * local_a0[3] + local_84 * *(float *)(self + 0xd8) +
                    *(float *)(self + 0xdc) * local_74 + local_64 * *(float *)(self + 0xe0)) *
                   fVar28 + (local_a0[3] * *(float *)(self + 0xc4) +
                             local_84 * *(float *)(self + 200) +
@@ -1792,7 +1792,7 @@ void AdaptionWidget_layoutRecursive(int widget)
      ((*(int *)(widget + 0x40) == 0 || (*(int *)(widget + 0x40) == self)))) {
     cursor_y = *(float *)(*(int *)(self + 4) + 0xd8);
     cursor_x = *(float *)(*(int *)(self + 4) + 0xd4);
-    local_y = 1.0 / (*(float *)(widget + 0xa4) * cursor_y + *(float *)(widget + 0x94) * cursor_x +
+    local_y = 1.0f / (*(float *)(widget + 0xa4) * cursor_y + *(float *)(widget + 0x94) * cursor_x +
                     *(float *)(widget + 0xc4));
     local_x = local_y * (*(float *)(widget + 0x98) * cursor_y + *(float *)(widget + 0x88) * cursor_x +
                          *(float *)(widget + 0xb8));
@@ -2096,19 +2096,19 @@ LAB_006296f5:
       Matrix4_Invert();
       iVar3 = *(int *)(*(int *)(self + 0x148) + 0x38);
       mat4_mulRight(local_88,self + 0xe8);
-      fVar11 = 1.0 / (local_6c * 0.0 + local_88[3] * 0.0 + local_4c);
+      fVar11 = 1.0f / (local_6c * 0.0f + local_88[3] * 0.0f + local_4c);
       fVar8 = position[1];
       fVar9 = *position;
       iVar4 = *(int *)(iVar3 + 0x68);
       iVar3 = *(int *)(iVar3 + 0x94);
-      fVar12 = 1.0 / (fVar9 * local_48[3] + fVar8 * local_2c + local_c);
+      fVar12 = 1.0f / (fVar9 * local_48[3] + fVar8 * local_2c + local_c);
       *(float *)(iVar3 + iVar4 * 8) =
            (fVar12 * (fVar9 * local_48[0] + fVar8 * local_38 + local_18) -
-           fVar11 * (local_78 * 0.0 + local_88[0] * 0.0 + local_58)) + *(float *)(iVar3 + iVar4 * 8)
+           fVar11 * (local_78 * 0.0f + local_88[0] * 0.0f + local_58)) + *(float *)(iVar3 + iVar4 * 8)
       ;
       *(float *)(iVar3 + 4 + iVar4 * 8) =
            (fVar12 * (fVar9 * local_48[1] + fVar8 * local_34 + local_14) -
-           fVar11 * (local_74 * 0.0 + local_88[1] * 0.0 + local_54)) +
+           fVar11 * (local_74 * 0.0f + local_88[1] * 0.0f + local_54)) +
            *(float *)(iVar3 + 4 + iVar4 * 8);
       (**(code **)(**(int **)(*(int *)(self + 0x148) + 0x38) + 4))(1);
       AdaptionWidget_computeLayoutBounds(matrix);
@@ -2123,9 +2123,9 @@ LAB_006296f5:
     if (*(int *)(iVar3 + 0x40) != 0) {
       if (*(int *)(iVar3 + 0x40) != 0) {
         pfVar2 = (float *)AdaptionWidget_computeBoundsUnion(local_88);
-        fVar21 = 1.0 / (pfVar2[7] * 0.0 + pfVar2[3] * 0.0 + pfVar2[0xf]);
-        fVar10 = fVar21 * (pfVar2[4] * 0.0 + *pfVar2 * 0.0 + pfVar2[0xc]) * -1.0;
-        fVar21 = fVar21 * (pfVar2[5] * 0.0 + pfVar2[1] * 0.0 + pfVar2[0xd]) * -1.0;
+        fVar21 = 1.0f / (pfVar2[7] * 0.0f + pfVar2[3] * 0.0f + pfVar2[0xf]);
+        fVar10 = fVar21 * (pfVar2[4] * 0.0f + *pfVar2 * 0.0f + pfVar2[0xc]) * -1.0f;
+        fVar21 = fVar21 * (pfVar2[5] * 0.0f + pfVar2[1] * 0.0f + pfVar2[0xd]) * -1.0f;
         local_104 = local_38 * fVar21 + local_48[0] * fVar10 + local_18;
         local_e4 = local_34 * fVar21 + local_48[1] * fVar10 + local_14;
         local_d8 = local_30 * fVar21 + local_48[2] * fVar10 + local_10;
@@ -2341,11 +2341,11 @@ void cube::AdaptionWidget::vfunc_11(void)
   if ((*(uint *)(self + 0x128) >> 7 & 1) != 0) {
     *(undefined2 *)(self + 0x14c) = 0;
     matrix = (float *)AdaptionWidget_computeLayoutBounds(matrix_buf);
-    world_y = 1.0 / (matrix[7] * 0.0 + matrix[3] * 0.0 + matrix[0xf]);
+    world_y = 1.0f / (matrix[7] * 0.0f + matrix[3] * 0.0f + matrix[0xf]);
     world_x = *(float *)(*(int *)(self + 4) + 0xd4) -
-            world_y * (matrix[4] * 0.0 + *matrix * 0.0 + matrix[0xc]);
+            world_y * (matrix[4] * 0.0f + *matrix * 0.0f + matrix[0xc]);
     world_y = *(float *)(*(int *)(self + 4) + 0xd8) -
-            world_y * (matrix[5] * 0.0 + matrix[1] * 0.0 + matrix[0xd]);
+            world_y * (matrix[5] * 0.0f + matrix[1] * 0.0f + matrix[0xd]);
     if (world_x < (*(float *)(self + 0x68) + *(float *)(self + 0x48)) - *(float *)(self + 0x58))
     {
       Widget_set_flags_word(*(undefined4 *)(self + 0x148));
@@ -2353,8 +2353,8 @@ void cube::AdaptionWidget::vfunc_11(void)
     }
     fVar3 = (*(float *)(self + 0x50) + *(float *)(self + 0x78)) - *(float *)(self + 0x60);
     fVar2 = (*(float *)(self + 0x50) + *(float *)(self + 0x70)) - *(float *)(self + 0x60);
-    if (fVar3 < 0.0) {
-      fVar3 = 0.0;
+    if (fVar3 < 0.0f) {
+      fVar3 = 0.0f;
     }
     if (fVar2 < fVar3) {
       fVar2 = fVar3;
@@ -2371,8 +2371,8 @@ void cube::AdaptionWidget::vfunc_11(void)
     }
     fVar2 = (*(float *)(self + 0x7c) + *(float *)(self + 0x54)) - *(float *)(self + 100);
     world_x = (*(float *)(self + 0x74) + *(float *)(self + 0x54)) - *(float *)(self + 100);
-    if (fVar2 < 0.0) {
-      fVar2 = 0.0;
+    if (fVar2 < 0.0f) {
+      fVar2 = 0.0f;
     }
     if (world_x < fVar2) {
       world_x = fVar2;
@@ -2484,10 +2484,10 @@ LAB_0062ae05:
     fVar7 = *pfVar4 - *(float *)(self + 0x98);
     fVar6 = pfVar4[1] - *(float *)(self + 0x9c);
     if ((*(byte *)(self + 0x128) & 1) == 0) {
-      fVar7 = 0.0;
+      fVar7 = 0.0f;
     }
     if ((*(uint *)(self + 0x128) >> 1 & 1) == 0) {
-      fVar6 = 0.0;
+      fVar6 = 0.0f;
     }
     fVar1 = *(float *)(self + 0xa4);
     axis = *(int *)(*(int *)(self + 0x148) + 0x38);
@@ -2550,7 +2550,7 @@ LAB_0062afbf:
     child = AdaptionWidget_getContentSize(local_20);
     local_e4 = *(float *)(child + 4);
     pfVar3 = (float *)AdaptionWidget_getContentSize(local_18);
-    new_x = *total * 0.5 + *pfVar3;
+    new_x = *total * 0.5f + *pfVar3;
     goto LAB_0062afbf;
   }
   if ((*(int *)(self + 300) == 1) && ((*(uint *)(self + 0x128) >> 3 & 1) == 0)) {
@@ -2567,7 +2567,7 @@ LAB_0062b07c:
     fVar4 = *(float *)(child + 4);
     pfVar3 = (float *)AdaptionWidget_getContentSize(local_18);
     new_x = *pfVar3;
-    new_y = total[1] * 0.5 + fVar4;
+    new_y = total[1] * 0.5f + fVar4;
     goto LAB_0062b07c;
   }
   mat4_identity();
@@ -2576,9 +2576,9 @@ LAB_0062b07c:
     if (*(int *)(child + 0x40) != 0) {
       if (*(int *)(child + 0x40) != 0) {
         pfVar3 = (float *)AdaptionWidget_computeBoundsUnion(local_a0);
-        fVar4 = 1.0 / (pfVar3[7] * 0.0 + pfVar3[3] * 0.0 + pfVar3[0xf]);
-        fVar5 = (pfVar3[4] * 0.0 + *pfVar3 * 0.0 + pfVar3[0xc]) * fVar4 * -1.0;
-        fVar4 = (pfVar3[5] * 0.0 + pfVar3[1] * 0.0 + pfVar3[0xd]) * fVar4 * -1.0;
+        fVar4 = 1.0f / (pfVar3[7] * 0.0f + pfVar3[3] * 0.0f + pfVar3[0xf]);
+        fVar5 = (pfVar3[4] * 0.0f + *pfVar3 * 0.0f + pfVar3[0xc]) * fVar4 * -1.0f;
+        fVar4 = (pfVar3[5] * 0.0f + pfVar3[1] * 0.0f + pfVar3[0xd]) * fVar4 * -1.0f;
         local_14 = local_50 * fVar4 + local_60 * fVar5 + local_30;
         local_e4 = local_4c * fVar4 + local_5c * fVar5 + local_2c;
         goto LAB_0062b0cb;
@@ -2684,7 +2684,7 @@ float * AdaptionWidget_getScrollFlag(float *out_pos)
     fVar1 = *(float *)(*(int *)(self + 4) + 0xd4);
     fVar2 = *(float *)(*(int *)(self + 4) + 0xd8);
     fVar3 = *(float *)(child + 0x8c);
-    inv_w = 1.0 / (*(float *)(child + 0x94) * fVar1 + *(float *)(child + 0xa4) * fVar2 +
+    inv_w = 1.0f / (*(float *)(child + 0x94) * fVar1 + *(float *)(child + 0xa4) * fVar2 +
                   *(float *)(child + 0xc4));
     fVar4 = *(float *)(child + 0x9c);
     fVar5 = *(float *)(child + 0xbc);
@@ -2769,21 +2769,21 @@ LAB_0062b578:
       fVar8 = matrix[6];
       fVar9 = matrix[7];
       fVar10 = matrix[0xf];
-      fVar14 = 1.0 / ((local_3c * *matrix + local_2c * matrix[1] + local_1c * matrix[2] +
-                      local_d0 * matrix[3]) * 0.0 +
+      fVar14 = 1.0f / ((local_3c * *matrix + local_2c * matrix[1] + local_1c * matrix[2] +
+                      local_d0 * matrix[3]) * 0.0f +
                       (local_2c * matrix[5] + matrix[4] * local_3c + local_1c * matrix[6] +
-                      local_d0 * matrix[7]) * 0.0 +
+                      local_d0 * matrix[7]) * 0.0f +
                      matrix[0xd] * local_2c + fVar7 * local_3c + local_1c * fVar15 +
                      local_d0 * matrix[0xf]);
       *out_point = ((local_48 * *matrix + local_38 * matrix[1] + local_28 * matrix[2] +
-                  local_cc * matrix[3]) * 0.0 +
+                  local_cc * matrix[3]) * 0.0f +
                   (local_38 * matrix[5] + matrix[4] * local_48 + local_28 * matrix[6] +
-                  local_cc * matrix[7]) * 0.0 +
+                  local_cc * matrix[7]) * 0.0f +
                  matrix[0xd] * local_38 + matrix[0xc] * local_48 + local_28 * fVar15 +
                  local_cc * matrix[0xf]) * fVar14;
       out_point[1] = ((local_44 * fVar1 + local_34 * fVar2 + local_24 * fVar4 + local_d8 * fVar5) *
-                    0.0 + (local_34 * fVar3 + fVar6 * local_44 + local_24 * fVar8 + local_d8 * fVar9
-                          ) * 0.0 +
+                    0.0f + (local_34 * fVar3 + fVar6 * local_44 + local_24 * fVar8 + local_d8 * fVar9
+                          ) * 0.0f +
                    fVar13 * local_34 + fVar7 * local_44 + local_24 * fVar15 + local_d8 * fVar10) *
                    fVar14;
       __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -2792,9 +2792,9 @@ LAB_0062b578:
     if (*(int *)(child + 0x40) != 0) {
       if (*(int *)(child + 0x40) != 0) {
         matrix = (float *)AdaptionWidget_computeBoundsUnion(local_88);
-        fVar13 = 1.0 / (matrix[7] * 0.0 + matrix[3] * 0.0 + matrix[0xf]);
-        fVar15 = (matrix[4] * 0.0 + *matrix * 0.0 + matrix[0xc]) * fVar13 * -1.0;
-        fVar13 = (matrix[5] * 0.0 + matrix[1] * 0.0 + matrix[0xd]) * fVar13 * -1.0;
+        fVar13 = 1.0f / (matrix[7] * 0.0f + matrix[3] * 0.0f + matrix[0xf]);
+        fVar15 = (matrix[4] * 0.0f + *matrix * 0.0f + matrix[0xc]) * fVar13 * -1.0f;
+        fVar13 = (matrix[5] * 0.0f + matrix[1] * 0.0f + matrix[0xd]) * fVar13 * -1.0f;
         local_cc = local_38 * fVar13 + local_48 * fVar15 + local_18;
         local_d8 = local_34 * fVar13 + local_44 * fVar15 + local_14;
         local_d0 = local_2c * fVar13 + local_3c * fVar15 + local_c;
@@ -2892,7 +2892,7 @@ void Widget_measureChildrenRecursive(int widget,undefined4 param_2,float *delta,
     child = *(int **)(widget + 0x40);
     if ((child == self) || (child == (int *)0x0)) {
       AdaptionWidget_compute_local_transform();
-      if ((*delta != 0.0) || (delta[1] != 0.0)) {
+      if ((*delta != 0.0f) || (delta[1] != 0.0f)) {
         *(undefined1 *)(self + 0x4d) = 1;
         child = (int *)**(int **)(widget + 0x2c);
         if (child != *(int **)(widget + 0x2c)) {
@@ -2978,14 +2978,14 @@ void AdaptionWidget_measureContent(float *delta,undefined4 apply)
   local_10c = ((float)self[0x1c] + (float)self[0x14]) - (float)self[0x18];
   local_4c = ((float)self[0x1d] + (float)self[0x15]) - (float)self[0x19];
   fVar16 = ((float)self[0x1f] + (float)self[0x15]) - (float)self[0x19];
-  if (fVar18 < 0.0) {
-    fVar18 = 0.0;
+  if (fVar18 < 0.0f) {
+    fVar18 = 0.0f;
   }
   if (local_10c < fVar18) {
     local_10c = fVar18;
   }
-  if (fVar16 < 0.0) {
-    fVar16 = 0.0;
+  if (fVar16 < 0.0f) {
+    fVar16 = 0.0f;
   }
   if (local_4c < fVar16) {
     local_4c = fVar16;
@@ -2995,9 +2995,9 @@ void AdaptionWidget_measureContent(float *delta,undefined4 apply)
     if (*(int *)(child + 0x40) != 0) {
       if (*(int *)(child + 0x40) != 0) {
         pfVar3 = (float *)AdaptionWidget_computeBoundsUnion(matrix);
-        fVar16 = 1.0 / (pfVar3[7] * 0.0 + pfVar3[3] * 0.0 + pfVar3[0xf]);
-        fVar18 = (pfVar3[4] * 0.0 + *pfVar3 * 0.0 + pfVar3[0xc]) * fVar16 * -1.0;
-        fVar16 = (pfVar3[5] * 0.0 + pfVar3[1] * 0.0 + pfVar3[0xd]) * fVar16 * -1.0;
+        fVar16 = 1.0f / (pfVar3[7] * 0.0f + pfVar3[3] * 0.0f + pfVar3[0xf]);
+        fVar18 = (pfVar3[4] * 0.0f + *pfVar3 * 0.0f + pfVar3[0xc]) * fVar16 * -1.0f;
+        fVar16 = (pfVar3[5] * 0.0f + pfVar3[1] * 0.0f + pfVar3[0xd]) * fVar16 * -1.0f;
         local_e0 = local_38 * fVar16 + local_48 * fVar18 + local_18;
         local_ec = local_34 * fVar16 + local_44 * fVar18 + local_14;
         local_f0 = local_40 * fVar18 + local_30 * fVar16 + local_10;
@@ -3061,14 +3061,14 @@ LAB_0062bcdb:
   fVar16 = (fVar17 + (float)self[0x14]) - (float)self[0x18];
   fVar17 = ((float)self[0x1f] + (float)self[0x15]) - (float)self[0x19];
   fVar18 = (fVar18 + (float)self[0x15]) - (float)self[0x19];
-  if (fVar19 < 0.0) {
-    fVar19 = 0.0;
+  if (fVar19 < 0.0f) {
+    fVar19 = 0.0f;
   }
   if (fVar16 < fVar19) {
     fVar16 = fVar19;
   }
-  if (fVar17 < 0.0) {
-    fVar17 = 0.0;
+  if (fVar17 < 0.0f) {
+    fVar17 = 0.0f;
   }
   if (fVar18 < fVar17) {
     fVar18 = fVar17;
@@ -3094,7 +3094,7 @@ LAB_0062c1cf:
                  fVar18 * (pfVar3[5] * local_34 + pfVar3[4] * local_44 + pfVar3[6] * local_24 +
                           pfVar3[7] * local_dc);
       local_50 = 0;
-      local_4c = 0.0;
+      local_4c = 0.0f;
       Widget_measureChildrenRecursive(self[0x52],&local_50,&local_58,apply);
       (**(code **)(*self + 0x28))();
       __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
@@ -3103,9 +3103,9 @@ LAB_0062c1cf:
     if (*(int *)(child + 0x40) != 0) {
       if (*(int *)(child + 0x40) != 0) {
         pfVar3 = (float *)AdaptionWidget_computeBoundsUnion(matrix);
-        fVar19 = 1.0 / (pfVar3[7] * 0.0 + pfVar3[3] * 0.0 + pfVar3[0xf]);
-        fVar17 = fVar19 * (pfVar3[4] * 0.0 + *pfVar3 * 0.0 + pfVar3[0xc]) * -1.0;
-        fVar19 = fVar19 * (pfVar3[5] * 0.0 + pfVar3[1] * 0.0 + pfVar3[0xd]) * -1.0;
+        fVar19 = 1.0f / (pfVar3[7] * 0.0f + pfVar3[3] * 0.0f + pfVar3[0xf]);
+        fVar17 = fVar19 * (pfVar3[4] * 0.0f + *pfVar3 * 0.0f + pfVar3[0xc]) * -1.0f;
+        fVar19 = fVar19 * (pfVar3[5] * 0.0f + pfVar3[1] * 0.0f + pfVar3[0xd]) * -1.0f;
         local_e0 = local_38 * fVar19 + local_48 * fVar17 + local_18;
         local_dc = local_34 * fVar19 + local_44 * fVar17 + local_14;
         goto LAB_0062c1cf;
@@ -3590,16 +3590,16 @@ void cube::AdaptionWidget::vfunc_1_0062e180(float *out_point,float *in_point,int
   local_60[1] = fVar29;
   fVar56 = (*(float *)(self + 0x30) + *(float *)(self + 0x58)) - *(float *)(self + 0x40);
   local_60[0] = fVar49;
-  if (fVar58 < 0.0) {
-    fVar58 = 0.0;
+  if (fVar58 < 0.0f) {
+    fVar58 = 0.0f;
   }
   local_c4 = local_10[0];
   if (local_10[0] < fVar58) {
     local_10[0] = fVar58;
     local_c4 = fVar58;
   }
-  if (fVar56 < 0.0) {
-    fVar56 = 0.0;
+  if (fVar56 < 0.0f) {
+    fVar56 = 0.0f;
   }
   local_d0 = local_10[1];
   if (local_10[1] < fVar56) {
@@ -3801,7 +3801,7 @@ LAB_0062e2e9:
   local_60[1] = *(float *)(self + 0xf4) * local_a0[3] + fVar15 * local_84 + fVar16 * local_74 +
                 local_64 * fVar14;
   fVar24 = *in_point;
-  fVar39 = 1.0 / (fVar24 * (fVar57 + fVar39 + fVar40 + fVar41) +
+  fVar39 = 1.0f / (fVar24 * (fVar57 + fVar39 + fVar40 + fVar41) +
                   (fVar42 + fVar43 + fVar44 + fVar45) * fVar23 + fVar46 + fVar55 + fVar53 + fVar51);
   fVar56 = fVar39 * ((fVar56 * fVar59 + fVar3 * fVar58 + fVar4 * fVar60 + fVar5 * fVar61) * fVar24 +
                      (fVar6 * fVar58 + fVar7 * fVar59 + fVar10 * fVar60 + fVar61 * fVar2) * fVar23 +
@@ -3811,31 +3811,31 @@ LAB_0062e2e9:
                     fVar38 + fVar54 + fVar52 + fVar50);
   if (fVar49 <= fVar56) {
     if (local_c4 + fVar49 <= fVar56) {
-      fVar58 = 1.0;
+      fVar58 = 1.0f;
     }
     else {
       fVar58 = (fVar56 - fVar49) / local_c4;
     }
   }
   else {
-    fVar58 = 0.0;
+    fVar58 = 0.0f;
   }
   if (fVar29 <= fVar39) {
     if (local_d0 + fVar29 <= fVar39) {
-      fVar61 = 1.0;
+      fVar61 = 1.0f;
     }
     else {
       fVar61 = (fVar39 - fVar29) / local_d0;
     }
   }
   else {
-    fVar61 = 0.0;
+    fVar61 = 0.0f;
   }
   fVar49 = ((*(float *)(self + 0x24) + fVar56) - fVar49) +
            fVar58 * (*(float *)(self + 0x2c) - local_c4);
   fVar29 = ((*(float *)(self + 0x28) + fVar39) - fVar29) +
            fVar61 * (*(float *)(self + 0x30) - local_d0);
-  fVar56 = 1.0 / ((local_84 * *(float *)(self + 0xd8) + *(float *)(self + 0xd4) * local_a0[3] +
+  fVar56 = 1.0f / ((local_84 * *(float *)(self + 0xd8) + *(float *)(self + 0xd4) * local_a0[3] +
                    *(float *)(self + 0xdc) * local_74 + local_64 * *(float *)(self + 0xe0)) *
                   fVar29 + (local_a0[3] * *(float *)(self + 0xc4) +
                             local_84 * *(float *)(self + 200) +
@@ -4338,8 +4338,8 @@ void Widget_layoutAspectFit(void)
         AdaptionWidget_onContentResized(vecTmp);
         denom = AdaptionWidget_getBoundsRect(vecTmp);
         ratio = *(float *)(widget + axis * 4) / *(float *)(denom + axis * 4);
-        if (ratio < 1.0) {
-          ratio = 1.0;
+        if (ratio < 1.0f) {
+          ratio = 1.0f;
         }
         AdaptionWidget_getBoundsRect(sizeVec);
         vecTmp = vecB;
@@ -4361,7 +4361,7 @@ void Widget_layoutAspectFit(void)
                    (*(float *)(denom + axis * 4) - *(float *)(extent + axis * 4)));
         }
         else {
-          offset = 0.0;
+          offset = 0.0f;
         }
         Widget_applyAlignmentOffset(offset);
       }
@@ -4397,8 +4397,8 @@ void Widget_applyAlignmentOffset(float t)
   stackCookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   widget = AdaptionWidget_onContentResized();
   if (widget != 0) {
-    clamped = 0.0;
-    if ((t < 0.0) || (clamped = 1.0, 1.0 < t)) {
+    clamped = 0.0f;
+    if ((t < 0.0f) || (clamped = 1.0f, 1.0f < t)) {
       t = clamped;
     }
     axis = (uint)(*(int *)(self + 0x238) != 1);

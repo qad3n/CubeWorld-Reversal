@@ -114,7 +114,7 @@ cube::WalkPathBehavior::vfunc_0(WalkPathBehavior *this,void *creature,void *worl
     local_9c = iStack_48;
     local_98 = wp_z;
     axis = 0;
-    half_height = *(float *)((int)creature + 0x88) * 0.5;
+    half_height = *(float *)((int)creature + 0x88) * 0.5f;
     do {
       uVar12 = ftol2();
       rand_offset[axis * 2] = (uint)uVar12;
@@ -174,7 +174,7 @@ LAB_004c63af:
     if (0x14 < attempt) break;
 LAB_004c6010:
     axis = 0;
-    half_height = *(float *)((int)creature + 0x88) * 0.5;
+    half_height = *(float *)((int)creature + 0x88) * 0.5f;
     do {
       uVar12 = ftol2();
       rand_offset[axis * 2] = (uint)uVar12;
@@ -190,7 +190,7 @@ LAB_004c6010:
                          wp_z + rand_offset[4]);
     blocked = WalkPathBehavior_checkPathClear(world,rand_offset + 6,(float *)((int)creature + 0x80),'\0');
     if (blocked == '\0') {
-      half_height = *(float *)((int)creature + 0x88) * 0.5;
+      half_height = *(float *)((int)creature + 0x88) * 0.5f;
       local_14 = 0;
       Vec3i64_randomize((int)rand_offset);
       puVar4 = &wp_x;
@@ -202,7 +202,7 @@ LAB_004c6010:
           *pfVar5 * *pfVar5 + pfVar5[1] * pfVar5[1] + pfVar5[2] * pfVar5[2]) {
         if (*(int *)((int)creature + 0x1464) == 0) {
           World_clearContainers((int)creature);
-          half_height = 0.1 - *(float *)((int)creature + 0x88) * 0.5;
+          half_height = 0.1f - *(float *)((int)creature + 0x88) * 0.5f;
           local_14 = 0;
           Vec3i64_randomize((int)rand_offset);
           puVar4 = Vec3i64_add((void *)((int)creature + 0x10),local_74,rand_offset);

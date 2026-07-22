@@ -454,41 +454,41 @@ void cube::CharacterStyleWidget::ctor_0
 void cube::CharacterStyleWidget::vfunc_10(void)
 
 {
-  float10 labelW;
-  float10 elemW;
+  float labelW;
+  float elemW;
   undefined4 argA;
   undefined4 argB;
   
   Widget_setScroll(0x42c80000,0x41400000,1);
   argB = 1;
   argA = 0x41400000;
-  labelW = (float10)Widget_measureGuarded(0x41400000,1);
-  elemW = (float10)Widget_measureGuarded();
-  Widget_setScroll(((float)labelW - (float)elemW) - 15.0,argA,argB);
+  labelW = (float)Widget_measureGuarded(0x41400000,1);
+  elemW = (float)Widget_measureGuarded();
+  Widget_setScroll(((float)labelW - (float)elemW) - 15.0f,argA,argB);
   Widget_setScroll(0x42c80000,0x42280000,1);
   argB = 1;
   argA = 0x42280000;
-  labelW = (float10)Widget_measureGuarded(0x42280000,1);
-  elemW = (float10)Widget_measureGuarded();
-  Widget_setScroll(((float)labelW - (float)elemW) - 15.0,argA,argB);
+  labelW = (float)Widget_measureGuarded(0x42280000,1);
+  elemW = (float)Widget_measureGuarded();
+  Widget_setScroll(((float)labelW - (float)elemW) - 15.0f,argA,argB);
   Widget_setScroll(0x42c80000,0x42900000,1);
   argB = 1;
   argA = 0x42900000;
-  labelW = (float10)Widget_measureGuarded(0x42900000,1);
-  elemW = (float10)Widget_measureGuarded();
-  Widget_setScroll(((float)labelW - (float)elemW) - 15.0,argA,argB);
+  labelW = (float)Widget_measureGuarded(0x42900000,1);
+  elemW = (float)Widget_measureGuarded();
+  Widget_setScroll(((float)labelW - (float)elemW) - 15.0f,argA,argB);
   Widget_setScroll(0x42c80000,0x42cc0000,1);
   argB = 1;
   argA = 0x42cc0000;
-  labelW = (float10)Widget_measureGuarded(0x42cc0000,1);
-  elemW = (float10)Widget_measureGuarded();
-  Widget_setScroll(((float)labelW - (float)elemW) - 15.0,argA,argB);
+  labelW = (float)Widget_measureGuarded(0x42cc0000,1);
+  elemW = (float)Widget_measureGuarded();
+  Widget_setScroll(((float)labelW - (float)elemW) - 15.0f,argA,argB);
   Widget_setScroll(0x42c80000,0x43040000,1);
   argB = 1;
   argA = 0x43040000;
-  labelW = (float10)Widget_measureGuarded(0x43040000,1);
-  elemW = (float10)Widget_measureGuarded();
-  Widget_setScroll(((float)labelW - (float)elemW) - 15.0,argA,argB);
+  labelW = (float)Widget_measureGuarded(0x43040000,1);
+  elemW = (float)Widget_measureGuarded();
+  Widget_setScroll(((float)labelW - (float)elemW) - 15.0f,argA,argB);
   return;
 }
 

@@ -28290,7 +28290,7 @@ void sqlite3VdbeExec(int *param_1)
   undefined4 *puVar35;
   undefined4 *puVar36;
   bool bVar37;
-  float10 fVar38;
+  double fVar38;
   ulonglong uVar39;
   ulonglong uVar40;
   longlong lVar41;
@@ -28881,7 +28881,7 @@ LAB_0056e0a3:
     case 0x1b:
     case 0x1c:
       if ((*(byte *)(local_e4 + *(int *)(local_e0 + 4 + iVar30 * 0x14) * 10 + 7) & 1) == 0) {
-        fVar38 = (float10)lib_fn_5759b0();
+        fVar38 = (double)lib_fn_5759b0();
         local_f8 = (double)fVar38;
         uVar32 = (uint)(local_f8 != 0.0);
         local_d0 = CONCAT44(local_d0._4_4_,uVar32);
@@ -31006,9 +31006,9 @@ joined_r0x0056d401:
         if (iVar25 == 0) break;
 LAB_0056d4cd:
         local_c0 = uVar39;
-        fVar38 = (float10)lib_fn_5759b0();
+        fVar38 = (double)lib_fn_5759b0();
         local_b8 = (double)fVar38;
-        fVar38 = (float10)lib_fn_5759b0(puVar35);
+        fVar38 = (double)lib_fn_5759b0(puVar35);
         local_b0 = (double)fVar38;
         switch(*(undefined1 *)(local_e0 + iVar30 * 0x14)) {
         case 0x56:

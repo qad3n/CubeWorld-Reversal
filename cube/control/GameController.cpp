@@ -517,10 +517,10 @@ void string_erase(uint pos,uint count)
  */
 /* Global::fabs_f @ 0040cba0 */
 
-float10 fabs_f(float param_1)
+float fabs_f(float param_1)
 
 {
-  return (float10)ABS(param_1);
+  return (float)ABS(param_1);
 }
 
 
@@ -626,14 +626,13 @@ undefined4 ostrstream_str_wrap(undefined4 param_1)
  */
 /* Global::cosf_f @ 0040e420 */
 
-float10 cosf_f(float param_1)
+float cosf_f(float param_1)
 
 {
   double dVar1;
   
-  dVar1 = (double)param_1;
-  libm_sse2_cos_precise();
-  return (float10)(float)dVar1;
+  dVar1 = libm_sse2_cos_precise((double)param_1);
+  return (float)(float)dVar1;
 }
 
 
@@ -952,29 +951,30 @@ void repeatCall(undefined4 param_1,undefined4 param_2,int count,code *callback)
 int computeLevelDiffBonus(void)
 
 {
-  short curLevel;
-  int item;
+  int iVar1;
   int self;
+  int item;
   int result;
-  double power;
+  int iVar4;
+  double dVar5;
   
-  item = getTargetEntity();
-  if (item == 0) {
+  iVar1 = getTargetEntity();
+  if (iVar1 == 0) {
     return 0;
   }
-  curLevel = *(short *)(item + 0x10);
-  item = *(int *)(*(int *)(*(int *)(self + 0x16c) + 0x8006d0) + 400);
-  result = 0;
-  if (curLevel < item) {
-    power = 2.0;
-    libm_sse2_pow_precise();
-    item = item - curLevel;
+  item = (int)*(short *)(iVar1 + 0x10);
+  result = *(int *)(*(int *)(*(int *)(self + 0x16c) + 0x8006d0) + 400);
+  iVar4 = 0;
+  if (item < result) {
+    dVar5 = libm_sse2_pow_precise
+                      (2.0,(double)((float)(int)((*(byte *)(iVar1 + 0xc) - 1) + item) * 0.25));
+    result = result - item;
     do {
-      result = (int)((float)result + (float)power * 2.0);
-      item = item + -1;
-    } while (item != 0);
+      iVar4 = (int)((float)iVar4 + (float)dVar5 * 2.0);
+      result = result + -1;
+    } while (result != 0);
   }
-  return result;
+  return iVar4;
 }
 
 
@@ -1381,12 +1381,12 @@ undefined4 vectorU32_at(int index)
  */
 /* Global::fixed16ToFloat @ 004120f0 */
 
-float10 fixed16ToFloat(void)
+float fixed16ToFloat(void)
 
 {
   longlong *self;
   
-  return (float10)((float)*self * 1.5258789e-05);
+  return (float)((float)*self * 1.5258789e-05f);
 }
 
 
@@ -1607,12 +1607,12 @@ void int64_addFn(int *out)
  */
 /* Global::vec3_dot @ 00412350 */
 
-float10 vec3_dot(float *b)
+float vec3_dot(float *b)
 
 {
   float *self;
   
-  return (float10)(b[1] * self[1] + *b * *self + b[2] * self[2]);
+  return (float)(b[1] * self[1] + *b * *self + b[2] * self[2]);
 }
 
 
@@ -1837,7 +1837,7 @@ void Creature_drawModel(undefined4 param_1,undefined4 param_2,undefined4 param_3
   int iVar17;
   float *pfVar18;
   bool bVar19;
-  float10 fVar20;
+  float fVar20;
   float fVar21;
   double dVar22;
   float fVar23;
@@ -2239,12 +2239,11 @@ void Creature_drawModel(undefined4 param_1,undefined4 param_2,undefined4 param_3
     local_1514 = *(undefined4 *)((int)fVar23 + 0xcc);
     local_152c = *(uint *)((int)fVar2 + 0xcc) ^ 0x80000000;
   }
-  dVar22 = (double)(*(float *)((int)*self + 0x118c) + 1.5707964);
   local_1690 = local_1694;
   local_1510 = local_172c;
   local_150c = local_1724;
   local_1508 = (float)local_1718;
-  libm_sse2_sin_precise();
+  dVar22 = libm_sse2_sin_precise((double)(*(float *)((int)*self + 0x118c) + 1.5707964));
   fVar2 = *self;
   cVar1 = *(char *)((int)fVar2 + 0x68);
   local_1714 = (float *)(float)dVar22;
@@ -2350,12 +2349,10 @@ void Creature_drawModel(undefined4 param_1,undefined4 param_2,undefined4 param_3
        (local_16b4 = *(float *)((int)fVar2 + 0x164) * *(float *)((int)fVar2 + 0x164) +
                      *(float *)((int)fVar2 + 0x160) * *(float *)((int)fVar2 + 0x160),
        0.0 < local_16b4)) {
-      dVar22 = (double)fVar23;
-      libm_sse2_sqrt_precise();
+      dVar22 = libm_sse2_sqrt_precise((double)fVar23);
       local_16b0 = *(float *)((int)*self + 0x40) * (1.0 / (float)dVar22);
       local_16ec = *(float *)((int)*self + 0x44) * (1.0 / (float)dVar22);
-      dVar22 = (double)local_16b4;
-      libm_sse2_sqrt_precise();
+      dVar22 = libm_sse2_sqrt_precise((double)local_16b4);
       local_1734 = (float *)(*(float *)((int)*self + 0x164) * (1.0 / (float)dVar22));
       local_16b4 = *(float *)((int)*self + 0x160) * (1.0 / (float)dVar22);
       fVar2 = local_16b4 * local_16ec - (float)local_1734 * local_16b0;
@@ -2367,8 +2364,7 @@ void Creature_drawModel(undefined4 param_1,undefined4 param_2,undefined4 param_3
       else {
         fVar2 = -1.0;
       }
-      dVar22 = (double)fVar2;
-      libm_sse2_asin_precise();
+      dVar22 = libm_sse2_asin_precise((double)fVar2);
       fVar2 = *self;
       local_16cc = (float *)((float)dVar22 * 57.29578);
       if ((float)local_1734 * local_16ec + local_16b4 * local_16b0 < -0.2) {
@@ -2418,11 +2414,9 @@ void Creature_drawModel(undefined4 param_1,undefined4 param_2,undefined4 param_3
   if ((*(ushort *)((int)fVar2 + 0x7e) & 1) == 0) {
     local_1708 = (float *)(*(float *)((int)fVar2 + 0xf4) * *(float *)((int)fVar2 + 0x1188) +
                           *(float *)((int)fVar2 + 0xf4));
-    dVar22 = (double)local_16fc;
-    libm_sse2_cos_precise();
+    dVar22 = libm_sse2_cos_precise((double)local_16fc);
     local_1734 = (float *)-((float)dVar22 * (float)local_1708);
-    dVar22 = (double)local_16fc;
-    libm_sse2_sin_precise();
+    dVar22 = libm_sse2_sin_precise((double)local_16fc);
     local_15e0 = (*(float *)((int)*self + 0xfc) - 4.1) + *(float *)((int)*self + 0x1188) * 6.0;
     local_15c4 = (float *)((uint)local_1734 ^ 0x80000000);
     local_15bc = *(float *)((int)*self + 0x1188) * 6.0 + (*(float *)((int)*self + 0xfc) - 4.1);
@@ -2690,8 +2684,7 @@ void Creature_drawModel(undefined4 param_1,undefined4 param_2,undefined4 param_3
         fStack_1618 = -60.0;
         vec3_copy(&local_1620);
         local_1620 = (double)((ulonglong)local_1620 & 0xffffffff00000000);
-        dVar22 = (double)(local_172c * 3.1415927 * 0.5);
-        libm_sse2_sin_precise();
+        dVar22 = libm_sse2_sin_precise((double)(local_172c * 3.1415927 * 0.5));
         local_1620 = (double)CONCAT44((float)dVar22 * 2.0,(float)local_1620);
         fStack_1618 = 0.0;
         vec3_copy(&local_1620);
@@ -2848,8 +2841,7 @@ LAB_00416ddd:
         local_1620 = (double)CONCAT44((1.0 - local_172c) * 0.0 + local_172c * 0.0,
                                       fVar2 + local_172c * 30.0);
         vec3_copy(&local_1620);
-        dVar22 = (double)((float)(int)self[1] * 0.5);
-        libm_sse2_cos_precise();
+        dVar22 = libm_sse2_cos_precise((double)((float)(int)self[1] * 0.5));
         local_15bc = (float)dVar22 * 0.5 + local_15bc;
         local_1620 = 1.5977136277678e-314;
         fStack_1618 = local_172c * 16.0;
@@ -2870,11 +2862,11 @@ LAB_00416ddd:
     uVar7 = setVec3(0xc2b40000,0,0x42200000);
     vec3_copy(uVar7);
     pfVar8 = (float *)arrayElem_stride4(2);
-    fVar20 = (float10)cosf_f((float)(int)self[1] * 0.5);
+    fVar20 = (float)cosf_f((float)(int)self[1] * 0.5);
     local_1734 = (float *)(float)fVar20;
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
     pfVar8 = (float *)arrayElem_stride4(2);
-    fVar20 = (float10)cosf_f((float)(int)self[1] * 0.5);
+    fVar20 = (float)cosf_f((float)(int)self[1] * 0.5);
     local_1734 = (float *)(float)fVar20;
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
     uVar7 = setVec3(0x3f800000,0xc0e00000,0);
@@ -2895,11 +2887,11 @@ LAB_00419bae:
       uVar7 = setVec3(0xc2b40000,0x42b40000,0xc2200000);
       vec3_copy(uVar7);
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.5);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.5);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.5);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.5);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       uVar7 = setVec3(0x3f800000,0xc0e00000,0);
@@ -2913,11 +2905,11 @@ LAB_00419bae:
     uVar7 = setVec3(0xc2b40000,0x42b40000,0xc2480000);
     vec3_copy(uVar7);
     pfVar8 = (float *)arrayElem_stride4(2);
-    fVar20 = (float10)cosf_f((float)(int)self[1] * 0.5);
+    fVar20 = (float)cosf_f((float)(int)self[1] * 0.5);
     local_1734 = (float *)(float)fVar20;
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
     pfVar8 = (float *)arrayElem_stride4(2);
-    fVar20 = (float10)cosf_f((float)(int)self[1] * 0.5);
+    fVar20 = (float)cosf_f((float)(int)self[1] * 0.5);
     local_1734 = (float *)(float)fVar20;
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
     uVar7 = setVec3(0xc0400000,0x40e00000,0x40400000);
@@ -3110,7 +3102,7 @@ LAB_00419bae:
       uVar7 = setVec3(0xc2b40000,0,0x42340000);
       vec3_copy(uVar7);
       pfVar8 = (float *)arrayElem_stride4(0);
-      fVar20 = (float10)sinf_f((float)((int)self[1] + -600) * 0.1);
+      fVar20 = (float)sinf_f((float)((int)self[1] + -600) * 0.1);
       pfVar9 = (float *)(float)fVar20;
       local_1734 = pfVar9;
       goto LAB_0041be09;
@@ -3436,25 +3428,25 @@ LAB_0041d2e7:
       uVar7 = setVec3(0x42700000,0xc1a00000,0x41a00000);
       vec3_copy(uVar7);
       local_1714 = (float *)((float)(int)self[1] * 0.01);
-      fVar20 = (float10)cosf_f(local_1714);
+      fVar20 = (float)cosf_f(local_1714);
       local_1734 = (float *)(float)fVar20;
       fVar2 = (float)local_1734 + 4.0;
-      fVar20 = (float10)sinf_f(local_1714,fVar2);
+      fVar20 = (float)sinf_f(local_1714,fVar2);
       local_1734 = (float *)(float)fVar20;
       uVar7 = setVec3(0,(float)local_1734 + 2.0,fVar2);
       vec3_copy(uVar7);
       uVar7 = setVec3(0x42700000,0x41a00000,0xc1a00000);
       vec3_copy(uVar7);
       local_1714 = (float *)((float)(int)self[1] * 0.01 + 1.5707964);
-      fVar20 = (float10)cosf_f(local_1714);
+      fVar20 = (float)cosf_f(local_1714);
       local_1734 = (float *)(float)fVar20;
       fVar2 = (float)local_1734 + 4.0;
-      fVar20 = (float10)sinf_f(local_1714,fVar2);
+      fVar20 = (float)sinf_f(local_1714,fVar2);
       local_1734 = (float *)(float)fVar20;
       uVar7 = setVec3(0,(float)local_1734 + 2.0,fVar2);
       vec3_copy(uVar7);
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.005);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.005);
       goto LAB_0041be01;
     }
     puVar10 = (undefined4 *)arrayElem_stride4(2);
@@ -3499,25 +3491,25 @@ LAB_0041bbec:
     uVar7 = setVec3(0x42700000,0xc1a00000,0x41a00000);
     vec3_copy(uVar7);
     local_1714 = (float *)((float)(int)self[1] * 0.01);
-    fVar20 = (float10)cosf_f(local_1714);
+    fVar20 = (float)cosf_f(local_1714);
     local_1734 = (float *)(float)fVar20;
     fVar2 = (float)local_1734 + 4.0;
-    fVar20 = (float10)sinf_f(local_1714,fVar2);
+    fVar20 = (float)sinf_f(local_1714,fVar2);
     local_1734 = (float *)(float)fVar20;
     uVar7 = setVec3(0,(float)local_1734 + 2.0,fVar2);
     vec3_copy(uVar7);
     uVar7 = setVec3(0x42700000,0x41a00000,0xc1a00000);
     vec3_copy(uVar7);
     local_1714 = (float *)((float)(int)self[1] * 0.01 + 1.5707964);
-    fVar20 = (float10)cosf_f(local_1714);
+    fVar20 = (float)cosf_f(local_1714);
     local_1734 = (float *)(float)fVar20;
     fVar2 = (float)local_1734 + 4.0;
-    fVar20 = (float10)sinf_f(local_1714,fVar2);
+    fVar20 = (float)sinf_f(local_1714,fVar2);
     local_1734 = (float *)(float)fVar20;
     uVar7 = setVec3(0,(float)local_1734 + 2.0,fVar2);
     vec3_copy(uVar7);
     pfVar8 = (float *)arrayElem_stride4(2);
-    fVar20 = (float10)sinf_f((float)(int)self[1] * 0.01);
+    fVar20 = (float)sinf_f((float)(int)self[1] * 0.01);
 LAB_0041be01:
     local_1734 = (float *)(float)fVar20;
     pfVar9 = (float *)((float)local_1734 * 0.5);
@@ -3741,19 +3733,19 @@ LAB_00418829:
       pfVar8 = (float *)arrayElem_stride4(1);
       *pfVar8 = *pfVar8 + 4.0;
       pfVar8 = (float *)arrayElem_stride4(0);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(0);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
       local_1734 = (float *)(float)fVar20;
       goto LAB_0041a5a9;
     }
@@ -3771,19 +3763,19 @@ LAB_00418829:
       pfVar8 = (float *)arrayElem_stride4(1);
       *pfVar8 = *pfVar8 + 4.0;
       pfVar8 = (float *)arrayElem_stride4(0);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(0);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       puVar10 = (undefined4 *)arrayElem_stride4(2);
@@ -3816,19 +3808,19 @@ LAB_00418829:
       pfVar8 = (float *)arrayElem_stride4(1);
       *pfVar8 = *pfVar8 + 4.0;
       pfVar8 = (float *)arrayElem_stride4(0);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(0);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       puVar10 = (undefined4 *)arrayElem_stride4(2);
@@ -3867,19 +3859,19 @@ LAB_00418829:
       pfVar8 = (float *)arrayElem_stride4(1);
       *pfVar8 = *pfVar8 + 4.0;
       pfVar8 = (float *)arrayElem_stride4(0);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(0);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
       local_1734 = (float *)(float)fVar20;
       *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+      fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
       local_1734 = (float *)(float)fVar20;
       goto LAB_0041a5a9;
     }
@@ -3912,19 +3904,19 @@ LAB_00418829:
     pfVar8 = (float *)arrayElem_stride4(1);
     *pfVar8 = *pfVar8 + 4.0;
     pfVar8 = (float *)arrayElem_stride4(0);
-    fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+    fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
     local_1734 = (float *)(float)fVar20;
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
     pfVar8 = (float *)arrayElem_stride4(2);
-    fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+    fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
     local_1734 = (float *)(float)fVar20;
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
     pfVar8 = (float *)arrayElem_stride4(0);
-    fVar20 = (float10)sinf_f((float)(int)self[1] * 0.04);
+    fVar20 = (float)sinf_f((float)(int)self[1] * 0.04);
     local_1734 = (float *)(float)fVar20;
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
     pfVar8 = (float *)arrayElem_stride4(2);
-    fVar20 = (float10)cosf_f((float)(int)self[1] * 0.05);
+    fVar20 = (float)cosf_f((float)(int)self[1] * 0.05);
     local_1734 = (float *)(float)fVar20;
 LAB_0041a5a9:
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
@@ -5080,25 +5072,25 @@ LAB_00416c9f:
       uVar7 = setVec3(0x42700000,0xc1a00000,0x41a00000);
       vec3_copy(uVar7);
       local_1714 = (float *)((float)(int)self[1] * 0.01);
-      fVar20 = (float10)cosf_f(local_1714);
+      fVar20 = (float)cosf_f(local_1714);
       local_1734 = (float *)(float)fVar20;
       fVar2 = (float)local_1734 + 4.0;
-      fVar20 = (float10)sinf_f(local_1714,fVar2);
+      fVar20 = (float)sinf_f(local_1714,fVar2);
       local_1734 = (float *)(float)fVar20;
       uVar7 = setVec3(0,(float)local_1734 + 2.0,fVar2);
       vec3_copy(uVar7);
       uVar7 = setVec3(0x42700000,0x41a00000,0xc1a00000);
       vec3_copy(uVar7);
       local_1714 = (float *)((float)(int)self[1] * 0.01 + 1.5707964);
-      fVar20 = (float10)cosf_f(local_1714);
+      fVar20 = (float)cosf_f(local_1714);
       local_1734 = (float *)(float)fVar20;
       fVar2 = (float)local_1734 + 4.0;
-      fVar20 = (float10)sinf_f(local_1714,fVar2);
+      fVar20 = (float)sinf_f(local_1714,fVar2);
       local_1734 = (float *)(float)fVar20;
       uVar7 = setVec3(0,(float)local_1734 + 2.0,fVar2);
       vec3_copy(uVar7);
       pfVar8 = (float *)arrayElem_stride4(2);
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.005);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.005);
       local_1734 = (float *)(float)fVar20;
       goto LAB_0041a5a9;
     }
@@ -5156,8 +5148,7 @@ LAB_00416c9f:
 LAB_0041414f:
     iVar17 = GameController_itemCooldown();
     if (*(int *)((int)*self + 0x6c) < iVar17) {
-      dVar22 = (double)((float)(int)self[1] * 0.02);
-      libm_sse2_cos_precise();
+      dVar22 = libm_sse2_cos_precise((double)((float)(int)self[1] * 0.02));
       fStack_1618 = 0.0;
       local_1620 = (double)(ulonglong)(uint)((float)dVar22 * 5.0 + 45.0);
       vec3_copy(&local_1620);
@@ -5349,20 +5340,20 @@ LAB_0041e64e:
       puVar10 = (undefined4 *)arrayElem_stride4(0);
       *puVar10 = 0x41a00000;
       local_1714 = (float *)((float)(int)self[1] * 0.005);
-      fVar20 = (float10)sinf_f(local_1714);
+      fVar20 = (float)sinf_f(local_1714);
       local_1734 = (float *)(float)fVar20;
       fVar2 = (float)local_1734 * 5.0 + 5.0;
       uVar7 = 0x40a00000;
-      fVar20 = (float10)cosf_f(local_1714,0x40a00000,fVar2);
+      fVar20 = (float)cosf_f(local_1714,0x40a00000,fVar2);
       local_1734 = (float *)(float)fVar20;
       uVar7 = setVec3((float)local_1734 * 3.0 - 1.0,uVar7,fVar2);
       vec3_copy(uVar7);
       local_1714 = (float *)((float)(int)self[1] * 0.005 + 3.1415927);
-      fVar20 = (float10)sinf_f(local_1714);
+      fVar20 = (float)sinf_f(local_1714);
       local_1734 = (float *)(float)fVar20;
       fVar2 = (float)local_1734 * 5.0 + 5.0;
       uVar7 = 0x40a00000;
-      fVar20 = (float10)cosf_f(local_1714,0x40a00000,fVar2);
+      fVar20 = (float)cosf_f(local_1714,0x40a00000,fVar2);
       local_1734 = (float *)(float)fVar20;
       puVar5 = (undefined8 *)setVec3((float)local_1734 * 3.0 + 1.0,uVar7,fVar2);
       goto LAB_0041e65a;
@@ -5404,20 +5395,20 @@ LAB_0041e64e:
     puVar10 = (undefined4 *)arrayElem_stride4(0);
     *puVar10 = 0x41a00000;
     local_1714 = (float *)((float)(int)self[1] * 0.005);
-    fVar20 = (float10)sinf_f(local_1714);
+    fVar20 = (float)sinf_f(local_1714);
     local_1734 = (float *)(float)fVar20;
     fVar2 = (float)local_1734 * 5.0 + 5.0;
     uVar7 = 0x40a00000;
-    fVar20 = (float10)cosf_f(local_1714,0x40a00000,fVar2);
+    fVar20 = (float)cosf_f(local_1714,0x40a00000,fVar2);
     local_1734 = (float *)(float)fVar20;
     uVar7 = setVec3((float)local_1734 * 3.0 - 1.0,uVar7,fVar2);
     vec3_copy(uVar7);
     local_1714 = (float *)((float)(int)self[1] * 0.005 + 3.1415927);
-    fVar20 = (float10)sinf_f(local_1714);
+    fVar20 = (float)sinf_f(local_1714);
     local_1734 = (float *)(float)fVar20;
     fVar2 = (float)local_1734 * 5.0 + 5.0;
     uVar7 = 0x40a00000;
-    fVar20 = (float10)cosf_f(local_1714,0x40a00000,fVar2);
+    fVar20 = (float)cosf_f(local_1714,0x40a00000,fVar2);
     local_1734 = (float *)(float)fVar20;
     puVar5 = (undefined8 *)setVec3((float)local_1734 * 3.0 + 1.0,uVar7,fVar2);
     goto LAB_0041e65a;
@@ -5476,7 +5467,7 @@ LAB_00419151:
   case 9.10844e-44:
     iVar17 = combat_getAttackTiming();
     if (*(int *)((int)*self + 0x6c) < iVar17) {
-      fVar20 = (float10)sinf_f((float)(int)self[1] * 0.03);
+      fVar20 = (float)sinf_f((float)(int)self[1] * 0.03);
       local_1734 = (float *)(float)fVar20;
       uVar7 = setVec3(0,0,(float)local_1734 * 90.0);
       vec3_copy(uVar7);
@@ -5562,11 +5553,11 @@ LAB_00419151:
     uVar7 = setVec3(0,0x41200000,0);
     vec3_copy(uVar7);
     pfVar8 = (float *)arrayElem_stride4(2);
-    fVar20 = (float10)cosf_f((float)(int)self[1] * 0.5);
+    fVar20 = (float)cosf_f((float)(int)self[1] * 0.5);
     local_1734 = (float *)(float)fVar20;
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
     pfVar8 = (float *)arrayElem_stride4(2);
-    fVar20 = (float10)cosf_f((float)(int)self[1] * 0.5);
+    fVar20 = (float)cosf_f((float)(int)self[1] * 0.5);
     local_1734 = (float *)(float)fVar20;
     fVar2 = *self;
     *pfVar8 = (float)local_1734 * 0.5 + *pfVar8;
@@ -5747,10 +5738,10 @@ LAB_0041e65a:
     if (local_16d9 == '\0') {
       uVar7 = noop();
       vec2_copy(uVar7);
-      fVar20 = (float10)vec2_lengthSq();
+      fVar20 = (float)vec2_lengthSq();
       local_1734 = (float *)(float)fVar20;
       if (0.1 < (float)local_1734) {
-        fVar20 = (float10)vec3_dot((int)*self + 0x34);
+        fVar20 = (float)vec3_dot((int)*self + 0x34);
         local_1734 = (float *)(float)fVar20;
         if (0.0 < (float)local_1734) {
           pfVar8 = (float *)arrayElem_stride4(0);
@@ -5796,50 +5787,50 @@ LAB_0041e9d0:
   local_1718 = (float *)arrayElem_stride4(0);
   pfVar8 = local_1724;
   puVar10 = (undefined4 *)arrayElem_stride4(0);
-  fVar20 = (float10)computeYawFromDir(*local_1718,*puVar10,pfVar8);
+  fVar20 = (float)computeYawFromDir(*local_1718,*puVar10,pfVar8);
   *local_1718 = (float)fVar20;
   local_16e0 = (float *)arrayElem_stride4(1);
   pfVar8 = local_1724;
   puVar10 = (undefined4 *)arrayElem_stride4(1);
-  fVar20 = (float10)computeYawFromDir(*local_16e0,*puVar10,pfVar8);
+  fVar20 = (float)computeYawFromDir(*local_16e0,*puVar10,pfVar8);
   *local_16e0 = (float)fVar20;
   pfVar9 = (float *)arrayElem_stride4(2);
   pfVar8 = local_1724;
   local_16c0 = pfVar9;
   puVar10 = (undefined4 *)arrayElem_stride4(2);
-  fVar20 = (float10)computeYawFromDir(*pfVar9,*puVar10,pfVar8);
+  fVar20 = (float)computeYawFromDir(*pfVar9,*puVar10,pfVar8);
   *pfVar9 = (float)fVar20;
   local_16c4 = (float *)arrayElem_stride4(0);
   pfVar8 = local_1724;
   puVar10 = (undefined4 *)arrayElem_stride4(0);
-  fVar20 = (float10)computeYawFromDir(*local_16c4,*puVar10,pfVar8);
+  fVar20 = (float)computeYawFromDir(*local_16c4,*puVar10,pfVar8);
   *local_16c4 = (float)fVar20;
   local_1730 = (float *)arrayElem_stride4(1);
   pfVar8 = local_1724;
   puVar10 = (undefined4 *)arrayElem_stride4(1);
-  fVar20 = (float10)computeYawFromDir(*local_1730,*puVar10,pfVar8);
+  fVar20 = (float)computeYawFromDir(*local_1730,*puVar10,pfVar8);
   *local_1730 = (float)fVar20;
   pfVar9 = (float *)arrayElem_stride4(2);
   pfVar8 = local_1724;
   local_1734 = pfVar9;
   puVar10 = (undefined4 *)arrayElem_stride4(2);
-  fVar20 = (float10)computeYawFromDir(*pfVar9,*puVar10,pfVar8);
+  fVar20 = (float)computeYawFromDir(*pfVar9,*puVar10,pfVar8);
   *pfVar9 = (float)fVar20;
   local_16ac = (float *)arrayElem_stride4(0);
   pfVar8 = local_1724;
   puVar10 = (undefined4 *)arrayElem_stride4(0);
-  fVar20 = (float10)computeYawFromDir(*local_16ac,*puVar10,pfVar8);
+  fVar20 = (float)computeYawFromDir(*local_16ac,*puVar10,pfVar8);
   *local_16ac = (float)fVar20;
   local_16a8 = (float *)arrayElem_stride4(1);
   pfVar8 = local_1724;
   puVar10 = (undefined4 *)arrayElem_stride4(1);
-  fVar20 = (float10)computeYawFromDir(*local_16a8,*puVar10,pfVar8);
+  fVar20 = (float)computeYawFromDir(*local_16a8,*puVar10,pfVar8);
   *local_16a8 = (float)fVar20;
   pfVar9 = (float *)arrayElem_stride4(2);
   pfVar8 = local_1724;
   local_1688 = pfVar9;
   puVar10 = (undefined4 *)arrayElem_stride4(2);
-  fVar20 = (float10)computeYawFromDir(*pfVar9,*puVar10,pfVar8);
+  fVar20 = (float)computeYawFromDir(*pfVar9,*puVar10,pfVar8);
   *pfVar9 = (float)fVar20;
   self[0x2a] = ((float)local_16cc - self[0x2a]) * (float)local_1724 + self[0x2a];
   uVar7 = vec3_sub(local_90c,self + 0x27);
@@ -5855,7 +5846,7 @@ LAB_0041e9d0:
   vec3_addInPlace(uVar7);
   if (*(char *)((int)*self + 0x68) == '\x1c') {
     vec3_copy((int)*self + 0x160);
-    fVar20 = (float10)vec3_lengthSq();
+    fVar20 = (float)vec3_lengthSq();
     local_1708 = (float *)(float)fVar20;
     if (0.0 < (float)local_1708) {
       vec3_normalize();
@@ -5905,19 +5896,19 @@ LAB_0041e9d0:
   arrayElem_stride8(2);
   int64_subFn(puVar24,uVar7);
   int64_addFn(puVar25,fVar2);
-  fVar20 = (float10)fixed16ToFloat();
+  fVar20 = (float)fixed16ToFloat();
   fVar2 = (float)fVar20;
   puVar25 = local_1668;
   pfVar8 = vecB;
   arrayElem_stride8(1);
   int64_add(puVar25,pfVar8);
-  fVar20 = (float10)fixed16ToFloat(fVar2);
+  fVar20 = (float)fixed16ToFloat(fVar2);
   fVar23 = (float)fVar20;
   puVar25 = local_1648;
   pfVar8 = vecA;
   arrayElem_stride8(0);
   int64_add(puVar25,pfVar8);
-  fVar20 = (float10)fixed16ToFloat(fVar23);
+  fVar20 = (float)fixed16ToFloat(fVar23);
   mat4_translate((float)fVar20,fVar23,fVar2);
   fVar2 = *self;
   local_172c = fVar2;
@@ -5933,7 +5924,7 @@ LAB_0041e9d0:
     if (*(int *)((int)fVar23 + 100) == 0x65) {
       vec3_copy((int)fVar23 + 0x34);
     }
-    fVar20 = (float10)vec3_lengthSq();
+    fVar20 = (float)vec3_lengthSq();
     local_1708 = (float *)(float)fVar20;
     if (0.01 < (float)local_1708) {
       vec3_normalize();
@@ -5976,7 +5967,7 @@ LAB_0041e9d0:
   pfVar9 = (float *)arrayElem_stride4(0);
   fVar2 = *pfVar9 / 11.2;
   mat4_scaleAxes(fVar2,fVar2,fVar2);
-  fVar20 = (float10)fabs_f(local_16a0);
+  fVar20 = (float)fabs_f(local_16a0);
   local_1708 = (float *)(float)fVar20;
   local_172c = (float)local_1708 * 4.0;
   if (*(char *)((int)*pfVar8 + 0x68) == 'O') {
@@ -6116,7 +6107,7 @@ LAB_0041e9d0:
     mat4_translate((float)iVar17 * -0.5,fVar23,fVar2);
     render_uploadModelViewMatrices(pfVar8,local_1704,local_1700);
     pfVar8 = local_1720;
-    fVar20 = (float10)item_hasSpecialAbility();
+    fVar20 = (float)item_hasSpecialAbility();
     render_setVec3Uniform58((float)fVar20);
     GameController_draw_mesh();
     render_setVec3Uniform58(0);
@@ -6171,7 +6162,7 @@ LAB_0041e9d0:
     mat4_translate((float)iVar17 * -0.5,uVar7,fVar2);
     render_uploadModelViewMatrices(pfVar8,local_1704,local_1700);
     pfVar8 = local_1720;
-    fVar20 = (float10)item_hasSpecialAbility();
+    fVar20 = (float)item_hasSpecialAbility();
     render_setVec3Uniform58((float)fVar20);
     GameController_draw_mesh();
     render_setVec3Uniform58(0);
@@ -6199,7 +6190,7 @@ LAB_0041e9d0:
     mat4_translate((float)iVar17 * -0.5,fVar23,fVar2);
     render_uploadModelViewMatrices(pfVar8,local_1704,local_1700);
     pfVar8 = local_1720;
-    fVar20 = (float10)item_hasSpecialAbility();
+    fVar20 = (float)item_hasSpecialAbility();
     render_setVec3Uniform58((float)fVar20);
     GameController_draw_mesh();
     render_setVec3Uniform58(0);
@@ -6545,7 +6536,7 @@ LAB_0041e9d0:
     }
     local_16a4 = pfVar11;
     if (0.0 < *(float *)((int)*local_1720 + 0x144)) {
-      fVar20 = (float10)cosf_f((float)(int)local_1720[1] * 0.01);
+      fVar20 = (float)cosf_f((float)(int)local_1720[1] * 0.01);
       local_16f0 = (float *)(float)fVar20;
       uVar7 = vec4_scale(local_4c,((float)local_16f0 + 1.0) * 0.25 + 1.0);
       render_setUniform30(uVar7);
@@ -6670,7 +6661,7 @@ LAB_004219a6:
     }
     mat4_translate(fVar21,fVar23,fVar2);
     render_uploadModelViewMatrices(pfVar9,local_1704,local_1700);
-    fVar20 = (float10)item_hasSpecialAbility();
+    fVar20 = (float)item_hasSpecialAbility();
     render_setVec3Uniform58((float)fVar20);
     GameController_draw_mesh();
     render_setVec3Uniform58(0);
@@ -6749,7 +6740,7 @@ LAB_004219a6:
       iVar17 = getField_0x44(fVar23);
       mat4_translate((float)iVar17 * -0.5,fVar23,fVar2);
       render_uploadModelViewMatrices(pfVar8 + 0xbb,local_1704,local_1700);
-      fVar20 = (float10)item_hasSpecialAbility();
+      fVar20 = (float)item_hasSpecialAbility();
       render_setVec3Uniform58((float)fVar20);
       GameController_draw_mesh();
       render_setVec3Uniform58(0);
@@ -6858,13 +6849,13 @@ LAB_00422250:
       }
       mat4_translate(fVar21,fVar23,fVar2);
       if (0.0 < *(float *)((int)*pfVar8 + 0x144)) {
-        fVar20 = (float10)cosf_f((float)(int)pfVar8[1] * 0.01);
+        fVar20 = (float)cosf_f((float)(int)pfVar8[1] * 0.01);
         local_16f0 = (float *)(float)fVar20;
         uVar7 = vec4_scale(local_2c,((float)local_16f0 + 1.0) * 0.25 + 1.0);
         render_setUniform30(uVar7);
       }
       render_uploadModelViewMatrices(pfVar8 + 0xbb,local_1704,local_1700);
-      fVar20 = (float10)item_hasSpecialAbility();
+      fVar20 = (float)item_hasSpecialAbility();
       render_setVec3Uniform58((float)fVar20);
       GameController_draw_mesh();
       render_setVec3Uniform58(0);
@@ -6928,7 +6919,7 @@ LAB_00422250:
   arrayElem_stride8(1);
   int64_negate(puVar24);
   int64_sub(puVar25,pfVar8);
-  fVar20 = (float10)fixed16ToFloat(uVar7);
+  fVar20 = (float)fixed16ToFloat(uVar7);
   fVar2 = (float)fVar20;
   pfVar8 = pfVar9 + 0x220;
   puVar25 = local_1630;
@@ -6936,7 +6927,7 @@ LAB_00422250:
   arrayElem_stride8(0);
   int64_negate(puVar24);
   int64_sub(puVar25,pfVar8);
-  fVar20 = (float10)fixed16ToFloat(fVar2);
+  fVar20 = (float)fixed16ToFloat(fVar2);
   setVec3((float)fVar20,fVar2,uVar7);
   local_1734 = pfVar9 + 0x1eb;
   vec3_addInPlace(&local_1528);
@@ -6958,17 +6949,17 @@ LAB_00422250:
       arrayElem_stride8(2);
       int64_subFn(puVar24,uVar7);
       int64_addFn(puVar25,fVar2);
-      fVar20 = (float10)fixed16ToFloat();
+      fVar20 = (float)fixed16ToFloat();
       fVar2 = (float)fVar20;
       puVar25 = local_1660;
       arrayElem_stride8(1);
       int64_add(puVar25,vecB);
-      fVar20 = (float10)fixed16ToFloat(fVar2);
+      fVar20 = (float)fixed16ToFloat(fVar2);
       fVar23 = (float)fVar20;
       puVar25 = local_1628;
       arrayElem_stride8(0);
       int64_add(puVar25,vecA);
-      fVar20 = (float10)fixed16ToFloat(fVar23);
+      fVar20 = (float)fixed16ToFloat(fVar23);
       mat4_translate((float)fVar20,fVar23,fVar2);
       puVar10 = (undefined4 *)arrayElem_stride4(2);
       mat4_rotateZ(*puVar10);
@@ -6981,9 +6972,9 @@ LAB_00422250:
       local_16f0 = (float *)(local_16ec * 0.5);
       do {
         local_16f4 = (float *)((float)(int)local_1734 * 3.1415927 * 0.0625 - 1.5707964);
-        fVar20 = (float10)cosf_f(local_16f4);
+        fVar20 = (float)cosf_f(local_16f4);
         local_16f8 = (float *)(float)fVar20;
-        fVar20 = (float10)sinf_f(local_16f4);
+        fVar20 = (float)sinf_f(local_16f4);
         local_16d8 = (float *)(float)fVar20;
         ppfVar3 = &local_1528;
         puVar25 = local_57c;
@@ -7169,7 +7160,7 @@ LAB_00422fe5:
       iVar17 = getField_0x44(fVar23);
       mat4_translate((float)iVar17 * -0.5,fVar23,fVar2);
       render_uploadModelViewMatrices(pfVar8 + 0xcb,local_1704,local_1700);
-      fVar20 = (float10)item_hasSpecialAbility();
+      fVar20 = (float)item_hasSpecialAbility();
       render_setVec3Uniform58((float)fVar20);
       GameController_draw_mesh();
       pfVar9 = pfVar8;
@@ -7245,7 +7236,7 @@ LAB_00422fe5:
   }
   if (pfVar9[0x34] != 0.0) {
     fVar2 = *pfVar9;
-    fVar20 = (float10)cosf_f(*(float *)((int)fVar2 + 0x118c) * 0.5);
+    fVar20 = (float)cosf_f(*(float *)((int)fVar2 + 0x118c) * 0.5);
     local_16f4 = (float *)(float)fVar20;
     local_16f8 = (float *)((float)local_16f4 * *(float *)((int)fVar2 + 0x1188) * 90.0 - 45.0);
     pfVar8 = local_1718;
@@ -7344,7 +7335,7 @@ LAB_00422fe5:
       iVar17 = getField_0x44(fVar23);
       mat4_translate((float)iVar17 * -0.5,fVar23,fVar2);
       render_uploadModelViewMatrices(pfVar8 + 299,local_1704,local_1700);
-      fVar20 = (float10)item_hasSpecialAbility();
+      fVar20 = (float)item_hasSpecialAbility();
       render_setVec3Uniform58((float)fVar20);
       GameController_draw_mesh();
       render_setVec3Uniform58(0);
@@ -7380,7 +7371,7 @@ LAB_00422fe5:
       iVar17 = getField_0x44(fVar23);
       mat4_translate((float)iVar17 * -0.5,fVar23,fVar2);
       render_uploadModelViewMatrices(local_1720 + 0x13b,local_1704,local_1700);
-      fVar20 = (float10)item_hasSpecialAbility();
+      fVar20 = (float)item_hasSpecialAbility();
       render_setVec3Uniform58((float)fVar20);
       GameController_draw_mesh();
       render_setVec3Uniform58(0);
@@ -7399,15 +7390,15 @@ LAB_00422fe5:
  */
 /* Global::vec3_length @ 00423f20 */
 
-float10 vec3_length(void)
+float vec3_length(void)
 
 {
   float *self;
   double lenSq;
   
-  lenSq = (double)(*self * *self + self[1] * self[1] + self[2] * self[2]);
-  libm_sse2_sqrt_precise();
-  return (float10)(float)lenSq;
+  lenSq = libm_sse2_sqrt_precise
+                    ((double)(*self * *self + self[1] * self[1] + self[2] * self[2]));
+  return (float)(float)lenSq;
 }
 
 
@@ -7419,7 +7410,7 @@ float10 vec3_length(void)
  */
 /* Global::computeYawFromDir @ 00423f70 */
 
-float10 computeYawFromDir(float angleA,float angleB,float scale)
+float computeYawFromDir(float angleA,float angleB,float scale)
 
 {
   float angleRad;
@@ -7430,23 +7421,18 @@ float10 computeYawFromDir(float angleA,float angleB,float scale)
   float clamped;
   
   angleRad = (angleA / 180.0) * 3.1415927;
-  dVar2 = (double)angleRad;
-  libm_sse2_cos_precise();
-  dVar3 = (double)angleRad;
-  libm_sse2_sin_precise();
+  dVar2 = libm_sse2_cos_precise((double)angleRad);
+  dVar3 = libm_sse2_sin_precise((double)angleRad);
   angleRad = (angleB / 180.0) * 3.1415927;
-  dVar4 = (double)angleRad;
-  libm_sse2_cos_precise();
-  dVar5 = (double)angleRad;
-  libm_sse2_sin_precise();
+  dVar4 = libm_sse2_cos_precise((double)angleRad);
+  dVar5 = libm_sse2_sin_precise((double)angleRad);
   angleRad = (float)dVar5 * (float)dVar2 - (float)dVar4 * (float)dVar3;
   clamped = 1.0;
   if ((1.0 < angleRad) || (clamped = -1.0, angleRad < -1.0)) {
     angleRad = clamped;
   }
-  dVar2 = (double)angleRad;
-  libm_sse2_asin_precise();
-  return (float10)((float)dVar2 * ((scale * 180.0) / 3.1415927) + angleA);
+  dVar2 = libm_sse2_asin_precise((double)angleRad);
+  return (float)((float)dVar2 * ((scale * 180.0) / 3.1415927) + angleA);
 }
 
 
@@ -7467,8 +7453,8 @@ void vec3_normalize(void)
   float invLen;
   
   x = *self;
-  len = (double)(x * x + self[1] * self[1] + self[2] * self[2]);
-  libm_sse2_sqrt_precise();
+  len = libm_sse2_sqrt_precise
+                    ((double)(x * x + self[1] * self[1] + self[2] * self[2]));
   invLen = 1.0 / (float)len;
   *self = x * invLen;
   self[1] = invLen * self[1];
@@ -7529,15 +7515,13 @@ void mat4_rotateAxisAngle(float angle,float axisX,float axisY,float axisZ)
   uint stackCookie;
   
   stackCookie = DAT_0076aa78 ^ (uint)auStack_5c;
-  dVar1 = (double)(axisX * axisX + axisY * axisY + axisZ * axisZ);
-  libm_sse2_sqrt_precise();
+  dVar1 = libm_sse2_sqrt_precise
+                    ((double)(axisX * axisX + axisY * axisY + axisZ * axisZ));
   len = (float)dVar1;
   if (len != 0.0) {
-    dVar1 = (double)(angle * 0.017453292);
-    libm_sse2_cos_precise();
+    dVar1 = libm_sse2_cos_precise((double)(angle * 0.017453292));
     cosv = (float)dVar1;
-    dVar1 = (double)(angle * 0.017453292);
-    libm_sse2_sin_precise();
+    dVar1 = libm_sse2_sin_precise((double)(angle * 0.017453292));
     sinv = (float)dVar1;
     axisX = axisX / len;
     axisY = axisY / len;
@@ -7587,11 +7571,9 @@ void mat4_rotateX(float angleDeg)
   double trig;
   float sinv;
   
-  trig = (double)(angleDeg * 0.017453292);
-  libm_sse2_cos_precise();
+  trig = libm_sse2_cos_precise((double)(angleDeg * 0.017453292));
   cosv = (float)trig;
-  trig = (double)(angleDeg * 0.017453292);
-  libm_sse2_sin_precise();
+  trig = libm_sse2_sin_precise((double)(angleDeg * 0.017453292));
   tmp = *(float *)(self + 0x10);
   sinv = (float)trig;
   *(float *)(self + 0x10) = *(float *)(self + 0x20) * sinv + tmp * cosv;
@@ -7626,11 +7608,9 @@ void mat4_rotateY(float angleDeg)
   double trig;
   float sinv;
   
-  trig = (double)(angleDeg * 0.017453292);
-  libm_sse2_cos_precise();
+  trig = libm_sse2_cos_precise((double)(angleDeg * 0.017453292));
   cosv = (float)trig;
-  trig = (double)(angleDeg * 0.017453292);
-  libm_sse2_sin_precise();
+  trig = libm_sse2_sin_precise((double)(angleDeg * 0.017453292));
   tmp = *self;
   sinv = (float)trig;
   *self = tmp * cosv - self[8] * sinv;
@@ -7665,11 +7645,9 @@ void mat4_rotateZ(float angleDeg)
   double trig;
   float sinv;
   
-  trig = (double)(angleDeg * 0.017453292);
-  libm_sse2_cos_precise();
+  trig = libm_sse2_cos_precise((double)(angleDeg * 0.017453292));
   cosv = (float)trig;
-  trig = (double)(angleDeg * 0.017453292);
-  libm_sse2_sin_precise();
+  trig = libm_sse2_sin_precise((double)(angleDeg * 0.017453292));
   tmp = *self;
   sinv = (float)trig;
   *self = self[4] * sinv + tmp * cosv;
@@ -7700,19 +7678,19 @@ void mat4_scaleAxes(float scaleX,float scaleY,float scaleZ)
 {
   float *self;
   
-  if (scaleX != 1.0) {
+  if (scaleX != 1.0f) {
     *self = *self * scaleX;
     self[1] = scaleX * self[1];
     self[2] = scaleX * self[2];
     self[3] = scaleX * self[3];
   }
-  if (scaleY != 1.0) {
+  if (scaleY != 1.0f) {
     self[4] = self[4] * scaleY;
     self[5] = self[5] * scaleY;
     self[6] = self[6] * scaleY;
     self[7] = self[7] * scaleY;
   }
-  if (scaleZ != 1.0) {
+  if (scaleZ != 1.0f) {
     self[8] = self[8] * scaleZ;
     self[9] = self[9] * scaleZ;
     self[10] = self[10] * scaleZ;
@@ -7764,12 +7742,12 @@ undefined4 getField_0x48(void)
  */
 /* Global::vec2_lengthSq @ 00424830 */
 
-float10 vec2_lengthSq(void)
+float vec2_lengthSq(void)
 
 {
   float *self;
   
-  return (float10)(*self * *self + self[1] * self[1]);
+  return (float)(*self * *self + self[1] * self[1]);
 }
 
 
@@ -7781,12 +7759,12 @@ float10 vec2_lengthSq(void)
  */
 /* Global::vec3_lengthSq @ 00424860 */
 
-float10 vec3_lengthSq(void)
+float vec3_lengthSq(void)
 
 {
   float *self;
   
-  return (float10)(*self * *self + self[1] * self[1] + self[2] * self[2]);
+  return (float)(*self * *self + self[1] * self[1] + self[2] * self[2]);
 }
 
 
@@ -7820,7 +7798,7 @@ float * mat4_transformPoint(float *out,float *vec)
   vz = vec[2];
   fVar4 = self[1];
   fVar5 = self[2];
-  invW = 1.0 / (self[3] * vx + self[7] * vy + self[0xb] * vz + self[0xf]);
+  invW = 1.0f / (self[3] * vx + self[7] * vy + self[0xb] * vz + self[0xf]);
   fVar6 = self[5];
   fVar7 = self[9];
   fVar8 = self[6];
@@ -7890,14 +7868,13 @@ void mat4_translate(float x,float y,float z)
  */
 /* Global::sinf_f @ 00424b50 */
 
-float10 sinf_f(float param_1)
+float sinf_f(float param_1)
 
 {
   double dVar1;
   
-  dVar1 = (double)param_1;
-  libm_sse2_sin_precise();
-  return (float10)(float)dVar1;
+  dVar1 = libm_sse2_sin_precise((double)param_1);
+  return (float)(float)dVar1;
 }
 
 
@@ -7909,14 +7886,13 @@ float10 sinf_f(float param_1)
  */
 /* Global::sqrtf_f @ 00424b70 */
 
-float10 sqrtf_f(float param_1)
+float sqrtf_f(float param_1)
 
 {
   double dVar1;
   
-  dVar1 = (double)param_1;
-  libm_sse2_sqrt_precise();
-  return (float10)(float)dVar1;
+  dVar1 = libm_sse2_sqrt_precise((double)param_1);
+  return (float)(float)dVar1;
 }
 
 
@@ -7958,8 +7934,8 @@ float * vec3_normalizeOut(float *out)
   float invLen;
   
   x = *self;
-  len = (double)(x * x + self[1] * self[1] + self[2] * self[2]);
-  libm_sse2_sqrt_precise();
+  len = libm_sse2_sqrt_precise
+                    ((double)(x * x + self[1] * self[1] + self[2] * self[2]));
   invLen = 1.0 / (float)len;
   *out = x;
   out[1] = self[1];
@@ -7986,8 +7962,7 @@ void mat4_perspective(float fovY,float aspect,float nearZ,float farZ)
   float *self;
   double tanHalf;
   
-  tanHalf = (double)(fovY * 0.5);
-  libm_sse2_tan_precise();
+  tanHalf = libm_sse2_tan_precise((double)(fovY * 0.5));
   *self = (1.0 / (float)tanHalf) / aspect;
   self[4] = 0.0;
   self[8] = 0.0;
@@ -8268,7 +8243,7 @@ void cube::GameController::drawCharacterAppearancePanel(void)
   int in_ECX;
   undefined4 *puVar9;
   int iVar10;
-  float10 fVar11;
+  float fVar11;
   undefined4 *puVar12;
   undefined4 *puVar13;
   undefined4 uVar14;
@@ -8331,14 +8306,14 @@ void cube::GameController::drawCharacterAppearancePanel(void)
   local_10 = ExceptionList;
   local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
-  local_c0 = 0.0;
+  local_c0 = 0.0f;
   local_198[0] = &PTR_006fcd00;
   local_188[0] = &DAT_006fcd08;
   local_d0 = in_ECX;
   std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::basic_ios<wchar_t,std::char_traits<wchar_t>_>
             (local_130);
   local_8 = 0;
-  local_c0 = 1.4013e-45;
+  local_c0 = 1.4013e-45f;
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)local_198,
@@ -8481,10 +8456,10 @@ LAB_00428f7c:
   uVar15 = 0x41400000;
   local_8._0_1_ = 9;
   uVar14 = 0x41d80000;
-  fVar11 = (float10)security_cookie_guard_b(0x41d80000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
+  fVar11 = (float)security_cookie_guard_b(0x41d80000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
                                  0xbf800000,1);
   local_c0 = (float)fVar11;
-  AdaptionWidget_draw_text_locked(&local_3c,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+  AdaptionWidget_draw_text_locked(&local_3c,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_60) {
     operator_delete(local_74);
@@ -8524,9 +8499,9 @@ LAB_00428f7c:
   uVar15 = 0x41400000;
   local_8._0_1_ = 0xb;
   uVar14 = 0x41d80000;
-  fVar11 = (float10)security_cookie_guard_b(0x41d80000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
+  fVar11 = (float)security_cookie_guard_b(0x41d80000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
   local_c0 = (float)fVar11;
-  AdaptionWidget_draw_text_locked(&local_3c,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+  AdaptionWidget_draw_text_locked(&local_3c,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_60) {
     operator_delete(local_74);
@@ -8657,10 +8632,10 @@ LAB_00428f7c:
   uVar15 = 0x41400000;
   local_8._0_1_ = 0x12;
   uVar14 = 0x42640000;
-  fVar11 = (float10)security_cookie_guard_b(0x42640000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
+  fVar11 = (float)security_cookie_guard_b(0x42640000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
                                  0xbf800000,1);
   local_c0 = (float)fVar11;
-  AdaptionWidget_draw_text_locked(&local_3c,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+  AdaptionWidget_draw_text_locked(&local_3c,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_60) {
     operator_delete(local_74);
@@ -8697,9 +8672,9 @@ LAB_00428f7c:
   uVar15 = 0x41400000;
   local_8._0_1_ = 0x14;
   uVar14 = 0x42640000;
-  fVar11 = (float10)security_cookie_guard_b(0x42640000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
+  fVar11 = (float)security_cookie_guard_b(0x42640000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
   local_c0 = (float)fVar11;
-  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
     operator_delete(local_3c);
@@ -8822,10 +8797,10 @@ LAB_00429aac:
   uVar15 = 0x41400000;
   local_8._0_1_ = 0x1b;
   uVar14 = 0x42ae0000;
-  fVar11 = (float10)security_cookie_guard_b(0x42ae0000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
+  fVar11 = (float)security_cookie_guard_b(0x42ae0000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
                                  0xbf800000,1);
   local_c0 = (float)fVar11;
-  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
     operator_delete(local_3c);
@@ -8862,9 +8837,9 @@ LAB_00429aac:
   uVar15 = 0x41400000;
   local_8._0_1_ = 0x1d;
   uVar14 = 0x42ae0000;
-  fVar11 = (float10)security_cookie_guard_b(0x42ae0000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
+  fVar11 = (float)security_cookie_guard_b(0x42ae0000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
   local_c0 = (float)fVar11;
-  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
     operator_delete(local_3c);
@@ -8972,10 +8947,10 @@ LAB_00429aac:
   uVar15 = 0x41400000;
   local_8._0_1_ = 0x24;
   uVar14 = 0x42ea0000;
-  fVar11 = (float10)security_cookie_guard_b(0x42ea0000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
+  fVar11 = (float)security_cookie_guard_b(0x42ea0000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
                                  0xbf800000,1);
   local_c0 = (float)fVar11;
-  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
     operator_delete(local_3c);
@@ -9012,9 +8987,9 @@ LAB_00429aac:
   uVar15 = 0x41400000;
   local_8._0_1_ = 0x26;
   uVar14 = 0x42ea0000;
-  fVar11 = (float10)security_cookie_guard_b(0x42ea0000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
+  fVar11 = (float)security_cookie_guard_b(0x42ea0000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
   local_c0 = (float)fVar11;
-  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
     operator_delete(local_3c);
@@ -9122,10 +9097,10 @@ LAB_00429aac:
   uVar15 = 0x41400000;
   local_8._0_1_ = 0x2d;
   uVar14 = 0x43130000;
-  fVar11 = (float10)security_cookie_guard_b(0x43130000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
+  fVar11 = (float)security_cookie_guard_b(0x43130000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
                                  0xbf800000,1);
   local_c0 = (float)fVar11;
-  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+  AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                puVar13,puVar9,uVar18,uVar19,uVar21);
   if (7 < local_28) {
     operator_delete(local_3c);
@@ -9160,9 +9135,9 @@ LAB_00429aac:
     uVar15 = 0x41400000;
     local_8._0_1_ = 0x2f;
     uVar14 = 0x43130000;
-    fVar11 = (float10)security_cookie_guard_b(0x43130000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
+    fVar11 = (float)security_cookie_guard_b(0x43130000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
     local_c0 = (float)fVar11;
-    AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0) * 0.5 + 100.0,uVar14,uVar15,uVar17,puVar12,
+    AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,(local_c0 - 110.0f) * 0.5f + 100.0f,uVar14,uVar15,uVar17,puVar12,
                  puVar13,puVar9,uVar18,uVar19,uVar21);
     if (7 < local_28) {
       operator_delete(local_3c);
@@ -9356,10 +9331,10 @@ LAB_00429aac:
     uVar15 = 0x41400000;
     local_8._0_1_ = 0x32;
     uVar14 = 0x43360000;
-    fVar11 = (float10)security_cookie_guard_b(0x43360000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
+    fVar11 = (float)security_cookie_guard_b(0x43360000,0x41400000,0x40400000,puVar12,puVar13,puVar9,1,
                                    0xbf800000,1);
     local_c0 = (float)fVar11;
-    AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,local_c0 * 0.5,uVar14,uVar15,uVar17,puVar12,puVar13,puVar9,
+    AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,local_c0 * 0.5f,uVar14,uVar15,uVar17,puVar12,puVar13,puVar9,
                  uVar18,uVar19,uVar21);
     if (7 < local_28) {
       operator_delete(local_3c);
@@ -9394,9 +9369,9 @@ LAB_00429aac:
       uVar15 = 0x41400000;
       local_8._0_1_ = 0x34;
       uVar14 = 0x43360000;
-      fVar11 = (float10)security_cookie_guard_b(0x43360000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
+      fVar11 = (float)security_cookie_guard_b(0x43360000,0x41400000,0,puVar12,puVar13,puVar9,1,0xbf800000,1);
       local_c0 = (float)fVar11;
-      AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,local_c0 * 0.5,uVar14,uVar15,uVar17,puVar12,puVar13,puVar9,
+      AdaptionWidget_draw_text_locked(&local_74,uVar3,0,0,local_c0 * 0.5f,uVar14,uVar15,uVar17,puVar12,puVar13,puVar9,
                    uVar18,uVar19,uVar21);
       if (local_28 < 8) {
         local_28 = 7;
@@ -9464,7 +9439,7 @@ LAB_00429aac:
               operator=<std::pair<unsigned___int64,unsigned___int64>,0>
                         ((pair<unsigned___int64,unsigned___int64> *)&local_24,local_78);
               if (iVar10 < 3) {
-                local_c8 = (float)iVar10 * 0.25 + 0.2;
+                local_c8 = (float)iVar10 * 0.25f + 0.2f;
                 pfVar6 = (float *)arrayElem_stride4(0);
                 *pfVar6 = local_c8 * *pfVar6;
                 pfVar6 = (float *)arrayElem_stride4(1);
@@ -9477,7 +9452,7 @@ LAB_00429aac:
                 puVar16 = local_bc;
                 setVec4(0x3f800000,0x3f800000,0x3f800000,0x3f800000);
                 uVar3 = math_vec4_sub(puVar16,puVar9);
-                uVar3 = vec4_scale_4a8f40(local_6c,((float)iVar10 - 3.0) * 0.25,uVar3);
+                uVar3 = vec4_scale_4a8f40(local_6c,((float)iVar10 - 3.0f) * 0.25f,uVar3);
                 vec4_addInPlace(uVar3);
               }
               iVar10 = **(int **)(local_d0 + 4);
@@ -9495,11 +9470,11 @@ LAB_00429aac:
               if ((((local_d4 <= local_e4) && (local_cc <= local_e0)) &&
                   (local_e4 < local_c4 * 0x11 + 0x1e)) && (local_e0 < local_cc + 0x11)) {
                 pfVar6 = (float *)arrayElem_stride4(2);
-                uVar7 = (int)(*pfVar6 * 255.0) & 0xff;
+                uVar7 = (int)(*pfVar6 * 255.0f) & 0xff;
                 pfVar6 = (float *)arrayElem_stride4(1);
-                uVar8 = (int)(*pfVar6 * 255.0) & 0xff;
+                uVar8 = (int)(*pfVar6 * 255.0f) & 0xff;
                 pfVar6 = (float *)arrayElem_stride4(0);
-                uVar3 = setColor3b((int)(*pfVar6 * 255.0) & 0xff,uVar8,uVar7);
+                uVar3 = setColor3b((int)(*pfVar6 * 255.0f) & 0xff,uVar8,uVar7);
                 copy3bytes(uVar3);
               }
               local_cc = iVar10 + 0x11;
@@ -10341,12 +10316,12 @@ int getTileCell32(uint blockX,uint blockY,int chunk)
  */
 /* Global::get_float_field_0x1000e78 @ 0042f720 */
 
-float10 get_float_field_0x1000e78(void)
+float get_float_field_0x1000e78(void)
 
 {
   int in_ECX;
   
-  return (float10)*(float *)(in_ECX + 0x1000e78);
+  return (float)*(float *)(in_ECX + 0x1000e78);
 }
 
 
@@ -10417,7 +10392,7 @@ void cube::GameController::drawQuestHud(void)
   int iVar19;
   float *pfVar20;
   uint uVar21;
-  float10 fVar22;
+  float fVar22;
   double dVar23;
   float fVar24;
   float fVar25;
@@ -10978,12 +10953,11 @@ void cube::GameController::drawQuestHud(void)
   uStack_9e4 = 0x3f800000;
   uStack_9e0 = 0x3f666666;
   render_setUniform30(&uStack_9ec);
-  dVar23 = 1.7400000095367432;
   uStack_aec = 0x3ecccccd;
   uStack_ae8 = 0x3ecccccd;
   uStack_ae4 = 0x3ecccccd;
   uStack_ae0 = 0x3f800000;
-  libm_sse2_sqrt_precise();
+  dVar23 = libm_sse2_sqrt_precise(1.7400000095367432);
   fStack_b70 = 1.0 / (float)dVar23;
   fStack_b78 = fStack_b70 * 0.7;
   fStack_b74 = fStack_b70 * 0.5;
@@ -10997,7 +10971,7 @@ void cube::GameController::drawQuestHud(void)
   uStack_b14 = 0x3f800000;
   uStack_b10 = 0x3f800000;
   render_setLightDirUniform(&uStack_b1c,&uStack_b4c,&fStack_b78,&uStack_aec);
-  fVar22 = (float10)Widget_measureGuarded();
+  fVar22 = (float)Widget_measureGuarded();
   fStack_eb8 = (float)fVar22;
   iVar17 = *(int *)((int)fStack_ea0 + 0x48);
   iVar11 = *(int *)((int)fStack_ea0 + 0x4c);
@@ -11036,13 +11010,13 @@ void cube::GameController::drawQuestHud(void)
   fStack_558 = fStack_e90;
   pfVar6 = (float *)Widget_computeBoundsFloat(auStack_404);
   puStack_eac = (undefined4 *)*pfVar6;
-  fVar22 = (float10)security_cookie_guard_b();
+  fVar22 = (float)security_cookie_guard_b();
   fStack_eb8 = (float)fVar22;
   if ((fStack_eb8 * 0.5 - 60.0 < (float)puStack_eac) &&
      (iVar17 = Widget_computeBoundsFloat(auStack_34c), 50.0 < *(float *)(iVar17 + 4))) {
     pfVar6 = (float *)Widget_computeBoundsFloat(auStack_32c);
     puStack_eac = (undefined4 *)*pfVar6;
-    fVar22 = (float10)security_cookie_guard_b();
+    fVar22 = (float)security_cookie_guard_b();
     fStack_eb8 = (float)fVar22;
     if (((float)puStack_eac < fStack_eb8 * 0.5 + 60.0) &&
        (iVar17 = Widget_computeBoundsFloat(auStack_3cc),
@@ -11058,13 +11032,11 @@ void cube::GameController::drawQuestHud(void)
   fStack_eb8 = *(float *)((int)in_ECX + 0x160) * 0.017453292;
   puStack_e8c = (undefined4 *)0x3f800000;
   fStack_cb4 = 1.0;
-  dVar23 = (double)fStack_eb8;
   local_e94 = 1.0;
   fStack_cb0 = 1.0;
-  libm_sse2_cos_precise();
+  dVar23 = libm_sse2_cos_precise((double)fStack_eb8);
   fStack_ea4 = (float)dVar23;
-  dVar23 = (double)fStack_eb8;
-  libm_sse2_sin_precise();
+  dVar23 = libm_sse2_sin_precise((double)fStack_eb8);
   fStack_e6c = (float)dVar23;
   fVar24 = fStack_e6c * 0.0;
   fVar3 = fStack_ea4 * 0.0;
@@ -11075,11 +11047,9 @@ void cube::GameController::drawQuestHud(void)
   fStack_eb0 = fVar3 - fStack_e6c;
   fStack_e6c = fStack_e6c + fVar3;
   fStack_eb8 = *(float *)((int)in_ECX + 0x164) * 0.017453292;
-  dVar23 = (double)fStack_eb8;
-  libm_sse2_cos_precise();
+  dVar23 = libm_sse2_cos_precise((double)fStack_eb8);
   ppuStack_e70 = (undefined **)(float)dVar23;
-  dVar23 = (double)fStack_eb8;
-  libm_sse2_sin_precise();
+  dVar23 = libm_sse2_sin_precise((double)fStack_eb8);
   fVar24 = (float)dVar23;
   uStack_e78 = (float)ppuStack_e70 - fVar24 * (float)puStack_eac;
   puStack_ccc = (undefined4 *)((float)ppuStack_e70 * (float)puStack_eac + fVar24);
@@ -11091,16 +11061,14 @@ void cube::GameController::drawQuestHud(void)
   fStack_e88 = fVar27 - fVar24 * (float)puStack_eac;
   ppuStack_e70 = (undefined **)((float)ppuStack_e70 * (float)puStack_eac + fVar3);
   fStack_eb8 = *(float *)((int)in_ECX + 0x168) * 0.017453292;
-  dVar23 = (double)fStack_eb8;
   puStack_eac = puStack_ccc;
   fStack_ea4 = fVar27 - fVar24 * fStack_ea4;
   fStack_cc8 = fStack_e74;
   fStack_cc4 = local_ea8;
   ppuStack_cc0 = ppuStack_e70;
-  libm_sse2_cos_precise();
+  dVar23 = libm_sse2_cos_precise((double)fStack_eb8);
   fStack_eb0 = (float)dVar23;
-  dVar23 = (double)fStack_eb8;
-  libm_sse2_sin_precise();
+  dVar23 = libm_sse2_sin_precise((double)fStack_eb8);
   fVar3 = (float)dVar23;
   fStack_cec = fVar3 * fStack_e7c + fStack_eb0 * uStack_e78;
   fStack_cdc = fStack_eb0 * fStack_e7c - uStack_e78 * fVar3;
@@ -11136,7 +11104,6 @@ void cube::GameController::drawQuestHud(void)
   iVar17 = *(int *)((int)in_ECX + 4);
   fStack_cbc = fVar27 * fStack_cdc + fVar24 * fStack_cec + fVar3 * (float)puVar14 + fStack_e80;
   fStack_cb8 = fVar27 * fStack_cd8 + fVar24 * fStack_ce8 + fVar3 * fStack_e74 + fStack_e80;
-  dVar23 = 0.39269909262657166;
   fStack_cb4 = fVar27 * fStack_cd4 + fVar24 * fStack_ce4 + fVar3 * local_ea8 + (float)puStack_e8c;
   fStack_cb0 = fVar27 * fStack_cd0 + fVar24 * fStack_ce0 + fVar3 * (float)ppuVar28 + local_e94;
   fStack_eb8 = fStack_cec;
@@ -11146,7 +11113,7 @@ void cube::GameController::drawQuestHud(void)
   fStack_e7c = fStack_ce4;
   uStack_e78 = fStack_cd8;
   fStack_d04 = fStack_cdc;
-  libm_sse2_tan_precise();
+  dVar23 = libm_sse2_tan_precise(0.39269909262657166);
   fVar3 = uStack_eb4;
   local_ea8 = 1.0 / (float)dVar23;
   uStack_63c = 0;
@@ -11233,11 +11200,11 @@ void cube::GameController::drawQuestHud(void)
   }
   render_uploadModelViewMatrices(&fStack_cec,&uStack_60c,afStack_64c);
   GameController_draw_mesh();
-  fVar22 = (float10)Widget_measureGuarded();
+  fVar22 = (float)Widget_measureGuarded();
   fStack_ebc = (float)fVar22;
   uStack_e78 = (float)(int)((fStack_ebc - 10.0) / 45.0);
   Widget_measure();
-  fVar22 = (float10)security_cookie_guard_a();
+  fVar22 = (float)security_cookie_guard_a();
   fStack_ebc = (float)fVar22;
   fStack_cf8 = (fStack_ebc - 130.0) + fStack_cf8;
   cVar1 = quest_hasActiveItemReq((int)fVar3 + 0x16c);
@@ -11392,7 +11359,7 @@ void cube::GameController::drawQuestHud(void)
     uStack_af4 = 0x3f800000;
     uVar45 = 1;
     uStack_c._0_1_ = 6;
-    fVar22 = (float10)security_cookie_guard_b(1);
+    fVar22 = (float)security_cookie_guard_b(1);
     fVar3 = (float)fVar22;
     uVar42 = 0x11;
     puVar14 = &uStack_b20;
@@ -11401,7 +11368,7 @@ void cube::GameController::drawQuestHud(void)
     uVar39 = 0x40400000;
     uVar37 = 0x41400000;
     uVar36 = 0x41f00000;
-    fVar22 = (float10)security_cookie_guard_b(0x41f00000,0x41400000,0x40400000,puVar41,puVar15,puVar14,0x11,
+    fVar22 = (float)security_cookie_guard_b(0x41f00000,0x41400000,0x40400000,puVar41,puVar15,puVar14,0x11,
                                    fVar3);
     fStack_eb0 = (float)fVar22;
     AdaptionWidget_draw_text_locked(&uStack_7c0,uVar7,0,0,fStack_eb0 * 0.5,uVar36,uVar37,uVar39,puVar41,puVar15,puVar14
@@ -11436,7 +11403,7 @@ void cube::GameController::drawQuestHud(void)
     uStack_8c4 = 0x3f800000;
     uVar45 = 1;
     uStack_c._0_1_ = 8;
-    fVar22 = (float10)security_cookie_guard_b(1);
+    fVar22 = (float)security_cookie_guard_b(1);
     fVar3 = (float)fVar22;
     uVar42 = 0x11;
     puVar14 = &uStack_a30;
@@ -11445,7 +11412,7 @@ void cube::GameController::drawQuestHud(void)
     uVar39 = 0;
     uVar37 = 0x41400000;
     uVar36 = 0x41f00000;
-    fVar22 = (float10)security_cookie_guard_b(0x41f00000,0x41400000,0,puVar41,puVar15,puVar14,0x11,fVar3);
+    fVar22 = (float)security_cookie_guard_b(0x41f00000,0x41400000,0,puVar41,puVar15,puVar14,0x11,fVar3);
     fStack_eb0 = (float)fVar22;
     AdaptionWidget_draw_text_locked(&uStack_670,uVar7,0,0,fStack_eb0 * 0.5,uVar36,uVar37,uVar39,puVar41,puVar15,puVar14
                  ,uVar42,fVar3,uVar45);
@@ -11467,7 +11434,7 @@ void cube::GameController::drawQuestHud(void)
         iVar17 = (int)fStack_cf8 / (int)fStack_e6c;
         fStack_eb8 = (float)(((int)fStack_cf8 % (int)fStack_e6c) * 0x2d + 0x32);
         puStack_eac = *(undefined4 **)(*(int *)((int)fVar3 + 0x288) + 0x118 + (int)fStack_e98);
-        fVar22 = (float10)security_cookie_guard_a();
+        fVar22 = (float)security_cookie_guard_a();
         fStack_eb0 = (float)fVar22;
         fStack_e9c = 0.0;
         ppuStack_e70 = (undefined **)0x0;
@@ -11637,7 +11604,7 @@ void cube::GameController::drawQuestHud(void)
         uStack_eb4 = (float)CONCAT13(1,(undefined3)uStack_eb4);
         u16string_assignCStr(L"Requires water");
         uStack_c._0_1_ = 0x15;
-        fVar22 = (float10)Widget_measure();
+        fVar22 = (float)Widget_measure();
         fStack_eb0 = (float)fVar22;
         puStack_eac = (undefined4 *)(fStack_eb0 - 40.0);
         u16string_assignCStr(L"resource1.dat");
@@ -11655,9 +11622,9 @@ void cube::GameController::drawQuestHud(void)
         uStack_7ec = 0x3e800000;
         uStack_7e8 = 0x3e800000;
         uStack_7e4 = 0x3f800000;
-        fVar22 = (float10)Widget_measureGuarded(1);
+        fVar22 = (float)Widget_measureGuarded(1);
         fStack_eb0 = (float)fVar22;
-        fVar22 = (float10)Widget_measureGuarded();
+        fVar22 = (float)Widget_measureGuarded();
         fStack_eb8 = (float)fVar22;
         AdaptionWidget_draw_text_locked(apvStack_748,apvStack_488,0,0,0x41700000,puStack_eac,0x41100000,0x40400000,
                      &uStack_7f0,&uStack_a00,&uStack_810,0x10,
@@ -11684,9 +11651,9 @@ void cube::GameController::drawQuestHud(void)
         uStack_9bc = 0x3e800000;
         uStack_9b8 = 0x3e800000;
         uStack_9b4 = 0x3f800000;
-        fVar22 = (float10)Widget_measureGuarded(1);
+        fVar22 = (float)Widget_measureGuarded(1);
         fStack_eb0 = (float)fVar22;
-        fVar22 = (float10)Widget_measureGuarded();
+        fVar22 = (float)Widget_measureGuarded();
         fStack_eb8 = (float)fVar22;
         AdaptionWidget_draw_text_locked(apvStack_658,apvStack_488,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_9c0,
                      &uStack_7e0,&uStack_7d0,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
@@ -11770,7 +11737,7 @@ void cube::GameController::drawQuestHud(void)
     }
     u16string_assignCStr(L"Requires Furnace");
     uStack_c._0_1_ = 0x1e;
-    fVar22 = (float10)Widget_measure();
+    fVar22 = (float)Widget_measure();
     fStack_eb0 = (float)fVar22;
     puStack_eac = (undefined4 *)(fStack_eb0 - 40.0);
     u16string_assignCStr(L"resource1.dat");
@@ -11788,9 +11755,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_b54 = 0x3f800000;
     uVar7 = 1;
     uStack_c._0_1_ = 0x1f;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_790,apvStack_470,0,0,0x41700000,puStack_eac,0x41100000,0x40400000,
                  &uStack_b60,&uStack_8e0,&uStack_860,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,
@@ -11817,9 +11784,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_9ac = 0x3e800000;
     uStack_9a8 = 0x3e800000;
     uStack_9a4 = 0x3f800000;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_760,apvStack_470,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_9b0,
                  &uStack_9d0,&uStack_9f0,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
@@ -11897,7 +11864,7 @@ void cube::GameController::drawQuestHud(void)
     }
     u16string_assignCStr(L"Requires Anvil");
     uStack_c._0_1_ = 0x21;
-    fVar22 = (float10)Widget_measure();
+    fVar22 = (float)Widget_measure();
     fStack_eb0 = (float)fVar22;
     puStack_eac = (undefined4 *)(fStack_eb0 - 40.0);
     u16string_assignCStr(L"resource1.dat");
@@ -11915,9 +11882,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_944 = 0x3f800000;
     uVar7 = 1;
     uStack_c._0_1_ = 0x22;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_730,apvStack_4b8,0,0,0x41700000,puStack_eac,0x41100000,0x40400000,
                  &uStack_950,&uStack_970,&uStack_990,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,
@@ -11944,9 +11911,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_8ec = 0x3e800000;
     uStack_8e8 = 0x3e800000;
     uStack_8e4 = 0x3f800000;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_700,apvStack_4b8,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_8f0,
                  &uStack_910,&uStack_930,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
@@ -12024,7 +11991,7 @@ void cube::GameController::drawQuestHud(void)
     }
     u16string_assignCStr(L"Requires Spinning Wheel");
     uStack_c._0_1_ = 0x18;
-    fVar22 = (float10)Widget_measure();
+    fVar22 = (float)Widget_measure();
     fStack_eb0 = (float)fVar22;
     puStack_eac = (undefined4 *)(fStack_eb0 - 40.0);
     u16string_assignCStr(L"resource1.dat");
@@ -12042,9 +12009,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_834 = 0x3f800000;
     uVar7 = 1;
     uStack_c._0_1_ = 0x19;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_718,apvStack_4d0,0,0,0x41700000,puStack_eac,0x41100000,0x40400000,
                  &uStack_840,&uStack_9a0,&uStack_8c0,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,
@@ -12071,9 +12038,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_95c = 0x3e800000;
     uStack_958 = 0x3e800000;
     uStack_954 = 0x3f800000;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_688,apvStack_4d0,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_960,
                  &uStack_8a0,&uStack_980,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
@@ -12151,7 +12118,7 @@ void cube::GameController::drawQuestHud(void)
     }
     u16string_assignCStr(L"Requires Loom");
     uStack_c._0_1_ = 0x1b;
-    fVar22 = (float10)Widget_measure();
+    fVar22 = (float)Widget_measure();
     fStack_eb0 = (float)fVar22;
     puStack_eac = (undefined4 *)(fStack_eb0 - 40.0);
     u16string_assignCStr(L"resource1.dat");
@@ -12169,9 +12136,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_874 = 0x3f800000;
     uVar7 = 1;
     uStack_c._0_1_ = 0x1c;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_6e8,apvStack_4a0,0,0,0x41700000,puStack_eac,0x41100000,0x40400000,
                  &uStack_880,&uStack_940,&uStack_800,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,
@@ -12198,9 +12165,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_8fc = 0x3e800000;
     uStack_8f8 = 0x3e800000;
     uStack_8f4 = 0x3f800000;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_7a8,apvStack_4a0,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_900,
                  &uStack_820,&uStack_920,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
@@ -12278,7 +12245,7 @@ void cube::GameController::drawQuestHud(void)
     }
     u16string_assignCStr(L"Requires Saw");
     uStack_c._0_1_ = 0x24;
-    fVar22 = (float10)Widget_measure();
+    fVar22 = (float)Widget_measure();
     fStack_eb0 = (float)fVar22;
     puStack_eac = (undefined4 *)(fStack_eb0 - 40.0);
     u16string_assignCStr(L"resource1.dat");
@@ -12296,9 +12263,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_aa4 = 0x3f800000;
     uVar7 = 1;
     uStack_c._0_1_ = 0x25;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_6d0,apvStack_4e8,0,0,0x41700000,puStack_eac,0x41100000,0x40400000,
                  &uStack_ab0,&uStack_ad0,&uStack_af0,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,
@@ -12325,9 +12292,9 @@ void cube::GameController::drawQuestHud(void)
     uStack_b2c = 0x3e800000;
     uStack_b28 = 0x3e800000;
     uStack_b24 = 0x3f800000;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     AdaptionWidget_draw_text_locked(apvStack_6a0,apvStack_4e8,0,0,0x41700000,puStack_eac,0x41100000,0,&uStack_b30,
                  &uStack_b50,&uStack_a90,0x10,((fStack_eb0 - fStack_eb8) - 40.0) - 10.0,uVar7);
@@ -12372,7 +12339,7 @@ void cube::GameController::drawQuestHud(void)
                   iVar17 = GameController_get_field_0x8006d0();
                   uVar7 = vec3i64_copySub(auStack_1f8,iVar17 + 0x10);
                   vec3i64_toFloat(uVar7);
-                  fVar22 = (float10)vec3_lengthSq();
+                  fVar22 = (float)vec3_lengthSq();
                   fStack_eb0 = (float)fVar22;
                   if (fStack_eb0 < 16.0) goto LAB_0043460c;
                 }
@@ -12393,7 +12360,7 @@ void cube::GameController::drawQuestHud(void)
     }
     u16string_assignCStr(L"Requires Workbench");
     uStack_c._0_1_ = 0x27;
-    fVar22 = (float10)Widget_measure();
+    fVar22 = (float)Widget_measure();
     fStack_eb0 = (float)fVar22;
     setPair_b(0x41700000,fStack_eb0 - 40.0);
     u16string_assignCStr(L"resource1.dat");
@@ -12401,10 +12368,10 @@ void cube::GameController::drawQuestHud(void)
     puVar14 = (undefined4 *)arrayElem_stride4(1);
     puVar15 = (undefined4 *)arrayElem_stride4(0);
     uVar47 = 1;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
     getField_0x40();
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     fVar3 = ((fStack_eb0 - fStack_eb8) - 40.0) - 10.0;
     uVar44 = 0x10;
@@ -12428,10 +12395,10 @@ void cube::GameController::drawQuestHud(void)
     u16string_assignCStr(L"resource1.dat");
     uVar47 = 1;
     uStack_c._0_1_ = 0x29;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
     getField_0x40();
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     fVar24 = ((fStack_eb0 - fStack_eb8) - 40.0) - 10.0;
     uVar44 = 0x10;
@@ -12494,7 +12461,7 @@ void cube::GameController::drawQuestHud(void)
                   iVar17 = GameController_get_field_0x8006d0();
                   uVar7 = vec3i64_copySub(auStack_210,iVar17 + 0x10);
                   vec3i64_toFloat(uVar7);
-                  fVar22 = (float10)vec3_lengthSq();
+                  fVar22 = (float)vec3_lengthSq();
                   fStack_eb0 = (float)fVar22;
                   if (fStack_eb0 < 16.0) goto LAB_0043460c;
                 }
@@ -12515,7 +12482,7 @@ void cube::GameController::drawQuestHud(void)
     }
     u16string_assignCStr(L"Requires Campfire");
     uStack_c._0_1_ = 0x2a;
-    fVar22 = (float10)Widget_measure();
+    fVar22 = (float)Widget_measure();
     fStack_eb0 = (float)fVar22;
     setPair_b(0x41700000,fStack_eb0 - 40.0);
     u16string_assignCStr(L"resource1.dat");
@@ -12523,10 +12490,10 @@ void cube::GameController::drawQuestHud(void)
     puVar14 = (undefined4 *)arrayElem_stride4(1);
     puVar15 = (undefined4 *)arrayElem_stride4(0);
     uVar47 = 1;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
     getField_0x40();
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     fVar3 = ((fStack_eb0 - fStack_eb8) - 40.0) - 10.0;
     uVar44 = 0x10;
@@ -12550,10 +12517,10 @@ void cube::GameController::drawQuestHud(void)
     u16string_assignCStr(L"resource1.dat");
     uVar47 = 1;
     uStack_c._0_1_ = 0x2c;
-    fVar22 = (float10)Widget_measureGuarded(1);
+    fVar22 = (float)Widget_measureGuarded(1);
     fStack_eb0 = (float)fVar22;
     getField_0x40();
-    fVar22 = (float10)Widget_measureGuarded();
+    fVar22 = (float)Widget_measureGuarded();
     fStack_eb8 = (float)fVar22;
     fVar24 = ((fStack_eb0 - fStack_eb8) - 40.0) - 10.0;
     uVar44 = 0x10;
@@ -12627,7 +12594,7 @@ LAB_00434691:
   }
 LAB_00434711:
   if (*(int *)((int)fVar3 + 0x2a0) != 0) {
-    fVar22 = (float10)get_float_field_0x1000e78();
+    fVar22 = (float)get_float_field_0x1000e78();
     fStack_eb0 = (float)fVar22;
     setFlagAtSlot(0.0 <= fStack_eb0);
   }
@@ -12748,12 +12715,12 @@ undefined4 getDword0x10(void)
  */
 /* Global::get_float_field_0xd4 @ 004348d0 */
 
-float10 get_float_field_0xd4(void)
+float get_float_field_0xd4(void)
 
 {
   int in_ECX;
   
-  return (float10)*(float *)(in_ECX + 0xd4);
+  return (float)*(float *)(in_ECX + 0xd4);
 }
 
 
@@ -12765,12 +12732,12 @@ float10 get_float_field_0xd4(void)
  */
 /* Global::get_float_field_0xd8 @ 004348e0 */
 
-float10 get_float_field_0xd8(void)
+float get_float_field_0xd8(void)
 
 {
   int in_ECX;
   
-  return (float10)*(float *)(in_ECX + 0xd8);
+  return (float)*(float *)(in_ECX + 0xd8);
 }
 
 
@@ -12824,13 +12791,13 @@ void mat_scaleColumns(float scaleX,float scaleY)
 {
   float *self;
   
-  if (scaleX != 1.0) {
+  if (scaleX != 1.0f) {
     *self = *self * scaleX;
     self[1] = scaleX * self[1];
     self[2] = scaleX * self[2];
     self[3] = scaleX * self[3];
   }
-  if (scaleY != 1.0) {
+  if (scaleY != 1.0f) {
     self[4] = self[4] * scaleY;
     self[5] = self[5] * scaleY;
     self[6] = self[6] * scaleY;
@@ -12909,21 +12876,21 @@ void node_applyDamageColorFlash(float amount)
   int mesh;
   int self;
   float *colorVec;
-  float10 maxDim;
-  float10 denom;
+  float maxDim;
+  float denom;
   float scale;
   
   if (*(int *)(self + 0x2a4) != 0) {
-    if (amount < 0.0) {
-      amount = 0.0;
+    if (amount < 0.0f) {
+      amount = 0.0f;
     }
     mat4_identity();
     mesh = *(int *)(*(int *)(self + 0x2a4) + 0x38);
     colorVec = (float *)(*(int *)(mesh + 0xc0) * 0x40 + *(int *)(mesh + 0xec));
-    maxDim = (float10)Widget_measureGuarded();
-    denom = (float10)security_cookie_guard_b();
-    scale = (((float)maxDim - 8.0) * amount) / (float)denom;
-    if (scale != 1.0) {
+    maxDim = (float)Widget_measureGuarded();
+    denom = (float)security_cookie_guard_b();
+    scale = (((float)maxDim - 8.0f) * amount) / (float)denom;
+    if (scale != 1.0f) {
       *colorVec = scale * *colorVec;
       colorVec[1] = scale * colorVec[1];
       colorVec[2] = scale * colorVec[2];
@@ -13315,7 +13282,7 @@ void text_layoutWordWrap(undefined4 *text,undefined2 *color)
   int wordCount;
   float idx;
   int *lineNode;
-  float10 fVar13;
+  float fVar13;
   float textLen;
   void *newNode;
   float segStart;
@@ -13347,11 +13314,11 @@ void text_layoutWordWrap(undefined4 *text,undefined2 *color)
   uVar4 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
   wordCount = 0;
-  segStart = 0.0;
+  segStart = 0.0f;
   local_14 = uVar4;
   wordList = (undefined4 *)list_allocNode32(0,0);
   textLen = (float)text[4];
-  idx = 0.0;
+  idx = 0.0f;
   local_8._1_3_ = 0;
   textLenSave = textLen;
   if (-1 < (int)textLen) {
@@ -13413,12 +13380,12 @@ LAB_0043a5a1:
   }
   wordCount = local_74;
   local_8._0_1_ = 0;
-  fVar13 = (float10)security_cookie_guard_b(uVar4);
+  fVar13 = (float)security_cookie_guard_b(uVar4);
   segStart = (float)fVar13;
-  textLen = segStart - 20.0;
-  textLenSave = 0.0;
+  textLen = segStart - 20.0f;
+  textLenSave = 0.0f;
   if (*(int *)(wordCount + 0x164) == 0) {
-    segStart = 0.0;
+    segStart = 0.0f;
     newNode = (void *)rbtree_allocNode24(0,0);
     node = *(int *)(wordCount + 0x160);
     local_8._0_1_ = 3;
@@ -13442,7 +13409,7 @@ LAB_0043a5a1:
       node = u16string_compare(0,lineNode[6],&DAT_006fd844,1);
       iVar9 = local_74;
       if (node == 0) {
-        textLenSave = textLenSave + 5.0;
+        textLenSave = textLenSave + 5.0f;
       }
       else {
         Font_measureTextScaled(lineNode + 2,*(int *)(local_74 + 0x148) + 0x48,0x41200000,0x40000000,0,0,0,
@@ -13476,7 +13443,7 @@ LAB_0043a808:
     if ((node == 0) || (node = u16string_compare(0,puVar6[6],&DAT_006fd850,1), node == 0)) break;
     node = u16string_compare(0,puVar6[6],&DAT_006fd844,1);
     if (node == 0) {
-      segStart = 7.00649e-45;
+      segStart = 7.00649e-45f;
     }
     else {
       segStart = (float)(int)(bounds1[0] - bounds0[0]);
@@ -13576,8 +13543,8 @@ void text_drawColoredString(undefined4 target,float *rgb)
   bPtr = rgb + 2;
   rgb._3_1_ = SUB41(colorPtr,3);
   rgb._0_3_ =
-       CONCAT12((char)(int)(*bPtr * 255.0),
-                CONCAT11((char)(int)(*gPtr * 255.0),(char)(int)(r * 255.0)));
+       CONCAT12((char)(int)(*bPtr * 255.0f),
+                CONCAT11((char)(int)(*gPtr * 255.0f),(char)(int)(r * 255.0f)));
   text_layoutWordWrap(target,&rgb);
   return;
 }
@@ -13809,10 +13776,10 @@ void container_destroy(void)
  */
 /* Global::curve_level05 @ 0043ca60 */
 
-float10 curve_level05(float level)
+float curve_level05(float level)
 
 {
-  return (float10)(1.0 - 1.0 / ((level - 1.0) * 0.05 + 1.0));
+  return (float)(1.0f - 1.0f / ((level - 1.0f) * 0.05f + 1.0f));
 }
 
 
@@ -13828,7 +13795,7 @@ int combat_getAttackWindup(uint abilityType)
 
 {
   int self;
-  float10 fVar1;
+  float fVar1;
   float baseTime;
   float rate;
   
@@ -13851,71 +13818,71 @@ int combat_getAttackWindup(uint abilityType)
     return 0;
   case 1:
   case 9:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 300.0;
+    baseTime = 300.0f;
     break;
   case 2:
   case 3:
   case 4:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 100.0;
+    baseTime = 100.0f;
     break;
   case 5:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 100.0;
+    baseTime = 100.0f;
     break;
   case 6:
   case 7:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 50.0;
+    baseTime = 50.0f;
     break;
   case 10:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 100.0;
+    baseTime = 100.0f;
     break;
   case 0xc:
   case 0x10:
   case 0x43:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 200.0;
+    baseTime = 200.0f;
     break;
   case 0xd:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 200.0;
+    baseTime = 200.0f;
     break;
   case 0xe:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 100.0;
+    baseTime = 100.0f;
     break;
   case 0xf:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 200.0;
+    baseTime = 200.0f;
     break;
   case 0x11:
   case 0x12:
   case 0x13:
   case 0x14:
   case 0x15:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 100.0;
+    baseTime = 100.0f;
     break;
   case 0x16:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     goto LAB_0043ce05;
   case 0x17:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 50.0;
+    baseTime = 50.0f;
     break;
   case 0x18:
   case 0x19:
@@ -13924,71 +13891,71 @@ int combat_getAttackWindup(uint abilityType)
   case 0x3b:
   case 0x3f:
   case 0x40:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 50.0;
+    baseTime = 50.0f;
     break;
   case 0x1a:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 300.0;
+    baseTime = 300.0f;
     break;
   default:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
 LAB_0043ce05:
     rate = (float)fVar1;
-    baseTime = 400.0;
+    baseTime = 400.0f;
     break;
   case 0x1e:
   case 0x20:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 800.0;
+    baseTime = 800.0f;
     break;
   case 0x1f:
   case 0x21:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 1600.0;
+    baseTime = 1600.0f;
     break;
   case 0x22:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 1600.0;
+    baseTime = 1600.0f;
     break;
   case 0x25:
   case 0x2b:
   case 0x59:
     if (*(char *)(self + 0xaa9) == '\f') {
-      fVar1 = (float10)combat_getEffectiveHaste();
+      fVar1 = (float)combat_getEffectiveHaste();
       rate = (float)fVar1;
-      baseTime = 600.0;
+      baseTime = 600.0f;
     }
     else {
-      fVar1 = (float10)combat_getEffectiveHaste();
+      fVar1 = (float)combat_getEffectiveHaste();
       rate = (float)fVar1;
-      baseTime = 1200.0;
+      baseTime = 1200.0f;
     }
     break;
   case 0x26:
   case 0x2c:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 500.0;
+    baseTime = 500.0f;
     break;
   case 0x27:
   case 0x28:
   case 0x29:
   case 0x2a:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 200.0;
+    baseTime = 200.0f;
     break;
   case 0x2d:
   case 0x2e:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 1200.0;
+    baseTime = 1200.0f;
     break;
   case 0x30:
   case 0x65:
@@ -13997,15 +13964,15 @@ LAB_0043ce05:
     return 400;
   case 0x39:
   case 0x3a:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 800.0;
+    baseTime = 800.0f;
     break;
   case 0x41:
   case 0x42:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 300.0;
+    baseTime = 300.0f;
     break;
   case 0x44:
   case 0x45:
@@ -14016,37 +13983,37 @@ LAB_0043ce05:
   case 0x4c:
   case 0x4d:
   case 0x4e:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 300.0;
+    baseTime = 300.0f;
     break;
   case 0x47:
   case 0x48:
     return 200;
   case 0x57:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 5000.0;
+    baseTime = 5000.0f;
     break;
   case 0x5b:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 1000.0;
+    baseTime = 1000.0f;
     break;
   case 0x5d:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 800.0;
+    baseTime = 800.0f;
     break;
   case 0x5e:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 500.0;
+    baseTime = 500.0f;
     break;
   case 0x5f:
-    fVar1 = (float10)combat_getEffectiveHaste();
+    fVar1 = (float)combat_getEffectiveHaste();
     rate = (float)fVar1;
-    baseTime = 1000.0;
+    baseTime = 1000.0f;
     break;
   case 0x69:
     return 5000;
@@ -14069,7 +14036,7 @@ int combat_getAttackTiming(void)
   int self;
   int castTime;
   int recoverTime;
-  float10 fVar3;
+  float fVar3;
   float base;
   float rate;
   
@@ -14090,71 +14057,71 @@ int combat_getAttackTiming(void)
     goto LAB_0043d510;
   case 1:
   case 9:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 2:
   case 3:
   case 4:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 5:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 6:
   case 7:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 50.0;
+    base = 50.0f;
     break;
   case 10:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0xc:
   case 0x10:
   case 0x43:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 0xd:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 0xe:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0xf:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 0x11:
   case 0x12:
   case 0x13:
   case 0x14:
   case 0x15:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0x16:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     goto LAB_0043d4f8;
   case 0x17:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 50.0;
+    base = 50.0f;
     break;
   case 0x18:
   case 0x19:
@@ -14163,71 +14130,71 @@ int combat_getAttackTiming(void)
   case 0x3b:
   case 0x3f:
   case 0x40:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 50.0;
+    base = 50.0f;
     break;
   case 0x1a:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 300.0;
+    base = 300.0f;
     break;
   default:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
 LAB_0043d4f8:
     rate = (float)fVar3;
-    base = 400.0;
+    base = 400.0f;
     break;
   case 0x1e:
   case 0x20:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 800.0;
+    base = 800.0f;
     break;
   case 0x1f:
   case 0x21:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 1600.0;
+    base = 1600.0f;
     break;
   case 0x22:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 1600.0;
+    base = 1600.0f;
     break;
   case 0x25:
   case 0x2b:
   case 0x59:
     if (*(char *)(self + 0xaa9) == '\f') {
-      fVar3 = (float10)combat_getEffectiveHaste();
+      fVar3 = (float)combat_getEffectiveHaste();
       rate = (float)fVar3;
-      base = 600.0;
+      base = 600.0f;
     }
     else {
-      fVar3 = (float10)combat_getEffectiveHaste();
+      fVar3 = (float)combat_getEffectiveHaste();
       rate = (float)fVar3;
-      base = 1200.0;
+      base = 1200.0f;
     }
     break;
   case 0x26:
   case 0x2c:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 500.0;
+    base = 500.0f;
     break;
   case 0x27:
   case 0x28:
   case 0x29:
   case 0x2a:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 0x2d:
   case 0x2e:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 1200.0;
+    base = 1200.0f;
     break;
   case 0x30:
   case 0x65:
@@ -14238,15 +14205,15 @@ LAB_0043d4f8:
     goto LAB_0043d510;
   case 0x39:
   case 0x3a:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 800.0;
+    base = 800.0f;
     break;
   case 0x41:
   case 0x42:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 0x44:
   case 0x45:
@@ -14257,38 +14224,38 @@ LAB_0043d4f8:
   case 0x4c:
   case 0x4d:
   case 0x4e:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 0x47:
   case 0x48:
     castTime = 200;
     goto LAB_0043d510;
   case 0x57:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 5000.0;
+    base = 5000.0f;
     break;
   case 0x5b:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 1000.0;
+    base = 1000.0f;
     break;
   case 0x5d:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 800.0;
+    base = 800.0f;
     break;
   case 0x5e:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 500.0;
+    base = 500.0f;
     break;
   case 0x5f:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 1000.0;
+    base = 1000.0f;
     break;
   case 0x69:
     castTime = 5000;
@@ -14304,16 +14271,16 @@ LAB_0043d510:
   case 1:
   case 2:
   case 9:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 200.0;
+    base = 200.0f;
     goto LAB_0043d7f4;
   case 3:
   case 4:
   case 0x3e:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     goto LAB_0043d7f4;
   case 5:
   case 0xc:
@@ -14321,57 +14288,57 @@ LAB_0043d510:
   case 0x11:
   case 0x41:
   case 0x42:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 400.0;
+    base = 400.0f;
     goto LAB_0043d7f4;
   case 6:
   case 7:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 150.0;
+    base = 150.0f;
     goto LAB_0043d7f4;
   default:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
     goto LAB_0043d7ec;
   case 10:
     recoverTime = 200;
     break;
   case 0xb:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
     goto LAB_0043d7ec;
   case 0xd:
   case 0xe:
   case 0xf:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 200.0;
+    base = 200.0f;
     goto LAB_0043d7f4;
   case 0x12:
   case 0x13:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 150.0;
+    base = 150.0f;
     goto LAB_0043d7f4;
   case 0x14:
   case 0x15:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 400.0;
+    base = 400.0f;
     goto LAB_0043d7f4;
   case 0x16:
-    fVar3 = (float10)combat_getEffectiveHaste();
-    recoverTime = (int)(50.0 / ((float)fVar3 * *(float *)(self + 0x17c)));
+    fVar3 = (float)combat_getEffectiveHaste();
+    recoverTime = (int)(50.0f / ((float)fVar3 * *(float *)(self + 0x17c)));
     break;
   case 0x17:
-    fVar3 = (float10)combat_getEffectiveHaste();
-    recoverTime = (int)(50.0 / ((float)fVar3 * *(float *)(self + 0x17c)));
+    fVar3 = (float)combat_getEffectiveHaste();
+    recoverTime = (int)(50.0f / ((float)fVar3 * *(float *)(self + 0x17c)));
     break;
   case 0x1a:
-    fVar3 = (float10)combat_getEffectiveHaste();
-    recoverTime = (int)(1200.0 / ((float)fVar3 * *(float *)(self + 0x17c)));
+    fVar3 = (float)combat_getEffectiveHaste();
+    recoverTime = (int)(1200.0f / ((float)fVar3 * *(float *)(self + 0x17c)));
     break;
   case 0x1e:
   case 0x20:
@@ -14384,14 +14351,14 @@ LAB_0043d510:
     recoverTime = 0x4b0;
     break;
   case 0x22:
-    fVar3 = (float10)combat_getEffectiveHaste();
-    recoverTime = (int)(1200.0 / ((float)fVar3 * *(float *)(self + 0x17c)));
+    fVar3 = (float)combat_getEffectiveHaste();
+    recoverTime = (int)(1200.0f / ((float)fVar3 * *(float *)(self + 0x17c)));
     break;
   case 0x25:
   case 0x2b:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     goto LAB_0043d7f4;
   case 0x26:
   case 0x27:
@@ -14399,14 +14366,14 @@ LAB_0043d510:
   case 0x29:
   case 0x2a:
   case 0x2c:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
     goto LAB_0043d7ec;
   case 0x2d:
   case 0x2e:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 500.0;
+    base = 500.0f;
     goto LAB_0043d7f4;
   case 0x32:
   case 0x4c:
@@ -14419,14 +14386,14 @@ LAB_0043d510:
     recoverTime = 100;
     break;
   case 0x37:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 500.0;
+    base = 500.0f;
     goto LAB_0043d7f4;
   case 0x43:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 200.0;
+    base = 200.0f;
     goto LAB_0043d7f4;
   case 0x44:
   case 0x45:
@@ -14440,25 +14407,25 @@ LAB_0043d510:
     recoverTime = 5000;
     break;
   case 0x4b:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
     goto LAB_0043d7ec;
   case 0x5b:
     recoverTime = 6000;
     break;
   case 0x5e:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 500.0;
+    base = 500.0f;
     goto LAB_0043d7f4;
   case 0x5f:
     recoverTime = 2000;
     break;
   case 0x68:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
 LAB_0043d7ec:
-    base = 300.0;
+    base = 300.0f;
 LAB_0043d7f4:
     recoverTime = (int)(base / (rate * *(float *)(self + 0x17c)));
   }
@@ -14468,24 +14435,24 @@ LAB_0043d7f4:
   case 0x60:
     return recoverTime + 100 + castTime;
   default:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 500.0;
+    base = 500.0f;
     break;
   case 3:
   case 4:
   case 5:
   case 0x3e:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 7:
   case 0xe:
   case 0x12:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 10:
     return recoverTime + 600 + castTime;
@@ -14493,14 +14460,14 @@ LAB_0043d7f4:
   case 0x3c:
   case 0x3d:
   case 0x68:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0xf:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 400.0;
+    base = 400.0f;
     break;
   case 0x16:
   case 0x1a:
@@ -14521,40 +14488,40 @@ LAB_0043d7f4:
   case 0x2e:
   case 0x5e:
   case 0x5f:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0x17:
-    fVar3 = (float10)combat_getEffectiveHaste();
-    return (int)(10.0 / ((float)fVar3 * *(float *)(self + 0x17c))) + recoverTime + castTime;
+    fVar3 = (float)combat_getEffectiveHaste();
+    return (int)(10.0f / ((float)fVar3 * *(float *)(self + 0x17c))) + recoverTime + castTime;
   case 0x30:
     return recoverTime + castTime;
   case 0x36:
     return recoverTime + 400 + castTime;
   case 0x39:
   case 0x3a:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 300.0;
+    base = 300.0f;
     break;
   case 0x41:
   case 0x42:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 200.0;
+    base = 200.0f;
     break;
   case 0x43:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 100.0;
+    base = 100.0f;
     break;
   case 0x44:
   case 0x45:
   case 0x5d:
-    fVar3 = (float10)combat_getEffectiveHaste();
+    fVar3 = (float)combat_getEffectiveHaste();
     rate = (float)fVar3;
-    base = 800.0;
+    base = 800.0f;
     break;
   case 0x47:
   case 0x48:
@@ -14688,39 +14655,39 @@ LAB_0043e0ff:
  */
 /* Global::stat_calcSpellPower @ 0043e190 */
 
-float10 stat_calcSpellPower(void)
+float stat_calcSpellPower(void)
 
 {
   int self;
-  float10 fVar1;
+  float fVar1;
   float bonus;
   double dVar3;
   double dVar4;
   undefined4 power;
   
-  dVar3 = 2.0;
-  libm_sse2_pow_precise();
-  dVar4 = 2.0;
-  libm_sse2_pow_precise();
+  dVar3 = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 + 1.0))
+                                 * 3.0));
+  dVar4 = libm_sse2_pow_precise(2.0,0.0);
   power = (float)dVar3 * (float)dVar4 * *(float *)(self + 0x180);
   if (*(char *)(self + 0x990) == '\x03') {
     if (*(char *)(self + 0x991) != '\r') {
-      fVar1 = (float10)item_weaponDamage();
+      fVar1 = (float)item_weaponDamage();
       power = (float)fVar1 + power;
       goto LAB_0043e27b;
     }
-    fVar1 = (float10)item_weaponDamage();
+    fVar1 = (float)item_weaponDamage();
     bonus = (float)fVar1 * 4.0;
   }
   else {
 LAB_0043e27b:
     if (*(char *)(self + 0xaa8) != '\x03') goto LAB_0043e29f;
-    fVar1 = (float10)item_weaponDamage();
+    fVar1 = (float)item_weaponDamage();
     bonus = (float)fVar1;
   }
   power = bonus + power;
 LAB_0043e29f:
-  return (float10)(*(float *)(self + 0x180) * power);
+  return (float)(*(float *)(self + 0x180) * power);
 }
 
 
@@ -14756,7 +14723,7 @@ undefined4 combat_isReadyToStrike(void)
        ((ability != '\"' && ((ability != '\x1c' && (ability != '\x1d')))))) {
       return 0;
     }
-    if (*(float *)(self + 0x144) <= 0.0) {
+    if (*(float *)(self + 0x144) <= 0.0f) {
       return 1;
     }
   }
@@ -14782,7 +14749,7 @@ bool combat_rollBlockSuccess(void)
   
   level = *(int *)(self + 400);
   roll = item_rarityScaled();
-  if ((int)((1.0 - 1.0 / (((float)level - 1.0) * 0.05 + 1.0)) * 100.0 + 1.0) < roll) {
+  if ((int)((1.0f - 1.0f / (((float)level - 1.0f) * 0.05f + 1.0f)) * 100.0f + 1.0f) < roll) {
     return false;
   }
   ok = item_classifyRecursive(*(undefined1 *)(self + 0x140));
@@ -14873,55 +14840,55 @@ bool ability_matchesId0x19(char *ability)
 int ability_getManaCost(undefined4 itemType,undefined4 arg)
 
 {
-  float10 frac;
+  float frac;
   
   switch(itemType) {
   case 0x15:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(8000.0 - (float)frac * 8000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(8000.0f - (float)frac * 8000.0f);
   default:
     return 0;
   case 0x30:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(20000.0 - (float)frac * 12000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(20000.0f - (float)frac * 12000.0f);
   case 0x31:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(16000.0 - (float)frac * 10000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(16000.0f - (float)frac * 10000.0f);
   case 0x32:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(16000.0 - (float)frac * 10000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(16000.0f - (float)frac * 10000.0f);
   case 0x36:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(20000.0 - (float)frac * 14000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(20000.0f - (float)frac * 14000.0f);
   case 0x48:
     return 15000;
   case 0x56:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(60000.0 - (float)frac * 40000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(60000.0f - (float)frac * 40000.0f);
   case 0x58:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(8000.0 - (float)frac * 8000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(8000.0f - (float)frac * 8000.0f);
   case 0x60:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(20000.0 - (float)frac * 14000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(20000.0f - (float)frac * 14000.0f);
   case 0x61:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(60000.0 - (float)frac * 30000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(60000.0f - (float)frac * 30000.0f);
   case 99:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(12000.0 - (float)frac * 10000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(12000.0f - (float)frac * 10000.0f);
   case 100:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(60000.0 - (float)frac * 30000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(60000.0f - (float)frac * 30000.0f);
   case 0x65:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(60000.0 - (float)frac * 30000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(60000.0f - (float)frac * 30000.0f);
   case 0x66:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(60000.0 - (float)frac * 30000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(60000.0f - (float)frac * 30000.0f);
   case 0x67:
-    frac = (float10)ability_getPowerFactor(itemType,arg);
-    return (int)(20000.0 - (float)frac * 10000.0);
+    frac = (float)ability_getPowerFactor(itemType,arg);
+    return (int)(20000.0f - (float)frac * 10000.0f);
   }
 }
 
@@ -14934,7 +14901,7 @@ int ability_getManaCost(undefined4 itemType,undefined4 arg)
  */
 /* Global::ability_getPowerFactor @ 0043ed60 */
 
-float10 ability_getPowerFactor(undefined4 itemType,int level)
+float ability_getPowerFactor(undefined4 itemType,int level)
 
 {
   int slot;
@@ -14942,7 +14909,7 @@ float10 ability_getPowerFactor(undefined4 itemType,int level)
   
   slot = item_materialCategory(itemType);
   if (slot < 0) {
-    return (float10)1;
+    return (float)1;
   }
   if (level < 0) {
     level = *(int *)(self + 0x1138 + slot * 4);
@@ -14950,7 +14917,7 @@ float10 ability_getPowerFactor(undefined4 itemType,int level)
   if ((level == 0) && (*(char *)(self + 0x60) != '\0')) {
     level = *(int *)(self + 400) / 2 + *(byte *)(self + 0x1a8) + 1;
   }
-  return (float10)(1.0 - 1.0 / ((float)level * 0.1 + 1.0));
+  return (float)(1.0f - 1.0f / ((float)level * 0.1f + 1.0f));
 }
 
 
@@ -15019,7 +14986,7 @@ undefined1 physics_isLandingHard(void)
   int self;
   
   if (((((*(byte *)(self + 0x124) & 0x10) != 0) &&
-       (*(float *)(self + 0x3c) <= 0.0 && *(float *)(self + 0x3c) != 0.0)) &&
+       (*(float *)(self + 0x3c) <= 0.0f && *(float *)(self + 0x3c) != 0.0f)) &&
       ((*(byte *)(self + 0x5c) & 1) == 0)) &&
      ((*(int *)(self + 300) < 1 && (*(int *)(self + 0x128) < 1)))) {
     return 1;
@@ -15148,21 +15115,21 @@ undefined4 quest_hasActiveItemReq(void)
  */
 /* Global::ability_getResourceCost @ 00444ae0 */
 
-float10 ability_getResourceCost(undefined4 abilityType,undefined4 level)
+float ability_getResourceCost(undefined4 abilityType,undefined4 level)
 
 {
   int *buffList;
   int *buff;
   int self;
-  float10 fVar3;
+  float fVar3;
   
   switch(abilityType) {
   case 3:
   case 4:
-    return (float10)0.1;
+    return (float)0.1f;
   default:
 switchD_00444af9_caseD_5:
-    return (float10)0;
+    return (float)0;
   case 0x1f:
   case 0x21:
   case 0x25:
@@ -15172,8 +15139,8 @@ switchD_00444af9_caseD_5:
   case 0x5f:
     break;
   case 0x22:
-    fVar3 = (float10)ability_getPowerFactor(0x22,level);
-    return (float10)((1.0 - (float)fVar3 * 0.75) * 0.125);
+    fVar3 = (float)ability_getPowerFactor(0x22,level);
+    return (float)((1.0f - (float)fVar3 * 0.75f) * 0.125f);
   }
   buffList = *(int **)(self + 0x1178);
   buff = (int *)*buffList;
@@ -15181,12 +15148,12 @@ switchD_00444af9_caseD_5:
     while ((char)buff[2] != '\t') {
       buff = (int *)*buff;
       if (buff == buffList) {
-        return (float10)0.3;
+        return (float)0.3f;
       }
     }
     if (buff != (int *)0xfffffff8) goto switchD_00444af9_caseD_5;
   }
-  return (float10)0.3;
+  return (float)0.3f;
 }
 
 
@@ -15206,20 +15173,20 @@ int shield_getBlockDuration(void)
   if (*(char *)(self + 0xaa8) == '\x03') {
     switch(*(undefined1 *)(self + 0xaa9)) {
     case 6:
-      return (int)(*(float *)(self + 0x17c) * 60.0);
+      return (int)(*(float *)(self + 0x17c) * 60.0f);
     case 8:
-      return (int)(*(float *)(self + 0x17c) * 80.0);
+      return (int)(*(float *)(self + 0x17c) * 80.0f);
     case 0xb:
     case 0xc:
     case 0xf:
     case 0x10:
     case 0x11:
 switchD_00444cc8_caseD_b:
-      return (int)(*(float *)(self + 0x17c) * 20.0);
+      return (int)(*(float *)(self + 0x17c) * 20.0f);
     }
   }
   else if ((*(byte *)(self + 0x7e) & 0x10) != 0) goto switchD_00444cc8_caseD_b;
-  return (int)(*(float *)(self + 0x17c) * 50.0);
+  return (int)(*(float *)(self + 0x17c) * 50.0f);
 }
 
 
@@ -15236,7 +15203,7 @@ int xp_getNextLevelCost(void)
 {
   int self;
   
-  return (int)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 + 1.0)) * 1000.0 + 50.0);
+  return (int)((1.0f - 1.0f / (((float)*(int *)(self + 400) - 1.0f) * 0.05f + 1.0f)) * 1000.0f + 50.0f);
 }
 
 
@@ -15431,10 +15398,10 @@ void creature_getScaleVec4(undefined4 *colorOut)
  */
 /* Global::curve_inverse20p1 @ 004462f0 */
 
-float10 curve_inverse20p1(float frac)
+float curve_inverse20p1(float frac)
 
 {
-  return (float10)((1.0 / (1.0 - frac) - 1.0) * 20.0 + 1.0);
+  return (float)((1.0f / (1.0f - frac) - 1.0f) * 20.0f + 1.0f);
 }
 
 
@@ -15585,7 +15552,7 @@ void Player_resetPhysics(void)
  */
 /* Global::combat_getEffectiveHaste @ 00447700 */
 
-float10 combat_getEffectiveHaste(void)
+float combat_getEffectiveHaste(void)
 
 {
   char blockType;
@@ -15593,38 +15560,38 @@ float10 combat_getEffectiveHaste(void)
   int maxVal;
   int *buff;
   int self;
-  float10 fVar5;
+  float fVar5;
   float ratio;
   float multiplier;
   
-  multiplier = 1.0;
+  multiplier = 1.0f;
   if (*(char *)(self + 0x60) != '\0') {
-    multiplier = (float)*(byte *)(self + 0x1a8) * 0.0625 + 0.75;
+    multiplier = (float)*(byte *)(self + 0x1a8) * 0.0625f + 0.75f;
   }
   blockType = *(char *)(self + 0x140);
   if ((blockType == '\x01') && (*(char *)(self + 0x141) == '\0')) {
     maxVal = shield_getBlockDuration();
-    if ((float)*(int *)(self + 0x70) / (float)maxVal <= 1.0) {
+    if ((float)*(int *)(self + 0x70) / (float)maxVal <= 1.0f) {
       maxVal = shield_getBlockDuration();
       ratio = (float)*(int *)(self + 0x70) / (float)maxVal;
     }
     else {
-      ratio = 1.0;
+      ratio = 1.0f;
     }
-    multiplier = ratio * 0.5 + multiplier;
+    multiplier = ratio * 0.5f + multiplier;
   }
   if ((blockType == '\x03') && (*(char *)(self + 0x141) == '\x01')) {
     maxVal = shield_getBlockDuration();
-    if ((float)*(int *)(self + 0x70) / (float)maxVal <= 1.0) {
+    if ((float)*(int *)(self + 0x70) / (float)maxVal <= 1.0f) {
       maxVal = shield_getBlockDuration();
       ratio = (float)*(int *)(self + 0x70) / (float)maxVal;
     }
     else {
-      ratio = 1.0;
+      ratio = 1.0f;
     }
     multiplier = ratio + multiplier;
   }
-  fVar5 = (float10)stat_calcHasteBonus();
+  fVar5 = (float)stat_calcHasteBonus();
   buffList = *(int **)(self + 0x1178);
   multiplier = (float)fVar5 + multiplier;
   buff = (int *)*buffList;
@@ -15632,7 +15599,7 @@ float10 combat_getEffectiveHaste(void)
     while ((char)buff[2] != '\f') {
       buff = (int *)*buff;
       if (buff == buffList) {
-        return (float10)multiplier;
+        return (float)multiplier;
       }
     }
     if (buff != (int *)0xfffffff8) {
@@ -15640,10 +15607,10 @@ float10 combat_getEffectiveHaste(void)
       if ((maxVal == 0) && (*(char *)(self + 0x60) != '\0')) {
         maxVal = *(int *)(self + 400) / 2 + *(byte *)(self + 0x1a8) + 1;
       }
-      multiplier = ((1.0 - 1.0 / ((float)maxVal * 0.1 + 1.0)) + 1.0) * multiplier;
+      multiplier = ((1.0f - 1.0f / ((float)maxVal * 0.1f + 1.0f)) + 1.0f) * multiplier;
     }
   }
-  return (float10)multiplier;
+  return (float)multiplier;
 }
 
 
@@ -15655,62 +15622,61 @@ float10 combat_getEffectiveHaste(void)
  */
 /* Global::stat_calcHasteBonus @ 004478b0 */
 
-float10 stat_calcHasteBonus(void)
+float stat_calcHasteBonus(void)
 
 {
   int self;
-  float10 fVar1;
+  float fVar1;
   double dVar2;
   double dVar3;
   double dVar4;
   undefined4 result;
   undefined4 value;
   
-  dVar2 = 2.0;
-  libm_sse2_pow_precise();
-  dVar3 = 2.0;
-  libm_sse2_pow_precise();
-  dVar4 = 2.0;
-  libm_sse2_pow_precise();
+  dVar2 = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 + 1.0))
+                                 * 3.0));
+  dVar3 = libm_sse2_pow_precise(2.0,0.0);
+  dVar4 = libm_sse2_pow_precise(2.0,3.0);
   value = (((float)dVar2 * (float)dVar3) / (float)dVar4) * 0.1;
   if (*(char *)(self + 0x990) == '\x03') {
-    fVar1 = (float10)item_computeStat_variant3();
+    fVar1 = (float)item_computeStat_variant3();
     value = (float)fVar1 + value;
   }
   if (*(char *)(self + 0xaa8) == '\x03') {
-    fVar1 = (float10)item_computeStat_variant3();
+    fVar1 = (float)item_computeStat_variant3();
     value = (float)fVar1 + value;
   }
   if (*(char *)(self + 0x530) == '\x04') {
-    fVar1 = (float10)item_computeStat_variant3();
+    fVar1 = (float)item_computeStat_variant3();
     value = (float)fVar1 + value;
   }
   if (*(char *)(self + 0x648) == '\x06') {
-    fVar1 = (float10)item_computeStat_variant3();
+    fVar1 = (float)item_computeStat_variant3();
     value = (float)fVar1 + value;
   }
   if (*(char *)(self + 0x760) == '\x05') {
-    fVar1 = (float10)item_computeStat_variant3();
+    fVar1 = (float)item_computeStat_variant3();
     value = (float)fVar1 + value;
   }
   if (*(char *)(self + 0x878) == '\a') {
-    fVar1 = (float10)item_computeStat_variant3();
+    fVar1 = (float)item_computeStat_variant3();
     value = (float)fVar1 + value;
   }
   if (*(char *)(self + 0x418) == '\b') {
-    fVar1 = (float10)item_computeStat_variant3();
+    fVar1 = (float)item_computeStat_variant3();
     value = (float)fVar1 + value;
   }
   if (*(char *)(self + 0xbc0) == '\t') {
-    fVar1 = (float10)item_computeStat_variant3();
+    fVar1 = (float)item_computeStat_variant3();
     value = (float)fVar1 + value;
   }
   result = value;
   if (*(char *)(self + 0xcd8) == '\t') {
-    fVar1 = (float10)item_computeStat_variant3();
+    fVar1 = (float)item_computeStat_variant3();
     result = (float)fVar1 + value;
   }
-  return (float10)result;
+  return (float)result;
 }
 
 
@@ -15726,21 +15692,21 @@ void xp_applyLevelUps(void)
 
 {
   int self;
-  float10 roll;
+  float roll;
   
   if ((0 < *(int *)(self + 400)) &&
-     ((int)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 + 1.0)) * 1000.0 + 50.0) <=
+     ((int)((1.0f - 1.0f / (((float)*(int *)(self + 400) - 1.0f) * 0.05f + 1.0f)) * 1000.0f + 50.0f) <=
       *(int *)(self + 0x194))) {
     do {
       *(int *)(self + 0x194) =
            *(int *)(self + 0x194) -
-           (int)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 + 1.0)) * 1000.0 + 50.0)
+           (int)((1.0f - 1.0f / (((float)*(int *)(self + 400) - 1.0f) * 0.05f + 1.0f)) * 1000.0f + 50.0f)
       ;
       *(int *)(self + 400) = *(int *)(self + 400) + 1;
-      roll = (float10)stat_calcAttackDamage();
+      roll = (float)stat_calcAttackDamage();
       *(float *)(self + 0x16c) = (float)roll;
-    } while ((int)((1.0 - 1.0 / (((float)*(int *)(self + 400) - 1.0) * 0.05 + 1.0)) * 1000.0 +
-                  50.0) <= *(int *)(self + 0x194));
+    } while ((int)((1.0f - 1.0f / (((float)*(int *)(self + 400) - 1.0f) * 0.05f + 1.0f)) * 1000.0f +
+                  50.0f) <= *(int *)(self + 0x194));
   }
   return;
 }
@@ -15910,10 +15876,10 @@ void render_setFogUniform64(float depth)
   uint cookie;
   
   cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  vec[0] = (depth - 80.0) / -30.0;
-  vec[1] = 0.0;
-  vec[2] = 0.0;
-  vec[3] = 0.0;
+  vec[0] = (depth - 80.0f) / -30.0f;
+  vec[1] = 0.0f;
+  vec[2] = 0.0f;
+  vec[3] = 0.0f;
   (**(code **)(**(int **)(self + 0x1c) + 0x178))
             (*(int **)(self + 0x1c),*(undefined4 *)(self + 100),vec,1);
   __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
@@ -15937,11 +15903,11 @@ void render_setInvUniform60(float value)
   uint cookie;
   
   cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  if (0.0 < value) {
-    vec[0] = 1.0 / value;
-    vec[1] = 0.0;
-    vec[2] = 0.0;
-    vec[3] = 0.0;
+  if (0.0f < value) {
+    vec[0] = 1.0f / value;
+    vec[1] = 0.0f;
+    vec[2] = 0.0f;
+    vec[3] = 0.0f;
     (**(code **)(**(int **)(self + 0x1c) + 0x178))
               (*(int **)(self + 0x1c),*(undefined4 *)(self + 0x60),vec,1);
   }
@@ -15998,9 +15964,10 @@ void render_setLightDirUniform(undefined4 idx0,undefined4 val1,float *dir,undefi
   uStack_5c = *(undefined4 *)(self + 0x44);
   uStack_64 = 0x4481ce;
   (**(code **)(*piStack_60 + 0x178))();
-  lenSq = (double)(*dir * *dir + dir[1] * dir[1] + dir[2] * dir[2]);
   uStack_64 = 0x448205;
-  libm_sse2_sqrt_precise();
+  lenSq = libm_sse2_sqrt_precise
+                    ((double)(*dir * *dir + dir[1] * dir[1] +
+                             dir[2] * dir[2]));
   nz = 1.0 / (float)lenSq;
   uStack_64 = 1;
   nx = *dir * nz;
@@ -17570,20 +17537,20 @@ int GameController_getSelectedCount(void)
 void GameController_isInFrontRange(void)
 
 {
-  float10 bound;
+  float bound;
   float cursorX;
   float cursorY;
   uint cookie;
   
   cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   Widget_computeBoundsFloat(&cursorX);
-  bound = (float10)security_cookie_guard_a();
-  if ((float)bound - 30.0 < cursorY) {
-    bound = (float10)security_cookie_guard_a();
+  bound = (float)security_cookie_guard_a();
+  if ((float)bound - 30.0f < cursorY) {
+    bound = (float)security_cookie_guard_a();
     if (cursorY < (float)bound) {
-      bound = (float10)security_cookie_guard_b();
-      if ((float)bound * 0.5 < cursorX) {
-        bound = (float10)security_cookie_guard_b();
+      bound = (float)security_cookie_guard_b();
+      if ((float)bound * 0.5f < cursorX) {
+        bound = (float)security_cookie_guard_b();
         if (cursorX < (float)bound) {
           __security_check_cookie(cookie ^ (uint)&stack0xfffffffc);
           return;
@@ -18004,12 +17971,12 @@ void GameController_lerpVec3(float *out,float *target,undefined4 param_3,undefin
   float by;
   float bz;
   float t;
-  float10 fVar4;
+  float fVar4;
   float invT;
   
-  fVar4 = (float10)iterated_lerp_toward1(param_3,param_4);
+  fVar4 = (float)iterated_lerp_toward1(param_3,param_4);
   t = (float)fVar4;
-  invT = 1.0 - t;
+  invT = 1.0f - t;
   by = target[1];
   bz = target[2];
   *out = invT * *out + *target * t;
@@ -18527,7 +18494,7 @@ void cube::GameController::ctor_0
   int iVar14;
   uint uVar15;
   uint *puVar16;
-  float10 fVar17;
+  float fVar17;
   float fVar18;
   float fVar19;
   float fVar20;
@@ -20523,7 +20490,7 @@ void cube::GameController::ctor_0
     pfVar8 = (float *)arrayElem_stride4(uVar2);
     fVar18 = *pfVar8 + 10.0;
     getField_0x40(fVar18);
-    fVar17 = (float10)Widget_measureGuarded();
+    fVar17 = (float)Widget_measureGuarded();
     local_6f6c = (float)fVar17;
     fVar20 = local_6f70 - local_6f6c * 0.5;
     getField_0x40(fVar20);
@@ -20599,7 +20566,7 @@ void cube::GameController::ctor_0
     pfVar8 = (float *)arrayElem_stride4(uVar2);
     fVar18 = *pfVar8 + 10.0;
     getField_0x40(fVar18);
-    fVar17 = (float10)Widget_measureGuarded();
+    fVar17 = (float)Widget_measureGuarded();
     local_6f6c = (float)fVar17;
     fVar20 = local_6f70 - local_6f6c * 0.5;
     getField_0x40(fVar20);
@@ -20675,7 +20642,7 @@ void cube::GameController::ctor_0
     pfVar8 = (float *)arrayElem_stride4(uVar2);
     fVar18 = *pfVar8 + 10.0;
     getField_0x40(fVar18);
-    fVar17 = (float10)Widget_measureGuarded();
+    fVar17 = (float)Widget_measureGuarded();
     local_6f6c = (float)fVar17;
     fVar20 = local_6f70 - local_6f6c * 0.5;
     getField_0x40();
@@ -20751,7 +20718,7 @@ void cube::GameController::ctor_0
     pfVar8 = (float *)arrayElem_stride4(uVar2);
     fVar18 = *pfVar8 + 10.0;
     getField_0x40();
-    fVar17 = (float10)Widget_measureGuarded();
+    fVar17 = (float)Widget_measureGuarded();
     local_6f6c = (float)fVar17;
     fVar20 = local_6f70 - local_6f6c * 0.5;
     getField_0x40();
@@ -22352,7 +22319,7 @@ void cube::GameController::ctor_0
     *(undefined4 *)(puVar6[0x2001b4] + 0x5c) = 0;
     *(undefined4 *)(puVar6[0x2001b4] + 0x180) = 0x3f800000;
     *(undefined4 *)(puVar6[0x2001b4] + 400) = 1;
-    fVar17 = (float10)stat_calcAttackDamage();
+    fVar17 = (float)stat_calcAttackDamage();
     *(float *)(puVar6[0x2001b4] + 0x16c) = (float)fVar17;
     *(undefined1 *)(puVar6[0x2001b4] + 0xaa8) = 3;
     *(undefined1 *)(puVar6[0x2001b4] + 0xaa9) = 0;
@@ -22394,7 +22361,7 @@ void cube::GameController::ctor_0
       local_6f58 = (float)(int)local_6f5c - 127.5;
       do {
         setPair_b((float)iVar5 - 127.5,local_6f58);
-        fVar17 = (float10)vec2_lengthSq();
+        fVar17 = (float)vec2_lengthSq();
         local_6f78 = (void *)(float)fVar17;
         fVar18 = 1.0 - (float)local_6f78 * 6.1035156e-05;
         if (fVar18 < 0.0) {
@@ -22419,7 +22386,7 @@ void cube::GameController::ctor_0
       local_6f58 = (float)(int)local_6f5c - 127.5;
       do {
         setPair_b((float)iVar5 - 127.5,local_6f58);
-        fVar17 = (float10)vec2_length();
+        fVar17 = (float)vec2_length();
         local_6f78 = (void *)(float)fVar17;
         fVar18 = 1.05 - (float)local_6f78 * 1.05 * 0.0078125;
         fVar20 = 0.0;
@@ -22911,18 +22878,18 @@ void cube::GameController::ctor_0
         local_6f50 = (uint *)(((float)iVar5 * 6.2831855) / 32767.0);
         iVar5 = rand();
         local_6f74 = (void *)(((float)iVar5 * 1.5707964) / 32767.0);
-        fVar17 = (float10)cosf_f(local_6f74);
+        fVar17 = (float)cosf_f(local_6f74);
         local_6f68 = (undefined4 *)(float)fVar17;
         local_6f5c = (float)local_6f68 * 100.0;
         iVar5 = rand();
         fVar18 = ((float)iVar5 * 0.1) / 32767.0 + 0.01;
-        fVar17 = (float10)sinf_f(local_6f74,fVar18);
+        fVar17 = (float)sinf_f(local_6f74,fVar18);
         local_6f68 = (undefined4 *)(float)fVar17;
         fVar20 = (float)local_6f68 * 100.0;
-        fVar17 = (float10)sinf_f(local_6f50,fVar20);
+        fVar17 = (float)sinf_f(local_6f50,fVar20);
         local_6f68 = (undefined4 *)(float)fVar17;
         fVar19 = (float)local_6f68 * local_6f5c;
-        fVar17 = (float10)cosf_f(local_6f50,fVar19);
+        fVar17 = (float)cosf_f(local_6f50,fVar19);
         local_6f68 = (undefined4 *)(float)fVar17;
         ppVar11 = (pair<unsigned___int64,unsigned___int64> *)
                   setVec4((float)local_6f68 * local_6f5c,fVar19,fVar20,fVar18);
@@ -24127,8 +24094,8 @@ void setQuadFaceFromNormal(undefined1 *pSrc,int pDirVec,float *pColor)
   dirTest[1] = 0;
   dirTest[2] = 0;
   *(uint *)(pThis + 4) =
-       (((int)(pColor[3] * 255.0) << 8 | (int)(*pColor * 255.0) & 0xffU) << 8 |
-       (int)(pColor[1] * 255.0) & 0xffU) << 8 | (int)(pColor[2] * 255.0) & 0xffU;
+       (((int)(pColor[3] * 255.0f) << 8 | (int)(*pColor * 255.0f) & 0xffU) << 8 |
+       (int)(pColor[1] * 255.0f) & 0xffU) << 8 | (int)(pColor[2] * 255.0f) & 0xffU;
   axisIdx = 0;
   while (*(int *)(pDirVec + axisIdx * 4) == dirTest[axisIdx]) {
     axisIdx = axisIdx + 1;
@@ -25150,7 +25117,7 @@ code_r0x0046bb46:
               enter_critical_section();
               if (iVar4 != *(int *)(*in_ECX + 0x8006d0)) {
                 if (((cStack_11dd != '\0') || (cVar1 = mem_equal_24(auStack_1024), cVar1 != '\0'))
-                   || (*(float *)(iVar4 + 0x16c) <= 0.0)) {
+                   || (*(float *)(iVar4 + 0x16c) <= 0.0f)) {
                   *(undefined4 *)(iVar4 + 0x1398) = 0;
                   container_clear();
                   vec6_copy(auStack_11d4);
@@ -26339,10 +26306,10 @@ void voxelRaycast_modelPick(int pModel,float *pMatrix)
   stackCookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   if (pModel != 0) {
     dimX = *(int *)(pModel + 0x4c);
-    fVar11 = (float)*(int *)(pModel + 0x48) * 0.5;
-    fVar12 = (float)*(int *)(pModel + 0x44) * 0.5;
-    fVar10 = (float)dimX * 0.5;
-    local_150 = 1.0 / (fVar12 * pMatrix[3] + fVar11 * pMatrix[7] + fVar10 * pMatrix[0xb] +
+    fVar11 = (float)*(int *)(pModel + 0x48) * 0.5f;
+    fVar12 = (float)*(int *)(pModel + 0x44) * 0.5f;
+    fVar10 = (float)dimX * 0.5f;
+    local_150 = 1.0f / (fVar12 * pMatrix[3] + fVar11 * pMatrix[7] + fVar10 * pMatrix[0xb] +
                       pMatrix[0xf]);
     local_158 = (fVar11 * pMatrix[4] + *pMatrix * fVar12 + fVar10 * pMatrix[8] + pMatrix[0xc]) *
                 local_150;
@@ -26478,30 +26445,30 @@ void voxelRaycast_modelPick(int pModel,float *pMatrix)
                   if (bVar9) {
                     local_104 = 0;
                     local_fc = 0;
-                    local_e8 = 0.0;
-                    local_e4 = 0.0;
-                    local_e0 = 0.0;
+                    local_e8 = 0.0f;
+                    local_e4 = 0.0f;
+                    local_e0 = 0.0f;
                     local_dc = 0;
-                    local_d4 = 0.0;
-                    local_d0[0x10] = 1.0;
+                    local_d4 = 0.0f;
+                    local_d0[0x10] = 1.0f;
                     local_8c = 0;
                     local_88 = 4000;
-                    local_d0[0] = 1.0;
-                    local_d0[1] = 0.0;
-                    local_d0[2] = 0.0;
-                    local_d0[3] = 0.0;
-                    local_d0[4] = 0.0;
-                    local_d0[5] = 1.0;
-                    local_d0[6] = 0.0;
-                    local_d0[7] = 0.0;
-                    local_d0[8] = 0.0;
-                    local_d0[9] = 0.0;
-                    local_d0[10] = 1.0;
-                    local_d0[0xb] = 0.0;
-                    local_d0[0xc] = 0.0;
-                    local_d0[0xd] = 0.0;
-                    local_d0[0xe] = 0.0;
-                    local_d0[0xf] = 1.0;
+                    local_d0[0] = 1.0f;
+                    local_d0[1] = 0.0f;
+                    local_d0[2] = 0.0f;
+                    local_d0[3] = 0.0f;
+                    local_d0[4] = 0.0f;
+                    local_d0[5] = 1.0f;
+                    local_d0[6] = 0.0f;
+                    local_d0[7] = 0.0f;
+                    local_d0[8] = 0.0f;
+                    local_d0[9] = 0.0f;
+                    local_d0[10] = 1.0f;
+                    local_d0[0xb] = 0.0f;
+                    local_d0[0xc] = 0.0f;
+                    local_d0[0xd] = 0.0f;
+                    local_d0[0xe] = 0.0f;
+                    local_d0[0xf] = 1.0f;
                     local_13c = in_stack_00000024;
                     dimX = rand();
                     fVar11 = (float)vx;
@@ -26514,7 +26481,7 @@ void voxelRaycast_modelPick(int pModel,float *pMatrix)
                                 pMatrix[0xd];
                     local_64 = fVar12 * pMatrix[6] + fVar11 * pMatrix[2] + pMatrix[10] * fVar10 +
                                pMatrix[0xe];
-                    fVar10 = 1.0 / (fVar12 * pMatrix[7] + fVar11 * pMatrix[3] +
+                    fVar10 = 1.0f / (fVar12 * pMatrix[7] + fVar11 * pMatrix[3] +
                                     fVar10 * pMatrix[0xb] + pMatrix[0xf]);
                     dimX = 0;
                     _local_20 = CONCAT44(fStack_68 * fVar10,local_6c * fVar10);
@@ -26550,32 +26517,32 @@ void voxelRaycast_modelPick(int pModel,float *pMatrix)
                     local_40 = __alldiv(uVar14,0x10000,0);
                     uVar13 = __allmul(uVar13,(undefined4)local_38,local_38._4_4_);
                     local_38 = __alldiv(uVar13,0x10000,0);
-                    local_e8 = (float)local_48 * 1.5258789e-05;
-                    local_e4 = (float)local_40 * 1.5258789e-05;
+                    local_e8 = (float)local_48 * 1.5258789e-05f;
+                    local_e4 = (float)local_40 * 1.5258789e-05f;
                     local_78 = 0;
                     uStack_74 = 0;
-                    local_e0 = (float)local_38 * 1.5258789e-05;
+                    local_e0 = (float)local_38 * 1.5258789e-05f;
                     local_70 = 0;
                     local_104 = 0;
                     local_fc = 0;
                     dimX = rand();
-                    local_84 = (float)dimX / 32767.0 - 0.5;
+                    local_84 = (float)dimX / 32767.0f - 0.5f;
                     dimX = rand();
-                    fStack_80 = (float)dimX / 32767.0 - 0.5;
+                    fStack_80 = (float)dimX / 32767.0f - 0.5f;
                     dimX = rand();
-                    local_7c = (float)dimX / 32767.0 - 0.5;
+                    local_7c = (float)dimX / 32767.0f - 0.5f;
                     uStack_140 = 0x3f800000;
-                    local_14 = CONCAT44(fStack_80 * 100.0,local_84 * 100.0);
-                    local_d4 = local_7c * 100.0;
+                    local_14 = CONCAT44(fStack_80 * 100.0f,local_84 * 100.0f);
+                    local_d4 = local_7c * 100.0f;
                     local_dc = local_14;
-                    local_14c = (float)*pbVar2 / 255.0;
-                    fStack_148 = (float)pbVar2[1] / 255.0;
-                    local_144 = (float)pbVar2[2] / 255.0;
+                    local_14c = (float)*pbVar2 / 255.0f;
+                    fStack_148 = (float)pbVar2[1] / 255.0f;
+                    local_144 = (float)pbVar2[2] / 255.0f;
                     local_30 = CONCAT44(in_stack_00000020[1] * fStack_148,
                                         local_14c * *in_stack_00000020);
                     local_f0 = in_stack_00000020[2] * local_144;
-                    local_d0[0x10] = 1.0;
-                    fStack_ec = in_stack_00000020[3] * 1.0;
+                    local_d0[0x10] = 1.0f;
+                    fStack_ec = in_stack_00000020[3] * 1.0f;
                     _local_28 = CONCAT44(fStack_ec,local_f0);
                     local_f8 = local_30;
                     pfVar7 = pMatrix;
@@ -26595,9 +26562,9 @@ void voxelRaycast_modelPick(int pModel,float *pMatrix)
                     local_10c = local_134[4];
                     local_108 = local_134[5];
                     dimX = **(int **)(pThis + 0x800740);
-                    local_d0[0xc] = 0.0;
-                    local_d0[0xd] = 0.0;
-                    local_d0[0xe] = 0.0;
+                    local_d0[0xc] = 0.0f;
+                    local_d0[0xd] = 0.0f;
+                    local_d0[0xe] = 0.0f;
                     local_8c = CONCAT11(local_8c._1_1_,1);
                     local_88 = 5000;
                     local_134[6] = local_134[0];
@@ -26778,7 +26745,7 @@ void renderEntityLabelBillboard(char *pText,float *pMatrix,undefined4 param_3,un
   char *pGlyph;
   float *pfVar4;
   float *pfVar5;
-  float10 fVar6;
+  float fVar6;
   float posY;
   float advance;
   float posX;
@@ -26801,7 +26768,7 @@ void renderEntityLabelBillboard(char *pText,float *pMatrix,undefined4 param_3,un
   
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   if (*pText != '\0') {
-    fVar6 = (float10)item_hasSpecialAbility();
+    fVar6 = (float)item_hasSpecialAbility();
     render_setVec3Uniform58((float)fVar6);
     idx = 0;
     if (0 < *(int *)(pText + 0x114)) {
@@ -27124,12 +27091,13 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
     local_150 = local_4a4;
     local_14c = local_4b0;
   }
-  dVar10 = (double)(local_4a4 * local_4a4 + local_4c4 * local_4c4 + local_4b0 * local_4b0);
   savedThis = pThis;
   local_348 = local_4f0;
   fStack_344 = local_4c0;
   local_340 = local_4e8;
-  libm_sse2_sqrt_precise();
+  dVar10 = libm_sse2_sqrt_precise
+                     ((double)(local_4a4 * local_4a4 + local_4c4 * local_4c4 + local_4b0 * local_4b0
+                              ));
   fVar11 = 1.0 / (float)dVar10;
   local_4b0 = local_4b0 * fVar11;
   local_4a4 = local_4a4 * fVar11;
@@ -27137,14 +27105,14 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
   local_4fc = local_4a4 * local_4e8 - local_4b0 * local_4c0;
   local_500 = local_4b0 * local_4f0 - local_4e8 * local_4c4;
   local_4f4 = local_4c0 * local_4c4 - local_4f0 * local_4a4;
-  dVar10 = (double)(local_500 * local_500 + local_4fc * local_4fc + local_4f4 * local_4f4);
-  libm_sse2_sqrt_precise();
+  dVar10 = libm_sse2_sqrt_precise
+                     ((double)(local_500 * local_500 + local_4fc * local_4fc + local_4f4 * local_4f4
+                              ));
   fVar11 = 1.0 / (float)dVar10;
   local_4fc = local_4fc * fVar11;
   local_500 = local_500 * fVar11;
   local_4f4 = local_4f4 * fVar11;
-  dVar10 = (double)local_504;
-  libm_sse2_sqrt_precise();
+  dVar10 = libm_sse2_sqrt_precise((double)local_504);
   local_490 = (float)dVar10;
   local_414 = local_4c4 * local_490;
   fStack_410 = local_4a4 * local_490;
@@ -27158,7 +27126,6 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
   local_50c = (float)param_1[2];
   local_4fc = (float)param_1[3];
   local_500 = (float)param_1[4];
-  dVar10 = (double)(local_4c0 * local_4c0 + local_4f0 * local_4f0 + local_4e8 * local_4e8);
   local_4f4 = (float)param_1[5];
   local_498 = uVar6;
   local_1d0 = uVar6;
@@ -27167,7 +27134,9 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
   local_1c4 = local_4fc;
   local_1c0 = local_500;
   local_1bc = local_4f4;
-  libm_sse2_sqrt_precise();
+  dVar10 = libm_sse2_sqrt_precise
+                     ((double)(local_4c0 * local_4c0 + local_4f0 * local_4f0 + local_4e8 * local_4e8
+                              ));
   fVar11 = 1.0 / (float)dVar10;
   local_1ac[0] = fVar11 * local_4f0;
   local_1ac[1] = local_4c0 * fVar11;
@@ -27327,8 +27296,7 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_488 = (double)local_49c * 3.141592653589793;
       local_4bc = (float)((local_488 * 2.0 * (double)local_490 -
                           (double)(local_508 * 0.005) * 3.141592653589793) * (double)param_12);
-      dVar10 = (double)local_4bc;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_4bc);
       fVar11 = local_34c;
       local_4f4 = (float)dVar10;
       _local_3d8 = CONCAT44(fStack_350 * local_4cc,local_354 * local_4cc);
@@ -27337,9 +27305,8 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_500 = local_4f4 * fStack_350 * local_4cc;
       local_4f4 = local_4f4 * local_3d0;
       _local_200 = CONCAT44(local_500,local_4fc);
-      dVar10 = (double)local_4bc;
       local_1f8 = local_4f4;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_4bc);
       local_21c = (float)dVar10;
       _local_2c4 = CONCAT44(local_4cc * fStack_410,local_4cc * local_414);
       local_2bc = local_4cc * local_40c;
@@ -27356,9 +27323,8 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_500 = local_500 + fVar9;
       local_4f4 = local_4f4 + local_418;
       local_50c = local_4bc * -0.3;
-      dVar10 = (double)local_50c;
       local_3e8 = local_418;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_50c);
       local_4d4 = (float)dVar10;
       _local_3c0 = CONCAT44(local_4cc * fStack_350,local_4cc * local_354);
       local_3b8 = local_4cc * fVar11;
@@ -27366,9 +27332,8 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_504 = local_4d4 * local_4cc * fStack_350;
       local_4d4 = local_4d4 * local_3b8;
       _local_20c = CONCAT44(local_504,local_4ec);
-      dVar10 = (double)local_50c;
       local_204 = local_4d4;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_50c);
       local_3a0 = (float)dVar10;
       local_4b0 = 1.0;
       _local_300 = CONCAT44(local_4cc * fStack_410,local_4cc * local_414);
@@ -27405,16 +27370,13 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4dc = *(float *)(param_3 + 8);
       local_500 = 0.0;
       local_4fc = 0.0;
-      dVar10 = 1.0;
-      libm_sse2_sqrt_precise();
+      dVar10 = libm_sse2_sqrt_precise(1.0);
       local_4e0 = (float)dVar10;
       if (local_4e0 != 0.0) {
         local_4dc = local_4dc * 0.017453292;
-        dVar10 = (double)local_4dc;
-        libm_sse2_cos_precise();
+        dVar10 = libm_sse2_cos_precise((double)local_4dc);
         local_50c = (float)dVar10;
-        dVar10 = (double)local_4dc;
-        libm_sse2_sin_precise();
+        dVar10 = libm_sse2_sin_precise((double)local_4dc);
         fVar7 = 1.0 / local_4e0;
         fVar14 = 0.0 / local_4e0;
         fVar12 = (float)dVar10;
@@ -27464,11 +27426,9 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_49c = local_49c * local_490;
       local_4c0 = local_49c * 360.0;
       local_50c = local_4c0 * 0.017453292;
-      dVar10 = (double)local_50c;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_50c);
       local_4dc = (float)dVar10;
-      dVar10 = (double)local_50c;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_50c);
       fVar7 = (float)dVar10;
       local_4d8 = local_4dc * local_4d0 + fVar7 * local_4b8;
       local_4b8 = local_4dc * local_4b8 - local_4d0 * fVar7;
@@ -27480,11 +27440,9 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4f8 = local_4dc * local_4e8 + fVar7 * local_4f0;
       local_50c = local_4c0 * 0.017453292;
       local_4dc = local_4dc * local_4f0 - local_4e8 * fVar7;
-      dVar10 = (double)local_50c;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_50c);
       local_4ec = (float)dVar10;
-      dVar10 = (double)local_50c;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_50c);
       fVar9 = (float)dVar10;
       fVar12 = local_4b0 * local_4ec;
       fVar7 = fVar9 * local_4b8;
@@ -27497,16 +27455,14 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_49c = local_49c * -360.0;
       local_4e4 = local_4e4 * fVar9 + local_4ec * local_4dc;
       local_50c = local_49c * 0.017453292;
-      dVar10 = (double)local_50c;
       local_4ec = fVar12 - fVar7;
       local_440 = local_4b0;
       local_43c = local_4a4;
       local_438 = local_4c4;
       local_434 = local_4e4;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_50c);
       local_4dc = (float)dVar10;
-      dVar10 = (double)local_50c;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_50c);
       fVar7 = (float)dVar10;
       local_504 = local_4ec * local_4dc + fVar7 * local_4d8;
       local_4f0 = local_4dc * local_4d8 - local_4ec * fVar7;
@@ -27516,7 +27472,6 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4d0 = local_4dc * local_4d0 - local_4a8 * fVar7;
       local_4c8 = fVar7 * local_4f8 + local_4dc * local_4b8;
       local_4dc = local_4dc * local_4f8 - local_4b8 * fVar7;
-      dVar10 = (double)(local_4bc * 0.9);
       local_460 = local_504;
       local_45c = local_4e8;
       local_458 = local_4d8;
@@ -27525,7 +27480,7 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_44c = local_4d4;
       local_448 = local_4d0;
       local_444 = local_4dc;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)(local_4bc * 0.9));
       fVar13 = ((float)dVar10 * 0.1 + 0.2) * (local_4cc + 0.2) * param_11;
       fVar14 = local_4d4;
       fVar15 = local_4c4;
@@ -27570,8 +27525,7 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_488 = local_488 * 3.0 * (double)local_490;
       local_4c8 = (float)((local_488 - (double)(local_508 * 0.004) * 3.141592653589793) *
                          (double)param_12);
-      dVar10 = (double)local_4c8;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_4c8);
       local_280 = (float)dVar10;
       _local_330 = CONCAT44(local_4cc * fStack_350,local_4cc * local_354);
       local_328 = local_4cc * fVar11;
@@ -27579,8 +27533,7 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_50c = local_280 * local_4cc * fStack_350;
       _local_288 = CONCAT44(local_50c,local_4f8);
       local_280 = local_328 * local_280;
-      dVar10 = (double)local_4c8;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_4c8);
       local_234 = (float)dVar10;
       _local_390 = CONCAT44(fStack_410 * local_4cc,local_414 * local_4cc);
       local_388 = local_40c * local_4cc;
@@ -27596,9 +27549,8 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_418 = local_2c8 + local_280;
       local_420 = local_378;
       local_4f8 = local_4c8 * 0.3;
-      dVar10 = (double)local_4f8;
       local_370 = local_418;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_4f8);
       local_504 = (float)dVar10;
       _local_318 = CONCAT44(fStack_350 * local_4cc,local_354 * local_4cc);
       local_310 = fVar11 * local_4cc;
@@ -27610,9 +27562,8 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4ec = local_504 * local_4ec;
       local_504 = local_504 * local_358;
       _local_230 = CONCAT44(local_4ec,local_50c);
-      dVar10 = (double)local_4f8;
       local_228 = local_504;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_4f8);
       local_3c4 = (float)dVar10;
       _local_2e8 = CONCAT44(fStack_410 * local_4cc,local_414 * local_4cc);
       local_2e0 = local_40c * local_4cc;
@@ -27652,11 +27603,9 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4a4 = fVar9 + fVar12 + 1.0;
       if (local_4e0 != 0.0) {
         local_4f8 = *(float *)(param_3 + 8) * 0.017453292;
-        dVar10 = (double)local_4f8;
-        libm_sse2_cos_precise();
+        dVar10 = libm_sse2_cos_precise((double)local_4f8);
         local_50c = (float)dVar10;
-        dVar10 = (double)local_4f8;
-        libm_sse2_sin_precise();
+        dVar10 = libm_sse2_sin_precise((double)local_4f8);
         fVar7 = 1.0 / local_4e0;
         local_4e0 = 0.0 / local_4e0;
         fVar12 = (float)dVar10;
@@ -27705,11 +27654,9 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       }
       local_4e0 = local_4c0 * 2.0;
       local_4f8 = local_4e0 * 0.017453292;
-      dVar10 = (double)local_4f8;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_4f8);
       local_4b4 = (float)dVar10;
-      dVar10 = (double)local_4f8;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_4f8);
       fVar9 = (float)dVar10;
       local_500 = fVar9 * local_4a8 + local_4b4 * local_4b8;
       local_4d4 = local_4b4 * local_4a8 - local_4b8 * fVar9;
@@ -27720,12 +27667,10 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4ac = fVar9 * local_4f0 + local_4b4 * local_4e8;
       local_4e0 = local_4e0 * 0.017453292;
       local_4b4 = local_4b4 * local_4f0 - local_4e8 * fVar9;
-      dVar10 = (double)local_4e0;
       local_4d0 = fVar9 * local_4d0 + fVar7;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_4e0);
       local_4f8 = (float)dVar10;
-      dVar10 = (double)local_4e0;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_4e0);
       fVar14 = (float)dVar10;
       fVar7 = local_4b0 * local_4f8;
       local_4a8 = fVar14 * local_4b0 + local_4f8 * local_4d4;
@@ -27736,7 +27681,6 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4b0 = local_4f8 * local_4e4 - fVar14 * local_4b4;
       local_50c = fVar14 * local_4e4 + local_4f8 * local_4b4;
       local_4f8 = local_49c * 2.0 * 0.017453292;
-      dVar10 = (double)local_4f8;
       local_504 = fVar9 - fVar14 * local_504;
       local_4d4 = fVar7 - fVar14 * local_4d4;
       local_4b8 = fVar12 - fVar14 * local_4b8;
@@ -27744,10 +27688,9 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_43c = local_4d8;
       local_438 = local_4bc;
       local_434 = local_50c;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_4f8);
       local_4fc = (float)dVar10;
-      dVar10 = (double)local_4f8;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_4f8);
       fVar7 = (float)dVar10;
       local_4ec = local_4d4 * local_4fc + fVar7 * local_500;
       local_4e0 = local_4fc * local_500 - local_4d4 * fVar7;
@@ -27757,7 +27700,6 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4d4 = local_4fc * local_4d0 - local_4b8 * fVar7;
       local_500 = fVar7 * local_4ac + local_4fc * local_4b0;
       local_4fc = local_4fc * local_4ac - local_4b0 * fVar7;
-      dVar10 = (double)(local_4c8 * 0.9);
       local_4d0 = local_458;
       local_460 = local_4ec;
       local_45c = local_4b4;
@@ -27766,7 +27708,7 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_44c = local_504;
       local_448 = local_4d4;
       local_444 = local_4fc;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)(local_4c8 * 0.9));
       fVar13 = ((float)dVar10 * 0.1 + 0.2) * (local_4cc + 0.2) * param_11;
       fVar14 = local_4d4;
       fVar15 = local_4a8;
@@ -27809,15 +27751,13 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       GameController_draw_mesh();
       local_4cc = local_4cc * 1.01;
       local_488 = (local_488 - (double)(local_508 * 0.006) * 3.141592653589793) * (double)param_12;
-      dVar10 = (double)(float)local_488;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)(float)local_488);
       local_3f4 = (float)dVar10;
       _local_3b4 = CONCAT44(fStack_350 * local_4cc,local_354 * local_4cc);
       local_3ac = fVar11 * local_4cc;
       _local_3fc = CONCAT44(fStack_350 * local_4cc * local_3f4,local_354 * local_4cc * local_3f4);
       local_3f4 = local_3ac * local_3f4;
-      dVar10 = (double)(float)local_488;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)(float)local_488);
       local_210 = (float)dVar10;
       _local_39c = CONCAT44(fStack_410 * local_4cc,local_414 * local_4cc);
       local_394 = local_40c * local_4cc;
@@ -27833,9 +27773,8 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_418 = local_37c + local_3f4;
       local_420 = local_36c;
       local_4f8 = (float)local_488 * 0.3;
-      dVar10 = (double)local_4f8;
       local_364 = local_418;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_4f8);
       local_400 = (float)dVar10;
       _local_33c = CONCAT44(fStack_350 * local_4cc,local_354 * local_4cc);
       local_334 = fVar11 * local_4cc;
@@ -27845,8 +27784,7 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_31c = local_334 * 0.5;
       _local_408 = CONCAT44(fVar7 * local_400,fVar11 * local_400);
       local_400 = local_31c * local_400;
-      dVar10 = (double)local_4f8;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_4f8);
       local_2d4 = (float)dVar10;
       _local_30c = CONCAT44(fStack_410 * local_4cc,local_414 * local_4cc);
       local_304 = local_40c * local_4cc;
@@ -27875,11 +27813,9 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       mat4_rotateAxisAngle(*(undefined4 *)(param_3 + 8),0,0,0x3f800000);
       local_4c0 = local_4c0 * 3.0;
       local_4f8 = local_4c0 * 0.017453292;
-      dVar10 = (double)local_4f8;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_4f8);
       local_4e0 = (float)dVar10;
-      dVar10 = (double)local_4f8;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_4f8);
       fVar11 = (float)dVar10;
       local_4ec = fVar11 * local_440 + local_4e0 * local_450;
       local_4f8 = local_4e0 * local_440 - fVar11 * local_450;
@@ -27890,11 +27826,9 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4bc = fVar11 * local_434 + local_4e0 * local_444;
       local_4c0 = local_4c0 * 0.017453292;
       local_4e0 = local_4e0 * local_434 - fVar11 * local_444;
-      dVar10 = (double)local_4c0;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_4c0);
       local_500 = (float)dVar10;
-      dVar10 = (double)local_4c0;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_4c0);
       fVar11 = (float)dVar10;
       fVar7 = local_460 * local_500;
       local_504 = local_500 * local_4f8 + local_460 * fVar11;
@@ -27906,16 +27840,14 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_500 = local_500 * local_4e0 + local_454 * fVar11;
       local_4f4 = local_4f4 - fVar11 * local_4e0;
       local_49c = local_49c * 3.0 * 0.017453292;
-      dVar10 = (double)local_49c;
       local_4f8 = fVar7 - fVar11 * local_4f8;
       local_440 = local_504;
       local_43c = local_4c8;
       local_438 = local_4d0;
       local_434 = local_500;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)local_49c);
       local_4fc = (float)dVar10;
-      dVar10 = (double)local_49c;
-      libm_sse2_sin_precise();
+      dVar10 = libm_sse2_sin_precise((double)local_49c);
       fVar11 = (float)dVar10;
       local_508 = local_4f8 * local_4fc + fVar11 * local_4ec;
       local_4e0 = local_4fc * local_4ec - local_4f8 * fVar11;
@@ -27926,7 +27858,6 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_4ec = local_4fc * local_4b8 - local_4ec;
       local_454 = fVar11 * local_4bc + local_4fc * local_4f4;
       local_4fc = local_4fc * local_4bc - local_4f4 * fVar11;
-      dVar10 = (double)((float)local_488 * 0.9);
       local_4bc = local_454;
       local_460 = local_508;
       local_45c = local_4b4;
@@ -27935,7 +27866,7 @@ void drawOrientedModelOrTrail(uint *param_1,float *param_2,int param_3,undefined
       local_44c = local_50c;
       local_448 = local_4ec;
       local_444 = local_4fc;
-      libm_sse2_cos_precise();
+      dVar10 = libm_sse2_cos_precise((double)((float)local_488 * 0.9));
       fVar16 = ((float)dVar10 * 0.1 + 0.2) * (local_4cc + 0.2) * param_11;
       fVar12 = local_500;
       fVar14 = local_504;
@@ -28036,7 +27967,7 @@ void GameController_start_game_mode(void)
   int iVar5;
   int in_ECX;
   int iVar6;
-  float10 fVar7;
+  float fVar7;
   undefined4 local_f81;
   undefined1 local_f7d [3641];
   void *local_144;
@@ -28175,7 +28106,7 @@ switchD_0047742e_default:
   *(undefined2 *)(*(int *)(in_ECX + 0x8006d0) + 0xe00) = 1;
   *(undefined1 *)(*(int *)(in_ECX + 0x8006d0) + 0xdf1) = 0;
   *(undefined1 *)(*(int *)(in_ECX + 0x8006d0) + 0xdfd) = 1;
-  fVar7 = (float10)stat_calcAttackDamage();
+  fVar7 = (float)stat_calcAttackDamage();
   *(float *)(*(int *)(in_ECX + 0x8006d0) + 0x16c) = (float)fVar7;
   iVar6 = *(int *)(*(int *)(in_ECX + 0x8006d0) + 0x1d28);
   puVar2 = *(undefined4 **)(iVar6 + 0x14);
@@ -28213,7 +28144,7 @@ void findNearestEntityInGrid(int worldX,int worldY)
   int pThis;
   int cx1;
   int iVar8;
-  float10 dist;
+  float dist;
   int bestObj;
   int bestDist;
   float offX;
@@ -28237,7 +28168,7 @@ void findNearestEntityInGrid(int worldX,int worldY)
           iVar2 = iVar2 + 1) {
         if ((((-1 < cx0) && (-1 < iVar2)) && (iVar8 < 0x20002f)) &&
            ((iVar2 < 0x400 && (pChunk = *(int *)(pThis + (iVar8 + iVar2) * 4), pChunk != 0)))) {
-          dist = (float10)fixedpoint_vec_subtract(pChunk,px << 0x10,
+          dist = (float)fixedpoint_vec_subtract(pChunk,px << 0x10,
                                         ((int)px >> 0x1f) << 0x10 | px >> 0x10,py << 0x10,
                                         ((int)py >> 0x1f) << 0x10 | py >> 0x10);
           if ((bestObj == 0) || ((int)dist < bestDist)) {
@@ -28415,7 +28346,7 @@ int getHoveredWorldItem(void)
         pBones = *(int *)(*(int *)(pCam + 0x38) + 0x19c);
         boneY = *(float *)(pBones + 4 + boneIdx * 8);
         boneX = *(float *)(pBones + boneIdx * 8);
-        invW = 1.0 / (*(float *)(pCam + 0x54) * boneX + *(float *)(pCam + 100) * boneY +
+        invW = 1.0f / (*(float *)(pCam + 0x54) * boneX + *(float *)(pCam + 100) * boneY +
                       *(float *)(pCam + 0x84));
         cursorX = *(float *)(*(int *)(pThis + 0x800710) + 0xd4);
         screenX = invW * (*(float *)(pCam + 0x58) * boneY + boneX * *(float *)(pCam + 0x48) +
@@ -28424,7 +28355,7 @@ int getHoveredWorldItem(void)
                         *(float *)(pCam + 0x7c));
         if (((screenX <= cursorX) &&
             (boneY = *(float *)(*(int *)(pThis + 0x800710) + 0xd8), invW <= boneY)) &&
-           ((cursorX < screenX + 120.0 && (boneY < invW + 120.0)))) {
+           ((cursorX < screenX + 120.0f && (boneY < invW + 120.0f)))) {
           return slotIdx * 0x11c + 4 + pCamera;
         }
       }
@@ -30061,7 +29992,7 @@ void cube::GameController::handleKeyPress
   local_10 = ExceptionList;
   local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
-  local_94 = 0.0;
+  local_94 = 0.0f;
   iVar4 = *(int *)(*(int *)(in_ECX + 0x800880) + 0x3c);
   if (((((*(int *)(*(int *)(iVar4 + 0x94) + *(int *)(iVar4 + 0x68) * 4) == 0) &&
         (iVar4 = *(int *)(*(int *)(in_ECX + 0x800890) + 0x3c),
@@ -30114,7 +30045,7 @@ void cube::GameController::handleKeyPress
           }
           else {
             if (*(char *)(iVar4 + 0xf09) == '\0') {
-              local_94 = *(float *)(iVar4 + 0x13bc) * 65536.0;
+              local_94 = *(float *)(iVar4 + 0x13bc) * 65536.0f;
               uVar12 = ftol2();
               local_34 = (uint)uVar12 - *(uint *)(iVar4 + 0x20);
               local_30 = (basic_streambuf<wchar_t,std::char_traits<wchar_t>_> *)
@@ -30172,7 +30103,7 @@ void cube::GameController::handleKeyPress
         std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::
         basic_ios<wchar_t,std::char_traits<wchar_t>_>(local_dc);
         local_8 = 0;
-        local_94 = 1.4013e-45;
+        local_94 = 1.4013e-45f;
         std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
         basic_iostream<wchar_t,std::char_traits<wchar_t>_>
                   ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)local_144,
@@ -30361,7 +30292,7 @@ void cube::GameController::vfunc_6(float dx,float dy)
   int *pThis;
   int deltaMs;
   int iVar5;
-  float10 fVar6;
+  float fVar6;
   float smoothZoom;
   float zoomDelta;
   undefined4 uVar9;
@@ -30374,8 +30305,8 @@ void cube::GameController::vfunc_6(float dx,float dy)
   DVar3 = timeGetTime();
   deltaMs = DVar3 - _DAT_0076b090;
   _DAT_0076b090 = DVar3;
-  fVar6 = (float10)iterated_lerp_toward1(deltaMs,0x3c23d70a);
-  smoothZoom = (1.0 - (float)fVar6) * DAT_0076b04c + *(float *)(pThis[0x2001c4] + 0xd8) * (float)fVar6;
+  fVar6 = (float)iterated_lerp_toward1(deltaMs,0x3c23d70a);
+  smoothZoom = (1.0f - (float)fVar6) * DAT_0076b04c + *(float *)(pThis[0x2001c4] + 0xd8) * (float)fVar6;
   zoomDelta = smoothZoom - DAT_0076b04c;
   DAT_0076b04c = smoothZoom;
   if ((*(int *)(*(int *)(*(int *)(pThis[0x200222] + 0x3c) + 0x94) +
@@ -30387,16 +30318,16 @@ void cube::GameController::vfunc_6(float dx,float dy)
       do {
         uVar9 = 1;
         iVar1 = pThis[0x47];
-        fVar6 = (float10)GameController_getWidgetSize2(1);
+        fVar6 = (float)GameController_getWidgetSize2(1);
         smoothZoom = (float)fVar6 + zoomDelta;
-        fVar6 = (float10)Widget_measureGuarded(smoothZoom);
-        Widget_setScroll((float)(iVar1 / 2) - (float)fVar6 * 0.5,smoothZoom,uVar9);
+        fVar6 = (float)Widget_measureGuarded(smoothZoom);
+        Widget_setScroll((float)(iVar1 / 2) - (float)fVar6 * 0.5f,smoothZoom,uVar9);
         iVar5 = iVar5 + 4;
       } while (iVar5 != pThis[0x20025f]);
     }
     pThis[0x200281] =
          (int)((*(float *)(pThis[0x2001c4] + 0xd8) - *(float *)(pThis[0x2001c4] + 0xe0)) *
-               (float)deltaMs * 2.0 + (float)pThis[0x200281]);
+               (float)deltaMs * 2.0f + (float)pThis[0x200281]);
     return;
   }
   if ((*(int *)(*(int *)(*(int *)(pThis[0x200223] + 0x3c) + 0x94) +
@@ -30408,67 +30339,67 @@ void cube::GameController::vfunc_6(float dx,float dy)
       do {
         uVar9 = 1;
         iVar1 = pThis[0x47];
-        fVar6 = (float10)GameController_getWidgetSize2(1);
+        fVar6 = (float)GameController_getWidgetSize2(1);
         smoothZoom = (float)fVar6 + zoomDelta;
-        fVar6 = (float10)Widget_measureGuarded(smoothZoom);
-        Widget_setScroll((float)(iVar1 / 2) - (float)fVar6 * 0.5,smoothZoom,uVar9);
+        fVar6 = (float)Widget_measureGuarded(smoothZoom);
+        Widget_setScroll((float)(iVar1 / 2) - (float)fVar6 * 0.5f,smoothZoom,uVar9);
         iVar5 = iVar5 + 4;
       } while (iVar5 != pThis[0x200271]);
     }
     pThis[0x200282] =
          (int)((*(float *)(pThis[0x2001c4] + 0xd8) - *(float *)(pThis[0x2001c4] + 0xe0)) *
-               (float)deltaMs * 2.0 + (float)pThis[0x200282]);
+               (float)deltaMs * 2.0f + (float)pThis[0x200282]);
     return;
   }
   guiActive = (**(code **)(*pThis + 4))();
   if (guiActive == '\0') {
     GameController_hittest_if_no_capture();
     if (pThis[0x65] == 0) {
-      smoothZoom = (float)pThis[99] * 0.005 * dy + (float)pThis[0x6c];
+      smoothZoom = (float)pThis[99] * 0.005f * dy + (float)pThis[0x6c];
     }
     else {
-      smoothZoom = (float)pThis[0x6c] - (float)pThis[99] * 0.005 * dy;
+      smoothZoom = (float)pThis[0x6c] - (float)pThis[99] * 0.005f * dy;
     }
     pThis[0x6c] = (int)smoothZoom;
-    if (180.0 < smoothZoom) {
+    if (180.0f < smoothZoom) {
       pThis[0x6c] = 0x43340000;
     }
-    if ((float)pThis[0x6c] <= 0.0 && (float)pThis[0x6c] != 0.0) {
+    if ((float)pThis[0x6c] <= 0.0f && (float)pThis[0x6c] != 0.0f) {
       pThis[0x6c] = 0;
     }
-    pThis[0x6e] = (int)((float)pThis[0x6e] - (float)pThis[99] * 0.005 * dx);
+    pThis[0x6e] = (int)((float)pThis[0x6e] - (float)pThis[99] * 0.005f * dx);
   }
   else {
     GameController_set_hover_widget(dx,dy);
     deltaMs = GameController_hittest_if_no_capture();
     if ((deltaMs == 0) && ((char)pThis[1] != '\0')) {
       smoothZoom = (*(float *)(pThis[0x2001c4] + 0xd8) - *(float *)(pThis[0x2001c4] + 0xe0)) *
-              (float)pThis[99] * 0.005;
+              (float)pThis[99] * 0.005f;
       if (pThis[0x65] == 0) {
         pThis[0x6c] = (int)(smoothZoom + (float)pThis[0x6c]);
       }
       else {
         pThis[0x6c] = (int)((float)pThis[0x6c] - smoothZoom);
       }
-      if (180.0 < (float)pThis[0x6c]) {
+      if (180.0f < (float)pThis[0x6c]) {
         pThis[0x6c] = 0x43340000;
       }
-      if ((float)pThis[0x6c] <= 0.0 && (float)pThis[0x6c] != 0.0) {
+      if ((float)pThis[0x6c] <= 0.0f && (float)pThis[0x6c] != 0.0f) {
         pThis[0x6c] = 0;
       }
       pThis[0x6e] = (int)((float)pThis[0x6e] -
                           (*(float *)(pThis[0x2001c4] + 0xd4) - *(float *)(pThis[0x2001c4] + 0xdc)
-                          ) * (float)pThis[99] * 0.005);
+                          ) * (float)pThis[99] * 0.005f);
     }
     if ((*(char *)((int)pThis + 10) != '\0') &&
        (*(int *)(*(int *)(*(int *)(pThis[0x200237] + 0x3c) + 0x94) +
                 *(int *)(*(int *)(pThis[0x200237] + 0x3c) + 0x68) * 4) != 0)) {
       *(float *)(pThis[0x20023d] + 0x16c) =
-           (*(float *)(pThis[0x2001c4] + 0xd4) - *(float *)(pThis[0x2001c4] + 0xdc)) * 0.5 +
+           (*(float *)(pThis[0x2001c4] + 0xd4) - *(float *)(pThis[0x2001c4] + 0xdc)) * 0.5f +
            *(float *)(pThis[0x20023d] + 0x16c);
       *(float *)(pThis[0x20023d] + 0x164) =
            *(float *)(pThis[0x20023d] + 0x164) -
-           (*(float *)(pThis[0x2001c4] + 0xd8) - *(float *)(pThis[0x2001c4] + 0xe0)) * 0.5;
+           (*(float *)(pThis[0x2001c4] + 0xd8) - *(float *)(pThis[0x2001c4] + 0xe0)) * 0.5f;
       return;
     }
   }
@@ -30489,25 +30420,25 @@ void cube::GameController::vfunc_9(int delta)
   if (*(char *)(pThis + 0x8006e4) == '\0') {
     zoom = *(float *)(pThis + 0x1c0) - (float)(delta * 2);
     *(float *)(pThis + 0x1c0) = zoom;
-    if (zoom < 0.0) {
+    if (zoom < 0.0f) {
       *(undefined4 *)(pThis + 0x1c0) = 0;
     }
-    if (14.0 < *(float *)(pThis + 0x1c0)) {
+    if (14.0f < *(float *)(pThis + 0x1c0)) {
       *(undefined4 *)(pThis + 0x1c0) = 0x41600000;
     }
   }
   else {
     if (delta < 0) {
-      zoom = *(float *)(pThis + 0x1c8) * 0.9;
+      zoom = *(float *)(pThis + 0x1c8) * 0.9f;
     }
     else {
-      zoom = *(float *)(pThis + 0x1c8) / 0.9;
+      zoom = *(float *)(pThis + 0x1c8) / 0.9f;
     }
     *(float *)(pThis + 0x1c8) = zoom;
-    if (10.0 < zoom) {
+    if (10.0f < zoom) {
       *(undefined4 *)(pThis + 0x1c8) = 0x41200000;
     }
-    if (*(float *)(pThis + 0x1c8) <= 0.01 && *(float *)(pThis + 0x1c8) != 0.01) {
+    if (*(float *)(pThis + 0x1c8) <= 0.01f && *(float *)(pThis + 0x1c8) != 0.01f) {
       *(undefined4 *)(pThis + 0x1c8) = 0x3c23d70a;
       return;
     }
@@ -30764,7 +30695,7 @@ void testSphereVsFrustum_fixed(uint *pPos,float bias,float radius)
   local_28 = local_50 - uVar4;
   local_24 = (*(int *)(pThis + 0x154) - uVar5) - (uint)(local_50 < uVar4);
   vec3i64_dotFixed(&local_54,&deltaX);
-  local_4c = radius * radius * 65536.0;
+  local_4c = radius * radius * 65536.0f;
   lVar9 = ftol2();
   if (CONCAT44(local_50,local_54) <= lVar9) {
     local_20 = uVar1 + *(uint *)(pThis + 0x1d8);
@@ -30774,11 +30705,11 @@ void testSphereVsFrustum_fixed(uint *pPos,float bias,float radius)
                 (uint)CARRY4(uVar3,*(uint *)(pThis + 0x1e0));
     planeIdx = 0;
     pPlane = (float *)(pThis + 0x1000fa8);
-    fx = (float)CONCAT44(iStack_1c,local_20) * 1.5258789e-05;
+    fx = (float)CONCAT44(iStack_1c,local_20) * 1.5258789e-05f;
     fz = (float)lVar6;
-    fy = (float)CONCAT44(iStack_14,local_18) * 1.5258789e-05;
+    fy = (float)CONCAT44(iStack_14,local_18) * 1.5258789e-05f;
     while (local_10 = uVar4, uStack_c = uVar5,
-          0.0 <= pPlane[-1] * fx + *pPlane * fy + pPlane[1] * fz * 1.5258789e-05 +
+          0.0f <= pPlane[-1] * fx + *pPlane * fy + pPlane[1] * fz * 1.5258789e-05f +
                  pPlane[2] + bias) {
       planeIdx = planeIdx + 1;
       pPlane = pPlane + 4;
@@ -31484,12 +31415,12 @@ void cube::GameController::loadStructureBlob
  */
 /* Global::getVelocityX @ 00480d90 */
 
-float10 getVelocityX(void)
+float getVelocityX(void)
 
 {
   int pThis;
   
-  return (float10)(*(float *)(pThis + 0xd4) - *(float *)(pThis + 0xdc));
+  return (float)(*(float *)(pThis + 0xd4) - *(float *)(pThis + 0xdc));
 }
 
 
@@ -31501,12 +31432,12 @@ float10 getVelocityX(void)
  */
 /* Global::getVelocityY @ 00480db0 */
 
-float10 getVelocityY(void)
+float getVelocityY(void)
 
 {
   int pThis;
   
-  return (float10)(*(float *)(pThis + 0xd8) - *(float *)(pThis + 0xe0));
+  return (float)(*(float *)(pThis + 0xd8) - *(float *)(pThis + 0xe0));
 }
 
 
@@ -32043,10 +31974,10 @@ void cube::GameController::vfunc_4(int w,int h)
   int pThis;
   uint uVar5;
   int screenW;
-  float10 fVar7;
-  float10 fVar8;
-  float10 fVar9;
-  float10 fVar10;
+  float fVar7;
+  float fVar8;
+  float fVar9;
+  float fVar10;
   float posY;
   undefined4 uVar12;
   undefined4 uVar13;
@@ -32062,7 +31993,7 @@ void cube::GameController::vfunc_4(int w,int h)
   stackCookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   if (*(int *)(pThis + 0x80093c) != 0) {
     screenW = *(int *)(pThis + 0x11c);
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     pWidget = *(int *)(*(int *)(pThis + 0x80093c) + 0x38);
     boneIdx = *(int *)(pWidget + 0x68);
     pWidget = *(int *)(pWidget + 0x94);
@@ -32108,7 +32039,7 @@ void cube::GameController::vfunc_4(int w,int h)
   screenW = *(int *)(pThis + 0x11c);
   posY = (float)(*(int *)(pThis + 0x120) / 2 + 0x32);
   uVar14 = 1;
-  fVar7 = (float10)Widget_measureGuarded(posY,1);
+  fVar7 = (float)Widget_measureGuarded(posY,1);
   Widget_setScroll(((float)screenW - (float)fVar7) * 0.5,posY,uVar14);
   if (*(int *)(pThis + 0x80087c) != 0) {
     screenW = *(int *)(*(int *)(pThis + 0x80087c) + 0x38);
@@ -32163,34 +32094,34 @@ void cube::GameController::vfunc_4(int w,int h)
   uVar14 = 1;
   screenW = *(int *)(pThis + 0x120);
   pWidget = *(int *)(pThis + 0x11c);
-  fVar7 = (float10)Widget_measure(1);
+  fVar7 = (float)Widget_measure(1);
   posY = (float)(screenW + -0x14) - (float)fVar7;
-  fVar7 = (float10)Widget_measureGuarded(posY);
+  fVar7 = (float)Widget_measureGuarded(posY);
   Widget_setScroll((float)(pWidget + -0x14) - (float)fVar7,posY,uVar14);
   uVar14 = 1;
   screenW = *(int *)(pThis + 0x120);
-  fVar7 = (float10)Widget_measure(1);
+  fVar7 = (float)Widget_measure(1);
   Widget_setScroll(0x41a00000,(float)(screenW + -0x14) - (float)fVar7,uVar14);
   screenW = *(int *)(pThis + 0x120);
   local_10._4_4_ = (float)*(int *)(pThis + 0x11c);
   uVar14 = 1;
-  fVar7 = (float10)Widget_measure(1);
+  fVar7 = (float)Widget_measure(1);
   posY = ((float)screenW - (float)fVar7) * 0.5;
-  fVar7 = (float10)Widget_measureGuarded(posY);
+  fVar7 = (float)Widget_measureGuarded(posY);
   Widget_setScroll((local_10._4_4_ - (float)fVar7) * 0.5,posY,uVar14);
   local_10._4_4_ = (float)*(int *)(pThis + 0x120);
   screenW = *(int *)(pThis + 0x11c);
   uVar14 = 1;
-  fVar7 = (float10)Widget_measure();
+  fVar7 = (float)Widget_measure();
   posY = (local_10._4_4_ - (float)fVar7) * 0.5;
-  fVar7 = (float10)Widget_measureGuarded();
+  fVar7 = (float)Widget_measureGuarded();
   local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
   Widget_setScroll(((float)screenW - (float)fVar7) * 0.5,posY,uVar14);
   Widget_setScroll(0x41a00000,0x41a00000,1);
   uVar13 = 1;
   uVar14 = 0x41a00000;
   local_10._4_4_ = (float)*(int *)(pThis + 0x11c);
-  fVar7 = (float10)Widget_measureGuarded(0x41a00000,1);
+  fVar7 = (float)Widget_measureGuarded(0x41a00000,1);
   Widget_setScroll((local_10._4_4_ - (float)fVar7) - 20.0,uVar14,uVar13);
   screenW = *(int *)(pThis + 0x120);
   pWidget = *(int *)(*(int *)(pThis + 0x8009ac) + 0x38);
@@ -32202,17 +32133,17 @@ void cube::GameController::vfunc_4(int w,int h)
   local_10._4_4_ = (float)*(int *)(pThis + 0x120);
   screenW = *(int *)(pThis + 0x11c);
   uVar14 = 1;
-  fVar7 = (float10)Widget_measure(1);
+  fVar7 = (float)Widget_measure(1);
   posY = (local_10._4_4_ - (float)fVar7) - 20.0;
-  fVar7 = (float10)Widget_measureGuarded(posY);
+  fVar7 = (float)Widget_measureGuarded(posY);
   local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
   Widget_setScroll(((float)screenW - (float)fVar7) - 20.0,posY,uVar14);
   screenW = *(int *)(pThis + 0x11c);
   uVar14 = 1;
   local_10._4_4_ = (float)*(int *)(pThis + 0x120);
-  fVar7 = (float10)Widget_measure(1);
+  fVar7 = (float)Widget_measure(1);
   posY = (local_10._4_4_ - (float)fVar7) * 0.5;
-  fVar7 = (float10)Widget_measureGuarded(posY);
+  fVar7 = (float)Widget_measureGuarded(posY);
   local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
   Widget_setScroll(((float)screenW - (float)fVar7) * 0.5,posY,uVar14);
   screenW = *(int *)(pThis + 0x120);
@@ -32232,10 +32163,10 @@ void cube::GameController::vfunc_4(int w,int h)
   uVar14 = 1;
   screenW = *(int *)(pThis + 0x120);
   pWidget = *(int *)(pThis + 0x11c);
-  fVar7 = (float10)Widget_measure(1);
+  fVar7 = (float)Widget_measure(1);
   local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
   posY = (float)(screenW + -0x14) - (float)fVar7;
-  fVar7 = (float10)Widget_measureGuarded(posY);
+  fVar7 = (float)Widget_measureGuarded(posY);
   local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
   Widget_setScroll((float)(pWidget + -0x14) - (float)fVar7,posY,uVar14);
   screenW = *(int *)(pThis + 0x800978);
@@ -32243,9 +32174,9 @@ void cube::GameController::vfunc_4(int w,int h)
     do {
       uVar14 = 1;
       pWidget = *(int *)(pThis + 0x11c);
-      fVar7 = (float10)GameController_getWidgetSize2(1);
+      fVar7 = (float)GameController_getWidgetSize2(1);
       posY = (float)fVar7;
-      fVar7 = (float10)Widget_measureGuarded(posY);
+      fVar7 = (float)Widget_measureGuarded(posY);
       local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
       Widget_setScroll((float)(pWidget / 2) - (float)fVar7 * 0.5,posY,uVar14);
       screenW = screenW + 4;
@@ -32292,9 +32223,9 @@ void cube::GameController::vfunc_4(int w,int h)
     screenW = *(int *)(pThis + 0x11c);
     uVar14 = 0;
     local_10._4_4_ = (float)*(int *)(pThis + 0x120);
-    fVar7 = (float10)Widget_measure(0);
+    fVar7 = (float)Widget_measure(0);
     posY = (local_10._4_4_ - (float)fVar7) - 220.0;
-    fVar7 = (float10)Widget_measureGuarded(posY);
+    fVar7 = (float)Widget_measureGuarded(posY);
     local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
     Widget_setScroll((float)(screenW + -0x14) - (float)fVar7,posY,uVar14);
   }
@@ -32364,10 +32295,10 @@ void cube::GameController::vfunc_4(int w,int h)
   Widget_setScroll(uVar14,uVar13,uVar12);
   if (*(int *)(pThis + 0x8008bc) != 0) {
     screenW = *(int *)(pThis + 0x11c);
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     pWidget = *(int *)(pThis + 0x120);
     local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
-    fVar8 = (float10)Widget_measure();
+    fVar8 = (float)Widget_measure();
     local_10 = CONCAT44((float)fVar8,(undefined4)local_10);
     fStack_14 = (float)(pWidget / 2) - (float)fVar8;
     local_18 = (float)(screenW / 2) - (float)fVar7 * 0.5;
@@ -32375,12 +32306,12 @@ void cube::GameController::vfunc_4(int w,int h)
   }
   if (*(int *)(pThis + 0x8008c0) != 0) {
     screenW = *(int *)(pThis + 0x11c);
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
-    fVar8 = (float10)Widget_measureGuarded();
+    fVar8 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar8,(undefined4)local_10);
     pWidget = *(int *)(pThis + 0x120);
-    fVar9 = (float10)Widget_measure();
+    fVar9 = (float)Widget_measure();
     local_10 = CONCAT44((float)fVar9,(undefined4)local_10);
     fStack_14 = (float)(pWidget / 2) - (float)fVar9;
     local_18 = (((float)(screenW / 2) - (float)fVar7 * 0.5) - (float)fVar8) - 10.0;
@@ -32388,14 +32319,14 @@ void cube::GameController::vfunc_4(int w,int h)
   }
   if (*(int *)(pThis + 0x800ad4) != 0) {
     screenW = *(int *)(pThis + 0x11c);
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
-    fVar8 = (float10)Widget_measureGuarded();
+    fVar8 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar8,(undefined4)local_10);
     pWidget = *(int *)(pThis + 0x120);
-    fVar9 = (float10)Widget_measure();
+    fVar9 = (float)Widget_measure();
     local_10 = CONCAT44((float)fVar9,(undefined4)local_10);
-    fVar10 = (float10)Widget_measure();
+    fVar10 = (float)Widget_measure();
     local_10 = CONCAT44((float)fVar10,(undefined4)local_10);
     fStack_14 = (float)fVar10 + ((float)(pWidget / 2) - (float)fVar9) + 10.0;
     local_18 = (((float)(screenW / 2) - (float)fVar7 * 0.5) - (float)fVar8) - 10.0;
@@ -32403,45 +32334,45 @@ void cube::GameController::vfunc_4(int w,int h)
   }
   if (*(int *)(pThis + 0x800908) != 0) {
     screenW = *(int *)(pThis + 0x11c);
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
-    fVar8 = (float10)Widget_measureGuarded();
+    fVar8 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar8,(undefined4)local_10);
     pWidget = *(int *)(pThis + 0x120);
-    fVar9 = (float10)Widget_measure();
+    fVar9 = (float)Widget_measure();
     local_10 = CONCAT44((float)fVar9,(undefined4)local_10);
     fStack_14 = (float)(pWidget / 2) - (float)fVar9;
     local_18 = (((float)(screenW / 2) - (float)fVar7 * 0.5) - (float)fVar8) - 10.0;
     AdaptionWidget_applyScrollLayout(&local_18,1);
   }
   if (*(int *)(pThis + 0x8008c4) != 0) {
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
     screenW = *(int *)(pThis + 0x11c);
     pWidget = *(int *)(pThis + 0x120);
-    fVar8 = (float10)Widget_measure();
+    fVar8 = (float)Widget_measure();
     local_10 = CONCAT44((float)fVar8,(undefined4)local_10);
     fStack_14 = (float)(pWidget / 2) - (float)fVar8;
     local_18 = (float)fVar7 * 0.5 + (float)(screenW / 2) + 10.0;
     AdaptionWidget_applyScrollLayout(&local_18,1);
   }
   if (*(int *)(pThis + 0x8008f8) != 0) {
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
     screenW = *(int *)(pThis + 0x11c);
     pWidget = *(int *)(pThis + 0x120);
-    fVar8 = (float10)Widget_measure();
+    fVar8 = (float)Widget_measure();
     local_10 = CONCAT44((float)fVar8,(undefined4)local_10);
     fStack_14 = (float)(pWidget / 2) - (float)fVar8;
     local_18 = (float)fVar7 * 0.5 + (float)(screenW / 2) + 10.0;
     AdaptionWidget_applyScrollLayout(&local_18,1);
   }
   if (*(int *)(pThis + 0x800900) != 0) {
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
     screenW = *(int *)(pThis + 0x11c);
     pWidget = *(int *)(pThis + 0x120);
-    fVar8 = (float10)Widget_measure();
+    fVar8 = (float)Widget_measure();
     local_10 = CONCAT44((float)fVar8,(undefined4)local_10);
     fStack_14 = (float)(pWidget / 2) - (float)fVar8;
     local_18 = (float)fVar7 * 0.5 + (float)(screenW / 2) + 10.0;
@@ -32449,12 +32380,12 @@ void cube::GameController::vfunc_4(int w,int h)
   }
   if (*(int *)(pThis + 0x8008dc) != 0) {
     screenW = *(int *)(pThis + 0x11c);
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar7,(undefined4)local_10);
-    fVar8 = (float10)Widget_measureGuarded();
+    fVar8 = (float)Widget_measureGuarded();
     local_10 = CONCAT44((float)fVar8,(undefined4)local_10);
     pWidget = *(int *)(pThis + 0x120);
-    fVar9 = (float10)Widget_measure();
+    fVar9 = (float)Widget_measure();
     local_10 = CONCAT44((float)fVar9,(undefined4)local_10);
     fStack_14 = (float)(pWidget / 2) - (float)fVar9;
     local_18 = (((float)(screenW / 2) - (float)fVar7 * 0.5) - (float)fVar8) - 10.0;
@@ -32503,11 +32434,12 @@ void playHitSoundAtPos(undefined4 soundId,uint *pPos,float volume,undefined4 par
 {
   uint uVar1;
   uint uVar2;
+  uint uVar3;
   float pThis;
-  undefined4 uVar3;
-  double dist;
-  float fVar5;
+  undefined4 uVar4;
+  double dVar5;
   float fVar6;
+  float fVar7;
   undefined1 auStack_a34 [4];
   float pThisF;
   float local_a2c;
@@ -32654,6 +32586,7 @@ void playHitSoundAtPos(undefined4 soundId,uint *pPos,float volume,undefined4 par
   ehHandler = &LAB_006e6b56;
   savedExcList = ExceptionList;
   stackCookie = DAT_0076aa78 ^ (uint)auStack_a34;
+  uVar3 = DAT_0076aa78 ^ (uint)&stack0xfffff5c0;
   ExceptionList = &savedExcList;
   local_a1c = pPos[3];
   local_a0c = *pPos;
@@ -32690,519 +32623,520 @@ void playHitSoundAtPos(undefined4 soundId,uint *pPos,float volume,undefined4 par
   local_a2c = (float)CONCAT44(iStack_9a4,local_9a8);
   local_9d8 = (float)CONCAT44(iStack_9ac,local_9b0) * 1.5258789e-05;
   local_9d4 = local_a2c * 1.5258789e-05;
-  dist = (double)(local_9d8 * local_9d8 + local_9dc * local_9dc + local_9d4 * local_9d4);
-  libm_sse2_sqrt_precise(DAT_0076aa78 ^ (uint)&stack0xfffff5c0);
+  dVar5 = libm_sse2_sqrt_precise
+                    ((double)(local_9d8 * local_9d8 + local_9dc * local_9dc + local_9d4 * local_9d4)
+                    );
   local_9ec = 0xf;
   local_9f0 = 0;
   local_a00[0] = (void *)((uint)local_a00[0] & 0xffffff00);
-  pThisF = (1.0 - (float)dist / 100.0) * volume;
-  uVar3 = 0;
+  pThisF = (1.0 - (float)dVar5 / 100.0) * volume;
+  uVar4 = 0;
   ehState = 0;
   switch(soundId) {
   case 0:
-    uVar3 = string_ctorAppend(local_2ec,local_a00,"hit.wav");
+    uVar4 = string_ctorAppend(local_2ec,local_a00,"hit.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,1);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 1:
-    uVar3 = string_ctorAppend(local_4cc,local_a00,"blade1.wav");
+    uVar4 = string_ctorAppend(local_4cc,local_a00,"blade1.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,2);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 2:
-    uVar3 = string_ctorAppend(local_94c,local_a00,"blade2.wav");
+    uVar4 = string_ctorAppend(local_94c,local_a00,"blade2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,3);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 3:
-    uVar3 = string_ctorAppend(local_49c,local_a00,"long-blade1.wav");
+    uVar4 = string_ctorAppend(local_49c,local_a00,"long-blade1.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,6);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 4:
-    uVar3 = string_ctorAppend(local_8ec,local_a00,"long-blade2.wav");
+    uVar4 = string_ctorAppend(local_8ec,local_a00,"long-blade2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,7);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 5:
-    uVar3 = string_ctorAppend(local_8bc,local_a00,"hit1.wav");
+    uVar4 = string_ctorAppend(local_8bc,local_a00,"hit1.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,9);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 6:
-    uVar3 = string_ctorAppend(local_46c,local_a00,"hit2.wav");
+    uVar4 = string_ctorAppend(local_46c,local_a00,"hit2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,10);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 7:
-    uVar3 = string_ctorAppend(local_88c,local_a00,"punch1.wav");
+    uVar4 = string_ctorAppend(local_88c,local_a00,"punch1.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0xb);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 8:
-    uVar3 = string_ctorAppend(local_13c,local_a00,"punch2.wav");
+    uVar4 = string_ctorAppend(local_13c,local_a00,"punch2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0xc);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 9:
-    uVar3 = string_ctorAppend(local_7c,local_a00,"hit-arrow.wav");
+    uVar4 = string_ctorAppend(local_7c,local_a00,"hit-arrow.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,4);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 10:
-    uVar3 = string_ctorAppend(local_91c,local_a00,"hit-arrow-critical.wav");
+    uVar4 = string_ctorAppend(local_91c,local_a00,"hit-arrow-critical.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,5);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0xb:
-    uVar3 = string_ctorAppend(local_25c,local_a00,"smash1.wav");
+    uVar4 = string_ctorAppend(local_25c,local_a00,"smash1.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,8);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0xc:
-    uVar3 = string_ctorAppend(local_43c,local_a00,"slam-ground.wav");
+    uVar4 = string_ctorAppend(local_43c,local_a00,"slam-ground.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0xe);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0xd:
-    uVar3 = string_ctorAppend(local_82c,local_a00,"smash-hit2.wav");
+    uVar4 = string_ctorAppend(local_82c,local_a00,"smash-hit2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0xf);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0xe:
-    uVar3 = string_ctorAppend(local_22c,local_a00,"smash-jump.wav");
+    uVar4 = string_ctorAppend(local_22c,local_a00,"smash-jump.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x10);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0xf:
-    uVar3 = string_ctorAppend(local_ac,local_a00,"swing.wav");
+    uVar4 = string_ctorAppend(local_ac,local_a00,"swing.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x14);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x10:
-    uVar3 = string_ctorAppend(local_79c,local_a00,"shield-swing.wav");
+    uVar4 = string_ctorAppend(local_79c,local_a00,"shield-swing.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x15);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x11:
-    uVar3 = string_ctorAppend(local_3dc,local_a00,"swing-slow.wav");
+    uVar4 = string_ctorAppend(local_3dc,local_a00,"swing-slow.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x16);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x12:
-    uVar3 = string_ctorAppend(local_76c,local_a00,"swing-slow2.wav");
+    uVar4 = string_ctorAppend(local_76c,local_a00,"swing-slow2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x17);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x13:
-    uVar3 = string_ctorAppend(local_10c,local_a00,"arrow-destroy.wav");
+    uVar4 = string_ctorAppend(local_10c,local_a00,"arrow-destroy.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x1c);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x14:
-    uVar3 = string_ctorAppend(local_6dc,local_a00,"blade1.wav");
+    uVar4 = string_ctorAppend(local_6dc,local_a00,"blade1.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x1d);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x15:
-    uVar3 = string_ctorAppend(local_37c,local_a00,"punch2.wav");
+    uVar4 = string_ctorAppend(local_37c,local_a00,"punch2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x1e);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x16:
-    uVar3 = string_ctorAppend(local_73c,local_a00,"salvo2.wav");
+    uVar4 = string_ctorAppend(local_73c,local_a00,"salvo2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x19);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x17:
-    uVar3 = string_ctorAppend(local_7fc,local_a00,"sword-hit03.wav");
+    uVar4 = string_ctorAppend(local_7fc,local_a00,"sword-hit03.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x11);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x18:
-    uVar3 = string_ctorAppend(local_40c,local_a00,"block.wav");
+    uVar4 = string_ctorAppend(local_40c,local_a00,"block.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x12);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x19:
-    uVar3 = string_ctorAppend(local_7cc,local_a00,"shield-slam.wav");
+    uVar4 = string_ctorAppend(local_7cc,local_a00,"shield-slam.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x13);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x1a:
-    uVar3 = string_ctorAppend(local_3ac,local_a00,"roll.wav");
+    uVar4 = string_ctorAppend(local_3ac,local_a00,"roll.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x1a);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x1b:
-    uVar3 = string_ctorAppend(local_70c,local_a00,"destroy2.wav");
+    uVar4 = string_ctorAppend(local_70c,local_a00,"destroy2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x1b);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x1c:
-    uVar3 = string_ctorAppend(local_6ac,local_a00,"cry.wav");
+    uVar4 = string_ctorAppend(local_6ac,local_a00,"cry.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x1f);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x1d:
-    uVar3 = string_ctorAppend(local_1cc,local_a00,"levelup2.wav");
+    uVar4 = string_ctorAppend(local_1cc,local_a00,"levelup2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x20);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x1e:
-    uVar3 = string_ctorAppend(local_67c,local_a00,"missioncomplete.wav");
+    uVar4 = string_ctorAppend(local_67c,local_a00,"missioncomplete.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x21);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x1f:
-    uVar3 = string_ctorAppend(local_34c,local_a00,"water-splash01.wav");
+    uVar4 = string_ctorAppend(local_34c,local_a00,"water-splash01.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x22);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x20:
-    uVar3 = string_ctorAppend(local_64c,local_a00,"step2.wav");
+    uVar4 = string_ctorAppend(local_64c,local_a00,"step2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x23);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x21:
-    uVar3 = string_ctorAppend(local_4c,local_a00,"step-water.wav");
+    uVar4 = string_ctorAppend(local_4c,local_a00,"step-water.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x24);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x22:
-    uVar3 = string_ctorAppend(local_61c,local_a00,"step-water2.wav");
+    uVar4 = string_ctorAppend(local_61c,local_a00,"step-water2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x25);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x23:
-    uVar3 = string_ctorAppend(local_31c,local_a00,"step-water3.wav");
+    uVar4 = string_ctorAppend(local_31c,local_a00,"step-water3.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x26);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x24:
-    uVar3 = string_ctorAppend(local_5ec,local_a00,"channel2.wav");
+    uVar4 = string_ctorAppend(local_5ec,local_a00,"channel2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x27);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x25:
-    uVar3 = string_ctorAppend(local_19c,local_a00,"channel-hit.wav");
+    uVar4 = string_ctorAppend(local_19c,local_a00,"channel-hit.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x28);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x26:
-    uVar3 = string_ctorAppend(local_5bc,local_a00,"fireball.wav");
+    uVar4 = string_ctorAppend(local_5bc,local_a00,"fireball.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x29);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x27:
-    uVar3 = string_ctorAppend(local_994,local_a00,"fire-hit.wav");
+    uVar4 = string_ctorAppend(local_994,local_a00,"fire-hit.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x2a);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x28:
-    uVar3 = string_ctorAppend(local_2bc,local_a00,"magic02.wav");
+    uVar4 = string_ctorAppend(local_2bc,local_a00,"magic02.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x2e);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x29:
-    uVar3 = string_ctorAppend(local_52c,local_a00,"watersplash.wav");
+    uVar4 = string_ctorAppend(local_52c,local_a00,"watersplash.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x2f);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x2a:
-    uVar3 = string_ctorAppend(local_16c,local_a00,"watersplash-hit.wav");
+    uVar4 = string_ctorAppend(local_16c,local_a00,"watersplash-hit.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x30);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x2b:
-    uVar3 = string_ctorAppend(local_28c,local_a00,"lich-scream.wav");
+    uVar4 = string_ctorAppend(local_28c,local_a00,"lich-scream.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x32);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x2c:
-    uVar3 = string_ctorAppend(local_97c,local_a00,"drink2.wav");
+    uVar4 = string_ctorAppend(local_97c,local_a00,"drink2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x33);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x2d:
-    uVar3 = string_ctorAppend(local_964,local_a00,"pickup.wav");
+    uVar4 = string_ctorAppend(local_964,local_a00,"pickup.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x34);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x2e:
-    uVar3 = string_ctorAppend(local_934,local_a00,"disenchant2.wav");
+    uVar4 = string_ctorAppend(local_934,local_a00,"disenchant2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x35);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x2f:
-    uVar3 = string_ctorAppend(local_904,local_a00,"upgrade2.wav");
+    uVar4 = string_ctorAppend(local_904,local_a00,"upgrade2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x36);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x30:
-    uVar3 = string_ctorAppend(local_1fc,local_a00,"swirl.wav");
+    uVar4 = string_ctorAppend(local_1fc,local_a00,"swirl.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x18);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x31:
-    uVar3 = string_ctorAppend(local_8d4,local_a00,"human-voice01.wav");
+    uVar4 = string_ctorAppend(local_8d4,local_a00,"human-voice01.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x37);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x32:
-    uVar3 = string_ctorAppend(local_8a4,local_a00,"human-voice02.wav");
+    uVar4 = string_ctorAppend(local_8a4,local_a00,"human-voice02.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x38);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x33:
-    uVar3 = string_ctorAppend(local_874,local_a00,"gate.wav");
+    uVar4 = string_ctorAppend(local_874,local_a00,"gate.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x39);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x34:
-    uVar3 = string_ctorAppend(local_814,local_a00,"spike-trap.wav");
+    uVar4 = string_ctorAppend(local_814,local_a00,"spike-trap.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x3b);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x35:
-    uVar3 = string_ctorAppend(local_7e4,local_a00,"fire-trap.wav");
+    uVar4 = string_ctorAppend(local_7e4,local_a00,"fire-trap.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x3c);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x36:
-    uVar3 = string_ctorAppend(local_844,local_a00,"lever.wav");
+    uVar4 = string_ctorAppend(local_844,local_a00,"lever.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x3a);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x37:
-    uVar3 = string_ctorAppend(local_784,local_a00,"charge2.wav");
+    uVar4 = string_ctorAppend(local_784,local_a00,"charge2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x3e);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x38:
-    uVar3 = string_ctorAppend(local_7b4,local_a00,"magic02.wav");
+    uVar4 = string_ctorAppend(local_7b4,local_a00,"magic02.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x3d);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x39:
-    uVar3 = string_ctorAppend(local_754,local_a00,"drop.wav");
+    uVar4 = string_ctorAppend(local_754,local_a00,"drop.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x3f);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x3a:
-    uVar3 = string_ctorAppend(local_724,local_a00,"drop-coin.wav");
+    uVar4 = string_ctorAppend(local_724,local_a00,"drop-coin.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x40);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x3b:
-    uVar3 = string_ctorAppend(local_6f4,local_a00,"drop-item.wav");
+    uVar4 = string_ctorAppend(local_6f4,local_a00,"drop-item.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x41);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x3c:
-    uVar3 = string_ctorAppend(local_6c4,local_a00,"male-groan.wav");
+    uVar4 = string_ctorAppend(local_6c4,local_a00,"male-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x42);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x3d:
-    uVar3 = string_ctorAppend(local_694,local_a00,"female-groan.wav");
+    uVar4 = string_ctorAppend(local_694,local_a00,"female-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x43);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x3e:
-    uVar3 = string_ctorAppend(local_664,local_a00,"male-groan.wav");
+    uVar4 = string_ctorAppend(local_664,local_a00,"male-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x44);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x3f:
-    uVar3 = string_ctorAppend(local_634,local_a00,"female-groan.wav");
+    uVar4 = string_ctorAppend(local_634,local_a00,"female-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x45);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x40:
-    uVar3 = string_ctorAppend(local_604,local_a00,"goblin-male-groan.wav");
+    uVar4 = string_ctorAppend(local_604,local_a00,"goblin-male-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x46);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x41:
-    uVar3 = string_ctorAppend(local_5d4,local_a00,"goblin-female-groan.wav");
+    uVar4 = string_ctorAppend(local_5d4,local_a00,"goblin-female-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x47);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x42:
-    uVar3 = string_ctorAppend(local_5a4,local_a00,"lizard-male-groan.wav");
+    uVar4 = string_ctorAppend(local_5a4,local_a00,"lizard-male-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x48);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x43:
-    uVar3 = string_ctorAppend(local_574,local_a00,"lizard-female-groan.wav");
+    uVar4 = string_ctorAppend(local_574,local_a00,"lizard-female-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x49);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x44:
-    uVar3 = string_ctorAppend(local_544,local_a00,"dwarf-male-groan.wav");
+    uVar4 = string_ctorAppend(local_544,local_a00,"dwarf-male-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x4a);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x45:
-    uVar3 = string_ctorAppend(local_514,local_a00,"dwarf-female-groan.wav");
+    uVar4 = string_ctorAppend(local_514,local_a00,"dwarf-female-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x4b);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x46:
-    uVar3 = string_ctorAppend(local_4e4,local_a00,"orc-male-groan.wav");
+    uVar4 = string_ctorAppend(local_4e4,local_a00,"orc-male-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x4c);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x47:
-    uVar3 = string_ctorAppend(local_4b4,local_a00,"orc-female-groan.wav");
+    uVar4 = string_ctorAppend(local_4b4,local_a00,"orc-female-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x4d);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x48:
-    uVar3 = string_ctorAppend(local_484,local_a00,"undead-male-groan.wav");
+    uVar4 = string_ctorAppend(local_484,local_a00,"undead-male-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x4e);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x49:
-    uVar3 = string_ctorAppend(local_454,local_a00,"undead-female-groan.wav");
+    uVar4 = string_ctorAppend(local_454,local_a00,"undead-female-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x4f);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x4a:
-    uVar3 = string_ctorAppend(local_424,local_a00,"frogman-male-groan.wav");
+    uVar4 = string_ctorAppend(local_424,local_a00,"frogman-male-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x50);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x4b:
-    uVar3 = string_ctorAppend(local_3f4,local_a00,"frogman-female-groan.wav");
+    uVar4 = string_ctorAppend(local_3f4,local_a00,"frogman-female-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x51);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x4c:
-    uVar3 = string_ctorAppend(local_3c4,local_a00,"monster-groan.wav");
+    uVar4 = string_ctorAppend(local_3c4,local_a00,"monster-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x52);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x4d:
-    uVar3 = string_ctorAppend(local_394,local_a00,"troll-groan.wav");
+    uVar4 = string_ctorAppend(local_394,local_a00,"troll-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x53);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x4e:
-    uVar3 = string_ctorAppend(local_304,local_a00,"mole-groan.wav");
+    uVar4 = string_ctorAppend(local_304,local_a00,"mole-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x56);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x4f:
-    uVar3 = string_ctorAppend(local_334,local_a00,"slime-groan.wav");
+    uVar4 = string_ctorAppend(local_334,local_a00,"slime-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x55);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x50:
-    uVar3 = string_ctorAppend(local_364,local_a00,"zombie-groan.wav");
+    uVar4 = string_ctorAppend(local_364,local_a00,"zombie-groan.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x54);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x51:
-    uVar3 = string_ctorAppend(local_4fc,local_a00,"Explosion.wav");
+    uVar4 = string_ctorAppend(local_4fc,local_a00,"Explosion.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x31);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x52:
-    uVar3 = string_ctorAppend(local_85c,local_a00,"punch2.wav");
+    uVar4 = string_ctorAppend(local_85c,local_a00,"punch2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0xd);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x53:
-    uVar3 = string_ctorAppend(local_2d4,local_a00,"menu-open2.wav");
+    uVar4 = string_ctorAppend(local_2d4,local_a00,"menu-open2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x57);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x54:
-    uVar3 = string_ctorAppend(local_2a4,local_a00,"menu-close2.wav");
+    uVar4 = string_ctorAppend(local_2a4,local_a00,"menu-close2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x58);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x55:
-    uVar3 = string_ctorAppend(local_274,local_a00,"menu-select.wav");
+    uVar4 = string_ctorAppend(local_274,local_a00,"menu-select.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x59);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x56:
-    uVar3 = string_ctorAppend(local_244,local_a00,"menu-tab.wav");
+    uVar4 = string_ctorAppend(local_244,local_a00,"menu-tab.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x5a);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x57:
-    uVar3 = string_ctorAppend(local_214,local_a00,"menu-grab-item.wav");
+    uVar4 = string_ctorAppend(local_214,local_a00,"menu-grab-item.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x5b);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x58:
-    uVar3 = string_ctorAppend(local_1e4,local_a00,"menu-drop-item.wav");
+    uVar4 = string_ctorAppend(local_1e4,local_a00,"menu-drop-item.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x5c);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x59:
-    uVar3 = string_ctorAppend(local_1b4,local_a00,"craft.wav");
+    uVar4 = string_ctorAppend(local_1b4,local_a00,"craft.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x5d);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x5a:
-    uVar3 = string_ctorAppend(local_184,local_a00,"craft-proc.wav");
+    uVar4 = string_ctorAppend(local_184,local_a00,"craft-proc.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x5e);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x5b:
-    uVar3 = string_ctorAppend(local_58c,local_a00,"absorb.wav");
+    uVar4 = string_ctorAppend(local_58c,local_a00,"absorb.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x2b);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x5c:
-    uVar3 = string_ctorAppend(local_dc,local_a00,"manashield.wav");
+    uVar4 = string_ctorAppend(local_dc,local_a00,"manashield.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x2c);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x5d:
-    uVar3 = string_ctorAppend(local_55c,local_a00,"bulwark.wav");
+    uVar4 = string_ctorAppend(local_55c,local_a00,"bulwark.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x2d);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x5e:
-    uVar3 = string_ctorAppend(local_154,local_a00,"bird1.wav");
+    uVar4 = string_ctorAppend(local_154,local_a00,"bird1.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x5f);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x5f:
-    uVar3 = string_ctorAppend(local_124,local_a00,"bird2.wav");
+    uVar4 = string_ctorAppend(local_124,local_a00,"bird2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x60);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x60:
-    uVar3 = string_ctorAppend(local_f4,local_a00,"bird3.wav");
+    uVar4 = string_ctorAppend(local_f4,local_a00,"bird3.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x61);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x61:
-    uVar3 = string_ctorAppend(local_64,local_a00,"cricket1.wav");
+    uVar4 = string_ctorAppend(local_64,local_a00,"cricket1.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,100);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 0x62:
-    uVar3 = string_ctorAppend(local_34,local_a00,"cricket2.wav");
+    uVar4 = string_ctorAppend(local_34,local_a00,"cricket2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x65);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 99:
-    uVar3 = string_ctorAppend(local_c4,local_a00,"owl1.wav");
+    uVar4 = string_ctorAppend(local_c4,local_a00,"owl1.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,0x62);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   case 100:
-    uVar3 = string_ctorAppend(local_94,local_a00,"owl2.wav");
+    uVar4 = string_ctorAppend(local_94,local_a00,"owl2.wav",uVar3);
     ehState = CONCAT31(ehState._1_3_,99);
-    uVar3 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar3);
+    uVar4 = (**(code **)(**(int **)((int)pThis + 0x800714) + 0x1c))(uVar4);
     break;
   default:
     goto switchD_0048460d_default;
@@ -33213,7 +33147,7 @@ switchD_0048460d_default:
   local_9a0 = (float)*(longlong *)pPos * 1.5258789e-05;
   local_a2c = (float)*(longlong *)(pPos + 4);
   fStack_99c = (float)*(longlong *)(pPos + 2) * 1.5258789e-05;
-  fVar5 = (1.0 / (*(float *)((int)pThis + 0x238) * local_9a0 +
+  fVar6 = (1.0 / (*(float *)((int)pThis + 0x238) * local_9a0 +
                   *(float *)((int)pThis + 0x248) * fStack_99c +
                   *(float *)((int)pThis + 600) * local_a2c * 1.5258789e-05 +
                  *(float *)((int)pThis + 0x268))) *
@@ -33221,12 +33155,12 @@ switchD_0048460d_default:
            *(float *)((int)pThis + 0x22c) * local_9a0 +
            *(float *)((int)pThis + 0x24c) * local_a2c * 1.5258789e-05 +
           *(float *)((int)pThis + 0x25c)) * -0.1;
-  fVar6 = -1.0;
-  if ((-1.0 <= fVar5) && (fVar6 = fVar5, 1.0 < fVar5)) {
-    fVar6 = 1.0;
+  fVar7 = -1.0;
+  if ((-1.0 <= fVar6) && (fVar7 = fVar6, 1.0 < fVar6)) {
+    fVar7 = 1.0;
   }
   (**(code **)(**(int **)((int)pThis + 0x800714) + 0x18))
-            (uVar3,(float)*(int *)((int)pThis + 0x184) * pThisF * 0.01,fVar6,param_4,0);
+            (uVar4,(float)*(int *)((int)pThis + 0x184) * pThisF * 0.01,fVar7,param_4,0);
   if (0xf < local_9ec) {
     operator_delete(local_a00[0]);
   }
@@ -33238,10 +33172,16 @@ LAB_00485e69:
 
 
 
+/* [AUDIT] proposed: vfunc_10  (confidence: high)
+ * purpose: cube::GameController::vfunc_10 per-frame update path (77332 B, largest func). Full-export failure was 120s timeout; retry hit decompiler payload cap; recovered with 3600s + 512MB payload. Body in extra_bodies.c.
+ * vars: -
+ */
+/* FAILED vfunc_10 @ 00488ee0 */
+
 
 /* [AUDIT] proposed: std::list<T>::push_back  (confidence: high)
  * purpose: Append node (elem via std_map_insert_val_wstr), ++size
- * vars: soundId=value
+ * vars: param_1=value
  */
 /* Global::std_list_push_back_4861f0 @ 004861f0 */
 
@@ -34503,7 +34443,7 @@ void mat4_transformPointProjective(float *pPoint)
   fVar8 = pMatrix[6];
   fVar9 = pMatrix[0xd];
   fVar10 = pMatrix[10];
-  invW = 1.0 / (pMatrix[3] * x + pMatrix[7] * y + pMatrix[0xb] * z + pMatrix[0xf]);
+  invW = 1.0f / (pMatrix[3] * x + pMatrix[7] * y + pMatrix[0xb] * z + pMatrix[0xf]);
   fVar11 = pMatrix[0xe];
   *pPoint = invW * (pMatrix[4] * y + x * *pMatrix + pMatrix[8] * z + pMatrix[0xc]);
   pPoint[1] = invW * (fVar4 * x + fVar6 * y + fVar7 * z + fVar9);
@@ -34595,8 +34535,8 @@ void cube::GameController::vfunc_10(int *param_1)
   int *piVar34;
   uint unaff_EDI;
   bool bVar35;
-  float10 fVar36;
-  float10 fVar37;
+  double fVar36;
+  double fVar37;
   int *piVar38;
   double dVar39;
   int *piVar40;
@@ -34946,11 +34886,10 @@ LAB_00489274:
       local_4748 = piVar29;
     } while ((int)piVar29 < local_4764[0xab] + iVar8);
   }
-  dVar39 = (double)(float)piVar38;
-  libm_sse2_sqrt_precise();
+  dVar39 = libm_sse2_sqrt_precise((double)(float)piVar38);
   piVar29 = local_473c;
   fVar41 = (float)dVar39 - 22.4;
-  fVar36 = (float10)iterated_lerp_toward1();
+  fVar36 = (double)iterated_lerp_toward1();
   local_4750 = (int *)(float)fVar36;
   fVar41 = (1.0 - (float)local_4750) * (float)local_4764[0x75] + (float)local_4750 * fVar41;
   local_4764[0x75] = (int)fVar41;
@@ -35205,28 +35144,28 @@ LAB_00489ca0:
       if (cVar4 == '\0') {
         getFirstDword();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4740 = (int *)(float)fVar36;
         local_4624 = 10.0;
         local_4738 = (int *)(float)(local_4764[0x48] + -10);
         iterator_backMinus4();
         getField_0x40();
-        fVar36 = (float10)Widget_measure();
+        fVar36 = (double)Widget_measure();
         local_4750 = (int *)(float)fVar36;
         local_4738 = (int *)((float)local_4738 - (float)local_4750);
         local_4700 = local_4738;
         iterator_backMinus4();
         iterator_backMinus4();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4750 = (int *)(float)fVar36;
         getField_0x40();
-        fVar36 = (float10)Widget_measure();
+        fVar36 = (double)Widget_measure();
         local_4758 = (int *)(float)fVar36;
         local_4750 = (int *)((float)local_4750 + (float)local_4758);
         getFirstDword();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4758 = (int *)(float)fVar36;
         if ((int)((float)local_4750 - (float)local_4758) < local_4764[0x48] + -0x14) {
           iVar10 = local_4764[0x48] / 2;
@@ -35235,7 +35174,7 @@ LAB_00489ca0:
           iterator_backMinus4();
           local_4738 = (int *)(float)(iVar8 + iVar10);
           getField_0x40();
-          fVar36 = (float10)Widget_measure();
+          fVar36 = (double)Widget_measure();
           local_4750 = (int *)(float)fVar36;
           local_4738 = (int *)((float)local_4738 - (float)local_4750);
           local_4700 = local_4738;
@@ -35244,7 +35183,7 @@ LAB_00489ca0:
           float_lerp_smooth();
           getFirstDword();
           getField_0x40();
-          fVar36 = (float10)GameController_getWidgetSize2();
+          fVar36 = (double)GameController_getWidgetSize2();
           local_4750 = (int *)(float)fVar36;
           local_4758 = (int *)((float)local_4740 - (float)local_4750);
           store_object_ref();
@@ -35253,10 +35192,10 @@ LAB_00489ca0:
           while (cVar4 != '\0') {
             getFirstDword();
             getField_0x40();
-            fVar36 = (float10)GameController_getWidgetSize2();
+            fVar36 = (double)GameController_getWidgetSize2();
             local_4750 = (int *)(float)fVar36;
             getField_0x40();
-            fVar36 = (float10)Widget_measureGuarded();
+            fVar36 = (double)Widget_measureGuarded();
             local_4750 = (int *)(float)fVar36;
             getField_0x40();
             Widget_setScroll();
@@ -35267,17 +35206,17 @@ LAB_00489ca0:
         }
         iterator_backMinus4();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4740 = (int *)(float)fVar36;
         getFirstDword();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4750 = (int *)(float)fVar36;
         if (((float)local_4750 < local_4624) && ((float)local_4740 < (float)local_4738)) {
           float_lerp_smooth();
           iterator_backMinus4();
           getField_0x40();
-          fVar36 = (float10)GameController_getWidgetSize2();
+          fVar36 = (double)GameController_getWidgetSize2();
           local_4750 = (int *)(float)fVar36;
           local_4758 = (int *)((float)local_4740 - (float)local_4750);
           store_object_ref();
@@ -35286,10 +35225,10 @@ LAB_00489ca0:
           while (cVar4 != '\0') {
             getFirstDword();
             getField_0x40();
-            fVar36 = (float10)GameController_getWidgetSize2();
+            fVar36 = (double)GameController_getWidgetSize2();
             local_4750 = (int *)(float)fVar36;
             getField_0x40();
-            fVar36 = (float10)Widget_measureGuarded();
+            fVar36 = (double)Widget_measureGuarded();
             local_4750 = (int *)(float)fVar36;
             getField_0x40();
             Widget_setScroll();
@@ -35305,10 +35244,10 @@ LAB_00489ca0:
         while (cVar4 != '\0') {
           getFirstDword();
           getField_0x40();
-          fVar36 = (float10)GameController_getWidgetSize2();
+          fVar36 = (double)GameController_getWidgetSize2();
           local_4750 = (int *)(float)fVar36;
           getField_0x40();
-          fVar36 = (float10)Widget_measureGuarded();
+          fVar36 = (double)Widget_measureGuarded();
           local_4750 = (int *)(float)fVar36;
           getField_0x40();
           Widget_setScroll();
@@ -35334,25 +35273,25 @@ LAB_00489ca0:
       vector_at_stride4();
       vector_at_stride4();
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize2();
+      fVar36 = (double)GameController_getWidgetSize2();
       local_4750 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measure();
+      fVar36 = (double)Widget_measure();
       local_4758 = (int *)(float)fVar36;
       local_4700 = (int *)((float)local_4750 + (float)local_4758);
       vector_at_stride4();
       vector_at_stride4();
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize();
+      fVar36 = (double)GameController_getWidgetSize();
       local_4750 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4758 = (int *)((float)local_4750 + (float)fVar36);
       getField_0x40();
-      fVar36 = (float10)Widget_measure();
+      fVar36 = (double)Widget_measure();
       local_4750 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4750 = (int *)(float)fVar36;
       getField_0x40();
       Widget_setScroll();
@@ -35361,16 +35300,16 @@ LAB_00489ca0:
       vector_at_stride4();
       vector_at_stride4();
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize();
+      fVar36 = (double)GameController_getWidgetSize();
       local_4750 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4758 = (int *)((float)local_4750 + (float)fVar36);
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize2();
+      fVar36 = (double)GameController_getWidgetSize2();
       local_4750 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4750 = (int *)(float)fVar36;
       getField_0x40();
       Widget_setScroll();
@@ -35381,10 +35320,10 @@ LAB_00489ca0:
       getField_0x40();
       GameController_getWidgetSize2();
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize();
+      fVar36 = (double)GameController_getWidgetSize();
       local_4758 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4750 = (int *)(float)fVar36;
       getField_0x40();
       Widget_setScroll();
@@ -35430,28 +35369,28 @@ LAB_00489ca0:
       if (cVar4 == '\0') {
         getFirstDword();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4744 = (int *)(float)fVar36;
         local_4614 = 10.0;
         local_4738 = (int *)(float)(local_4764[0x48] + -10);
         iterator_backMinus4();
         getField_0x40();
-        fVar36 = (float10)Widget_measure();
+        fVar36 = (double)Widget_measure();
         local_4730 = (int *)(float)fVar36;
         local_4738 = (int *)((float)local_4738 - (float)local_4730);
         local_4720 = local_4738;
         iterator_backMinus4();
         iterator_backMinus4();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4730 = (int *)(float)fVar36;
         getField_0x40();
-        fVar36 = (float10)Widget_measure();
+        fVar36 = (double)Widget_measure();
         local_4750 = (int *)(float)fVar36;
         local_4730 = (int *)((float)local_4730 + (float)local_4750);
         getFirstDword();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4750 = (int *)(float)fVar36;
         if ((int)((float)local_4730 - (float)local_4750) < local_4764[0x48] + -0x14) {
           iVar10 = local_4764[0x48] / 2;
@@ -35460,7 +35399,7 @@ LAB_00489ca0:
           iterator_backMinus4();
           local_4738 = (int *)(float)(iVar8 + iVar10);
           getField_0x40();
-          fVar36 = (float10)Widget_measure();
+          fVar36 = (double)Widget_measure();
           local_4730 = (int *)(float)fVar36;
           local_4738 = (int *)((float)local_4738 - (float)local_4730);
           local_4720 = local_4738;
@@ -35469,7 +35408,7 @@ LAB_00489ca0:
           float_lerp_smooth();
           getFirstDword();
           getField_0x40();
-          fVar36 = (float10)GameController_getWidgetSize2();
+          fVar36 = (double)GameController_getWidgetSize2();
           local_4730 = (int *)(float)fVar36;
           local_4750 = (int *)((float)local_4744 - (float)local_4730);
           store_object_ref();
@@ -35478,10 +35417,10 @@ LAB_00489ca0:
           while (cVar4 != '\0') {
             getFirstDword();
             getField_0x40();
-            fVar36 = (float10)GameController_getWidgetSize2();
+            fVar36 = (double)GameController_getWidgetSize2();
             local_4730 = (int *)(float)fVar36;
             getField_0x40();
-            fVar36 = (float10)Widget_measureGuarded();
+            fVar36 = (double)Widget_measureGuarded();
             local_4730 = (int *)(float)fVar36;
             getField_0x40();
             Widget_setScroll();
@@ -35492,17 +35431,17 @@ LAB_00489ca0:
         }
         iterator_backMinus4();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4744 = (int *)(float)fVar36;
         getFirstDword();
         getField_0x40();
-        fVar36 = (float10)GameController_getWidgetSize2();
+        fVar36 = (double)GameController_getWidgetSize2();
         local_4730 = (int *)(float)fVar36;
         if (((float)local_4730 < local_4614) && ((float)local_4744 < (float)local_4738)) {
           float_lerp_smooth();
           iterator_backMinus4();
           getField_0x40();
-          fVar36 = (float10)GameController_getWidgetSize2();
+          fVar36 = (double)GameController_getWidgetSize2();
           local_4730 = (int *)(float)fVar36;
           local_4750 = (int *)((float)local_4744 - (float)local_4730);
           store_object_ref();
@@ -35511,10 +35450,10 @@ LAB_00489ca0:
           while (cVar4 != '\0') {
             getFirstDword();
             getField_0x40();
-            fVar36 = (float10)GameController_getWidgetSize2();
+            fVar36 = (double)GameController_getWidgetSize2();
             local_4730 = (int *)(float)fVar36;
             getField_0x40();
-            fVar36 = (float10)Widget_measureGuarded();
+            fVar36 = (double)Widget_measureGuarded();
             local_4730 = (int *)(float)fVar36;
             getField_0x40();
             Widget_setScroll();
@@ -35529,10 +35468,10 @@ LAB_00489ca0:
         while (cVar4 != '\0') {
           local_4720 = (int *)getFirstDword();
           getField_0x40();
-          fVar36 = (float10)GameController_getWidgetSize2();
+          fVar36 = (double)GameController_getWidgetSize2();
           local_4730 = (int *)(float)fVar36;
           getField_0x40();
-          fVar36 = (float10)Widget_measureGuarded();
+          fVar36 = (double)Widget_measureGuarded();
           local_4730 = (int *)(float)fVar36;
           getField_0x40();
           Widget_setScroll();
@@ -35561,25 +35500,25 @@ LAB_00489ca0:
       rbtree_findOrInsert_intKey();
       rbtree_findOrInsert_intKey();
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize2();
+      fVar36 = (double)GameController_getWidgetSize2();
       local_4730 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measure();
+      fVar36 = (double)Widget_measure();
       local_4750 = (int *)(float)fVar36;
       local_4758 = (int *)((float)local_4730 + (float)local_4750);
       rbtree_findOrInsert_intKey();
       rbtree_findOrInsert_intKey();
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize();
+      fVar36 = (double)GameController_getWidgetSize();
       local_4730 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4750 = (int *)((float)local_4730 + (float)fVar36);
       getField_0x40();
-      fVar36 = (float10)Widget_measure();
+      fVar36 = (double)Widget_measure();
       local_4730 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4730 = (int *)(float)fVar36;
       getField_0x40();
       Widget_setScroll();
@@ -35588,16 +35527,16 @@ LAB_00489ca0:
       rbtree_findOrInsert_intKey();
       rbtree_findOrInsert_intKey();
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize();
+      fVar36 = (double)GameController_getWidgetSize();
       local_4730 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4750 = (int *)((float)local_4730 + (float)fVar36);
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize2();
+      fVar36 = (double)GameController_getWidgetSize2();
       local_4730 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4730 = (int *)(float)fVar36;
       getField_0x40();
       Widget_setScroll();
@@ -35608,10 +35547,10 @@ LAB_00489ca0:
       getField_0x40();
       GameController_getWidgetSize2();
       getField_0x40();
-      fVar36 = (float10)GameController_getWidgetSize();
+      fVar36 = (double)GameController_getWidgetSize();
       local_4750 = (int *)(float)fVar36;
       getField_0x40();
-      fVar36 = (float10)Widget_measureGuarded();
+      fVar36 = (double)Widget_measureGuarded();
       local_4730 = (int *)(float)fVar36;
       getField_0x40();
       Widget_setScroll();
@@ -35740,7 +35679,7 @@ LAB_0048b7fc:
       mat4_rotateZ();
       p_Var44 = (LPCRITICAL_SECTION)(local_4764 + 0x200174);
       EnterCriticalSection(p_Var44);
-      fVar36 = (float10)getVelocityY();
+      fVar36 = (double)getVelocityY();
       local_45cc = (int *)(float)fVar36;
       getVelocityX();
       setVec3();
@@ -36328,7 +36267,7 @@ LAB_0048d4f8:
       Struct_copy_10Dwords_bytes();
     }
     else {
-      fVar36 = (float10)GameController_entityDistanceSq();
+      fVar36 = (double)GameController_entityDistanceSq();
       pCVar19 = (CRefTime *)(float)fVar36;
       local_4734 = pCVar19;
       if (piVar29[0xd] == 1) {
@@ -36341,7 +36280,7 @@ LAB_0048d4f8:
         fixed_sub_scaled_64();
         fixed16ToFloat();
         setPair_b();
-        fVar36 = (float10)vec2_lengthSq();
+        fVar36 = (double)vec2_lengthSq();
         fVar41 = (float)fVar36 / 16900.0;
         if (1.0 < fVar41) {
           fVar41 = 1.0;
@@ -36578,11 +36517,11 @@ LAB_0048d3f0:
   }
   else {
     getField_0x40();
-    fVar36 = (float10)GameController_getWidgetSize();
+    fVar36 = (double)GameController_getWidgetSize();
     local_4734 = (CRefTime *)(float)fVar36;
     local_4740 = (int *)(int)((float)local_4734 + 50.0);
     getField_0x40();
-    fVar36 = (float10)GameController_getWidgetSize2();
+    fVar36 = (double)GameController_getWidgetSize2();
     local_4734 = (CRefTime *)(float)fVar36;
     fVar41 = (float)local_4734 + 70.0;
     getField_0x38();
@@ -37458,7 +37397,7 @@ LAB_0048ea4f:
       if (*(char *)((int)piVar34 + 0x45) == '\x01') {
         vec3_copy();
         uStack_4760 = (int *)piVar34[4];
-        fVar36 = (float10)stat_calcSpellPower();
+        fVar36 = (double)stat_calcSpellPower();
         local_4720 = (int *)(float)fVar36;
         iVar8 = piVar38[0x2001b4];
         *(float *)(iVar8 + 0x170) = *(float *)(iVar8 + 0x174) + *(float *)(iVar8 + 0x170);
@@ -37519,7 +37458,7 @@ LAB_0048ea4f:
       else if (0.0 < *(float *)(piVar38[0x2001b4] + 0x16c)) {
         if (0.0 < (float)piVar34[4]) {
           uStack_4760 = (int *)((float)piVar34[4] * 0.25);
-          fVar36 = (float10)powf_f();
+          fVar36 = (double)powf_f();
           local_4720 = (int *)(float)fVar36;
           *(float *)(piVar38[0x2001b4] + 0x1190) =
                *(float *)(piVar38[0x2001b4] + 0x1190) - (float)uStack_4760 / (float)local_4720;
@@ -37543,10 +37482,10 @@ LAB_0048ea4f:
           *(undefined4 *)(piVar38[0x2001b4] + 0x16c) = 0;
         }
         uStack_4760 = *(int **)(piVar38[0x2001b4] + 0x16c);
-        fVar36 = (float10)stat_calcAttackDamage();
+        fVar36 = (double)stat_calcAttackDamage();
         local_4720 = (int *)(float)fVar36;
         if ((float)local_4720 < (float)uStack_4760) {
-          fVar36 = (float10)stat_calcAttackDamage();
+          fVar36 = (double)stat_calcAttackDamage();
           *(float *)(piVar38[0x2001b4] + 0x16c) = (float)fVar36;
         }
       }
@@ -37671,7 +37610,7 @@ LAB_0048ea4f:
     if ((*(int *)(iVar8 + 8) != 0) && (0.0 < *(float *)(*(int *)(iVar8 + 8) + 0x16c))) {
       vec3i64_copySub();
       vec3i64_toFloat();
-      fVar36 = (float10)vec3_lengthSq();
+      fVar36 = (double)vec3_lengthSq();
       uStack_4760 = (int *)(float)fVar36;
       if ((float)uStack_4760 <= 3600.0) {
         uStack_429c = *(undefined4 *)(iVar8 + 8);
@@ -37827,7 +37766,7 @@ LAB_004910c1:
     getField_0x38();
     computeCellOffset();
     mat4_identity();
-    fVar36 = (float10)stat_calcAttackDamage();
+    fVar36 = (double)stat_calcAttackDamage();
     local_4764 = (int *)(float)fVar36;
     getField_0x38();
     computeCellOffset();
@@ -37907,7 +37846,7 @@ LAB_004910c1:
     getField_0x38();
     computeCellOffset();
     mat4_identity();
-    fVar36 = (float10)stat_calcAttackDamage();
+    fVar36 = (double)stat_calcAttackDamage();
     local_4764 = (int *)(float)fVar36;
     getField_0x38();
     computeCellOffset();
@@ -38091,7 +38030,7 @@ LAB_00491cea:
       computeCellOffset();
       mat4_identity();
       vector_at_stride4();
-      fVar36 = (float10)stat_calcAttackDamage();
+      fVar36 = (double)stat_calcAttackDamage();
       local_4764 = (int *)(float)fVar36;
       getField_0x38();
       computeCellOffset();
@@ -38348,7 +38287,7 @@ LAB_00491ed8:
     getField_0x38();
     computeCellOffset();
     mat4_identity();
-    fVar36 = (float10)stat_calcAttackDamage();
+    fVar36 = (double)stat_calcAttackDamage();
     local_4764 = (int *)(float)fVar36;
     getField_0x38();
     computeCellOffset();
@@ -38824,13 +38763,13 @@ LAB_00494469:
   CRefTime::Millisecs(pCVar19);
   pCVar19 = (CRefTime *)arrayElem_stride8();
   CRefTime::Millisecs(pCVar19);
-  fVar36 = (float10)GameController_sampleTemperatureGrid();
+  fVar36 = (double)GameController_sampleTemperatureGrid();
   iVar17 = (int)((float)fVar36 * 100.0);
   pCVar19 = (CRefTime *)arrayElem_stride8();
   CRefTime::Millisecs(pCVar19);
   pCVar19 = (CRefTime *)arrayElem_stride8();
   CRefTime::Millisecs(pCVar19);
-  fVar36 = (float10)GameController_sampleHumidityGrid();
+  fVar36 = (double)GameController_sampleHumidityGrid();
   iVar31 = -0x14 - (int)((float)fVar36 * -60.0);
   iVar10 = getter_field80015c();
   iVar32 = (iVar10 / 60000) % 0x3c;
@@ -39000,7 +38939,7 @@ LAB_00494469:
         cVar4 = *(char *)((int)piVar38 + 0x45);
         local_4740 = (int *)CONCAT13(cVar4,(undefined3)local_4740);
         if (((cVar4 != '\x04') && (cVar4 != '\x06')) &&
-           ((fVar36 = (float10)fabs_f(), 0.1 <= (float)fVar36 || (local_4740._3_1_ != '\0'))))
+           ((fVar36 = (double)fabs_f(), 0.1 <= (float)fVar36 || (local_4740._3_1_ != '\0'))))
         {
           Struct_init_off4_defaults();
           uStack_28 = 0xac;
@@ -39065,7 +39004,7 @@ LAB_00494469:
             std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<(pbVar16,p_Var43);
           }
           else {
-            fVar36 = (float10)fabs_f();
+            fVar36 = (double)fabs_f();
             if (1.0 <= (float)fVar36) {
               std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                         (abStack_3cc4,(int)fVar36);
@@ -39341,7 +39280,7 @@ LAB_00494469:
       else {
         piStack_4768 = piVar34 + 0x15;
         vec3_scale();
-        fVar36 = (float10)vec3_length();
+        fVar36 = (double)vec3_length();
         local_4774 = (int *)((int)fVar36 + 1);
         if (10 < (int)local_4774) {
           local_4774 = (int *)0xa;
@@ -39444,7 +39383,7 @@ LAB_00494469:
   if (piVar29[0x200236] != 0) {
     vec3i64_copySub();
     vec3i64_toFloat();
-    fVar36 = (float10)vec3_lengthSq();
+    fVar36 = (double)vec3_lengthSq();
     if (25.0 <= (float)fVar36) {
       piVar29[0x200236] = 0;
     }
@@ -39761,7 +39700,7 @@ LAB_00496f37:
       Player_resetCombatState();
       World_findNearestSpawnPoint();
       vec6_copy();
-      fVar36 = (float10)stat_calcAttackDamage();
+      fVar36 = (double)stat_calcAttackDamage();
       *(float *)(piVar29[0x2001b4] + 0x16c) = (float)fVar36;
       goto LAB_004975c1;
     }
@@ -39853,7 +39792,7 @@ LAB_004975c1:
     vec3_copy();
     puVar13 = (undefined4 *)arrayElem_stride4();
     *puVar13 = 0;
-    fVar36 = (float10)vec3_lengthSq();
+    fVar36 = (double)vec3_lengthSq();
     if (0.0 < (float)fVar36) {
       vec3_normalize();
       setVec3();
@@ -40136,7 +40075,7 @@ LAB_00498409:
   vec3i64_copyAdd();
   isZero_off10();
   setFlagAtSlot();
-  fVar36 = (float10)World_raycastVoxels();
+  fVar36 = (double)World_raycastVoxels();
   local_46bc = (int *)(float)fVar36;
   if (0.0 <= (float)local_46bc) {
     vec3_scale();
@@ -40163,7 +40102,7 @@ LAB_00498409:
   local_4774 = (int *)0xbf800000;
   getter_field80015c();
   powf_f();
-  fVar36 = (float10)powf_f();
+  fVar36 = (double)powf_f();
   fStack_46ac = (float)fVar36;
   store_object_ref();
   map_getRoot();
@@ -40263,7 +40202,7 @@ LAB_00498409:
           } while ((int)pCStack_472c < 2);
           vec3i64_copySub();
           vec3i64_selfDotFixed();
-          fVar36 = (float10)fixed16ToFloat();
+          fVar36 = (double)fixed16ToFloat();
           local_4730 = (int *)(float)fVar36;
           if (((float)local_4730 < 16.0) &&
              (((float)local_4700 < 0.0 || ((float)local_4730 < (float)local_4700)))) {
@@ -40275,7 +40214,7 @@ LAB_00498409:
             *(undefined1 *)(piVar34 + 2) = 1;
             vec3i64_copySub();
             vec3i64_selfDotFixed();
-            fVar36 = (float10)fixed16ToFloat();
+            fVar36 = (double)fixed16ToFloat();
             piVar38 = (int *)(float)fVar36;
             if (((float)local_4750 < 0.0) || ((float)piVar38 < (float)local_4750)) {
               iVar8 = *piVar34;
@@ -40314,7 +40253,7 @@ LAB_00498409:
     vec3i64_copyAdd();
     vec3i64_copySub();
     vec3i64_toFloat();
-    fVar36 = (float10)vec3_dot();
+    fVar36 = (double)vec3_dot();
     if (0.0 < (float)fVar36) {
       vec6_copy();
     }
@@ -40368,7 +40307,7 @@ LAB_00498409:
               piVar38 = (int *)getPtrPlus8();
               vec3i64_copySub();
               vec3i64_selfDotFixed();
-              fVar36 = (float10)fixed16ToFloat();
+              fVar36 = (double)fixed16ToFloat();
               piVar29 = (int *)(float)fVar36;
               if ((float)piVar29 <= 16.0) {
                 arrayElem_stride4();
@@ -40377,7 +40316,7 @@ LAB_00498409:
                 vec3i64_copySub();
                 vec3i64_copySub();
                 vec3i64_selfDotFixed();
-                fVar36 = (float10)fixed16ToFloat();
+                fVar36 = (double)fixed16ToFloat();
                 local_4748 = (int *)(float)fVar36;
                 if (((float)local_4700 < 0.0) || ((float)piVar29 < (float)local_4700)) {
                   local_45e4 = 0;
@@ -40518,18 +40457,18 @@ LAB_00498409:
               if (cVar4 != '\0') {
                 vec3i64_copySub();
                 vec3i64_toFloat();
-                fVar36 = (float10)vec3_lengthSq();
+                fVar36 = (double)vec3_lengthSq();
                 fVar41 = (float)fVar36;
                 piVar38 = piStack_475c;
                 if (fVar41 <= 16.0) {
                   vec3i64_copySub();
                   vec3i64_toFloat();
-                  fVar36 = (float10)vec3_lengthSq();
+                  fVar36 = (double)vec3_lengthSq();
                   piVar38 = piStack_475c;
                   if ((float)fVar36 <= 100.0) {
                     vec3i64_copySub();
                     vec3i64_toFloat();
-                    fVar36 = (float10)vec3_lengthSq();
+                    fVar36 = (double)vec3_lengthSq();
                     local_4748 = (int *)(float)fVar36;
                     cVar4 = quest_checkItemThreshold();
                     if (cVar4 == '\0') {
@@ -40673,7 +40612,7 @@ LAB_00498409:
   if ((0.0 <= (float)local_46bc) && (iRam008006d9 != 0)) {
     vec3i64_copySub();
     vec3i64_toFloat();
-    fVar36 = (float10)vec3_lengthSq();
+    fVar36 = (double)vec3_lengthSq();
     if ((float)fVar36 < (float)local_46bc * (float)local_46bc) {
       vec3i64_copySub();
       vec3i64_toFloat();
@@ -40940,14 +40879,14 @@ LAB_0049ad01:
               operator=<std::pair<unsigned___int64,unsigned___int64>,0>(apStack_337c,ppVar23);
             }
             else {
-              fVar36 = (float10)curve_level05();
-              fVar37 = (float10)curve_level05();
+              fVar36 = (double)curve_level05();
+              fVar37 = (double)curve_level05();
               if ((float)fVar37 + 0.3 < (float)fVar36) goto LAB_0049ad01;
-              fVar36 = (float10)curve_level05();
-              fVar37 = (float10)curve_level05();
+              fVar36 = (double)curve_level05();
+              fVar37 = (double)curve_level05();
               if ((float)fVar37 + 0.1 < (float)fVar36) goto LAB_0049ad01;
-              fVar36 = (float10)curve_level05();
-              fVar37 = (float10)curve_level05();
+              fVar36 = (double)curve_level05();
+              fVar37 = (double)curve_level05();
               if ((float)fVar37 - 0.1 < (float)fVar36) goto LAB_0049ad01;
             }
             deref_frontValue();
@@ -41228,7 +41167,7 @@ code_r0x0049bf44:
       default:
         vector_at_stride4();
         local_4748 = piRam008006d1;
-        fVar36 = (float10)ability_getResourceCost();
+        fVar36 = (double)ability_getResourceCost();
         piStack_46e4 = (int *)(float)fVar36;
         if ((float)piStack_46e4 <= (float)local_4748[0x5c]) {
           puVar27 = (undefined1 *)vector_at_stride4();
@@ -41300,11 +41239,11 @@ code_r0x0049bd98:
         *(undefined1 *)(piRam008006d1 + 0x1a) = *puVar27;
         vec3_copy();
         piVar29 = piRam008006d1;
-        fVar36 = (float10)vec3_length();
+        fVar36 = (double)vec3_length();
         piVar29[0x476] = (int)(((float)fVar36 / 50.0) * 1000.0);
         piVar29 = piRam008006d1;
         piStack_4768 = piRam008006d1 + 0xd;
-        fVar36 = (float10)vec3_lengthSq();
+        fVar36 = (double)vec3_lengthSq();
         if (0.0 < (float)fVar36) {
           vec3_normalize();
           vec3_scaleInPlace();
@@ -41321,13 +41260,13 @@ code_r0x0049bd98:
         local_4748 = piRam008006d1;
         puVar13 = (undefined4 *)arrayElem_stride4();
         *puVar13 = 0;
-        fVar36 = (float10)vec3_lengthSq();
+        fVar36 = (double)vec3_lengthSq();
         if (0.0 < (float)fVar36) {
           vec3_normalize();
           ability_getPowerFactor();
           vec3_scaleInPlace();
           local_4748 = piRam008006d1;
-          fVar36 = (float10)ability_getPowerFactor();
+          fVar36 = (double)ability_getPowerFactor();
           fVar41 = (float)fVar36 * 12.0 + 5.0;
           pfVar14 = (float *)arrayElem_stride4();
           *pfVar14 = fVar41;
@@ -41344,9 +41283,9 @@ code_r0x0049bd98:
         vec3_scaleOut();
         vec3_copy();
         piVar29 = piRam008006d1;
-        fVar36 = (float10)vec3_length();
+        fVar36 = (double)vec3_length();
         piVar29[0x476] = (int)(((float)fVar36 / 50.0) * 1000.0);
-        fVar36 = (float10)vec3_lengthSq();
+        fVar36 = (double)vec3_lengthSq();
         if (2500.0 < (float)fVar36) {
           vec3_normalize();
           vec3_scaleInPlace();
@@ -41367,7 +41306,7 @@ code_r0x0049b8d5:
         local_4748 = piRam008006d1 + 0xd;
         puVar13 = (undefined4 *)arrayElem_stride4();
         *puVar13 = 0;
-        fVar36 = (float10)vec3_lengthSq();
+        fVar36 = (double)vec3_lengthSq();
         piStack_46e4 = (int *)(float)fVar36;
         if (0.0 < (float)piStack_46e4) {
           vec3_normalize();
@@ -41489,7 +41428,7 @@ LAB_0049c02f:
   mat4_rotateX();
   vec3i64_copySub();
   vec3i64_toFloat();
-  fVar36 = (float10)vec3_lengthSq();
+  fVar36 = (double)vec3_lengthSq();
   piStack_46e4 = (int *)(float)fVar36;
   if (2500.0 < (float)piStack_46e4) {
     vec6_copy();
@@ -41594,7 +41533,7 @@ LAB_0049c02f:
         world_getColumnAtFixedPos();
         cVar4 = block_isSolidType();
         if (cVar4 != '\0') {
-          fVar36 = (float10)World_raycastVoxels();
+          fVar36 = (double)World_raycastVoxels();
           fStack_45d0 = (float)fVar36;
           if (*pfStack_46e8 - fStack_45d0 < (float)local_4708) {
             local_4708 = (undefined4 *)(*pfStack_46e8 - fStack_45d0);
@@ -41622,11 +41561,11 @@ LAB_0049c02f:
   if (cVar4 != '\0') {
     vec3i64_copySub();
     vec3i64_toFloat();
-    fVar36 = (float10)vec3_lengthSq();
+    fVar36 = (double)vec3_lengthSq();
     piStack_470c = (int *)(float)fVar36;
     if (0.0 < (float)piStack_470c) {
       vec3_normalize();
-      fVar36 = (float10)World_raycastVoxels();
+      fVar36 = (double)World_raycastVoxels();
       piStack_470c = (int *)(float)fVar36;
       if (0.0 <= (float)piStack_470c) {
         vec3_scale();
@@ -41656,10 +41595,10 @@ LAB_0049c02f:
   mat4_identity();
   local_4748 = (int *)((float)local_4780[0x7a] * 0.5);
   GameController_get_8000bc();
-  fVar36 = (float10)cosf_f();
+  fVar36 = (double)cosf_f();
   piStack_470c = (int *)(float)fVar36;
   GameController_get_8000bc();
-  fVar36 = (float10)cosf_f();
+  fVar36 = (double)cosf_f();
   piStack_470c = (int *)(float)fVar36;
   mat_translateByCols();
   mat4_rotateX();
@@ -42759,7 +42698,7 @@ void cube::GameController::drawItemTooltip
   undefined4 uVar12;
   undefined4 uVar13;
   int in_ECX;
-  float10 fVar14;
+  float fVar14;
   void **ppvVar15;
   undefined1 *puVar16;
   undefined4 uVar17;
@@ -42827,7 +42766,7 @@ void cube::GameController::drawItemTooltip
   local_14 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
   local_1c = (float)param_2;
-  local_1e4 = 0.0;
+  local_1e4 = 0.0f;
   local_18 = (float)param_3;
   local_1f0 = param_1;
   local_2a4[0] = &PTR_006fcd00;
@@ -42836,7 +42775,7 @@ void cube::GameController::drawItemTooltip
   std::basic_ios<wchar_t,std::char_traits<wchar_t>_>::basic_ios<wchar_t,std::char_traits<wchar_t>_>
             (local_23c);
   local_8 = 0;
-  local_1e4 = 1.4013e-45;
+  local_1e4 = 1.4013e-45f;
   std::basic_iostream<wchar_t,std::char_traits<wchar_t>_>::
   basic_iostream<wchar_t,std::char_traits<wchar_t>_>
             ((basic_iostream<wchar_t,std::char_traits<wchar_t>_> *)local_2a4,
@@ -42892,7 +42831,7 @@ void cube::GameController::drawItemTooltip
     u16string_assignCStr(L"resource1.dat");
     local_8._0_1_ = 6;
     uVar3 = u16_ostrstream_str_wrap(local_5c);
-    local_1e4 = param_4 * 10.0;
+    local_1e4 = param_4 * 10.0f;
     local_6c = 0;
     local_68 = 0;
     local_64 = 0;
@@ -42960,7 +42899,7 @@ void cube::GameController::drawItemTooltip
   }
   cVar2 = *param_1;
   local_9c = 0x3f800000;
-  local_18 = param_4 * 30.0 + local_18;
+  local_18 = param_4 * 30.0f + local_18;
   local_98 = 0x3f800000;
   local_94 = 0x3f800000;
   local_90 = 0x3f800000;
@@ -43008,7 +42947,7 @@ void cube::GameController::drawItemTooltip
   u16string_assignPtrLen(L"resource1.dat",0xd);
   local_8._0_1_ = 0xb;
   uVar3 = u16_ostrstream_str_wrap(local_5c);
-  local_1e8 = param_4 * 9.0;
+  local_1e8 = param_4 * 9.0f;
   local_2c = 0;
   local_28 = 0;
   local_24 = 0;
@@ -43072,7 +43011,7 @@ void cube::GameController::drawItemTooltip
     if (7 < local_20) {
       operator_delete(local_34);
     }
-    local_18 = param_4 * 14.0 + local_18;
+    local_18 = param_4 * 14.0f + local_18;
     cVar2 = item_classifyRecursive(*(undefined1 *)(*(int *)(in_ECX + 0x8006d0) + 0x140));
     if (cVar2 == '\0') {
       u16string_assignCStr(&PTR_006fccac);
@@ -43170,7 +43109,7 @@ void cube::GameController::drawItemTooltip
         cVar2 = quest_hasActiveItemReq(local_1dc);
         uVar1 = (undefined1)local_8;
         if (cVar2 != '\0') {
-          local_18 = param_4 * 27.0 + local_18;
+          local_18 = param_4 * 27.0f + local_18;
           u16string_assignCStr(L"Already known");
           local_8._0_1_ = 0x15;
           u16string_assignCStr(L"resource1.dat");
@@ -43233,12 +43172,12 @@ void cube::GameController::drawItemTooltip
   if (7 < local_20) {
     operator_delete(local_34);
   }
-  local_1e8 = param_4 * 16.0;
+  local_1e8 = param_4 * 16.0f;
   local_18 = local_18 + local_1e8;
   if (*param_1 == '\x13') {
-    fVar14 = (float10)curve_level05((float)(int)*(short *)(param_1 + 0x10));
+    fVar14 = (float)curve_level05((float)(int)*(short *)(param_1 + 0x10));
     local_1e4 = (float)fVar14;
-    iVar4 = (int)(local_1e4 * 1000.0 + 50.0);
+    iVar4 = (int)(local_1e4 * 1000.0f + 50.0f);
     u16string_assignCStr(&PTR_006fccac);
     local_8._0_1_ = 0x19;
     strstreambuf_tidy();
@@ -43260,7 +43199,7 @@ void cube::GameController::drawItemTooltip
     u16string_assignCStr(L"resource1.dat");
     local_8._0_1_ = 0x1a;
     uVar3 = u16_ostrstream_str_wrap(local_5c);
-    local_1e4 = param_4 * 10.0;
+    local_1e4 = param_4 * 10.0f;
     local_2c = 0;
     local_28 = 0;
     local_24 = 0;
@@ -43314,7 +43253,7 @@ void cube::GameController::drawItemTooltip
     if (7 < local_78) {
       operator_delete(local_8c[0]);
     }
-    local_1e0 = param_4 * 14.0;
+    local_1e0 = param_4 * 14.0f;
     local_18 = local_18 + local_1e0;
     cVar2 = weapon_isMeleeType(param_1[1]);
     uVar1 = (undefined1)local_8;
@@ -43406,8 +43345,8 @@ void cube::GameController::drawItemTooltip
     if (7 < local_20) {
       operator_delete(local_34);
     }
-    fVar14 = (float10)item_weaponDamage();
-    fVar14 = (float10)math_round_to_tenth((float)fVar14);
+    fVar14 = (float)item_weaponDamage();
+    fVar14 = (float)math_round_to_tenth((float)fVar14);
     fVar19 = (float)fVar14;
     pbVar5 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)
              wostream_insertNarrow(local_294,&DAT_0070291c);
@@ -43415,7 +43354,7 @@ void cube::GameController::drawItemTooltip
     u16string_assignCStr(L"resource1.dat");
     local_8._0_1_ = 0x24;
     uVar3 = u16_ostrstream_str_wrap(local_5c);
-    local_1e0 = param_4 * 10.0;
+    local_1e0 = param_4 * 10.0f;
     local_2c = 0;
     local_28 = 0;
     local_24 = 0;
@@ -43469,11 +43408,11 @@ void cube::GameController::drawItemTooltip
     if (7 < local_78) {
       operator_delete(local_8c[0]);
     }
-    local_18 = param_4 * 14.0 + local_18;
+    local_18 = param_4 * 14.0f + local_18;
   }
-  fVar14 = (float10)item_computeStat_armor();
+  fVar14 = (float)item_computeStat_armor();
   local_1e0 = (float)fVar14;
-  if (0.1 <= local_1e0) {
+  if (0.1f <= local_1e0) {
     u16string_assignCStr(&PTR_006fccac);
     local_8._0_1_ = 0x28;
     strstreambuf_tidy();
@@ -43486,8 +43425,8 @@ void cube::GameController::drawItemTooltip
     if (7 < local_20) {
       operator_delete(local_34);
     }
-    fVar14 = (float10)item_computeStat_armor();
-    fVar14 = (float10)math_round_to_tenth((float)fVar14);
+    fVar14 = (float)item_computeStat_armor();
+    fVar14 = (float)math_round_to_tenth((float)fVar14);
     fVar19 = (float)fVar14;
     pbVar5 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)
              wostream_insertNarrow(local_294,&DAT_00702924);
@@ -43495,7 +43434,7 @@ void cube::GameController::drawItemTooltip
     u16string_assignCStr(L"resource1.dat");
     local_8._0_1_ = 0x29;
     uVar3 = u16_ostrstream_str_wrap(local_5c);
-    local_1e0 = param_4 * 10.0;
+    local_1e0 = param_4 * 10.0f;
     local_2c = 0;
     local_28 = 0;
     local_24 = 0;
@@ -43549,11 +43488,11 @@ void cube::GameController::drawItemTooltip
     if (7 < local_78) {
       operator_delete(local_8c[0]);
     }
-    local_18 = param_4 * 14.0 + local_18;
+    local_18 = param_4 * 14.0f + local_18;
   }
-  fVar14 = (float10)item_computeBlockValue();
+  fVar14 = (float)item_computeBlockValue();
   local_1e0 = (float)fVar14;
-  if (0.1 <= local_1e0) {
+  if (0.1f <= local_1e0) {
     u16string_assignCStr(&PTR_006fccac);
     local_8._0_1_ = 0x2d;
     strstreambuf_tidy();
@@ -43566,15 +43505,15 @@ void cube::GameController::drawItemTooltip
     if (7 < local_20) {
       operator_delete(local_34);
     }
-    fVar14 = (float10)item_computeBlockValue();
-    fVar14 = (float10)math_round_to_tenth((float)fVar14);
+    fVar14 = (float)item_computeBlockValue();
+    fVar14 = (float)math_round_to_tenth((float)fVar14);
     fVar19 = (float)fVar14;
     pbVar5 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)wostream_insertNarrow(local_294,"ARMOR ");
     std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<(pbVar5,fVar19);
     u16string_assignCStr(L"resource1.dat");
     local_8._0_1_ = 0x2e;
     uVar3 = u16_ostrstream_str_wrap(local_5c);
-    local_1e0 = param_4 * 10.0;
+    local_1e0 = param_4 * 10.0f;
     local_2c = 0;
     local_28 = 0;
     local_24 = 0;
@@ -43630,9 +43569,9 @@ void cube::GameController::drawItemTooltip
     }
     local_18 = local_18 + local_1e8;
   }
-  fVar14 = (float10)item_computeStat_variant2();
+  fVar14 = (float)item_computeStat_variant2();
   local_1e0 = (float)fVar14;
-  if (0.1 <= local_1e0) {
+  if (0.1f <= local_1e0) {
     u16string_assignCStr(&PTR_006fccac);
     local_8._0_1_ = 0x32;
     strstreambuf_tidy();
@@ -43645,15 +43584,15 @@ void cube::GameController::drawItemTooltip
     if (7 < local_20) {
       operator_delete(local_34);
     }
-    fVar14 = (float10)item_computeStat_variant2();
-    fVar14 = (float10)math_round_to_tenth((float)fVar14);
+    fVar14 = (float)item_computeStat_variant2();
+    fVar14 = (float)math_round_to_tenth((float)fVar14);
     fVar19 = (float)fVar14;
     pbVar5 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)wostream_insertNarrow(local_294,"RESI ");
     std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<(pbVar5,fVar19);
     u16string_assignCStr(L"resource1.dat");
     local_8._0_1_ = 0x33;
     uVar3 = u16_ostrstream_str_wrap(local_5c);
-    local_1e0 = param_4 * 10.0;
+    local_1e0 = param_4 * 10.0f;
     local_2c = 0;
     local_28 = 0;
     local_24 = 0;
@@ -43709,9 +43648,9 @@ void cube::GameController::drawItemTooltip
     }
     local_18 = local_18 + local_1e8;
   }
-  fVar14 = (float10)item_computeStat_variant3();
+  fVar14 = (float)item_computeStat_variant3();
   local_1e0 = (float)fVar14;
-  if (0.001 <= local_1e0) {
+  if (0.001f <= local_1e0) {
     u16string_assignCStr(&PTR_006fccac);
     local_8._0_1_ = 0x37;
     strstreambuf_tidy();
@@ -43724,9 +43663,9 @@ void cube::GameController::drawItemTooltip
     if (7 < local_20) {
       operator_delete(local_34);
     }
-    fVar14 = (float10)item_computeStat_variant3(&DAT_007020e0);
+    fVar14 = (float)item_computeStat_variant3(&DAT_007020e0);
     local_1e0 = (float)fVar14;
-    fVar14 = (float10)math_round_to_tenth(local_1e0 * 100.0);
+    fVar14 = (float)math_round_to_tenth(local_1e0 * 100.0f);
     fVar19 = (float)fVar14;
     pbVar5 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)wostream_insertNarrow(local_294,"TEMPO ");
     pbVar7 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<(pbVar5,fVar19);
@@ -43734,7 +43673,7 @@ void cube::GameController::drawItemTooltip
     u16string_assignCStr(L"resource1.dat");
     local_8._0_1_ = 0x38;
     uVar3 = u16_ostrstream_str_wrap(local_5c);
-    local_1e0 = param_4 * 10.0;
+    local_1e0 = param_4 * 10.0f;
     local_2c = 0;
     local_28 = 0;
     local_24 = 0;
@@ -43790,9 +43729,9 @@ void cube::GameController::drawItemTooltip
     }
     local_18 = local_18 + local_1e8;
   }
-  fVar14 = (float10)item_computeStat_regen();
+  fVar14 = (float)item_computeStat_regen();
   local_1e0 = (float)fVar14;
-  if (0.001 <= local_1e0) {
+  if (0.001f <= local_1e0) {
     u16string_assignCStr(&PTR_006fccac);
     local_8._0_1_ = 0x3c;
     strstreambuf_tidy();
@@ -43805,9 +43744,9 @@ void cube::GameController::drawItemTooltip
     if (7 < local_20) {
       operator_delete(local_34);
     }
-    fVar14 = (float10)item_computeStat_regen(&DAT_007020e0);
+    fVar14 = (float)item_computeStat_regen(&DAT_007020e0);
     local_1e0 = (float)fVar14;
-    fVar14 = (float10)math_round_to_tenth(local_1e0 * 100.0);
+    fVar14 = (float)math_round_to_tenth(local_1e0 * 100.0f);
     fVar19 = (float)fVar14;
     pbVar5 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)wostream_insertNarrow(local_294,"CRIT ");
     pbVar7 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<(pbVar5,fVar19);
@@ -43815,7 +43754,7 @@ void cube::GameController::drawItemTooltip
     u16string_assignCStr(L"resource1.dat");
     local_8._0_1_ = 0x3d;
     uVar3 = u16_ostrstream_str_wrap(local_5c);
-    local_1e0 = param_4 * 10.0;
+    local_1e0 = param_4 * 10.0f;
     local_2c = 0;
     local_28 = 0;
     local_24 = 0;
@@ -43872,16 +43811,16 @@ void cube::GameController::drawItemTooltip
     pfVar8 = (float *)arrayElem_stride4(1);
     *pfVar8 = *pfVar8 + local_1e8;
   }
-  fVar14 = (float10)Item_compute_value();
+  fVar14 = (float)Item_compute_value();
   local_1e0 = (float)fVar14;
-  if (0.1 <= local_1e0) {
+  if (0.1f <= local_1e0) {
     u16string_assignCStr(&PTR_006fccac);
     local_8._0_1_ = 0x41;
     strstreambuf_initWrap(local_8c);
     local_8._0_1_ = 3;
     std_string_FreeMember();
-    fVar14 = (float10)Item_compute_value();
-    fVar14 = (float10)math_round_to_tenth((float)fVar14);
+    fVar14 = (float)Item_compute_value();
+    fVar14 = (float)math_round_to_tenth((float)fVar14);
     fVar19 = (float)fVar14;
     pbVar5 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)
              wostream_insertNarrow(local_294,&DAT_00702948);
@@ -43889,7 +43828,7 @@ void cube::GameController::drawItemTooltip
     u16string_assignCStr(L"resource1.dat");
     local_8._0_1_ = 0x42;
     uVar9 = u16_ostrstream_str_wrap(local_8c);
-    local_1e4 = param_4 * 10.0;
+    local_1e4 = param_4 * 10.0f;
     local_8._0_1_ = 0x43;
     pfVar8 = (float *)arrayElem_stride4(1);
     puVar10 = (undefined4 *)arrayElem_stride4(0);
@@ -43941,9 +43880,9 @@ void cube::GameController::drawItemTooltip
     param_1 = local_1f0;
   }
   if (*param_1 == '\x01') {
-    fVar14 = (float10)item_computeValue();
+    fVar14 = (float)item_computeValue();
     local_1f0 = (char *)(float)fVar14;
-    if (0.1 <= (float)local_1f0) {
+    if (0.1f <= (float)local_1f0) {
       u16string_assignCStr(&PTR_006fccac);
       local_8._0_1_ = 0x46;
       strstreambuf_initWrap(local_b4);
@@ -43957,7 +43896,7 @@ void cube::GameController::drawItemTooltip
       u16string_assignCStr(L"resource1.dat");
       local_8._0_1_ = 0x47;
       uVar9 = u16_ostrstream_str_wrap(local_b4);
-      local_1e4 = param_4 * 10.0;
+      local_1e4 = param_4 * 10.0f;
       local_8._0_1_ = 0x48;
       pfVar8 = (float *)arrayElem_stride4(1);
       puVar10 = (undefined4 *)arrayElem_stride4(0);
@@ -44065,7 +44004,7 @@ void GameController_renderCreature(int param_1)
   longlong *plVar5;
   undefined4 uVar6;
   int *pThis;
-  float10 fVar7;
+  float fVar7;
   float fVar8;
   double dVar9;
   float fVar10;
@@ -44281,11 +44220,9 @@ void GameController_renderCreature(int param_1)
   }
   mat4_identity();
   angleRad = (float)pThis[0x6b] * 0.017453292;
-  dVar9 = (double)angleRad;
-  libm_sse2_cos_precise();
+  dVar9 = libm_sse2_cos_precise((double)angleRad);
   fStack_3f0 = (float)dVar9;
-  dVar9 = (double)angleRad;
-  libm_sse2_sin_precise();
+  dVar9 = libm_sse2_sin_precise((double)angleRad);
   fVar10 = (float)dVar9;
   fStack_3e0 = fStack_390 * fVar10 + fStack_3a0 * fStack_3f0;
   fStack_3e8 = fVar10 * fStack_38c + fStack_39c * fStack_3f0;
@@ -44703,7 +44640,7 @@ LAB_004a8263:
             if ((((-1.0 <= fVar10) && (fVar10 <= 1.0)) && (-1.0 <= fVar11)) && (fVar11 <= 1.0)) {
               uVar6 = vec3i64_copySub(auStack_a0,pThis[0x2001b4] + 0x10);
               vec3i64_dotFixed(auStack_3c8,uVar6);
-              fVar7 = (float10)fixed16ToFloat();
+              fVar7 = (float)fixed16ToFloat();
               fStack_3fc = (float)fVar7;
               if ((fStack_3fc < scale) &&
                  (firstPerson = Entity_stepToward(*(int *)((int)fVar8 + 0x18) + 0x10,pThis + 0x50,1,0x43480000
@@ -44772,7 +44709,7 @@ LAB_004a8263:
             if ((((-1.0 <= fVar10) && (fVar10 <= 1.0)) && (-1.0 <= fVar11)) && (fVar11 <= 1.0)) {
               uVar6 = vec3i64_copySub(auStack_58,pThis[0x2001b4] + 0x10);
               vec3i64_dotFixed(auStack_3c0,uVar6);
-              fVar7 = (float10)fixed16ToFloat();
+              fVar7 = (float)fixed16ToFloat();
               scale = (float)fVar7;
               if (((scale < fStack_3d8) && (fStack_3fc <= scale)) &&
                  ((firstPerson = Entity_stepToward(*(int *)((int)fVar8 + 0x18) + 0x10,pThis + 0x50,1,
@@ -44811,14 +44748,14 @@ LAB_004a8d9c:
     if (((DAT_0076b164 < 200) &&
         (((*(byte *)(guiOpen + 0x5c) & 1) != 0 || (*(int *)(guiOpen + 0x128) != 0)))) &&
        (*(float *)(guiOpen + 0x3c) <= 0.0)) {
-      dVar9 = (double)(*(float *)(guiOpen + 0x38) * *(float *)(guiOpen + 0x38) +
-                      *(float *)(guiOpen + 0x34) * *(float *)(guiOpen + 0x34));
-      libm_sse2_sqrt_precise();
+      dVar9 = libm_sse2_sqrt_precise
+                        ((double)(*(float *)(guiOpen + 0x38) * *(float *)(guiOpen + 0x38) +
+                                 *(float *)(guiOpen + 0x34) * *(float *)(guiOpen + 0x34)));
       fVar8 = 10.0;
       if ((float)dVar9 + 2.0 < 10.0) {
-        dVar9 = (double)(*(float *)(guiOpen + 0x38) * *(float *)(guiOpen + 0x38) +
-                        *(float *)(guiOpen + 0x34) * *(float *)(guiOpen + 0x34));
-        libm_sse2_sqrt_precise();
+        dVar9 = libm_sse2_sqrt_precise
+                          ((double)(*(float *)(guiOpen + 0x38) * *(float *)(guiOpen + 0x38) +
+                                   *(float *)(guiOpen + 0x34) * *(float *)(guiOpen + 0x34)));
         fVar8 = (float)dVar9 + 2.0;
       }
       *(float *)(guiOpen + 0x3c) = fVar8;
@@ -44873,6 +44810,12 @@ LAB_004a8ed9:
 }
 
 
+
+/* [AUDIT] proposed: vfunc_11  (confidence: high)
+ * purpose: cube::GameController::vfunc_11 (59248 B). Same recovery route: 3600s + 512MB payload (135s). Body in extra_bodies.c.
+ * vars: -
+ */
+/* FAILED vfunc_11 @ 004ac260 */
 
 
 /* [AUDIT] proposed: vec3_floatToByte3  (confidence: high)
@@ -44943,9 +44886,9 @@ void vec4_scale_4a8f40(float *pResult,float scale,float *pVec)
 void float_lerp_smooth(float *pA,float *pB,undefined4 steps,undefined4 t)
 
 {
-  float10 blend;
+  float blend;
   
-  blend = (float10)iterated_lerp_toward1(steps,t);
+  blend = (float)iterated_lerp_toward1(steps,t);
   *pA = (1.0 - (float)blend) * *pA + *pB * (float)blend;
   return;
 }
@@ -45079,7 +45022,7 @@ void iter_postdec_4(int *pOut)
  */
 /* Global::iterated_lerp_toward1 @ 004ac150 */
 
-float10 iterated_lerp_toward1(int steps,float factor)
+float iterated_lerp_toward1(int steps,float factor)
 
 {
   int blocks;
@@ -45115,7 +45058,7 @@ float10 iterated_lerp_toward1(int steps,float factor)
       steps = steps + -1;
     } while (steps != 0);
   }
-  return (float10)(float)result;
+  return (float)(float)result;
 }
 
 
@@ -45181,18 +45124,17 @@ void cube::GameController::vfunc_11(void)
   pair<unsigned___int64,unsigned___int64> *ppVar45;
   byte *pbVar46;
   bool bVar47;
-  float10 fVar48;
+  float fVar48;
   float fVar49;
   double dVar50;
   double dVar51;
-  undefined1 auVar52 [16];
+  float fVar52;
   float fVar53;
-  float fVar54;
-  undefined8 uVar55;
-  undefined1 *puVar56;
+  undefined8 uVar54;
+  undefined1 *puVar55;
+  byte *pbVar56;
   byte *pbVar57;
   byte *pbVar58;
-  byte *pbVar59;
   CRefTime *pCStack_40e8;
   CRefTime *pCStack_40e4;
   CRefTime **ppCStack_40e0;
@@ -45290,7 +45232,7 @@ void cube::GameController::vfunc_11(void)
   char cStack_3f39;
   undefined4 uStack_3f38;
   float fStack_3f34;
-  int iVar60;
+  int iVar59;
   undefined1 auStack_3f28 [8];
   uint uStack_3f20;
   undefined1 local_3f1c [4];
@@ -45970,54 +45912,52 @@ void cube::GameController::vfunc_11(void)
   uStack_3e9c = 0;
   uStack_44._0_1_ = 1;
   uStack_44._1_3_ = 0;
-  dVar50 = (double)(((float)*(int *)(in_ECX + 0x800440) * 2.0) / 8.64e+07 - 1.0);
-  libm_sse2_pow_precise();
-  auVar52._0_8_ = (double)(1.0 - (float)dVar50);
-  auVar52._8_8_ = 0;
-  libm_sse2_pow_precise();
-  fStack_3ea8 = (float)auVar52._0_8_;
+  dVar50 = libm_sse2_pow_precise
+                     ((double)(((float)*(int *)(in_ECX + 0x800440) * 2.0) / 8.64e+07 - 1.0),4.0);
+  dVar50 = libm_sse2_pow_precise((double)(1.0 - (float)dVar50),5.0);
+  fStack_3ea8 = (float)dVar50;
   uStack_3e18 = 0;
   auStack_3e14[0] = 0;
   uStack_3e18 = rbtree_allocHead24();
   uStack_44 = CONCAT31(uStack_44._1_3_,2);
   if (0 < *(int *)(in_ECX + 0x2dc) * *(int *)(in_ECX + 0x2dc)) {
-    iVar60 = 0;
+    iVar59 = 0;
     iVar40 = 0;
     do {
-      iStack_3f0c = *(int *)(*(int *)(in_ECX + 0x2e0) + 0x70 + iVar60);
-      if ((iStack_3f0c != 0) && (*(char *)(*(int *)(in_ECX + 0x2e0) + 0x74 + iVar60) != '\0')) {
+      iStack_3f0c = *(int *)(*(int *)(in_ECX + 0x2e0) + 0x70 + iVar59);
+      if ((iStack_3f0c != 0) && (*(char *)(*(int *)(in_ECX + 0x2e0) + 0x74 + iVar59) != '\0')) {
         ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x4ac4bc;
         piVar7 = (int *)rbtree_findOrInsert_intKey();
         *piVar7 = *piVar7 + 1;
       }
       iVar40 = iVar40 + 1;
-      iVar60 = iVar60 + 0x268;
+      iVar59 = iVar59 + 0x268;
     } while (iVar40 < *(int *)(in_ECX + 0x2dc) * *(int *)(in_ECX + 0x2dc));
   }
-  fVar53 = *(float *)(in_ECX + 0x2ac);
+  fVar52 = *(float *)(in_ECX + 0x2ac);
   fStack_3eac = *(float *)(in_ECX + 0x1d4) + 22.4;
-  iVar60 = *(int *)(in_ECX + 0x2dc);
+  iVar59 = *(int *)(in_ECX + 0x2dc);
   iStack_3eec = in_ECX + 0x2ac;
-  fStack_3f48 = fVar53;
-  if ((int)fVar53 < (int)fVar53 + iVar60) {
+  fStack_3f48 = fVar52;
+  if ((int)fVar52 < (int)fVar52 + iVar59) {
     do {
       fStack_3efc = *(float *)(in_ECX + 0x2b0);
-      fStack_3f48 = fVar53;
-      if ((int)fStack_3efc < (int)fStack_3efc + iVar60) {
+      fStack_3f48 = fVar52;
+      if ((int)fStack_3efc < (int)fStack_3efc + iVar59) {
         do {
-          if ((((-1 < (int)fVar53) && (-1 < (int)fStack_3efc)) && ((int)fVar53 < 0x80000)) &&
+          if ((((-1 < (int)fVar52) && (-1 < (int)fStack_3efc)) && ((int)fVar52 < 0x80000)) &&
              ((int)fStack_3efc < 0x80000)) {
-            iVar60 = (((int)fStack_3efc % iVar60) * iVar60 + (int)fStack_3f48 % iVar60) * 0x268 +
+            iVar59 = (((int)fStack_3efc % iVar59) * iVar59 + (int)fStack_3f48 % iVar59) * 0x268 +
                      *(int *)(in_ECX + 0x2e0);
             ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x4ac597;
-            iStack_3f58 = iVar60;
-            iStack_3f44 = iVar60;
+            iStack_3f58 = iVar59;
+            iStack_3f44 = iVar59;
             piVar7 = (int *)rbtree_findOrInsert_intKey();
             if (*piVar7 == 0) {
               ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x4ac5ad;
-              EnterCriticalSection((LPCRITICAL_SECTION)(iVar60 + 0x250));
-              if (*(int *)(iVar60 + 0x14) != 0) {
-                plVar9 = (longlong *)(iVar60 + 8);
+              EnterCriticalSection((LPCRITICAL_SECTION)(iVar59 + 0x250));
+              if (*(int *)(iVar59 + 0x14) != 0) {
+                plVar9 = (longlong *)(iVar59 + 8);
                 piVar7 = (int *)**(int **)plVar9;
                 plStack_3f50 = plVar9;
                 if (piVar7 != *(int **)plVar9) {
@@ -46030,7 +45970,7 @@ void cube::GameController::vfunc_11(void)
                     piVar7 = (int *)*piVar7;
                   } while (piVar7 != (int *)(int)*plVar9);
                 }
-                iVar60 = iStack_3f58;
+                iVar59 = iStack_3f58;
                 plStack_3f50 = (longlong *)(iStack_3f58 + 0x10);
                 if (plVar9 != plStack_3f50) {
                   ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)
@@ -46038,40 +45978,40 @@ void cube::GameController::vfunc_11(void)
                   piStack_3f78 = (int *)0x4ac5fb;
                   std_list_assign();
                 }
-                piVar7 = (int *)(iVar60 + 0x10);
+                piVar7 = (int *)(iVar59 + 0x10);
                 puVar15 = (undefined4 *)*piVar7;
                 pvVar3 = (void *)*puVar15;
                 *puVar15 = puVar15;
                 *(int *)(*piVar7 + 4) = *piVar7;
-                *(undefined4 *)(iVar60 + 0x14) = 0;
+                *(undefined4 *)(iVar59 + 0x14) = 0;
                 if (pvVar3 != (void *)*piVar7) {
                   ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)&UNK_004ac620;
                   operator_delete(pvVar3);
                 }
-                if ((undefined4 *)(iVar60 + 0x240) != (undefined4 *)(iVar60 + 0x248)) {
+                if ((undefined4 *)(iVar59 + 0x240) != (undefined4 *)(iVar59 + 0x248)) {
                   ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)
-                                 **(undefined4 **)(iVar60 + 0x248);
+                                 **(undefined4 **)(iVar59 + 0x248);
                   piStack_3f78 = (int *)0x4ac64b;
                   list_assignReuse_005c03f0();
                 }
               }
               ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x4ac658;
-              LeaveCriticalSection((LPCRITICAL_SECTION)(iVar60 + 0x250));
+              LeaveCriticalSection((LPCRITICAL_SECTION)(iVar59 + 0x250));
             }
             ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x4ac665;
-            EnterCriticalSection((LPCRITICAL_SECTION)(iVar60 + 0x250));
-            if (*(int *)(iVar60 + 0xc) != 0) {
+            EnterCriticalSection((LPCRITICAL_SECTION)(iVar59 + 0x250));
+            if (*(int *)(iVar59 + 0xc) != 0) {
               afStack_3628[0] = fStack_3f48;
               afStack_3628[1] = fStack_3efc;
               iVar40 = 0;
-              pfVar11 = (float *)(iVar60 + 0x18);
+              pfVar11 = (float *)(iVar59 + 0x18);
               do {
                 if (*pfVar11 != afStack_3628[iVar40]) goto LAB_004ac73c;
                 iVar40 = iVar40 + 1;
                 pfVar11 = pfVar11 + 1;
               } while (iVar40 < 2);
-              ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)(iVar60 + 0x38);
-              piStack_3f78 = (int *)(iVar60 + 0x20);
+              ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)(iVar59 + 0x38);
+              piStack_3f78 = (int *)(iVar59 + 0x20);
               ppStack_3f7c = (pair<unsigned___int64,unsigned___int64> *)0x4ac6ce;
               cVar5 = testAABBvsFrustum_fixed();
               if (cVar5 != '\0') {
@@ -46086,12 +46026,12 @@ void cube::GameController::vfunc_11(void)
                 plStack_3f50 = (longlong *)(float)lStack_3d08;
                 iStack_3f58 = iStack_3f44;
                 *(float *)(iStack_3f44 + 0x6c) = (float)plStack_3f50 * 1.5258789e-05;
-                iVar60 = iStack_3f44;
+                iVar59 = iStack_3f44;
               }
             }
 LAB_004ac73c:
-            piVar7 = (int *)**(int **)(iVar60 + 0x240);
-            iVar60 = iStack_3f58;
+            piVar7 = (int *)**(int **)(iVar59 + 0x240);
+            iVar59 = iStack_3f58;
             if (piVar7 != *(int **)(iStack_3f58 + 0x240)) {
               iStack_3eb0 = 0;
               iVar40 = iStack_3f58;
@@ -46107,46 +46047,46 @@ LAB_004ac73c:
                     afStack_34ec[0] = 0.0;
                     afStack_34ec[1] = 0.0;
                     afStack_34ec[2] = 0.0;
-                    iVar60 = 0;
+                    iVar59 = 0;
                     do {
-                      fStack_3f34 = afStack_34ec[iVar60] * 65536.0;
-                      uVar55 = ftol2();
+                      fStack_3f34 = afStack_34ec[iVar59] * 65536.0;
+                      uVar54 = ftol2();
                       iVar40 = iStack_3f54;
-                      auStack_35c8[iVar60 * 2] = (uint)uVar55;
-                      auStack_35c8[iVar60 * 2 + 1] = (uint)((ulonglong)uVar55 >> 0x20);
-                      iVar60 = iVar60 + 1;
-                    } while (iVar60 < 3);
+                      auStack_35c8[iVar59 * 2] = (uint)uVar54;
+                      auStack_35c8[iVar59 * 2 + 1] = (uint)((ulonglong)uVar54 >> 0x20);
+                      iVar59 = iVar59 + 1;
+                    } while (iVar59 < 3);
                     uStack_3f20 = piVar7[4] + auStack_35c8[0];
                     plStack_3f50 = (longlong *)
                                    (piVar7[5] + auStack_35c8[1] +
                                    (uint)CARRY4(piVar7[4],auStack_35c8[0]));
                     local_3ef0 = piVar7[6] + auStack_35c8[2];
-                    iVar60 = piVar7[7] + auStack_35c8[3] + (uint)CARRY4(piVar7[6],auStack_35c8[2]);
+                    iVar59 = piVar7[7] + auStack_35c8[3] + (uint)CARRY4(piVar7[6],auStack_35c8[2]);
                     puStack_3f14 = (undefined4 *)(piVar7[8] + (int)fStack_35b8);
                     iStack_3ec0 = piVar7[9] + (int)fStack_35b4 +
                                   (uint)CARRY4(piVar7[8],(uint)fStack_35b8);
-                    dVar50 = (double)((float)*(int *)(iStack_3f54 + 0x8003a0) * 0.01 +
-                                     (float)iStack_3eb0);
                     uStack_36e0 = uStack_3f20;
                     plStack_36dc = plStack_3f50;
                     uStack_36d8 = local_3ef0;
-                    iStack_36d4 = iVar60;
+                    iStack_36d4 = iVar59;
                     puStack_36d0 = puStack_3f14;
                     iStack_36cc = iStack_3ec0;
                     uStack_34a0 = uStack_3f20;
                     plStack_349c = plStack_3f50;
                     uStack_3498 = local_3ef0;
-                    iStack_3494 = iVar60;
+                    iStack_3494 = iVar59;
                     puStack_3490 = puStack_3f14;
                     iStack_348c = iStack_3ec0;
-                    libm_sse2_cos_precise();
+                    dVar50 = libm_sse2_cos_precise
+                                       ((double)((float)*(int *)(iStack_3f54 + 0x8003a0) * 0.01 +
+                                                (float)iStack_3eb0));
                     fStack_3488 = (float)dVar50 * 0.5 + 15.0;
                     fStack_3768 = (float)(*(uint *)(iVar40 + 0x140) - uStack_3f20);
                     fStack_3764 = (float)((*(int *)(iVar40 + 0x144) - (int)plStack_3f50) -
                                          (uint)(*(uint *)(iVar40 + 0x140) < uStack_3f20));
                     fStack_3760 = (float)(*(uint *)(iVar40 + 0x148) - local_3ef0);
                     ppStack_3f5c = *(pair<unsigned___int64,unsigned___int64> **)(iVar40 + 0x150);
-                    fStack_375c = (float)((*(int *)(iVar40 + 0x14c) - iVar60) -
+                    fStack_375c = (float)((*(int *)(iVar40 + 0x14c) - iVar59) -
                                          (uint)(*(uint *)(iVar40 + 0x148) < local_3ef0));
                     fStack_3758 = (float)((int)ppStack_3f5c - (int)puStack_3f14);
                     fStack_3754 = (float)((*(int *)(iStack_3f54 + 0x154) - iStack_3ec0) -
@@ -46160,10 +46100,10 @@ LAB_004ac73c:
                     fStack_3480 = (float)piVar7[0xe];
                     fStack_347c = (float)piVar7[0xf];
                     if (piVar7[2] == 0xd) {
-                      fVar53 = 1.0 - fStack_3ea8 * 0.5;
-                      fStack_3484 = fVar53 * fStack_3484;
-                      fStack_3480 = fVar53 * fStack_3480;
-                      fStack_347c = fVar53 * fStack_347c;
+                      fVar52 = 1.0 - fStack_3ea8 * 0.5;
+                      fStack_3484 = fVar52 * fStack_3484;
+                      fStack_3480 = fVar52 * fStack_3480;
+                      fStack_347c = fVar52 * fStack_347c;
                     }
                     ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x4acaab;
                     std_vector_pushback_48();
@@ -46172,8 +46112,8 @@ LAB_004ac73c:
                   }
                 }
                 if (*(float *)(iVar40 + 0x6c) <= 4096.0 && *(float *)(iVar40 + 0x6c) != 4096.0) {
-                  iVar60 = *(int *)(in_ECX + 0x800440);
-                  if ((iVar60 < 0x1499701) || (75599999 < iVar60)) {
+                  iVar59 = *(int *)(in_ECX + 0x800440);
+                  if ((iVar59 < 0x1499701) || (75599999 < iVar59)) {
                     iVar8 = piVar7[2];
                     if (iVar8 == 0x3d) {
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
@@ -46186,7 +46126,7 @@ LAB_004ac73c:
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                       ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4acf99;
-                      iVar60 = __alldiv();
+                      iVar59 = __alldiv();
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       piStack_3f78 = (int *)piVar7[5];
                       ppStack_3f7c = (pair<unsigned___int64,unsigned___int64> *)piVar7[4];
@@ -46196,21 +46136,21 @@ LAB_004ac73c:
                                      (piVar7[6] + 0x14d0000);
                       piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                       plStack_3f50 = (longlong *)
-                                     ((int)(iVar60 + (iVar60 / 1000) * -1000 +
+                                     ((int)(iVar59 + (iVar59 / 1000) * -1000 +
                                                      ((int)uStack_3f20 / 1000) * -1000 + uStack_3f20
                                            + *(int *)(iStack_3f54 + 0x8003a0)) / 1000);
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4ad02d;
                       ppStack_3f5c = ppStack_3f7c;
-                      iVar60 = __alldiv();
+                      iVar59 = __alldiv();
                       in_ECX = iStack_3f54;
                       iVar40 = iStack_3f58;
                       if ((plStack_3f50 !=
                            (longlong *)
-                           ((iVar60 % 1000 + (iVar8 / 1000) * -1000 +
+                           ((iVar59 % 1000 + (iVar8 / 1000) * -1000 +
                              *(int *)(iStack_3f54 + 0x8006e8) + iVar8 +
                             *(int *)(iStack_3f54 + 0x8003a0)) / 1000)) &&
-                         (iVar60 = rand(), iVar40 = iStack_3f58, iVar60 % 10 == 0)) {
+                         (iVar59 = rand(), iVar40 = iStack_3f58, iVar59 % 10 == 0)) {
                         rand();
                         piStack_3f78 = piVar7 + 4;
                         ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x3dcccccd;
@@ -46226,7 +46166,7 @@ LAB_004ac73c:
                     }
                     else {
 LAB_004ad0ed:
-                      if ((43200000 < iVar60) && (iVar60 < 86400000)) {
+                      if ((43200000 < iVar59) && (iVar59 < 86400000)) {
                         if ((iVar8 == 2) || ((iVar8 == 3 || (iVar8 == 4)))) {
                           ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                           piStack_3f78 = (int *)piVar7[5];
@@ -46238,7 +46178,7 @@ LAB_004ad0ed:
                           ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                           piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                           ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4ad2d3;
-                          iVar60 = __alldiv();
+                          iVar59 = __alldiv();
                           ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                           piStack_3f78 = (int *)piVar7[5];
                           ppStack_3f7c = (pair<unsigned___int64,unsigned___int64> *)piVar7[4];
@@ -46248,22 +46188,22 @@ LAB_004ad0ed:
                                          (piVar7[6] + 0x14d0000);
                           piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                           plStack_3f50 = (longlong *)
-                                         ((int)(iVar60 + (iVar60 / 5000) * -5000 +
+                                         ((int)(iVar59 + (iVar59 / 5000) * -5000 +
                                                          ((int)uStack_3f20 / 5000) * -5000 +
                                                 uStack_3f20 + *(int *)(iStack_3f54 + 0x8003a0)) /
                                          5000);
                           ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                           ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4ad367;
                           ppStack_3f5c = ppStack_3f7c;
-                          iVar60 = __alldiv();
+                          iVar59 = __alldiv();
                           in_ECX = iStack_3f54;
                           iVar40 = iStack_3f58;
                           if ((plStack_3f50 !=
                                (longlong *)
-                               ((iVar60 % 5000 + (iVar8 / 5000) * -5000 +
+                               ((iVar59 % 5000 + (iVar8 / 5000) * -5000 +
                                  *(int *)(iStack_3f54 + 0x8006e8) + iVar8 +
                                 *(int *)(iStack_3f54 + 0x8003a0)) / 5000)) &&
-                             (iVar60 = rand(), iVar40 = iStack_3f58, iVar60 % 0x46 == 0)) {
+                             (iVar59 = rand(), iVar40 = iStack_3f58, iVar59 % 0x46 == 0)) {
                             rand();
                             piStack_3f78 = piVar7 + 4;
                             ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x3d4ccccd;
@@ -46282,7 +46222,7 @@ LAB_004ad0ed:
                           ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                           piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                           ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4ad160;
-                          iVar60 = __alldiv();
+                          iVar59 = __alldiv();
                           ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                           piStack_3f78 = (int *)piVar7[5];
                           ppStack_3f7c = (pair<unsigned___int64,unsigned___int64> *)piVar7[4];
@@ -46292,22 +46232,22 @@ LAB_004ad0ed:
                                          (piVar7[6] + 0x14d0000);
                           piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                           plStack_3f50 = (longlong *)
-                                         ((int)(iVar60 + (iVar60 / 5000) * -5000 +
+                                         ((int)(iVar59 + (iVar59 / 5000) * -5000 +
                                                          ((int)uStack_3f20 / 5000) * -5000 +
                                                 uStack_3f20 + *(int *)(iStack_3f54 + 0x8003a0)) /
                                          5000);
                           ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                           ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4ad1f4;
                           ppStack_3f5c = ppStack_3f7c;
-                          iVar60 = __alldiv();
+                          iVar59 = __alldiv();
                           in_ECX = iStack_3f54;
                           iVar40 = iStack_3f58;
                           if ((plStack_3f50 !=
                                (longlong *)
-                               ((iVar60 % 5000 + (iVar8 / 5000) * -5000 +
+                               ((iVar59 % 5000 + (iVar8 / 5000) * -5000 +
                                  *(int *)(iStack_3f54 + 0x8006e8) + iVar8 +
                                 *(int *)(iStack_3f54 + 0x8003a0)) / 5000)) &&
-                             (iVar60 = rand(), iVar40 = iStack_3f58, iVar60 % 0x46 == 0)) {
+                             (iVar59 = rand(), iVar40 = iStack_3f58, iVar59 % 0x46 == 0)) {
                             rand();
                             piStack_3f78 = piVar7 + 4;
                             ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x3d4ccccd;
@@ -46331,7 +46271,7 @@ LAB_004ad0ed:
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                       ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4acb22;
-                      iVar60 = __alldiv();
+                      iVar59 = __alldiv();
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       piStack_3f78 = (int *)piVar7[5];
                       ppStack_3f7c = (pair<unsigned___int64,unsigned___int64> *)piVar7[4];
@@ -46341,21 +46281,21 @@ LAB_004ad0ed:
                                      (piVar7[6] + 0x14d0000);
                       piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                       plStack_3f50 = (longlong *)
-                                     ((int)(iVar60 + (iVar60 / 1000) * -1000 +
+                                     ((int)(iVar59 + (iVar59 / 1000) * -1000 +
                                                      ((int)uStack_3f20 / 1000) * -1000 + uStack_3f20
                                            + *(int *)(iStack_3f54 + 0x8003a0)) / 1000);
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4acbb6;
                       ppStack_3f5c = ppStack_3f7c;
-                      iVar60 = __alldiv();
+                      iVar59 = __alldiv();
                       in_ECX = iStack_3f54;
                       iVar40 = iStack_3f58;
                       if ((plStack_3f50 !=
                            (longlong *)
-                           ((iVar60 % 1000 + (iVar8 / 1000) * -1000 +
+                           ((iVar59 % 1000 + (iVar8 / 1000) * -1000 +
                              *(int *)(iStack_3f54 + 0x8006e8) + iVar8 +
                             *(int *)(iStack_3f54 + 0x8003a0)) / 1000)) &&
-                         (iVar60 = rand(), iVar40 = iStack_3f58, iVar60 % 10 == 0)) {
+                         (iVar59 = rand(), iVar40 = iStack_3f58, iVar59 % 10 == 0)) {
                         rand();
                         piStack_3f78 = piVar7 + 4;
                         ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x3dcccccd;
@@ -46377,7 +46317,7 @@ LAB_004ad406:
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                       ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4acc9e;
-                      iVar60 = __alldiv();
+                      iVar59 = __alldiv();
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       piStack_3f78 = (int *)piVar7[5];
                       ppStack_3f7c = (pair<unsigned___int64,unsigned___int64> *)piVar7[4];
@@ -46387,21 +46327,21 @@ LAB_004ad406:
                                      (piVar7[6] + 0x14d0000);
                       piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                       plStack_3f50 = (longlong *)
-                                     ((int)(iVar60 + (iVar60 / 1000) * -1000 +
+                                     ((int)(iVar59 + (iVar59 / 1000) * -1000 +
                                                      ((int)uStack_3f20 / 1000) * -1000 + uStack_3f20
                                            + *(int *)(iStack_3f54 + 0x8003a0)) / 1000);
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4acd32;
                       ppStack_3f5c = ppStack_3f7c;
-                      iVar60 = __alldiv();
+                      iVar59 = __alldiv();
                       in_ECX = iStack_3f54;
                       iVar40 = iStack_3f58;
                       if ((plStack_3f50 !=
                            (longlong *)
-                           ((iVar60 % 1000 + (iVar8 / 1000) * -1000 +
+                           ((iVar59 % 1000 + (iVar8 / 1000) * -1000 +
                              *(int *)(iStack_3f54 + 0x8006e8) + iVar8 +
                             *(int *)(iStack_3f54 + 0x8003a0)) / 1000)) &&
-                         (iVar60 = rand(), iVar40 = iStack_3f58, iVar60 % 10 == 0)) {
+                         (iVar59 = rand(), iVar40 = iStack_3f58, iVar59 % 10 == 0)) {
                         rand();
                         piStack_3f78 = piVar7 + 4;
                         ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x3dcccccd;
@@ -46421,7 +46361,7 @@ LAB_004ad406:
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                       ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4ace1a;
-                      iVar60 = __alldiv();
+                      iVar59 = __alldiv();
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       piStack_3f78 = (int *)piVar7[5];
                       ppStack_3f7c = (pair<unsigned___int64,unsigned___int64> *)piVar7[4];
@@ -46431,21 +46371,21 @@ LAB_004ad406:
                                      (piVar7[6] + 0x14d0000);
                       piStack_3f78 = (int *)(piVar7[7] + (uint)(0xfeb2ffff < (uint)piVar7[6]));
                       plStack_3f50 = (longlong *)
-                                     ((int)(iVar60 + (iVar60 / 1000) * -1000 +
+                                     ((int)(iVar59 + (iVar59 / 1000) * -1000 +
                                                      ((int)uStack_3f20 / 1000) * -1000 + uStack_3f20
                                            + *(int *)(iStack_3f54 + 0x8003a0)) / 1000);
                       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x10000;
                       ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)0x4aceae;
                       ppStack_3f5c = ppStack_3f7c;
-                      iVar60 = __alldiv();
+                      iVar59 = __alldiv();
                       in_ECX = iStack_3f54;
                       iVar40 = iStack_3f58;
                       if ((plStack_3f50 !=
                            (longlong *)
-                           ((iVar60 % 1000 + (iVar8 / 1000) * -1000 +
+                           ((iVar59 % 1000 + (iVar8 / 1000) * -1000 +
                              *(int *)(iStack_3f54 + 0x8006e8) + iVar8 +
                             *(int *)(iStack_3f54 + 0x8003a0)) / 1000)) &&
-                         (iVar60 = rand(), iVar40 = iStack_3f58, iVar60 % 10 == 0)) {
+                         (iVar59 = rand(), iVar40 = iStack_3f58, iVar59 % 10 == 0)) {
                         rand();
                         piStack_3f78 = piVar7 + 4;
                         ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x3dcccccd;
@@ -46456,26 +46396,26 @@ LAB_004ad406:
                   }
                 }
                 piVar7 = (int *)*piVar7;
-                iVar60 = iStack_3f44;
+                iVar59 = iStack_3f44;
               } while (piVar7 != (int *)*(int *)(iVar40 + 0x240));
             }
             ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x4ad43a;
-            LeaveCriticalSection((LPCRITICAL_SECTION)(iVar60 + 0x250));
-            fVar53 = fStack_3f48;
+            LeaveCriticalSection((LPCRITICAL_SECTION)(iVar59 + 0x250));
+            fVar52 = fStack_3f48;
           }
-          iVar60 = *(int *)(in_ECX + 0x2dc);
+          iVar59 = *(int *)(in_ECX + 0x2dc);
           fStack_3efc = (float)((int)fStack_3efc + 1);
-        } while ((int)fStack_3efc < *(int *)(in_ECX + 0x2b0) + iVar60);
+        } while ((int)fStack_3efc < *(int *)(in_ECX + 0x2b0) + iVar59);
       }
-      iVar60 = *(int *)(in_ECX + 0x2dc);
-      fVar53 = (float)((int)fVar53 + 1);
-      fStack_3f48 = fVar53;
-    } while ((int)fVar53 < *(int *)(in_ECX + 0x2ac) + iVar60);
+      iVar59 = *(int *)(in_ECX + 0x2dc);
+      fVar52 = (float)((int)fVar52 + 1);
+      fStack_3f48 = fVar52;
+    } while ((int)fVar52 < *(int *)(in_ECX + 0x2ac) + iVar59);
   }
-  iVar60 = *(int *)(*(int *)(in_ECX + 0x800898) + 0x3c);
-  if (*(int *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) != 0) {
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x800874) + 0x3c);
-    cStack_3f39 = *(int *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) != 0;
+  iVar59 = *(int *)(*(int *)(in_ECX + 0x800898) + 0x3c);
+  if (*(int *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) != 0) {
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x800874) + 0x3c);
+    cStack_3f39 = *(int *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) != 0;
     iVar40 = *(int *)(*(int *)(in_ECX + 0x800880) + 0x3c);
     cStack_3e79 = *(int *)(*(int *)(iVar40 + 0x94) + *(int *)(iVar40 + 0x68) * 4) != 0;
     iVar40 = *(int *)(*(int *)(in_ECX + 0x800888) + 0x3c);
@@ -46484,28 +46424,28 @@ LAB_004ad406:
     cStack_3e7a = *(int *)(*(int *)(iVar40 + 0x94) + *(int *)(iVar40 + 0x68) * 4) != 0;
     iVar40 = *(int *)(*(int *)(in_ECX + 0x800890) + 0x3c);
     cStack_3ecd = *(int *)(*(int *)(iVar40 + 0x94) + *(int *)(iVar40 + 0x68) * 4) != 0;
-    *(undefined4 *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = 0;
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x800880) + 0x3c);
-    *(undefined4 *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = 0;
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x800888) + 0x3c);
-    *(undefined4 *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = 0;
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x80088c) + 0x3c);
-    *(undefined4 *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = 0;
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x800890) + 0x3c);
-    *(undefined4 *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = 0;
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x800884) + 0x3c);
-    *(undefined4 *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = 0;
+    *(undefined4 *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = 0;
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x800880) + 0x3c);
+    *(undefined4 *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = 0;
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x800888) + 0x3c);
+    *(undefined4 *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = 0;
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x80088c) + 0x3c);
+    *(undefined4 *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = 0;
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x800890) + 0x3c);
+    *(undefined4 *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = 0;
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x800884) + 0x3c);
+    *(undefined4 *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = 0;
     Widget_render_pass();
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x800874) + 0x3c);
-    *(uint *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = (uint)(cStack_3f39 != '\0');
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x800880) + 0x3c);
-    *(uint *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = (uint)(cStack_3e79 != '\0');
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x800888) + 0x3c);
-    *(uint *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = (uint)(cStack_3e7b != '\0');
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x80088c) + 0x3c);
-    *(uint *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = (uint)(cStack_3e7a != '\0');
-    iVar60 = *(int *)(*(int *)(in_ECX + 0x800890) + 0x3c);
-    *(uint *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = (uint)(cStack_3ecd != '\0');
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x800874) + 0x3c);
+    *(uint *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = (uint)(cStack_3f39 != '\0');
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x800880) + 0x3c);
+    *(uint *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = (uint)(cStack_3e79 != '\0');
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x800888) + 0x3c);
+    *(uint *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = (uint)(cStack_3e7b != '\0');
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x80088c) + 0x3c);
+    *(uint *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = (uint)(cStack_3e7a != '\0');
+    iVar59 = *(int *)(*(int *)(in_ECX + 0x800890) + 0x3c);
+    *(uint *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = (uint)(cStack_3ecd != '\0');
     ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x4ad678;
     (**(code **)(**(int **)(in_ECX + 0x134) + 0xa8))();
     ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)0x4ad67f;
@@ -46524,8 +46464,8 @@ LAB_004ad406:
   piStack_3f84 = *(int **)(in_ECX + 0x144);
   pfStack_3f88 = (float *)*puStack_3f14;
   pfStack_3f8c = (float *)0x4ad6e7;
-  iVar60 = world_getColumnAtFixedPos();
-  cStack_3ecd = (*(byte *)(iVar60 + 3) & 0x1f) == 2;
+  iVar59 = world_getColumnAtFixedPos();
+  cStack_3ecd = (*(byte *)(iVar59 + 3) & 0x1f) == 2;
   if ((bool)cStack_3ecd) {
     uStack_3830 = 0x3ecccccd;
     uStack_382c = 0x3f000000;
@@ -46548,10 +46488,8 @@ LAB_004ad406:
   Terrain_computeBiomeColor();
   ppStack_3f5c = (pair<unsigned___int64,unsigned___int64> *)
                  (((float)*(int *)(in_ECX + 0x800440) * 2.0 * 3.1415927) / 8.64e+07);
-  dVar50 = (double)(float)ppStack_3f5c;
-  libm_sse2_cos_precise();
-  dVar51 = (double)(float)ppStack_3f5c;
-  libm_sse2_sin_precise();
+  dVar50 = libm_sse2_cos_precise((double)(float)ppStack_3f5c);
+  dVar51 = libm_sse2_sin_precise((double)(float)ppStack_3f5c);
   afStack_378c[2] = 0.0;
   afStack_378c[3] = -(float)dVar51;
   uStack_377c = CONCAT44(uStack_377c._4_4_,(float)dVar50) ^ 0x80000000;
@@ -46620,7 +46558,7 @@ LAB_004ad406:
   uStack_369c = 0;
   puVar10 = auStack_7a4;
   puVar18 = auStack_564;
-  iVar60 = 0x10;
+  iVar59 = 0x10;
   do {
     *puVar18 = 0;
     puVar18[1] = 0;
@@ -46628,8 +46566,8 @@ LAB_004ad406:
     *(undefined4 *)(puVar10 + 1) = 0;
     puVar18 = puVar18 + 2;
     puVar10 = (undefined8 *)((int)puVar10 + 0xc);
-    iVar60 = iVar60 + -1;
-  } while (iVar60 != 0);
+    iVar59 = iVar59 + -1;
+  } while (iVar59 != 0);
   ppStack_3f7c = (pair<unsigned___int64,unsigned___int64> *)auStack_7a4;
   ppStack_3f80 = (pair<unsigned___int64,unsigned___int64> *)auStack_564;
   piStack_3f84 = (int *)0x4adb04;
@@ -46735,16 +46673,16 @@ LAB_004ad406:
       fStack_3f48 = -*(float *)(in_ECX + 0x1a4);
     }
     pfVar11 = (float *)(in_ECX + 0x1000e4c);
-    iVar60 = 0;
+    iVar59 = 0;
     do {
       ppStack_3f74 = (pair<unsigned___int64,unsigned___int64> *)(*pfVar11 * 65536.0);
       pfStack_3f88 = (float *)0x4adf3c;
-      uVar55 = ftol2();
-      *(int *)(aCStack_2e80 + iVar60 * 8) = (int)uVar55;
-      *(int *)(aCStack_2e80 + (iVar60 * 2 + 1) * 4) = (int)((ulonglong)uVar55 >> 0x20);
-      iVar60 = iVar60 + 1;
+      uVar54 = ftol2();
+      *(int *)(aCStack_2e80 + iVar59 * 8) = (int)uVar54;
+      *(int *)(aCStack_2e80 + (iVar59 * 2 + 1) * 4) = (int)((ulonglong)uVar54 >> 0x20);
+      iVar59 = iVar59 + 1;
       pfVar11 = pfVar11 + 1;
-    } while (iVar60 < 3);
+    } while (iVar59 < 3);
     fStack_35e4 = (float)(piVar37[0x6b] ^ 0x80000000);
     pfStack_3f88 = (float *)0x1;
     pfStack_3f8c = (float *)0x10;
@@ -46774,9 +46712,8 @@ LAB_004ad406:
     uStack_346c = 0x3ecccccd;
     uStack_3468 = 0x3ecccccd;
     uStack_3464 = 0x3f800000;
-    dVar50 = 1.25;
     pfStack_3fb0 = (float *)0x4ae097;
-    libm_sse2_sqrt_precise();
+    dVar50 = libm_sse2_sqrt_precise(1.25);
     pfStack_3fb0 = (float *)&uStack_3470;
     fStack_35e4 = 1.0 / (float)dVar50;
     fStack_35ec = fStack_35e4 * 0.0;
@@ -46820,31 +46757,31 @@ LAB_004ad406:
     leave_critical_section();
     goto LAB_004bbb5a;
   }
-  iVar60 = *(int *)(*(int *)(in_ECX + 0x800874) + 0x3c);
-  if ((((*(int *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) == 0) &&
-       (iVar60 = *(int *)(*(int *)(in_ECX + 0x800880) + 0x3c),
-       *(int *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) == 0)) &&
-      (iVar60 = *(int *)(*(int *)(in_ECX + 0x800888) + 0x3c),
-      *(int *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) == 0)) &&
-     (((iVar60 = *(int *)(*(int *)(in_ECX + 0x800894) + 0x3c),
-       *(int *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) == 0 &&
-       (iVar60 = *(int *)(*(int *)(in_ECX + 0x80088c) + 0x3c),
-       *(int *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) == 0)) &&
-      ((iVar60 = *(int *)(*(int *)(in_ECX + 0x800890) + 0x3c),
-       *(int *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) == 0 &&
-       (iVar60 = *(int *)(*(int *)(in_ECX + 0x800898) + 0x3c),
-       *(int *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) == 0)))))) {
+  iVar59 = *(int *)(*(int *)(in_ECX + 0x800874) + 0x3c);
+  if ((((*(int *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) == 0) &&
+       (iVar59 = *(int *)(*(int *)(in_ECX + 0x800880) + 0x3c),
+       *(int *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) == 0)) &&
+      (iVar59 = *(int *)(*(int *)(in_ECX + 0x800888) + 0x3c),
+      *(int *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) == 0)) &&
+     (((iVar59 = *(int *)(*(int *)(in_ECX + 0x800894) + 0x3c),
+       *(int *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) == 0 &&
+       (iVar59 = *(int *)(*(int *)(in_ECX + 0x80088c) + 0x3c),
+       *(int *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) == 0)) &&
+      ((iVar59 = *(int *)(*(int *)(in_ECX + 0x800890) + 0x3c),
+       *(int *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) == 0 &&
+       (iVar59 = *(int *)(*(int *)(in_ECX + 0x800898) + 0x3c),
+       *(int *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) == 0)))))) {
     bVar4 = 1;
   }
   else {
     bVar4 = 0;
   }
-  iVar60 = *(int *)(*(int *)(in_ECX + 0x800884) + 0x3c);
+  iVar59 = *(int *)(*(int *)(in_ECX + 0x800884) + 0x3c);
   pfStack_3f88 = (float *)0x0;
   pfStack_3f8c = (float *)0x89;
-  *(uint *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = (uint)bVar4;
-  iVar60 = *(int *)(*(int *)(in_ECX + 0x8008a0) + 0x3c);
-  *(undefined4 *)(*(int *)(iVar60 + 0x94) + *(int *)(iVar60 + 0x68) * 4) = 0;
+  *(uint *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = (uint)bVar4;
+  iVar59 = *(int *)(*(int *)(in_ECX + 0x8008a0) + 0x3c);
+  *(undefined4 *)(*(int *)(iVar59 + 0x94) + *(int *)(iVar59 + 0x68) * 4) = 0;
   pfStack_3f90 = *(float **)(in_ECX + 0x134);
   iStack_3f94 = 0x4ae381;
   (**(code **)((int)*pfStack_3f90 + 0xe4))();
@@ -46864,24 +46801,24 @@ LAB_004ad406:
   lVar2 = *plStack_3f50;
   pfVar13 = (float *)(in_ECX + 0x22c);
   pfVar43 = afStack_378c;
-  for (iVar60 = 0x10; iVar60 != 0; iVar60 = iVar60 + -1) {
+  for (iVar59 = 0x10; iVar59 != 0; iVar59 = iVar59 + -1) {
     *pfVar43 = *pfVar13;
     pfVar13 = pfVar13 + 1;
     pfVar43 = pfVar43 + 1;
   }
   fStack_35b8 = (float)lVar2 * 1.5258789e-05;
   fStack_35b4 = (float)*(longlong *)(pfStack_3f90 + 0x52) * 1.5258789e-05;
-  fVar53 = (float)*(longlong *)(pfStack_3f90 + 0x54) * 1.5258789e-05;
+  fVar52 = (float)*(longlong *)(pfStack_3f90 + 0x54) * 1.5258789e-05;
   fStack_375c = (float)uStack_377c * fStack_35b4 + afStack_378c[0] * fStack_35b8 +
-                fStack_376c * fVar53 + fStack_375c;
+                fStack_376c * fVar52 + fStack_375c;
   pCStack_3fac = (CRefTime *)0x44fa0000;
   fStack_3f48 = uStack_377c._4_4_ * fStack_35b4 + afStack_378c[1] * fStack_35b8 +
-                fStack_3768 * fVar53 + fStack_3758;
+                fStack_3768 * fVar52 + fStack_3758;
   pfStack_3fb0 = (float *)0x3dcccccd;
   pfStack_3f8c = (float *)(fStack_3774 * fStack_35b4 + afStack_378c[2] * fStack_35b8 +
-                           fStack_3764 * fVar53 + fStack_3754);
+                           fStack_3764 * fVar52 + fStack_3754);
   pfStack_3f98 = (float *)(fStack_3770 * fStack_35b4 + afStack_378c[3] * fStack_35b8 +
-                           fStack_3760 * fVar53 + (float)pfStack_3750);
+                           fStack_3760 * fVar52 + (float)pfStack_3750);
   pfStack_3fb4 = (float *)-((float)(int)pfStack_3f90[0x47] / (float)(int)pfStack_3f90[0x48]);
   if ((*(ushort *)((int)pfStack_3f90[0x2001b4] + 0x124) & 0x400) == 0) {
     puStack_3fb8 = (undefined4 *)0x3f5f66f4;
@@ -46912,24 +46849,24 @@ LAB_004ad406:
     fStack_371c = -1.0;
     fStack_3718 = -1.0;
     fStack_3714 = 0.0;
-    iVar60 = 0;
+    iVar59 = 0;
     do {
-      fVar54 = pfVar11[0x2001d7];
-      fVar53 = *(float *)(iVar60 + (int)fVar54);
-      fVar49 = *(float *)(iVar60 + 4 + (int)fVar54);
-      fVar1 = *(float *)(iVar60 + 8 + (int)fVar54);
-      pfStack_3f8c = *(float **)(iVar60 + 0xc + (int)fVar54);
-      fStack_3728 = fVar49 * fStack_37ac + fVar53 * fStack_37bc + fVar1 * fStack_379c +
+      fVar53 = pfVar11[0x2001d7];
+      fVar52 = *(float *)(iVar59 + (int)fVar53);
+      fVar49 = *(float *)(iVar59 + 4 + (int)fVar53);
+      fVar1 = *(float *)(iVar59 + 8 + (int)fVar53);
+      pfStack_3f8c = *(float **)(iVar59 + 0xc + (int)fVar53);
+      fStack_3728 = fVar49 * fStack_37ac + fVar52 * fStack_37bc + fVar1 * fStack_379c +
                     (float)pfStack_3f98;
       uStack_978 = 0xffffffff;
-      fStack_3724 = fVar49 * fStack_37a8 + fVar53 * fStack_37b8 + fVar1 * fStack_3798 +
+      fStack_3724 = fVar49 * fStack_37a8 + fVar52 * fStack_37b8 + fVar1 * fStack_3798 +
                     (float)piStack_3f78;
-      fVar54 = 1.0 / (fVar49 * fStack_37a0 + fVar53 * fStack_37b0 + fVar1 * fStack_3790 + 2.8026e-45
+      fVar53 = 1.0 / (fVar49 * fStack_37a0 + fVar52 * fStack_37b0 + fVar1 * fStack_3790 + 2.8026e-45
                      );
-      fStack_3720 = fVar49 * fStack_37a4 + fVar53 * fStack_37b4 + fVar1 * fStack_3794 +
+      fStack_3720 = fVar49 * fStack_37a4 + fVar52 * fStack_37b4 + fVar1 * fStack_3794 +
                     (float)pfStack_3fbc;
-      afStack_3840[0] = fVar54 * fStack_3720;
-      uStack_3848 = CONCAT44(fVar54 * fStack_3724,fVar54 * fStack_3728);
+      afStack_3840[0] = fVar53 * fStack_3720;
+      uStack_3848 = CONCAT44(fVar53 * fStack_3724,fVar53 * fStack_3728);
       uStack_377c = uStack_3848;
       uStack_984 = uStack_3848;
       uStack_37fc = CONCAT44((float)pfStack_3f8c * fStack_3718,(float)pfStack_3f8c * fStack_371c);
@@ -46995,7 +46932,7 @@ LAB_004ad406:
       p_Stack_3ff0 = (LPCRITICAL_SECTION)0x4aea60;
       (**(code **)(*(int *)pCStack_3fec + 0x14c))();
       iStack_3f9c = iStack_3f9c + 1;
-      iVar60 = iVar60 + 0x10;
+      iVar59 = iVar59 + 0x10;
     } while (iStack_3f9c < (int)pfVar11[0x2001d8] - (int)pfVar11[0x2001d7] >> 4);
   }
   puStack_3fe0 = (ulonglong *)pfVar11[0x4d];
@@ -47026,12 +46963,12 @@ LAB_004ad406:
   pCStack_4014 = (CRefTime *)&fStack_3768;
   piStack_4018 = (int *)0x4aeb15;
   mat4_transformPoint();
-  fVar53 = fStack_3f48 * 250.0 + 50.0;
-  if (255.0 < fVar53) {
-    fVar53 = 255.0;
+  fVar52 = fStack_3f48 * 250.0 + 50.0;
+  if (255.0 < fVar52) {
+    fVar52 = 255.0;
   }
   pCStack_4010 = (CRefTime *)0x42200000;
-  uVar41 = (int)(fStack_3f48 * 200.0 * fStack_3f48) & 0xffU | ((int)fVar53 | 0xffff00U) << 8;
+  uVar41 = (int)(fStack_3f48 * 200.0 * fStack_3f48) & 0xffU | ((int)fVar52 | 0xffff00U) << 8;
   pCStack_4014 = aCStack_24d4;
   piStack_4018 = (int *)0x0;
   pCStack_401c = (CRefTime *)0xbf800000;
@@ -47116,14 +47053,14 @@ LAB_004ad406:
   piVar37 = piStack_4008;
   pfVar13 = afStack_38d4;
   pfVar11 = pfVar11 + 0x2002a4;
-  for (iVar60 = 0x10; iVar60 != 0; iVar60 = iVar60 + -1) {
+  for (iVar59 = 0x10; iVar59 != 0; iVar59 = iVar59 + -1) {
     *pfVar11 = *pfVar13;
     pfVar13 = pfVar13 + 1;
     pfVar11 = pfVar11 + 1;
   }
   piVar7 = piStack_4008 + 0x9b;
   piVar44 = &iStack_3884;
-  for (iVar60 = 0x10; iVar60 != 0; iVar60 = iVar60 + -1) {
+  for (iVar59 = 0x10; iVar59 != 0; iVar59 = iVar59 + -1) {
     *piVar44 = *piVar7;
     piVar7 = piVar7 + 1;
     piVar44 = piVar44 + 1;
@@ -47143,11 +47080,11 @@ LAB_004ad406:
   pCStack_4040 = (CRefTime *)0x13;
   pCStack_4048 = (CRefTime *)0x4aedff;
   (**(code **)(*(int *)pbStack_4044 + 0xe4))();
-  pbVar58 = (byte *)piVar37[0x4d];
+  pbVar57 = (byte *)piVar37[0x4d];
   pCStack_4048 = (CRefTime *)0x6;
   pCStack_404c = (CRefTime *)0x14;
   _pCStack_4058 = (double)CONCAT44(0x4aee14,pCStack_4058);
-  (**(code **)(*(int *)pbVar58 + 0xe4))();
+  (**(code **)(*(int *)pbVar57 + 0xe4))();
   _pCStack_4058 = (double)CONCAT44(piVar37 + 0x9b,afStack_34ec + 2);
   dStack_4060 = (double)CONCAT44(0x4aee2e,pCVar42);
   mat4_mulRight();
@@ -47318,7 +47255,7 @@ LAB_004ad406:
       _pCStack_4058 = (double)CONCAT44(pbVar24,0x4af3bc);
       vec3i64_selfDotFixed();
       _pCStack_4058 = (double)CONCAT44(0x4af3c3,pCStack_4058);
-      fVar48 = (float10)fixed16ToFloat();
+      fVar48 = (float)fixed16ToFloat();
       fStack_2cf4 = (float)fVar48;
       _pCStack_4058 = (double)CONCAT44(*(undefined4 *)(pCStack_4040 + 0x4c),auStack_2478);
       dStack_4060 = 1.3411048244149626e-08;
@@ -47352,28 +47289,28 @@ LAB_004ad406:
   cVar5 = operator_ne_int();
   while (cVar5 != '\0') {
     _pCStack_4058 = (double)CONCAT44(0x4af4dc,pCStack_4058);
-    iVar60 = getPtrPlus8();
+    iVar59 = getPtrPlus8();
     pbVar24 = auStack_3a5c;
     dStack_4060 = (double)CONCAT44(auStack_ef4,0x4af4f6);
-    pCStack_4058 = (CRefTime *)iVar60;
+    pCStack_4058 = (CRefTime *)iVar59;
     vec3i64_copySub();
     _pCStack_4058 = (double)CONCAT44(pbVar24,0x4af4fd);
     vec3i64_selfDotFixed();
     _pCStack_4058 = (double)CONCAT44(0x4af504,pCStack_4058);
-    fVar48 = (float10)fixed16ToFloat();
+    fVar48 = (float)fixed16ToFloat();
     fStack_2d24 = (float)fVar48;
-    fVar53 = 1.0 - (float)*(int *)(iVar60 + 0x28) / (float)*(int *)(iVar60 + 0x2c);
-    if (fVar53 < 0.0) {
-      fVar53 = 0.0;
+    fVar52 = 1.0 - (float)*(int *)(iVar59 + 0x28) / (float)*(int *)(iVar59 + 0x2c);
+    if (fVar52 < 0.0) {
+      fVar52 = 0.0;
     }
-    _pCStack_4058 = (double)CONCAT44(fVar53,auStack_2450);
+    _pCStack_4058 = (double)CONCAT44(fVar52,auStack_2450);
     dStack_4060 = (double)CONCAT44(0x4af54c,pCVar42);
     uVar14 = vec3_scaleOut();
     _pCStack_4058 = (double)CONCAT44(uVar14,0x4af559);
     vec3_copy();
-    _pCStack_4058 = (double)CONCAT44(iVar60,0x4af566);
+    _pCStack_4058 = (double)CONCAT44(iVar59,0x4af566);
     vec6_copy();
-    uStack_2d34 = *(undefined4 *)(iVar60 + 0x24);
+    uStack_2d34 = *(undefined4 *)(iVar59 + 0x24);
     _pCStack_4058 = (double)CONCAT44(auStack_2d4c,0x4af588);
     std_vector_pushback_48();
     _pCStack_4058 = (double)ZEXT48(&piStack_4008);
@@ -47394,12 +47331,12 @@ LAB_004ad406:
   cVar5 = operator_ne_int();
   while (cVar5 != '\0') {
     _pCStack_4058 = (double)CONCAT44(0x4af60e,pCStack_4058);
-    iVar60 = iterator_at_0x10();
-    pCVar12 = (CRefTime *)(iVar60 + 8);
-    iVar60 = *(int *)pCVar12;
+    iVar59 = iterator_at_0x10();
+    pCVar12 = (CRefTime *)(iVar59 + 8);
+    iVar59 = *(int *)pCVar12;
     pCStack_3fac = pCVar12;
-    if ((iVar60 != 0) && (0.0 < *(float *)(iVar60 + 0x16c))) {
-      if ((*(char *)(iVar60 + 0xaa9) == '\x14') || (*(char *)(iVar60 + 0x991) == '\x14')) {
+    if ((iVar59 != 0) && (0.0 < *(float *)(iVar59 + 0x16c))) {
+      if ((*(char *)(iVar59 + 0xaa9) == '\x14') || (*(char *)(iVar59 + 0x991) == '\x14')) {
         _pCStack_4058 = (double)CONCAT44(0x4af654,pCStack_4058);
         mat4_identity();
         _pCStack_4058 = 4.2464187950271e-314;
@@ -47429,7 +47366,7 @@ LAB_004ad406:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4af732);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4af739,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_2e4c = (float)fVar48;
         _pCStack_4058 = 3.0517585344114195e-05;
         dStack_4060 = 0.025000005977509863;
@@ -47470,7 +47407,7 @@ LAB_004ad406:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4af8ad);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4af8b4,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_2dec = (float)fVar48;
         _pCStack_4058 =
              (double)CONCAT44((float)*(byte *)(*(int *)pCVar12 + 0xdfc) * 0.25 + 0.75,aCStack_223c);
@@ -47485,8 +47422,8 @@ LAB_004ad406:
         std_vector_pushback_48();
       }
       _pCStack_4058 = 1.91003896964045e-313;
-      iVar60 = list_findByTypeByte();
-      if (iVar60 != 0) {
+      iVar59 = list_findByTypeByte();
+      if (iVar59 != 0) {
         _pCStack_4058 = (double)CONCAT44(0x4af954,pCStack_4058);
         mat4_identity();
         _pCStack_4058 = 4.24641917545765e-314;
@@ -47517,7 +47454,7 @@ LAB_004ad406:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4afa37);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4afa3e,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_30d4 = (float)fVar48;
         _pCStack_4058 = 5.20552092569981e-315;
         dStack_4060 = 9.765627334965838e-05;
@@ -47538,7 +47475,7 @@ LAB_004ad406:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4afadb);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4afae2,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_2d54 = (float)fVar48;
         _pCStack_4058 = 0.000878906457364792;
         dStack_4060 = 2.42780646939691e-317;
@@ -47567,7 +47504,7 @@ LAB_004ad406:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4afbca);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4afbd1,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_3074 = (float)fVar48;
         _pCStack_4058 = 5.2386907203709476e-11;
         dStack_4060 = 5.2386900404992895e-11;
@@ -47596,7 +47533,7 @@ LAB_004ad406:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4afcb9);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4afcc0,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_2f84 = (float)fVar48;
         _pCStack_4058 = 3.051758515084657e-05;
         dStack_4060 = 5.238690040499444e-11;
@@ -47625,7 +47562,7 @@ LAB_004ad406:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4afda8);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4afdaf,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_2ec4 = (float)fVar48;
         _pCStack_4058 = 1.3411048210842936e-08;
         dStack_4060 = 3.051757815830298e-05;
@@ -47654,7 +47591,7 @@ LAB_004ad406:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4afe97);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4afe9e,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_3014 = (float)fVar48;
         _pCStack_4058 = 9.765628767581802e-05;
         dStack_4060 = 0.000878906343665131;
@@ -47675,7 +47612,7 @@ LAB_004ad406:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4aff40);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4aff47,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_2d84 = (float)fVar48;
         _pCStack_4058 = (double)CONCAT44(0x3f000000,auStack_20c8);
         dStack_4060 = (double)CONCAT44(auStack_191c,0x4aff6d);
@@ -47723,10 +47660,10 @@ LAB_004b000b:
         _pCStack_4058 = (double)CONCAT44(pbVar24,0x4b00e4);
         vec3i64_selfDotFixed();
         _pCStack_4058 = (double)CONCAT44(0x4b00eb,pCStack_4058);
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         fStack_2fb4 = (float)fVar48;
         _pCStack_4058 = (double)CONCAT44((float)*(int *)(*(int *)pCVar12 + 0x6c) * 0.01,0x4b010f);
-        fVar48 = (float10)cosf_f();
+        fVar48 = (float)cosf_f();
         pCStack_4040 = (CRefTime *)(float)fVar48;
         _pCStack_4058 = (double)CONCAT44((float)pCStack_4040 * 0.1 + 1.0,auStack_20b0);
         dStack_4060 = 5.2386907127815326e-11;
@@ -47746,13 +47683,13 @@ LAB_004b000b:
               ((CVar6 == (CRefTime)0x2b || (CVar6 == (CRefTime)0x2c)))) {
         pCStack_3fa8 = *(CRefTime **)pCVar12;
         _pCStack_4058 = -NAN;
-        iVar60 = combat_getAttackWindup();
-        if (*(int *)(pCStack_3fa8 + 0x6c) < iVar60) goto LAB_004b000b;
+        iVar59 = combat_getAttackWindup();
+        if (*(int *)(pCStack_3fa8 + 0x6c) < iVar59) goto LAB_004b000b;
       }
       pCStack_4028 = (CRefTime *)(float)*(int *)(*(int *)pCVar12 + 0x70);
       _pCStack_4058 = (double)CONCAT44(0x4b0199,pCStack_4058);
-      iVar60 = shield_getBlockDuration();
-      pCStack_4028 = (CRefTime *)((float)pCStack_4028 / (float)iVar60);
+      iVar59 = shield_getBlockDuration();
+      pCStack_4028 = (CRefTime *)((float)pCStack_4028 / (float)iVar59);
       if ((float)pCStack_4028 != 0.0) {
         if (*(char *)(*(int *)pCVar12 + 0xaa8) == '\x03') {
           _pCStack_4058 = (double)CONCAT44(auStack_3318,0x4b01df);
@@ -47763,13 +47700,13 @@ LAB_004b000b:
             _pCStack_4058 = (double)CONCAT44(*(int *)pCVar12 + 0x1a04,0x4b0212);
             vec3i64_setFromGen();
             _pCStack_4058 = (double)CONCAT44(auStack_3a9c,0x4b0227);
-            iVar60 = int64_negate();
+            iVar59 = int64_negate();
             _pCStack_4058 = (double)CONCAT44(auStack_3d2c,0x4b023e);
             int64_negate();
             _pCStack_4058 = (double)CONCAT44(auStack_291c,auStack_114c);
             pCStack_4064 = (CRefTime *)0x0;
             int_toFixed16();
-            pCStack_4064 = *(CRefTime **)(iVar60 + 4);
+            pCStack_4064 = *(CRefTime **)(iVar59 + 4);
             vec6_set();
             dStack_4060 = (double)CONCAT44(0x4b0279,pCVar42);
             uVar14 = vec3i64_copyAdd();
@@ -47783,7 +47720,7 @@ LAB_004b000b:
             _pCStack_4058 = (double)CONCAT44(pbVar24,0x4b02bb);
             vec3i64_selfDotFixed();
             _pCStack_4058 = (double)CONCAT44(0x4b02c2,pCStack_4058);
-            fVar48 = (float10)fixed16ToFloat();
+            fVar48 = (float)fixed16ToFloat();
             afStack_2e7c[0] = (float)fVar48;
             _pCStack_4058 = (double)CONCAT44(0x3e99999a,auStack_2074);
             dStack_4060 = (double)CONCAT44(0x4b02e5,pCVar42);
@@ -47811,13 +47748,13 @@ LAB_004b000b:
             _pCStack_4058 = (double)CONCAT44(*(int *)pCVar12 + 0x1b84,0x4b038f);
             vec3i64_setFromGen();
             _pCStack_4058 = (double)CONCAT44(auStack_3d1c,0x4b03a4);
-            iVar60 = int64_negate();
+            iVar59 = int64_negate();
             _pCStack_4058 = (double)CONCAT44(auStack_3af4,0x4b03bb);
             int64_negate();
             _pCStack_4058 = (double)CONCAT44(auStack_28f4,auStack_10bc);
             pCStack_4064 = (CRefTime *)0x0;
             int_toFixed16();
-            pCStack_4064 = *(CRefTime **)(iVar60 + 4);
+            pCStack_4064 = *(CRefTime **)(iVar59 + 4);
             vec6_set();
             dStack_4060 = (double)CONCAT44(0x4b03f6,pCVar42);
             uVar14 = vec3i64_copyAdd();
@@ -47831,7 +47768,7 @@ LAB_004b000b:
             _pCStack_4058 = (double)CONCAT44(pbVar24,0x4b0438);
             vec3i64_selfDotFixed();
             _pCStack_4058 = (double)CONCAT44(0x4b043f,pCStack_4058);
-            fVar48 = (float10)fixed16ToFloat();
+            fVar48 = (float)fixed16ToFloat();
             fStack_2f54 = (float)fVar48;
             _pCStack_4058 = (double)CONCAT44(0x3f000000,auStack_22d8);
             dStack_4060 = (double)CONCAT44(0x4b0462,pCVar42);
@@ -47866,7 +47803,7 @@ LAB_004b000b:
             _pCStack_4058 = (double)CONCAT44(pbVar24,0x4b053b);
             vec3i64_selfDotFixed();
             _pCStack_4058 = (double)CONCAT44(0x4b0542,pCStack_4058);
-            fVar48 = (float10)fixed16ToFloat();
+            fVar48 = (float)fixed16ToFloat();
             fStack_2dbc = (float)fVar48;
             _pCStack_4058 = (double)CONCAT44(0x3dcccccd,auStack_22a8);
             dStack_4060 = (double)CONCAT44(0x4b0565,pCVar42);
@@ -47900,7 +47837,7 @@ LAB_004b000b:
             _pCStack_4058 = (double)CONCAT44(pbVar24,0x4b0637);
             vec3i64_selfDotFixed();
             _pCStack_4058 = (double)CONCAT44(0x4b063e,pCStack_4058);
-            fVar48 = (float10)fixed16ToFloat();
+            fVar48 = (float)fixed16ToFloat();
             fStack_2f0c = (float)fVar48;
             _pCStack_4058 = (double)CONCAT44(0x3dcccccd,auStack_2b1c);
             dStack_4060 = (double)CONCAT44(0x4b0661,pCVar42);
@@ -48014,7 +47951,7 @@ LAB_004b000b:
                   _pCStack_4058 = (double)CONCAT44(pbVar24,0x4b09ee);
                   vec3i64_selfDotFixed();
                   _pCStack_4058 = (double)CONCAT44(0x4b09f5,pCStack_4058);
-                  fVar48 = (float10)fixed16ToFloat();
+                  fVar48 = (float)fixed16ToFloat();
                   fStack_2e1c = (float)fVar48;
                   _pCStack_4058 = (double)CONCAT44(1.0 - (float)pfStack_3f8c,aCStack_2aa4);
                   dStack_4060 = 0.0008789064586380846;
@@ -48055,7 +47992,7 @@ LAB_004b000b:
                   _pCStack_4058 = (double)CONCAT44(pbVar24,0x4b0b51);
                   vec3i64_selfDotFixed();
                   _pCStack_4058 = (double)CONCAT44(0x4b0b58,pCStack_4058);
-                  fVar48 = (float10)fixed16ToFloat();
+                  fVar48 = (float)fixed16ToFloat();
                   fStack_30a4 = (float)fVar48;
                   _pCStack_4058 = (double)CONCAT44(1.0 - (float)pfStack_3f8c,auStack_2224);
                   dStack_4060 = 3.4332283526339325e-06;
@@ -48092,7 +48029,7 @@ LAB_004b000b:
                 _pCStack_4058 = (double)CONCAT44(auStack_21f4,0x4b0c72);
                 item_glowColor();
                 _pCStack_4058 = (double)CONCAT44(0x4b0c79,pCStack_4058);
-                fVar48 = (float10)vec3_lengthSq();
+                fVar48 = (float)vec3_lengthSq();
                 pCStack_4040 = (CRefTime *)(float)fVar48;
                 if (0.0 < (float)pCStack_4040) {
                   _pCStack_4058 = (double)CONCAT44(3,auStack_39dc);
@@ -48105,8 +48042,8 @@ LAB_004b000b:
                   puVar18 = (undefined8 *)arrayElem_stride8();
                   dStack_4060 = (double)*puVar18;
                   pCStack_4064 = (CRefTime *)0x0;
-                  iVar60 = arrayElem_stride8();
-                  pCStack_4064 = *(CRefTime **)(iVar60 + 4);
+                  iVar59 = arrayElem_stride8();
+                  pCStack_4064 = *(CRefTime **)(iVar59 + 4);
                   vec6_set();
                   _pCStack_4058 = (double)CONCAT44(fStack_3fa4,0x41800000);
                   pCStack_4064 = (CRefTime *)0x0;
@@ -48130,7 +48067,7 @@ LAB_004b000b:
                     _pCStack_4058 = (double)CONCAT44(pbVar24,0x4b0d92);
                     vec3i64_selfDotFixed();
                     _pCStack_4058 = (double)CONCAT44(0x4b0d99,pCStack_4058);
-                    fVar48 = (float10)fixed16ToFloat();
+                    fVar48 = (float)fixed16ToFloat();
                     fStack_3044 = (float)fVar48;
                     _pCStack_4058 = (double)CONCAT44(auStack_21dc,0x4b0db1);
                     uVar14 = item_glowColor();
@@ -48175,9 +48112,9 @@ LAB_004b000b:
   if (0 < *(int *)(pCStack_4038 + 0x2dc) * *(int *)(pCStack_4038 + 0x2dc)) {
     uStack_402c = (CRefTime *)0x0;
     do {
-      iVar60 = *(int *)(pCStack_4038 + 0x2e0);
-      *(undefined4 *)(uStack_402c + iVar60 + 0x238) = 0;
-      ppVar45 = (pair<unsigned___int64,unsigned___int64> *)(uStack_402c + iVar60 + 0x78);
+      iVar59 = *(int *)(pCStack_4038 + 0x2e0);
+      *(undefined4 *)(uStack_402c + iVar59 + 0x238) = 0;
+      ppVar45 = (pair<unsigned___int64,unsigned___int64> *)(uStack_402c + iVar59 + 0x78);
       pCStack_3fe4 = (CRefTime *)0x10;
       do {
         _pCStack_4058 = 0.0;
@@ -48265,9 +48202,9 @@ LAB_004b000b:
                    ((-1 < (int)pCStack_400c && (-1 < (int)pCVar19)))) &&
                   ((int)pCStack_400c < 0x80000)) &&
                  (((int)pCVar19 < 0x80000 &&
-                  (iVar60 = (((int)pCVar19 % (int)pCStack_3fe4) * (int)pCStack_3fe4 +
+                  (iVar59 = (((int)pCVar19 % (int)pCStack_3fe4) * (int)pCStack_3fe4 +
                             (int)pCStack_400c % (int)pCStack_3fe4) * 0x268 +
-                            *(int *)(pCStack_4038 + 0x2e0), *(int *)(iVar60 + 0x238) < 0x10)))) {
+                            *(int *)(pCStack_4038 + 0x2e0), *(int *)(iVar59 + 0x238) < 0x10)))) {
                 dStack_4060 = 2.43065722817341e-317;
                 int_toFixed16();
                 dStack_4060 = (double)*puStack_3fe0;
@@ -48295,10 +48232,10 @@ LAB_004b000b:
                 std::pair<unsigned___int64,unsigned___int64>::
                 operator=<std::pair<unsigned___int64,unsigned___int64>,0>
                           ((pair<unsigned___int64,unsigned___int64> *)
-                           (*(int *)(iVar60 + 0x238) * 0x10 + 0x78 + iVar60),ppVar45);
+                           (*(int *)(iVar59 + 0x238) * 0x10 + 0x78 + iVar59),ppVar45);
                 _pCStack_4058 = (double)CONCAT44(uStack_402c + 0x1c,0x4b126c);
                 vec3_copy();
-                *(int *)(iVar60 + 0x238) = *(int *)(iVar60 + 0x238) + 1;
+                *(int *)(iVar59 + 0x238) = *(int *)(iVar59 + 0x238) + 1;
                 pCVar23 = pCStack_403c;
                 pCVar39 = pCStack_400c;
               }
@@ -48336,9 +48273,9 @@ LAB_004b000b:
     pCStack_3fe4 = (CRefTime *)arrayElem_stride4();
     piStack_4018 = aiStack_87c;
     ppStack_3fe8 = apStack_63c;
-    iVar60 = 0;
+    iVar59 = 0;
     do {
-      _pCStack_4058 = (double)CONCAT44(iVar60,0x4b136d);
+      _pCStack_4058 = (double)CONCAT44(iVar59,0x4b136d);
       iVar40 = vector_at_48();
       dStack_4060 = 2.43089536781471e-317;
       int_toFixed16();
@@ -48361,10 +48298,10 @@ LAB_004b000b:
       _pCStack_4058 = (double)CONCAT44(iVar40 + 0x1c,0x4b1415);
       vec3_copy();
       ppStack_3fe8 = ppStack_3fe8 + 0x10;
-      iVar60 = iVar60 + 1;
+      iVar59 = iVar59 + 1;
       piStack_4018 = piVar37 + 3;
       pCVar12 = pCStack_4038;
-    } while (iVar60 < (int)pCStack_3fc4);
+    } while (iVar59 < (int)pCStack_3fc4);
   }
   _pCStack_4058 = (double)CONCAT44(auStack_33d8,auStack_1bdc);
   dStack_4060 = (double)CONCAT44(0x4b144f,pCVar42);
@@ -48404,7 +48341,7 @@ LAB_004b000b:
     lVar16 = CRefTime::Millisecs(pCVar19);
     _pCStack_4058 = (double)CONCAT44(pbVar24,lVar16);
     dStack_4060 = (double)CONCAT44(0x4b1569,pCVar42);
-    fVar48 = (float10)GameController_sampleTemperatureGrid();
+    fVar48 = (float)GameController_sampleTemperatureGrid();
     pCStack_4040 = (CRefTime *)(float)fVar48;
     if (0.01 < (float)pCStack_4040) {
       _pCStack_4058 = 2.12442694967008e-314;
@@ -48419,7 +48356,7 @@ LAB_004b000b:
       lVar16 = CRefTime::Millisecs(pCVar19);
       _pCStack_4058 = (double)CONCAT44(pbVar24,lVar16);
       dStack_4060 = (double)CONCAT44(0x4b15b5,pCVar42);
-      fVar48 = (float10)World_getRegionCellPtr();
+      fVar48 = (float)World_getRegionCellPtr();
       pCStack_4040 = (CRefTime *)(float)fVar48;
       if ((float)pCStack_4040 < 0.01) {
         pCStack_400c = (CRefTime *)0xfffffffa;
@@ -48439,13 +48376,13 @@ LAB_004b000b:
             _pCStack_4058 = (double)(int)uStack_402c;
             dStack_4060 = (double)(int)pCVar19;
             pCStack_4064 = (CRefTime *)0x4b1683;
-            fVar48 = (float10)perlinNoise2D_cosInterp();
+            fVar48 = (float)perlinNoise2D_cosInterp();
             piStack_4018 = (int *)(float)fVar48;
             ppStack_3fe8 = (pair<unsigned___int64,unsigned___int64> *)
                            (((float)piStack_4018 + 1.0) * 0.5);
             _pCStack_4058 = (double)CONCAT44(uStack_402c,pCVar19);
             dStack_4060 = (double)CONCAT44(0x4b16bc,pCVar42);
-            fVar48 = (float10)GameController_sampleTemperatureGrid();
+            fVar48 = (float)GameController_sampleTemperatureGrid();
             piStack_4018 = (int *)(float)fVar48;
             if ((float)ppStack_3fe8 < (float)piStack_4018 * 0.8) {
               dStack_4060 = 2.43132915745175e-317;
@@ -48468,7 +48405,7 @@ LAB_004b000b:
               lVar16 = CRefTime::Millisecs(pCStack_3fc4);
               _pCStack_4058 = (double)CONCAT44(pbVar24,lVar16);
               dStack_4060 = (double)CONCAT44(0x4b177e,pCVar42);
-              fVar48 = (float10)GameController_sampleTemperatureGrid();
+              fVar48 = (float)GameController_sampleTemperatureGrid();
               piStack_4018 = (int *)(float)fVar48;
               if (0.3 <= (float)piStack_4018) {
                 pbVar24 = (byte *)0x0;
@@ -48478,7 +48415,7 @@ LAB_004b000b:
                 dStack_4060 = (double)CONCAT44(0x4b17ad,pCVar42);
                 lVar16 = CRefTime::Millisecs(pCStack_3fc4);
                 dStack_4060 = (double)CONCAT44(lVar16,0x4b17b9);
-                fVar48 = (float10)World_placeObjectWithSpacing();
+                fVar48 = (float)World_placeObjectWithSpacing();
                 piStack_4008 = (int *)(float)fVar48;
                 _pCStack_4058 = 4.24642302274683e-314;
                 ppStack_3fe8 = (pair<unsigned___int64,unsigned___int64> *)arrayElem_stride8();
@@ -48489,7 +48426,7 @@ LAB_004b000b:
                 dStack_4060 = (double)CONCAT44(0x4b17e7,pCVar42);
                 lVar16 = CRefTime::Millisecs(pCStack_3fc4);
                 dStack_4060 = (double)CONCAT44(lVar16,0x4b17f3);
-                fVar48 = (float10)terrain_generateColumnColor();
+                fVar48 = (float)terrain_generateColumnColor();
                 piStack_4018 = (int *)(float)fVar48;
                 _pCStack_4058 =
                      (double)CONCAT44((float)piStack_4018 + (float)piStack_4008 * 100.0,0x4b181e);
@@ -48503,7 +48440,7 @@ LAB_004b000b:
                 _pCStack_4058 = (double)((int)uStack_402c * 0x13);
                 dStack_4060 = (double)((int)pCVar19 * 0x11);
                 pCStack_4064 = (CRefTime *)0x4b1873;
-                fVar48 = (float10)perlinNoise2D_cosInterp();
+                fVar48 = (float)perlinNoise2D_cosInterp();
                 piStack_4008 = (int *)(float)fVar48;
                 _pCStack_4058 = (double)CONCAT44((float)piStack_4008 * 50.0 + 170.0,0x4b18a1);
                 int64_setFromGen();
@@ -48526,22 +48463,22 @@ LAB_004b000b:
                 _pCStack_4058 = (double)((int)uStack_402c * 0x17);
                 dStack_4060 = (double)((int)pCVar19 * 0xf);
                 pCStack_4064 = (CRefTime *)0x4b195f;
-                fVar48 = (float10)perlinNoise2D_cosInterp();
+                fVar48 = (float)perlinNoise2D_cosInterp();
                 piStack_4008 = (int *)(float)fVar48;
-                fVar53 = (float)piStack_4008 * 2.0 + 7.0;
-                _pCStack_4058 = (double)CONCAT44(fVar53,fVar53);
-                dStack_4060 = (double)CONCAT44(fVar53,0x4b1999);
+                fVar52 = (float)piStack_4008 * 2.0 + 7.0;
+                _pCStack_4058 = (double)CONCAT44(fVar52,fVar52);
+                dStack_4060 = (double)CONCAT44(fVar52,0x4b1999);
                 mat4_scaleAxes();
                 _pCStack_4058 =
                      (double)CONCAT44((float)((int)(uStack_402c + (int)pCVar19) * 0x5a),0x4b19c2);
                 mat4_rotateZ();
                 pbVar24 = (byte *)0x0;
                 pCStack_4058 = (CRefTime *)0x4b19d6;
-                iVar60 = getField_0x48();
-                _pCStack_4058 = (double)CONCAT44(pbVar24,(float)iVar60 * -0.5);
+                iVar59 = getField_0x48();
+                _pCStack_4058 = (double)CONCAT44(pbVar24,(float)iVar59 * -0.5);
                 dStack_4060 = (double)CONCAT44(0x4b19f7,pCVar42);
-                iVar60 = getField_0x44();
-                dStack_4060 = (double)CONCAT44((float)iVar60 * -0.5,0x4b1a18);
+                iVar59 = getField_0x44();
+                dStack_4060 = (double)CONCAT44((float)iVar59 * -0.5,0x4b1a18);
                 mat4_translate();
                 _pCStack_4058 = (double)CONCAT44(auStack_3904,auStack_38b4);
                 dStack_4060 = (double)CONCAT44(auStack_2bac,0x4b1a3b);
@@ -48599,15 +48536,15 @@ LAB_004b000b:
   cVar5 = operator_ne_int();
   while (pCStack_405c = (CRefTime *)((ulonglong)dStack_4060 >> 0x20), cVar5 != '\0') {
     piVar37 = (int *)getFirstDword();
-    iVar60 = *piVar37;
-    p_Stack_3ff0 = (LPCRITICAL_SECTION)(iVar60 + 0x250);
+    iVar59 = *piVar37;
+    p_Stack_3ff0 = (LPCRITICAL_SECTION)(iVar59 + 0x250);
     pCStack_4064 = (CRefTime *)0x4b1bd7;
     EnterCriticalSection(p_Stack_3ff0);
     cVar5 = isZero_off4();
     if (cVar5 == '\0') {
       pCStack_4064 = (CRefTime *)0x4b1bfa;
       render_setUniform30();
-      pCStack_4064 = (CRefTime *)(iVar60 + 0x78);
+      pCStack_4064 = (CRefTime *)(iVar59 + 0x78);
       render_uploadBoneMatrices();
       pCStack_4064 = (CRefTime *)0x4b1c23;
       render_setVec3Uniform5c();
@@ -48627,7 +48564,7 @@ LAB_004b000b:
           int_toFixed16();
           int64_add();
           pCStack_4064 = (CRefTime *)0x4b1cd5;
-          fVar48 = (float10)fixed16ToFloat();
+          fVar48 = (float)fixed16ToFloat();
           pCStack_4064 = (CRefTime *)(float)fVar48;
           arrayElem_stride4();
           int_toFixed16();
@@ -48669,10 +48606,10 @@ LAB_004b000b:
       noop();
       pCStack_4064 = (CRefTime *)0x4b1e36;
       vec2_copy();
-      fVar48 = (float10)vec2_lengthSq();
+      fVar48 = (float)vec2_lengthSq();
       pCStack_4014 = (CRefTime *)(float)fVar48;
       if ((float)pCStack_4014 <= (float)pCStack_404c * (float)pCStack_404c) {
-        fStack_3ff4 = (float)(iVar60 + 0x240);
+        fStack_3ff4 = (float)(iVar59 + 0x240);
         pCStack_4064 = (CRefTime *)0x4b1e76;
         deref_frontValue();
         pCStack_4064 = (CRefTime *)0x4b1e87;
@@ -48682,13 +48619,13 @@ LAB_004b000b:
         while (cVar5 != '\0') {
           pCStack_4048 = pCVar42 + 1;
           pCStack_4038 = (CRefTime *)getPtrPlus8();
-          iVar60 = *(int *)pCStack_4038;
-          if (iVar60 == 0x3c) {
+          iVar59 = *(int *)pCStack_4038;
+          if (iVar59 == 0x3c) {
             iVar40 = GameController_get_8000bc();
-            iVar60 = *(int *)(pCVar12 + 0x8006e8);
+            iVar59 = *(int *)(pCVar12 + 0x8006e8);
             iVar8 = GameController_get_8000bc();
             pCVar42 = pCStack_4048;
-            if (iVar8 / 1000 != (iVar40 + iVar60) / 1000) {
+            if (iVar8 / 1000 != (iVar40 + iVar59) / 1000) {
               uVar41 = rand();
               uVar41 = uVar41 & 0x8000000f;
               bVar47 = uVar41 == 0;
@@ -48702,8 +48639,8 @@ LAB_004b000b:
                 pCStack_4064 = (CRefTime *)0x4b1f4c;
                 vec6_copy();
                 pCStack_4064 = (CRefTime *)0x4b1f56;
-                iVar60 = rand();
-                pCStack_4064 = (CRefTime *)((float)iVar60 / 32767.0 - 0.5);
+                iVar59 = rand();
+                pCStack_4064 = (CRefTime *)((float)iVar59 / 32767.0 - 0.5);
                 rand();
                 setVec3();
                 pCStack_4064 = (CRefTime *)0x40800000;
@@ -48716,8 +48653,8 @@ LAB_004b000b:
                 vec3_copy();
                 rand();
                 pCStack_4064 = (CRefTime *)0x4b2018;
-                iVar60 = rand();
-                pCStack_4064 = (CRefTime *)((float)iVar60 / 32767.0 - 0.5);
+                iVar59 = rand();
+                pCStack_4064 = (CRefTime *)((float)iVar59 / 32767.0 - 0.5);
                 rand();
                 setVec3();
                 pCStack_4064 = (CRefTime *)0x41200000;
@@ -48746,23 +48683,23 @@ LAB_004b000b:
           }
           else {
             pCVar42 = pCStack_4048;
-            if (((-1 < iVar60) && (iVar40 = std_vector_size_4(), pCVar42 = pCStack_4048, iVar60 < iVar40)
-                ) && (iVar60 != 0x12)) {
+            if (((-1 < iVar59) && (iVar40 = std_vector_size_4(), pCVar42 = pCStack_4048, iVar59 < iVar40)
+                ) && (iVar59 != 0x12)) {
               pCStack_4064 = (CRefTime *)0x4b25df;
               piVar37 = (int *)vector_at_stride4();
               pCVar42 = pCStack_4048;
               if (*piVar37 != 0) {
-                iVar60 = getField_0x44();
+                iVar59 = getField_0x44();
                 iVar40 = getter_off4c();
-                if (iVar40 < iVar60) {
+                if (iVar40 < iVar59) {
                   dStack_4060 = (double)CONCAT44(pCStack_405c,0x4b2617);
-                  iVar60 = getField_0x44();
+                  iVar59 = getField_0x44();
                 }
                 else {
                   dStack_4060 = (double)CONCAT44(pCStack_405c,0x4b261e);
-                  iVar60 = getter_off4c();
+                  iVar59 = getter_off4c();
                 }
-                pCStack_4064 = (CRefTime *)((float)iVar60 * *(float *)(pCStack_4038 + 0x20));
+                pCStack_4064 = (CRefTime *)((float)iVar59 * *(float *)(pCStack_4038 + 0x20));
                 pCStack_4024 = pCStack_4038 + 8;
                 getter_off4c();
                 int64_setFromGen();
@@ -48791,7 +48728,7 @@ LAB_004b000b:
                   vec3i64_copySub();
                   pCStack_4064 = (CRefTime *)0x4b2749;
                   vec3i64_toFloat();
-                  fVar48 = (float10)vec3_lengthSq();
+                  fVar48 = (float)vec3_lengthSq();
                   pCVar42 = pCStack_4048;
                   pCStack_4024 = (CRefTime *)(float)fVar48;
                   if ((float)pCStack_4024 <= (float)piStack_3ffc * (float)piStack_3ffc) {
@@ -48860,8 +48797,8 @@ LAB_004b000b:
               if (*(int *)(pcVar25 + 0x140) != 0) goto LAB_004b2c50;
               pCStack_4064 = (CRefTime *)0x4b229b;
               pCStack_4048 = (CRefTime *)GameController_item_icon_id();
-              iVar60 = getField_0x44();
-              pCStack_4014 = (CRefTime *)((float)iVar60 * 0.7 * *(float *)(pcVar25 + 0x134));
+              iVar59 = getField_0x44();
+              pCStack_4014 = (CRefTime *)((float)iVar59 * 0.7 * *(float *)(pcVar25 + 0x134));
               pCStack_4064 = (CRefTime *)0x4b22d6;
               vec6_copy();
               if (0 < *(int *)(pcVar25 + 0x13c)) {
@@ -48903,7 +48840,7 @@ LAB_004b000b:
               pCStack_4064 = pCVar12 + 0x1e0;
               int64_add();
               pCStack_4064 = (CRefTime *)0x4b2475;
-              fVar48 = (float10)fixed16ToFloat();
+              fVar48 = (float)fixed16ToFloat();
               pCStack_4064 = (CRefTime *)(float)fVar48;
               int64_add();
               fixed16ToFloat();
@@ -48937,7 +48874,7 @@ LAB_004b000b:
               case '\r':
                 GameController_get_8000bc();
                 pCStack_4064 = (CRefTime *)0x4b2981;
-                fVar48 = (float10)cosf_f();
+                fVar48 = (float)cosf_f();
                 pCStack_4014 = (CRefTime *)(float)fVar48;
                 pCStack_4064 = (CRefTime *)0x4b29b8;
                 math_vec4_scale();
@@ -48966,15 +48903,15 @@ LAB_004b28be:
                 getter_off4c();
               }
               pCStack_4064 = (CRefTime *)0x4b2a0a;
-              iVar60 = getField_0x48();
-              pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+              iVar59 = getField_0x48();
+              pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
               getField_0x44();
               mat4_translate();
               if (*(int *)(pcVar25 + 0x13c) != 0) {
                 getter_off4c();
                 pCStack_4064 = (CRefTime *)0x4b2a7d;
-                iVar60 = getField_0x48();
-                pCStack_4064 = (CRefTime *)((float)iVar60 * 0.5);
+                iVar59 = getField_0x48();
+                pCStack_4064 = (CRefTime *)((float)iVar59 * 0.5);
                 getField_0x44();
                 mat4_translate();
                 pCStack_4064 = (CRefTime *)0x4b2ad9;
@@ -48983,8 +48920,8 @@ LAB_004b28be:
                 mat4_rotateY();
                 getter_off4c();
                 pCStack_4064 = (CRefTime *)0x4b2b25;
-                iVar60 = getField_0x48();
-                pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+                iVar59 = getField_0x48();
+                pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
                 getField_0x44();
                 mat4_translate();
               }
@@ -49029,7 +48966,7 @@ LAB_004b2c50:
               pCStack_3fc8 = pCStack_3fc8 + 1;
               piStack_4008 = (int *)getFirstDword();
               pCStack_4014 = (CRefTime *)*piStack_4008;
-              if ((-1 < (int)pCStack_4014) && (iVar60 = std_vector_size_4(), (int)pCStack_4014 < iVar60))
+              if ((-1 < (int)pCStack_4014) && (iVar59 = std_vector_size_4(), (int)pCStack_4014 < iVar59))
               {
                 pCStack_4024 = (CRefTime *)(piStack_4008 + 9);
                 pCStack_4064 = (CRefTime *)0x4b2d2b;
@@ -49062,8 +48999,8 @@ LAB_004b2c50:
                   if ((*piStack_4008 == 6) && ((char)piStack_4008[0xc] != '\0')) {
                     pCStack_4064 = (CRefTime *)0x0;
                     setVec3();
-                    iVar60 = piStack_4008[8];
-                    if (iVar60 == 1) {
+                    iVar59 = piStack_4008[8];
+                    if (iVar59 == 1) {
                       pCStack_4064 = (CRefTime *)0x41000000;
 LAB_004b2ea6:
                       setVec3();
@@ -49071,11 +49008,11 @@ LAB_004b2ea6:
                       vec3_copy();
                     }
                     else {
-                      if (iVar60 == 2) {
+                      if (iVar59 == 2) {
                         pCStack_4064 = (CRefTime *)0x0;
                         goto LAB_004b2ea6;
                       }
-                      if (iVar60 == 3) {
+                      if (iVar59 == 3) {
                         pCStack_4064 = (CRefTime *)0xc1000000;
                         goto LAB_004b2ea6;
                       }
@@ -49124,7 +49061,7 @@ LAB_004b2ea6:
                   vec3i64_copySub();
                   pCStack_4064 = (CRefTime *)0x4b3033;
                   vec3i64_toFloat();
-                  fVar48 = (float10)vec3_lengthSq();
+                  fVar48 = (float)vec3_lengthSq();
                   fStack_3ff4 = (float)fVar48;
                   if (fStack_3ff4 <= (float)pCStack_4020 * (float)pCStack_4020) {
                     pCStack_4064 = (CRefTime *)0x4b30ab;
@@ -49242,15 +49179,15 @@ LAB_004b2ea6:
       mat4_rotateZ();
       dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
       pCStack_4064 = (CRefTime *)0x4b34f0;
-      iVar60 = getField_0x48();
-      pCStack_4064 = (CRefTime *)(float)-(iVar60 / 2);
+      iVar59 = getField_0x48();
+      pCStack_4064 = (CRefTime *)(float)-(iVar59 / 2);
       getField_0x44();
       mat4_translate();
       pCStack_4064 = aCStack_38c0;
       render_uploadModelViewMatrices();
       GameController_get_8000bc();
       pCStack_4064 = (CRefTime *)0x4b3573;
-      fVar48 = (float10)cosf_f();
+      fVar48 = (float)cosf_f();
       pCStack_4014 = (CRefTime *)(float)fVar48;
       pCStack_4064 = (CRefTime *)0x3f800000;
       setVec4();
@@ -49267,8 +49204,8 @@ LAB_004b2ea6:
   pCStack_4064 = (CRefTime *)0x4b3607;
   cVar5 = operator_ne_int();
   while (pCStack_405c = (CRefTime *)((ulonglong)dStack_4060 >> 0x20), cVar5 != '\0') {
-    iVar60 = iterator_at_0x10();
-    pCStack_4014 = (CRefTime *)(iVar60 + 8);
+    iVar59 = iterator_at_0x10();
+    pCStack_4014 = (CRefTime *)(iVar59 + 8);
     if (*(float *)pCStack_4014 != 0.0) {
       pCStack_4064 = (CRefTime *)0x42800000;
       cVar5 = testSphereVsFrustum_fixed();
@@ -49284,7 +49221,7 @@ LAB_004b2ea6:
           arrayElem_stride8();
           int64_add();
           pCStack_4064 = (CRefTime *)0x4b36c5;
-          fVar48 = (float10)fixed16ToFloat();
+          fVar48 = (float)fixed16ToFloat();
           pCStack_4064 = (CRefTime *)(float)fVar48;
           arrayElem_stride8();
           int64_add();
@@ -49294,8 +49231,8 @@ LAB_004b2ea6:
           mat4_rotateZ();
           getter_off4c();
           pCStack_4064 = (CRefTime *)0x4b3749;
-          iVar60 = getField_0x48();
-          pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+          iVar59 = getField_0x48();
+          pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
           getField_0x44();
           mat4_translate();
           pCStack_4064 = (CRefTime *)0x4b3799;
@@ -49324,15 +49261,15 @@ LAB_004b2ea6:
   pCStack_4064 = (CRefTime *)0x4b3842;
   cVar5 = operator_ne_int();
   while (pCStack_405c = (CRefTime *)((ulonglong)dStack_4060 >> 0x20), cVar5 != '\0') {
-    iVar60 = iterator_at_0x10();
-    if (*(int *)(iVar60 + 8) != 0) {
+    iVar59 = iterator_at_0x10();
+    if (*(int *)(iVar59 + 8) != 0) {
       pCStack_4064 = aCStack_e40;
       vec3i64_copySub();
       pCStack_4064 = (CRefTime *)0x4b3884;
       vec3i64_toFloat();
-      fVar48 = (float10)vec3_lengthSq();
+      fVar48 = (float)vec3_lengthSq();
       pCStack_4014 = (CRefTime *)(float)fVar48;
-      uStack_3e50 = *(undefined4 *)(iVar60 + 8);
+      uStack_3e50 = *(undefined4 *)(iVar59 + 8);
       uStack_3e48 = 0;
       pCStack_4064 = (CRefTime *)0x4b38c3;
       pCStack_3e4c = pCStack_4014;
@@ -49378,7 +49315,7 @@ LAB_004b2ea6:
       CVar6 = pCVar12[0x68];
       if ((((CVar6 == (CRefTime)0x1e) || (CVar6 == (CRefTime)0x1f)) ||
           ((CVar6 == (CRefTime)0x20 || (CVar6 == (CRefTime)0x21)))) &&
-         (iVar60 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar60)) {
+         (iVar59 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar59)) {
         pCStack_4064 = (CRefTime *)0x4b416a;
         vec3i64_setFromGen();
         pCStack_4064 = (CRefTime *)0x40800000;
@@ -49387,15 +49324,15 @@ LAB_004b2ea6:
         if (cVar5 != '\0') {
           pCStack_403c = (CRefTime *)(float)(int)*(float *)(pCVar12 + 0x6c);
           pCStack_4064 = (CRefTime *)0x4b41c2;
-          iVar60 = combat_getAttackWindup();
-          pCStack_403c = (CRefTime *)(((float)pCStack_403c / (float)iVar60) * 0.1);
+          iVar59 = combat_getAttackWindup();
+          pCStack_403c = (CRefTime *)(((float)pCStack_403c / (float)iVar59) * 0.1);
           fStack_4004 = (float)(int)*(float *)(pCVar12 + 0x6c) * 2.0;
-          iVar60 = combat_getAttackTiming();
-          fStack_4004 = fStack_4004 / (float)iVar60;
+          iVar59 = combat_getAttackTiming();
+          fStack_4004 = fStack_4004 / (float)iVar59;
           fStack_4000 = 6.02558e-44;
           pCStack_4064 = (CRefTime *)0x4b4226;
-          iVar60 = combat_getAttackWindup();
-          if (iVar60 < (int)*(float *)(pCVar12 + 0x6c)) {
+          iVar59 = combat_getAttackWindup();
+          if (iVar59 < (int)*(float *)(pCVar12 + 0x6c)) {
             pCStack_403c = (CRefTime *)((float)pCStack_403c * 2.0);
             fStack_4000 = 1.20512e-43;
             fStack_4004 = fStack_4004 * 2.0;
@@ -49466,12 +49403,12 @@ LAB_004b2ea6:
       }
       if (((*(float *)(pCVar12 + 0x1a0) != 0.0 || *(float *)(pCVar12 + 0x1a4) != 0.0) &&
           (pCVar12[0x68] == (CRefTime)0x22)) &&
-         (iVar60 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar60)) {
+         (iVar59 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar59)) {
         pCStack_4064 = (CRefTime *)0x4b4592;
-        iVar60 = map_valueAtOr0();
-        if (iVar60 != 0) {
-          pCStack_4030 = (CRefTime *)(iVar60 + 0x80);
-          pCStack_4040 = (CRefTime *)(iVar60 + 0x1350);
+        iVar59 = map_valueAtOr0();
+        if (iVar59 != 0) {
+          pCStack_4030 = (CRefTime *)(iVar59 + 0x80);
+          pCStack_4040 = (CRefTime *)(iVar59 + 0x1350);
           pCStack_4064 = (CRefTime *)0x2;
           piVar37 = (int *)arrayElem_stride4();
           pCStack_4064 = (CRefTime *)*piVar37;
@@ -49499,10 +49436,10 @@ LAB_004b2ea6:
       CVar6 = pCVar12[0x68];
       if (((CVar6 == (CRefTime)0x1c) && (0.0 < *(float *)(pCVar12 + 0x170))) ||
          (((CVar6 == (CRefTime)0x5f || (CVar6 == (CRefTime)0x5e)) &&
-          (iVar60 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar60)))) {
+          (iVar59 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar59)))) {
         pCStack_4064 = (CRefTime *)0x4b46b8;
-        iVar60 = combat_getAttackWindup();
-        if (((int)*(float *)(pCVar12 + 0x6c) < iVar60) || (0 < (int)*(float *)(pCVar12 + 300)))
+        iVar59 = combat_getAttackWindup();
+        if (((int)*(float *)(pCVar12 + 0x6c) < iVar59) || (0 < (int)*(float *)(pCVar12 + 300)))
         goto LAB_004b4e1b;
         pCStack_4024 = pCVar12 + 0x10;
         pCStack_4064 = (CRefTime *)0x43480000;
@@ -49513,7 +49450,7 @@ LAB_004b2ea6:
         pCStack_4064 = (CRefTime *)0x4b4720;
         projectile_getMuzzlePosition();
         pCStack_4064 = (CRefTime *)0x0;
-        fVar48 = (float10)World_raycastVoxels();
+        fVar48 = (float)World_raycastVoxels();
         pCStack_4064 = (CRefTime *)(float)fVar48;
         pCStack_4030 = pCStack_4064;
         vec3_scale();
@@ -49541,8 +49478,8 @@ LAB_004b2ea6:
           else {
             getter_off4c();
             pCStack_4064 = (CRefTime *)0x4b48ae;
-            iVar60 = getField_0x48();
-            pCStack_4064 = (CRefTime *)(float)iVar60;
+            iVar59 = getField_0x48();
+            pCStack_4064 = (CRefTime *)(float)iVar59;
             getField_0x44();
             setVec3();
             pCStack_4064 = (CRefTime *)0x3f000000;
@@ -49563,8 +49500,8 @@ LAB_004b2ea6:
         else {
           getter_off4c();
           pCStack_4064 = (CRefTime *)0x4b47cc;
-          iVar60 = getField_0x48();
-          pCStack_4064 = (CRefTime *)(float)iVar60;
+          iVar59 = getField_0x48();
+          pCStack_4064 = (CRefTime *)(float)iVar59;
           getField_0x44();
           setVec3();
           pCStack_4064 = (CRefTime *)0x3f000000;
@@ -49595,7 +49532,7 @@ LAB_004b2ea6:
         arrayElem_stride8();
         int64_add();
         pCStack_4064 = (CRefTime *)0x4b4a6b;
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         pCStack_4064 = (CRefTime *)(float)fVar48;
         arrayElem_stride8();
         int64_add();
@@ -49614,20 +49551,20 @@ LAB_004b2ea6:
           fStack_4000 = 0.25;
         }
         pCStack_4064 = (CRefTime *)0x4b4b36;
-        iVar60 = combat_getAttackWindup();
-        if (1.0 <= (float)((int)*(float *)(pCVar12 + 0x6c) - iVar60) * 0.01) {
+        iVar59 = combat_getAttackWindup();
+        if (1.0 <= (float)((int)*(float *)(pCVar12 + 0x6c) - iVar59) * 0.01) {
           pCStack_4040 = (CRefTime *)0x3f800000;
         }
         else {
           pCStack_4064 = (CRefTime *)0x4b4b60;
-          iVar60 = combat_getAttackWindup();
-          pCStack_4040 = (CRefTime *)((float)((int)*(float *)(pCVar12 + 0x6c) - iVar60) * 0.01);
+          iVar59 = combat_getAttackWindup();
+          pCStack_4040 = (CRefTime *)((float)((int)*(float *)(pCVar12 + 0x6c) - iVar59) * 0.01);
         }
         pCStack_4064 = aCStack_2ec8;
         pCStack_4064 = (CRefTime *)vec3i64_copySub();
         vec3i64_toFloat();
         pCStack_4064 = (CRefTime *)0x4b4bbe;
-        fVar48 = (float10)vec3_length();
+        fVar48 = (float)vec3_length();
         pCStack_4030 = (CRefTime *)(float)fVar48;
         pCStack_4064 = (CRefTime *)((float)pCStack_4030 * (float)pCStack_4040);
         mat4_scaleAxes();
@@ -49640,27 +49577,27 @@ LAB_004b2ea6:
           dStack_4060 = (double)CONCAT44(pCStack_405c,0x3f800000);
           pCStack_4064 = (CRefTime *)0x3f800000;
           GameController_get_8000bc();
-          fVar48 = (float10)cosf_f();
+          fVar48 = (float)cosf_f();
           pCStack_4030 = (CRefTime *)(float)fVar48;
           GameController_get_8000bc();
-          fVar48 = (float10)cosf_f();
+          fVar48 = (float)cosf_f();
         }
         else if (pCVar12[0x141] == (CRefTime)0x2) {
           dStack_4060 = (double)CONCAT44(pCStack_405c,0x3f800000);
           pCStack_4064 = (CRefTime *)0x4b4cd0;
-          iVar60 = GameController_get_8000bc();
-          pCStack_4064 = (CRefTime *)((float)iVar60 * 0.01);
-          fVar48 = (float10)cosf_f();
+          iVar59 = GameController_get_8000bc();
+          pCStack_4064 = (CRefTime *)((float)iVar59 * 0.01);
+          fVar48 = (float)cosf_f();
           pCStack_4030 = (CRefTime *)(float)fVar48;
           pCStack_4064 = (CRefTime *)((float)pCStack_4030 * 0.3 + 0.4);
           GameController_get_8000bc();
-          fVar48 = (float10)cosf_f();
+          fVar48 = (float)cosf_f();
         }
         else {
           dStack_4060 = (double)CONCAT44(pCStack_405c,0x3f800000);
           pCStack_4064 = (CRefTime *)0x3ecccccd;
           GameController_get_8000bc();
-          fVar48 = (float10)cosf_f();
+          fVar48 = (float)cosf_f();
         }
         pCStack_4030 = (CRefTime *)(float)fVar48;
         setVec4();
@@ -49689,8 +49626,8 @@ LAB_004b4e1b:
         CRefTime::Millisecs(pCVar42);
         CRefTime::Millisecs(pCStack_4038);
         CRefTime::Millisecs(pCStack_4034);
-        iVar60 = map_getTileLightOrHeight();
-        pCStack_4030 = (CRefTime *)((float)iVar60 / 255.0);
+        iVar59 = map_getTileLightOrHeight();
+        pCStack_4030 = (CRefTime *)((float)iVar59 / 255.0);
         *(float *)(pCVar12 + 0x149c) = *(float *)(pCVar12 + 0x6c);
         switch(pCVar12[0x68]) {
         case (CRefTime)0x1:
@@ -50025,7 +49962,7 @@ LAB_004b535a:
             pCStack_4064 = (CRefTime *)(pbVar46 + 0x1e0);
             int64_add();
             pCStack_4064 = (CRefTime *)0x4b56b1;
-            fVar48 = (float10)fixed16ToFloat();
+            fVar48 = (float)fixed16ToFloat();
             pCStack_4064 = (CRefTime *)(float)fVar48;
             int64_add();
             fixed16ToFloat();
@@ -50034,7 +49971,7 @@ LAB_004b535a:
             mat4_scaleAxes();
             GameController_get_8000bc();
             pCStack_4064 = (CRefTime *)0x4b5742;
-            fVar48 = (float10)cosf_f();
+            fVar48 = (float)cosf_f();
             pCStack_4030 = (CRefTime *)((float)fVar48 * 40.0);
             pCStack_4064 = (CRefTime *)0x4b576a;
             arrayElem_stride4();
@@ -50042,8 +49979,8 @@ LAB_004b535a:
             mat4_rotateZ();
             dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
             pCStack_4064 = (CRefTime *)0x4b57a1;
-            iVar60 = getField_0x48();
-            pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+            iVar59 = getField_0x48();
+            pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
             getField_0x44();
             mat4_translate();
             pCStack_4064 = aCStack_38c0;
@@ -50067,14 +50004,14 @@ LAB_004b535a:
             pCStack_4064 = pCStack_3fec;
             int64_add();
             pCStack_4064 = (CRefTime *)0x4b5905;
-            fVar48 = (float10)fixed16ToFloat();
+            fVar48 = (float)fixed16ToFloat();
             pCStack_4064 = (CRefTime *)(float)fVar48;
             int64_add();
             fixed16ToFloat();
             mat4_translate();
             GameController_get_8000bc();
             pCStack_4064 = (CRefTime *)0x4b595e;
-            fVar48 = (float10)cosf_f();
+            fVar48 = (float)cosf_f();
             pCStack_4030 = (CRefTime *)((float)fVar48 * 0.1 + 1.0);
             pCStack_4064 = (CRefTime *)0x4b598e;
             pfVar11 = (float *)arrayElem_stride4();
@@ -50085,8 +50022,8 @@ LAB_004b535a:
             mat4_rotateZ();
             dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
             pCStack_4064 = (CRefTime *)0x4b5a00;
-            iVar60 = getField_0x48();
-            pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+            iVar59 = getField_0x48();
+            pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
             getField_0x44();
             mat4_translate();
             pCStack_4064 = aCStack_38c0;
@@ -50119,7 +50056,7 @@ LAB_004b535a:
         pCStack_4064 = (CRefTime *)0x4b5b62;
         render_setVec3Uniform48();
         if (((((pCVar12[0x140] == (CRefTime)0x4) && (pCVar12[0x141] == (CRefTime)0x1)) &&
-             (iVar60 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar60)) &&
+             (iVar59 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar59)) &&
             (((CVar6 = pCVar12[0x68], CVar6 == (CRefTime)0x11 || (CVar6 == (CRefTime)0x5)) ||
              (CVar6 == (CRefTime)0x14)))) ||
            ((pCVar12[0x68] == (CRefTime)0x30 || (pCVar12[0x68] == (CRefTime)0x5d)))) {
@@ -50137,7 +50074,7 @@ LAB_004b5bb8:
             render_setVec3Uniform5c();
             pfVar11 = afStack_38d4 + 2;
             pCVar42 = aCStack_1674;
-            for (iVar60 = 0x10; iVar60 != 0; iVar60 = iVar60 + -1) {
+            for (iVar59 = 0x10; iVar59 != 0; iVar59 = iVar59 + -1) {
               *(float *)pCVar42 = *pfVar11;
               pfVar11 = pfVar11 + 1;
               pCVar42 = pCVar42 + 4;
@@ -50153,23 +50090,23 @@ LAB_004b5bb8:
             ppStack_4084 = ppStack_3f5c;
             ppStack_4088 = apStack_391c;
             pCStack_408c = aCStack_1674;
-            pfStack_4090 = *(float **)(pbVar58 + 0x800580);
+            pfStack_4090 = *(float **)(pbVar57 + 0x800580);
             piStack_4094 = (int *)0x4b5cf8;
             Creature_drawModel();
             pCStack_404c = pCStack_404c + 1;
           } while ((int)pCStack_404c < 5);
           render_setVec3Uniform5c();
-          (**(code **)(**(int **)(pbVar58 + 0x134) + 0xe4))();
+          (**(code **)(**(int **)(pbVar57 + 0x134) + 0xe4))();
           pCVar12 = pCStack_4048;
-          pbVar46 = pbVar58;
+          pbVar46 = pbVar57;
         }
         else {
           pCStack_4064 = (CRefTime *)0x4b5ba3;
-          iVar60 = list_findByTypeByte();
-          if (iVar60 != 0) goto LAB_004b5bb8;
+          iVar59 = list_findByTypeByte();
+          if (iVar59 != 0) goto LAB_004b5bb8;
           pCStack_4064 = (CRefTime *)0x4b5bb0;
-          iVar60 = list_findByTypeByte();
-          if (iVar60 != 0) goto LAB_004b5bb8;
+          iVar59 = list_findByTypeByte();
+          if (iVar59 != 0) goto LAB_004b5bb8;
         }
         if (*(float *)(pCVar12 + 0x1190) <= 0.0) {
           pCStack_4064 = (CRefTime *)0x4b5d6c;
@@ -50188,8 +50125,8 @@ LAB_004b5bb8:
           list_pushBack_via583cb0();
         }
         pCStack_403c = (CRefTime *)(float)(int)*(float *)(pCVar12 + 0x70);
-        iVar60 = shield_getBlockDuration();
-        pCStack_403c = (CRefTime *)((float)pCStack_403c / (float)iVar60);
+        iVar59 = shield_getBlockDuration();
+        pCStack_403c = (CRefTime *)((float)pCStack_403c / (float)iVar59);
         if (*(float *)(pCVar12 + 0x1574) != 0.0) {
           pCStack_4064 = aCStack_3868;
           renderEntityLabelBillboard();
@@ -50225,13 +50162,13 @@ LAB_004b5bb8:
             pCStack_4064 = pCStack_3fec;
             int64_add();
             pCStack_4064 = (CRefTime *)0x4b61a9;
-            fVar48 = (float10)fixed16ToFloat();
+            fVar48 = (float)fixed16ToFloat();
             pCStack_4064 = (CRefTime *)(float)fVar48;
             int64_add();
             fixed16ToFloat();
             mat4_translate();
             pCStack_4064 = (CRefTime *)0x4b61fb;
-            fVar48 = (float10)cosf_f();
+            fVar48 = (float)cosf_f();
             pCStack_400c = (CRefTime *)((float)fVar48 * 0.1 + 1.0);
             pCStack_4064 = (CRefTime *)0x4b622b;
             pfVar11 = (float *)arrayElem_stride4();
@@ -50242,7 +50179,7 @@ LAB_004b5bb8:
             pfVar11 = (float *)arrayElem_stride4();
             pCStack_4030 = (CRefTime *)(*pfVar11 + 180.0);
             pCStack_4064 = (CRefTime *)0x4b62a3;
-            fVar48 = (float10)cosf_f();
+            fVar48 = (float)cosf_f();
             pCStack_400c = (CRefTime *)(float)fVar48;
             pCStack_4064 = (CRefTime *)0x4b62d0;
             mat4_rotateZ();
@@ -50268,7 +50205,7 @@ LAB_004b5bb8:
           pCStack_4064 = pCStack_3fec;
           int64_add();
           pCStack_4064 = (CRefTime *)0x4b5fbc;
-          fVar48 = (float10)fixed16ToFloat();
+          fVar48 = (float)fixed16ToFloat();
           pCStack_4064 = (CRefTime *)(float)fVar48;
           int64_add();
           fixed16ToFloat();
@@ -50281,8 +50218,8 @@ LAB_004b5bb8:
           mat4_rotateZ();
           dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
           pCStack_4064 = (CRefTime *)0x4b6077;
-          iVar60 = getField_0x48();
-          pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+          iVar59 = getField_0x48();
+          pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
           getField_0x44();
           mat4_translate();
           pCStack_4064 = aCStack_38c0;
@@ -50296,8 +50233,8 @@ LAB_004b5bb8:
           if ((((CVar6 == (CRefTime)0x25) || (CVar6 == (CRefTime)0x26)) || (CVar6 == (CRefTime)0x2b)
               ) || (CVar6 == (CRefTime)0x2c)) {
             pCStack_4064 = (CRefTime *)0x4b632d;
-            iVar60 = combat_getAttackWindup();
-            if ((int)*(float *)(pCVar12 + 0x6c) < iVar60) {
+            iVar59 = combat_getAttackWindup();
+            if ((int)*(float *)(pCVar12 + 0x6c) < iVar59) {
               pCStack_4064 = (CRefTime *)0x0;
               setVec4();
               pCStack_4064 = (CRefTime *)0x0;
@@ -50323,8 +50260,8 @@ LAB_004b5bb8:
               }
               fStack_4000 = (float)(int)*(float *)(pCVar12 + 0x6c);
               pCStack_4064 = (CRefTime *)0x4b6495;
-              iVar60 = combat_getAttackWindup();
-              fStack_4000 = fStack_4000 / (float)iVar60;
+              iVar59 = combat_getAttackWindup();
+              fStack_4000 = fStack_4000 / (float)iVar59;
               if (pCVar12[0x68] == (CRefTime)0x26) {
                 fStack_4000 = fStack_4000 * 0.5;
               }
@@ -50357,8 +50294,8 @@ LAB_004b5bb8:
                     else {
                       getter_off4c();
                       pCStack_4064 = (CRefTime *)0x4b660c;
-                      iVar60 = getField_0x48();
-                      pCStack_4064 = (CRefTime *)(float)iVar60;
+                      iVar59 = getField_0x48();
+                      pCStack_4064 = (CRefTime *)(float)iVar59;
                       getField_0x44();
                       setVec3();
                       pCStack_4064 = (CRefTime *)0x3f000000;
@@ -50381,8 +50318,8 @@ LAB_004b5bb8:
                 if (*(float *)(pCVar12 + 0x1564) != 0.0) {
                   getter_off4c();
                   pCStack_4064 = (CRefTime *)0x4b678d;
-                  iVar60 = getField_0x48();
-                  pCStack_4064 = (CRefTime *)(float)iVar60;
+                  iVar59 = getField_0x48();
+                  pCStack_4064 = (CRefTime *)(float)iVar59;
                   getField_0x44();
                   setVec3();
                   pCStack_4064 = (CRefTime *)0x3f000000;
@@ -50404,8 +50341,8 @@ LAB_004b5bb8:
               else {
                 getter_off4c();
                 pCStack_4064 = (CRefTime *)0x4b6508;
-                iVar60 = getField_0x48();
-                pCStack_4064 = (CRefTime *)(float)iVar60;
+                iVar59 = getField_0x48();
+                pCStack_4064 = (CRefTime *)(float)iVar59;
                 getField_0x44();
                 setVec3();
                 pCStack_4064 = (CRefTime *)0x3f000000;
@@ -50599,12 +50536,12 @@ LAB_004b6d09:
           }
           if ((pCVar12[0x68] == (CRefTime)0x57) || (pCVar12[0x68] == (CRefTime)0x58)) {
             pCStack_400c = *(CRefTime **)(pCVar12 + 0x6c);
-            iVar60 = combat_getAttackTiming();
-            if ((int)pCStack_400c < iVar60) {
+            iVar59 = combat_getAttackTiming();
+            if ((int)pCStack_400c < iVar59) {
               pCStack_403c = (CRefTime *)(float)(int)pCStack_400c;
               pCStack_4064 = (CRefTime *)0x4b6ec4;
-              iVar60 = combat_getAttackWindup();
-              pCStack_403c = (CRefTime *)((float)pCStack_403c / (float)iVar60);
+              iVar59 = combat_getAttackWindup();
+              pCStack_403c = (CRefTime *)((float)pCStack_403c / (float)iVar59);
               if ((1.0 < (float)pCStack_403c) &&
                  (pCStack_403c = (CRefTime *)(20.0 - (float)pCStack_403c * 19.0),
                  (float)pCStack_403c < 0.0)) {
@@ -50644,7 +50581,7 @@ LAB_004b6d09:
           }
         }
         if ((pCVar12[0x68] == (CRefTime)0x65) &&
-           (iVar60 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar60)) {
+           (iVar59 = combat_getAttackTiming(), (int)*(float *)(pCVar12 + 0x6c) < iVar59)) {
           pCStack_4064 = (CRefTime *)0x4b70af;
           fStack_4000 = (float)vectorU32_at();
           if (fStack_4000 != 0.0) {
@@ -50662,27 +50599,27 @@ LAB_004b6d09:
             pCStack_4064 = (CRefTime *)0x0;
             arrayElem_stride4();
             mat4_rotateAxisAngle();
-            iVar60 = getField_0x44();
-            pCStack_3fac = (CRefTime *)(0.8 / (float)iVar60);
+            iVar59 = getField_0x44();
+            pCStack_3fac = (CRefTime *)(0.8 / (float)iVar59);
             if ((int)*(float *)(pCVar12 + 0x6c) < 200) {
               pCStack_3fac = (CRefTime *)
                              (((float)(int)*(float *)(pCVar12 + 0x6c) / 200.0) * (float)pCStack_3fac
                              );
             }
-            iVar60 = combat_getAttackTiming();
+            iVar59 = combat_getAttackTiming();
             pCVar42 = pCStack_3fac;
-            if (iVar60 + -200 < (int)*(float *)(pCVar12 + 0x6c)) {
-              iVar60 = combat_getAttackTiming();
+            if (iVar59 + -200 < (int)*(float *)(pCVar12 + 0x6c)) {
+              iVar59 = combat_getAttackTiming();
               pCVar42 = (CRefTime *)
-                        (((float)(iVar60 - (int)*(float *)(pCVar12 + 0x6c)) / 200.0) *
+                        (((float)(iVar59 - (int)*(float *)(pCVar12 + 0x6c)) / 200.0) *
                         (float)pCStack_3fac);
             }
             pCStack_4064 = pCVar42;
             mat4_scaleAxes();
             dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
             pCStack_4064 = (CRefTime *)0x4b724d;
-            iVar60 = getField_0x48();
-            pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+            iVar59 = getField_0x48();
+            pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
             getField_0x44();
             mat4_translate();
             pCStack_4064 = aCStack_38c0;
@@ -50728,10 +50665,10 @@ LAB_004b6d09:
 LAB_004b7409:
               pCStack_4064 = (CRefTime *)
                              ((int)(pCStack_4030 + ((int)pCStack_4030 >> 0x1f & 7)) >> 3);
-              iVar60 = GameController_getVoxelColumn8();
-              if ((iVar60 != 0) && (*(int *)(iVar60 + 0x18) != 0)) {
-                if ((*(int *)(*(int *)(pbVar46 + 0x8006d0) + 400) + -2 <= *(int *)(iVar60 + 0x24))
-                   && (*(int *)(iVar60 + 0x24) <= *(int *)(*(int *)(pbVar46 + 0x8006d0) + 400) + 2))
+              iVar59 = GameController_getVoxelColumn8();
+              if ((iVar59 != 0) && (*(int *)(iVar59 + 0x18) != 0)) {
+                if ((*(int *)(*(int *)(pbVar46 + 0x8006d0) + 400) + -2 <= *(int *)(iVar59 + 0x24))
+                   && (*(int *)(iVar59 + 0x24) <= *(int *)(*(int *)(pbVar46 + 0x8006d0) + 400) + 2))
                 goto LAB_004b73f3;
               }
             }
@@ -50770,13 +50707,13 @@ LAB_004b73f3:
             pCStack_4064 = (CRefTime *)0x0;
             arrayElem_stride4();
             mat4_rotateAxisAngle();
-            iVar60 = getField_0x44();
-            pCStack_4064 = (CRefTime *)(0.8 / (float)iVar60);
+            iVar59 = getField_0x44();
+            pCStack_4064 = (CRefTime *)(0.8 / (float)iVar59);
             mat4_scaleAxes();
             dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
             pCStack_4064 = (CRefTime *)0x4b760b;
-            iVar60 = getField_0x48();
-            pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+            iVar59 = getField_0x48();
+            pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
             getField_0x44();
             mat4_translate();
             pCStack_4064 = aCStack_38c0;
@@ -50976,7 +50913,7 @@ LAB_004b7685:
         int64_addFn();
         int64_add();
         pCStack_4064 = (CRefTime *)0x4b7831;
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         pCStack_4064 = (CRefTime *)(float)fVar48;
         pCStack_407c = (CRefTime *)0x4b7862;
         int_toFixed16();
@@ -50988,8 +50925,8 @@ LAB_004b7685:
         mat4_scaleAxes();
         dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
         pCStack_4064 = (CRefTime *)0x4b78c0;
-        iVar60 = getField_0x48();
-        pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+        iVar59 = getField_0x48();
+        pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
         getField_0x44();
         mat4_translate();
         pbVar46 = pbStack_4044;
@@ -51026,7 +50963,7 @@ LAB_004b7685:
         int64_addFn();
         int64_add();
         pCStack_4064 = (CRefTime *)0x4b8294;
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         pCStack_4064 = (CRefTime *)(float)fVar48;
         pCStack_407c = (CRefTime *)0x4b82c0;
         arrayElem_stride4();
@@ -51040,8 +50977,8 @@ LAB_004b7685:
         mat4_scaleAxes();
         dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
         pCStack_4064 = (CRefTime *)0x4b8329;
-        iVar60 = getField_0x48();
-        pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+        iVar59 = getField_0x48();
+        pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
         getField_0x44();
         mat4_translate();
         pCStack_4064 = aCStack_38c0;
@@ -51073,7 +51010,7 @@ LAB_004b7685:
         int64_addFn();
         int64_add();
         pCStack_4064 = (CRefTime *)0x4b7a92;
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         pCStack_4064 = (CRefTime *)(float)fVar48;
         pCStack_407c = (CRefTime *)0x4b7ac8;
         arrayElem_stride8();
@@ -51089,8 +51026,8 @@ LAB_004b7685:
         mat4_scaleAxes();
         dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
         pCStack_4064 = (CRefTime *)0x4b7b38;
-        iVar60 = getField_0x48();
-        pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+        iVar59 = getField_0x48();
+        pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
         getField_0x44();
         mat4_translate();
         pCStack_4064 = aCStack_38c0;
@@ -51112,7 +51049,7 @@ LAB_004b7685:
         int64_addFn();
         int64_add();
         pCStack_4064 = (CRefTime *)0x4b7c62;
-        fVar48 = (float10)fixed16ToFloat();
+        fVar48 = (float)fixed16ToFloat();
         pCStack_4064 = (CRefTime *)(float)fVar48;
         pCStack_407c = (CRefTime *)0x4b7c98;
         arrayElem_stride8();
@@ -51128,8 +51065,8 @@ LAB_004b7685:
         mat4_scaleAxes();
         dStack_4060 = (double)(ZEXT48(pCStack_405c) << 0x20);
         pCStack_4064 = (CRefTime *)0x4b7d08;
-        iVar60 = getField_0x48();
-        pCStack_4064 = (CRefTime *)((float)iVar60 * -0.5);
+        iVar59 = getField_0x48();
+        pCStack_4064 = (CRefTime *)((float)iVar59 * -0.5);
         getField_0x44();
         mat4_translate();
         pCStack_4064 = aCStack_38c0;
@@ -51278,10 +51215,10 @@ LAB_004b7685:
         ppStack_40b0 = (pair<unsigned___int64,unsigned___int64> *)&UNK_004b854b;
         drawOrientedModelOrTrail();
       }
-      uVar55 = _pCStack_4058;
+      uVar54 = _pCStack_4058;
       pbVar24 = (byte *)((ulonglong)_pCStack_4058 >> 0x20);
-      iVar60 = (int)pbVar24;
-      _pCStack_4058 = (double)uVar55;
+      iVar59 = (int)pbVar24;
+      _pCStack_4058 = (double)uVar54;
       break;
     case 1.4013e-45:
       pCStack_4080 = *(CRefTime **)(pCVar12 + 0x50);
@@ -51310,11 +51247,11 @@ LAB_004b7685:
       ppStack_4088 = (pair<unsigned___int64,unsigned___int64> *)&UNK_004b89c7;
       setVec4();
       pCStack_407c = (CRefTime *)&UNK_004b89d3;
-      iVar60 = map_valueAtOr0();
-      if (iVar60 != 0) {
+      iVar59 = map_valueAtOr0();
+      if (iVar59 != 0) {
         pCStack_407c = (CRefTime *)&UNK_004b89ea;
-        iVar60 = map_valueAtOr0();
-        if (*(char *)(iVar60 + 0x141) == '\x01') {
+        iVar59 = map_valueAtOr0();
+        if (*(char *)(iVar59 + 0x141) == '\x01') {
           pCStack_407c = (CRefTime *)0x3f800000;
           pCStack_4080 = (CRefTime *)0x0;
           ppStack_4084 = (pair<unsigned___int64,unsigned___int64> *)0x0;
@@ -51373,35 +51310,35 @@ LAB_004b7685:
       goto LAB_004b8b7c;
     case 2.8026e-45:
       pCStack_407c = (CRefTime *)&UNK_004b86f9;
-      iVar60 = map_valueAtOr0();
-      if (iVar60 != 0) {
+      iVar59 = map_valueAtOr0();
+      if (iVar59 != 0) {
         pCStack_407c = (CRefTime *)&UNK_004b8708;
-        iVar60 = map_valueAtOr0();
-        if (*(char *)(iVar60 + 0xaa8) == '\x03') {
+        iVar59 = map_valueAtOr0();
+        if (*(char *)(iVar59 + 0xaa8) == '\x03') {
           pCStack_407c = (CRefTime *)&UNK_004b871c;
-          iVar60 = map_valueAtOr0();
-          if (*(char *)(iVar60 + 0xaa9) == '\b') {
+          iVar59 = map_valueAtOr0();
+          if (*(char *)(iVar59 + 0xaa9) == '\b') {
             pCStack_407c = (CRefTime *)&UNK_004b8730;
             map_valueAtOr0();
             pCStack_407c = (CRefTime *)&UNK_004b8741;
-            iVar60 = GameController_item_icon_id();
-            _pCStack_4058 = (double)CONCAT44(iVar60,pCStack_4058);
+            iVar59 = GameController_item_icon_id();
+            _pCStack_4058 = (double)CONCAT44(iVar59,pCStack_4058);
             break;
           }
         }
       }
       pCStack_407c = (CRefTime *)&UNK_004b875a;
-      iVar60 = vectorU32_at();
-      _pCStack_4058 = (double)CONCAT44(iVar60,pCStack_4058);
+      iVar59 = vectorU32_at();
+      _pCStack_4058 = (double)CONCAT44(iVar59,pCStack_4058);
       break;
     default:
       goto LAB_004b8b7c;
     case 5.60519e-45:
       pCStack_407c = (CRefTime *)&UNK_004b8773;
-      iVar60 = vectorU32_at();
-      _pCStack_4058 = (double)CONCAT44(iVar60,pCStack_4058);
+      iVar59 = vectorU32_at();
+      _pCStack_4058 = (double)CONCAT44(iVar59,pCStack_4058);
     }
-    if (iVar60 != 0) {
+    if (iVar59 != 0) {
       if (*(float *)(pCStack_4040 + 0x60) != 1.4013e-45) {
         pCStack_407c = (CRefTime *)0x0;
         pCStack_4080 = (CRefTime *)0x2;
@@ -51469,7 +51406,7 @@ LAB_004b7685:
         mat4_rotateAxisAngle_v();
       }
       else {
-        fVar48 = (float10)vec3_lengthSq();
+        fVar48 = (float)vec3_lengthSq();
         pCStack_4010 = (CRefTime *)(float)fVar48;
         if (0.0 < (float)pCStack_4010) {
           pCStack_407c = (CRefTime *)&UNK_004b8808;
@@ -51489,11 +51426,11 @@ LAB_004b7685:
       mat4_scaleAxes();
       getter_off4c();
       pCStack_407c = (CRefTime *)&UNK_004b8890;
-      iVar60 = getField_0x48();
-      pCStack_407c = (CRefTime *)((float)iVar60 * -0.5);
+      iVar59 = getField_0x48();
+      pCStack_407c = (CRefTime *)((float)iVar59 * -0.5);
       pCStack_4080 = (CRefTime *)&UNK_004b88ac;
-      iVar60 = getField_0x44();
-      pCStack_4080 = (CRefTime *)((float)iVar60 * -0.5);
+      iVar59 = getField_0x44();
+      pCStack_4080 = (CRefTime *)((float)iVar59 * -0.5);
       ppStack_4084 = (pair<unsigned___int64,unsigned___int64> *)&UNK_004b88cd;
       mat4_translate();
       pCStack_407c = (CRefTime *)&fStack_38d8;
@@ -51584,7 +51521,7 @@ LAB_004b8b7c:
         _pCStack_4058 = (double)CONCAT44(pbVar24,1.0 / ((float)pCStack_408c * 2.0));
         ppCStack_40e0 = (CRefTime **)((float)piVar7[0x1a] * 0.01);
         pCStack_40e4 = (CRefTime *)0x4b8d72;
-        fVar48 = (float10)cosf_f();
+        fVar48 = (float)cosf_f();
         piVar37 = (int *)(float)fVar48;
         pCStack_4064 = (CRefTime *)
                        ((-(int)((float)piVar37 * -50.0) - 0x6aU & 0xff) << 8 | 0xff0000ff);
@@ -51613,59 +51550,59 @@ LAB_004b8b7c:
               pCStack_4028 = (CRefTime *)arrayElem_stride4();
               pCStack_4024 = (CRefTime *)(ppStack_40a8 + 1);
               do {
-                uVar55 = _pCStack_4058;
+                uVar54 = _pCStack_4058;
                 pbVar24 = (byte *)((ulonglong)_pCStack_4058 >> 0x20);
-                fVar53 = *(float *)pCVar12;
+                fVar52 = *(float *)pCVar12;
                 ppCStack_40e0 = (CRefTime **)0x0;
                 pCStack_40e8 = (CRefTime *)(ppStack_40a8 + *(int *)pbVar24);
                 fStack_40c0 = 0.0;
-                pCStack_40e4 = (CRefTime *)fVar53;
-                _pCStack_4058 = (double)uVar55;
+                pCStack_40e4 = (CRefTime *)fVar52;
+                _pCStack_4058 = (double)uVar54;
                 world_getColumnData(ppStack_4084 + *(int *)pCStack_4028);
                 ppCStack_40e0 = (CRefTime **)0x4b8e82;
                 cVar5 = block_isSolidType();
-                uVar55 = _pCStack_4058;
-                while (_pCStack_4058 = (double)uVar55, cVar5 == '\0') {
+                uVar54 = _pCStack_4058;
+                while (_pCStack_4058 = (double)uVar54, cVar5 == '\0') {
                   fStack_40c0 = (float)((int)fStack_40c0 + 1);
-                  fVar53 = (float)((int)fVar53 + -1);
+                  fVar52 = (float)((int)fVar52 + -1);
                   if (100 < (int)fStack_40c0) goto LAB_004b9253;
-                  pbVar24 = (byte *)((ulonglong)uVar55 >> 0x20);
+                  pbVar24 = (byte *)((ulonglong)uVar54 >> 0x20);
                   ppCStack_40e0 = (CRefTime **)0x0;
                   pCStack_40e8 = (CRefTime *)(ppStack_40a8 + *(int *)pbVar24);
-                  pCStack_40e4 = (CRefTime *)fVar53;
+                  pCStack_40e4 = (CRefTime *)fVar52;
                   world_getColumnData(ppStack_4084 + *(int *)pCStack_4028);
                   ppCStack_40e0 = (CRefTime **)0x4b8eca;
                   cVar5 = block_isSolidType();
-                  uVar55 = _pCStack_4058;
+                  uVar54 = _pCStack_4058;
                 }
                 ppCStack_40e0 = *(CRefTime ***)pCStack_4028;
                 piStack_40bc = (int *)((float)piStack_40a4[0x13] + (float)(int)ppStack_4084);
                 pCStack_40e4 = (CRefTime *)auStack_3d10;
                 pCStack_40e8 = (CRefTime *)0x0;
-                p_Stack_3ff0 = (LPCRITICAL_SECTION)((int)fVar53 + 1);
+                p_Stack_3ff0 = (LPCRITICAL_SECTION)((int)fVar52 + 1);
                 arrayElem_stride8();
                 pCStack_40e8 = (CRefTime *)0x4b8f18;
                 int64_subFixed16();
                 ppCStack_40e0 = (CRefTime **)0x4b8f1f;
-                fVar48 = (float10)fixed16ToFloat();
-                uVar55 = _pCStack_4058;
+                fVar48 = (float)fixed16ToFloat();
+                uVar54 = _pCStack_4058;
                 pbVar24 = (byte *)((ulonglong)_pCStack_4058 >> 0x20);
-                pCStack_4058 = (CRefTime *)uVar55;
+                pCStack_4058 = (CRefTime *)uVar54;
                 piStack_40bc = (int *)(((float)piStack_40bc - (float)fVar48) * (float)pCStack_4058);
                 ppCStack_40e0 = *(CRefTime ***)pbVar24;
                 pCStack_40e4 = (CRefTime *)auStack_3d00;
                 puStack_40b4 = (undefined *)((float)piStack_40a4[0x13] + (float)(int)ppStack_40a8);
                 pCStack_40e8 = (CRefTime *)0x1;
-                _pCStack_4058 = (double)uVar55;
+                _pCStack_4058 = (double)uVar54;
                 arrayElem_stride8();
                 pCStack_40e8 = (CRefTime *)0x4b8f80;
                 int64_subFixed16();
                 ppCStack_40e0 = (CRefTime **)0x4b8f87;
-                fVar48 = (float10)fixed16ToFloat();
+                fVar48 = (float)fixed16ToFloat();
                 ppVar45 = ppStack_4084;
                 puStack_40b4 = (undefined *)
                                (((float)puStack_40b4 - (float)fVar48) * (float)pCStack_4058);
-                ppCStack_40e0 = (CRefTime **)(float)((int)fVar53 + 1);
+                ppCStack_40e0 = (CRefTime **)(float)((int)fVar52 + 1);
                 pCStack_40e4 = (CRefTime *)(float)(int)ppStack_40a8;
                 pCStack_40e8 = (CRefTime *)(float)(int)ppStack_4084;
                 setVec3();
@@ -51707,24 +51644,24 @@ LAB_004b8b7c:
                 setPair_b();
                 ppCStack_40e0 = (CRefTime **)0x4b9196;
                 mat4_identity();
-                uVar55 = _pCStack_4058;
+                uVar54 = _pCStack_4058;
                 pCStack_40e4 = (CRefTime *)(pbVar46 + 0x1e0);
                 ppCStack_40e0 = (CRefTime **)0x3c23d70a;
                 pCStack_40e8 = aCStack_3cf0;
                 pbVar24 = (byte *)((ulonglong)_pCStack_4058 >> 0x20);
                 uVar14 = *(undefined4 *)pbVar24;
-                _pCStack_4058 = (double)uVar55;
+                _pCStack_4058 = (double)uVar54;
                 int_toFixed16(uVar14);
                 int64_add();
                 pCStack_40e4 = (CRefTime *)0x4b91d0;
-                fVar48 = (float10)fixed16ToFloat();
+                fVar48 = (float)fixed16ToFloat();
                 pCStack_40e8 = (CRefTime *)(pbVar46 + 0x1d8);
                 pCStack_40e4 = (CRefTime *)(float)fVar48;
                 puVar26 = auStack_3cd0;
                 int_toFixed16(*(int *)pCStack_4028);
                 int64_add(puVar26);
                 pCStack_40e8 = (CRefTime *)0x4b9206;
-                fVar48 = (float10)fixed16ToFloat();
+                fVar48 = (float)fixed16ToFloat();
                 pCStack_40e8 = (CRefTime *)(float)fVar48;
                 mat4_translate();
                 pCStack_40e8 = *(CRefTime **)(pbVar46 + 0x134);
@@ -51777,8 +51714,8 @@ LAB_004b9253:
           cVar5 = operator_ne_int();
           while (cVar5 != '\0') {
             ppCStack_40e0 = (CRefTime **)0x4b936c;
-            iVar60 = iterator_at_0x10();
-            piVar7 = (int *)(iVar60 + 8);
+            iVar59 = iterator_at_0x10();
+            piVar7 = (int *)(iVar59 + 8);
             pbVar24 = (byte *)((ulonglong)_pCStack_4058 >> 0x20);
             _pCStack_4058 = (double)CONCAT44(pbVar24,piVar7);
             if ((*piVar7 != 0) && (0.0 < *(float *)(*piVar7 + 0x16c))) {
@@ -51793,14 +51730,14 @@ LAB_004b9253:
                  ((pbVar46[0x8006e6] == 0 || (*piVar7 == *(int *)(pbVar46 + 0x8006d0))))) {
                 ppCStack_40e0 = (CRefTime **)0x4b93f8;
                 mat4_identity();
-                iVar60 = *piVar7;
+                iVar59 = *piVar7;
                 ppCStack_40e0 = (CRefTime **)0x2;
                 pCStack_40e4 = (CRefTime *)0x4b9404;
                 puVar15 = (undefined4 *)arrayElem_stride4();
                 ppCStack_40e0 = (CRefTime **)*puVar15;
                 pCStack_40e4 = (CRefTime *)0x4b941a;
                 mat4_rotateZ();
-                ppCStack_40e0 = (CRefTime **)(iVar60 + 0x1544);
+                ppCStack_40e0 = (CRefTime **)(iVar59 + 0x1544);
                 pCStack_40e4 = (CRefTime *)auStack_3674;
                 pCStack_40e8 = (CRefTime *)0x4b9435;
                 mat3_transformVector();
@@ -51827,21 +51764,21 @@ LAB_004b9253:
                   pCStack_4064 = (CRefTime *)0xfffffffe;
                   do {
                     ppCStack_40e0 = (CRefTime **)0x0;
-                    iVar60 = *piVar37;
+                    iVar59 = *piVar37;
                     pCStack_40e8 = pCStack_4064 + (int)*(float *)pCStack_404c;
                     fStack_40c0 = 0.0;
-                    pCStack_40e4 = (CRefTime *)iVar60;
+                    pCStack_40e4 = (CRefTime *)iVar59;
                     world_getColumnData(ppStack_40a8 + *(int *)ppStack_4088);
                     ppCStack_40e0 = (CRefTime **)0x4b9506;
                     cVar5 = block_isSolidType();
                     ppVar45 = ppStack_40a8;
                     while (ppStack_40a8 = ppVar45, cVar5 == '\0') {
                       fStack_40c0 = (float)((int)fStack_40c0 + 1);
-                      iVar60 = iVar60 + -1;
+                      iVar59 = iVar59 + -1;
                       if (100 < (int)fStack_40c0) goto LAB_004b991e;
                       ppCStack_40e0 = (CRefTime **)0x0;
                       pCStack_40e8 = pCStack_4064 + (int)*(float *)pCStack_404c;
-                      pCStack_40e4 = (CRefTime *)iVar60;
+                      pCStack_40e4 = (CRefTime *)iVar59;
                       world_getColumnData(ppVar45 + *(int *)ppStack_4088);
                       ppCStack_40e0 = (CRefTime **)0x4b9551;
                       cVar5 = block_isSolidType();
@@ -51851,7 +51788,7 @@ LAB_004b9253:
                     piStack_40bc = (int *)((float)(int)ppVar45 + 1.5);
                     pCStack_40e4 = (CRefTime *)auStack_3cb0;
                     pCStack_40e8 = (CRefTime *)0x0;
-                    _pCStack_4058 = (double)CONCAT44(iVar60 + 1,pCStack_4058);
+                    _pCStack_4058 = (double)CONCAT44(iVar59 + 1,pCStack_4058);
                     puVar15 = (undefined4 *)arrayElem_stride4();
                     pCStack_40e8 = (CRefTime *)*puVar15;
                     puVar26 = auStack_3ca0;
@@ -51860,7 +51797,7 @@ LAB_004b9253:
                     pCStack_40e8 = (CRefTime *)0x4b95c6;
                     int64_subFixed16();
                     ppCStack_40e0 = (CRefTime **)0x4b95cd;
-                    fVar48 = (float10)fixed16ToFloat();
+                    fVar48 = (float)fixed16ToFloat();
                     pCVar12 = pCStack_4064;
                     pCStack_408c = (CRefTime *)(float)fVar48;
                     ppCStack_40e0 = *(CRefTime ***)pCStack_404c;
@@ -51877,12 +51814,12 @@ LAB_004b9253:
                     pCStack_40e8 = (CRefTime *)0x4b9659;
                     int64_subFixed16();
                     ppCStack_40e0 = (CRefTime **)0x4b9660;
-                    fVar48 = (float10)fixed16ToFloat();
+                    fVar48 = (float)fixed16ToFloat();
                     ppVar45 = ppStack_40a8;
                     pCStack_408c = (CRefTime *)(float)fVar48;
                     puStack_40b4 = (undefined *)
                                    (((float)puStack_40b4 - (float)pCStack_408c) * 0.33333334);
-                    ppCStack_40e0 = (CRefTime **)(float)(iVar60 + 1);
+                    ppCStack_40e0 = (CRefTime **)(float)(iVar59 + 1);
                     pCStack_40e4 = (CRefTime *)(float)(int)pCVar12;
                     pCStack_40e8 = (CRefTime *)(float)(int)ppStack_40a8;
                     setVec3();
@@ -51891,12 +51828,12 @@ LAB_004b9253:
                     pCStack_40e4 = (CRefTime *)piStack_40bc;
                     pCStack_40e8 = (CRefTime *)0x4b96e8;
                     setPair_b();
-                    uVar55 = _pCStack_4058;
+                    uVar54 = _pCStack_4058;
                     pbVar24 = (byte *)((ulonglong)_pCStack_4058 >> 0x20);
                     ppCStack_40e0 = (CRefTime **)(float)(int)pbVar24;
                     pCStack_40e4 = (CRefTime *)(float)(int)pCVar12;
                     pCStack_40e8 = (CRefTime *)(float)(int)(ppVar45 + 1);
-                    _pCStack_4058 = (double)uVar55;
+                    _pCStack_4058 = (double)uVar54;
                     setVec3();
                     pCStack_40e4 = (CRefTime *)((float)piStack_40bc + 0.33333334);
                     ppCStack_40e0 = (CRefTime **)puStack_40b4;
@@ -51904,12 +51841,12 @@ LAB_004b9253:
                     pCStack_40e8 = (CRefTime *)0x4b9764;
                     pCStack_408c = pCStack_40e4;
                     setPair_b();
-                    uVar55 = _pCStack_4058;
+                    uVar54 = _pCStack_4058;
                     pbVar24 = (byte *)((ulonglong)_pCStack_4058 >> 0x20);
                     pCStack_40e4 = (CRefTime *)(float)(int)(pCVar12 + 1);
                     ppCStack_40e0 = (CRefTime **)(float)(int)pbVar24;
                     pCStack_40e8 = (CRefTime *)(float)(int)(ppVar45 + 1);
-                    _pCStack_4058 = (double)uVar55;
+                    _pCStack_4058 = (double)uVar54;
                     setVec3();
                     ppCStack_40e0 = (CRefTime **)((float)puStack_40b4 + 0.33333334);
                     uStack_9ec = 0xff000000;
@@ -51917,13 +51854,13 @@ LAB_004b9253:
                     pCStack_40e8 = (CRefTime *)0x4b97e0;
                     puStack_40b4 = (undefined *)ppCStack_40e0;
                     setPair_b();
-                    uVar55 = _pCStack_4058;
+                    uVar54 = _pCStack_4058;
                     ppVar45 = ppStack_40a8;
                     pbVar24 = (byte *)((ulonglong)_pCStack_4058 >> 0x20);
                     ppCStack_40e0 = (CRefTime **)(float)(int)pbVar24;
                     pCStack_40e4 = (CRefTime *)(float)(int)(pCVar12 + 1);
                     pCStack_40e8 = (CRefTime *)(float)(int)ppStack_40a8;
-                    _pCStack_4058 = (double)uVar55;
+                    _pCStack_4058 = (double)uVar54;
                     setVec3();
                     ppCStack_40e0 = (CRefTime **)puStack_40b4;
                     auStack_9d4[0] = 0xff000000;
@@ -51938,14 +51875,14 @@ LAB_004b9253:
                     int_toFixed16(*(float *)pCStack_404c);
                     int64_add();
                     pCStack_40e4 = (CRefTime *)0x4b9894;
-                    fVar48 = (float10)fixed16ToFloat();
+                    fVar48 = (float)fixed16ToFloat();
                     puVar26 = auStack_3c50;
                     pCStack_40e4 = (CRefTime *)(float)fVar48;
                     pCStack_40e8 = pCVar42;
                     int_toFixed16(*(int *)ppStack_4088);
                     int64_add(puVar26);
                     pCStack_40e8 = (CRefTime *)0x4b98c7;
-                    fVar48 = (float10)fixed16ToFloat();
+                    fVar48 = (float)fixed16ToFloat();
                     pCStack_40e8 = (CRefTime *)(float)fVar48;
                     mat4_translate();
                     pbVar46 = pbStack_40c4;
@@ -51980,25 +51917,25 @@ LAB_004b991e:
   ppCStack_40e0 = (CRefTime **)0x0;
   pCStack_40e4 = (CRefTime *)0x0;
   (**(code **)(*(int *)pCStack_40e8 + 0x104))();
-  pbVar59 = (byte *)0x16;
+  pbVar58 = (byte *)0x16;
   (**(code **)(**(int **)(pbVar46 + 0x134) + 0xe4))(*(int **)(pbVar46 + 0x134),0x16,1);
   uVar14 = 0;
   (**(code **)(**(int **)(pbVar46 + 0x134) + 0xe4))(*(int **)(pbVar46 + 0x134),0x89,0);
-  pbVar57 = *(byte **)(pbVar46 + 0x134);
-  (**(code **)(*(int *)pbVar57 + 0x164))(pbVar57,0x42);
+  pbVar56 = *(byte **)(pbVar46 + 0x134);
+  (**(code **)(*(int *)pbVar56 + 0x164))(pbVar56,0x42);
   deref_frontValue(&uStack_3ff8);
   uVar27 = store_object_ref(&ppStack_3f74);
   cVar5 = operator_ne_int(uVar27);
   while (cVar5 != '\0') {
-    iVar60 = iterator_at_0x10();
-    piVar7 = (int *)(iVar60 + 8);
+    iVar59 = iterator_at_0x10();
+    piVar7 = (int *)(iVar59 + 8);
     if ((*piVar7 != 0) && (0.0 < *(float *)(*piVar7 + 0x16c))) {
       pCVar12 = pCStack_404c;
       puVar15 = (undefined4 *)arrayElem_stride4(1);
       cVar5 = testSphereVsFrustum_fixed(*piVar7 + 0x1350,*puVar15,pCVar12);
       if ((cVar5 != '\0') &&
          ((cVar5 = creature_hasFireAffinity(), cVar5 == '\0' &&
-          (iVar60 = combat_getAttackTiming(), *(int *)(*piVar7 + 0x6c) <= iVar60)))) {
+          (iVar59 = combat_getAttackTiming(), *(int *)(*piVar7 + 0x6c) <= iVar59)))) {
         mat4_identity();
         (**(code **)(**(int **)(pbVar46 + 0x134) + 0xb0))(*(int **)(pbVar46 + 0x134),2,auStack_396c)
         ;
@@ -52008,38 +51945,38 @@ LAB_004b991e:
         uVar27 = 0;
         pbVar29 = pbVar46 + 0x1e0;
         puVar26 = auStack_3c74;
-        puVar56 = auStack_3c64;
+        puVar55 = auStack_3c64;
         arrayElem_stride8(1);
-        int64_negate(puVar56);
+        int64_negate(puVar55);
         int64_sub(puVar26,pbVar29);
-        fVar48 = (float10)fixed16ToFloat(uVar27);
-        fVar53 = (float)fVar48;
+        fVar48 = (float)fixed16ToFloat(uVar27);
+        fVar52 = (float)fVar48;
         pbVar46 = pbVar46 + 0x1d8;
         puVar26 = auStack_3c54;
-        puVar56 = auStack_3c44;
+        puVar55 = auStack_3c44;
         arrayElem_stride8(0);
-        int64_negate(puVar56);
+        int64_negate(puVar55);
         int64_sub(puVar26,pbVar46);
-        fVar48 = (float10)fixed16ToFloat(fVar53);
-        setVec3((float)fVar48,fVar53,uVar27);
+        fVar48 = (float)fixed16ToFloat(fVar52);
+        setVec3((float)fVar48,fVar52,uVar27);
         ppStack_4088 = (pair<unsigned___int64,unsigned___int64> *)
                        ((float)*(int *)(*piVar7 + 0x70) * 0.1);
         if (1.0 < (float)ppStack_4088) {
           ppStack_4088 = (pair<unsigned___int64,unsigned___int64> *)0x3f800000;
         }
-        fVar53 = 1.0 - (float)ppStack_4088;
+        fVar52 = 1.0 - (float)ppStack_4088;
         uVar27 = setVec3(0x43480000,0x42c80000,0x437f0000);
         uVar27 = vec3_scale(auStack_20cc,ppStack_4088,uVar27);
         puVar26 = auStack_2958;
         uVar28 = setVec3(0x42c80000,0x437f0000,0x437f0000);
-        vec3_scale(auStack_2930,fVar53,uVar28,puVar26,uVar27);
+        vec3_scale(auStack_2930,fVar52,uVar28,puVar26,uVar27);
         uVar27 = vec3_add(puVar26,uVar27);
         vec3_floatToByte3(uVar27);
         uVar27 = setVec3(0x437f0000,0x42480000,0x42c80000);
         uVar27 = vec3_scale(auStack_2908,ppStack_4088,uVar27);
         puVar26 = auStack_2258;
         uVar28 = setVec3(0x437f0000,0x437f0000,0x437f0000);
-        vec3_scale(auStack_20b4,fVar53,uVar28,puVar26,uVar27);
+        vec3_scale(auStack_20b4,fVar52,uVar28,puVar26,uVar27);
         uVar27 = vec3_add(puVar26,uVar27);
         vec3_floatToByte3(uVar27);
         uVar27 = setVec3(0x437f0000,0x437f0000,0x437f0000);
@@ -52055,51 +51992,51 @@ LAB_004b991e:
         pbVar30 = (byte *)addInt(2);
         pfStack_4090 = (float *)0x1a04;
         puVar17 = auStack_400;
-        pbVar46 = pbVar57;
+        pbVar46 = pbVar56;
         do {
-          fVar53 = ((1.0 - (float)(int)ppStack_4088 / 15.0) - 0.5) * 2.0;
-          fVar53 = 1.0 - fVar53 * fVar53;
-          fVar53 = fVar53 * fVar53;
+          fVar52 = ((1.0 - (float)(int)ppStack_4088 / 15.0) - 0.5) * 2.0;
+          fVar52 = 1.0 - fVar52 * fVar52;
+          fVar52 = fVar52 * fVar52;
           uVar27 = vec3_sub(auStack_2890,auStack_3858);
           vec3_copy(uVar27);
-          *puVar17 = (((int)(fVar53 * 50.0) << 8 | (uint)(byte)*pCStack_40e8) << 8 |
+          *puVar17 = (((int)(fVar52 * 50.0) << 8 | (uint)(byte)*pCStack_40e8) << 8 |
                      (uint)(byte)*ppStack_40a8) << 8 | (uint)*pbStack_409c;
           uVar27 = vec3_sub(auStack_200c,auStack_3858);
           vec3_copy(uVar27);
-          puVar17[4] = (((int)(fVar53 * 200.0) << 8 | (uint)(byte)*ppStack_4098) << 8 |
+          puVar17[4] = (((int)(fVar52 * 200.0) << 8 | (uint)(byte)*ppStack_4098) << 8 |
                        (uint)*pbVar29) << 8 | (uint)*pbVar30;
           pfStack_4090 = pfStack_4090 + 3;
           ppStack_4088 = ppStack_4088 + 1;
           puVar17 = puVar17 + 8;
         } while ((int)pfStack_4090 < 0x1ac4);
-        pbVar57 = pbVar46;
+        pbVar56 = pbVar46;
         (**(code **)(**(int **)(pbVar46 + 0x134) + 0x14c))
                   (*(int **)(pbVar46 + 0x134),5,0x1e,auStack_40c,0x10);
         if (*(char *)(*piVar7 + 0x990) == '\x03') {
           piVar37 = (int *)0x0;
           iStack_4070 = 0x1b84;
           puVar17 = auStack_3f0 + 2;
-          pbVar46 = pbVar59;
+          pbVar46 = pbVar58;
           do {
-            fVar53 = ((1.0 - (float)(int)piVar37 / 15.0) - 0.5) * 2.0;
-            fVar53 = 1.0 - fVar53 * fVar53;
-            fVar53 = fVar53 * fVar53;
+            fVar52 = ((1.0 - (float)(int)piVar37 / 15.0) - 0.5) * 2.0;
+            fVar52 = 1.0 - fVar52 * fVar52;
+            fVar52 = fVar52 * fVar52;
             uVar27 = vec3_sub(auStack_2850,afStack_3840);
             vec3_copy(uVar27);
-            *puVar17 = (((int)(fVar53 * 50.0) << 8 | (uint)*pbStack_40d0) << 8 |
+            *puVar17 = (((int)(fVar52 * 50.0) << 8 | (uint)*pbStack_40d0) << 8 |
                        (uint)*(byte *)pfStack_4090) << 8 | (uint)(byte)*ppStack_4084;
             uVar27 = vec3_sub(auStack_2210,afStack_3840);
             vec3_copy(uVar27);
-            uVar55 = _pCStack_4058;
+            uVar54 = _pCStack_4058;
             pbVar24 = (byte *)((ulonglong)_pCStack_4058 >> 0x20);
-            puVar17[4] = (((int)(fVar53 * 255.0) << 8 | (uint)(byte)*pCStack_4080) << 8 |
-                         (uint)*pbVar58) << 8 | (uint)*pbVar24;
+            puVar17[4] = (((int)(fVar52 * 255.0) << 8 | (uint)(byte)*pCStack_4080) << 8 |
+                         (uint)*pbVar57) << 8 | (uint)*pbVar24;
             iStack_4070 = iStack_4070 + 0xc;
             piVar37 = (int *)((int)piVar37 + 1);
             puVar17 = puVar17 + 8;
-            _pCStack_4058 = (double)uVar55;
+            _pCStack_4058 = (double)uVar54;
           } while (iStack_4070 < 0x1c44);
-          pbVar59 = pbVar46;
+          pbVar58 = pbVar46;
           (**(code **)(**(int **)(pbVar46 + 0x134) + 0x14c))
                     (*(int **)(pbVar46 + 0x134),5,0x1e,auStack_3f4,0x10);
         }
@@ -52115,9 +52052,9 @@ LAB_004b991e:
   (**(code **)(*piVar7 + 0xe4))(piVar7,7,1);
   piVar44 = *(int **)(pbVar46 + 0x134);
   (**(code **)(*piVar44 + 0xe4))(piVar44,0xe,1);
-  pbVar58 = *(byte **)(pbVar46 + 0x134);
-  iVar60 = 1;
-  (**(code **)(*(int *)pbVar58 + 0xe4))(pbVar58,0x16);
+  pbVar57 = *(byte **)(pbVar46 + 0x134);
+  iVar59 = 1;
+  (**(code **)(*(int *)pbVar57 + 0xe4))(pbVar57,0x16);
   render_setUniform30(auStack_39f0);
   map_getRoot(&pCStack_4010);
   uVar27 = store_object_ref(&pfStack_3f90);
@@ -52134,21 +52071,21 @@ LAB_004b991e:
       piVar31 = (int *)getPtrPlus8();
       if (*(int *)(*piVar31 + 0xc) != 0) {
         mat4_identity();
-        pbVar59 = pbVar46 + 0x1e0;
+        pbVar58 = pbVar46 + 0x1e0;
         fVar49 = (float)*(int *)(*piVar31 + 0x1c);
         puVar26 = auStack_3c40;
         piVar32 = (int *)arrayElem_stride4(1);
         int_toFixed16(*piVar32 << 5);
-        int64_add(puVar26,pbVar59);
-        fVar48 = (float10)fixed16ToFloat(fVar49);
-        pbVar59 = pbVar46 + 0x1d8;
-        fVar53 = (float)fVar48;
+        int64_add(puVar26,pbVar58);
+        fVar48 = (float)fixed16ToFloat(fVar49);
+        pbVar58 = pbVar46 + 0x1d8;
+        fVar52 = (float)fVar48;
         puVar26 = auStack_3c20;
         piVar32 = (int *)arrayElem_stride4(0);
         int_toFixed16(*piVar32 << 5);
-        int64_add(puVar26,pbVar59);
-        fVar48 = (float10)fixed16ToFloat(fVar53);
-        mat4_translate((float)fVar48,fVar53,fVar49);
+        int64_add(puVar26,pbVar58);
+        fVar48 = (float)fixed16ToFloat(fVar52);
+        mat4_translate((float)fVar48,fVar52,fVar49);
         render_uploadBoneMatrices(iVar40 + 0x78,iVar40 + 0x178);
         render_uploadModelViewMatrices(auStack_1538,auStack_3990,auStack_39e0);
         (**(code **)(**(int **)(pbVar46 + 0x134) + 400))
@@ -52182,7 +52119,7 @@ LAB_004b991e:
                    auStack_39f8,auStack_3a08);
     }
     if (piVar32[1] != 0) {
-      GameController_renderDroppedItem(piVar32[1],piVar32[2],uVar14,pbVar57,auStack_39a8,auStack_39f8,auStack_3a08);
+      GameController_renderDroppedItem(piVar32[1],piVar32[2],uVar14,pbVar56,auStack_39a8,auStack_39f8,auStack_3a08);
     }
     iter_postinc_10(auStack_3e90,0);
     uVar27 = map_getRoot(&uStack_3f64);
@@ -52234,7 +52171,7 @@ LAB_004ba673:
       list_popFront_node(auStack_3eb4,0);
       uVar14 = store_object_ref(&piStack_3fa0);
       cVar5 = operator_ne_int(uVar14);
-      pbVar46 = pbVar58;
+      pbVar46 = pbVar57;
     }
     vec4_mulComponent(&uStack_34a4,auStack_3a08);
     if ((*(ushort *)((int)pCVar12 + 0x7e) & 0x200) != 0) {
@@ -52255,10 +52192,10 @@ LAB_004ba673:
       Creature_drawModel(piVar31[0x200160],auStack_39b4,auStack_3a04,pbVar46,piVar31[0x2001ba],
                    &fStack_34b0,iStack_40d4,ppCStack_40e0,uVar41,uVar14);
       (**(code **)(**(int **)(iVar40 + 0x134) + 0xe4))(*(int **)(iVar40 + 0x134),0xa8,0xf);
-      render_setVec3Uniform5c(1.0 - *(float *)(iVar60 + 0x1190) * 0.75);
+      render_setVec3Uniform5c(1.0 - *(float *)(iVar59 + 0x1190) * 0.75);
       uVar14 = map_valueAtOr0((int)pCVar12 + 0x11c8);
       Creature_drawModel(*(undefined4 *)(pbVar46 + 0x800580),auStack_39e8,(int)&uStack_3a3c + 4,piVar37,0,
-                   afStack_34ec + 2,pbVar57,piVar7,uVar41,uVar14);
+                   afStack_34ec + 2,pbVar56,piVar7,uVar41,uVar14);
       render_setVec3Uniform5c(0x3f800000);
     }
     list_popFront_node(auStack_3e70,0);
@@ -52271,7 +52208,7 @@ LAB_004ba673:
   uVar14 = setVec4(0x3f800000,0x3f800000,0x3f800000,0x3f800000);
   render_setUniform30(uVar14);
   Node_dtor_release_children();
-  pbVar58 = (byte *)0x0;
+  pbVar57 = (byte *)0x0;
   (**(code **)(**(int **)(pbVar46 + 0x134) + 0xac))
             (*(int **)(pbVar46 + 0x134),0,0,2,0xffffffff,0x3f800000);
   cVar5 = hasActiveWorldChunk();
@@ -52279,36 +52216,36 @@ LAB_004ba673:
     GameController_getField_b4();
     cVar5 = hasActiveWorldChunk();
     if (cVar5 != '\0') {
-      iVar60 = *(int *)(pbVar46 + 0x120);
+      iVar59 = *(int *)(pbVar46 + 0x120);
       iVar40 = *(int *)(pbVar46 + 0x11c);
       uVar14 = 0;
       if (0.35 <= *(float *)(pbVar46 + 0x1c4)) {
         if (*(float *)(pbVar46 + 0x1c4) < 2.0) {
           uVar28 = 1;
-          uVar27 = *(undefined4 *)(pbVar58 + 0x8006e8);
-          pbVar57 = (byte *)0x3f4ccccd;
+          uVar27 = *(undefined4 *)(pbVar57 + 0x8006e8);
+          pbVar56 = (byte *)0x3f4ccccd;
           puVar17 = (uint *)arrayElem_stride4(2);
-          pbVar46 = pbVar58;
+          pbVar46 = pbVar57;
         }
         else {
           uVar28 = 0;
-          uVar27 = *(undefined4 *)(pbVar58 + 0x8006e8);
-          pbVar57 = (byte *)0x3fcccccd;
+          uVar27 = *(undefined4 *)(pbVar57 + 0x8006e8);
+          pbVar56 = (byte *)0x3fcccccd;
           puVar17 = (uint *)arrayElem_stride4(2);
-          pbVar46 = pbVar58;
+          pbVar46 = pbVar57;
         }
       }
       else {
         uVar28 = 0;
-        uVar27 = *(undefined4 *)(pbVar58 + 0x8006e8);
-        pbVar57 = (byte *)0x3ccccccd;
+        uVar27 = *(undefined4 *)(pbVar57 + 0x8006e8);
+        pbVar56 = (byte *)0x3ccccccd;
         puVar17 = (uint *)arrayElem_stride4(2);
-        pbVar46 = pbVar58;
+        pbVar46 = pbVar57;
       }
       uVar35 = setVec3(0xc2f00000,0,*puVar17 ^ 0x80000000);
-      pbVar58 = pbVar46;
-      GameController_processNetworkTick(*(int *)(pbVar46 + 0x8006d0) + 0x10,iVar40 + -0xf0,iVar60 + -0xaa,iVar40,iVar60,
-                   uVar35,pbVar57,uVar27,uVar28,uVar14);
+      pbVar57 = pbVar46;
+      GameController_processNetworkTick(*(int *)(pbVar46 + 0x8006d0) + 0x10,iVar40 + -0xf0,iVar59 + -0xaa,iVar40,iVar59,
+                   uVar35,pbVar56,uVar27,uVar28,uVar14);
       uVar14 = setVec4(0x3ecccccd,0x3ecccccd,0x3ecccccd,0x3f800000);
       puVar26 = auStack_2278;
       setVec3(0x3f000000,0x3ecccccd,0xbf19999a);
@@ -52337,8 +52274,8 @@ LAB_004ba673:
         repeatCall(apStack_674,0x10,0x10,noop);
         repeatCall(auStack_8f4,0xc,0x10,noop);
         ppVar45 = apStack_674;
-        iVar60 = 0x10;
-        pbVar46 = pbVar57;
+        iVar59 = 0x10;
+        pbVar46 = pbVar56;
         do {
           ppVar22 = (pair<unsigned___int64,unsigned___int64> *)setVec4(0,0,0,0);
           std::pair<unsigned___int64,unsigned___int64>::
@@ -52346,15 +52283,15 @@ LAB_004ba673:
           uVar14 = setVec3(0,0,0);
           vec3_copy(uVar14);
           ppVar45 = ppVar45 + 0x10;
-          iVar60 = iVar60 + -1;
-        } while (iVar60 != 0);
+          iVar59 = iVar59 + -1;
+        } while (iVar59 != 0);
         render_uploadBoneMatrices(apStack_674,auStack_8f4);
         uVar14 = setVec4(0x3f800000,0x3f800000,0x3f800000,0x3f800000);
         render_setUniform30(uVar14);
         render_setVec3Uniform5c(0x3f800000);
         render_setVec3Uniform58(0);
         iVar8 = 0;
-        iVar60 = 0;
+        iVar59 = 0;
         if (0 < iVar40) {
           puVar15 = (undefined4 *)arrayElem_stride4(1);
           puVar20 = (undefined4 *)arrayElem_stride4(0);
@@ -52362,14 +52299,14 @@ LAB_004ba673:
             pCStack_403c = (CRefTime *)
                            ((((float)iVar8 * 6.2831855) / (float)iVar40 +
                             (*(float *)(pbVar46 + 0x800a4c) * 3.1415927) / 180.0) - 1.5707964);
-            fVar48 = (float10)sinf_f(pCStack_403c);
+            fVar48 = (float)sinf_f(pCStack_403c);
             pCStack_40e8 = (CRefTime *)(float)fVar48;
-            fVar53 = (float)pCStack_40e8 * *(float *)(pbVar46 + 0x800a48) +
+            fVar52 = (float)pCStack_40e8 * *(float *)(pbVar46 + 0x800a48) +
                      (float)*(int *)(pbVar46 + 0x120) * 0.5;
-            fVar48 = (float10)cosf_f(pCStack_403c,fVar53);
+            fVar48 = (float)cosf_f(pCStack_403c,fVar52);
             pCStack_40e8 = (CRefTime *)(float)fVar48;
             setPair_b((float)pCStack_40e8 * *(float *)(pbVar46 + 0x800a48) +
-                         (float)*(int *)(pbVar46 + 0x11c) * 0.5,fVar53);
+                         (float)*(int *)(pbVar46 + 0x11c) * 0.5,fVar52);
             vector_at_stride8(iVar8);
             uVar27 = 0;
             puVar21 = (undefined4 *)arrayElem_stride4(1);
@@ -52378,8 +52315,8 @@ LAB_004ba673:
             vector_at_12(*puVar21);
             iVar8 = arrayElem0x11c(uVar14);
             drawBillboardModelRotated(*puVar20,*puVar15,pbVar46 + 0x800a1c,0x3db851ec,iVar8 + 4,uVar27);
-            iVar8 = iVar60 + 1;
-            iVar60 = iVar8;
+            iVar8 = iVar59 + 1;
+            iVar59 = iVar8;
           } while (iVar8 < iVar40);
         }
       }
@@ -52399,15 +52336,15 @@ LAB_004ba673:
       render_bindNodeTransformA();
       (**(code **)(**(int **)(pbVar46 + 0x134) + 0xac))
                 (*(int **)(pbVar46 + 0x134),0,0,2,0,0x3f800000,0);
-      iVar60 = getDword0xe8();
-      fVar48 = (float10)sinf_f((float)iVar60 * 0.001);
+      iVar59 = getDword0xe8();
+      fVar48 = (float)sinf_f((float)iVar59 * 0.001);
       fStack_40c0 = (float)fVar48;
-      fVar53 = fStack_40c0 * 20.0;
+      fVar52 = fStack_40c0 * 20.0;
       uVar14 = 0;
-      iVar60 = getDword0xe8(0,fVar53);
-      fVar48 = (float10)cosf_f((float)iVar60 * 0.0005);
+      iVar59 = getDword0xe8(0,fVar52);
+      fVar48 = (float)cosf_f((float)iVar59 * 0.0005);
       fStack_40c0 = (float)fVar48;
-      setVec3(fStack_40c0 * 20.0,uVar14,fVar53);
+      setVec3(fStack_40c0 * 20.0,uVar14,fVar52);
       uVar14 = setVec4(0x3ecccccd,0x3ecccccd,0x3ecccccd,0x3f800000);
       puVar26 = auStack_2808;
       setVec3(0,0x3f000000,0xbf800000);
@@ -52418,8 +52355,8 @@ LAB_004ba673:
       repeatCall(apStack_54c,0x10,0x10,noop);
       repeatCall(auStack_80c,0xc,0x10,noop);
       ppVar45 = apStack_54c;
-      iVar60 = 0x10;
-      pbVar46 = pbVar58;
+      iVar59 = 0x10;
+      pbVar46 = pbVar57;
       do {
         ppVar22 = (pair<unsigned___int64,unsigned___int64> *)setVec4(0,0,0,0);
         std::pair<unsigned___int64,unsigned___int64>::
@@ -52427,8 +52364,8 @@ LAB_004ba673:
         uVar14 = setVec3(0,0,0);
         vec3_copy(uVar14);
         ppVar45 = ppVar45 + 0x10;
-        iVar60 = iVar60 + -1;
-      } while (iVar60 != 0);
+        iVar59 = iVar59 + -1;
+      } while (iVar59 != 0);
       render_uploadBoneMatrices(apStack_54c,auStack_80c);
       uVar14 = setVec4(0x3f800000,0x3f800000,0x3f800000,0x3f800000);
       render_setUniform30(uVar14);
@@ -52436,45 +52373,45 @@ LAB_004ba673:
       uVar14 = vectorU32_at((int)*(short *)(*(int *)(pbVar46 + 0x8006d0) + 0x8c));
       puVar26 = auStack_3880;
       uVar28 = 0x3b656042;
-      puVar56 = auStack_2508;
+      puVar55 = auStack_2508;
       setVec3(0xc2f00000,0,0x41a00000);
-      uVar27 = vec3_add(puVar56,puVar26);
+      uVar27 = vec3_add(puVar55,puVar26);
       drawModelAtProjectedPos(0x42480000,0x42700000,uVar27,uVar28,uVar14,uVar35);
       uVar14 = 0x3f800000;
-      pbVar58 = (byte *)addInt(2);
-      fVar53 = (float)*pbVar58 / 255.0;
-      pbVar58 = (byte *)addInt(1);
-      fVar49 = (float)*pbVar58 / 255.0;
-      pbVar58 = (byte *)addInt(0);
-      uVar14 = setVec4((float)*pbVar58 / 255.0,fVar49,fVar53,uVar14);
+      pbVar57 = (byte *)addInt(2);
+      fVar52 = (float)*pbVar57 / 255.0;
+      pbVar57 = (byte *)addInt(1);
+      fVar49 = (float)*pbVar57 / 255.0;
+      pbVar57 = (byte *)addInt(0);
+      uVar14 = setVec4((float)*pbVar57 / 255.0,fVar49,fVar52,uVar14);
       render_setUniform30(uVar14);
       uVar35 = 0;
       uVar14 = vectorU32_at((int)*(short *)(*(int *)(pbVar46 + 0x8006d0) + 0x8e));
       puVar26 = auStack_3880;
       uVar28 = 0x3b656042;
-      puVar56 = auStack_24fc;
+      puVar55 = auStack_24fc;
       setVec3(0xc2f00000,0,0x41a00000);
-      uVar27 = vec3_add(puVar56,puVar26);
+      uVar27 = vec3_add(puVar55,puVar26);
       drawModelAtProjectedPos(0x42480000,0x42700000,uVar27,uVar28,uVar14,uVar35);
-      iVar60 = map_valueAtOr0(*(int *)(pbVar46 + 0x8006d0) + 0x11c8);
-      if (iVar60 != 0) {
+      iVar59 = map_valueAtOr0(*(int *)(pbVar46 + 0x8006d0) + 0x11c8);
+      if (iVar59 != 0) {
         uVar14 = setVec4(0x3f800000,0x3f800000,0x3f800000,0x3f800000);
         render_setUniform30(uVar14);
-        if (*(short *)(iVar60 + 0x8c) < 0) {
-          if (*(short *)(iVar60 + 0x94) < 0) goto LAB_004bb615;
+        if (*(short *)(iVar59 + 0x8c) < 0) {
+          if (*(short *)(iVar59 + 0x94) < 0) goto LAB_004bb615;
           uVar27 = 0;
-          uVar14 = vectorU32_at((int)*(short *)(iVar60 + 0x94));
+          uVar14 = vectorU32_at((int)*(short *)(iVar59 + 0x94));
           puVar26 = auStack_24cc;
         }
         else {
           uVar27 = 0;
-          uVar14 = vectorU32_at((int)*(short *)(iVar60 + 0x8c));
+          uVar14 = vectorU32_at((int)*(short *)(iVar59 + 0x8c));
           puVar26 = auStack_24e4;
         }
-        puVar56 = auStack_3880;
+        puVar55 = auStack_3880;
         uVar35 = 0x3b656042;
         setVec3(0xc30c0000,0,0x41a00000);
-        uVar28 = vec3_add(puVar26,puVar56);
+        uVar28 = vec3_add(puVar26,puVar55);
         drawModelAtProjectedPos(0x42480000,0x43520000,uVar28,uVar35,uVar14,uVar27);
       }
 LAB_004bb615:
@@ -52494,7 +52431,7 @@ LAB_004bb615:
       if (cVar5 != '\0') {
         iVar40 = 0x10e;
         pCStack_4080 = (CRefTime *)0x0;
-        iVar60 = 0;
+        iVar59 = 0;
         do {
           iVar8 = iterator_at_0x10();
           piVar37 = (int *)(iVar8 + 8);
@@ -52504,42 +52441,42 @@ LAB_004bb615:
             if (iVar36 <= (int)pCStack_407c) break;
             if ((*(char *)(iVar8 + 0x60) == '\0') && (iVar8 != *(int *)(pbVar46 + 0x8006d0))) {
               iVar8 = getDword0xe8();
-              fVar48 = (float10)sinf_f((float)iVar8 * 0.001 + (float)iVar60);
+              fVar48 = (float)sinf_f((float)iVar8 * 0.001 + (float)iVar59);
               fStack_40c0 = (float)fVar48;
-              fVar53 = fStack_40c0 * 20.0;
+              fVar52 = fStack_40c0 * 20.0;
               uVar14 = 0;
-              iVar8 = getDword0xe8(0,fVar53);
-              fVar48 = (float10)cosf_f((float)iVar8 * 0.0005 + (float)(int)pCStack_4080);
+              iVar8 = getDword0xe8(0,fVar52);
+              fVar48 = (float)cosf_f((float)iVar8 * 0.0005 + (float)(int)pCStack_4080);
               fStack_40c0 = (float)fVar48;
-              setVec3(fStack_40c0 * 20.0,uVar14,fVar53);
+              setVec3(fStack_40c0 * 20.0,uVar14,fVar52);
               uVar14 = setVec4(0x3f800000,0x3f800000,0x3f800000,0x3f800000);
               render_setUniform30(uVar14);
               uVar35 = 0;
               uVar14 = vectorU32_at((int)*(short *)(*piVar37 + 0x8c));
               puVar26 = auStack_34d8;
               uVar28 = 0x3b23d70a;
-              puVar56 = auStack_2718;
+              puVar55 = auStack_2718;
               setVec3(0xc2f00000,0,0x41a00000);
-              uVar27 = vec3_add(puVar56,puVar26);
+              uVar27 = vec3_add(puVar55,puVar26);
               drawModelAtProjectedPos((float)iVar40,0x42340000,uVar27,uVar28,uVar14,uVar35);
               uVar14 = 0x3f800000;
-              pbVar58 = (byte *)addInt(2);
-              fVar53 = (float)*pbVar58 / 255.0;
-              pbVar58 = (byte *)addInt(1);
-              fVar49 = (float)*pbVar58 / 255.0;
-              pbVar58 = (byte *)addInt(0);
-              uVar14 = setVec4((float)*pbVar58 / 255.0,fVar49,fVar53,uVar14);
+              pbVar57 = (byte *)addInt(2);
+              fVar52 = (float)*pbVar57 / 255.0;
+              pbVar57 = (byte *)addInt(1);
+              fVar49 = (float)*pbVar57 / 255.0;
+              pbVar57 = (byte *)addInt(0);
+              uVar14 = setVec4((float)*pbVar57 / 255.0,fVar49,fVar52,uVar14);
               render_setUniform30(uVar14);
               uVar35 = 0;
               uVar14 = vectorU32_at((int)*(short *)(*piVar37 + 0x8e));
               puVar26 = auStack_34d8;
               uVar28 = 0x3b23d70a;
-              puVar56 = auStack_26f0;
+              puVar55 = auStack_26f0;
               setVec3(0xc2f00000,0,0x41a00000);
-              uVar27 = vec3_add(puVar56,puVar26);
+              uVar27 = vec3_add(puVar55,puVar26);
               drawModelAtProjectedPos((float)iVar40,0x42340000,uVar27,uVar28,uVar14,uVar35);
               pCStack_407c = pCStack_407c + 1;
-              iVar60 = iVar60 + 0x2b;
+              iVar59 = iVar59 + 0x2b;
               iVar40 = iVar40 + 0xdc;
               pCStack_4080 = pCStack_4080 + 0x21;
             }
@@ -52577,7 +52514,6 @@ LAB_004bbb5a:
   __security_check_cookie(uStack_58 ^ (uint)&uStack_3f64);
   return;
 }
-
 
 
 
@@ -52660,8 +52596,8 @@ void GameController_spawnRibbonEffect(uint *pPos,undefined8 *param_2,undefined8 
     do {
       t = (float)(param_4 % 2000) / 2000.0;
       fVar6 = (t - 0.5) * 2.0;
-      dVar7 = (double)((float)i + ((float)iVar2 / 500.0) * 2.0 * 3.1415927);
-      libm_sse2_cos_precise();
+      dVar7 = libm_sse2_cos_precise
+                        ((double)((float)i + ((float)iVar2 / 500.0) * 2.0 * 3.1415927));
       fVar9 = 1.0 - t;
       fVar11 = ((float)dVar7 * 0.5 + 1.0) * param_8 * (1.0 - fVar6 * fVar6);
       fVar6 = ((float)layer / 10.0 + (float)iVar3 * 0.0001) * 2.0 * 3.1415927;
@@ -52680,10 +52616,8 @@ void GameController_spawnRibbonEffect(uint *pPos,undefined8 *param_2,undefined8 
       _local_28 = CONCAT44(fStack_14 + fStack_74 * t,local_18 + local_78 * t);
       _local_20 = CONCAT44(fStack_c + fStack_6c * t,local_10 + local_70 * t);
       render_setUniform30(&local_28);
-      dVar7 = (double)fVar6;
-      libm_sse2_cos_precise();
-      dVar8 = (double)fVar6;
-      libm_sse2_sin_precise();
+      dVar7 = libm_sse2_cos_precise((double)fVar6);
+      dVar8 = libm_sse2_sin_precise((double)fVar6);
       fVar17 = t * param_7 * 2.0;
       fVar20 = (float)dVar7 * param_7 * 0.0;
       fVar9 = (float)dVar8 * param_7 * 0.0;
@@ -52702,28 +52636,24 @@ void GameController_spawnRibbonEffect(uint *pPos,undefined8 *param_2,undefined8 
       fVar6 = fVar15 + fVar6;
       fVar9 = t * 40.0 * 0.017453292;
       fVar18 = (float)*(longlong *)(pPos + 4) * 1.5258789e-05 + fVar6 + fVar17 + fVar21 + 0.0;
-      dVar7 = (double)fVar9;
       fVar23 = fVar15 + fVar13 + fVar10 + (float)dVar8 * param_7 + fVar20 + fVar12 + 0.0;
       fVar20 = fVar6 + fVar10 + fVar21 + fVar12 + 1.0;
       local_38 = fVar22;
       local_34 = fVar23;
       local_30 = fVar18;
       local_2c = fVar20;
-      libm_sse2_cos_precise();
+      dVar7 = libm_sse2_cos_precise((double)fVar9);
       fVar6 = (float)dVar7;
-      dVar7 = (double)fVar9;
-      libm_sse2_sin_precise();
+      dVar7 = libm_sse2_sin_precise((double)fVar9);
       fVar17 = (float)dVar7;
       fVar9 = fVar6 * 0.0;
       fVar13 = fVar17 * 0.0;
       fVar21 = fVar9 + fVar13;
       fVar16 = fVar9 - fVar13;
       fVar10 = t * 30.0 * 0.017453292;
-      dVar7 = (double)fVar10;
-      libm_sse2_cos_precise();
+      dVar7 = libm_sse2_cos_precise((double)fVar10);
       fVar12 = (float)dVar7;
-      dVar7 = (double)fVar10;
-      libm_sse2_sin_precise();
+      dVar7 = libm_sse2_sin_precise((double)fVar10);
       fVar10 = (float)dVar7;
       fVar14 = fVar12 - fVar16 * fVar10;
       local_88 = fVar16 * fVar12 + fVar10;
@@ -52736,15 +52666,13 @@ void GameController_spawnRibbonEffect(uint *pPos,undefined8 *param_2,undefined8 
       fVar25 = (fVar6 - fVar13) * fVar12 + local_98;
       local_98 = fVar16 * fVar12 + local_98;
       t = t * 10.0 * 0.017453292;
-      dVar7 = (double)t;
       local_48 = local_88;
       local_44 = local_94;
       local_40 = fVar25;
       local_3c = local_98;
-      libm_sse2_cos_precise();
+      dVar7 = libm_sse2_cos_precise((double)t);
       fVar10 = (float)dVar7;
-      dVar7 = (double)t;
-      libm_sse2_sin_precise();
+      dVar7 = libm_sse2_sin_precise((double)t);
       t = (float)dVar7;
       local_68 = fVar21 * t + fVar14 * fVar10;
       local_58 = fVar21 * fVar10 - fVar14 * t;
@@ -52874,8 +52802,8 @@ void GameController_spawnRibbonEffect2(uint *pPos,undefined8 *param_2,undefined8
     do {
       t = (float)(param_4 % 2000) / 2000.0;
       fVar6 = (t - 0.5) * 2.0;
-      dVar8 = (double)((float)i + ((float)iVar2 / 500.0) * 2.0 * 3.1415927);
-      libm_sse2_cos_precise();
+      dVar8 = libm_sse2_cos_precise
+                        ((double)((float)i + ((float)iVar2 / 500.0) * 2.0 * 3.1415927));
       fVar13 = ((float)dVar8 * 0.5 + 1.0) * param_8 * (1.0 - fVar6 * fVar6);
       fVar6 = t * t * 4.0 * 3.1415927 * param_9 +
               ((float)iVar4 / 10.0 + (float)iVar3 * 0.0001) * 2.0 * 3.1415927;
@@ -52896,10 +52824,8 @@ void GameController_spawnRibbonEffect2(uint *pPos,undefined8 *param_2,undefined8
       _local_20 = CONCAT44(fStack_c + fStack_6c * t,local_10 + local_70 * t);
       render_setUniform30(&local_28);
       fVar10 = t * param_7;
-      dVar8 = (double)fVar6;
-      libm_sse2_cos_precise();
-      dVar9 = (double)fVar6;
-      libm_sse2_sin_precise();
+      dVar8 = libm_sse2_cos_precise((double)fVar6);
+      dVar9 = libm_sse2_sin_precise((double)fVar6);
       fVar19 = (float)dVar8 * fVar10 * 0.0;
       fVar11 = (float)dVar9 * fVar10 * 0.0;
       fVar20 = fVar19 + fVar11;
@@ -52919,27 +52845,23 @@ void GameController_spawnRibbonEffect2(uint *pPos,undefined8 *param_2,undefined8
       fVar21 = (float)*(longlong *)(pPos + 4) * 1.5258789e-05 + fVar17 +
                fVar10 * 2.0 + fVar20 + 0.0;
       fVar18 = fVar18 + fVar16 + fVar12 + (float)dVar9 * fVar10 + fVar19 + fVar14 + 0.0;
-      dVar8 = (double)fVar7;
       fVar16 = fVar17 + fVar12 + fVar20 + fVar14 + 1.0;
       local_38 = fVar23;
       local_34 = fVar18;
       local_30 = fVar21;
       local_2c = fVar16;
-      libm_sse2_cos_precise();
+      dVar8 = libm_sse2_cos_precise((double)fVar7);
       fVar6 = (float)dVar8;
-      dVar8 = (double)fVar7;
-      libm_sse2_sin_precise();
+      dVar8 = libm_sse2_sin_precise((double)fVar7);
       fVar17 = (float)dVar8;
       fVar10 = fVar6 * 0.0;
       fVar12 = fVar17 * 0.0;
       fVar19 = fVar10 + fVar12;
       fVar20 = fVar10 - fVar12;
       fVar7 = t * 30.0 * 0.017453292;
-      dVar8 = (double)fVar7;
-      libm_sse2_cos_precise();
+      dVar8 = libm_sse2_cos_precise((double)fVar7);
       fVar11 = (float)dVar8;
-      dVar8 = (double)fVar7;
-      libm_sse2_sin_precise();
+      dVar8 = libm_sse2_sin_precise((double)fVar7);
       fVar7 = (float)dVar8;
       fVar14 = fVar11 - fVar20 * fVar7;
       fVar24 = fVar11 * 0.0;
@@ -52952,15 +52874,13 @@ void GameController_spawnRibbonEffect2(uint *pPos,undefined8 *param_2,undefined8
       fVar25 = (fVar6 - fVar12) * fVar11 + local_9c;
       local_9c = fVar20 * fVar11 + local_9c;
       t = t * 10.0 * 0.017453292;
-      dVar8 = (double)t;
       local_48 = local_84;
       local_44 = local_94;
       local_40 = fVar25;
       local_3c = local_9c;
-      libm_sse2_cos_precise();
+      dVar8 = libm_sse2_cos_precise((double)t);
       fVar7 = (float)dVar8;
-      dVar8 = (double)t;
-      libm_sse2_sin_precise();
+      dVar8 = libm_sse2_sin_precise((double)t);
       t = (float)dVar8;
       local_68 = fVar19 * t + fVar14 * fVar7;
       local_58 = fVar19 * fVar7 - fVar14 * t;
@@ -53160,15 +53080,13 @@ void GameController_spawnEffectMesh(int *pEntity,float param_2,float param_3,flo
     local_a4 = local_13c;
     if ((*(byte *)(pEntity + 0xe) & 4) != 0) {
       local_150 = 0.1 / ((float)*(int *)((int)pModel + 0x4c) * fVar3);
-      dVar2 = -1.5707963705062866;
       local_164 = local_b4;
       local_14c = local_c0;
       local_140 = local_b8;
       local_12c = local_bc;
-      libm_sse2_cos_precise();
+      dVar2 = libm_sse2_cos_precise(-1.5707963705062866);
       local_f4 = (float)dVar2;
-      dVar2 = -1.5707963705062866;
-      libm_sse2_sin_precise();
+      dVar2 = libm_sse2_sin_precise(-1.5707963705062866);
       local_110 = (float)dVar2;
       local_10c = local_14c * local_110;
       local_14c = local_14c * local_f4 + local_148 * local_110;
@@ -53181,11 +53099,11 @@ void GameController_spawnEffectMesh(int *pEntity,float param_2,float param_3,flo
       local_15c = local_15c * local_110 + local_164 * local_f4;
       local_12c = local_12c * local_f4 + local_138 * local_110;
       mat4_identity();
-      dVar2 = (double)((float)*(int *)(pThis + 0x8003a0) * 0.004 + (float)(param_5 * 0x1e) + 84.0);
-      libm_sse2_cos_precise();
+      dVar2 = libm_sse2_cos_precise
+                        ((double)((float)*(int *)(pThis + 0x8003a0) * 0.004 +
+                                  (float)(param_5 * 0x1e) + 84.0));
       local_164 = (float)dVar2;
-      dVar2 = (double)((float)*(int *)(pThis + 0x8003a0) * 0.0027 + 93.0);
-      libm_sse2_cos_precise();
+      dVar2 = libm_sse2_cos_precise((double)((float)*(int *)(pThis + 0x8003a0) * 0.0027 + 93.0));
       fVar3 = (local_164 + (float)dVar2) * local_150;
       local_fc = local_60 * local_10c + fVar3 * local_154 + local_58 * local_14c +
                  local_54 * local_120;
@@ -53218,12 +53136,10 @@ void GameController_spawnEffectMesh(int *pEntity,float param_2,float param_3,flo
                   local_34 * local_13c;
       local_114 = local_2c * local_158 + local_30 * local_114 + local_28 * local_15c +
                   local_24 * local_13c;
-      dVar2 = 1.5707963705062866;
       local_140 = local_3c * local_124 + pModel + local_38 * local_140 + local_34 * local_134;
-      libm_sse2_cos_precise();
+      dVar2 = libm_sse2_cos_precise(1.5707963705062866);
       local_10c = (float)dVar2;
-      dVar2 = 1.5707963705062866;
-      libm_sse2_sin_precise();
+      dVar2 = libm_sse2_sin_precise(1.5707963705062866);
       local_108 = (float)dVar2;
       local_120 = local_fc * local_10c - local_ec * local_108;
       fVar4 = local_fc * local_108 + local_ec * local_10c;
@@ -53242,11 +53158,11 @@ void GameController_spawnEffectMesh(int *pEntity,float param_2,float param_3,flo
       local_160 = fVar5 * local_f4 - local_110 * local_148;
       local_110 = local_e8 * local_f4 + fVar4 * local_110;
       mat4_identity();
-      dVar2 = (double)((float)*(int *)(pThis + 0x8003a0) * 0.005 + (float)(param_5 * 0x1e));
-      libm_sse2_cos_precise();
+      dVar2 = libm_sse2_cos_precise
+                        ((double)((float)*(int *)(pThis + 0x8003a0) * 0.005 +
+                                 (float)(param_5 * 0x1e)));
       local_164 = (float)dVar2;
-      dVar2 = (double)((float)*(int *)(pThis + 0x8003a0) * 0.003);
-      libm_sse2_cos_precise();
+      dVar2 = libm_sse2_cos_precise((double)((float)*(int *)(pThis + 0x8003a0) * 0.003));
       pModel = (local_164 + (float)dVar2) * local_150 * 0.8;
       local_148 = local_a0 * local_120 + local_110 * 0.0 + local_98 * local_fc +
                   local_94 * local_11c;
@@ -53291,7 +53207,6 @@ void GameController_spawnEffectMesh(int *pEntity,float param_2,float param_3,flo
       local_110 = fVar3;
     }
     modelPtr = (float)pEntity[9] * 0.017453292;
-    dVar2 = (double)modelPtr;
     local_164 = local_b4;
     local_14c = local_c0;
     local_140 = local_b8;
@@ -53300,10 +53215,9 @@ void GameController_spawnEffectMesh(int *pEntity,float param_2,float param_3,flo
     local_130 = local_ac;
     local_12c = local_bc;
     local_120 = local_b0;
-    libm_sse2_cos_precise();
+    dVar2 = libm_sse2_cos_precise((double)modelPtr);
     local_108 = (float)dVar2;
-    dVar2 = (double)modelPtr;
-    libm_sse2_sin_precise();
+    dVar2 = libm_sse2_sin_precise((double)modelPtr);
     fVar3 = (float)dVar2;
     local_e0 = local_154 * fVar3 + local_148 * local_108;
     local_154 = local_154 * local_108 - fVar3 * local_148;
@@ -53326,8 +53240,7 @@ void GameController_spawnEffectMesh(int *pEntity,float param_2,float param_3,flo
       pModel = 1.0;
     }
     else {
-      dVar2 = (double)param_2;
-      libm_sse2_sqrt_precise();
+      dVar2 = libm_sse2_sqrt_precise((double)param_2);
       pModel = 1.0 - ((float)dVar2 - param_4) / (param_3 - param_4);
     }
     render_setVec3Uniform5c(pModel);
@@ -53498,17 +53411,15 @@ void GameController_renderDroppedItem(float *pItem,float param_2,float param_3,f
       local_118 = local_54 * local_120;
     }
     local_120 = (float)((int)pItemSaved[8] * 0x5a) * 0.017453292;
-    dVar9 = (double)local_120;
     local_12c = local_50;
     local_f8 = local_4c;
     local_f4 = local_48;
     local_ec = local_44;
     local_e0 = local_13c;
     fStack_dc = local_11c;
-    libm_sse2_cos_precise();
+    dVar9 = libm_sse2_cos_precise((double)local_120);
     local_100 = (float)dVar9;
-    dVar9 = (double)local_120;
-    libm_sse2_sin_precise();
+    dVar9 = libm_sse2_sin_precise((double)local_120);
     fVar10 = (float)dVar9;
     local_70 = local_110 * fVar10;
     local_110 = local_110 * local_100 - local_108 * fVar10;
@@ -53657,7 +53568,6 @@ void GameController_renderDroppedItem(float *pItem,float param_2,float param_3,f
       local_88 = local_88 * local_f8;
     }
     local_13c = (float)((int)pItemSaved[8] * 0x5a) * 0.017453292;
-    dVar9 = (double)local_13c;
     local_124 = local_88;
     local_120 = local_8c;
     local_100 = local_90;
@@ -53666,10 +53576,9 @@ void GameController_renderDroppedItem(float *pItem,float param_2,float param_3,f
     local_7c = local_d0;
     local_78 = local_130;
     local_74 = local_d4;
-    libm_sse2_cos_precise();
+    dVar9 = libm_sse2_cos_precise((double)local_13c);
     local_140 = (float)dVar9;
-    dVar9 = (double)local_13c;
-    libm_sse2_sin_precise();
+    dVar9 = libm_sse2_sin_precise((double)local_13c);
     fVar10 = local_e4;
     fVar11 = (float)dVar9;
     local_104 = local_138 * local_140 + local_114 * fVar11;
@@ -53716,7 +53625,6 @@ void GameController_renderDroppedItem(float *pItem,float param_2,float param_3,f
       local_d0 = local_114 * fVar12 + local_104 * 0.0 + local_ec + local_12c;
       local_13c = local_110 * fVar12 + local_128 * 0.0 + local_f4 + local_108;
       local_130 = local_118 * fVar12 + local_134 * 0.0 + local_f8 + local_78;
-      dVar9 = (double)local_e4;
       local_138 = local_10c * fVar12 + local_11c * 0.0 + local_140 + local_74;
       local_9c = local_110;
       local_98 = local_118;
@@ -53724,10 +53632,9 @@ void GameController_renderDroppedItem(float *pItem,float param_2,float param_3,f
       local_7c = local_13c;
       local_78 = local_130;
       local_74 = local_138;
-      libm_sse2_cos_precise();
+      dVar9 = libm_sse2_cos_precise((double)local_e4);
       local_d4 = (float)dVar9;
-      dVar9 = (double)local_e4;
-      libm_sse2_sin_precise();
+      dVar9 = libm_sse2_sin_precise((double)local_e4);
       fVar11 = (float)dVar9;
       local_b0 = local_104 * local_d4 + local_114 * fVar11;
       local_a0 = local_114 * local_d4 - fVar11 * local_104;
@@ -53770,17 +53677,15 @@ void GameController_renderDroppedItem(float *pItem,float param_2,float param_3,f
       local_f8 = local_110 * 0.0 + local_140 + local_120 * 9.0 + local_7c;
       local_e0 = local_a4 * 0.0;
       local_ec = local_118 * 0.0 + local_f4 + local_124 * 9.0 + local_78;
-      dVar9 = (double)local_e4;
       local_138 = local_94 * 0.0 + local_e0 + local_fc * 9.0 + local_74;
       local_130 = local_78;
       local_12c = local_80;
       local_114 = local_a0;
       local_10c = local_94;
       local_108 = local_7c;
-      libm_sse2_cos_precise();
+      dVar9 = libm_sse2_cos_precise((double)local_e4);
       local_d4 = (float)dVar9;
-      dVar9 = (double)local_e4;
-      libm_sse2_sin_precise();
+      dVar9 = libm_sse2_sin_precise((double)local_e4);
       fVar11 = (float)dVar9;
       local_a0 = local_100 * fVar11;
       local_100 = local_100 * local_d4 - local_114 * fVar11;
@@ -53832,16 +53737,14 @@ void GameController_renderDroppedItem(float *pItem,float param_2,float param_3,f
       local_d0 = ((local_9c * fVar11 + local_128) - local_120 * 0.5) + local_7c;
       local_11c = local_11c * 0.0;
       local_13c = ((local_98 * fVar11 + local_134) - local_124 * 0.5) + local_78;
-      dVar9 = (double)local_e0;
       local_140 = ((local_94 * fVar11 + local_11c) - local_fc * 0.5) + local_74;
       local_80 = local_d4;
       local_7c = local_d0;
       local_78 = local_13c;
       local_74 = local_140;
-      libm_sse2_cos_precise();
+      dVar9 = libm_sse2_cos_precise((double)local_e0);
       local_e4 = (float)dVar9;
-      dVar9 = (double)local_e0;
-      libm_sse2_sin_precise();
+      dVar9 = libm_sse2_sin_precise((double)local_e0);
       fVar10 = (float)dVar9;
       local_a0 = local_100 * fVar10 + local_114 * local_e4;
       local_100 = local_100 * local_e4 - fVar10 * local_114;
@@ -53889,8 +53792,7 @@ void GameController_renderDroppedItem(float *pItem,float param_2,float param_3,f
       fVar10 = 1.0;
     }
     else {
-      dVar9 = (double)param_2;
-      libm_sse2_sqrt_precise();
+      dVar9 = libm_sse2_sqrt_precise((double)param_2);
       fVar10 = 1.0 - ((float)dVar9 - param_4) / (param_3 - param_4);
     }
     render_setVec3Uniform5c(fVar10);
@@ -53933,7 +53835,7 @@ undefined1 GameController_isTimerZero_1cc(void)
 {
   int pThis;
   
-  if (*(float *)(pThis + 0x1cc) == 0.0) {
+  if (*(float *)(pThis + 0x1cc) == 0.0f) {
     return 1;
   }
   return 0;
@@ -53948,7 +53850,7 @@ undefined1 GameController_isTimerZero_1cc(void)
  */
 /* Global::perlinNoise2D_cosInterp @ 004c0ef0 */
 
-float10 perlinNoise2D_cosInterp(undefined4 xLo,undefined4 xHi,double y)
+float perlinNoise2D_cosInterp(undefined4 xLo,undefined4 xHi,double y)
 
 {
   int hashSeed;
@@ -53958,35 +53860,32 @@ float10 perlinNoise2D_cosInterp(undefined4 xLo,undefined4 xHi,double y)
   uint grad3;
   double fx;
   double weight;
-  double dVar8;
   
-  dVar8 = (double)(int)y;
+  weight = (double)(int)y;
   fx = (double)(int)(double)CONCAT44(xHi,xLo);
-  hashSeed = (int)dVar8 * 0x39;
+  hashSeed = (int)weight * 0x39;
   grad2 = (int)fx + hashSeed;
   grad0 = hashSeed + (int)(fx + 1.0);
   grad2 = grad2 ^ grad2 * 0x2000;
   grad0 = grad0 ^ grad0 * 0x2000;
-  weight = ((double)CONCAT44(xHi,xLo) - fx) * 3.1415927;
-  hashSeed = (int)(dVar8 + 1.0) * 0x39;
+  hashSeed = (int)(weight + 1.0) * 0x39;
   grad3 = (int)fx + hashSeed;
   grad1 = hashSeed + (int)(fx + 1.0);
   grad3 = grad3 ^ grad3 * 0x2000;
   grad1 = grad1 ^ grad1 * 0x2000;
-  libm_sse2_cos_precise();
-  fx = (1.0 - weight) * 0.5;
-  weight = (y - (double)(int)y) * 3.1415927;
-  libm_sse2_cos_precise();
-  weight = (1.0 - weight) * 0.5;
-  return (float10)(float)(((1.0 - (double)((grad2 * grad2 * 0xec4d + 0x131071f) * grad2 + 0xd208dd0d
-                                          & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - fx) +
+  fx = libm_sse2_cos_precise(((double)CONCAT44(xHi,xLo) - fx) * 3.1415927);
+  weight = (1.0 - fx) * 0.5;
+  fx = libm_sse2_cos_precise((y - (double)(int)y) * 3.1415927);
+  fx = (1.0 - fx) * 0.5;
+  return (float)(float)(((1.0 - (double)((grad2 * grad2 * 0xec4d + 0x131071f) * grad2 + 0xd208dd0d
+                                          & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - weight) +
                           (1.0 - (double)((grad0 * grad0 * 0xec4d + 0x131071f) * grad0 + 0xd208dd0d
-                                         & 0x7fffffff) * 9.313225746154785e-10) * fx) *
-                          (1.0 - weight) +
+                                         & 0x7fffffff) * 9.313225746154785e-10) * weight) *
+                          (1.0 - fx) +
                          ((1.0 - (double)((grad3 * grad3 * 0xec4d + 0x131071f) * grad3 + 0xd208dd0d
-                                         & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - fx) +
+                                         & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - weight) +
                          (1.0 - (double)((grad1 * grad1 * 0xec4d + 0x131071f) * grad1 + 0xd208dd0d &
-                                        0x7fffffff) * 9.313225746154785e-10) * fx) * weight);
+                                        0x7fffffff) * 9.313225746154785e-10) * weight) * fx);
 }
 
 
@@ -54016,11 +53915,11 @@ void vec3_rotateTowardAngle(float *pVecA,float *pVecB)
   ax = *pVecA;
   ay = pVecA[1];
   az = pVecA[2];
-  lenA = (double)(ax * ax + ay * ay + az * az);
-  libm_sse2_sqrt_precise();
+  lenA = libm_sse2_sqrt_precise((double)(ax * ax + ay * ay + az * az));
   if (0.0001 <= ABS((float)lenA)) {
-    lenB = (double)(*pVecB * *pVecB + pVecB[1] * pVecB[1] + pVecB[2] * pVecB[2]);
-    libm_sse2_sqrt_precise();
+    lenB = libm_sse2_sqrt_precise
+                      ((double)(*pVecB * *pVecB + pVecB[1] * pVecB[1] +
+                               pVecB[2] * pVecB[2]));
     if (0.0001 <= ABS((float)lenB)) {
       fVar4 = pVecB[2];
       fVar5 = pVecB[1];
@@ -54029,9 +53928,9 @@ void vec3_rotateTowardAngle(float *pVecA,float *pVecB)
       crossY = fVar6 * pVecA[2] - fVar4 * *pVecA;
       crossZ = fVar5 * *pVecA - fVar6 * pVecA[1];
       if (0.0001 <= ABS(crossY * crossY + crossX * crossX + crossZ * crossZ)) {
-        lenA = (double)((fVar6 * ax + fVar5 * ay + fVar4 * az) /
-                        ((float)lenB * (float)lenA));
-        libm_sse2_acos_precise(crossX,crossY,crossZ);
+        lenA = libm_sse2_acos_precise
+                          ((double)((fVar6 * ax + fVar5 * ay + fVar4 * az) /
+                                   ((float)lenB * (float)lenA)));
         mat4_rotateAxisAngle((float)lenA * 57.29578,crossX,crossY,crossZ);
       }
     }
@@ -54063,7 +53962,7 @@ void cube::GameController::drawCurrencyPanel(void)
   undefined8 *puVar10;
   int iVar11;
   pair<unsigned___int64,unsigned___int64> *ppVar12;
-  float10 fVar13;
+  float fVar13;
   int *piVar14;
   float fVar15;
   float fVar16;
@@ -54296,16 +54195,16 @@ void cube::GameController::drawCurrencyPanel(void)
     } while (iVar11 != 0);
     render_bindNodeTransformA();
     render_uploadBoneMatrices(local_1d4,local_d4);
-    fVar13 = (float10)Widget_measureGuarded();
+    fVar13 = (float)Widget_measureGuarded();
     local_4e4 = (pair<unsigned___int64,unsigned___int64> *)(float)fVar13;
-    local_4f8 = (int)(((float)local_4e4 - 10.0) / (float)(*(int *)(in_ECX + 0x1a8) + 5));
-    fVar13 = (float10)Widget_measure();
+    local_4f8 = (int)(((float)local_4e4 - 10.0f) / (float)(*(int *)(in_ECX + 0x1a8) + 5));
+    fVar13 = (float)Widget_measure();
     iVar11 = *(int *)(in_ECX + 0x1b4);
     local_4ec = (pair<unsigned___int64,unsigned___int64> *)
                 (*(int *)(*(int *)(in_ECX + 0x198) + iVar11 * 4) * local_4f8);
     local_4dc = *(int **)(in_ECX + 0x160);
     local_4e8 = local_4ec +
-                (int)(((float)fVar13 - 40.0) / (float)(*(int *)(in_ECX + 0x1ac) + 5)) * local_4f8;
+                (int)(((float)fVar13 - 40.0f) / (float)(*(int *)(in_ECX + 0x1ac) + 5)) * local_4f8;
     if ((iVar11 < (local_4dc[1] - *local_4dc) / 0xc) &&
        ((*(int *)(*local_4dc + 4 + iVar11 * 0xc) - *(int *)(*local_4dc + iVar11 * 0xc)) / 0x11c <
         (int)local_4e8)) {
@@ -54320,10 +54219,10 @@ void cube::GameController::drawCurrencyPanel(void)
         iVar3 = (int)local_4ec -
                 *(int *)(*(int *)(in_ECX + 0x198) + *(int *)(in_ECX + 0x1b4) * 4) * local_4f8;
         local_4f0 = (float)(int)((float)((*(int *)(in_ECX + 0x1a8) + 5) * (iVar3 % local_4f8)) +
-                                local_284 + 10.0);
+                                local_284 + 10.0f);
         local_4dc = (int *)0x3cf5c28f;
         local_4e0 = (int)((float)((*(int *)(in_ECX + 0x1ac) + 5) * (iVar3 / local_4f8)) +
-                         local_280 + 40.0);
+                         local_280 + 40.0f);
         fVar15 = *(float *)(*(int *)(in_ECX + 4) + 0xd4);
         if (((((float)(int)local_4f0 <= fVar15) &&
              (fVar15 < (float)(*(int *)(in_ECX + 0x1a8) + (int)local_4f0))) &&
@@ -54357,7 +54256,7 @@ void cube::GameController::drawCurrencyPanel(void)
                                + 4 + iVar11);
           piVar14 = local_4dc;
           if (*local_4d8 == '\t') {
-            piVar14 = (int *)((float)local_4dc * 0.75);
+            piVar14 = (int *)((float)local_4dc * 0.75f);
           }
           iVar3 = *(int *)(in_ECX + 0x1ac) / 2;
           drawBillboardModelRotated((float)((int)local_4f0 + iVar3),(float)(local_4e0 + iVar3),
@@ -54506,14 +54405,14 @@ LAB_004c273e:
       local_4d8 = (char *)(iVar11 % 100);
       local_200 = (pair<unsigned___int64,unsigned___int64> *)(local_4e0 / 100);
       local_4e0 = local_4e0 % 100;
-      fVar13 = (float10)security_cookie_guard_b();
+      fVar13 = (float)security_cookie_guard_b();
       local_4f0 = (float)fVar13;
-      iVar11 = (int)(local_4f0 - 30.0);
-      fVar13 = (float10)security_cookie_guard_a();
+      iVar11 = (int)(local_4f0 - 30.0f);
+      fVar13 = (float)security_cookie_guard_a();
       local_4f0 = (float)fVar13;
       local_1d8 = 7;
       local_1dc = 0;
-      local_4dc = (int *)(int)(local_4f0 - 10.0);
+      local_4dc = (int *)(int)(local_4f0 - 10.0f);
       local_1ec = (undefined4 *)((uint)local_1ec & 0xffff0000);
       u16string_assignPtrLen(&PTR_006fccac,0);
       local_8._0_1_ = 8;
@@ -54768,9 +54667,9 @@ LAB_004c273e:
       if (7 < local_228) {
         operator_delete(local_23c[0]);
       }
-      fVar13 = (float10)security_cookie_guard_a();
+      fVar13 = (float)security_cookie_guard_a();
       local_200 = (pair<unsigned___int64,unsigned___int64> *)(float)fVar13;
-      fVar15 = (float)local_200 - 10.0;
+      fVar15 = (float)local_200 - 10.0f;
       u16string_assignCStr(&PTR_006fccac);
       local_8._0_1_ = 0x17;
       strstreambuf_tidy();
@@ -55353,7 +55252,7 @@ LAB_004c273e:
             local_4d8 = local_4d8 + -0x28;
           }
           fVar15 = local_4f0;
-          if (local_4f0 != 0.0) {
+          if (local_4f0 != 0.0f) {
             u16string_assignCStr(&PTR_006fccac);
             local_8._0_1_ = 0x40;
             strstreambuf_initWrap(local_27c);
@@ -55599,9 +55498,9 @@ LAB_004c576f:
     iVar11 = iVar11 + 0x11ec;
     uVar8 = 0x3d4ccccd;
     uVar4 = GameController_get_field_ptr_0x800a1c(0x3d4ccccd,iVar11);
-    fVar13 = (float10)get_float_field_0xd8(uVar4);
+    fVar13 = (float)get_float_field_0xd8(uVar4);
     fVar15 = (float)fVar13;
-    fVar13 = (float10)get_float_field_0xd4(fVar15);
+    fVar13 = (float)get_float_field_0xd4(fVar15);
     drawBillboardModelRotated((float)fVar13,fVar15,uVar4,uVar8,iVar11,uVar23);
   }
 LAB_004c595f:
@@ -55628,7 +55527,7 @@ void InventoryWidget_rebuildItemList(int *pList)
   int pThis;
   int *pIt;
   int *pNode;
-  float10 fVar6;
+  float fVar6;
   undefined4 uVar7;
   int count;
   int yPos;
@@ -55673,10 +55572,10 @@ void InventoryWidget_rebuildItemList(int *pList)
     do {
       Widget_setPositionFloat(pNode[2]);
       uVar7 = 1;
-      fVar6 = (float10)Widget_measure(1);
-      Widget_setScroll((float)yPos,-(float)fVar6 - 3.0,uVar7);
-      fVar6 = (float10)Widget_measureGuarded();
-      yPos = (int)((float)fVar6 + 2.0 + (float)yPos);
+      fVar6 = (float)Widget_measure(1);
+      Widget_setScroll((float)yPos,-(float)fVar6 - 3.0f,uVar7);
+      fVar6 = (float)Widget_measureGuarded();
+      yPos = (int)((float)fVar6 + 2.0f + (float)yPos);
       plasma::Widget::MemberFunctionConnection<cube::InventoryWidget>::ctor_0
                 (2,pThis,GameController_navigate_next_tab,0,1,1);
       pNode = (int *)*pNode;
@@ -55710,18 +55609,18 @@ void InventoryWidget_updateScroll(void)
   int itemStart;
   int cellW;
   int pThis;
-  float10 fVar7;
+  float fVar7;
   float innerW;
   float scrollX;
   
   if (*(int *)(pThis + 0x160) != 0) {
-    fVar7 = (float10)Widget_measureGuarded();
+    fVar7 = (float)Widget_measureGuarded();
     scrollX = (float)fVar7;
     cellW = *(int *)(pThis + 0x1a8);
-    innerW = scrollX - 10.0;
-    fVar7 = (float10)Widget_measure();
+    innerW = scrollX - 10.0f;
+    fVar7 = (float)Widget_measure();
     iVar1 = *(int *)(pThis + 0x1ac);
-    scrollX = 0.0;
+    scrollX = 0.0f;
     std_vector_resize_erase_4(((*(int **)(pThis + 0x160))[1] - **(int **)(pThis + 0x160)) / 0xc,&scrollX);
     piVar2 = *(int **)(pThis + 0x160);
     if ((*piVar2 == piVar2[1]) ||
@@ -55738,7 +55637,7 @@ void InventoryWidget_updateScroll(void)
       }
       cellW = (((*(int *)(iVar4 + 4 + slot * 0xc) - itemStart) / 0x11c - 1U) /
                (uint)(int)(innerW / (float)(cellW + 5)) -
-              (int)(((float)fVar7 - 40.0) / (float)(iVar1 + 5))) + 2;
+              (int)(((float)fVar7 - 40.0f) / (float)(iVar1 + 5))) + 2;
       if (cellW < 1) {
         cellW = 1;
       }
@@ -55768,8 +55667,8 @@ void InventoryWidget_drawScrollbar(void)
   int pScrollArr;
   int rowH;
   int pThis;
-  float10 fVar4;
-  float10 fVar5;
+  float fVar4;
+  float fVar5;
   float thumbH;
   float fVar7;
   float fVar8;
@@ -55780,27 +55679,27 @@ void InventoryWidget_drawScrollbar(void)
     Widget_measureGuarded();
     if (((*(int *)(pThis + 0x178) != 0) && (*(int *)(pThis + 0x1a4) != 0)) &&
        (*(int *)(pThis + 0x198) != *(int *)(pThis + 0x19c))) {
-      fVar4 = (float10)Widget_measure();
-      rowH = (int)((float)fVar4 - 70.0) / *(int *)(pThis + 0x1a4);
+      fVar4 = (float)Widget_measure();
+      rowH = (int)((float)fVar4 - 70.0f) / *(int *)(pThis + 0x1a4);
       thumbH = (float)rowH;
       if (1 < *(int *)(pThis + 0x1a4)) {
         slot = *(int *)(pThis + 0x1b4);
         pScrollArr = *(int *)(pThis + 0x198);
         uVar9 = 1;
-        fVar5 = (float10)Widget_measureGuarded(thumbH,1);
+        fVar5 = (float)Widget_measureGuarded(thumbH,1);
         fVar8 = (float)fVar5;
-        fVar7 = (float)((((int)((float)fVar4 - 70.0) - rowH) * *(int *)(pScrollArr + slot * 4)) /
+        fVar7 = (float)((((int)((float)fVar4 - 70.0f) - rowH) * *(int *)(pScrollArr + slot * 4)) /
                         (*(int *)(pThis + 0x1a4) + -1) + 0x23);
-        fVar4 = (float10)Widget_measureGuarded(fVar7,fVar8);
-        Widget_layoutChildrenGuarded((float)fVar4 - 28.0,fVar7,fVar8,thumbH,uVar9);
+        fVar4 = (float)Widget_measureGuarded(fVar7,fVar8);
+        Widget_layoutChildrenGuarded((float)fVar4 - 28.0f,fVar7,fVar8,thumbH,uVar9);
         return;
       }
       uVar10 = 1;
-      fVar4 = (float10)Widget_measureGuarded(thumbH,1);
+      fVar4 = (float)Widget_measureGuarded(thumbH,1);
       fVar8 = (float)fVar4;
       uVar9 = 0x420c0000;
-      fVar4 = (float10)Widget_measureGuarded(0x420c0000,fVar8);
-      Widget_layoutChildrenGuarded((float)fVar4 - 28.0,uVar9,fVar8,thumbH,uVar10);
+      fVar4 = (float)Widget_measureGuarded(0x420c0000,fVar8);
+      Widget_layoutChildrenGuarded((float)fVar4 - 28.0f,uVar9,fVar8,thumbH,uVar10);
     }
   }
   return;
@@ -55822,7 +55721,7 @@ void InventoryWidget_handleSlotHover(char doSelect)
   int index;
   int pThis;
   int cols;
-  float10 fVar4;
+  float fVar4;
   
   if (*(int *)(pThis + 0x160) != 0) {
     if (doSelect != '\0') {
@@ -55834,13 +55733,13 @@ void InventoryWidget_handleSlotHover(char doSelect)
       playSoundAtPlayer(0x55);
     }
     if (*(int *)(pThis + 0x16c) != 0) {
-      fVar4 = (float10)Widget_measureGuarded();
-      cols = (int)(((float)fVar4 - 10.0) / (float)(*(int *)(pThis + 0x1a8) + 5));
-      fVar4 = (float10)Widget_measure();
+      fVar4 = (float)Widget_measureGuarded();
+      cols = (int)(((float)fVar4 - 10.0f) / (float)(*(int *)(pThis + 0x1a8) + 5));
+      fVar4 = (float)Widget_measure();
       index = *(int *)(pThis + 400);
       firstItem = *(int *)(*(int *)(pThis + 0x198) + *(int *)(pThis + 0x1b4) * 4) * cols;
       if (((-1 < index) && (firstItem <= index)) &&
-         (index < (int)(((float)fVar4 - 40.0) / (float)(*(int *)(pThis + 0x1ac) + 5)) * cols +
+         (index < (int)(((float)fVar4 - 40.0f) / (float)(*(int *)(pThis + 0x1ac) + 5)) * cols +
                   firstItem)) {
         index = *(int *)(*(int *)(pThis + 0x16c) + 0x3c);
         *(undefined4 *)(*(int *)(index + 0x94) + *(int *)(index + 0x68) * 4) = 1;
@@ -55911,9 +55810,9 @@ void GameController_avgEquippedColor(float *pOut)
   count = 0;
   iVar3 = 0;
   *pOut = 0.0;
-  pOut[1] = 0.0;
-  pOut[2] = 0.0;
-  pOut[3] = 0.0;
+  pOut[1] = 0.0f;
+  pOut[2] = 0.0f;
+  pOut[3] = 0.0f;
   if (0 < *(int *)(pThis + 0x114)) {
     pMat = (byte *)(pThis + 0x17);
     do {
@@ -55933,7 +55832,7 @@ void GameController_avgEquippedColor(float *pOut)
       pMat = pMat + 8;
     } while (iVar3 < *(int *)(pThis + 0x114));
     if (0 < count) {
-      inv = 1.0 / (float)count;
+      inv = 1.0f / (float)count;
       *pOut = *pOut * inv;
       pOut[1] = inv * pOut[1];
       pOut[2] = pOut[2] * inv;
@@ -55955,30 +55854,30 @@ void GameController_avgEquippedColor(float *pOut)
  */
 /* Global::item_computeValue @ 004c6e10 */
 
-float10 item_computeValue(void)
+float item_computeValue(void)
 
 {
   char *pItem;
-  float10 base;
+  float base;
   
   if (*pItem == '\x01') {
     switch(pItem[1]) {
     case '\x01':
     case '\x02':
-      base = (float10)math_pow2Mul((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
-      return (float10)((float)base * 200.0);
+      base = (float)math_pow2Mul((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
+      return (float)((float)base * 200.0f);
     case '\x04':
     case '\x05':
     case '\x06':
-      base = (float10)math_pow2Mul((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
-      return (float10)((float)base * 200.0);
+      base = (float)math_pow2Mul((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
+      return (float)((float)base * 200.0f);
     case '\b':
     case '\t':
-      base = (float10)math_pow2Mul((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
-      return (float10)((float)base * 100.0);
+      base = (float)math_pow2Mul((float)(int)*(short *)(pItem + 0x10),pItem[0xc]);
+      return (float)((float)base * 100.0f);
     }
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -56075,19 +55974,19 @@ switchD_004c700c_caseD_17:
  */
 /* Global::item_computeStat_armor @ 004c70b0 */
 
-float10 item_computeStat_armor(void)
+float item_computeStat_armor(void)
 
 {
   char typeByte;
   char *in_ECX;
-  float10 baseValue;
+  float baseValue;
   float rarityFactor;
   float materialMult;
   
   typeByte = *in_ECX;
   if ((((typeByte != '\x03') && (typeByte != '\x04')) && (typeByte != '\a')) &&
      ((typeByte != '\x05' && (typeByte != '\x06')))) {
-    return (float10)0;
+    return (float)0;
   }
   rarityFactor = 0.5;
   if (typeByte == '\x04') {
@@ -56105,9 +56004,9 @@ float10 item_computeStat_armor(void)
   else if (typeByte == '\x1b') {
     materialMult = materialMult + 0.75;
   }
-  baseValue = (float10)math_pow2Mul((float)*(int *)(in_ECX + 0x114) * 0.1 +
+  baseValue = (float)math_pow2Mul((float)*(int *)(in_ECX + 0x114) * 0.1 +
                                 (float)(int)*(short *)(in_ECX + 0x10),in_ECX[0xc]);
-  return (float10)((float)baseValue * 5.0 * rarityFactor * materialMult);
+  return (float)((float)baseValue * 5.0 * rarityFactor * materialMult);
 }
 
 
@@ -56170,96 +56069,96 @@ float * material_toColor(float *colorOut,undefined4 materialType,float *srcColor
   switch(materialType) {
   case 1:
     *colorOut = 0.7;
-    colorOut[1] = 0.7;
-    colorOut[2] = 0.7;
-    colorOut[3] = 1.0;
+    colorOut[1] = 0.7f;
+    colorOut[2] = 0.7f;
+    colorOut[3] = 1.0f;
     *colorOut = *srcColor * 0.7;
-    colorOut[1] = srcColor[1] * 0.7;
-    colorOut[2] = srcColor[2] * 0.7;
+    colorOut[1] = srcColor[1] * 0.7f;
+    colorOut[2] = srcColor[2] * 0.7f;
     colorOut[3] = srcColor[3];
     return colorOut;
   case 2:
     *colorOut = 0.4;
-    colorOut[1] = 0.3;
-    colorOut[2] = 0.2;
-    colorOut[3] = 1.0;
+    colorOut[1] = 0.3f;
+    colorOut[2] = 0.2f;
+    colorOut[3] = 1.0f;
     *colorOut = *srcColor * 0.4;
-    colorOut[1] = srcColor[1] * 0.3;
-    colorOut[2] = srcColor[2] * 0.2;
+    colorOut[1] = srcColor[1] * 0.3f;
+    colorOut[2] = srcColor[2] * 0.2f;
     colorOut[3] = srcColor[3];
     return colorOut;
   default:
-    shade = 0.5;
+    shade = 0.5f;
     *colorOut = 0.5;
-    colorOut[1] = 0.5;
-    colorOut[2] = 0.5;
+    colorOut[1] = 0.5f;
+    colorOut[2] = 0.5f;
     break;
   case 5:
-    shade = 0.1;
+    shade = 0.1f;
     *colorOut = 0.1;
-    colorOut[1] = 0.1;
-    colorOut[2] = 0.1;
+    colorOut[1] = 0.1f;
+    colorOut[2] = 0.1f;
     break;
   case 7:
-    shade = 0.9;
+    shade = 0.9f;
     *colorOut = 0.9;
-    colorOut[1] = 0.9;
-    colorOut[2] = 0.9;
+    colorOut[1] = 0.9f;
+    colorOut[2] = 0.9f;
     break;
   case 0xb:
     *colorOut = 1.0;
-    colorOut[1] = 0.7;
-    colorOut[2] = 0.2;
-    colorOut[3] = 1.0;
+    colorOut[1] = 0.7f;
+    colorOut[2] = 0.2f;
+    colorOut[3] = 1.0f;
     *colorOut = *srcColor;
-    colorOut[1] = srcColor[1] * 0.7;
-    colorOut[2] = srcColor[2] * 0.2;
+    colorOut[1] = srcColor[1] * 0.7f;
+    colorOut[2] = srcColor[2] * 0.2f;
     colorOut[3] = srcColor[3];
     return colorOut;
   case 0xc:
     *colorOut = 0.8;
-    colorOut[1] = 0.8;
-    colorOut[2] = 0.85;
-    colorOut[3] = 1.0;
+    colorOut[1] = 0.8f;
+    colorOut[2] = 0.85f;
+    colorOut[3] = 1.0f;
     *colorOut = *srcColor * 0.8;
-    colorOut[1] = srcColor[1] * 0.8;
-    colorOut[2] = srcColor[2] * 0.85;
+    colorOut[1] = srcColor[1] * 0.8f;
+    colorOut[2] = srcColor[2] * 0.85f;
     colorOut[3] = srcColor[3];
     return colorOut;
   case 0x80:
     shade = srcColor[3];
-    glowScale = level * 0.5 + 1.0;
-    colorOut[1] = glowScale * 0.5;
+    glowScale = level * 0.5f + 1.0f;
+    colorOut[1] = glowScale * 0.5f;
     *colorOut = glowScale;
     colorOut[3] = (shade + level) * glowScale;
-    colorOut[2] = glowScale * 0.1;
+    colorOut[2] = glowScale * 0.1f;
     return colorOut;
   case 0x81:
     shade = srcColor[3];
-    glowScale = level * 0.5 + 1.0;
+    glowScale = level * 0.5f + 1.0f;
     *colorOut = glowScale * 0.3;
     colorOut[1] = glowScale;
     colorOut[3] = (shade + level) * glowScale;
-    colorOut[2] = glowScale * 0.5;
+    colorOut[2] = glowScale * 0.5f;
     return colorOut;
   case 0x82:
     shade = srcColor[3];
-    glowScale = level * 0.5 + 1.0;
+    glowScale = level * 0.5f + 1.0f;
     *colorOut = glowScale * 0.3;
     colorOut[2] = glowScale;
     colorOut[3] = (shade + level) * glowScale;
-    colorOut[1] = glowScale * 0.5;
+    colorOut[1] = glowScale * 0.5f;
     return colorOut;
   case 0x83:
     shade = srcColor[3];
-    glowScale = level * 0.5 + 1.0;
+    glowScale = level * 0.5f + 1.0f;
     *colorOut = glowScale * 0.8;
-    colorOut[1] = glowScale * 0.8;
+    colorOut[1] = glowScale * 0.8f;
     colorOut[2] = glowScale;
     colorOut[3] = (shade + level) * glowScale;
     return colorOut;
   }
-  colorOut[3] = 1.0;
+  colorOut[3] = 1.0f;
   *colorOut = *srcColor * shade;
   colorOut[1] = srcColor[1] * shade;
   colorOut[2] = srcColor[2] * shade;
@@ -56305,10 +56204,10 @@ int item_rarityScaled(void)
 
 {
   int entity;
-  float10 ratio;
+  float ratio;
   
-  ratio = (float10)curve_level05((float)(int)*(short *)(entity + 0x10));
-  return (int)((float)ratio * 100.0 + 1.0);
+  ratio = (float)curve_level05((float)(int)*(short *)(entity + 0x10));
+  return (int)((float)ratio * 100.0f + 1.0f);
 }
 
 
@@ -56325,40 +56224,40 @@ int item_valueByType(void)
 {
   char typeByte;
   char *item;
-  float10 ratio;
+  float ratio;
   float multiplier;
   
-  multiplier = 0.2;
+  multiplier = 0.2f;
   switch(*item) {
   case '\x03':
   case '\x04':
-    multiplier = 2.0;
+    multiplier = 2.0f;
     break;
   case '\x05':
   case '\x06':
   case '\t':
-    multiplier = 1.0;
+    multiplier = 1.0f;
     break;
   case '\a':
   case '\b':
-    multiplier = 1.5;
+    multiplier = 1.5f;
     break;
   case '\x17':
-    multiplier = 100.0;
+    multiplier = 100.0f;
   }
   if ((*item == '\x03') &&
      ((((((typeByte = item[1], typeByte == '\x0f' || (typeByte == '\x10')) || (typeByte == '\x11')) ||
         ((typeByte == '\x05' || (typeByte == '\n')))) ||
        ((typeByte == '\v' || ((typeByte == '\x12' || (typeByte == '\b')))))) ||
       ((typeByte == '\x06' || (typeByte == '\a')))))) {
-    multiplier = multiplier * 2.0;
+    multiplier = multiplier * 2.0f;
   }
-  ratio = (float10)math_pow2Mul((float)(int)*(short *)(item + 0x10),item[0xc]);
-  if ((int)((float)ratio * 10.0 * multiplier) < 1) {
+  ratio = (float)math_pow2Mul((float)(int)*(short *)(item + 0x10),item[0xc]);
+  if ((int)((float)ratio * 10.0f * multiplier) < 1) {
     return 1;
   }
-  ratio = (float10)math_pow2Mul((float)(int)*(short *)(item + 0x10),item[0xc]);
-  return (int)((float)ratio * 10.0 * multiplier);
+  ratio = (float)math_pow2Mul((float)(int)*(short *)(item + 0x10),item[0xc]);
+  return (int)((float)ratio * 10.0f * multiplier);
 }
 
 
@@ -56370,7 +56269,7 @@ int item_valueByType(void)
  */
 /* Global::item_hasSpecialAbility @ 004c7be0 */
 
-float10 item_hasSpecialAbility(void)
+float item_hasSpecialAbility(void)
 
 {
   char subType;
@@ -56379,9 +56278,9 @@ float10 item_hasSpecialAbility(void)
   if ((*item != '\0') &&
      ((((subType = item[0xd], subType == '\x01' || (subType == '\v')) || (subType == '\f')) ||
       (subType == '\x16')))) {
-    return (float10)1;
+    return (float)1;
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -56393,13 +56292,13 @@ float10 item_hasSpecialAbility(void)
  */
 /* Global::item_computeStat_variant3 @ 004c7c00 */
 
-float10 item_computeStat_variant3(void)
+float item_computeStat_variant3(void)
 
 {
   char typeByte;
   char subType;
   char *in_ECX;
-  float10 ratio;
+  float ratio;
   float variance;
   float rarityFactor;
   
@@ -56419,13 +56318,13 @@ float10 item_computeStat_variant3(void)
     if (in_ECX[0xd] == '\f') {
       variance = variance + 1.0;
     }
-    ratio = (float10)math_pow2Div((float)(int)*(short *)(in_ECX + 0x10),in_ECX[0xc]);
+    ratio = (float)math_pow2Div((float)(int)*(short *)(in_ECX + 0x10),in_ECX[0xc]);
     variance = (float)ratio * rarityFactor * variance;
     if (0.001 <= variance) {
-      return (float10)variance;
+      return (float)variance;
     }
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -56511,40 +56410,40 @@ void Item_get_type_color(undefined4 *param_1)
  */
 /* Global::item_weaponDamage @ 004c7f60 */
 
-float10 item_weaponDamage(void)
+float item_weaponDamage(void)
 
 {
   char subType;
   char *item;
-  float10 ratio;
+  float ratio;
   float powerBonus;
   
   if (*item != '\x03') {
-    return (float10)0;
+    return (float)0;
   }
   subType = item[1];
-  powerBonus = (float)*(int *)(item + 0x114) * 0.1;
+  powerBonus = (float)*(int *)(item + 0x114) * 0.1f;
   switch(subType) {
   case '\x03':
   case '\x04':
-    ratio = (float10)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
-    return (float10)((float)ratio * 2.0);
+    ratio = (float)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
+    return (float)((float)ratio * 2.0f);
   case '\x05':
-    ratio = (float10)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
-    return (float10)((float)ratio * 4.0);
+    ratio = (float)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
+    return (float)((float)ratio * 4.0f);
   case '\r':
-    ratio = (float10)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
-    return (float10)((float)ratio * 2.0);
+    ratio = (float)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
+    return (float)((float)ratio * 2.0f);
   }
   if ((((((subType != '\x0f') && (subType != '\x10')) && (subType != '\x11')) &&
        ((subType != '\x05' && (subType != '\n')))) &&
       ((subType != '\v' && ((subType != '\x12' && (subType != '\b')))))) &&
      ((subType != '\x06' && (subType != '\a')))) {
-    ratio = (float10)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
-    return (float10)((float)ratio * 4.0);
+    ratio = (float)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
+    return (float)((float)ratio * 4.0f);
   }
-  ratio = (float10)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
-  return (float10)((float)ratio * 8.0);
+  ratio = (float)math_pow2Mul((float)(int)*(short *)(item + 0x10) + powerBonus,item[0xc]);
+  return (float)((float)ratio * 8.0f);
 }
 
 
@@ -56725,10 +56624,10 @@ LAB_004dc9f7:
     dz = itemNode[6] - *(uint *)(zone + 0x20);
     iStack_54 = (itemNode[7] - *(int *)(zone + 0x24)) -
                 (uint)((uint)itemNode[6] < *(uint *)(zone + 0x20));
-    fx = (float)CONCAT44(iStack_64,dx) * 1.5258789e-05;
-    fy = (float)CONCAT44(iStack_5c,dy) * 1.5258789e-05;
-    fz = (float)CONCAT44(iStack_54,dz) * 1.5258789e-05;
-    if (fy * fy + fx * fx + fz * fz < 40000.0) {
+    fx = (float)CONCAT44(iStack_64,dx) * 1.5258789e-05f;
+    fy = (float)CONCAT44(iStack_5c,dy) * 1.5258789e-05f;
+    fz = (float)CONCAT44(iStack_54,dz) * 1.5258789e-05f;
+    if (fy * fy + fx * fx + fz * fz < 40000.0f) {
       iVar10 = *(int *)(*(int *)(in_ECX + 0x28) + zoneIndex * 4);
       iVar9 = *(int *)(iVar10 + 0x28);
       iVar8 = map_insertVal_00465e60(iVar9,*(undefined4 *)(iVar9 + 4),itemNode + 2);
@@ -56743,17 +56642,17 @@ LAB_004dcb52:
   itemNode = *(int **)buffers[2];
   if (itemNode != (int *)buffers[2]) {
     do {
-      local_48 = (float)*(longlong *)(zone + 0x10) * 1.5258789e-05;
-      local_44 = (float)*(longlong *)(zone + 0x18) * 1.5258789e-05;
+      local_48 = (float)*(longlong *)(zone + 0x10) * 1.5258789e-05f;
+      local_44 = (float)*(longlong *)(zone + 0x18) * 1.5258789e-05f;
       uVar2 = *(undefined8 *)(itemNode + 2);
       local_30._4_4_ = (float)((ulonglong)uVar2 >> 0x20);
       local_30._4_4_ = local_30._4_4_ - local_44;
-      local_40 = (float)*(longlong *)(zone + 0x20) * 1.5258789e-05;
+      local_40 = (float)*(longlong *)(zone + 0x20) * 1.5258789e-05f;
       local_30._0_4_ = (float)uVar2;
       local_30._0_4_ = (float)local_30 - local_48;
       local_28 = (float)itemNode[4] - local_40;
       if (local_30._4_4_ * local_30._4_4_ + (float)local_30 * (float)local_30 + local_28 * local_28
-          < 40000.0) {
+          < 40000.0f) {
         iVar10 = *(int *)(*(int *)(in_ECX + 0x28) + iVar1);
         iVar9 = *(int *)(iVar10 + 0x20);
         iVar8 = Map_InsertVec6(iVar9,*(undefined4 *)(iVar9 + 4),itemNode + 2);
@@ -57049,7 +56948,7 @@ void GameController_terrainStateChanged(void)
   int i;
   int *selfPos;
   int *worldPos;
-  float10 fVar6;
+  float fVar6;
   float cursorY;
   float cursorX;
   uint local_8;
@@ -57074,10 +56973,10 @@ void GameController_terrainStateChanged(void)
     return;
   }
   Widget_computeBoundsFloat(&cursorY);
-  fVar6 = (float10)security_cookie_guard_a();
-  if (((((float)fVar6 - 30.0 < cursorX) && (fVar6 = (float10)security_cookie_guard_a(), cursorX < (float)fVar6)
-       ) && (fVar6 = (float10)security_cookie_guard_b(), (float)fVar6 * 0.5 < cursorY)) &&
-     (fVar6 = (float10)security_cookie_guard_b(), cursorY < (float)fVar6)) {
+  fVar6 = (float)security_cookie_guard_a();
+  if (((((float)fVar6 - 30.0f < cursorX) && (fVar6 = (float)security_cookie_guard_a(), cursorX < (float)fVar6)
+       ) && (fVar6 = (float)security_cookie_guard_b(), (float)fVar6 * 0.5f < cursorY)) &&
+     (fVar6 = (float)security_cookie_guard_b(), cursorY < (float)fVar6)) {
     __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
     return;
   }
@@ -57104,7 +57003,7 @@ void GameController_questStateChanged(void)
   int i;
   int *selfPos;
   int *worldPos;
-  float10 fVar7;
+  float fVar7;
   float cursorY;
   float cursorX;
   uint local_8;
@@ -57132,10 +57031,10 @@ void GameController_questStateChanged(void)
     return;
   }
   Widget_computeBoundsFloat(&cursorY);
-  fVar7 = (float10)security_cookie_guard_a();
-  if ((((float)fVar7 - 30.0 < cursorX) &&
-      ((fVar7 = (float10)security_cookie_guard_a(), cursorX < (float)fVar7 &&
-       (fVar7 = (float10)security_cookie_guard_b(), cursorY < (float)fVar7 * 0.5)))) && (0.0 < cursorY)) {
+  fVar7 = (float)security_cookie_guard_a();
+  if ((((float)fVar7 - 30.0f < cursorX) &&
+      ((fVar7 = (float)security_cookie_guard_a(), cursorX < (float)fVar7 &&
+       (fVar7 = (float)security_cookie_guard_b(), cursorY < (float)fVar7 * 0.5f)))) && (0.0f < cursorY)) {
     __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
     return;
   }
@@ -57158,19 +57057,19 @@ int GameController_computeQuestScore(void)
   int world;
   int in_ECX;
   int statOffset;
-  float10 weight;
+  float weight;
   float total;
   undefined4 local_8;
   
-  total = 0.0;
-  local_8 = 0.0;
+  total = 0.0f;
+  local_8 = 0.0f;
   statOffset = 0x1138;
   do {
     world = *(int *)(*(int *)(in_ECX + 400) + 0x8006d0);
     if (*(int *)(in_ECX + -0xfd8 + statOffset) < *(int *)(statOffset + world)) {
-      weight = (float10)math_pow2Mul((float)*(int *)(world + 400),0);
+      weight = (float)math_pow2Mul((float)*(int *)(world + 400),0);
       total = (float)weight * (float)(*(int *)(statOffset + world) - *(int *)(in_ECX + -0xfd8 + statOffset)) *
-              10.0 + local_8;
+              10.0f + local_8;
       local_8 = total;
     }
     statOffset = statOffset + 4;
@@ -57178,8 +57077,8 @@ int GameController_computeQuestScore(void)
   statOffset = *(int *)(*(int *)(in_ECX + 400) + 0x8006d0);
   if ((*(uint *)(in_ECX + 0x18c) != (uint)*(byte *)(statOffset + 0x141)) && (1 < *(int *)(statOffset + 400)))
   {
-    weight = (float10)math_pow2Mul((float)*(int *)(statOffset + 400),0);
-    total = (float)weight * 100.0 + local_8;
+    weight = (float)math_pow2Mul((float)*(int *)(statOffset + 400),0);
+    total = (float)weight * 100.0f + local_8;
   }
   return (int)total;
 }
@@ -57666,7 +57565,7 @@ void GameController_show_region_name(undefined4 param_1,undefined4 param_2,uint 
   undefined4 extraout_EDX_01;
   undefined4 extraout_EDX_02;
   undefined4 extraout_EDX_03;
-  float10 fVar5;
+  float fVar5;
   undefined4 extra;
   int local_7c;
   uint local_78;
@@ -57707,9 +57606,9 @@ void GameController_show_region_name(undefined4 param_1,undefined4 param_2,uint 
     local_64 = yCopy << 0x10;
     local_78 = ((int)xCopy >> 0x1f) << 0x10 | xCopy >> 0x10;
     local_7c = xCopy << 0x10;
-    fVar5 = (float10)GameController_entityDistanceSq(&local_7c,&local_64);
+    fVar5 = (float)GameController_entityDistanceSq(&local_7c,&local_64);
     distance = (float)fVar5;
-    if (0.2 <= distance) {
+    if (0.2f <= distance) {
       GameController_format_region_singular(param_1,param_2,zone);
       uVar3 = extraout_EDX;
       goto LAB_004e556d;
@@ -57753,7 +57652,7 @@ void GameController_show_region_name(undefined4 param_1,undefined4 param_2,uint 
       uVar3 = extraout_EDX_01;
     }
     else {
-      distance = 8.96831e-44;
+      distance = 8.96831e-44f;
       chunk = std_wstring_findSubstr(&distance,0,1);
       if (chunk == -1) {
         u16string_assignCStr(&PTR_006fccac);
@@ -58153,7 +58052,7 @@ void VoxelModel_build_mesh(void)
   int *piVar9;
   int iVar10;
   void *pvVar11;
-  float10 fVar12;
+  float fVar12;
   float fVar13;
   void *local_c04;
   void *local_c00;
@@ -58868,9 +58767,9 @@ void VoxelModel_build_mesh(void)
                 iVar7 = local_bdc + -1;
                 local_324 = (float)local_bd8[2];
                 local_320 = CONCAT44(fStack_328,local_32c);
-                local_be4 = local_32c / 255.0;
-                local_be0 = fStack_328 / 255.0;
-                local_bd8 = (byte *)(local_324 / 255.0);
+                local_be4 = local_32c / 255.0f;
+                local_be0 = fStack_328 / 255.0f;
+                local_bd8 = (byte *)(local_324 / 255.0f);
                 if (((iVar7 < 0) || ((int)piVar9 < 0)) ||
                    (((int)pvVar11 < 0 ||
                     (((*(int *)(self + 0x44) <= iVar7 || (*(int *)(self + 0x48) <= (int)piVar9))
@@ -58893,11 +58792,11 @@ void VoxelModel_build_mesh(void)
                 local_980 = 0xffffffff;
                 local_97c = 0;
                 local_978 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,pvVar11,&local_980);
+                fVar12 = (float)VoxelModel_compute_ao(local_bdc,piVar9,pvVar11,&local_980);
                 local_bd4 = (undefined1 *)(float)fVar12;
-                local_694 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_69c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_698 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_694 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                local_69c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_698 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_37c = CONCAT44(fStack_698,local_69c);
                 uStack_690 = 0x3f800000;
                 local_374 = CONCAT44(0x3f800000,local_694);
@@ -58905,12 +58804,12 @@ void VoxelModel_build_mesh(void)
                 fStack_598 = local_be0;
                 local_594 = local_bd8;
                 uStack_590 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd4;
+                fVar13 = 1.0f - (float)local_bd4;
                 _local_84 = CONCAT44(local_be0 * (float)local_bd4,local_be4 * (float)local_bd4);
-                _local_7c = CONCAT44((float)local_bd4 * 1.0,(float)local_bd8 * (float)local_bd4);
+                _local_7c = CONCAT44((float)local_bd4 * 1.0f,(float)local_bd8 * (float)local_bd4);
                 _local_1e4 = CONCAT44(local_be0 * (float)local_bd4 + fVar13 * fStack_698,
                                       local_be4 * (float)local_bd4 + fVar13 * local_69c);
-                _local_1dc = CONCAT44((float)local_bd4 * 1.0 + fVar13 * 1.0,
+                _local_1dc = CONCAT44((float)local_bd4 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd8 * (float)local_bd4 + fVar13 * local_694);
                 local_b00 = local_bdc;
                 local_800 = 0xffffffff;
@@ -58924,11 +58823,11 @@ void VoxelModel_build_mesh(void)
                 local_818 = 0xffffffff;
                 local_814 = 0;
                 local_810 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,iVar10,&local_818);
+                fVar12 = (float)VoxelModel_compute_ao(local_bdc,piVar9,iVar10,&local_818);
                 local_bd4 = (undefined1 *)(float)fVar12;
-                local_394 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_39c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_398 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_394 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                local_39c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_398 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_79c = CONCAT44(fStack_398,local_39c);
                 uStack_390 = 0x3f800000;
                 local_794 = CONCAT44(0x3f800000,local_394);
@@ -58936,16 +58835,16 @@ void VoxelModel_build_mesh(void)
                 fStack_3b8 = local_be0;
                 local_3b4 = local_bd8;
                 uStack_3b0 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd4;
+                fVar13 = 1.0f - (float)local_bd4;
                 _local_184 = CONCAT44(local_be0 * (float)local_bd4,local_be4 * (float)local_bd4);
                 local_830 = local_bdc;
-                _local_17c = CONCAT44((float)local_bd4 * 1.0,(float)local_bd8 * (float)local_bd4);
+                _local_17c = CONCAT44((float)local_bd4 * 1.0f,(float)local_bd8 * (float)local_bd4);
                 local_998 = 0xffffffff;
                 _local_284 = CONCAT44(local_be0 * (float)local_bd4 + fVar13 * fStack_398,
                                       local_be4 * (float)local_bd4 + fVar13 * local_39c);
                 local_994 = 0;
                 local_990 = 0;
-                _local_27c = CONCAT44((float)local_bd4 * 1.0 + fVar13 * 1.0,
+                _local_27c = CONCAT44((float)local_bd4 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd8 * (float)local_bd4 + fVar13 * local_394);
                 local_82c = piVar9;
                 local_828 = iVar10;
@@ -58955,28 +58854,28 @@ void VoxelModel_build_mesh(void)
                 local_a58 = 0xffffffff;
                 local_a54 = 0;
                 local_a50 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,iVar7,iVar10,&local_a58);
+                fVar12 = (float)VoxelModel_compute_ao(local_bdc,iVar7,iVar10,&local_a58);
                 local_bd4 = (undefined1 *)(float)fVar12;
-                local_5b4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_5bc = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_5b8 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_5b4 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                local_5bc = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_5b8 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_3dc = CONCAT44(fStack_5b8,local_5bc);
                 uStack_5b0 = 0x3f800000;
                 local_3d4 = CONCAT44(0x3f800000,local_5b4);
-                fVar13 = 1.0 - (float)local_bd4;
+                fVar13 = 1.0f - (float)local_bd4;
                 local_6bc = local_be4;
                 fStack_6b8 = local_be0;
                 local_6b4 = local_bd8;
                 uStack_6b0 = 0x3f800000;
                 local_9b0 = local_bdc;
                 _local_a4 = CONCAT44(local_be0 * (float)local_bd4,local_be4 * (float)local_bd4);
-                _local_9c = CONCAT44((float)local_bd4 * 1.0,(float)local_bd8 * (float)local_bd4);
+                _local_9c = CONCAT44((float)local_bd4 * 1.0f,(float)local_bd8 * (float)local_bd4);
                 local_7b8 = 0xffffffff;
                 local_7b4 = 0;
                 local_7b0 = 0;
                 _local_204 = CONCAT44(local_be0 * (float)local_bd4 + fStack_5b8 * fVar13,
                                       local_be4 * (float)local_bd4 + local_5bc * fVar13);
-                _local_1fc = CONCAT44((float)local_bd4 * 1.0 + fVar13 * 1.0,
+                _local_1fc = CONCAT44((float)local_bd4 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd8 * (float)local_bd4 + local_5b4 * fVar13);
                 local_9ac = iVar7;
                 local_9a8 = iVar10;
@@ -58986,15 +58885,15 @@ void VoxelModel_build_mesh(void)
                 local_860 = 0xffffffff;
                 local_85c = 0;
                 local_858 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,iVar7,local_be8,&local_860);
+                fVar12 = (float)VoxelModel_compute_ao(local_bdc,iVar7,local_be8,&local_860);
                 local_bd4 = (undefined1 *)(float)fVar12;
-                local_3fc = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_3f8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_3f4 = (float)*(byte *)(self + 0x5e) / 255.0;
+                local_3fc = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_3f8 = (float)*(byte *)(self + 0x5d) / 255.0f;
+                local_3f4 = (float)*(byte *)(self + 0x5e) / 255.0f;
                 local_5dc = CONCAT44(fStack_3f8,local_3fc);
                 uStack_3f0 = 0x3f800000;
                 local_5d4 = CONCAT44(0x3f800000,local_3f4);
-                fVar13 = 1.0 - (float)local_bd4;
+                fVar13 = 1.0f - (float)local_bd4;
                 uStack_410 = 0x3f800000;
                 local_878 = local_bdc;
                 local_41c = local_be4;
@@ -59003,12 +58902,12 @@ void VoxelModel_build_mesh(void)
                 _local_124 = CONCAT44(local_be0 * (float)local_bd4,local_be4 * (float)local_bd4);
                 local_ab8 = 0xffffffff;
                 local_ab4 = 0;
-                _local_11c = CONCAT44((float)local_bd4 * 1.0,(float)local_bd8 * (float)local_bd4);
+                _local_11c = CONCAT44((float)local_bd4 * 1.0f,(float)local_bd8 * (float)local_bd4);
                 local_ab0 = 0;
                 local_870 = pvVar11;
                 _local_304 = CONCAT44(local_be0 * (float)local_bd4 + fStack_3f8 * fVar13,
                                       local_be4 * (float)local_bd4 + local_3fc * fVar13);
-                _local_2fc = CONCAT44((float)local_bd4 * 1.0 + fVar13 * 1.0,
+                _local_2fc = CONCAT44((float)local_bd4 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd8 * (float)local_bd4 + local_3f4 * fVar13);
                 local_874 = iVar7;
                 uVar5 = setQuadFaceFromNormal(&local_878,&local_ab8,&local_304);
@@ -59039,11 +58938,11 @@ LAB_004e8400:
                 local_9c8 = 1;
                 local_9c4 = 0;
                 local_9c0 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,piVar9,pvVar11,&local_9c8);
+                fVar12 = (float)VoxelModel_compute_ao(local_bd4,piVar9,pvVar11,&local_9c8);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_734 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_73c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_738 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_734 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                local_73c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_738 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_43c = CONCAT44(fStack_738,local_73c);
                 uStack_730 = 0x3f800000;
                 local_434 = CONCAT44(0x3f800000,local_734);
@@ -59051,13 +58950,13 @@ LAB_004e8400:
                 fStack_5f8 = local_be0;
                 local_5f4 = local_bd8;
                 uStack_5f0 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 _local_c4 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                _local_bc = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                _local_bc = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                 local_890 = 1;
                 _local_224 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_738,
                                       local_73c * fVar13 + local_be4 * (float)local_bd0);
-                _local_21c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_21c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd8 * (float)local_bd0 + fVar13 * local_734);
                 local_a70 = (int)local_bd4;
                 local_88c = 0;
@@ -59070,11 +58969,11 @@ LAB_004e8400:
                 local_8a8 = 1;
                 local_8a4 = 0;
                 local_8a0 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,iVar7,pvVar11,&local_8a8);
+                fVar12 = (float)VoxelModel_compute_ao(local_bd4,iVar7,pvVar11,&local_8a8);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_45c = (float)*(byte *)(self + 0x5c) / 255.0;
-                local_454 = (float)*(byte *)(self + 0x5e) / 255.0;
-                fStack_458 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_45c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                local_454 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                fStack_458 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_6dc = CONCAT44(fStack_458,local_45c);
                 uStack_450 = 0x3f800000;
                 local_6d4 = CONCAT44(0x3f800000,local_454);
@@ -59082,16 +58981,16 @@ LAB_004e8400:
                 fStack_478 = local_be0;
                 local_474 = local_bd8;
                 uStack_470 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 _local_24 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_1c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_1c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 local_8c0 = (int)local_bd4;
                 _local_2a4 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_458,
                                       (float)local_bd0 * local_be4 + fVar13 * local_45c);
                 local_9e0 = 1;
                 local_9dc = 0;
                 local_9d8 = 0;
-                _local_29c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_29c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + fVar13 * local_454);
                 local_8bc = iVar7;
                 local_8b8 = pvVar11;
@@ -59101,12 +59000,12 @@ LAB_004e8400:
                 local_ae8 = 1;
                 local_ae4 = 0;
                 local_ae0 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,iVar7,iVar10,&local_ae8);
+                fVar12 = (float)VoxelModel_compute_ao(local_bd4,iVar7,iVar10,&local_ae8);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                fStack_618 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_614 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_61c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fVar13 = 1.0 - (float)local_bd0;
+                fStack_618 = (float)*(byte *)(self + 0x5d) / 255.0f;
+                local_614 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                local_61c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fVar13 = 1.0f - (float)local_bd0;
                 local_49c = CONCAT44(fStack_618,local_61c);
                 uStack_610 = 0x3f800000;
                 local_494 = CONCAT44(0x3f800000,local_614);
@@ -59116,13 +59015,13 @@ LAB_004e8400:
                 uStack_770 = 0x3f800000;
                 local_9f8 = (int)local_bd4;
                 _local_34 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_2c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_2c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 local_8d8 = 1;
                 local_8d4 = 0;
                 local_8d0 = 0;
                 _local_244 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_618,
                                       (float)local_bd0 * local_be4 + fVar13 * local_61c);
-                _local_23c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_23c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + fVar13 * local_614);
                 local_9f4 = iVar7;
                 local_9f0 = iVar10;
@@ -59132,11 +59031,11 @@ LAB_004e8400:
                 local_848 = 1;
                 local_844 = 0;
                 local_840 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,local_bec,iVar10,&local_848);
+                fVar12 = (float)VoxelModel_compute_ao(local_bd4,local_bec,iVar10,&local_848);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_4bc = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_4b8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_4b4 = (float)*(byte *)(self + 0x5e) / 255.0;
+                local_4bc = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_4b8 = (float)*(byte *)(self + 0x5d) / 255.0f;
+                local_4b4 = (float)*(byte *)(self + 0x5e) / 255.0f;
                 local_63c = CONCAT44(fStack_4b8,local_4bc);
                 uStack_4b0 = 0x3f800000;
                 local_634 = CONCAT44(0x3f800000,local_4b4);
@@ -59144,9 +59043,9 @@ LAB_004e8400:
                 fStack_4d8 = local_be0;
                 local_4d4 = local_bd8;
                 uStack_4d0 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 _local_164 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_15c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_15c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 local_a88 = (int)local_bd4;
                 _local_2e4 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_4b8,
                                       (float)local_bd0 * local_be4 + fVar13 * local_4bc);
@@ -59154,7 +59053,7 @@ LAB_004e8400:
                 local_8ec = 0;
                 local_8e8 = 0;
                 local_a84 = piVar9;
-                _local_2dc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_2dc = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + fVar13 * local_4b4);
                 local_a80 = iVar10;
                 uVar5 = setQuadFaceFromNormal(&local_a88,&local_8f0,&local_2e4);
@@ -59182,11 +59081,11 @@ LAB_004e8dc5:
                 local_908 = 0;
                 local_904 = 0xffffffff;
                 local_900 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,local_be8,&local_908);
+                fVar12 = (float)VoxelModel_compute_ao(local_bdc,piVar9,local_be8,&local_908);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_6fc = (float)*(byte *)(self + 0x5c) / 255.0;
-                local_6f4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                fStack_6f8 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_6fc = (float)*(byte *)(self + 0x5c) / 255.0f;
+                local_6f4 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                fStack_6f8 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_4fc = CONCAT44(fStack_6f8,local_6fc);
                 uStack_6f0 = 0x3f800000;
                 local_4f4 = CONCAT44(0x3f800000,local_6f4);
@@ -59194,13 +59093,13 @@ LAB_004e8dc5:
                 fStack_658 = local_be0;
                 local_654 = local_bd8;
                 uStack_650 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 local_a10 = 0;
                 _local_e4 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_dc = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_dc = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 _local_264 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_6f8,
                                       (float)local_bd0 * local_be4 + fVar13 * local_6fc);
-                _local_25c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_25c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + fVar13 * local_6f4);
                 local_920 = local_bdc;
                 local_a0c = 0xffffffff;
@@ -59212,11 +59111,11 @@ LAB_004e8dc5:
                 local_ad0 = 0;
                 local_acc = 0xffffffff;
                 local_ac8 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,piVar9,pvVar11,&local_ad0);
+                fVar12 = (float)VoxelModel_compute_ao(local_bd4,piVar9,pvVar11,&local_ad0);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_51c = (float)*(byte *)(self + 0x5c) / 255.0;
-                local_514 = (float)*(byte *)(self + 0x5e) / 255.0;
-                fStack_518 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_51c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                local_514 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                fStack_518 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_75c = CONCAT44(fStack_518,local_51c);
                 uStack_510 = 0x3f800000;
                 local_754 = CONCAT44(0x3f800000,local_514);
@@ -59224,9 +59123,9 @@ LAB_004e8dc5:
                 fStack_538 = local_be0;
                 local_534 = local_bd8;
                 uStack_530 = 0x3f800000;
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 _local_144 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_13c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_13c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 local_a28 = (int)local_bd4;
                 _local_1c4 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_518,
                                       (float)local_bd0 * local_be4 + fVar13 * local_51c);
@@ -59234,7 +59133,7 @@ LAB_004e8dc5:
                 local_934 = 0xffffffff;
                 local_930 = 0;
                 local_a20 = pvVar11;
-                _local_1bc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_1bc = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + fVar13 * local_514);
                 local_a24 = piVar9;
                 uVar5 = setQuadFaceFromNormal(&local_a28,&local_938,&local_1c4);
@@ -59243,12 +59142,12 @@ LAB_004e8dc5:
                 local_950 = 0;
                 local_94c = 0xffffffff;
                 local_948 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,local_bec,iVar7,&local_950);
+                fVar12 = (float)VoxelModel_compute_ao(local_bd4,local_bec,iVar7,&local_950);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                fStack_678 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_674 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_67c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fVar13 = 1.0 - (float)local_bd0;
+                fStack_678 = (float)*(byte *)(self + 0x5d) / 255.0f;
+                local_674 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                local_67c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fVar13 = 1.0f - (float)local_bd0;
                 local_55c = CONCAT44(fStack_678,local_67c);
                 uStack_670 = 0x3f800000;
                 local_554 = CONCAT44(0x3f800000,local_674);
@@ -59259,13 +59158,13 @@ LAB_004e8dc5:
                 local_968 = (int)local_bd4;
                 local_964 = local_bec;
                 _local_44 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_3c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_3c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 local_aa0 = 0;
                 _local_1b4 = CONCAT44((float)local_bd0 * local_be0 + fVar13 * fStack_678,
                                       (float)local_bd0 * local_be4 + fVar13 * local_67c);
                 local_a9c = 0xffffffff;
                 local_a98 = 0;
-                _local_1ac = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_1ac = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + fVar13 * local_674);
                 local_960 = iVar7;
                 uVar5 = setQuadFaceFromNormal(&local_968,&local_aa0,&local_1b4);
@@ -59273,15 +59172,15 @@ LAB_004e8dc5:
                 local_a40 = 0;
                 local_a3c = 0xffffffff;
                 local_a38 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,local_bec,iVar7,&local_a40);
+                fVar12 = (float)VoxelModel_compute_ao(local_bdc,local_bec,iVar7,&local_a40);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_57c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_578 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_574 = (float)*(byte *)(self + 0x5e) / 255.0;
+                local_57c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_578 = (float)*(byte *)(self + 0x5d) / 255.0f;
+                local_574 = (float)*(byte *)(self + 0x5e) / 255.0f;
                 uStack_570 = 0x3f800000;
                 local_34c = CONCAT44(fStack_578,local_57c);
                 local_344 = CONCAT44(0x3f800000,local_574);
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 uStack_360 = 0x3f800000;
                 local_7f4 = local_bdc;
                 local_36c = local_be4;
@@ -59289,13 +59188,13 @@ LAB_004e8dc5:
                 local_364 = local_bd8;
                 local_7f0 = local_bec;
                 _local_64 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_5c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_5c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 local_7dc = 0;
                 local_7d8 = 0xffffffff;
                 local_7d4 = 0;
                 _local_1d4 = CONCAT44((float)local_bd0 * local_be0 + fStack_578 * fVar13,
                                       (float)local_bd0 * local_be4 + local_57c * fVar13);
-                _local_1cc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_1cc = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + local_574 * fVar13);
                 local_7ec = iVar7;
                 uVar5 = setQuadFaceFromNormal(&local_7f4,&local_7dc,&local_1d4);
@@ -59325,25 +59224,25 @@ LAB_004e979a:
                 local_80c = 0;
                 local_808 = 1;
                 local_804 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,pvVar1,pvVar11,&local_80c);
+                fVar12 = (float)VoxelModel_compute_ao(local_bdc,pvVar1,pvVar11,&local_80c);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_38c = (float)*(byte *)(self + 0x5c) / 255.0;
-                local_384 = (float)*(byte *)(self + 0x5e) / 255.0;
-                fStack_388 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_38c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                local_384 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                fStack_388 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_3ac = CONCAT44(fStack_388,local_38c);
                 uStack_380 = 0x3f800000;
                 local_3a4 = CONCAT44(0x3f800000,local_384);
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 uStack_3c0 = 0x3f800000;
                 local_3cc = local_be4;
                 fStack_3c8 = local_be0;
                 local_3c4 = local_bd8;
                 _local_74 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_6c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_6c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 _local_1f4 = CONCAT44((float)local_bd0 * local_be0 + fStack_388 * fVar13,
                                       (float)local_bd0 * local_be4 + local_38c * fVar13);
                 local_83c = local_bdc;
-                _local_1ec = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_1ec = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + local_384 * fVar13);
                 local_824 = 0;
                 local_820 = 1;
@@ -59356,21 +59255,21 @@ LAB_004e979a:
                 local_854 = 0;
                 local_850 = 1;
                 local_84c = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bdc,local_be8,iVar7,&local_854);
+                fVar12 = (float)VoxelModel_compute_ao(local_bdc,local_be8,iVar7,&local_854);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_3e4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_3ec = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_3e8 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_3e4 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                local_3ec = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_3e8 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_40c = CONCAT44(fStack_3e8,local_3ec);
                 uStack_3e0 = 0x3f800000;
                 local_404 = CONCAT44(0x3f800000,local_3e4);
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 uStack_420 = 0x3f800000;
                 local_42c = local_be4;
                 fStack_428 = local_be0;
                 local_424 = local_bd8;
                 _local_94 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_8c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_8c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 local_884 = local_bdc;
                 local_880 = local_be8;
                 _local_214 = CONCAT44((float)local_bd0 * local_be0 + fStack_3e8 * fVar13,
@@ -59378,7 +59277,7 @@ LAB_004e979a:
                 local_86c = 0;
                 local_868 = 1;
                 local_864 = 0;
-                _local_20c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_20c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + local_3e4 * fVar13);
                 local_87c = iVar7;
                 uVar5 = setQuadFaceFromNormal(&local_884,&local_86c,&local_214);
@@ -59386,15 +59285,15 @@ LAB_004e979a:
                 local_89c = 0;
                 local_898 = 1;
                 local_894 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,local_be8,iVar7,&local_89c);
+                fVar12 = (float)VoxelModel_compute_ao(local_bd4,local_be8,iVar7,&local_89c);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_444 = (float)*(byte *)(self + 0x5e) / 255.0;
-                local_44c = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_448 = (float)*(byte *)(self + 0x5d) / 255.0;
+                local_444 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                local_44c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_448 = (float)*(byte *)(self + 0x5d) / 255.0f;
                 local_46c = CONCAT44(fStack_448,local_44c);
                 uStack_440 = 0x3f800000;
                 local_464 = CONCAT44(0x3f800000,local_444);
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 local_48c = local_be4;
                 fStack_488 = local_be0;
                 local_484 = local_bd8;
@@ -59402,13 +59301,13 @@ LAB_004e979a:
                 local_7c4 = (int)local_bd4;
                 local_7c0 = local_be8;
                 _local_b4 = CONCAT44((float)local_bd0 * local_be0,(float)local_bd0 * local_be4);
-                _local_ac = CONCAT44((float)local_bd0 * 1.0,(float)local_bd0 * (float)local_bd8);
+                _local_ac = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd0 * (float)local_bd8);
                 local_8b4 = 0;
                 _local_234 = CONCAT44((float)local_bd0 * local_be0 + fStack_448 * fVar13,
                                       (float)local_bd0 * local_be4 + local_44c * fVar13);
                 local_8b0 = 1;
                 local_8ac = 0;
-                _local_22c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_22c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd0 * (float)local_bd8 + local_444 * fVar13);
                 local_7bc = iVar7;
                 uVar5 = setQuadFaceFromNormal(&local_7c4,&local_8b4,&local_234);
@@ -59417,15 +59316,15 @@ LAB_004e979a:
                 local_7d0 = 0;
                 local_7cc = 1;
                 local_7c8 = 0;
-                fVar12 = (float10)VoxelModel_compute_ao(local_bd4,local_be8,pvVar11,&local_7d0);
+                fVar12 = (float)VoxelModel_compute_ao(local_bd4,local_be8,pvVar11,&local_7d0);
                 local_bd0 = (undefined1 *)(float)fVar12;
-                local_4ac = (float)*(byte *)(self + 0x5c) / 255.0;
-                fStack_4a8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                local_4a4 = (float)*(byte *)(self + 0x5e) / 255.0;
+                local_4ac = (float)*(byte *)(self + 0x5c) / 255.0f;
+                fStack_4a8 = (float)*(byte *)(self + 0x5d) / 255.0f;
+                local_4a4 = (float)*(byte *)(self + 0x5e) / 255.0f;
                 local_4cc = CONCAT44(fStack_4a8,local_4ac);
                 uStack_4a0 = 0x3f800000;
                 local_4c4 = CONCAT44(0x3f800000,local_4a4);
-                fVar13 = 1.0 - (float)local_bd0;
+                fVar13 = 1.0f - (float)local_bd0;
                 uStack_4e0 = 0x3f800000;
                 local_8e4 = (int)local_bd4;
                 local_4ec = local_be4;
@@ -59434,13 +59333,13 @@ LAB_004e979a:
                 _local_d4 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
                 local_8cc = 0;
                 local_8c8 = 1;
-                _local_cc = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                _local_cc = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                 local_8c4 = 0;
                 local_8e0 = pvVar1;
                 local_8dc = pvVar11;
                 _local_254 = CONCAT44(local_be0 * (float)local_bd0 + fStack_4a8 * fVar13,
                                       local_be4 * (float)local_bd0 + local_4ac * fVar13);
-                _local_24c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                _local_24c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                       (float)local_bd8 * (float)local_bd0 + local_4a4 * fVar13);
                 uVar5 = setQuadFaceFromNormal(&local_8e4,&local_8cc,&local_254);
                 ChunkBuffer_vector_insert_8(uVar5);
@@ -59464,11 +59363,11 @@ LAB_004ea1c6:
                   local_8fc = 0;
                   local_8f8 = 0;
                   local_8f4 = 0xffffffff;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,pvVar11,&local_8fc);
+                  fVar12 = (float)VoxelModel_compute_ao(local_bdc,piVar9,pvVar11,&local_8fc);
                   local_bd0 = (undefined1 *)(float)fVar12;
-                  local_504 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_50c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_508 = (float)*(byte *)(self + 0x5d) / 255.0;
+                  local_504 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                  local_50c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                  fStack_508 = (float)*(byte *)(self + 0x5d) / 255.0f;
                   local_52c = CONCAT44(fStack_508,local_50c);
                   uStack_500 = 0x3f800000;
                   local_524 = CONCAT44(0x3f800000,local_504);
@@ -59476,12 +59375,12 @@ LAB_004ea1c6:
                   fStack_548 = local_be0;
                   local_544 = local_bd8;
                   uStack_540 = 0x3f800000;
-                  fVar13 = 1.0 - (float)local_bd0;
+                  fVar13 = 1.0f - (float)local_bd0;
                   _local_f4 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  _local_ec = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                  _local_ec = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                   _local_274 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_508,
                                         local_be4 * (float)local_bd0 + fVar13 * local_50c);
-                  _local_26c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                  _local_26c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                         (float)local_bd8 * (float)local_bd0 + fVar13 * local_504);
                   local_92c = local_bdc;
                   local_914 = 0;
@@ -59494,11 +59393,11 @@ LAB_004ea1c6:
                   local_944 = 0;
                   local_940 = 0;
                   local_93c = 0xffffffff;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bdc,(int)piVar9 + 1,pvVar11,&local_944);
+                  fVar12 = (float)VoxelModel_compute_ao(local_bdc,(int)piVar9 + 1,pvVar11,&local_944);
                   local_bd0 = (undefined1 *)(float)fVar12;
-                  local_564 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_56c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_568 = (float)*(byte *)(self + 0x5d) / 255.0;
+                  local_564 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                  local_56c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                  fStack_568 = (float)*(byte *)(self + 0x5d) / 255.0f;
                   local_58c = CONCAT44(fStack_568,local_56c);
                   uStack_560 = 0x3f800000;
                   local_584 = CONCAT44(0x3f800000,local_564);
@@ -59506,10 +59405,10 @@ LAB_004ea1c6:
                   fStack_5a8 = local_be0;
                   local_5a4 = local_bd8;
                   uStack_5a0 = 0x3f800000;
-                  fVar13 = 1.0 - (float)local_bd0;
+                  fVar13 = 1.0f - (float)local_bd0;
                   _local_114 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
                   local_974 = local_bdc;
-                  _local_10c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                  _local_10c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                   local_970 = (int)piVar9 + 1;
                   _local_294 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_568,
                                         local_be4 * (float)local_bd0 + fVar13 * local_56c);
@@ -59517,19 +59416,19 @@ LAB_004ea1c6:
                   local_958 = 0;
                   local_954 = 0xffffffff;
                   local_96c = pvVar11;
-                  _local_28c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                  _local_28c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                         (float)local_bd8 * (float)local_bd0 + fVar13 * local_564);
                   uVar5 = setQuadFaceFromNormal(&local_974,&local_95c,&local_294);
                   ChunkBuffer_vector_insert_8(uVar5);
                   local_98c = 0;
                   local_988 = 0;
                   local_984 = 0xffffffff;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bd4,(int)piVar9 + 1,pvVar11,&local_98c);
+                  fVar12 = (float)VoxelModel_compute_ao(local_bd4,(int)piVar9 + 1,pvVar11,&local_98c);
                   local_bd0 = (undefined1 *)(float)fVar12;
-                  fStack_5c8 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_5cc = (float)*(byte *)(self + 0x5c) / 255.0;
-                  local_5c4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  fVar13 = 1.0 - (float)local_bd0;
+                  fStack_5c8 = (float)*(byte *)(self + 0x5d) / 255.0f;
+                  local_5cc = (float)*(byte *)(self + 0x5c) / 255.0f;
+                  local_5c4 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                  fVar13 = 1.0f - (float)local_bd0;
                   local_5ec = CONCAT44(fStack_5c8,local_5cc);
                   uStack_5c0 = 0x3f800000;
                   local_5e4 = CONCAT44(0x3f800000,local_5c4);
@@ -59540,25 +59439,25 @@ LAB_004ea1c6:
                   local_9bc = (int)local_bd4;
                   local_9b8 = (int)piVar9 + 1;
                   _local_134 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  _local_12c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                  _local_12c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                   local_9a4 = 0;
                   local_9a0 = 0;
                   local_99c = 0xffffffff;
                   local_9b4 = pvVar11;
                   _local_2b4 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_5c8,
                                         local_be4 * (float)local_bd0 + fVar13 * local_5cc);
-                  _local_2ac = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                  _local_2ac = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                         (float)local_bd8 * (float)local_bd0 + fVar13 * local_5c4);
                   uVar5 = setQuadFaceFromNormal(&local_9bc,&local_9a4,&local_2b4);
                   ChunkBuffer_vector_insert_8(uVar5);
                   local_9d4 = 0;
                   local_9d0 = 0;
                   local_9cc = 0xffffffff;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bd4,piVar9,pvVar11,&local_9d4);
+                  fVar12 = (float)VoxelModel_compute_ao(local_bd4,piVar9,pvVar11,&local_9d4);
                   local_bd0 = (undefined1 *)(float)fVar12;
-                  local_62c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_628 = (float)*(byte *)(self + 0x5d) / 255.0;
-                  local_624 = (float)*(byte *)(self + 0x5e) / 255.0;
+                  local_62c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                  fStack_628 = (float)*(byte *)(self + 0x5d) / 255.0f;
+                  local_624 = (float)*(byte *)(self + 0x5e) / 255.0f;
                   local_64c = CONCAT44(fStack_628,local_62c);
                   uStack_620 = 0x3f800000;
                   local_644 = CONCAT44(0x3f800000,local_624);
@@ -59566,9 +59465,9 @@ LAB_004ea1c6:
                   fStack_668 = local_be0;
                   local_664 = local_bd8;
                   uStack_660 = 0x3f800000;
-                  fVar13 = 1.0 - (float)local_bd0;
+                  fVar13 = 1.0f - (float)local_bd0;
                   _local_154 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  _local_14c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                  _local_14c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                   local_a04 = (int)local_bd4;
                   _local_2d4 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_628,
                                         local_be4 * (float)local_bd0 + fVar13 * local_62c);
@@ -59576,7 +59475,7 @@ LAB_004ea1c6:
                   local_9e8 = 0;
                   local_9e4 = 0xffffffff;
                   local_9fc = pvVar11;
-                  _local_2cc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                  _local_2cc = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                         (float)local_bd8 * (float)local_bd0 + fVar13 * local_624);
                   local_a00 = piVar9;
                   uVar5 = setQuadFaceFromNormal(&local_a04,&local_9ec,&local_2d4);
@@ -59599,11 +59498,11 @@ LAB_004ea1c6:
                   local_a1c = 0;
                   local_a18 = 0;
                   local_a14 = 1;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bdc,piVar9,(int)pvVar11 + 1,&local_a1c);
+                  fVar12 = (float)VoxelModel_compute_ao(local_bdc,piVar9,(int)pvVar11 + 1,&local_a1c);
                   local_bd0 = (undefined1 *)(float)fVar12;
-                  local_684 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_68c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_688 = (float)*(byte *)(self + 0x5d) / 255.0;
+                  local_684 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                  local_68c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                  fStack_688 = (float)*(byte *)(self + 0x5d) / 255.0f;
                   local_6ac = CONCAT44(fStack_688,local_68c);
                   uStack_680 = 0x3f800000;
                   local_6a4 = CONCAT44(0x3f800000,local_684);
@@ -59611,14 +59510,14 @@ LAB_004ea1c6:
                   fStack_6c8 = local_be0;
                   local_6c4 = local_bd8;
                   uStack_6c0 = 0x3f800000;
-                  fVar13 = 1.0 - (float)local_bd0;
+                  fVar13 = 1.0f - (float)local_bd0;
                   _local_174 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
-                  _local_16c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                  _local_16c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                   _local_2f4 = CONCAT44(local_be0 * (float)local_bd0 + fVar13 * fStack_688,
                                         local_be4 * (float)local_bd0 + fVar13 * local_68c);
                   local_a4c = local_bdc;
                   local_a44 = (int)pvVar11 + 1;
-                  _local_2ec = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                  _local_2ec = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                         (float)local_bd8 * (float)local_bd0 + fVar13 * local_684);
                   local_a34 = 0;
                   local_a30 = 0;
@@ -59629,15 +59528,15 @@ LAB_004ea1c6:
                   local_a64 = 0;
                   local_a60 = 0;
                   local_a5c = 1;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bd4,piVar9,(int)pvVar11 + 1,&local_a64);
+                  fVar12 = (float)VoxelModel_compute_ao(local_bd4,piVar9,(int)pvVar11 + 1,&local_a64);
                   local_bd0 = (undefined1 *)(float)fVar12;
-                  local_6e4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_6ec = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_6e8 = (float)*(byte *)(self + 0x5d) / 255.0;
+                  local_6e4 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                  local_6ec = (float)*(byte *)(self + 0x5c) / 255.0f;
+                  fStack_6e8 = (float)*(byte *)(self + 0x5d) / 255.0f;
                   local_70c = CONCAT44(fStack_6e8,local_6ec);
                   uStack_6e0 = 0x3f800000;
                   local_704 = CONCAT44(0x3f800000,local_6e4);
-                  fVar13 = 1.0 - (float)local_bd0;
+                  fVar13 = 1.0f - (float)local_bd0;
                   uStack_720 = 0x3f800000;
                   local_72c = local_be4;
                   fStack_728 = local_be0;
@@ -59645,13 +59544,13 @@ LAB_004ea1c6:
                   _local_194 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
                   local_a94 = (int)local_bd4;
                   local_a8c = (int)pvVar11 + 1;
-                  _local_18c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                  _local_18c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                   local_a7c = 0;
                   _local_314 = CONCAT44(local_be0 * (float)local_bd0 + fStack_6e8 * fVar13,
                                         local_be4 * (float)local_bd0 + local_6ec * fVar13);
                   local_a78 = 0;
                   local_a74 = 1;
-                  _local_30c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                  _local_30c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                         (float)local_bd8 * (float)local_bd0 + local_6e4 * fVar13);
                   local_a90 = piVar9;
                   uVar5 = setQuadFaceFromNormal(&local_a94,&local_a7c,&local_314);
@@ -59659,16 +59558,16 @@ LAB_004ea1c6:
                   local_aac = 0;
                   local_aa8 = 0;
                   local_aa4 = 1;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bd4,(int)piVar9 + 1,(int)pvVar11 + 1,
+                  fVar12 = (float)VoxelModel_compute_ao(local_bd4,(int)piVar9 + 1,(int)pvVar11 + 1,
                                                  &local_aac);
                   local_bd0 = (undefined1 *)(float)fVar12;
-                  local_744 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_74c = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_748 = (float)*(byte *)(self + 0x5d) / 255.0;
+                  local_744 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                  local_74c = (float)*(byte *)(self + 0x5c) / 255.0f;
+                  fStack_748 = (float)*(byte *)(self + 0x5d) / 255.0f;
                   local_76c = CONCAT44(fStack_748,local_74c);
                   uStack_740 = 0x3f800000;
                   local_764 = CONCAT44(0x3f800000,local_744);
-                  fVar13 = 1.0 - (float)local_bd0;
+                  fVar13 = 1.0f - (float)local_bd0;
                   local_78c = local_be4;
                   fStack_788 = local_be0;
                   local_784 = local_bd8;
@@ -59677,29 +59576,29 @@ LAB_004ea1c6:
                   local_ad8 = (int)piVar9 + 1;
                   _local_104 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
                   local_ad4 = (int)pvVar11 + 1;
-                  _local_fc = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                  _local_fc = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                   local_ac4 = 0;
                   local_ac0 = 0;
                   local_abc = 1;
                   _local_2c4 = CONCAT44(local_be0 * (float)local_bd0 + fStack_748 * fVar13,
                                         local_be4 * (float)local_bd0 + local_74c * fVar13);
-                  _local_2bc = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                  _local_2bc = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                         (float)local_bd8 * (float)local_bd0 + local_744 * fVar13);
                   uVar5 = setQuadFaceFromNormal(&local_adc,&local_ac4,&local_2c4);
                   ChunkBuffer_vector_insert_8(uVar5);
                   local_af4 = 0;
                   local_af0 = 0;
                   local_aec = 1;
-                  fVar12 = (float10)VoxelModel_compute_ao(local_bdc,(int)piVar9 + 1,(int)pvVar11 + 1,
+                  fVar12 = (float)VoxelModel_compute_ao(local_bdc,(int)piVar9 + 1,(int)pvVar11 + 1,
                                                  &local_af4);
                   local_bd0 = (undefined1 *)(float)fVar12;
-                  local_7a4 = (float)*(byte *)(self + 0x5e) / 255.0;
-                  local_7ac = (float)*(byte *)(self + 0x5c) / 255.0;
-                  fStack_7a8 = (float)*(byte *)(self + 0x5d) / 255.0;
+                  local_7a4 = (float)*(byte *)(self + 0x5e) / 255.0f;
+                  local_7ac = (float)*(byte *)(self + 0x5c) / 255.0f;
+                  fStack_7a8 = (float)*(byte *)(self + 0x5d) / 255.0f;
                   local_35c = CONCAT44(fStack_7a8,local_7ac);
                   uStack_7a0 = 0x3f800000;
                   local_354 = CONCAT44(0x3f800000,local_7a4);
-                  fVar13 = 1.0 - (float)local_bd0;
+                  fVar13 = 1.0f - (float)local_bd0;
                   uStack_330 = 0x3f800000;
                   local_7e8 = local_bdc;
                   local_7e4 = (int)piVar9 + 1;
@@ -59709,12 +59608,12 @@ LAB_004ea1c6:
                   local_7e0 = (int)pvVar11 + 1;
                   _local_54 = CONCAT44(local_be0 * (float)local_bd0,local_be4 * (float)local_bd0);
                   local_b0c = 0;
-                  _local_4c = CONCAT44((float)local_bd0 * 1.0,(float)local_bd8 * (float)local_bd0);
+                  _local_4c = CONCAT44((float)local_bd0 * 1.0f,(float)local_bd8 * (float)local_bd0);
                   local_b08 = 0;
                   local_b04 = 1;
                   _local_1a4 = CONCAT44(local_be0 * (float)local_bd0 + fStack_7a8 * fVar13,
                                         local_be4 * (float)local_bd0 + local_7ac * fVar13);
-                  _local_19c = CONCAT44((float)local_bd0 * 1.0 + fVar13 * 1.0,
+                  _local_19c = CONCAT44((float)local_bd0 * 1.0f + fVar13 * 1.0f,
                                         (float)local_bd8 * (float)local_bd0 + local_7a4 * fVar13);
                   uVar5 = setQuadFaceFromNormal(&local_7e8,&local_b0c,&local_1a4);
                   ChunkBuffer_vector_insert_8(uVar5);
@@ -59797,11 +59696,11 @@ LAB_004ea1c6:
 
 /* [AUDIT] proposed: VoxelModel::compute_ao  (confidence: med)
  * purpose: Computes ambient-occlusion ratio for a voxel corner by sampling neighboring filled voxels along a direction
- * vars: param_4=direction; ratio filled/total returned as float10
+ * vars: param_4=direction; ratio filled/total returned as float
  */
 /* Global::VoxelModel_compute_ao @ 004eb8d0 */
 
-float10 VoxelModel_compute_ao(int x,int y,int z,int *dir)
+float VoxelModel_compute_ao(int x,int y,int z,int *dir)
 
 {
   int in_ECX;
@@ -59899,10 +59798,10 @@ LAB_004eba08:
       iVar4 = iVar4 + -1;
     } while (iVar4 != 0);
     if (0 < totalSamples) {
-      return (float10)((float)matchCount / (float)totalSamples);
+      return (float)((float)matchCount / (float)totalSamples);
     }
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -79732,24 +79631,23 @@ void cube::GameController::drawWeaponCustomization(void)
   char *pcVar18;
   int *piVar19;
   float *pfVar20;
-  float10 fVar21;
+  float fVar21;
   double dVar22;
-  undefined1 auVar23 [16];
+  float fVar23;
   float fVar24;
   float fVar25;
   float fVar26;
   float fVar27;
   float fVar28;
   float fVar29;
-  float fVar30;
+  undefined4 uVar30;
   undefined4 uVar31;
-  undefined4 uVar32;
-  undefined8 *puVar33;
+  undefined8 *puVar32;
+  undefined4 uVar33;
   undefined4 uVar34;
-  undefined4 uVar35;
   _func_basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_>_ptr_basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_>_ptr
-  *p_Var36;
-  undefined4 uVar37;
+  *p_Var35;
+  undefined4 uVar36;
   undefined1 auStack_770 [8];
   float local_768;
   float *local_764;
@@ -80035,7 +79933,7 @@ void cube::GameController::drawWeaponCustomization(void)
             local_140 = fVar16;
             local_13c[0] = 0xe0b;
             local_12f = SUB41(local_738,0);
-            fVar21 = (float10)curve_inverse20p1((float)(int)local_740 * 0.01);
+            fVar21 = (float)curve_inverse20p1((float)(int)local_740 * 0.01);
             local_760 = *(float **)(in_ECX + 0x174);
             local_750 = (float *)(float)fVar21;
             local_12c = (undefined2)(int)fVar21;
@@ -80086,15 +79984,15 @@ LAB_00588c7d:
                 local_750 = (float *)((int)local_764 / 0x11c);
                 local_768 = (float)((uint)local_750 >> 1);
                 if ((float *)(0xe6c2b4 - (int)local_768) < local_750) {
-                  fVar24 = 0.0;
+                  fVar23 = 0.0;
                 }
                 else {
-                  fVar24 = (float)((int)local_750 + (int)local_768);
+                  fVar23 = (float)((int)local_750 + (int)local_768);
                 }
-                if ((uint)fVar24 < (uint)local_758) {
-                  fVar24 = local_758;
+                if ((uint)fVar23 < (uint)local_758) {
+                  fVar23 = local_758;
                 }
-                vector_reallocInsert_0x11c(fVar24);
+                vector_reallocInsert_0x11c(fVar23);
               }
               if (*(float **)(in_ECX + 0x174) != (float *)0x0) {
                 **(float **)(in_ECX + 0x174) = fVar16;
@@ -80169,10 +80067,10 @@ LAB_00588caf:
     afStack_578[3] = 1.0;
     render_setUniform30(afStack_578);
     render_setVec3Uniform5c(0x3f800000);
-    fVar21 = (float10)Widget_measureGuarded();
+    fVar21 = (float)Widget_measureGuarded();
     local_758 = (float)fVar21;
     fStack_718 = local_758 * 0.5;
-    fVar21 = (float10)Widget_measure();
+    fVar21 = (float)Widget_measure();
     iVar5 = *(int *)(in_ECX + 0x148);
     fVar16 = 1.0 / (*(float *)(iVar5 + 0x54) * local_710 +
                     *(float *)(iVar5 + 100) * (float)local_750 + *(float *)(iVar5 + 0x84));
@@ -80213,45 +80111,39 @@ LAB_00588caf:
     uStack_37c = 0x3f800000;
     local_758 = *(float *)(in_ECX + 0x164) * 0.017453292;
     fStack_6ec = 1.0;
-    dVar22 = (double)local_758;
     fStack_71c = 1.0;
-    libm_sse2_cos_precise();
+    dVar22 = libm_sse2_cos_precise((double)local_758);
     local_764 = (float *)(float)dVar22;
-    dVar22 = (double)local_758;
-    libm_sse2_sin_precise();
+    dVar22 = libm_sse2_sin_precise((double)local_758);
     fStack_720 = (float)dVar22;
-    fVar24 = fStack_720 * 0.0;
+    fVar23 = fStack_720 * 0.0;
     fVar16 = (float)local_764 * 0.0;
-    local_768 = fVar24 + fVar16;
-    local_75c = (void *)(fVar16 - fVar24);
-    fStack_70c = (float)local_764 + fVar24;
-    local_764 = (float *)((float)local_764 - fVar24);
+    local_768 = fVar23 + fVar16;
+    local_75c = (void *)(fVar16 - fVar23);
+    fStack_70c = (float)local_764 + fVar23;
+    local_764 = (float *)((float)local_764 - fVar23);
     fStack_730 = fVar16 - fStack_720;
     fStack_720 = fStack_720 + fVar16;
     local_758 = *(float *)(in_ECX + 0x168) * 0.017453292;
-    dVar22 = (double)local_758;
-    libm_sse2_cos_precise();
+    dVar22 = libm_sse2_cos_precise((double)local_758);
     fStack_714 = (float)dVar22;
-    dVar22 = (double)local_758;
-    libm_sse2_sin_precise();
-    fVar25 = (float)dVar22;
-    fVar16 = fStack_714 - fVar25 * (float)local_75c;
-    local_748 = fStack_714 * (float)local_75c + fVar25;
-    fVar26 = fStack_714 * 0.0;
-    fVar24 = fVar25 * 0.0;
-    fStack_6fc = fStack_714 * fStack_730 + fVar24;
-    fStack_728 = fVar26 - fVar25 * (float)local_764;
-    fStack_704 = fStack_714 * (float)local_764 + fVar24;
-    local_764 = (float *)(fVar26 - fVar25 * (float)local_75c);
-    fStack_714 = fStack_714 * (float)local_75c + fVar24;
+    dVar22 = libm_sse2_sin_precise((double)local_758);
+    fVar24 = (float)dVar22;
+    fVar16 = fStack_714 - fVar24 * (float)local_75c;
+    local_748 = fStack_714 * (float)local_75c + fVar24;
+    fVar25 = fStack_714 * 0.0;
+    fVar23 = fVar24 * 0.0;
+    fStack_6fc = fStack_714 * fStack_730 + fVar23;
+    fStack_728 = fVar25 - fVar24 * (float)local_764;
+    fStack_704 = fStack_714 * (float)local_764 + fVar23;
+    local_764 = (float *)(fVar25 - fVar24 * (float)local_75c);
+    fStack_714 = fStack_714 * (float)local_75c + fVar23;
     local_758 = *(float *)(in_ECX + 0x16c) * 0.017453292;
-    dVar22 = (double)local_758;
     local_75c = (void *)fVar16;
-    fStack_730 = fVar26 - fVar25 * fStack_730;
-    libm_sse2_cos_precise();
+    fStack_730 = fVar25 - fVar24 * fStack_730;
+    dVar22 = libm_sse2_cos_precise((double)local_758);
     local_738 = (float)dVar22;
-    dVar22 = (double)local_758;
-    libm_sse2_sin_precise();
+    dVar22 = libm_sse2_sin_precise((double)local_758);
     fVar16 = (float)dVar22;
     afStack_490[0] = (fVar16 * local_768 + local_738 * (float)local_75c) * 0.25;
     fStack_480 = (local_738 * local_768 - (float)local_75c * fVar16) * 0.25;
@@ -80280,16 +80172,15 @@ LAB_00588caf:
       fStack_468 = fVar16 * fStack_468;
       fStack_714 = fVar16 * fStack_714;
     }
-    fVar25 = (float)(int)ppuStack_6e4 * -0.5;
-    fVar24 = (float)(int)ppuStack_6dc * -0.5;
+    fVar24 = (float)(int)ppuStack_6e4 * -0.5;
+    fVar23 = (float)(int)ppuStack_6dc * -0.5;
     fVar16 = (float)(int)ppuStack_6e8 * -0.5;
     iVar5 = *(int *)(in_ECX + 4);
-    local_764 = (float *)(fVar25 * fStack_480 + fVar24 * afStack_490[0] + fVar16 * local_748 +
+    local_764 = (float *)(fVar24 * fStack_480 + fVar23 * afStack_490[0] + fVar16 * local_748 +
                          fStack_6e0);
-    fStack_70c = fVar25 * fStack_47c + fVar24 * afStack_490[1] + fVar16 * fStack_46c + fStack_6e0;
-    dVar22 = 0.39269909262657166;
-    local_758 = fVar25 * fStack_478 + fVar24 * afStack_490[2] + fVar16 * fStack_468 + fStack_6ec;
-    local_768 = fVar25 * local_738 + fVar24 * afStack_490[3] + fVar16 * fStack_714 + fStack_71c;
+    fStack_70c = fVar24 * fStack_47c + fVar23 * afStack_490[1] + fVar16 * fStack_46c + fStack_6e0;
+    local_758 = fVar24 * fStack_478 + fVar23 * afStack_490[2] + fVar16 * fStack_468 + fStack_6ec;
+    local_768 = fVar24 * local_738 + fVar23 * afStack_490[3] + fVar16 * fStack_714 + fStack_71c;
     uStack_754 = afStack_490[2];
     uStack_74c = afStack_490[1];
     local_740 = fStack_47c;
@@ -80306,15 +80197,15 @@ LAB_00588caf:
     fStack_45c = fStack_70c;
     fStack_458 = local_758;
     fStack_454 = local_768;
-    libm_sse2_tan_precise();
-    fVar26 = 1.0 / (float)dVar22;
+    dVar22 = libm_sse2_tan_precise(0.39269909262657166);
+    fVar25 = 1.0 / (float)dVar22;
     afStack_3f8[4] = 0.0;
-    fVar25 = -(fVar26 / ((float)*(int *)(iVar5 + 0x10c) / (float)*(int *)(iVar5 + 0x110)));
-    afStack_3f8[0] = fVar25;
+    fVar24 = -(fVar25 / ((float)*(int *)(iVar5 + 0x10c) / (float)*(int *)(iVar5 + 0x110)));
+    afStack_3f8[0] = fVar24;
     uStack_3d8 = 0;
     uStack_3c8 = 0;
     afStack_3f8[1] = 0.0;
-    afStack_3f8[5] = fVar26;
+    afStack_3f8[5] = fVar25;
     uStack_3d4 = 0;
     uStack_3c4 = 0;
     afStack_3f8[2] = 0.0;
@@ -80325,10 +80216,10 @@ LAB_00588caf:
     uStack_3dc = 0;
     uStack_3cc = 0x3f800000;
     uStack_3bc = 0;
-    fVar27 = ((fStack_718 - (float)*(int *)(iVar5 + 0x10c) * 0.5) / (float)*(int *)(iVar5 + 0x10c))
+    fVar26 = ((fStack_718 - (float)*(int *)(iVar5 + 0x10c) * 0.5) / (float)*(int *)(iVar5 + 0x10c))
              * 2.0;
-    fVar28 = fVar27 * 0.0;
-    fVar24 = ((fStack_72c - (float)*(int *)(iVar5 + 0x110) * 0.5) / (float)*(int *)(iVar5 + 0x110))
+    fVar27 = fVar26 * 0.0;
+    fVar23 = ((fStack_72c - (float)*(int *)(iVar5 + 0x110) * 0.5) / (float)*(int *)(iVar5 + 0x110))
              * -2.0;
     fStack_558 = 1.0;
     pfStack_554 = (float *)0x0;
@@ -80338,17 +80229,17 @@ LAB_00588caf:
     fStack_544 = 1.0;
     fStack_540 = 0.0;
     fStack_53c = 0.0;
-    fVar16 = fVar24 * 0.0;
+    fVar16 = fVar23 * 0.0;
     fStack_538 = 0.0;
-    fVar29 = fVar28 + fVar16;
+    fVar28 = fVar27 + fVar16;
     pvStack_534 = (void *)0x0;
     fStack_530 = 1.0;
     fStack_52c = 0.0;
-    fStack_528 = fVar27 + fVar16 + fStack_744 + 0.0;
-    fStack_524 = fVar24 + fVar28 + fStack_744 + 0.0;
+    fStack_528 = fVar26 + fVar16 + fStack_744 + 0.0;
+    fStack_524 = fVar23 + fVar27 + fStack_744 + 0.0;
     fStack_718 = fStack_528 * 0.0;
-    fStack_520 = fVar29 + 0.0 + 0.0;
-    fStack_51c = fVar29 + fStack_744 + 1.0;
+    fStack_520 = fVar28 + 0.0 + 0.0;
+    fStack_51c = fVar28 + fStack_744 + 1.0;
     pfVar6 = &fStack_558;
     pfVar20 = afStack_438;
     for (iVar5 = 0x10; iVar5 != 0; iVar5 = iVar5 + -1) {
@@ -80356,40 +80247,40 @@ LAB_00588caf:
       pfVar6 = pfVar6 + 1;
       pfVar20 = pfVar20 + 1;
     }
-    fVar16 = fStack_744 + fVar25 + fStack_744 + fStack_718;
+    fVar16 = fStack_744 + fVar24 + fStack_744 + fStack_718;
     afStack_438[0] = fVar16;
-    fVar24 = fVar26 * 0.0 + 0.0 + fStack_744 + fStack_718;
-    fStack_428 = fVar24;
+    fVar23 = fVar25 * 0.0 + 0.0 + fStack_744 + fStack_718;
+    fStack_428 = fVar23;
     fStack_528 = local_73c + 0.0 + fStack_528;
     fStack_418 = fStack_528;
-    fVar27 = afStack_438[1] * 0.0;
+    fVar26 = afStack_438[1] * 0.0;
     fStack_718 = (local_73c - 0.0) + fStack_718;
     fStack_408 = fStack_718;
-    fVar28 = fStack_404 * 0.0;
-    afStack_438[1] = fVar25 * afStack_438[1] + fStack_424 * 0.0 + fStack_414 * 0.0 + fVar28;
-    fVar30 = fVar27 + fStack_424 * 0.0;
-    fStack_424 = fVar26 * fStack_424 + fVar27 + fStack_414 * 0.0 + fVar28;
-    fVar29 = fStack_414 * 0.10001;
-    fStack_414 = fStack_414 * 1.0001 + fVar30 + fStack_404;
-    fVar27 = fStack_400 * 0.0;
-    fStack_404 = (fVar30 - fVar29) + fVar28;
-    fVar28 = afStack_438[2] * 0.0;
-    fVar29 = fStack_420 * 0.0 + fVar28;
-    afStack_438[2] = fVar25 * afStack_438[2] + fStack_420 * 0.0 + fStack_410 * 0.0 + fVar27;
-    fStack_420 = fVar26 * fStack_420 + fVar28 + fStack_410 * 0.0 + fVar27;
-    fVar28 = fStack_410 * 0.10001;
-    fStack_410 = fStack_410 * 1.0001 + fVar29 + fStack_400;
-    fStack_400 = (fVar29 - fVar28) + fVar27;
-    fVar27 = fStack_3fc * 0.0;
-    fVar28 = afStack_438[3] * 0.0;
-    fVar29 = fStack_41c * 0.0 + fVar28;
-    afStack_438[3] = fVar25 * afStack_438[3] + fStack_41c * 0.0 + fStack_40c * 0.0 + fVar27;
-    fVar25 = fStack_40c * 1.0001 + fVar29 + fStack_3fc;
-    fStack_41c = fVar26 * fStack_41c + fVar28 + fStack_40c * 0.0 + fVar27;
-    fStack_3fc = (fVar29 - fStack_40c * 0.10001) + fVar27;
-    fStack_40c = fVar25;
-    fVar26 = fStack_528 * 0.0;
-    fVar25 = fStack_718 * 0.0;
+    fVar27 = fStack_404 * 0.0;
+    afStack_438[1] = fVar24 * afStack_438[1] + fStack_424 * 0.0 + fStack_414 * 0.0 + fVar27;
+    fVar29 = fVar26 + fStack_424 * 0.0;
+    fStack_424 = fVar25 * fStack_424 + fVar26 + fStack_414 * 0.0 + fVar27;
+    fVar28 = fStack_414 * 0.10001;
+    fStack_414 = fStack_414 * 1.0001 + fVar29 + fStack_404;
+    fVar26 = fStack_400 * 0.0;
+    fStack_404 = (fVar29 - fVar28) + fVar27;
+    fVar27 = afStack_438[2] * 0.0;
+    fVar28 = fStack_420 * 0.0 + fVar27;
+    afStack_438[2] = fVar24 * afStack_438[2] + fStack_420 * 0.0 + fStack_410 * 0.0 + fVar26;
+    fStack_420 = fVar25 * fStack_420 + fVar27 + fStack_410 * 0.0 + fVar26;
+    fVar27 = fStack_410 * 0.10001;
+    fStack_410 = fStack_410 * 1.0001 + fVar28 + fStack_400;
+    fStack_400 = (fVar28 - fVar27) + fVar26;
+    fVar26 = fStack_3fc * 0.0;
+    fVar27 = afStack_438[3] * 0.0;
+    fVar28 = fStack_41c * 0.0 + fVar27;
+    afStack_438[3] = fVar24 * afStack_438[3] + fStack_41c * 0.0 + fStack_40c * 0.0 + fVar26;
+    fVar24 = fStack_40c * 1.0001 + fVar28 + fStack_3fc;
+    fStack_41c = fVar25 * fStack_41c + fVar27 + fStack_40c * 0.0 + fVar26;
+    fStack_3fc = (fVar28 - fStack_40c * 0.10001) + fVar26;
+    fStack_40c = fVar24;
+    fVar25 = fStack_528 * 0.0;
+    fVar24 = fStack_718 * 0.0;
     pfVar6 = afStack_438;
     pfVar20 = afStack_3f8;
     for (iVar5 = 0x10; iVar5 != 0; iVar5 = iVar5 + -1) {
@@ -80397,8 +80288,8 @@ LAB_00588caf:
       pfVar6 = pfVar6 + 1;
       pfVar20 = pfVar20 + 1;
     }
-    fVar27 = fVar16 * 0.0 + fVar24 * 0.0;
-    fStack_744 = fVar24 * 0.0 + fVar16 + fVar26 + fVar25;
+    fVar26 = fVar16 * 0.0 + fVar23 * 0.0;
+    fStack_744 = fVar23 * 0.0 + fVar16 + fVar25 + fVar24;
     pfVar6 = afStack_438;
     pfVar20 = &fStack_558;
     for (iVar5 = 0x10; iVar5 != 0; iVar5 = iVar5 + -1) {
@@ -80406,34 +80297,34 @@ LAB_00588caf:
       pfVar6 = pfVar6 + 1;
       pfVar20 = pfVar20 + 1;
     }
-    fVar28 = fVar16 * 0.0 + fVar24 + fVar26 + fVar25;
-    fStack_718 = fVar27 + fVar26 + fStack_718;
-    fVar25 = fVar27 + fStack_528 + fVar25;
+    fVar27 = fVar16 * 0.0 + fVar23 + fVar25 + fVar24;
+    fStack_718 = fVar26 + fVar25 + fStack_718;
+    fVar24 = fVar26 + fStack_528 + fVar24;
     fVar16 = fStack_524 * 0.0;
     fStack_71c = fStack_544 * 0.0 + (float)pfStack_554 + (float)pvStack_534 * 0.0 + fVar16;
     fStack_72c = (float)pfStack_554 * 0.0 + fStack_544 + (float)pvStack_534 * 0.0 + fVar16;
-    fVar24 = fStack_544 * 0.0 + (float)pfStack_554 * 0.0;
-    fVar16 = fVar24 + (float)pvStack_534 + fVar16;
-    fStack_720 = (float)pvStack_534 * 0.0 + fVar24 + fStack_524;
+    fVar23 = fStack_544 * 0.0 + (float)pfStack_554 * 0.0;
+    fVar16 = fVar23 + (float)pvStack_534 + fVar16;
+    fStack_720 = (float)pvStack_534 * 0.0 + fVar23 + fStack_524;
     fStack_6e0 = fStack_520 * 0.0;
     fStack_6ec = fStack_540 * 0.0 + fStack_550 + fStack_530 * 0.0 + fStack_6e0;
-    fVar24 = fStack_540 * 0.0 + fStack_550 * 0.0;
+    fVar23 = fStack_540 * 0.0 + fStack_550 * 0.0;
     fStack_728 = fStack_550 * 0.0 + fStack_540 + fStack_530 * 0.0 + fStack_6e0;
-    fStack_6e0 = fVar24 + fStack_530 + fStack_6e0;
-    local_73c = fStack_530 * 0.0 + fVar24 + fStack_520;
-    fVar24 = fStack_51c * 0.0;
-    ppuStack_6e8 = (undefined **)(fStack_53c * 0.0 + fStack_54c + fStack_52c * 0.0 + fVar24);
-    fStack_730 = fStack_54c * 0.0 + fStack_53c + fStack_52c * 0.0 + fVar24;
-    fVar26 = fStack_53c * 0.0 + fStack_54c * 0.0;
-    ppuStack_6e4 = (undefined **)(fVar26 + fStack_52c + fVar24);
-    local_75c = (void *)(fStack_52c * 0.0 + fVar26 + fStack_51c);
-    fStack_558 = fVar28 * uStack_74c + fStack_744 * fStack_700 + fVar25 * uStack_754 +
+    fStack_6e0 = fVar23 + fStack_530 + fStack_6e0;
+    local_73c = fStack_530 * 0.0 + fVar23 + fStack_520;
+    fVar23 = fStack_51c * 0.0;
+    ppuStack_6e8 = (undefined **)(fStack_53c * 0.0 + fStack_54c + fStack_52c * 0.0 + fVar23);
+    fStack_730 = fStack_54c * 0.0 + fStack_53c + fStack_52c * 0.0 + fVar23;
+    fVar25 = fStack_53c * 0.0 + fStack_54c * 0.0;
+    ppuStack_6e4 = (undefined **)(fVar25 + fStack_52c + fVar23);
+    local_75c = (void *)(fStack_52c * 0.0 + fVar25 + fStack_51c);
+    fStack_558 = fVar27 * uStack_74c + fStack_744 * fStack_700 + fVar24 * uStack_754 +
                  fStack_718 * fStack_6f4;
-    fStack_548 = fVar28 * local_740 + fStack_744 * fStack_724 + fVar25 * fStack_708 +
+    fStack_548 = fVar27 * local_740 + fStack_744 * fStack_724 + fVar24 * fStack_708 +
                  fStack_718 * local_738;
-    fStack_538 = fVar28 * fStack_6fc + fStack_744 * local_748 + fVar25 * fStack_704 +
+    fStack_538 = fVar27 * fStack_6fc + fStack_744 * local_748 + fVar24 * fStack_704 +
                  fStack_718 * fStack_714;
-    fStack_528 = fVar28 * fStack_70c + fStack_744 * (float)local_764 + fVar25 * local_758 +
+    fStack_528 = fVar27 * fStack_70c + fStack_744 * (float)local_764 + fVar24 * local_758 +
                  fStack_718 * local_768;
     pfStack_554 = (float *)(fStack_72c * uStack_74c + fStack_71c * fStack_700 + fVar16 * uStack_754
                            + fStack_720 * fStack_6f4);
@@ -80462,34 +80353,33 @@ LAB_00588caf:
     Matrix4_Invert();
     in_ECX = local_6f8;
     iVar5 = *(int *)(local_6f8 + 4);
-    fVar24 = (*(float *)(iVar5 + 0xd4) / (float)*(int *)(iVar5 + 0x10c)) * 2.0 - 1.0;
+    fVar23 = (*(float *)(iVar5 + 0xd4) / (float)*(int *)(iVar5 + 0x10c)) * 2.0 - 1.0;
     fVar16 = 1.0 - (*(float *)(iVar5 + 0xd8) / (float)*(int *)(iVar5 + 0x110)) * 2.0;
-    fStack_730 = 1.0 / (fStack_53c * fVar16 + fStack_54c * fVar24 + fStack_52c * 0.0 + fStack_51c);
+    fStack_730 = 1.0 / (fStack_53c * fVar16 + fStack_54c * fVar23 + fStack_52c * 0.0 + fStack_51c);
     local_75c = (void *)(fStack_730 *
-                        (fStack_548 * fVar16 + fStack_558 * fVar24 + fStack_538 * 0.0 + fStack_528))
+                        (fStack_548 * fVar16 + fStack_558 * fVar23 + fStack_538 * 0.0 + fStack_528))
     ;
     fStack_70c = fStack_730 *
-                 (fStack_540 * fVar16 + fStack_550 * fVar24 + fStack_530 * 0.0 + fStack_520);
+                 (fStack_540 * fVar16 + fStack_550 * fVar23 + fStack_530 * 0.0 + fStack_520);
     fStack_730 = fStack_730 *
-                 (fStack_544 * fVar16 + (float)pfStack_554 * fVar24 + (float)pvStack_534 * 0.0 +
+                 (fStack_544 * fVar16 + (float)pfStack_554 * fVar23 + (float)pvStack_534 * 0.0 +
                  fStack_524);
-    fVar24 = (*(float *)(iVar5 + 0xd4) / (float)*(int *)(iVar5 + 0x10c)) * 2.0 - 1.0;
+    fVar23 = (*(float *)(iVar5 + 0xd4) / (float)*(int *)(iVar5 + 0x10c)) * 2.0 - 1.0;
     fVar16 = 1.0 - (*(float *)(iVar5 + 0xd8) / (float)*(int *)(iVar5 + 0x110)) * 2.0;
-    fVar25 = 1.0 / (fVar16 * fStack_53c + fVar24 * fStack_54c + fStack_52c + fStack_51c);
-    fStack_744 = fVar25 * (fVar16 * fStack_548 + fVar24 * fStack_558 + fStack_538 + fStack_528) -
+    fVar24 = 1.0 / (fVar16 * fStack_53c + fVar23 * fStack_54c + fStack_52c + fStack_51c);
+    fStack_744 = fVar24 * (fVar16 * fStack_548 + fVar23 * fStack_558 + fStack_538 + fStack_528) -
                  (float)local_75c;
-    fStack_71c = fVar25 * (fVar16 * fStack_540 + fVar24 * fStack_550 + fStack_530 + fStack_520) -
+    fStack_71c = fVar24 * (fVar16 * fStack_540 + fVar23 * fStack_550 + fStack_530 + fStack_520) -
                  fStack_70c;
-    fStack_72c = fVar25 * (fVar16 * fStack_544 + fVar24 * (float)pfStack_554 + (float)pvStack_534 +
+    fStack_72c = fVar24 * (fVar16 * fStack_544 + fVar23 * (float)pfStack_554 + (float)pvStack_534 +
                           fStack_524) - fStack_730;
-    auVar23._0_8_ =
-         (double)(fStack_72c * fStack_72c + fStack_744 * fStack_744 + fStack_71c * fStack_71c);
-    auVar23._8_8_ = 0;
     local_4c0 = local_75c;
     fStack_4bc = fStack_730;
     fStack_4b8 = fStack_70c;
-    libm_sse2_sqrt_precise();
-    fStack_718 = 1.0 / (float)auVar23._0_8_;
+    dVar22 = libm_sse2_sqrt_precise
+                       ((double)(fStack_72c * fStack_72c + fStack_744 * fStack_744 +
+                                fStack_71c * fStack_71c));
+    fStack_718 = 1.0 / (float)dVar22;
     fStack_720 = fStack_718 * fStack_744;
     fStack_728 = fStack_718 * fStack_72c;
     fStack_718 = fStack_718 * fStack_71c;
@@ -80538,7 +80428,7 @@ LAB_00588caf:
         cVar3 = *(char *)(in_ECX + 0x3c8);
         pcVar18 = (char *)(*(int *)(in_ECX + 0x160) + 0x14);
         do {
-          fVar24 = uStack_74c;
+          fVar23 = uStack_74c;
           fVar16 = uStack_754;
           if (cVar3 == '\0') {
 LAB_0058a821:
@@ -80565,7 +80455,7 @@ LAB_0058a821:
           else {
             uStack_74c._0_2_ =
                  CONCAT11(*(undefined1 *)(in_ECX + 0x3d0),*(undefined1 *)(in_ECX + 0x3cc));
-            uStack_74c._3_1_ = SUB41(fVar24,3);
+            uStack_74c._3_1_ = SUB41(fVar23,3);
             uStack_74c._0_3_ = CONCAT12(*(undefined1 *)(in_ECX + 0x3d4),(undefined2)uStack_74c);
             iVar5 = 0;
             pcVar15 = pcVar18;
@@ -80591,9 +80481,9 @@ LAB_0058a821:
         if (0.0 < fStack_720) {
           iVar5 = aiStack_518[0] + 1;
         }
-        fVar24 = ((float)iVar5 - ((float)local_4c0 + afStack_508[0] * local_758)) / fStack_720;
-        if (fVar24 < 10.0) {
-          fVar16 = fVar24;
+        fVar23 = ((float)iVar5 - ((float)local_4c0 + afStack_508[0] * local_758)) / fStack_720;
+        if (fVar23 < 10.0) {
+          fVar16 = fVar23;
         }
       }
       iVar5 = 0;
@@ -80602,10 +80492,10 @@ LAB_0058a821:
         if (0.0 < fStack_728) {
           iVar12 = aiStack_518[1] + 1;
         }
-        fVar24 = ((float)iVar12 - (fStack_4bc + afStack_508[1] * local_758)) / fStack_728;
-        if (fVar24 < fVar16) {
+        fVar23 = ((float)iVar12 - (fStack_4bc + afStack_508[1] * local_758)) / fStack_728;
+        if (fVar23 < fVar16) {
           iVar5 = 1;
-          fVar16 = fVar24;
+          fVar16 = fVar23;
         }
       }
       if (fStack_718 != 0.0) {
@@ -80613,10 +80503,10 @@ LAB_0058a821:
         if (0.0 < fStack_718) {
           iVar12 = aiStack_518[2] + 1;
         }
-        fVar24 = ((float)iVar12 - (fStack_4b8 + afStack_508[2] * local_758)) / fStack_718;
-        if (fVar24 < fVar16) {
+        fVar23 = ((float)iVar12 - (fStack_4b8 + afStack_508[2] * local_758)) / fStack_718;
+        if (fVar23 < fVar16) {
           iVar5 = 2;
-          fVar16 = fVar24;
+          fVar16 = fVar23;
         }
       }
       afStack_578[0] = 0.0;
@@ -80653,29 +80543,29 @@ LAB_0058a89a:
           pfVar20 = pfVar20 + 1;
         }
         if (*(char *)(local_6f8 + 0x2a8) == '\0') {
-          fVar27 = fStack_720 * 100.0 + (float)local_75c;
+          fVar26 = fStack_720 * 100.0 + (float)local_75c;
           fVar16 = fStack_728 * 100.0 + fStack_730;
-          fVar26 = fStack_718 * 100.0 + fStack_70c;
-          fStack_528 = fVar16 * fStack_480 + fVar27 * afStack_490[0] + fVar26 * fStack_470;
-          fVar25 = fVar16 * fStack_544 + fVar27 * (float)pfStack_554 + fVar26 * (float)pvStack_534;
-          fVar24 = fVar16 * fStack_540 + fVar27 * fStack_550 + fVar26 * fStack_530;
-          fVar16 = fVar16 * fStack_53c + fVar27 * fStack_54c + fVar26 * fStack_52c;
+          fVar25 = fStack_718 * 100.0 + fStack_70c;
+          fStack_528 = fVar16 * fStack_480 + fVar26 * afStack_490[0] + fVar25 * fStack_470;
+          fVar24 = fVar16 * fStack_544 + fVar26 * (float)pfStack_554 + fVar25 * (float)pvStack_534;
+          fVar23 = fVar16 * fStack_540 + fVar26 * fStack_550 + fVar25 * fStack_530;
+          fVar16 = fVar16 * fStack_53c + fVar26 * fStack_54c + fVar25 * fStack_52c;
         }
         else {
           *(int *)(local_6f8 + 0x29c) = *(int *)(local_6f8 + 0x29c) + aiStack_4d0[0];
           *(int *)(local_6f8 + 0x2a0) = *(int *)(local_6f8 + 0x2a0) + aiStack_4d0[1];
           *(int *)(local_6f8 + 0x2a4) = *(int *)(local_6f8 + 0x2a4) + aiStack_4d0[2];
-          fVar27 = (float)*(int *)(local_6f8 + 0x29c);
+          fVar26 = (float)*(int *)(local_6f8 + 0x29c);
           fVar16 = (float)*(int *)(local_6f8 + 0x2a0);
-          fVar26 = (float)*(int *)(local_6f8 + 0x2a4);
-          fStack_528 = fVar16 * fStack_480 + fVar27 * afStack_490[0] + fVar26 * fStack_470;
-          fVar25 = fStack_544 * fVar16 + (float)pfStack_554 * fVar27 + (float)pvStack_534 * fVar26;
-          fVar24 = fStack_540 * fVar16 + fStack_550 * fVar27 + fStack_530 * fVar26;
-          fVar16 = fStack_53c * fVar16 + fStack_54c * fVar27 + fStack_52c * fVar26;
+          fVar25 = (float)*(int *)(local_6f8 + 0x2a4);
+          fStack_528 = fVar16 * fStack_480 + fVar26 * afStack_490[0] + fVar25 * fStack_470;
+          fVar24 = fStack_544 * fVar16 + (float)pfStack_554 * fVar26 + (float)pvStack_534 * fVar25;
+          fVar23 = fStack_540 * fVar16 + fStack_550 * fVar26 + fStack_530 * fVar25;
+          fVar16 = fStack_53c * fVar16 + fStack_54c * fVar26 + fStack_52c * fVar25;
         }
         fStack_51c = fVar16 + fStack_51c;
-        fStack_520 = fVar24 + fStack_520;
-        fStack_524 = fVar25 + fStack_524;
+        fStack_520 = fVar23 + fStack_520;
+        fStack_524 = fVar24 + fStack_524;
         fStack_528 = fStack_528 + (float)pfStack_460;
         afStack_578[0] = 1.0;
         afStack_578[1] = 1.0;
@@ -80704,7 +80594,7 @@ LAB_0058addd:
     if (0 < *(int *)(*(int *)(in_ECX + 0x160) + 0x114)) {
       do {
         iVar5 = local_6f8;
-        fVar24 = uStack_74c;
+        fVar23 = uStack_74c;
         fVar16 = uStack_754;
         if (*(char *)(in_ECX + 0x3c8) == '\0') {
 LAB_0058ae4e:
@@ -80716,27 +80606,27 @@ LAB_0058ae4e:
             pfVar20 = pfVar20 + 1;
           }
           pcVar18 = (char *)((int)local_760 * 8 + 0x14 + *(int *)(local_6f8 + 0x160));
-          fVar26 = (float)(int)*pcVar18;
+          fVar25 = (float)(int)*pcVar18;
           fVar16 = (float)(int)pcVar18[1];
-          fVar25 = (float)(int)pcVar18[2];
+          fVar24 = (float)(int)pcVar18[2];
           local_768 = fStack_544;
           local_764 = pfStack_554;
-          fStack_744 = fVar16 * fStack_480 + fVar26 * afStack_490[0] + fVar25 * fStack_470 +
+          fStack_744 = fVar16 * fStack_480 + fVar25 * afStack_490[0] + fVar24 * fStack_470 +
                        (float)pfStack_460;
           fStack_528 = fStack_744;
           local_75c = pvStack_534;
           local_73c = fStack_540;
-          fStack_72c = fStack_544 * fVar16 + (float)pfStack_554 * fVar26 +
-                       (float)pvStack_534 * fVar25 + fStack_524;
+          fStack_72c = fStack_544 * fVar16 + (float)pfStack_554 * fVar25 +
+                       (float)pvStack_534 * fVar24 + fStack_524;
           fStack_524 = fStack_72c;
           local_758 = fStack_550;
           local_748 = fStack_530;
           local_738 = fStack_53c;
-          fStack_71c = fStack_540 * fVar16 + fStack_550 * fVar26 + fStack_530 * fVar25 + fStack_520;
+          fStack_71c = fStack_540 * fVar16 + fStack_550 * fVar25 + fStack_530 * fVar24 + fStack_520;
           fStack_520 = fStack_71c;
           local_740 = fStack_54c;
           fStack_724 = fStack_52c;
-          fStack_6ec = fStack_53c * fVar16 + fStack_54c * fVar26 + fStack_52c * fVar25 + fStack_51c;
+          fStack_6ec = fStack_53c * fVar16 + fStack_54c * fVar25 + fStack_52c * fVar24 + fStack_51c;
           fStack_51c = fStack_6ec;
           if (*(char *)(local_6f8 + 0x2a8) == '\0') {
 LAB_0058b410:
@@ -80751,7 +80641,7 @@ LAB_0058b410:
           else {
             uStack_74c._0_2_ =
                  CONCAT11(*(undefined1 *)(local_6f8 + 0x2a0),*(undefined1 *)(local_6f8 + 0x29c));
-            uStack_74c._3_1_ = SUB41(fVar24,3);
+            uStack_74c._3_1_ = SUB41(fVar23,3);
             uStack_74c._0_3_ = CONCAT12(*(undefined1 *)(local_6f8 + 0x2a4),(undefined2)uStack_74c);
             iVar12 = 0;
             do {
@@ -80781,7 +80671,6 @@ LAB_0058b410:
                          (local_768 * 0.5 + (float)local_764 * 0.5 + (float)pvStack_534 * 0.5);
             fStack_520 = fStack_72c - (local_73c * 0.5 + fStack_550 * 0.5 + local_748 * 0.5);
             fStack_51c = fStack_71c - (local_738 * 0.5 + local_740 * 0.5 + fStack_724 * 0.5);
-            dVar22 = (double)((float)*(int *)(*(int *)(local_6f8 + 4) + 0xe8) * 0.01);
             pfStack_554 = local_764;
             fStack_54c = local_740;
             fStack_544 = local_768;
@@ -80789,7 +80678,8 @@ LAB_0058b410:
             fStack_53c = local_738;
             fStack_530 = local_748;
             fStack_52c = fStack_724;
-            libm_sse2_cos_precise();
+            dVar22 = libm_sse2_cos_precise
+                               ((double)((float)*(int *)(*(int *)(local_6f8 + 4) + 0xe8) * 0.01));
             uStack_568 = 0x3f8000003f800000;
             fVar16 = (float)dVar22 * 0.2 + 1.0;
             fStack_560 = 1.0;
@@ -80828,18 +80718,18 @@ LAB_0058b410:
   }
   iVar5 = *(int *)(in_ECX + 0x148);
   fVar16 = *(float *)(iVar5 + 0x5c);
-  fVar24 = *(float *)(iVar5 + 0x4c);
-  fVar25 = *(float *)(iVar5 + 0x48);
-  fVar26 = *(float *)(iVar5 + 0x58);
-  fVar29 = 1.0 / (*(float *)(iVar5 + 0x54) * local_710 + *(float *)(iVar5 + 100) * (float)local_750
+  fVar23 = *(float *)(iVar5 + 0x4c);
+  fVar24 = *(float *)(iVar5 + 0x48);
+  fVar25 = *(float *)(iVar5 + 0x58);
+  fVar28 = 1.0 / (*(float *)(iVar5 + 0x54) * local_710 + *(float *)(iVar5 + 100) * (float)local_750
                  + *(float *)(iVar5 + 0x84));
-  fVar27 = *(float *)(iVar5 + 0x7c);
+  fVar26 = *(float *)(iVar5 + 0x7c);
   local_760 = (float *)0x0;
-  fVar28 = *(float *)(iVar5 + 0x78);
+  fVar27 = *(float *)(iVar5 + 0x78);
   *(undefined4 *)(in_ECX + 0x2ac) = 0xffffffff;
   if (0 < (piVar19[1] - *piVar19) / 0x11c) {
-    fStack_744 = fVar29 * (fVar25 * local_710 + fVar26 * (float)local_750 + fVar28) + 20.0;
-    fStack_72c = fVar29 * (fVar24 * local_710 + fVar16 * (float)local_750 + fVar27) + 40.0;
+    fStack_744 = fVar28 * (fVar24 * local_710 + fVar25 * (float)local_750 + fVar27) + 20.0;
+    fStack_72c = fVar28 * (fVar23 * local_710 + fVar16 * (float)local_750 + fVar26) + 40.0;
     local_768 = 0.0;
     do {
       entityState_copy(*piVar19 + (int)local_768 + 4U);
@@ -80873,7 +80763,7 @@ LAB_0058b410:
       local_768 = (float)((int)local_768 + 0x11c);
     } while ((int)local_760 < (piVar19[1] - *piVar19) / 0x11c);
   }
-  p_Var36 = (_func_basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_>_ptr_basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_>_ptr
+  p_Var35 = (_func_basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_>_ptr_basic_ostream<wchar_t,struct_std::char_traits<wchar_t>_>_ptr
              *)0x0;
   piVar19 = *(int **)(*(int *)(in_ECX + 0x298) + 0x134);
   iVar12 = 7;
@@ -80906,7 +80796,7 @@ LAB_0058b410:
   pbVar10 = (basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)wostream_insertNarrow(pbVar11);
   pbVar11 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<(pbVar10,iVar12);
   std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
-            ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)pbVar11,p_Var36);
+            ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)pbVar11,p_Var35);
   u16string_assignCStr(L"resource1.dat");
   uStack_c._0_1_ = 4;
   uVar8 = u16_ostrstream_str_wrap(apvStack_4e8);
@@ -80919,19 +80809,19 @@ LAB_0058b410:
   uStack_4f0 = 0x3f80000000000000;
   uStack_568 = 0x3f8000003f800000;
   fStack_560 = 1.0;
-  uVar37 = 1;
+  uVar36 = 1;
   uStack_55c = 0x3f800000;
-  uVar35 = 0xbf800000;
-  uVar34 = 0;
+  uVar34 = 0xbf800000;
+  uVar33 = 0;
   pfVar6 = afStack_578;
   puVar14 = &uStack_4f8;
-  puVar33 = &uStack_568;
-  uVar32 = 0x40000000;
-  uVar31 = 0x41200000;
-  fVar21 = (float10)security_cookie_guard_a(0x41200000,0x40000000,puVar33,puVar14,pfVar6,0,0xbf800000,1);
+  puVar32 = &uStack_568;
+  uVar31 = 0x40000000;
+  uVar30 = 0x41200000;
+  fVar21 = (float)security_cookie_guard_a(0x41200000,0x40000000,puVar32,puVar14,pfVar6,0,0xbf800000,1);
   fStack_744 = (float)fVar21;
-  AdaptionWidget_draw_text_locked(apvStack_4a8,uVar8,0,0,0x41a00000,fStack_744 - 20.0,uVar31,uVar32,puVar33,puVar14,
-               pfVar6,uVar34,uVar35,uVar37);
+  AdaptionWidget_draw_text_locked(apvStack_4a8,uVar8,0,0,0x41a00000,fStack_744 - 20.0,uVar30,uVar31,puVar32,puVar14,
+               pfVar6,uVar33,uVar34,uVar36);
   if (7 < uStack_4d4) {
     operator_delete(apvStack_4e8[0]);
   }
@@ -80945,9 +80835,9 @@ LAB_0058b410:
   u16string_assignCStr(L"resource1.dat");
   uStack_c._0_1_ = 6;
   uVar8 = u16_ostrstream_str_wrap(apvStack_4e8);
-  uVar37 = 1;
-  uVar35 = 0xbf800000;
-  uVar34 = 0;
+  uVar36 = 1;
+  uVar34 = 0xbf800000;
+  uVar33 = 0;
   afStack_578[0] = 0.0;
   afStack_578[1] = 0.0;
   afStack_578[2] = 0.0;
@@ -80959,14 +80849,14 @@ LAB_0058b410:
   uStack_55c = 0x3f800000;
   pfVar6 = afStack_578;
   puVar14 = &uStack_4f8;
-  puVar33 = &uStack_568;
+  puVar32 = &uStack_568;
   uStack_c = CONCAT31(uStack_c._1_3_,7);
-  uVar32 = 0;
-  uVar31 = 0x41200000;
-  fVar21 = (float10)security_cookie_guard_a(0x41200000,0,puVar33,puVar14,pfVar6,0,0xbf800000,1);
+  uVar31 = 0;
+  uVar30 = 0x41200000;
+  fVar21 = (float)security_cookie_guard_a(0x41200000,0,puVar32,puVar14,pfVar6,0,0xbf800000,1);
   fStack_744 = (float)fVar21;
-  AdaptionWidget_draw_text_locked(apvStack_4a8,uVar8,0,0,0x41a00000,fStack_744 - 20.0,uVar31,uVar32,puVar33,puVar14,
-               pfVar6,uVar34,uVar35,uVar37);
+  AdaptionWidget_draw_text_locked(apvStack_4a8,uVar8,0,0,0x41a00000,fStack_744 - 20.0,uVar30,uVar31,puVar32,puVar14,
+               pfVar6,uVar33,uVar34,uVar36);
   if (7 < uStack_4d4) {
     operator_delete(apvStack_4e8[0]);
   }
@@ -81076,12 +80966,12 @@ LAB_0058bbf5:
       uStack_5d8 = 0;
       uStack_5d4 = 0;
       uStack_c = 0xf;
-      p_Var36 = endl_exref;
+      p_Var35 = endl_exref;
       pbVar11 = std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
                           ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)apuStack_618,
                            *(int *)(*piVar19 + (int)local_75c));
       std::basic_ostream<wchar_t,std::char_traits<wchar_t>_>::operator<<
-                ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)pbVar11,p_Var36);
+                ((basic_ostream<wchar_t,std::char_traits<wchar_t>_> *)pbVar11,p_Var35);
       u16string_assignCStr(L"resource1.dat");
       uStack_c._0_1_ = 0x10;
       uVar8 = u16_ostrstream_str_wrap(apvStack_4e8);
@@ -82955,7 +82845,7 @@ void Terrain_computeBiomeColor(undefined4 *voxelKey,float *param_2,float *param_
   undefined4 uVar4;
   undefined4 uVar5;
   int in_ECX;
-  float10 fVar6;
+  float fVar6;
   double dVar7;
   float timeFactor;
   float blend;
@@ -83014,10 +82904,9 @@ void Terrain_computeBiomeColor(undefined4 *voxelKey,float *param_2,float *param_
   float local_c;
   
   uVar2 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  dVar7 = (double)ABS(((float)*(int *)(in_ECX + 0x80015c) * 2.0) / 8.64e+07 - 1.0);
-  libm_sse2_pow_precise();
-  dVar7 = (double)(1.0 - (float)dVar7);
-  libm_sse2_pow_precise();
+  dVar7 = libm_sse2_pow_precise
+                    ((double)ABS(((float)*(int *)(in_ECX + 0x80015c) * 2.0) / 8.64e+07 - 1.0),3.0);
+  dVar7 = libm_sse2_pow_precise((double)(1.0 - (float)dVar7),4.0);
   timeFactor = (float)dVar7;
   voxel = world_getColumnAtFixedPos(*voxelKey,voxelKey[1],voxelKey[2],voxelKey[3],voxelKey[4],voxelKey[5],0);
   voxelType = *(byte *)(voxel + 3);
@@ -83071,11 +82960,11 @@ void Terrain_computeBiomeColor(undefined4 *voxelKey,float *param_2,float *param_
   local_2c = 1.0;
   uVar4 = __alldiv(voxelKey[2],voxelKey[3],0x10000,0);
   uVar5 = __alldiv(*voxelKey,voxelKey[1],0x10000,0);
-  fVar6 = (float10)GameController_sampleHumidityGrid(uVar5,uVar4);
+  fVar6 = (float)GameController_sampleHumidityGrid(uVar5,uVar4);
   noiseA = (float)fVar6;
   uVar4 = __alldiv(voxelKey[2],voxelKey[3],0x10000,0);
   uVar5 = __alldiv(*voxelKey,voxelKey[1],0x10000,0);
-  fVar6 = (float10)GameController_sampleTemperatureGrid(uVar5,uVar4);
+  fVar6 = (float)GameController_sampleTemperatureGrid(uVar5,uVar4);
   noiseB = (float)fVar6;
   if ((0.6 < noiseA) && (noiseB < 0.4)) {
     blend = (1.0 - noiseB / 0.4) * ((noiseA - 0.6) / 0.4);
@@ -83091,7 +82980,7 @@ void Terrain_computeBiomeColor(undefined4 *voxelKey,float *param_2,float *param_
     }
     uVar4 = __alldiv(voxelKey[2],voxelKey[3],0x10000,0);
     uVar5 = __alldiv(*voxelKey,voxelKey[1],0x10000,0);
-    fVar6 = (float10)World_getRegionCellPtr2(uVar5,uVar4);
+    fVar6 = (float)World_getRegionCellPtr2(uVar5,uVar4);
     blend = (1.0 - (float)fVar6) * (((noiseB - 0.6) * local_88) / 0.4);
     local_8c = local_8c + blend * (0.0 - local_8c);
     local_54 = blend * (1.0 - local_54) + local_54;
@@ -83132,7 +83021,7 @@ void Terrain_computeBiomeColor(undefined4 *voxelKey,float *param_2,float *param_
   }
   uVar4 = __alldiv(voxelKey[2],voxelKey[3],0x10000,0);
   uVar5 = __alldiv(*voxelKey,voxelKey[1],0x10000,0);
-  fVar6 = (float10)World_getRegionCellPtr(uVar5,uVar4);
+  fVar6 = (float)World_getRegionCellPtr(uVar5,uVar4);
   noiseA = (float)fVar6;
   if (0.0 < noiseA) {
     noiseB = 1.0 - noiseA;
@@ -83690,9 +83579,9 @@ void World_findNearestSpawnPoint(uint *out_pos,uint *in_pos)
   }
   else {
     piVar5 = (int *)*candidates;
-    best_dist2 = -1.0;
+    best_dist2 = -1.0f;
     best_node = (int *)0x0;
-    best_dist = -1.0;
+    best_dist = -1.0f;
     if (piVar5 != candidates) {
       do {
         local_54._0_4_ = (uint)*(undefined8 *)(piVar5 + 2);
@@ -83703,9 +83592,9 @@ void World_findNearestSpawnPoint(uint *out_pos,uint *in_pos)
         local_4c._4_4_ = (int)((ulonglong)*(undefined8 *)(piVar5 + 4) >> 0x20);
         local_4c = CONCAT44((local_4c._4_4_ - in_pos[3]) - (uint)((uint)local_4c < in_pos[2]),
                             (uint)local_4c - in_pos[2]);
-        fVar12 = (float)local_4c * 1.5258789e-05 * (float)local_4c * 1.5258789e-05 +
-                 (float)local_54 * 1.5258789e-05 * (float)local_54 * 1.5258789e-05;
-        if ((best_dist < 0.0) || (fVar12 < best_dist)) {
+        fVar12 = (float)local_4c * 1.5258789e-05f * (float)local_4c * 1.5258789e-05f +
+                 (float)local_54 * 1.5258789e-05f * (float)local_54 * 1.5258789e-05f;
+        if ((best_dist < 0.0f) || (fVar12 < best_dist)) {
           best_node = piVar5;
           best_dist = fVar12;
         }
@@ -83728,9 +83617,9 @@ void World_findNearestSpawnPoint(uint *out_pos,uint *in_pos)
         local_34._4_4_ = (int)((ulonglong)*(undefined8 *)(piVar5 + 4) >> 0x20);
         local_34 = CONCAT44((local_34._4_4_ - in_pos[3]) - (uint)((uint)local_34 < in_pos[2]),
                             (uint)local_34 - in_pos[2]);
-        best_dist = (float)local_3c * 1.5258789e-05 * (float)local_3c * 1.5258789e-05 +
-                 (float)local_34 * 1.5258789e-05 * (float)local_34 * 1.5258789e-05;
-        if ((best_dist2 < 0.0) || (best_dist < best_dist2)) {
+        best_dist = (float)local_3c * 1.5258789e-05f * (float)local_3c * 1.5258789e-05f +
+                 (float)local_34 * 1.5258789e-05f * (float)local_34 * 1.5258789e-05f;
+        if ((best_dist2 < 0.0f) || (best_dist < best_dist2)) {
           best_node = piVar5;
           best_dist2 = best_dist;
         }
@@ -83832,7 +83721,7 @@ void GameController_updateHeldObjectOnMove(int hit_info)
     if (*(char *)(controller + 0xb4) == '\0') {
       rbtree_lowerBound_pairKey(&key,entity_a + 0x11c8);
       if (((key != *(int *)(controller + 4)) && (creature = *(int *)(key + 0x18), creature != 0)) &&
-         (0.0 < *(float *)(creature + 0x16c))) {
+         (0.0f < *(float *)(creature + 0x16c))) {
         *(int *)(creature + 0x194) = *(int *)(creature + 0x194) + *(int *)(hit_info + 0x14);
         xp_applyLevelUps(controller);
         *(undefined4 *)(entity_a + 0x1024) = *(undefined4 *)(creature + 0x194);
@@ -84896,7 +84785,7 @@ void World_raycastVoxels(uint *origin,float *dir,float max_dist,char want_solid,
   
   cell[3] = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   uVar8 = origin[1];
-  t = 0.0;
+  t = 0.0f;
   cell[0] = __alldiv(*origin,uVar8,0x10000,0);
   cell[1] = __alldiv(origin[2],origin[3],0x10000,0);
   cell[2] = __alldiv(origin[4],origin[5],0x10000,0);
@@ -84910,7 +84799,7 @@ void World_raycastVoxels(uint *origin,float *dir,float max_dist,char want_solid,
     cell[2] = cell[2] + -1;
   }
   steps = 0;
-  if (0.0 < max_dist) {
+  if (0.0f < max_dist) {
     do {
       uVar1 = cell[2];
       uVar8 = cell[1];
@@ -84966,7 +84855,7 @@ LAB_005a376f:
         local_168[iVar5 * 2 + 0x19] = (uint)((ulonglong)uVar20 >> 0x20);
         iVar5 = iVar5 + 1;
       } while (iVar5 < 3);
-      fVar19 = 10.0;
+      fVar19 = 10.0f;
       local_38._0_4_ = (uint)*(undefined8 *)origin;
       local_38._4_4_ = (int)((ulonglong)*(undefined8 *)origin >> 0x20);
       local_38 = CONCAT44(local_38._4_4_ + local_168[0x19] +
@@ -84984,20 +84873,20 @@ LAB_005a376f:
                           (uint)local_28 + local_168[0x1c]);
       iVar5 = 0;
       iVar10 = 0;
-      local_184 = 10.0;
+      local_184 = 10.0f;
       local_194 = 0;
       pfVar14 = dir;
       do {
         fVar18 = *pfVar14;
         if (1e-06 <= fVar18 * fVar18) {
-          if (fVar18 <= 0.0) {
+          if (fVar18 <= 0.0f) {
             lVar21 = ftol2();
           }
           else {
             lVar21 = ftol2();
           }
           local_17c = (float)lVar21;
-          local_17c = local_17c * 1.5258789e-05;
+          local_17c = local_17c * 1.5258789e-05f;
           iVar5 = local_194;
           fVar19 = local_184;
           if (local_17c < local_184) {
@@ -85010,7 +84899,7 @@ LAB_005a376f:
         iVar10 = iVar10 + 1;
         pfVar14 = pfVar14 + 1;
       } while (iVar10 < 3);
-      if (dir[iVar5] <= 0.0) {
+      if (dir[iVar5] <= 0.0f) {
         cell[iVar5] = cell[iVar5] - 1;
       }
       else {
@@ -85093,7 +84982,7 @@ LAB_005a376f:
                         local_e8 = local_18;
                       }
                       fVar18 = *dir;
-                      if (fVar18 != 0.0) {
+                      if (fVar18 != 0.0f) {
                         lVar21 = ftol2();
                         uVar15 = piVar13[2];
                         iVar5 = piVar13[3];
@@ -85101,8 +84990,8 @@ LAB_005a376f:
                         fVar17 = ((float)CONCAT44((((iVar5 - (int)((ulonglong)lVar21 >> 0x20)) -
                                                    (uint)(uVar15 < (uint)lVar21)) - uVar8) -
                                                   (uint)(uVar12 < uVar1),uVar12 - uVar1) *
-                                 1.5258789e-05) / fVar18;
-                        if ((0.0 <= fVar17) && (fVar17 < fVar19)) {
+                                 1.5258789e-05f) / fVar18;
+                        if ((0.0f <= fVar17) && (fVar17 < fVar19)) {
                           iVar10 = 0;
                           local_44._0_4_ = (float)*(undefined8 *)dir;
                           local_44._4_4_ = (float)((ulonglong)*(undefined8 *)dir >> 0x20);
@@ -85147,9 +85036,9 @@ LAB_005a376f:
                         }
 LAB_005a3f8e:
                         fVar18 = ((float)(lVar21 + CONCAT44((iVar5 - uVar8) - (uint)(uVar15 < uVar1)
-                                                            ,uVar15 - uVar1)) * 1.5258789e-05) /
+                                                            ,uVar15 - uVar1)) * 1.5258789e-05f) /
                                  fVar18;
-                        if ((0.0 <= fVar18) && (fVar18 < t)) {
+                        if ((0.0f <= fVar18) && (fVar18 < t)) {
                           iVar5 = 0;
                           local_74._0_4_ = (float)*(undefined8 *)dir;
                           local_74._4_4_ = (float)((ulonglong)*(undefined8 *)dir >> 0x20);
@@ -85195,7 +85084,7 @@ LAB_005a3f8e:
                         }
                       }
                       fVar19 = dir[1];
-                      if (fVar19 != 0.0) {
+                      if (fVar19 != 0.0f) {
                         lVar21 = ftol2();
                         uVar15 = piVar13[4];
                         iVar5 = piVar13[5];
@@ -85203,9 +85092,9 @@ LAB_005a3f8e:
                         fVar17 = ((float)CONCAT44((((iVar5 - (int)((ulonglong)lVar21 >> 0x20)) -
                                                    (uint)(uVar15 < (uint)lVar21)) - uVar2) -
                                                   (uint)(uVar12 < uVar7),uVar12 - uVar7) *
-                                 1.5258789e-05) / fVar19;
+                                 1.5258789e-05f) / fVar19;
                         fVar18 = t;
-                        if ((0.0 <= fVar17) && (fVar17 < t)) {
+                        if ((0.0f <= fVar17) && (fVar17 < t)) {
                           iVar10 = 0;
                           local_50._0_4_ = (float)*(undefined8 *)dir;
                           local_50._4_4_ = (float)((ulonglong)*(undefined8 *)dir >> 0x20);
@@ -85251,9 +85140,9 @@ LAB_005a3f8e:
 LAB_005a4460:
                         t = fVar18;
                         fVar19 = ((float)(lVar21 + CONCAT44((iVar5 - uVar2) - (uint)(uVar15 < uVar7)
-                                                            ,uVar15 - uVar7)) * 1.5258789e-05) /
+                                                            ,uVar15 - uVar7)) * 1.5258789e-05f) /
                                  fVar19;
-                        if ((0.0 <= fVar19) && (fVar19 < t)) {
+                        if ((0.0f <= fVar19) && (fVar19 < t)) {
                           iVar5 = 0;
                           local_68._0_4_ = (float)*(undefined8 *)dir;
                           local_68._4_4_ = (float)((ulonglong)*(undefined8 *)dir >> 0x20);
@@ -85334,9 +85223,9 @@ int FUN_005a4710(int param_1,int param_2)
   if ((param_1 == 0x200) && (param_2 == 0x200)) {
     return 1;
   }
-  dVar1 = (double)((float)(0x200 - param_2) * (float)(0x200 - param_2) +
-                  (float)(0x200 - param_1) * (float)(0x200 - param_1));
-  libm_sse2_sqrt_precise();
+  dVar1 = libm_sse2_sqrt_precise
+                    ((double)((float)(0x200 - param_2) * (float)(0x200 - param_2) +
+                             (float)(0x200 - param_1) * (float)(0x200 - param_1)));
   return 2 - (int)((float)dVar1 * -0.75);
 }
 
@@ -86340,8 +86229,7 @@ LAB_005a9117:
   local_2c4 = (float)local_3b0;
   if (fVar29 <= 0.001) goto LAB_005a9c76;
   if (1.0 < fVar29) {
-    dVar28 = (double)fVar29;
-    libm_sse2_sqrt_precise();
+    dVar28 = libm_sse2_sqrt_precise((double)fVar29);
     fVar29 = 1.0 / (float)dVar28;
     local_3e4 = (float *)(fVar29 * local_2c8);
     local_3d8 = (float *)(fVar29 * (float)local_3d8);
@@ -87442,7 +87330,7 @@ void GameController_sampleTemperatureGrid(float x,uint z)
   uint uVar4;
   float fVar5;
   uint *puVar6;
-  float10 fVar7;
+  float fVar7;
   float fVar8;
   float fVar9;
   float fVar10;
@@ -87497,11 +87385,11 @@ void GameController_sampleTemperatureGrid(float x,uint z)
   local_98 = z;
   local_7c = world;
   local_74 = fVar5;
-  fVar7 = (float10)perlinNoise2D_cosInterp((double)(int)z * 0.0005,0x40aabe0000000000);
+  fVar7 = (float)perlinNoise2D_cosInterp((double)(int)z * 0.0005,0x40aabe0000000000);
   local_70 = (float)fVar7;
   local_88 = local_70 * 3.0 * 256.0;
   local_60 = local_88;
-  fVar7 = (float10)perlinNoise2D_cosInterp((double)(int)x * 0.0005,0x40d6df4000000000);
+  fVar7 = (float)perlinNoise2D_cosInterp((double)(int)x * 0.0005,0x40d6df4000000000);
   fVar8 = local_94;
   uVar1 = local_98;
   local_5c = (float)fVar7 * 3.0 * 256.0;
@@ -87609,7 +87497,7 @@ void GameController_sampleTemperatureGrid(float x,uint z)
           local_b4 = uVar1 << 0x10;
           local_a8 = uVar4 << 0x10 | (uint)fVar8 >> 0x10;
           local_ac = (int)fVar8 << 0x10;
-          fVar7 = (float10)vec3_distanceSquared(&local_ac,&local_b4);
+          fVar7 = (float)vec3_distanceSquared(&local_ac,&local_b4);
           local_94 = (float)fVar7;
           fVar5 = 1.0 - local_94;
           fVar8 = 0.0;
@@ -87636,7 +87524,7 @@ LAB_005c4db1:
 
 /* [AUDIT] proposed: GameController::sampleHumidityGrid  (confidence: med)
  * purpose: Scans 0x400-stride POI grid near (x,y) for nearest, distance-weighted; second climate channel (humidity)
- * vars: world grid; nearest by squared dist; float10 return
+ * vars: world grid; nearest by squared dist; float return
  */
 /* Global::GameController_sampleHumidityGrid @ 005c4dd0 */
 
@@ -87658,8 +87546,8 @@ void GameController_sampleHumidityGrid(int x,int z)
   int iVar12;
   int iVar13;
   uint *cell;
-  float10 fVar15;
-  float10 fVar16;
+  float fVar15;
+  float fVar16;
   float fVar17;
   float fVar18;
   uint *best;
@@ -87675,8 +87563,8 @@ void GameController_sampleHumidityGrid(int x,int z)
   iVar4 = (int)(z + -0x4000 + (z + -0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
   iVar5 = (int)(x + 0x4000 + (x + 0x4000 >> 0x1f & 0x3fffU)) >> 0xe;
   iVar13 = (int)((z + 0x4000 >> 0x1f & 0x3fffU) + z + 0x4000) >> 0xe;
-  fVar15 = (float10)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
-  fVar16 = (float10)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
+  fVar15 = (float)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
+  fVar16 = (float)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
   uVar6 = (uint)((float)x + (float)fVar15 * 3.0 * 256.0);
   cell = (uint *)0x0;
   best = (uint *)0x0;
@@ -87772,8 +87660,8 @@ int * FUN_005d7a70(int param_1,int param_2)
   int in_ECX;
   bool bVar6;
   bool bVar7;
-  float10 fVar8;
-  float10 fVar9;
+  float fVar8;
+  float fVar9;
   float fVar10;
   double dVar11;
   
@@ -87862,9 +87750,9 @@ LAB_005d7d29:
   *piVar2 = (iVar3 + (iVar3 >> 0x1f & 0x7ffU) & 0xfffff800) + 0x400;
   piVar2[1] = (piVar2[1] + (piVar2[1] >> 0x1f & 0x7ffU) & 0xfffff800) + 0x400;
   dVar11 = (double)*(int *)(in_ECX + 0x800188);
-  fVar8 = (float10)perlinNoise2D_cosInterp((double)param_1 * 1.4 + dVar11,
+  fVar8 = (float)perlinNoise2D_cosInterp((double)param_1 * 1.4 + dVar11,
                                 (double)param_2 * 1.4 + dVar11 + 843.0);
-  fVar9 = (float10)perlinNoise2D_cosInterp((double)param_1 * 4.0 + dVar11,
+  fVar9 = (float)perlinNoise2D_cosInterp((double)param_1 * 4.0 + dVar11,
                                 (double)param_2 * 4.0 + dVar11 + 843.0);
   iVar3 = (int)((((float)fVar8 + 1.0) * 100.0 - 70.0) + (float)fVar9 * 30.0);
   piVar2[6] = iVar3;
@@ -87942,7 +87830,7 @@ void cube::GameController::generateRegion
   int iVar20;
   float fVar21;
   float *pfVar22;
-  float10 fVar23;
+  float fVar23;
   double dVar24;
   undefined8 uVar25;
   longlong lVar26;
@@ -88198,7 +88086,7 @@ void cube::GameController::generateRegion
             pfVar13[-1] = (float)local_308;
             uVar4 = __alldiv(local_2e8._0_4_,local_308,0x10000,0);
             uVar5 = __alldiv(pfVar13[-4],pfVar13[-3],0x10000,0);
-            fVar23 = (float10)terrain_generateColumnColor(uVar5,uVar4,0);
+            fVar23 = (float)terrain_generateColumnColor(uVar5,uVar4,0);
             pfVar13[1] = (float)fVar23;
             pfVar13[5] = local_310;
             uVar4 = __alldiv(pfVar13[-2],pfVar13[-1],0x10000,0);
@@ -88209,8 +88097,7 @@ void cube::GameController::generateRegion
               local_5c = (float)((int)local_70 - (int)local_2fc);
               local_58 = (float)(int)(uStack_6c - local_30c);
               _local_8c = CONCAT44(uStack_6c - local_30c,(int)local_70 - (int)local_2fc);
-              dVar24 = (double)(local_58 * local_58 + local_5c * local_5c);
-              libm_sse2_sqrt_precise();
+              dVar24 = libm_sse2_sqrt_precise((double)(local_58 * local_58 + local_5c * local_5c));
               local_308 = (void *)(float)dVar24;
               iVar18 = rand();
               local_78 = local_2fc;
@@ -88290,7 +88177,7 @@ void cube::GameController::generateRegion
           }
           uVar4 = __alldiv(pfVar13[-2],pfVar13[-1],0x10000,0);
           uVar5 = __alldiv(pfVar13[-4],pfVar13[-3],0x10000,0);
-          fVar23 = (float10)terrain_generateColumnColor(uVar5,uVar4,0);
+          fVar23 = (float)terrain_generateColumnColor(uVar5,uVar4,0);
           local_318 = (float)fVar23;
           pfVar13[1] = local_318;
           if (local_318 < 0.0) {
@@ -88383,10 +88270,10 @@ void cube::GameController::generateRegion
         *(char *)((int)local_2fc + 0x19U + iVar18) = (char)uVar11;
         local_2cc = (float)((local_2d4 * 0x40 + uVar3) * 0x100 + 0x80);
         iVar14 = (local_2d8 * 0x40 + uVar15) * 0x100 + 0x80;
-        fVar23 = (float10)GameController_sampleHumidityGrid(local_2cc,iVar14);
+        fVar23 = (float)GameController_sampleHumidityGrid(local_2cc,iVar14);
         local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar23);
         if (0.8 < (float)fVar23) {
-          fVar23 = (float10)GameController_sampleTemperatureGrid(local_2cc,iVar14);
+          fVar23 = (float)GameController_sampleTemperatureGrid(local_2cc,iVar14);
           local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar23);
           *(char *)((int)local_2fc + 0x19U + iVar18) = ((float)fVar23 <= 0.8) + '\x04';
         }
@@ -89040,7 +88927,7 @@ LAB_005dbc70:
     pfVar17 = local_294;
     local_264 = ((int)local_318 >> 0x1f) << 0x10 | (uint)local_318 >> 0x10;
     local_268 = (float)((int)local_318 << 0x10);
-    fVar23 = (float10)vec3_distanceSquared(&local_270,&local_268);
+    fVar23 = (float)vec3_distanceSquared(&local_270,&local_268);
     local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar23);
     local_310 = 1.0 - (float)fVar23;
     if (0.0 < local_310) {
@@ -89151,16 +89038,16 @@ void assign_two_dwords(undefined4 *out_min,undefined4 *out_max)
   
   *out_min = 1;
   *out_max = 10;
-  if (*(float *)(tile + 0x10) <= 0.2 && *(float *)(tile + 0x10) != 0.2) {
+  if (*(float *)(tile + 0x10) <= 0.2f && *(float *)(tile + 0x10) != 0.2f) {
     *out_min = 10;
     *out_max = 0x14;
   }
-  if ((*(float *)(tile + 0xc) <= 0.2 && *(float *)(tile + 0xc) != 0.2) &&
-     (0.8 < *(float *)(tile + 0x10))) {
+  if ((*(float *)(tile + 0xc) <= 0.2f && *(float *)(tile + 0xc) != 0.2f) &&
+     (0.8f < *(float *)(tile + 0x10))) {
     *out_min = 0xf;
     *out_max = 0x19;
   }
-  if ((0.8 < *(float *)(tile + 0xc)) && (0.8 < *(float *)(tile + 0x10))) {
+  if ((0.8f < *(float *)(tile + 0xc)) && (0.8f < *(float *)(tile + 0x10))) {
     *out_min = 10;
     *out_max = 0x14;
   }
@@ -89199,8 +89086,8 @@ void fixedpoint_vec_subtract(uint *pos,uint tx_lo,int tx_hi,uint ty_lo,int ty_hi
   uVar1 = uVar1 * 0x10000;
   iVar3 = (uVar2 - ty_hi) - (uint)(uVar1 < ty_lo);
   fVar6 = (float)CONCAT44((uVar5 - tx_hi) - (uint)(uVar4 < tx_lo),uVar4 - tx_lo) *
-          1.5258789e-05;
-  fVar7 = (float)CONCAT44(iVar3,uVar1 - ty_lo) * 1.5258789e-05;
+          1.5258789e-05f;
+  fVar7 = (float)CONCAT44(iVar3,uVar1 - ty_lo) * 1.5258789e-05f;
   __security_check_cookie
             (DAT_0076aa78 ^ (uint)&stack0xfffffffc ^ (uint)&stack0xfffffffc,iVar3,
              fVar7 * fVar7 + fVar6 * fVar6,uVar4,uVar5,uVar1,uVar2);
@@ -89219,11 +89106,11 @@ void fixedpoint_vec_subtract(uint *pos,uint tx_lo,int tx_hi,uint ty_lo,int ty_hi
 float * World_getColumnDataAt2(float *out,int x,int z)
 
 {
-  float10 fVar1;
+  float fVar1;
   
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
+  fVar1 = (float)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
   *out = (float)fVar1 * 3.0 * 256.0;
-  fVar1 = (float10)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
+  fVar1 = (float)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
   out[1] = (float)fVar1 * 3.0 * 256.0;
   return out;
 }
@@ -89256,8 +89143,8 @@ void World_getRegionCellPtr2(int x,int z)
   int iVar13;
   int iVar14;
   uint *puVar15;
-  float10 fVar16;
-  float10 fVar17;
+  float fVar16;
+  float fVar17;
   float fVar18;
   float fVar19;
   uint *best;
@@ -89296,8 +89183,8 @@ joined_r0x005f07c4:
       iVar10 = iVar5;
     } while (iVar14 <= iVar6);
     if (bVar3) {
-      fVar16 = (float10)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
-      fVar17 = (float10)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
+      fVar16 = (float)perlinNoise2D_cosInterp((double)z * 0.0005,0x40aabe0000000000);
+      fVar17 = (float)perlinNoise2D_cosInterp((double)x * 0.0005,0x40d6df4000000000);
       uVar7 = (uint)((float)x + (float)fVar16 * 3.0 * 256.0);
       puVar15 = (uint *)0x0;
       best = (uint *)0x0;
@@ -89698,12 +89585,12 @@ void GameController_buildDecalMesh2(undefined4 param_1,undefined2 param_2,undefi
 
 
 /* [AUDIT] proposed: vec3_distanceSquared  (confidence: med)
- * purpose: Computes squared distance (float10) between two position vectors; shared helper (label 'itembox')
+ * purpose: Computes squared distance (float) between two position vectors; shared helper (label 'itembox')
  * vars: param_1/param_2 pos vec; 'itembox' near ref
  */
 /* Global::vec3_distanceSquared @ 005f8e10 */
 
-float10 vec3_distanceSquared(uint *x_fixed,uint *y_fixed)
+float vec3_distanceSquared(uint *x_fixed,uint *y_fixed)
 
 {
   float radius;
@@ -89724,7 +89611,7 @@ float10 vec3_distanceSquared(uint *x_fixed,uint *y_fixed)
   
   radius = (float)effect[4];
   if (radius < 0.001) {
-    return (float10)0;
+    return (float)0;
   }
   type = effect[6];
   if (((type != 0xb) && (type != 0xc)) && (type != 0xe)) {
@@ -89758,7 +89645,7 @@ float10 vec3_distanceSquared(uint *x_fixed,uint *y_fixed)
       local_2c = CONCAT44((((int)((ulonglong)uVar13 >> 0x20) - effect[3]) -
                           (uint)((uint)uVar13 < effect[2])) + uVar3 + (uint)CARRY4(type,uVar2),
                           type + uVar2);
-      return (float10)(((float)local_2c * 1.5258789e-05 * (float)local_2c * 1.5258789e-05 +
+      return (float)(((float)local_2c * 1.5258789e-05 * (float)local_2c * 1.5258789e-05 +
                        fVar6 * 1.5258789e-05 * fVar6 * 1.5258789e-05) / (radius * radius));
     }
     uVar13 = ftol2();
@@ -89788,13 +89675,13 @@ float10 vec3_distanceSquared(uint *x_fixed,uint *y_fixed)
     local_2c = CONCAT44((((int)((ulonglong)uVar13 >> 0x20) - effect[3]) -
                         (uint)((uint)uVar13 < effect[2])) + uVar3 + (uint)CARRY4(type,uVar2),
                         type + uVar2);
-    return (float10)(((float)local_2c * 1.5258789e-05 * (float)local_2c * 1.5258789e-05 +
+    return (float)(((float)local_2c * 1.5258789e-05 * (float)local_2c * 1.5258789e-05 +
                      fVar6 * 1.5258789e-05 * fVar6 * 1.5258789e-05) / (radius * radius));
   }
   local_2c = CONCAT44((x_fixed[1] - effect[1]) - (uint)(*x_fixed < *effect),*x_fixed - *effect);
   fVar6 = (float)local_2c;
   local_2c = CONCAT44((y_fixed[1] - effect[3]) - (uint)(*y_fixed < effect[2]),*y_fixed - effect[2]);
-  return (float10)(((float)local_2c * 1.5258789e-05 * (float)local_2c * 1.5258789e-05 +
+  return (float)(((float)local_2c * 1.5258789e-05 * (float)local_2c * 1.5258789e-05 +
                    fVar6 * 1.5258789e-05 * fVar6 * 1.5258789e-05) / (radius * radius));
 }
 
@@ -90332,13 +90219,12 @@ void GameController_processNetworkTick(int *self,int param_2,int param_3,int par
   local_1c = DAT_0076aa78 ^ (uint)&piStack_bf0;
   uStack_bfc = (int *)(DAT_0076aa78 ^ (uint)&stack0xfffff408);
   ExceptionList = &local_14;
-  dVar24 = 0.39269909262657166;
   local_bbc = self;
   local_b3c = param_6;
   in_ECX[0x20002e] = in_ECX[0x20002e] + param_8;
   piStack_c00 = (int *)0x5fc21c;
   local_ba8 = in_ECX;
-  libm_sse2_tan_precise();
+  dVar24 = libm_sse2_tan_precise(0.39269909262657166);
   local_bdc = (float *)(1.0 / (float)dVar24);
   local_bd4 = -((float)local_bdc / ((float)param_4 / (float)param_5));
   piStack_c00 = (int *)0x5fc26f;
@@ -90434,13 +90320,11 @@ void GameController_processNetworkTick(int *self,int param_2,int param_3,int par
     local_bb4 = (double)CONCAT44(local_920 * param_7,local_904 * param_7);
   }
   local_b90 = (int *)0x0;
-  dVar24 = 0.0;
   piStack_c00 = (int *)0x5fc961;
-  libm_sse2_cos_precise();
+  dVar24 = libm_sse2_cos_precise(0.0);
   local_b64 = (float)dVar24;
-  dVar24 = (double)(float)local_b90;
   piStack_c00 = (int *)0x5fc97f;
-  libm_sse2_sin_precise();
+  dVar24 = libm_sse2_sin_precise((double)(float)local_b90);
   pfVar10 = local_b3c;
   fVar26 = (float)dVar24;
   local_b6c = local_b64 * local_bd8 + fVar26 * local_bc4;
@@ -90452,13 +90336,11 @@ void GameController_processNetworkTick(int *self,int param_2,int param_3,int par
   local_bd8 = local_b64 * (float)local_b94 + fVar26 * local_bd4;
   local_b90 = (int *)(*local_b3c * 0.017453292);
   local_b64 = local_b64 * local_bd4 - (float)local_b94 * fVar26;
-  dVar24 = (double)(float)local_b90;
   piStack_c00 = (int *)0x5fca95;
-  libm_sse2_cos_precise();
+  dVar24 = libm_sse2_cos_precise((double)(float)local_b90);
   local_bc8 = (float)dVar24;
-  dVar24 = (double)(float)local_b90;
   piStack_c00 = (int *)0x5fcaad;
-  libm_sse2_sin_precise();
+  dVar24 = libm_sse2_sin_precise((double)(float)local_b90);
   fVar26 = (float)dVar24;
   local_908 = local_bc8 * (float)local_bdc - local_bb8 * fVar26;
   local_904 = local_b8c * fVar26;
@@ -90470,14 +90352,12 @@ void GameController_processNetworkTick(int *self,int param_2,int param_3,int par
   local_b54 = local_bc8 * local_b64 + fVar26 * local_b7c;
   local_b90 = (int *)(pfVar10[2] * 0.017453292);
   local_8fc = local_bc8 * local_b7c - local_b64 * fVar26;
-  dVar24 = (double)(float)local_b90;
   piStack_c00 = (int *)0x5fcbc6;
   local_bc8 = local_bc8 * local_bb8 + fVar26 * (float)local_bdc;
-  libm_sse2_cos_precise();
+  dVar24 = libm_sse2_cos_precise((double)(float)local_b90);
   local_bb8 = (float)dVar24;
-  dVar24 = (double)(float)local_b90;
   piStack_c00 = (int *)0x5fcbde;
-  libm_sse2_sin_precise();
+  dVar24 = libm_sse2_sin_precise((double)(float)local_b90);
   piVar14 = local_ba8;
   fVar26 = (float)dVar24;
   local_928 = fVar26 * local_bc8 + local_bb8 * local_b6c;
@@ -91185,7 +91065,6 @@ LAB_005fe9f8:
             local_ba8 = piStack_a38;
             fStack_bcc = fVar26 + (float)piStack_a38 * fVar27 + fStack_a28;
             local_be4._0_4_ = (int *)((float)piVar14[0x20002e] * 0.02 * 0.017453292);
-            dVar24 = (double)(float)(int *)local_be4;
             piStack_bf0 = piStack_a50;
             local_bec = puStack_a5c;
             puStack_be8 = puStack_a4c;
@@ -91201,10 +91080,9 @@ LAB_005fe9f8:
             local_b80 = fStack_a64;
             local_b68 = fStack_a34;
             fStack_a28 = fStack_bcc;
-            libm_sse2_cos_precise();
+            dVar24 = libm_sse2_cos_precise((double)(float)(int *)local_be4);
             uStack_b74._0_4_ = (float)dVar24;
-            dVar24 = (double)(float)(int *)local_be4;
-            libm_sse2_sin_precise();
+            dVar24 = libm_sse2_sin_precise((double)(float)(int *)local_be4);
             fVar26 = (float)dVar24;
             fStack_a64 = (float)local_b94 * fVar26 + local_b80 * (float)uStack_b74;
             piStack_a54 = (int *)((float)local_b94 * (float)uStack_b74 - fVar26 * local_b80);
@@ -91529,9 +91407,8 @@ LAB_005ffb3e:
   local_b80 = (float)local_bc0;
   fStack_83c = (float)local_ba8;
   if (0.0 < fVar27) {
-    dVar24 = (double)fVar27;
     fStack_840 = (float)puStack_c0c;
-    libm_sse2_sqrt_precise();
+    dVar24 = libm_sse2_sqrt_precise((double)fVar27);
     puStack_c0c = (uint *)((float)puStack_c0c * (1.0 / (float)dVar24) * 300.0);
     fStack_83c = (float)local_ba8 * (1.0 / (float)dVar24) * 300.0;
   }
@@ -91560,10 +91437,9 @@ LAB_005ffb3e:
   *(float *)((int)fVar26 + 0x88) = fStack_548;
   uStack_59c = 0x3ecccccd;
   uStack_598 = 0x3ecccccd;
-  dVar24 = (double)((float)piStack_c00 + 0.25 + 1.0);
   uStack_594 = 0x3ecccccd;
   uStack_590 = 0x3f800000;
-  libm_sse2_sqrt_precise();
+  dVar24 = libm_sse2_sqrt_precise((double)((float)piStack_c00 + 0.25 + 1.0));
   local_63c = 1.0 / (float)dVar24;
   local_644 = local_63c * 0.0;
   local_640 = local_63c * 0.5;
@@ -91631,11 +91507,9 @@ LAB_005ffb3e:
             pfVar12 = pfVar12 + 1;
           }
           fVar26 = *(float *)(iVar18 + 0x137c) * 0.017453292;
-          dVar24 = (double)fVar26;
-          libm_sse2_cos_precise();
+          dVar24 = libm_sse2_cos_precise((double)fVar26);
           local_bec = (uint *)(float)dVar24;
-          dVar24 = (double)fVar26;
-          libm_sse2_sin_precise();
+          dVar24 = libm_sse2_sin_precise((double)fVar26);
           fVar26 = local_bd4;
           fVar29 = (float)dVar24;
           local_b7c = (float)local_bec * uStack_c08 + fVar29 * fStack_9ac;
@@ -91756,13 +91630,11 @@ LAB_005ffb3e:
           fStack_88c = fStack_88c * 0.5;
           fStack_888 = fStack_888 * 0.5;
           fVar26 = -*(float *)((int)local_b68 + 8) * 0.017453292;
-          dVar24 = (double)fVar26;
           fStack_894 = local_bac;
           fStack_890 = fStack_b98;
-          libm_sse2_cos_precise();
+          dVar24 = libm_sse2_cos_precise((double)fVar26);
           uStack_bfc = (int *)(float)dVar24;
-          dVar24 = (double)fVar26;
-          libm_sse2_sin_precise();
+          dVar24 = libm_sse2_sin_precise((double)fVar26);
           fVar27 = (float)dVar24;
           afStack_8b4[0] = (float)piStack_c04 * fVar27;
           piStack_c04 = (int *)((float)piStack_c04 * (float)uStack_bfc - uStack_c08 * fVar27);
@@ -92076,7 +91948,7 @@ void locked_pair_update(int x,int z)
   int world;
   int iVar7;
   int iVar8;
-  float10 fVar9;
+  float fVar9;
   int best_dist;
   int best;
   float local_10;
@@ -92104,7 +91976,7 @@ void locked_pair_update(int x,int z)
           __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
           return;
         }
-        fVar9 = (float10)fixedpoint_vec_subtract(iVar1 + 4,uVar5 << 0x10,
+        fVar9 = (float)fixedpoint_vec_subtract(iVar1 + 4,uVar5 << 0x10,
                                       ((int)uVar5 >> 0x1f) << 0x10 | uVar5 >> 0x10,uVar6 << 0x10,
                                       ((int)uVar6 >> 0x1f) << 0x10 | uVar6 >> 0x10);
         if ((best == 0) || ((int)fVar9 < best_dist)) {
@@ -92273,7 +92145,7 @@ void cube::GameController::loadLandscapeTile
   int iVar16;
   int iVar17;
   int iVar18;
-  float10 fVar19;
+  float fVar19;
   int iStack_180;
   undefined **local_17c [4];
   undefined *local_16c [2];
@@ -92403,7 +92275,7 @@ void cube::GameController::loadLandscapeTile
           Vector_ConstructResize(local_80);
           stream_readBytes(local_54,iVar17);
           local_3c = (void *)0x0;
-          local_38 = 0.0;
+          local_38 = 0.0f;
           p_Stack_34 = (LPCRITICAL_SECTION)0x0;
           local_8._0_1_ = 7;
           zlib_inflateBuffer(&local_54,&local_3c);
@@ -92442,7 +92314,7 @@ void cube::GameController::loadLandscapeTile
         iVar12 = local_5c;
         local_88 = local_90 << 6;
         local_60 = local_8c << 6;
-        local_68 = 0.0;
+        local_68 = 0.0f;
         local_80 = local_60;
         do {
           iVar16 = 0;
@@ -92459,7 +92331,7 @@ void cube::GameController::loadLandscapeTile
           local_60 = local_60 + 1;
         } while ((int)local_68 < 0x1000);
         local_94 = (int)(local_88 + (local_88 >> 0x1f & 7U)) >> 3;
-        local_68 = 2.86986e-42;
+        local_68 = 2.86986e-42f;
         local_60 = (int)((local_80 >> 0x1f & 7U) + local_80) >> 3;
         do {
           iVar17 = 0;
@@ -92545,7 +92417,7 @@ void cube::GameController::loadLandscapeTile
               local_94 = uVar9 << 0x10;
               local_b8 = ((int)uVar14 >> 0x1f) << 0x10 | uVar14 >> 0x10;
               local_a4 = uVar14 << 0x10;
-              fVar19 = (float10)fixedpoint_vec_subtract(local_ac,local_a4,local_b8,local_94,local_a8);
+              fVar19 = (float)fixedpoint_vec_subtract(local_ac,local_a4,local_b8,local_94,local_a8);
               iVar17 = -1;
               local_b0 = (float)fVar19;
               do {
@@ -92558,7 +92430,7 @@ void cube::GameController::loadLandscapeTile
                        || (iVar10 = *(int *)(*(int *)(local_5c + 0xac) + 0x4000bc +
                                             (iVar10 * 0x400 + iVar12) * 4), iVar10 == 0))
                     goto LAB_00602d2f;
-                    fVar19 = (float10)fixedpoint_vec_subtract(iVar10,local_a4,local_b8,local_94,local_a8);
+                    fVar19 = (float)fixedpoint_vec_subtract(iVar10,local_a4,local_b8,local_94,local_a8);
                     local_b4 = (float)fVar19;
                     if (local_b4 < (float)(int)local_b0) goto LAB_00602d2f;
                   }
@@ -92640,7 +92512,7 @@ LAB_00602d2f:
                   uVar9 = ((int)local_b8 >> 0x1f) << 0x10 | local_b8 >> 0x10;
                   local_b8 = local_b8 << 0x10;
                   local_1c = CONCAT44(uVar9,(float)local_1c);
-                  fVar19 = (float10)fixedpoint_vec_subtract(local_ac,local_b8,uVar9,local_b4,local_b0);
+                  fVar19 = (float)fixedpoint_vec_subtract(local_ac,local_b8,uVar9,local_b4,local_b0);
                   iVar17 = -1;
                   local_24 = CONCAT44((float)fVar19,(float)local_24);
                   do {
@@ -92652,7 +92524,7 @@ LAB_00602d2f:
                             ((-1 < iVar12 && (iVar10 < 0x400)))))) && (iVar12 < 0x400)) &&
                          (iVar10 = *(int *)(*(int *)(local_5c + 0xac) + 0x4000bc +
                                            (iVar10 * 0x400 + iVar12) * 4), iVar10 != 0)) {
-                        fVar19 = (float10)fixedpoint_vec_subtract(iVar10,local_b8,local_1c._4_4_,local_b4,
+                        fVar19 = (float)fixedpoint_vec_subtract(iVar10,local_b8,local_1c._4_4_,local_b4,
                                                        local_b0);
                         local_70 = (void *)(float)fVar19;
                         if ((float)local_70 < (float)(int)(float)local_24._4_4_) goto LAB_00602f7e;
@@ -92987,8 +92859,8 @@ void cube::GameController::streamTileChunk
       Vector_ConstructResize(local_e4);
       stream_readBytes(local_68,iVar4);
       local_5c = (void *)0x0;
-      local_58 = 0.0;
-      local_54 = 0.0;
+      local_58 = 0.0f;
+      local_54 = 0.0f;
       local_8._0_1_ = 7;
       zlib_inflateBuffer(&local_68,&local_5c);
       local_110 = operator_new(0x60);
@@ -93086,16 +92958,16 @@ LAB_00603f32:
       list_clearSingleNode();
       LeaveCriticalSection(p_Var17);
       local_50 = (void *)0x0;
-      fStack_4c = 0.0;
-      local_48 = 0.0;
+      fStack_4c = 0.0f;
+      local_48 = 0.0f;
       pfVar10 = local_44;
       iVar4 = 2;
       do {
         iVar16 = 2;
         do {
-          pfVar10[0] = 0.0;
-          pfVar10[1] = 0.0;
-          pfVar10[2] = 0.0;
+          pfVar10[0] = 0.0f;
+          pfVar10[1] = 0.0f;
+          pfVar10[2] = 0.0f;
           pfVar10 = pfVar10 + 3;
           iVar16 = iVar16 + -1;
         } while (iVar16 != 0);
@@ -93112,11 +92984,11 @@ LAB_00603f32:
           local_f4 = local_b4 * 0x100 + local_d4;
           local_ec = local_f4 * 0x100;
           local_9c = (void *)0x0;
-          local_a4 = 0.0;
-          local_a0 = 0.0;
-          local_b0 = 0.0;
+          local_a4 = 0.0f;
+          local_a0 = 0.0f;
+          local_b0 = 0.0f;
           local_c8 = 10000000;
-          local_d0 = 0.0;
+          local_d0 = 0.0f;
           do {
             iVar4 = 0;
             local_d8 = local_ec;
@@ -93129,9 +93001,9 @@ LAB_00603f32:
               }
               if (*(int *)(iVar5 + 0x10) + iVar16 < 1) {
                 if ((DAT_0076de0c >> 0x18 & 0x1f) - 2 < 2) {
-                  fVar22 = 80.0;
-                  fVar23 = 100.0;
-                  fVar26 = 255.0;
+                  fVar22 = 80.0f;
+                  fVar23 = 100.0f;
+                  fVar26 = 255.0f;
                 }
                 else {
                   fVar22 = (float)(DAT_0076de0c & 0xff);
@@ -93162,9 +93034,9 @@ LAB_00603f32:
                   if ((*(byte *)(iVar20 + 3) & 0x1f) != 0) {
                     pbVar9 = (byte *)array_atChecked4(iVar16);
                     if ((pbVar9[3] & 0xffffff1f) - 2 < 2) {
-                      fVar28 = 80.0;
-                      fVar22 = 100.0;
-                      fVar23 = 255.0;
+                      fVar28 = 80.0f;
+                      fVar22 = 100.0f;
+                      fVar23 = 255.0f;
                     }
                     else {
                       fVar28 = (float)*pbVar9;
@@ -93200,11 +93072,11 @@ LAB_00604286:
             local_d0 = (float)((int)fVar28 + 1);
             local_ec = local_ec + 0x20;
           } while ((int)local_d0 < 8);
-          local_9c = (void *)((float)local_9c * 0.015625);
-          local_a4 = local_a4 * 0.015625;
-          local_a0 = local_a0 * 0.015625;
-          local_ec = -((int)((int)(local_b0 * -0.015625) +
-                            ((int)(local_b0 * -0.015625) >> 0x1f & 7U)) >> 3) -
+          local_9c = (void *)((float)local_9c * 0.015625f);
+          local_a4 = local_a4 * 0.015625f;
+          local_a0 = local_a0 * 0.015625f;
+          local_ec = -((int)((int)(local_b0 * -0.015625f) +
+                            ((int)(local_b0 * -0.015625f) >> 0x1f & 7U)) >> 3) -
                      *(int *)(local_ac + 4);
           local_50 = local_9c;
           fStack_4c = local_a4;
@@ -93279,11 +93151,11 @@ LAB_00604286:
             local_d8 = local_e0 * 0x100 + local_b4 * 8;
             local_e4 = local_f0 * 0x100 + local_d4 * 8;
             do {
-              fVar28 = 0.0;
+              fVar28 = 0.0f;
               local_108 = 0;
-              local_d0 = 0.0;
-              local_a0 = 0.0;
-              local_a4 = 0.0;
+              local_d0 = 0.0f;
+              local_a0 = 0.0f;
+              local_a4 = 0.0f;
               local_114 = 0;
               fVar22 = fVar28;
               fVar23 = fVar28;
@@ -93380,9 +93252,9 @@ LAB_0060490a:
                       }
                       else {
                         if (uVar11 - 2 < 2) {
-                          fVar24 = 80.0;
-                          fVar25 = 100.0;
-                          fVar27 = 255.0;
+                          fVar24 = 80.0f;
+                          fVar25 = 100.0f;
+                          fVar27 = 255.0f;
                         }
                         else {
                           fVar24 = (float)(byte)*puVar13;
@@ -93405,7 +93277,7 @@ LAB_0060490a:
                 local_114 = local_114 + 1;
               } while (local_114 < 8);
               if (iVar16 != 0) {
-                fVar26 = 1.0 / (float)iVar16;
+                fVar26 = 1.0f / (float)iVar16;
                 local_5c = (void *)(fVar26 * fVar28);
                 local_58 = fVar26 * fVar22;
                 local_54 = fVar26 * fVar23;
@@ -93460,14 +93332,14 @@ LAB_0060490a:
       local_b8 = local_b8 + 0xc;
       if (((0 < iVar16) && (0 < iVar4)) && (0 < iVar5)) {
         local_5c = (void *)0x0;
-        local_58 = 0.0;
-        local_54 = 0.0;
+        local_58 = 0.0f;
+        local_54 = 0.0f;
         Vector_Resize(iVar5 * iVar4 * iVar16 * 3);
         pvVar18 = local_5c;
         memcpy(local_5c,*(void **)(local_dc + 0x30),(int)local_58 - (int)local_5c);
         local_50 = (void *)0x0;
-        fStack_4c = 0.0;
-        local_48 = 0.0;
+        fStack_4c = 0.0f;
+        local_48 = 0.0f;
         local_8._0_1_ = 0xc;
         FUN_005fc0d0(&local_5c,&local_50);
         _Src = local_50;
@@ -93604,7 +93476,7 @@ void cube::GameController::drawWorldSelectEntry(void)
   int iVar11;
   float *pfVar12;
   float *pfVar13;
-  float10 fVar14;
+  float fVar14;
   float fVar15;
   float fVar16;
   float fVar17;
@@ -93916,7 +93788,7 @@ void cube::GameController::drawWorldSelectEntry(void)
   ExceptionList = &local_14;
   local_bf0 = 0.0;
   if (*(int *)((int)in_ECX + 0x160) == 0) {
-    fVar14 = (float10)Widget_measureGuarded();
+    fVar14 = (float)Widget_measureGuarded();
     local_bf0 = (float)fVar14;
     fVar15 = local_bf0 * 0.5;
     local_b18[0] = &PTR_006fcd00;
@@ -94051,19 +93923,15 @@ void cube::GameController::drawWorldSelectEntry(void)
           } while (iVar4 != 0);
         }
         fStack_c18 = (*(float *)((int)in_ECX + 0x164) / 180.0) * 3.1415927;
-        dVar18 = (double)fStack_c18;
-        libm_sse2_sin_precise();
+        dVar18 = libm_sse2_sin_precise((double)fStack_c18);
         fStack_c14 = (float)dVar18;
-        dVar18 = (double)fStack_c18;
-        libm_sse2_cos_precise();
+        dVar18 = libm_sse2_cos_precise((double)fStack_c18);
         dStack_4d8 = (double)(float)dVar18;
         dStack_4d0 = (double)fStack_c14;
         fStack_c18 = 0.0;
-        dVar18 = 0.0;
-        libm_sse2_sin_precise();
+        dVar18 = libm_sse2_sin_precise(0.0);
         fStack_a68 = (float)dVar18;
-        dVar18 = (double)fStack_c18;
-        libm_sse2_cos_precise();
+        dVar18 = libm_sse2_cos_precise((double)fStack_c18);
         dStack_3f0 = (double)(float)dVar18;
         dStack_3e8 = (double)fStack_a68;
         fVar20 = (float)(dStack_3e8 * dStack_4d8 - dStack_3f0 * (double)fStack_c14);
@@ -94071,8 +93939,7 @@ void cube::GameController::drawWorldSelectEntry(void)
         if ((1.0 < fVar20) || (fVar15 = -1.0, fVar20 < -1.0)) {
           fVar20 = fVar15;
         }
-        dVar18 = (double)fVar20;
-        libm_sse2_asin_precise();
+        dVar18 = libm_sse2_asin_precise((double)fVar20);
         fVar15 = (float)dVar18 * ((fStack_c1c * 180.0) / 3.1415927) +
                  *(float *)((int)in_ECX + 0x164);
       }
@@ -94094,12 +93961,11 @@ void cube::GameController::drawWorldSelectEntry(void)
       uStack_8c4 = 0;
       uStack_8c0 = 0;
       render_setVec3Uniform70(&uStack_8c8);
-      dVar18 = 12.859999656677246;
       uStack_878 = 0x3ecccccd;
       uStack_874 = 0x3ecccccd;
       uStack_870 = 0x3ecccccd;
       uStack_86c = 0x3f800000;
-      libm_sse2_sqrt_precise();
+      dVar18 = libm_sse2_sqrt_precise(12.859999656677246);
       fStack_8b4 = 1.0 / (float)dVar18;
       fStack_8bc = fStack_8b4 * 0.5;
       fStack_8b8 = fStack_8b4 * 0.6;
@@ -94138,16 +94004,14 @@ void cube::GameController::drawWorldSelectEntry(void)
       fStack_a68 = fStack_a38;
       fStack_bd8 = fStack_a48 * 0.0 + fStack_a58 * 0.0 + fStack_a38 * 17.0 + fStack_a28;
       fStack_c18 = fStack_a34;
-      dVar18 = -2.094395160675049;
       fStack_c10 = fStack_a44 * 0.0 + fStack_a54 * 0.0 + fStack_a34 * 17.0 + fStack_a24;
       fStack_a30 = fStack_be8;
       ppuStack_a2c = appuStack_be0[0];
       fStack_a28 = fStack_bd8;
       fStack_a24 = fStack_c10;
-      libm_sse2_cos_precise();
+      dVar18 = libm_sse2_cos_precise(-2.094395160675049);
       fStack_c1c = (float)dVar18;
-      dVar18 = -2.094395160675049;
-      libm_sse2_sin_precise();
+      dVar18 = libm_sse2_sin_precise(-2.094395160675049);
       fVar15 = (float)dVar18;
       fStack_bf8 = fStack_a50 * fStack_c1c + fStack_bfc * fVar15;
       fStack_bfc = fStack_bfc * fStack_c1c - fStack_a50 * fVar15;
@@ -94160,11 +94024,9 @@ void cube::GameController::drawWorldSelectEntry(void)
       fStack_c1c = fStack_a44 * fStack_c1c + fStack_c18 * fVar15;
       fStack_be4 = (*(float *)((int)in_ECX + 0x164) + 45.0) * 0.017453292;
       fStack_c18 = fVar20 - fStack_a44 * fVar15;
-      dVar18 = (double)fStack_be4;
-      libm_sse2_cos_precise();
+      dVar18 = libm_sse2_cos_precise((double)fStack_be4);
       fStack_bec = (float)dVar18;
-      dVar18 = (double)fStack_be4;
-      libm_sse2_sin_precise();
+      dVar18 = libm_sse2_sin_precise((double)fStack_be4);
       fVar19 = (float)dVar18;
       fVar15 = fStack_bf8 * fVar19;
       fVar20 = fStack_bf4 * fVar19;
@@ -94192,7 +94054,6 @@ void cube::GameController::drawWorldSelectEntry(void)
                      (fStack_a5c * fVar16 + fStack_bf4 * fVar15 + fStack_c00 * fVar20 +
                      (float)appuStack_be0[0]);
       fStack_a28 = fStack_a58 * fVar16 + fStack_c04 * fVar15 + fStack_a68 * fVar20 + fStack_bd8;
-      dVar18 = 0.39269909262657166;
       fStack_a24 = fStack_a54 * fVar16 + fStack_c1c * fVar15 + fStack_c18 * fVar20 + fStack_c10;
       fStack_a50 = fStack_bf8;
       fStack_a4c = fStack_bf4;
@@ -94202,7 +94063,7 @@ void cube::GameController::drawWorldSelectEntry(void)
       fStack_a3c = fStack_c00;
       fStack_a38 = fStack_a68;
       fStack_a34 = fStack_c18;
-      libm_sse2_tan_precise();
+      dVar18 = libm_sse2_tan_precise(0.39269909262657166);
       fStack_c18 = 1.0 / (float)dVar18;
       fStack_c1c = -(fStack_c18 /
                     ((float)*(int *)(iVar11 + 0x10c) / (float)*(int *)(iVar11 + 0x110)));
@@ -94354,12 +94215,11 @@ void cube::GameController::drawWorldSelectEntry(void)
         uStack_8dc = 0;
         uStack_8d8 = 0;
         render_setVec3Uniform70(&uStack_8e0);
-        dVar18 = 3.5;
         uStack_754 = 0x3ecccccd;
         uStack_750 = 0x3ecccccd;
         uStack_74c = 0x3ecccccd;
         uStack_748 = 0x3f800000;
-        libm_sse2_sqrt_precise();
+        dVar18 = libm_sse2_sqrt_precise(3.5);
         fStack_8ac = 1.0 / (float)dVar18;
         fStack_8b0 = fStack_8ac * 0.5;
         fStack_8a8 = fStack_8ac * 1.5;
@@ -94390,11 +94250,9 @@ void cube::GameController::drawWorldSelectEntry(void)
         fStack_9f8 = 0.0;
         fStack_9f0 = 1.0;
         fStack_9f4 = 17.0;
-        dVar18 = -1.6580628156661987;
-        libm_sse2_cos_precise();
+        dVar18 = libm_sse2_cos_precise(-1.6580628156661987);
         fStack_c1c = (float)dVar18;
-        dVar18 = -1.6580628156661987;
-        libm_sse2_sin_precise();
+        dVar18 = libm_sse2_sin_precise(-1.6580628156661987);
         fStack_bf4 = (float)dVar18;
         fVar20 = fStack_bf4 * 0.0;
         fVar15 = fStack_c1c * 0.0;
@@ -94403,13 +94261,11 @@ void cube::GameController::drawWorldSelectEntry(void)
         fStack_a04 = fStack_c1c - fVar20;
         fStack_a08 = fVar15 - fStack_bf4;
         fStack_bf4 = fStack_bf4 + fVar15;
-        dVar18 = 0.7853981852531433;
         fStack_c1c = fVar20 + fVar15;
         fStack_a00 = fStack_a0c;
-        libm_sse2_cos_precise();
+        dVar18 = libm_sse2_cos_precise(0.7853981852531433);
         fStack_be4 = (float)dVar18;
-        dVar18 = 0.7853981852531433;
-        libm_sse2_sin_precise();
+        dVar18 = libm_sse2_sin_precise(0.7853981852531433);
         fVar15 = (float)dVar18;
         fStack_a20 = fStack_be4 * 0.0;
         ppuStack_a2c = (undefined **)(fVar15 * fStack_c1c + fStack_be4);
@@ -94430,9 +94286,8 @@ void cube::GameController::drawWorldSelectEntry(void)
         fStack_9f8 = fStack_a18 * 0.0 + fStack_a28 * 0.0 + fVar15 * fStack_a08 + fStack_9f8;
         iVar11 = *(int *)((int)in_ECX + 4);
         fStack_9f4 = fStack_a14 * 0.0 + fStack_a24 * 0.0 + fVar15 * fStack_a04 + fStack_9f4;
-        dVar18 = 0.39269909262657166;
         fStack_9f0 = fStack_a10 * 0.0 + fStack_a20 * 0.0 + fVar15 * fStack_a00 + fStack_9f0;
-        libm_sse2_tan_precise();
+        dVar18 = libm_sse2_tan_precise(0.39269909262657166);
         in_ECX = fStack_bd8;
         fStack_c20 = 1.0 / (float)dVar18;
         fStack_c28 = -(fStack_c20 /
@@ -94899,7 +94754,7 @@ void GameController_updateSubsystems(int param_1,undefined4 param_2,int param_3)
   uint uVar32;
   code *pcVar33;
   bool bVar34;
-  float10 fVar35;
+  float fVar35;
   float fVar36;
   undefined8 uVar37;
   longlong in_stack_ffffc88c;
@@ -95432,15 +95287,15 @@ void GameController_updateSubsystems(int param_1,undefined4 param_2,int param_3)
           (*(char *)((int)fVar12 + 0x68) == 'T')) && (0.0 < *(float *)((int)fVar12 + 0x16c))) {
         if (fVar12 == *(float *)(controller + 0xb8)) {
           iVar6 = *(int *)(controller + 0xb8);
-          fVar35 = (float10)stat_calcAttackDamage();
+          fVar35 = (float)stat_calcAttackDamage();
           local_2b3c = (CRefTime *)(float)fVar35;
           *(float *)(iVar6 + 0x16c) =
                (float)local_2b3c * (float)local_2b28 * 0.001 * 0.05 + *(float *)(iVar6 + 0x16c);
           iVar6 = *(int *)(controller + 0xb8);
-          fVar35 = (float10)stat_calcAttackDamage();
+          fVar35 = (float)stat_calcAttackDamage();
           local_2b3c = (CRefTime *)(float)fVar35;
           if ((float)local_2b3c < *(float *)(iVar6 + 0x16c)) {
-            fVar35 = (float10)stat_calcAttackDamage();
+            fVar35 = (float)stat_calcAttackDamage();
             *(float *)(*(int *)(controller + 0xb8) + 0x16c) = (float)fVar35;
           }
         }
@@ -95605,7 +95460,7 @@ void GameController_updateSubsystems(int param_1,undefined4 param_2,int param_3)
               arrayElem_stride8();
               arrayElem_stride8();
               pCVar9 = local_2b3c;
-              fVar35 = (float10)GameController_entityDistanceSq();
+              fVar35 = (float)GameController_entityDistanceSq();
               local_2b3c = (CRefTime *)(float)fVar35;
               controller = local_2b1c;
               if (0.0 < (float)local_2b3c) {
@@ -95851,7 +95706,7 @@ LAB_0060db14:
                   vec3i64_toFloat();
                   local_2b20 = (CRefTime *)arrayElem_stride4();
                   *(float *)local_2b20 = 0.0;
-                  fVar35 = (float10)vec3_lengthSq();
+                  fVar35 = (float)vec3_lengthSq();
                   local_2b3c = (CRefTime *)(float)fVar35;
                   if (0.0 < (float)local_2b3c) {
                     vec3_normalize();
@@ -95864,7 +95719,7 @@ LAB_0060db14:
                   arrayElem_stride8();
                   arrayElem_stride8();
                   Terrain_blockTypeAtTime();
-                  fVar35 = (float10)powf_f();
+                  fVar35 = (float)powf_f();
                   local_2b3c = (CRefTime *)(float)fVar35;
                   fVar12 = (float)local_2b3c * 10.0;
                   if (*piVar7 == 8) {
@@ -95932,10 +95787,10 @@ LAB_0060db14:
           pCVar9 = local_2b60;
           vec3i64_copySub();
           vec3i64_toFloat();
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b3c = (CRefTime *)(float)fVar35;
           if ((float)local_2b3c <= 16.0) {
-            fVar35 = (float10)vec3_lengthSq();
+            fVar35 = (float)vec3_lengthSq();
             local_2b3c = (CRefTime *)(float)fVar35;
             if (((float)local_2b3c <= 0.0) &&
                ((pCVar9[0x68] == (CRefTime)0x53 || (pCVar9[0x68] == (CRefTime)0x54)))) {
@@ -96059,7 +95914,7 @@ LAB_0060dd57:
              ) {
             vec3i64_copySub();
             vec3i64_toFloat();
-            fVar35 = (float10)vec3_lengthSq();
+            fVar35 = (float)vec3_lengthSq();
             local_2b3c = (CRefTime *)(float)fVar35;
             if ((float)local_2b3c < 262144.0) goto LAB_0060e33a;
           }
@@ -96075,7 +95930,7 @@ LAB_0060dd57:
           getPtrPlus8();
           vec3i64_copySub();
           vec3i64_toFloat();
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b3c = (CRefTime *)(float)fVar35;
           if (((float)local_2b6c < 0.0) || ((float)local_2b3c < (float)local_2b6c)) {
             local_2b6c = local_2b3c;
@@ -96244,7 +96099,7 @@ LAB_0060e33a:
             *(int *)(iVar6 + 400) = (int)*(short *)((int)*(float *)pCVar9 + 0x1030);
             *(undefined4 *)(iVar6 + 0x194) = *(undefined4 *)((int)*(float *)pCVar9 + 0x1024);
             vec6_copy();
-            fVar35 = (float10)stat_calcAttackDamage();
+            fVar35 = (float)stat_calcAttackDamage();
             *(float *)(iVar6 + 0x16c) = (float)fVar35;
             fVar12 = *(float *)pCVar9;
             if (*(int *)((int)fVar12 + 0x1134) < 0x10) {
@@ -96357,7 +96212,7 @@ LAB_0060e9cd:
                 vec3i64_copyAdd();
                 vec3i64_copySub();
                 vec3i64_toFloat();
-                fVar35 = (float10)vec3_lengthSq();
+                fVar35 = (float)vec3_lengthSq();
                 local_2b3c = (CRefTime *)(float)fVar35;
                 if ((float)local_2b3c < 64.0) {
                   local_2b3c = (CRefTime *)arrayElem_stride8();
@@ -96475,7 +96330,7 @@ LAB_0060e9cd:
                   arrayElem_stride8();
                   int64_sub();
                   fixed16ToFloat();
-                  fVar35 = (float10)fabs_f();
+                  fVar35 = (float)fabs_f();
                   local_2b20 = (CRefTime *)(float)fVar35;
                   pfVar18 = (float *)arrayElem_stride4();
                   pfVar19 = (float *)arrayElem_stride4();
@@ -96485,7 +96340,7 @@ LAB_0060e9cd:
                     vec3i64_toFloat();
                     puVar11 = (undefined4 *)arrayElem_stride4();
                     *puVar11 = 0;
-                    fVar35 = (float10)vec3_lengthSq();
+                    fVar35 = (float)vec3_lengthSq();
                     local_2b3c = (CRefTime *)(float)fVar35;
                     if (0.01 < (float)local_2b3c) {
                       vec3_normalize();
@@ -96500,7 +96355,7 @@ LAB_0060e9cd:
                     local_2b98 = (CRefTime *)CONCAT31(local_2b98._1_3_,bVar34);
                     vec3_scaleInPlace();
                     pCVar9 = local_2b50;
-                    fVar35 = (float10)stat_calcWeaponDamage();
+                    fVar35 = (float)stat_calcWeaponDamage();
                     local_2b3c = (CRefTime *)(float)fVar35;
                     local_2b44 = (CRefTime *)((float)local_2b3c * 25.0);
                     if ((char)local_2b98 != '\0') {
@@ -96524,7 +96379,7 @@ LAB_0060e9cd:
           iVar6 = map_valueAtOr0();
           if (((iVar6 != 0) && (19999 < (int)*(float *)(pCVar9 + 0x6c))) &&
              (iVar6 = map_valueAtOr0(), 0.0 <= *(float *)(iVar6 + 0x16c))) {
-            fVar35 = (float10)stat_calcAttackDamage();
+            fVar35 = (float)stat_calcAttackDamage();
             *(float *)(pCVar9 + 0x16c) = (float)fVar35;
             map_valueAtOr0();
             vec6_copy();
@@ -96585,7 +96440,7 @@ LAB_0060e9cd:
           getPtrPlus8();
           vec3i64_copySub();
           vec3i64_toFloat();
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b3c = (CRefTime *)(float)fVar35;
           if ((float)local_2b3c < 262144.0) goto LAB_0060f849;
           list_popFront_node();
@@ -96659,7 +96514,7 @@ LAB_0060f849:
               getPtrPlus8();
               vec3i64_copySub();
               vec3i64_toFloat();
-              fVar35 = (float10)vec3_lengthSq();
+              fVar35 = (float)vec3_lengthSq();
               local_2b3c = (CRefTime *)(float)fVar35;
               if ((float)local_2b3c < 262144.0) {
                 local_2b48 = operator_new(0xa0);
@@ -96716,7 +96571,7 @@ LAB_0060fc64:
                 getPtrPlus8();
                 vec3i64_copySub();
                 vec3i64_toFloat();
-                fVar35 = (float10)vec3_lengthSq();
+                fVar35 = (float)vec3_lengthSq();
                 local_2b20 = (CRefTime *)(float)fVar35;
                 if ((float)local_2b3c * (float)local_2b3c <= (float)local_2b20)
                 goto code_r0x0060fcbc;
@@ -96914,7 +96769,7 @@ LAB_00610370:
                 *(float *)(pCVar26 + 0x13f4) = *(float *)(pCVar9 + 0x10b8);
                 std_vector_assignRange();
                 copyCtor_ObjWithVec();
-                fVar35 = (float10)stat_calcAttackDamage();
+                fVar35 = (float)stat_calcAttackDamage();
                 *(float *)(pCVar26 + 0x16c) = (float)fVar35;
                 if ((*(ushort *)(pCVar9 + 0x7a) & 0x200) != 0) {
                   vec3_scaleInPlace();
@@ -96995,7 +96850,7 @@ LAB_00610433:
               iVar6 = local_2b1c;
             }
             else {
-              fVar35 = (float10)item_computeValue();
+              fVar35 = (float)item_computeValue();
               local_2b44 = (CRefTime *)(float)fVar35;
               *(float *)(local_2b18 + 0x16c) = (float)local_2b44 + *(float *)(local_2b18 + 0x16c);
               Struct_init_off10_scale1();
@@ -97226,7 +97081,7 @@ LAB_00610433:
                 if (cVar3 != '\0') {
                   vec3i64_copySub();
                   vec3i64_toFloat();
-                  fVar35 = (float10)vec3_lengthSq();
+                  fVar35 = (float)vec3_lengthSq();
                   local_2b20 = (CRefTime *)(float)fVar35;
                   iVar6 = local_2b1c;
                   if ((float)local_2b20 <= 16.0) {
@@ -97402,7 +97257,7 @@ LAB_00610433:
               std_list_clear_67e480();
               vec3i64_copySub();
               vec3i64_toFloat();
-              fVar35 = (float10)vec3_lengthSq();
+              fVar35 = (float)vec3_lengthSq();
               local_2b20 = (CRefTime *)(float)fVar35;
               if (40000.0 < (float)local_2b20) {
                 vec6_copy();
@@ -97421,10 +97276,10 @@ LAB_00610433:
       if (*(char *)(iVar6 + 0xb4) == '\0') {
         list_clearSingleNode();
       }
-      fVar35 = (float10)stat_calcAttackDamage();
+      fVar35 = (float)stat_calcAttackDamage();
       local_2b20 = (CRefTime *)(float)fVar35;
       if ((float)local_2b20 < *(float *)(local_2b18 + 0x16c)) {
-        fVar35 = (float10)stat_calcAttackDamage();
+        fVar35 = (float)stat_calcAttackDamage();
         *(float *)(local_2b18 + 0x16c) = (float)fVar35;
       }
       if (*(float *)(local_2b18 + 0x16c) <= 0.0) goto LAB_0061fe21;
@@ -97926,10 +97781,10 @@ LAB_00613058:
           if (((iVar6 + iVar8 <= (int)*(float *)(local_2b18 + 0x6c) + local_2b28) &&
               (iVar6 = combat_getAttackTiming(), (int)*(float *)(local_2b18 + 0x6c) < iVar6)) &&
              (*(float *)(local_2b18 + 0x128) == 0.0)) {
-            fVar35 = (float10)combat_getEffectiveHaste();
+            fVar35 = (float)combat_getEffectiveHaste();
             local_2b20 = (CRefTime *)(float)fVar35;
             *(float *)(local_2b18 + 0x70) = 0.0;
-            fVar35 = (float10)combat_getEffectiveHaste();
+            fVar35 = (float)combat_getEffectiveHaste();
             local_2b4c = (CRefTime *)(float)fVar35;
             *(int *)(local_2b18 + 0x6c) =
                  (int)(((float)local_2b20 / (float)local_2b4c) *
@@ -97944,7 +97799,7 @@ LAB_00613058:
              (iVar6 = combat_getAttackWindup(), pCVar26 = pCVar9,
              iVar6 < (int)*(float *)(pCVar9 + 0x6c) + local_2b28)) {
             *(float *)(pCVar9 + 0x13b4) = 0.1;
-            fVar35 = (float10)ability_getResourceCost();
+            fVar35 = (float)ability_getResourceCost();
             local_2b20 = (CRefTime *)(float)fVar35;
             fVar12 = *(float *)(pCVar9 + 0x170);
             *(float *)(pCVar9 + 0x170) = fVar12 - (float)local_2b20;
@@ -97959,7 +97814,7 @@ LAB_00613058:
           if (*(float *)(local_2b18 + 0x6c) == 0.0) {
             local_2b18[0x13c0] = (CRefTime)0x0;
             *(float *)(local_2b18 + 0x13b4) = 0.0;
-            fVar35 = (float10)ability_getResourceCost();
+            fVar35 = (float)ability_getResourceCost();
             local_2b20 = (CRefTime *)(float)fVar35;
             if ((float)local_2b20 <= 0.0) {
               CVar5 = pCVar9[0x68];
@@ -97997,7 +97852,7 @@ LAB_00613058:
               }
             }
             else {
-              fVar35 = (float10)ability_getResourceCost();
+              fVar35 = (float)ability_getResourceCost();
               local_2b20 = (CRefTime *)(float)fVar35;
               *(CRefTime **)(pCVar9 + 0x13b4) = local_2b20;
               *(float *)(pCVar9 + 0x170) = *(float *)(pCVar9 + 0x170) - (float)local_2b20;
@@ -98121,7 +97976,7 @@ LAB_00613058:
                         vec3i64_copyAdd();
                         vec3i64_copySub();
                         vec3i64_toFloat();
-                        fVar35 = (float10)vec3_lengthSq();
+                        fVar35 = (float)vec3_lengthSq();
                         local_2b20 = (CRefTime *)(float)fVar35;
                         if ((float)local_2b20 < (float)iVar6) {
                           local_2b44 = (CRefTime *)arrayElem_stride8();
@@ -98271,7 +98126,7 @@ LAB_00613058:
                     arrayElem_stride8();
                     int64_sub();
                     fixed16ToFloat();
-                    fVar35 = (float10)fabs_f();
+                    fVar35 = (float)fabs_f();
                     local_2b4c = (CRefTime *)(float)fVar35;
                     pfVar18 = (float *)arrayElem_stride4();
                     pCVar9 = local_2b18;
@@ -98293,7 +98148,7 @@ LAB_00613058:
                         vec3i64_toFloat();
                         puVar11 = (undefined4 *)arrayElem_stride4();
                         *puVar11 = 0;
-                        fVar35 = (float10)vec3_lengthSq();
+                        fVar35 = (float)vec3_lengthSq();
                         local_2b20 = (CRefTime *)(float)fVar35;
                         if (0.01 < (float)local_2b20) {
                           vec3_normalize();
@@ -98309,7 +98164,7 @@ LAB_006144cf:
                           local_2c0c = CONCAT31(local_2c0c._1_3_,1);
                         }
                         pCVar9 = local_2b18;
-                        fVar35 = (float10)Ability_get_cooldown();
+                        fVar35 = (float)Ability_get_cooldown();
                         local_2b20 = (CRefTime *)(float)fVar35;
                         sqrtf_f();
                         vec3_scaleInPlace();
@@ -98319,9 +98174,9 @@ LAB_006144cf:
                            ((CVar5 == (CRefTime)0x1e ||
                             (((CVar5 == (CRefTime)0x1f || (CVar5 == (CRefTime)0x20)) ||
                              (CVar5 == (CRefTime)0x21)))))) {
-                          fVar35 = (float10)lookup_float_by_id();
+                          fVar35 = (float)lookup_float_by_id();
                           local_2b20 = (CRefTime *)(float)fVar35;
-                          fVar35 = (float10)Creature_compute_stat_pow();
+                          fVar35 = (float)Creature_compute_stat_pow();
                           local_2b4c = (CRefTime *)(float)fVar35;
                           local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
                           iVar6 = rand();
@@ -98331,9 +98186,9 @@ LAB_006144cf:
                         }
                         else {
                           local_2b94 = *(CRefTime **)(pCVar9 + 0x13b4);
-                          fVar35 = (float10)lookup_float_by_id();
+                          fVar35 = (float)lookup_float_by_id();
                           local_2b20 = (CRefTime *)(float)fVar35;
-                          fVar35 = (float10)stat_calcWeaponDamage();
+                          fVar35 = (float)stat_calcWeaponDamage();
                           local_2b4c = (CRefTime *)(float)fVar35;
                           local_2b20 = (CRefTime *)
                                        ((float)local_2b20 * (float)local_2b4c *
@@ -98434,7 +98289,7 @@ LAB_006144cf:
                         vec6_copy();
                         iVar6 = rand();
                         local_2b4c = (CRefTime *)(1.25 - ((float)iVar6 * 0.5) / 32767.0);
-                        fVar35 = (float10)Creature_compute_stat_pow();
+                        fVar35 = (float)Creature_compute_stat_pow();
                         local_2b20 = (CRefTime *)(float)fVar35;
                         fStack_d1c = (float)local_2b20 * (float)local_2b4c * 1.0 * -0.1;
                         uStack_d18 = combat_rollElementProc();
@@ -98507,13 +98362,13 @@ LAB_00614bb7:
           iVar8 = combat_getAttackWindup();
           if (((int)*(float *)(pCVar9 + 0x6c) <= iVar8) &&
              (iVar8 = combat_getAttackWindup(), iVar8 < (int)*(float *)(pCVar9 + 0x6c) + local_2b28)) {
-            fVar35 = (float10)ability_getResourceCost();
+            fVar35 = (float)ability_getResourceCost();
             local_2b20 = (CRefTime *)(float)fVar35;
             if ((float)local_2b20 <= 0.0) {
               fVar12 = *(float *)(pCVar9 + 0x170) - *(float *)(pCVar9 + 0x144);
             }
             else {
-              fVar35 = (float10)ability_getResourceCost();
+              fVar35 = (float)ability_getResourceCost();
               local_2b20 = (CRefTime *)(float)fVar35;
               fVar12 = *(float *)(pCVar9 + 0x170) - (float)local_2b20;
             }
@@ -98545,11 +98400,11 @@ LAB_00614bb7:
               fStack_530 = fStack_530 + 2.0;
             }
             local_2b44 = (CRefTime *)fStack_528;
-            fVar35 = (float10)ability_getResourceCost();
+            fVar35 = (float)ability_getResourceCost();
             local_2b20 = (CRefTime *)(float)fVar35;
             pCVar22 = local_2b44;
             if (0.0 < (float)local_2b20) {
-              fVar35 = (float10)ability_getResourceCost();
+              fVar35 = (float)ability_getResourceCost();
               fStack_528 = (float)fVar35;
               pCVar22 = (CRefTime *)fStack_528;
             }
@@ -98598,9 +98453,9 @@ LAB_00614bb7:
               local_2b24 = (CRefTime *)0x0;
             }
             local_2b94 = *(CRefTime **)(pCVar9 + 0x13b4);
-            fVar35 = (float10)lookup_float_by_id();
+            fVar35 = (float)lookup_float_by_id();
             local_2b20 = (CRefTime *)(float)fVar35;
-            fVar35 = (float10)stat_calcWeaponDamage();
+            fVar35 = (float)stat_calcWeaponDamage();
             local_2b4c = (CRefTime *)(float)fVar35;
             local_2b20 = (CRefTime *)
                          ((float)local_2b20 * (float)local_2b4c *
@@ -98684,7 +98539,7 @@ LAB_00617602:
             pCVar9 = local_2b18;
             if (((int)*(float *)(local_2b18 + 0x6c) <= iVar8) &&
                (iVar8 = combat_getAttackWindup(), iVar8 < (int)*(float *)(pCVar9 + 0x6c) + local_2b28)) {
-              fVar35 = (float10)ability_getResourceCost();
+              fVar35 = (float)ability_getResourceCost();
               local_2b20 = (CRefTime *)(float)fVar35;
               *(float *)(pCVar9 + 0x170) = *(float *)(pCVar9 + 0x170) - (float)local_2b20;
               iVar8 = list_findByTypeByte();
@@ -98735,14 +98590,14 @@ LAB_00617602:
 LAB_00615f5c:
               local_2b54 = local_2b18 + 0x160;
               vec3_copy();
-              fVar35 = (float10)vec3_lengthSq();
+              fVar35 = (float)vec3_lengthSq();
               local_2b20 = (CRefTime *)(float)fVar35;
               if (0.0 < (float)local_2b20) {
                 vec3_normalize();
               }
               projectile_getMuzzlePosition();
               vec3_normalizeOut();
-              fVar35 = (float10)World_raycastVoxels();
+              fVar35 = (float)World_raycastVoxels();
               local_2b20 = (CRefTime *)(float)fVar35;
               local_2b40 = local_2b20;
               if (local_2b18[0x68] == (CRefTime)0x68) {
@@ -98761,7 +98616,7 @@ LAB_00615f5c:
                 uStack_ab0 = 0;
                 uStack_ab8 = 0;
                 uStack_ab4 = 0;
-                fVar35 = (float10)Creature_compute_stat_pow();
+                fVar35 = (float)Creature_compute_stat_pow();
                 local_2b20 = (CRefTime *)(float)fVar35;
                 fStack_b0c = *(float *)(local_2b18 + 8);
                 fStack_ac4 = (float)local_2b20 * 0.1;
@@ -98811,7 +98666,7 @@ LAB_00615f5c:
                           arrayElem_stride8();
                           int64_sub();
                           fixed16ToFloat();
-                          fVar35 = (float10)fabs_f();
+                          fVar35 = (float)fabs_f();
                           local_2b20 = (CRefTime *)(float)fVar35;
                           pfVar18 = (float *)arrayElem_stride4();
                           if ((float)local_2b20 < *pfVar18 * 0.5 + 1.0) {
@@ -98822,7 +98677,7 @@ LAB_00615f5c:
                             vec3i64_toFloat();
                             puVar11 = (undefined4 *)arrayElem_stride4();
                             *puVar11 = 0;
-                            fVar35 = (float10)vec3_lengthSq();
+                            fVar35 = (float)vec3_lengthSq();
                             local_2b20 = (CRefTime *)(float)fVar35;
                             if (0.01 < (float)local_2b20) {
                               vec3_normalize();
@@ -98830,14 +98685,14 @@ LAB_00615f5c:
                             *puVar11 = 0x3e800000;
                             iVar6 = rand();
                             local_2b4c = (CRefTime *)(((float)iVar6 * 0.05) / 32767.0 + 1.0);
-                            fVar35 = (float10)Creature_compute_stat_pow();
+                            fVar35 = (float)Creature_compute_stat_pow();
                             local_2b20 = (CRefTime *)(float)fVar35;
                             local_2b60 = (CRefTime *)((float)local_2b20 * 1.5 * (float)local_2b4c);
                             if (local_2b18[0x68] == (CRefTime)0x68) {
                               local_2b94 = *(CRefTime **)(local_2b18 + 0x13b4);
-                              fVar35 = (float10)lookup_float_by_id();
+                              fVar35 = (float)lookup_float_by_id();
                               local_2b20 = (CRefTime *)(float)fVar35;
-                              fVar35 = (float10)stat_calcWeaponDamage();
+                              fVar35 = (float)stat_calcWeaponDamage();
                               local_2b4c = (CRefTime *)(float)fVar35;
                               local_2b20 = (CRefTime *)
                                            ((float)local_2b20 * (float)local_2b4c *
@@ -98889,10 +98744,10 @@ LAB_00615f5c:
                                 if (*(char *)(iVar6 + 0xb4) == '\0') {
                                   *(float *)(local_2b18 + 0x16c) =
                                        *(float *)(local_2b18 + 0x16c) - (float)local_2b60;
-                                  fVar35 = (float10)stat_calcAttackDamage();
+                                  fVar35 = (float)stat_calcAttackDamage();
                                   local_2b20 = (CRefTime *)(float)fVar35;
                                   if ((float)local_2b20 < *(float *)(local_2b18 + 0x16c)) {
-                                    fVar35 = (float10)stat_calcAttackDamage();
+                                    fVar35 = (float)stat_calcAttackDamage();
                                     *(float *)(local_2b18 + 0x16c) = (float)fVar35;
                                   }
                                 }
@@ -98908,7 +98763,7 @@ LAB_00615f5c:
                                 uStack_a40 = 0;
                                 uStack_a48 = 0;
                                 uStack_a44 = 0;
-                                fVar35 = (float10)Creature_compute_stat_pow();
+                                fVar35 = (float)Creature_compute_stat_pow();
                                 local_2b20 = (CRefTime *)(float)fVar35;
                                 fStack_a9c = *(float *)(local_2b18 + 8);
                                 fStack_a54 = (float)local_2b20 * 0.1;
@@ -98963,10 +98818,10 @@ LAB_00615f5c:
                 vec3_negateSwapYZ();
                 vec3_copy();
                 list_pushBack_via4520d0();
-                fVar35 = (float10)combat_getEffectiveHaste();
+                fVar35 = (float)combat_getEffectiveHaste();
                 local_2b20 = (CRefTime *)(float)fVar35;
                 *(float *)(pCVar22 + 0x70) = 0.0;
-                fVar35 = (float10)combat_getEffectiveHaste();
+                fVar35 = (float)combat_getEffectiveHaste();
                 local_2b4c = (CRefTime *)(float)fVar35;
                 *(int *)(pCVar22 + 0x6c) =
                      (int)(((float)local_2b20 / (float)local_2b4c) *
@@ -99051,12 +98906,12 @@ LAB_00615ec0:
             iVar6 = local_2b1c;
             if (((int)*(float *)(local_2b18 + 0x6c) - iVar28) / (int)((float)iVar8 * 0.125) !=
                 (iVar27 - iVar20) / (int)((float)iVar8 * 0.125)) {
-              fVar35 = (float10)ability_getResourceCost();
+              fVar35 = (float)ability_getResourceCost();
               local_2b20 = (CRefTime *)(float)fVar35;
               pCVar9 = local_2b18;
               iVar6 = local_2b1c;
               if ((float)local_2b20 <= *(float *)(local_2b18 + 0x170)) {
-                fVar35 = (float10)ability_getResourceCost();
+                fVar35 = (float)ability_getResourceCost();
                 local_2b20 = (CRefTime *)(float)fVar35;
                 *(float *)(local_2b18 + 0x170) = *(float *)(local_2b18 + 0x170) - (float)local_2b20;
                 pCVar26 = (CRefTime *)map_valueAtOr0();
@@ -99068,7 +98923,7 @@ LAB_00615ec0:
                 vec6_copy();
                 iVar6 = rand();
                 local_2b4c = (CRefTime *)(1.25 - ((float)iVar6 * 0.5) / 32767.0);
-                fVar35 = (float10)Creature_compute_stat_pow();
+                fVar35 = (float)Creature_compute_stat_pow();
                 local_2b20 = (CRefTime *)(float)fVar35;
                 fStack_c44 = (float)local_2b20 * -2.0 * (float)local_2b4c;
                 uStack_c40 = combat_rollElementProc();
@@ -99137,10 +98992,10 @@ LAB_00615ec0:
           iVar6 = combat_getAttackWindup();
           if (((int)*(float *)(pCVar9 + 0x6c) <= iVar6) &&
              (iVar6 = combat_getAttackWindup(), iVar6 < (int)*(float *)(pCVar9 + 0x6c) + local_2b28)) {
-            fVar35 = (float10)vec3_lengthSq();
+            fVar35 = (float)vec3_lengthSq();
             local_2b20 = (CRefTime *)(float)fVar35;
             if (0.0 < (float)local_2b20) {
-              fVar35 = (float10)ability_getResourceCost();
+              fVar35 = (float)ability_getResourceCost();
               fVar12 = *(float *)(pCVar9 + 0x170);
               *(float *)(pCVar9 + 0x170) = fVar12 - (float)fVar35;
               if (fVar12 - (float)fVar35 < 0.0) {
@@ -99155,7 +99010,7 @@ LAB_00615ec0:
           iVar6 = local_2b1c;
           if ((((int)local_2b20 < iVar20 + iVar28) && ((int)local_2b20 <= iVar8)) &&
              (iVar8 < (int)(local_2b20 + local_2b28))) {
-            fVar35 = (float10)vec3_lengthSq();
+            fVar35 = (float)vec3_lengthSq();
             local_2b20 = (CRefTime *)(float)fVar35;
             iVar6 = local_2b1c;
             if (0.0 < (float)local_2b20) {
@@ -99190,9 +99045,9 @@ LAB_00615ec0:
               pCVar9 = local_2b18;
               if (local_2b18[0x68] == (CRefTime)0x6c) {
                 uStack_388 = 4;
-                fVar35 = (float10)lookup_float_by_id();
+                fVar35 = (float)lookup_float_by_id();
                 local_2b20 = (CRefTime *)(float)fVar35;
-                fVar35 = (float10)stat_calcWeaponDamage();
+                fVar35 = (float)stat_calcWeaponDamage();
                 local_2b4c = (CRefTime *)(float)fVar35;
                 local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
                 iVar6 = rand();
@@ -99213,18 +99068,18 @@ LAB_00615ec0:
                     ((CVar5 == (CRefTime)0x28 ||
                      ((CVar5 == (CRefTime)0x2c || (CVar5 == (CRefTime)0x29)))))) ||
                    (CVar5 == (CRefTime)0x2a)) {
-                  fVar35 = (float10)lookup_float_by_id();
+                  fVar35 = (float)lookup_float_by_id();
                   local_2b20 = (CRefTime *)(float)fVar35;
-                  fVar35 = (float10)Creature_compute_stat_pow();
+                  fVar35 = (float)Creature_compute_stat_pow();
                   local_2b4c = (CRefTime *)(float)fVar35;
                   local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
                   iVar6 = rand();
                   fStack_3a0 = (1.25 - ((float)iVar6 * 0.5) / 32767.0) * (float)local_2b20 * 1.0;
                 }
                 else if ((CVar5 == (CRefTime)0x2e) || (CVar5 == (CRefTime)0x2d)) {
-                  fVar35 = (float10)lookup_float_by_id();
+                  fVar35 = (float)lookup_float_by_id();
                   local_2b20 = (CRefTime *)(float)fVar35;
-                  fVar35 = (float10)Creature_compute_stat_pow();
+                  fVar35 = (float)Creature_compute_stat_pow();
                   local_2b4c = (CRefTime *)(float)fVar35;
                   local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
                   iVar6 = rand();
@@ -99233,9 +99088,9 @@ LAB_00615ec0:
                   fStack_398 = fStack_398 + 0.5;
                 }
                 else {
-                  fVar35 = (float10)lookup_float_by_id();
+                  fVar35 = (float)lookup_float_by_id();
                   local_2b20 = (CRefTime *)(float)fVar35;
-                  fVar35 = (float10)Creature_compute_stat_pow();
+                  fVar35 = (float)Creature_compute_stat_pow();
                   local_2b4c = (CRefTime *)(float)fVar35;
                   local_2b20 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
                   iVar6 = rand();
@@ -99344,7 +99199,7 @@ LAB_00615ec0:
                 if (cVar3 == '\0') {
                   vec3i64_copySub();
                   vec3i64_toFloat();
-                  fVar35 = (float10)vec3_lengthSq();
+                  fVar35 = (float)vec3_lengthSq();
                   local_2b20 = (CRefTime *)(float)fVar35;
                   if ((float)local_2b20 < (float)local_2b24) {
                     local_2b24 = local_2b20;
@@ -99384,7 +99239,7 @@ LAB_00615ec0:
               int64_sub_42ca00();
             }
             arrayElem_stride8();
-            fVar35 = (float10)fixed16ToFloat();
+            fVar35 = (float)fixed16ToFloat();
             *(float *)(local_2b18 + 0x13bc) = (float)fVar35;
             pCVar9 = local_2b18;
             iVar6 = local_2b1c;
@@ -99431,7 +99286,7 @@ LAB_00615ec0:
             iVar6 = local_2b1c;
             if (((int)local_2b44 < iVar8 + iVar28) &&
                ((int)local_2b44 / iVar20 != (int)(local_2b44 + local_2b28) / iVar20)) {
-              fVar35 = (float10)vec3_lengthSq();
+              fVar35 = (float)vec3_lengthSq();
               local_2b20 = (CRefTime *)(float)fVar35;
               iVar6 = local_2b1c;
               if (0.0 < (float)local_2b20) {
@@ -99461,9 +99316,9 @@ LAB_00615ec0:
                   local_2b44 = (CRefTime *)0x3dcccccd;
                 }
                 local_2b94 = *(CRefTime **)(pCVar9 + 0x13b4);
-                fVar35 = (float10)lookup_float_by_id();
+                fVar35 = (float)lookup_float_by_id();
                 local_2b20 = (CRefTime *)(float)fVar35;
-                fVar35 = (float10)stat_calcWeaponDamage();
+                fVar35 = (float)stat_calcWeaponDamage();
                 local_2b4c = (CRefTime *)(float)fVar35;
                 local_2b20 = (CRefTime *)
                              ((float)local_2b20 * (float)local_2b4c *
@@ -99521,9 +99376,9 @@ LAB_00615ec0:
           uStack_b20 = 0;
           uStack_b28 = 0;
           uStack_b24 = 0;
-          fVar35 = (float10)lookup_float_by_id();
+          fVar35 = (float)lookup_float_by_id();
           local_2b20 = (CRefTime *)(float)fVar35;
-          fVar35 = (float10)Creature_compute_stat_pow();
+          fVar35 = (float)Creature_compute_stat_pow();
           local_2b4c = (CRefTime *)(float)fVar35;
           fStack_b7c = *(float *)(local_2b18 + 8);
           fStack_b78 = *(float *)(local_2b18 + 0xc);
@@ -99622,7 +99477,7 @@ LAB_00615ec0:
           }
           *(ushort *)(iVar6 + 0x7e) = *(ushort *)(iVar6 + 0x7e) & 0xfdff | 0x800;
           *(float *)(iVar6 + 400) = *(float *)(pCVar9 + 400);
-          fVar35 = (float10)stat_calcAttackDamage();
+          fVar35 = (float)stat_calcAttackDamage();
           *(float *)(iVar6 + 0x16c) = (float)fVar35;
           vec6_copy();
           local_2b34 = operator_new(0xc);
@@ -99716,7 +99571,7 @@ LAB_00615ec0:
         std_list_insert_node_32();
         struct_clearFields();
         uStack_2e80 = 30000;
-        fVar35 = (float10)Creature_compute_stat_pow();
+        fVar35 = (float)Creature_compute_stat_pow();
         local_2b20 = (CRefTime *)(float)fVar35;
         fStack_2e84 = (float)local_2b20 * 4.0;
         uStack_2e88 = CONCAT31(uStack_2e88._1_3_,6);
@@ -99836,10 +99691,10 @@ LAB_00615ec0:
 LAB_00611f56:
         *(int *)(pCVar9 + 0x74) = (int)*(float *)(pCVar9 + 0x74) + local_2b28;
         if (4000 < (int)*(float *)(pCVar9 + 0x74)) {
-          fVar35 = (float10)combat_getEffectiveHaste();
+          fVar35 = (float)combat_getEffectiveHaste();
           local_2b20 = (CRefTime *)(float)fVar35;
           *(float *)(pCVar9 + 0x70) = 0.0;
-          fVar35 = (float10)combat_getEffectiveHaste();
+          fVar35 = (float)combat_getEffectiveHaste();
           local_2b4c = (CRefTime *)(float)fVar35;
           *(int *)(pCVar9 + 0x6c) =
                (int)(((float)local_2b20 / (float)local_2b4c) * (float)(int)*(float *)(pCVar9 + 0x6c)
@@ -100032,13 +99887,13 @@ LAB_006187a7:
       if (pCVar9[0x68] != (CRefTime)0x0) {
         flags_setOrClear114();
       }
-      fVar35 = (float10)vec3_lengthSq();
+      fVar35 = (float)vec3_lengthSq();
       local_2b20 = (CRefTime *)(float)fVar35;
       if (0.0 < (float)local_2b20) {
         flags_setOrClear114();
       }
       if ((pCVar9[0x68] == (CRefTime)0x53) || (pCVar9[0x68] == (CRefTime)0x54)) {
-        fVar35 = (float10)vec3_lengthSq();
+        fVar35 = (float)vec3_lengthSq();
         local_2b20 = (CRefTime *)(float)fVar35;
         if (0.0 < (float)local_2b20) {
           pCVar9[0x68] = (CRefTime)0x0;
@@ -100058,7 +99913,7 @@ LAB_006187a7:
           if (local_2b18[0x60] != (CRefTime)0x0) {
             local_2b24 = (CRefTime *)((float)local_2b24 * 0.5);
           }
-          fVar35 = (float10)item_computeValue();
+          fVar35 = (float)item_computeValue();
           local_2b20 = (CRefTime *)(float)fVar35;
           local_2b44 = (CRefTime *)((float)local_2b20 * (float)local_2b24);
           if (0.0 < (float)local_2b44) {
@@ -100072,16 +99927,16 @@ LAB_006187a7:
             local_4f8 = 0;
             list_pushBack_via451ee0();
             *(float *)(pCVar22 + 0x16c) = (float)local_2b44 + *(float *)(pCVar22 + 0x16c);
-            fVar35 = (float10)stat_calcAttackDamage();
+            fVar35 = (float)stat_calcAttackDamage();
             local_2b20 = (CRefTime *)(float)fVar35;
             if ((float)local_2b20 < *(float *)(pCVar22 + 0x16c)) {
-              fVar35 = (float10)stat_calcAttackDamage();
+              fVar35 = (float)stat_calcAttackDamage();
               *(float *)(pCVar22 + 0x16c) = (float)fVar35;
             }
           }
-          fVar35 = (float10)item_computeStat_ranged();
+          fVar35 = (float)item_computeStat_ranged();
           local_2b20 = (CRefTime *)(float)fVar35;
-          fVar35 = (float10)powf_f();
+          fVar35 = (float)powf_f();
           local_2b4c = (CRefTime *)(float)fVar35;
           fVar36 = ((float)local_2b20 / (float)local_2b4c) * (float)local_2b24;
           fVar12 = fVar36 + *(float *)(pCVar22 + 0x13c);
@@ -100178,7 +100033,7 @@ LAB_006187a7:
       }
       if ((((*(char *)(iVar6 + 0xb4) == '\0') && (pCVar9[0x60] == (CRefTime)0x1)) &&
           (0.0 < *(float *)(pCVar9 + 0x16c))) && (cVar3 = isZero_off4(), cVar3 != '\0')) {
-        fVar35 = (float10)stat_calcAttackDamage();
+        fVar35 = (float)stat_calcAttackDamage();
         *(float *)(pCVar9 + 0x16c) = (float)fVar35;
       }
       local_2b2d = '\x01';
@@ -100194,12 +100049,12 @@ LAB_006187a7:
       local_2b34 = (int *)noop();
       vec2_copy();
       local_2b7c = 0.0;
-      fVar35 = (float10)vec2_lengthSq();
+      fVar35 = (float)vec2_lengthSq();
       local_2b20 = (CRefTime *)(float)fVar35;
       if (0.01 < (float)local_2b20) {
         noop();
         vec2_copy();
-        fVar35 = (float10)vec2_lengthSq();
+        fVar35 = (float)vec2_lengthSq();
         local_2b20 = (CRefTime *)(float)fVar35;
         if (0.01 < (float)local_2b20) {
           vec2_normalize();
@@ -100209,7 +100064,7 @@ LAB_006187a7:
           local_2b20 = (CRefTime *)(*pfVar18 * *pfVar19);
           arrayElem_stride4();
           arrayElem_stride4();
-          fVar35 = (float10)asinf_f();
+          fVar35 = (float)asinf_f();
           local_2b20 = (CRefTime *)(float)fVar35;
           local_2b7c = ((float)local_2b20 / 3.1415927) * 180.0 * 0.5;
           pCVar9 = local_2b18;
@@ -100252,14 +100107,14 @@ LAB_006187a7:
       }
       if (pCVar9[0x68] == (CRefTime)0x6b) {
         if (((byte)pCVar9[0x5c] & 2) != 0) {
-          fVar35 = (float10)curve_diminishingx3p1();
+          fVar35 = (float)curve_diminishingx3p1();
 LAB_006192c6:
           local_2b20 = (CRefTime *)(float)fVar35;
           local_2b64 = (CRefTime *)((float)local_2b20 * (float)local_2b64);
         }
       }
       else if (((byte)pCVar9[0x5c] & 2) != 0) {
-        fVar35 = (float10)curve_diminishingHalf();
+        fVar35 = (float)curve_diminishingHalf();
         goto LAB_006192c6;
       }
       if (pCVar9 == *(CRefTime **)(iVar6 + 0xb8)) {
@@ -100277,7 +100132,7 @@ LAB_006193cc:
             map_valueAtOr0();
             cVar3 = weapon_isMeleeType();
             if (cVar3 == '\0') goto LAB_006193cc;
-            fVar35 = (float10)curve_diminishingP1();
+            fVar35 = (float)curve_diminishingP1();
             local_2b20 = (CRefTime *)(float)fVar35;
             if ((float)local_2b20 == 0.0) {
               local_2b18[0x68] = (CRefTime)0x0;
@@ -100294,7 +100149,7 @@ LAB_006193cc:
           if (bVar34) {
             local_2b18[0x68] = (CRefTime)0x0;
           }
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b20 = (CRefTime *)(float)fVar35;
           if (0.0 < (float)local_2b20) {
             *(float *)(pCVar9 + 0x1198) = *(float *)(pCVar9 + 0x1198) - local_2ba4 * 0.002;
@@ -100312,7 +100167,7 @@ LAB_006193cc:
         local_2b64 = (CRefTime *)0x41a00000;
       }
       if (((byte)pCVar9[0x124] & 0x10) != 0) {
-        fVar35 = (float10)curve_diminishingx3p15();
+        fVar35 = (float)curve_diminishingx3p15();
         local_2b20 = (CRefTime *)(float)fVar35;
         if ((float)local_2b20 <= 0.0) {
           *(ushort *)(pCVar9 + 0x124) = *(ushort *)(pCVar9 + 0x124) & 0xffef;
@@ -100322,10 +100177,10 @@ LAB_006193cc:
         }
       }
       if (((byte)pCVar9[0x124] & 1) != 0) {
-        fVar35 = (float10)vec3_lengthSq();
+        fVar35 = (float)vec3_lengthSq();
         local_2b20 = (CRefTime *)(float)fVar35;
         if (0.0 < (float)local_2b20) {
-          fVar35 = (float10)curve_diminishingN1();
+          fVar35 = (float)curve_diminishingN1();
           local_2b20 = (CRefTime *)(float)fVar35;
           if ((float)local_2b20 <= 0.0) {
             *(ushort *)(pCVar9 + 0x124) = *(ushort *)(pCVar9 + 0x124) & 0xfffe;
@@ -100345,16 +100200,16 @@ LAB_006193cc:
         }
       }
       if (pCVar9[0x68] == (CRefTime)0x4f) {
-        fVar35 = (float10)ability_getPowerFactor();
+        fVar35 = (float)ability_getPowerFactor();
         local_2b20 = (CRefTime *)(float)fVar35;
         local_2b64 = (CRefTime *)(((float)local_2b20 * 0.4 + 0.5) * (float)local_2b64);
         getter_field80015c();
-        fVar35 = (float10)powf_f();
+        fVar35 = (float)powf_f();
         local_2b20 = (CRefTime *)(float)fVar35;
-        fVar35 = (float10)powf_f();
+        fVar35 = (float)powf_f();
         local_2b4c = (CRefTime *)(float)fVar35;
         local_2b24 = pCVar9 + 0x10;
-        fVar35 = (float10)Terrain_sampleBlockBrightness();
+        fVar35 = (float)Terrain_sampleBlockBrightness();
         local_2b20 = (CRefTime *)(float)fVar35;
         local_2b58 = (CRefTime *)((float)local_2b20 * (float)local_2b4c);
         deref_frontValue();
@@ -100370,7 +100225,7 @@ LAB_006193cc:
             if ((*(byte *)(iVar6 + 0x38) & 1) != 0) {
               vec3i64_copySub();
               vec3i64_toFloat();
-              fVar35 = (float10)vec3_lengthSq();
+              fVar35 = (float)vec3_lengthSq();
               local_2b20 = (CRefTime *)(float)fVar35;
               if ((float)local_2b20 < 256.0) {
                 fVar12 = 1.0 - (float)local_2b20 * 0.00390625;
@@ -100389,7 +100244,7 @@ LAB_006193cc:
             if (*piVar7 == 0x32) {
               vec3i64_copySub();
               vec3i64_toFloat();
-              fVar35 = (float10)vec3_lengthSq();
+              fVar35 = (float)vec3_lengthSq();
               local_2b20 = (CRefTime *)(float)fVar35;
               if ((float)local_2b20 < 256.0) {
                 fVar12 = 1.0 - (float)local_2b20 * 0.00390625;
@@ -100408,7 +100263,7 @@ LAB_006193cc:
             if (*pcVar16 == '\x12') {
               vec3i64_copySub();
               vec3i64_toFloat();
-              fVar35 = (float10)vec3_lengthSq();
+              fVar35 = (float)vec3_lengthSq();
               local_2b20 = (CRefTime *)(float)fVar35;
               if ((float)local_2b20 < 256.0) {
                 fVar12 = 1.0 - (float)local_2b20 * 0.00390625;
@@ -100437,7 +100292,7 @@ LAB_006193cc:
              ((*(ushort *)(*(int *)(iVar6 + 8) + 0x124) & 0x200) != 0)) {
             vec3i64_copySub();
             vec3i64_toFloat();
-            fVar35 = (float10)vec3_lengthSq();
+            fVar35 = (float)vec3_lengthSq();
             local_2b20 = (CRefTime *)(float)fVar35;
             if ((float)local_2b20 < 100.0) {
               fVar12 = 1.0 - (float)local_2b20 / 100.0;
@@ -100450,12 +100305,12 @@ LAB_006193cc:
           iVar6 = local_2b1c;
           pCVar9 = local_2b18;
         }
-        fVar35 = (float10)ability_getPowerFactor();
+        fVar35 = (float)ability_getPowerFactor();
         local_2b20 = (CRefTime *)(float)fVar35;
         local_2b94 = (CRefTime *)(1.0 - (0.9 - (float)local_2b20 * 0.5) * (float)local_2b58);
-        fVar35 = (float10)ability_getPowerFactor();
+        fVar35 = (float)ability_getPowerFactor();
         local_2b20 = (CRefTime *)(0.5 - (float)fVar35 * 0.5);
-        fVar35 = (float10)vec3_length();
+        fVar35 = (float)vec3_length();
         local_2b4c = (CRefTime *)(float)fVar35;
         fVar12 = ((float)local_2b94 - (float)local_2b20 * (float)local_2b4c) * local_2b8c * 0.0005 +
                  *(float *)(pCVar9 + 0x1190);
@@ -100471,7 +100326,7 @@ LAB_00619c61:
       }
       else {
         if ((*(ushort *)(pCVar9 + 0x124) & 0x400) != 0) {
-          fVar35 = (float10)ability_getPowerFactor();
+          fVar35 = (float)ability_getPowerFactor();
           local_2b20 = (CRefTime *)(float)fVar35;
           fVar12 = ((float)local_2b20 * 0.0005 + 1e-05) * local_2b8c + *(float *)(pCVar9 + 0x1190);
           *(float *)(pCVar9 + 0x1190) = fVar12;
@@ -100519,7 +100374,7 @@ LAB_00619d59:
       }
       iVar8 = list_findByTypeByte();
       if (iVar8 != 0) {
-        fVar35 = (float10)ability_getPowerFactor();
+        fVar35 = (float)ability_getPowerFactor();
         local_2b20 = (CRefTime *)(float)fVar35;
         local_2b64 = (CRefTime *)(((float)local_2b20 + 1.0) * (float)local_2b64);
       }
@@ -100587,7 +100442,7 @@ LAB_0061a0f1:
                 arrayElem_stride8();
                 int64_sub();
                 fixed16ToFloat();
-                fVar35 = (float10)fabs_f();
+                fVar35 = (float)fabs_f();
                 local_2b4c = (CRefTime *)(float)fVar35;
                 pfVar18 = (float *)arrayElem_stride4();
                 local_2b20 = (CRefTime *)(*pfVar18 * 0.5);
@@ -100774,7 +100629,7 @@ LAB_0061a1ea:
         local_2b88 = (CRefTime *)CONCAT31(local_2b88._1_3_,1);
       }
       if (pCVar9[0x68] == (CRefTime)0x24) {
-        fVar35 = (float10)combat_getEffectiveHaste();
+        fVar35 = (float)combat_getEffectiveHaste();
         local_2b20 = (CRefTime *)(float)fVar35;
         *(float *)(pCVar9 + 0x144) =
              (float)local_2b20 * local_2b8c * 0.0005 + *(float *)(pCVar9 + 0x144);
@@ -100784,7 +100639,7 @@ LAB_0061a1ea:
            || ((CVar5 == (CRefTime)0x8 || (CVar5 == (CRefTime)0x3b)))) ||
           ((CVar5 == (CRefTime)0x3f || (CVar5 == (CRefTime)0x40)))) &&
          (iVar8 = combat_getAttackWindup(), iVar8 <= (int)*(float *)(pCVar9 + 0x6c))) {
-        fVar35 = (float10)combat_getEffectiveHaste();
+        fVar35 = (float)combat_getEffectiveHaste();
         local_2b20 = (CRefTime *)(float)fVar35;
         local_2b24 = (CRefTime *)((float)local_2b20 * local_2b8c * 0.00075);
         if ((pCVar9[0x140] == (CRefTime)0x2) && (pCVar9[0x141] == (CRefTime)0x0)) {
@@ -100803,7 +100658,7 @@ LAB_0061a1ea:
         iVar8 = list_findByTypeByte();
         pCVar22 = local_2b24;
         if (iVar8 != 0) {
-          fVar35 = (float10)ability_getPowerFactor();
+          fVar35 = (float)ability_getPowerFactor();
           local_2b20 = (CRefTime *)(float)fVar35;
           pCVar22 = (CRefTime *)(((float)local_2b20 * 9.0 + 1.0) * (float)local_2b24);
         }
@@ -100828,21 +100683,21 @@ LAB_0061a1ea:
         noop();
         vec2_copy();
         vec2_copy();
-        fVar35 = (float10)vec2_dot();
+        fVar35 = (float)vec2_dot();
         local_2b20 = (CRefTime *)(float)fVar35;
         if ((float)local_2b20 < 0.0) {
           vec2_copy();
           vec2_copy();
           vec2_normalize();
           vec2_normalize();
-          fVar35 = (float10)vec2_dot();
+          fVar35 = (float)vec2_dot();
           local_2b20 = (CRefTime *)(float)fVar35;
           local_2b64 = (CRefTime *)(((float)local_2b20 * 0.5 + 1.0) * (float)local_2b64);
         }
       }
       vec3_addInPlace();
       vec2_copy();
-      fVar35 = (float10)vec2_lengthSq();
+      fVar35 = (float)vec2_lengthSq();
       local_2b20 = (CRefTime *)(float)fVar35;
       if ((float)local_2b64 * (float)local_2b64 < (float)local_2b20) {
         vec2_copy();
@@ -100867,7 +100722,7 @@ LAB_0061a1ea:
         local_2bb8 = (float *)arrayElem_stride4();
         if (0.0 <= *local_2bb8) {
           arrayElem_stride8();
-          fVar35 = (float10)fixed16ToFloat();
+          fVar35 = (float)fixed16ToFloat();
           *(float *)(pCVar9 + 0x13bc) = (float)fVar35;
         }
         *local_2bb8 = *local_2bb8 - local_2ba4 * 30.0;
@@ -100879,7 +100734,7 @@ LAB_0061a1ea:
         if (-10.0 < *local_2bb8) {
 LAB_0061abdd:
           arrayElem_stride8();
-          fVar35 = (float10)fixed16ToFloat();
+          fVar35 = (float)fixed16ToFloat();
           *(float *)(pCVar9 + 0x13bc) = (float)fVar35;
         }
       }
@@ -100888,10 +100743,10 @@ LAB_0061abdd:
         if (((uint)fVar12 & 2) == 0) {
           if (((uint)fVar12 & 1) == 0) {
             if (((uint)fVar12 & 4) != 0) {
-              fVar35 = (float10)vec3_lengthSq();
+              fVar35 = (float)vec3_lengthSq();
               local_2b20 = (CRefTime *)(float)fVar35;
               if (64.0 < (float)local_2b20) {
-                fVar35 = (float10)vec3_dot();
+                fVar35 = (float)vec3_dot();
                 local_2b20 = (CRefTime *)(float)fVar35;
                 if ((float)local_2b20 < -4.0) {
                   fVar12 = (float)combat_getComboWindow();
@@ -100914,7 +100769,7 @@ LAB_0061abdd:
             vec3_addInPlace();
           }
           else {
-            fVar35 = (float10)fabs_f();
+            fVar35 = (float)fabs_f();
             local_2b20 = (CRefTime *)(float)fVar35;
             if (40.0 < (float)local_2b20) {
               fVar12 = (float)combat_getComboWindow();
@@ -101009,7 +100864,7 @@ LAB_0061abdd:
                         vec3i64_toFloat();
                         puVar11 = (undefined4 *)arrayElem_stride4();
                         *puVar11 = 0;
-                        fVar35 = (float10)vec3_lengthSq();
+                        fVar35 = (float)vec3_lengthSq();
                         local_2b20 = (CRefTime *)(float)fVar35;
                         if (0.0 < (float)local_2b20) {
                           vec3_normalize();
@@ -101034,7 +100889,7 @@ LAB_0061abdd:
           iVar6 = local_2b1c;
         }
       }
-      fVar35 = (float10)vec3_length();
+      fVar35 = (float)vec3_length();
       local_2b20 = (CRefTime *)(int)((float)fVar35 + 1.0);
       vec3_scaleInPlace();
       local_2b64 = pCVar9 + 0x10;
@@ -101161,7 +101016,7 @@ LAB_0061c158:
                     int64_subFixed16(uVar38);
                     ftol64_ofFloat();
                     ftol64_ofFloat();
-                    fVar35 = (float10)fixed16ToFloat();
+                    fVar35 = (float)fixed16ToFloat();
                     local_2b9c = (CRefTime *)(float)fVar35;
                     *(float *)(local_2b18 + 0x16c) =
                          *(float *)(local_2b18 + 0x16c) - (float)local_2b9c;
@@ -101199,7 +101054,7 @@ LAB_0061c158:
                 *local_2bb8 = 0.0;
                 puVar11 = (undefined4 *)arrayElem_stride4();
                 *puVar11 = 0;
-                fVar35 = (float10)fixed16ToFloat();
+                fVar35 = (float)fixed16ToFloat();
                 *(float *)(local_2b18 + 0x13bc) = (float)fVar35;
                 pCVar9 = local_2b18;
               }
@@ -101280,7 +101135,7 @@ LAB_0061cc31:
                       local_2bc0 = (CRefTime *)(iVar6 + 8);
                       vec3i64_copySub();
                       vec3i64_toFloat();
-                      fVar35 = (float10)vec3_lengthSq();
+                      fVar35 = (float)vec3_lengthSq();
                       local_2ba0 = (CRefTime *)(float)fVar35;
                       pCVar9 = local_2b18;
                       if ((((float)local_2ba0 <= 4096.0) && (*(int *)(iVar6 + 8) != 0)) &&
@@ -101379,7 +101234,7 @@ LAB_0061cac6:
                   vec2_copy();
                   int64_subFn();
                   int64_sub();
-                  fVar35 = (float10)fixed16ToFloat();
+                  fVar35 = (float)fixed16ToFloat();
                   *(float *)(local_2b18 + 0x1180) = (float)fVar35;
                   int64_add_42c9b0();
                   pCVar9 = local_2b18;
@@ -101511,7 +101366,7 @@ LAB_0061bcb0:
                   local_2bc0 = (CRefTime *)(iVar6 + 8);
                   vec3i64_copySub();
                   vec3i64_toFloat();
-                  fVar35 = (float10)vec3_lengthSq();
+                  fVar35 = (float)vec3_lengthSq();
                   local_2ba0 = (CRefTime *)(float)fVar35;
                   if ((((float)local_2ba0 <= 4096.0) && (*(int *)(iVar6 + 8) != 0)) &&
                      (local_2b9c = (CRefTime *)vectorU32_at(), local_2b9c != (CRefTime *)0x0)) {
@@ -101613,17 +101468,17 @@ LAB_0061c144:
       *(int *)(pCVar9 + 0x145c) = (int)*(float *)(pCVar9 + 0x145c) + local_2b28;
       if ((int)*(float *)(pCVar9 + 300) < 1) {
         vec2_copy();
-        fVar35 = (float10)vec2_lengthSq();
+        fVar35 = (float)vec2_lengthSq();
         local_2b78 = (CRefTime *)(float)fVar35;
         if (16.0 < (float)local_2b78) {
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b78 = (CRefTime *)(float)fVar35;
           if (16.0 < (float)local_2b78) {
             vec3i64_copySub();
             vec3i64_toFloat();
-            fVar35 = (float10)vec3_lengthSq();
+            fVar35 = (float)vec3_lengthSq();
             local_2ba0 = (CRefTime *)(float)fVar35;
-            fVar35 = (float10)vec3_lengthSq();
+            fVar35 = (float)vec3_lengthSq();
             local_2b78 = (CRefTime *)(float)fVar35;
             if ((float)local_2ba0 < (float)local_2b78 * 0.01) {
               *(uint *)(pCVar9 + 0x5c) = (uint)*(float *)(pCVar9 + 0x5c) | 0x20;
@@ -101739,7 +101594,7 @@ LAB_0061c144:
           arrayElem_stride8();
           int_toFixed16();
           int64_sub();
-          fVar35 = (float10)fixed16ToFloat();
+          fVar35 = (float)fixed16ToFloat();
           local_2b78 = (CRefTime *)(float)fVar35;
           pfVar18 = (float *)arrayElem_stride4();
           fVar36 = (float)local_2b78 / (*pfVar18 * 0.5);
@@ -101759,7 +101614,7 @@ LAB_0061c144:
         }
       }
       local_2b40 = (CRefTime *)0x3ba3d70a;
-      fVar35 = (float10)vec3_lengthSq();
+      fVar35 = (float)vec3_lengthSq();
       local_2b78 = (CRefTime *)(float)fVar35;
       if (0.0 < (float)local_2b78) {
         local_2b40 = (CRefTime *)0x3b23d70a;
@@ -101810,7 +101665,7 @@ LAB_0061c144:
       }
       if ((local_2b35 != 0) && (local_2b2d != '\0')) {
         vec2_copy();
-        fVar35 = (float10)vec2_lengthSq();
+        fVar35 = (float)vec2_lengthSq();
         local_2b34 = (int *)(float)fVar35;
         if ((0.0 < (float)local_2b34) &&
            ((((byte)pCVar9[0x5c] & 3) == 0 && (pfVar18 = (float *)arrayElem_stride4(), *pfVar18 <= 0.0)))
@@ -101840,7 +101695,7 @@ LAB_0061c144:
                     int64_addFn();
                     vec2_copy();
                     int64_sub();
-                    fVar35 = (float10)fixed16ToFloat();
+                    fVar35 = (float)fixed16ToFloat();
                     *(float *)(local_2b18 + 0x1180) = (float)fVar35;
                     pCVar9 = local_2b4c;
                     break;
@@ -102055,7 +101910,7 @@ LAB_0061dc71:
 LAB_0061ddc3:
       if (((byte)pCVar9[0x5c] & 4) == 0) {
         setVec3();
-        fVar35 = (float10)vec3_dot();
+        fVar35 = (float)vec3_dot();
         local_2b34 = (int *)(float)fVar35;
         if ((float)local_2b34 <= 0.1) {
           if (pCVar9[0x60] == (CRefTime)0x0) {
@@ -102096,7 +101951,7 @@ LAB_0061ddc3:
         }
         if (((byte)pCVar9[0x5c] & 4) == 0) {
           setVec3();
-          fVar35 = (float10)vec3_dot();
+          fVar35 = (float)vec3_dot();
           local_2b34 = (int *)(float)fVar35;
           if ((float)local_2b34 <= 0.1) {
             if (pCVar9[0x60] == (CRefTime)0x0) {
@@ -102137,7 +101992,7 @@ LAB_0061ddc3:
           }
           if (((byte)pCVar9[0x5c] & 4) == 0) {
             setVec3();
-            fVar35 = (float10)vec3_dot();
+            fVar35 = (float)vec3_dot();
             local_2b34 = (int *)(float)fVar35;
             if ((float)local_2b34 <= 0.1) {
               if (pCVar9[0x60] == (CRefTime)0x0) {
@@ -102178,7 +102033,7 @@ LAB_0061ddc3:
             }
             if (((byte)pCVar9[0x5c] & 4) == 0) {
               setVec3();
-              fVar35 = (float10)vec3_dot();
+              fVar35 = (float)vec3_dot();
               local_2b34 = (int *)(float)fVar35;
               if ((float)local_2b34 <= 0.1) {
                 if (pCVar9[0x60] == (CRefTime)0x0) {
@@ -102255,14 +102110,14 @@ LAB_0061ddc3:
         }
       }
       if (pCVar9 == *(CRefTime **)(local_2b1c + 0xb8)) {
-        fVar35 = (float10)vec3_dot();
+        fVar35 = (float)vec3_dot();
         local_2b34 = (int *)(float)fVar35;
         if (((((float)local_2b34 <= 0.0) && ((*(ushort *)(pCVar9 + 0x124) & 1) != 0)) &&
             ((*(ushort *)(pCVar9 + 0x124) & 0x10) == 0)) &&
            (((char)local_2bdc != '\0' && (((byte)pCVar9[0x5c] & 4) == 0)))) {
           noop();
           vec2_copy();
-          fVar35 = (float10)vec2_lengthSq();
+          fVar35 = (float)vec2_lengthSq();
           local_2b34 = (int *)(float)fVar35;
           if (0.0 < (float)local_2b34) {
             vec3_scale();
@@ -102294,21 +102149,21 @@ LAB_0061ef93:
              ((((byte)pCVar22[0x124] & 1) != 0 && (((uint)local_2b20 & 4) != 0))))
           goto LAB_0061f008;
           *(float *)(pCVar22 + 0x118c) = 0.0;
-          fVar35 = (float10)sqrtf_f();
+          fVar35 = (float)sqrtf_f();
           local_2b34 = (int *)(float)fVar35;
           fVar12 = (float)local_2b34 * local_2ba4;
         }
         else {
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b34 = (int *)(float)fVar35;
           if (((float)local_2b34 <= 0.5) || (pCVar22[0x68] == (CRefTime)0x6b)) goto LAB_0061ef93;
           if ((((byte)pCVar22[0x124] & 1) == 0) || (((byte)pCVar22[0x5c] & 4) == 0)) {
             local_2b78 = *(CRefTime **)(pCVar22 + 0x118c);
             vec2_copy();
-            fVar35 = (float10)vec2_length();
+            fVar35 = (float)vec2_length();
             local_2b24 = (CRefTime *)(float)fVar35;
             if (((byte)pCVar22[0x5c] & 1) == 0) {
-              fVar35 = (float10)sqrtf_f();
+              fVar35 = (float)sqrtf_f();
               local_2b34 = (int *)(float)fVar35;
               *(float *)(pCVar22 + 0x118c) =
                    (float)local_2b34 * local_2b8c * 0.002 * (float)local_2b24 * 1.5 +
@@ -102325,14 +102180,14 @@ LAB_0061ef93:
                    ((CVar5 == (CRefTime)0x12 || (CVar5 == (CRefTime)0x11)))))) ||
                  (CVar5 == (CRefTime)0xa)) &&
                 (iVar6 = combat_getAttackWindup(), (int)*(float *)(pCVar22 + 0x6c) < iVar6)))) {
-              fVar35 = (float10)sqrtf_f();
+              fVar35 = (float)sqrtf_f();
               fVar12 = local_2b8c * 0.000100000005 * (float)local_2b24 * 1.5;
 LAB_0061ed61:
               local_2b34 = (int *)(float)fVar35;
               fVar12 = (float)local_2b34 * fVar12;
             }
             else {
-              fVar35 = (float10)sqrtf_f();
+              fVar35 = (float)sqrtf_f();
               fVar12 = (float)local_2b24 * local_2ba4 * 1.5;
               if (pCVar22[0x68] != (CRefTime)0x4f) goto LAB_0061ed61;
               local_2b34 = (int *)(float)fVar35;
@@ -102368,9 +102223,9 @@ LAB_0061ed61:
             }
             goto LAB_0061f008;
           }
-          fVar35 = (float10)sqrtf_f();
+          fVar35 = (float)sqrtf_f();
           local_2b78 = (CRefTime *)(float)fVar35;
-          fVar35 = (float10)vec3_length();
+          fVar35 = (float)vec3_length();
           local_2b34 = (int *)(float)fVar35;
           fVar12 = local_2ba4 * 0.2;
           *(float *)(pCVar22 + 0x118c) =
@@ -102423,17 +102278,17 @@ LAB_0061f008:
       array_lerp();
       if ((((*(ushort *)(pCVar22 + 0x124) & 1) == 0) || (((byte)pCVar22[0x5c] & 4) == 0)) ||
          ((*(ushort *)(pCVar22 + 0x124) & 0x10) != 0)) {
-        fVar35 = (float10)exp_decay_factor();
+        fVar35 = (float)exp_decay_factor();
         pCVar9 = local_2b18;
         local_2b34 = (int *)(float)fVar35;
         *(float *)(pCVar22 + 0x58) = (float)local_2b34 * *(float *)(pCVar22 + 0x58);
         if ((((byte)local_2b18[0x124] & 4) == 0) || (0 < (int)*(float *)(local_2b18 + 300))) {
           if (*(float *)(local_2b18 + 0x128) == 0.0) {
             vec2_copy();
-            fVar35 = (float10)vec2_lengthSq();
+            fVar35 = (float)vec2_lengthSq();
             local_2b34 = (int *)(float)fVar35;
             if (0.02 < (float)local_2b34) {
-              fVar35 = (float10)vec3_dot();
+              fVar35 = (float)vec3_dot();
               local_2b34 = (int *)(float)fVar35;
               if ((0.0 < (float)local_2b34) && ((char)local_2b88 == '\0')) {
                 vec2_copy();
@@ -102447,12 +102302,12 @@ LAB_0061f008:
                 }
                 pfVar18 = (float *)arrayElem_stride4();
                 if (*pfVar18 <= 0.0) {
-                  fVar35 = (float10)acosf_wrap();
+                  fVar35 = (float)acosf_wrap();
                   local_2b34 = (int *)(float)fVar35;
                   pvVar30 = local_2b34;
                 }
                 else {
-                  fVar35 = (float10)acosf_wrap();
+                  fVar35 = (float)acosf_wrap();
                   local_2b34 = (int *)(float)fVar35;
                   pvVar30 = (void *)-(float)local_2b34;
                 }
@@ -102465,7 +102320,7 @@ LAB_0061f008:
         else {
           noop();
           vec2_copy();
-          fVar35 = (float10)vec2_lengthSq();
+          fVar35 = (float)vec2_lengthSq();
           local_2b34 = (int *)(float)fVar35;
           if ((0.0 < (float)local_2b34) && ((char)local_2b88 == '\0')) {
             vec2_normalize();
@@ -102478,26 +102333,26 @@ LAB_0061f008:
             }
             pfVar18 = (float *)arrayElem_stride4();
             if (*pfVar18 <= 0.0) {
-              fVar35 = (float10)acosf_wrap();
+              fVar35 = (float)acosf_wrap();
             }
             else {
-              fVar35 = (float10)acosf_wrap();
+              fVar35 = (float)acosf_wrap();
             }
             local_2b34 = (int *)(float)fVar35;
-            fVar35 = (float10)computeYawFromDir();
+            fVar35 = (float)computeYawFromDir();
             local_2b34 = (int *)(float)fVar35;
             array_lerp();
             pCVar9 = local_2b18;
           }
           vec3_copy();
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b34 = (int *)(float)fVar35;
           if (0.0 < (float)local_2b34) {
             vec3_normalize();
             arrayElem_stride4();
-            fVar35 = (float10)asinf_f();
+            fVar35 = (float)asinf_f();
             local_2b34 = (int *)(float)fVar35;
-            fVar35 = (float10)computeYawFromDir();
+            fVar35 = (float)computeYawFromDir();
             local_2b34 = (int *)(float)fVar35;
             array_lerp();
           }
@@ -102517,13 +102372,13 @@ LAB_0061f008:
         }
         pfVar18 = (float *)arrayElem_stride4();
         if (*pfVar18 <= 0.0) {
-          fVar35 = (float10)acosf_wrap();
+          fVar35 = (float)acosf_wrap();
         }
         else {
-          fVar35 = (float10)acosf_wrap();
+          fVar35 = (float)acosf_wrap();
         }
         local_2b34 = (int *)(float)fVar35;
-        fVar35 = (float10)computeYawFromDir();
+        fVar35 = (float)computeYawFromDir();
         local_2b34 = (int *)(float)fVar35;
         array_lerp();
         pCVar9 = local_2b18;
@@ -102577,7 +102432,7 @@ LAB_0061f008:
             vec3i64_copyAdd();
             vec3i64_copySub();
             vec3i64_toFloat();
-            fVar35 = (float10)vec3_lengthSq();
+            fVar35 = (float)vec3_lengthSq();
             local_2b34 = (int *)(float)fVar35;
             if (1.0 < (float)local_2b34) {
               vec6_copy();
@@ -102633,13 +102488,13 @@ LAB_0061fd4e:
         int64_add_42c9b0();
         pfVar18 = (float *)arrayElem_stride4();
         arrayElem_stride4();
-        fVar35 = (float10)computeYawFromDir();
+        fVar35 = (float)computeYawFromDir();
         *pfVar18 = (float)fVar35;
         pfVar18 = (float *)arrayElem_stride4();
-        fVar35 = (float10)computeYawFromDir();
+        fVar35 = (float)computeYawFromDir();
         *pfVar18 = (float)fVar35;
         pfVar18 = (float *)arrayElem_stride4();
-        fVar35 = (float10)computeYawFromDir();
+        fVar35 = (float)computeYawFromDir();
         *pfVar18 = (float)fVar35;
         *(float *)(local_2b18 + 0x1180) = 0.0;
       }
@@ -102689,7 +102544,7 @@ LAB_0061fe21:
       if (cVar3 == '\x01') {
         vec3i64_copySub();
         vec3i64_toFloat();
-        fVar35 = (float10)vec3_lengthSq();
+        fVar35 = (float)vec3_lengthSq();
         local_2b48 = (void *)(float)fVar35;
         if (0.001 <= (float)local_2b48) {
           if (100.0 < (float)local_2b48) {
@@ -102705,7 +102560,7 @@ LAB_0061fff4:
           *(undefined1 *)(*piVar7 + 0x70) = 2;
         }
 LAB_0061ffff:
-        fVar35 = (float10)computeYawFromDir();
+        fVar35 = (float)computeYawFromDir();
 LAB_00620623:
         local_2b48 = (void *)(float)fVar35;
         array_lerp();
@@ -102713,16 +102568,16 @@ LAB_00620623:
       else {
         if (cVar3 == '\0') {
           local_2b90 = (-*(float *)(iVar6 + 0x50) * 3.1415927) / 180.0;
-          fVar35 = (float10)cosf_f();
+          fVar35 = (float)cosf_f();
           local_2b48 = (void *)(float)fVar35;
-          fVar35 = (float10)sinf_f();
+          fVar35 = (float)sinf_f();
           local_2b48 = (void *)(float)fVar35;
           setVec3();
           vec3i64_setFromGen();
           vec3i64_copyAdd();
           vec3i64_copySub();
           vec3i64_toFloat();
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b48 = (void *)(float)fVar35;
           if (0.001 <= (float)local_2b48) {
             vec3_normalize();
@@ -102736,16 +102591,16 @@ LAB_00620623:
         }
         if (cVar3 == '\x02') {
           local_2b90 = (-*(float *)(iVar6 + 0x50) * 3.1415927) / 180.0;
-          fVar35 = (float10)cosf_f();
+          fVar35 = (float)cosf_f();
           local_2b48 = (void *)(float)fVar35;
-          fVar35 = (float10)sinf_f();
+          fVar35 = (float)sinf_f();
           local_2b48 = (void *)(float)fVar35;
           setVec3();
           vec3i64_setFromGen();
           vec3i64_copyAdd();
           vec3i64_copySub();
           vec3i64_toFloat();
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b48 = (void *)(float)fVar35;
           if (0.001 <= (float)local_2b48) {
             vec3_normalize();
@@ -102762,7 +102617,7 @@ LAB_00620623:
           vec3i64_toFloat();
           local_2cc0 = (undefined4 *)arrayElem_stride4();
           *local_2cc0 = 0;
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b48 = (void *)(float)fVar35;
           if (0.001 <= (float)local_2b48) {
             if (900.0 < (float)local_2b48) {
@@ -102809,7 +102664,7 @@ LAB_00620623:
           array_lerp();
           vec3_copy();
           *local_2cc0 = 0;
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b48 = (void *)(float)fVar35;
           if ((float)local_2b48 <= 0.0) goto LAB_0062063f;
           vec3_normalize();
@@ -102822,13 +102677,13 @@ LAB_00620623:
           }
           pfVar18 = (float *)arrayElem_stride4();
           if (*pfVar18 <= 0.0) {
-            fVar35 = (float10)acosf_wrap();
+            fVar35 = (float)acosf_wrap();
           }
           else {
-            fVar35 = (float10)acosf_wrap();
+            fVar35 = (float)acosf_wrap();
           }
           local_2b48 = (void *)(float)fVar35;
-          fVar35 = (float10)computeYawFromDir();
+          fVar35 = (float)computeYawFromDir();
           goto LAB_00620623;
         }
       }
@@ -102843,7 +102698,7 @@ LAB_0062063f:
       vec3i64_copySub();
       vec6_copyAndScale();
       vec3i64_add();
-      fVar35 = (float10)computeYawFromDir();
+      fVar35 = (float)computeYawFromDir();
       local_2b48 = (void *)(float)fVar35;
       in_stack_ffffc88c = 0x62074c00000000;
       array_lerp();
@@ -102862,7 +102717,7 @@ LAB_0062094d:
         else {
           vec3i64_copySub();
           vec3i64_toFloat();
-          fVar35 = (float10)vec3_lengthSq();
+          fVar35 = (float)vec3_lengthSq();
           local_2b48 = (void *)(float)fVar35;
           if (4096.0 < (float)local_2b48) goto LAB_0062094d;
           mat4_identity();
@@ -103087,13 +102942,13 @@ LAB_00620c9d:
   if ((puVar11[0x18] != 2) && (5000 < (int)puVar11[0x1a])) {
     if ((puVar11[0x18] != 3) && (iVar6 = map_valueAtOr0(), iVar6 != 0)) {
       map_valueAtOr0();
-      fVar35 = (float10)combat_getEffectiveHaste();
+      fVar35 = (float)combat_getEffectiveHaste();
       local_2b48 = (void *)(float)fVar35;
       iVar6 = map_valueAtOr0();
       *(undefined4 *)(iVar6 + 0x70) = 0;
       iVar6 = map_valueAtOr0();
       map_valueAtOr0();
-      fVar35 = (float10)combat_getEffectiveHaste();
+      fVar35 = (float)combat_getEffectiveHaste();
       local_2b90 = (float)fVar35;
       *(int *)(iVar6 + 0x6c) =
            (int)(((float)local_2b48 / local_2b90) * (float)*(int *)(iVar6 + 0x6c));
@@ -103105,12 +102960,12 @@ LAB_00620c9d:
   if (iVar6 != 0) {
     local_2b50 = (CRefTime *)map_valueAtOr0();
   }
-  fVar35 = (float10)vec3_length();
+  fVar35 = (float)vec3_length();
   local_2b48 = (void *)(float)fVar35;
   local_2c0c = (uint)((float)local_2b48 * 2.0 + 1.0);
   vec3_divScalar();
   vec3_copy();
-  fVar35 = (float10)vec3_lengthSq();
+  fVar35 = (float)vec3_lengthSq();
   local_2b48 = (void *)(float)fVar35;
   if (0.0 < (float)local_2b48) {
     vec3_normalize();
@@ -103356,12 +103211,12 @@ LAB_00621edb:
         world_getColumnAtFixedPos();
         cVar3 = block_isSolidType();
         if (cVar3 == '\0') {
-          fVar35 = (float10)vec3_length();
+          fVar35 = (float)vec3_length();
           local_2b48 = (void *)((float)fVar35 * local_2ba4);
           vec3_normalizeOut();
           vec3_negateSwapYZ();
           in_stack_ffffc88c = CONCAT44(puVar11 + 6,0x622298);
-          fVar35 = (float10)World_raycastVoxels();
+          fVar35 = (float)World_raycastVoxels();
           local_2b90 = (float)fVar35;
           if (local_2b90 < (float)local_2b48) {
             local_2b35 = 1;
@@ -103397,10 +103252,10 @@ LAB_00621edb:
         cVar3 = (char)local_2b5c;
         if (((cVar3 == '\0') && (local_2b35 != 0)) &&
            ((puVar11[0x18] != 3 && (local_2b88 != (CRefTime *)0x0)))) {
-          fVar35 = (float10)combat_getEffectiveHaste();
+          fVar35 = (float)combat_getEffectiveHaste();
           local_2b48 = (void *)(float)fVar35;
           *(float *)(pCVar9 + 0x70) = 0.0;
-          fVar35 = (float10)combat_getEffectiveHaste();
+          fVar35 = (float)combat_getEffectiveHaste();
           local_2b90 = (float)fVar35;
           *(int *)(pCVar9 + 0x6c) =
                (int)(((float)local_2b48 / local_2b90) * (float)(int)*(float *)(pCVar9 + 0x6c));
@@ -103617,14 +103472,13 @@ LAB_00620d7a:
  */
 /* Global::exp_decay_factor @ 00622d40 */
 
-float10 exp_decay_factor(float param_1)
+float exp_decay_factor(float param_1)
 
 {
   double arg_as_double;
   
-  arg_as_double = (double)param_1;
-  libm_sse2_exp_precise();
-  return (float10)(float)arg_as_double;
+  arg_as_double = libm_sse2_exp_precise((double)param_1);
+  return (float)(float)arg_as_double;
 }
 
 
@@ -103710,10 +103564,10 @@ void GameController_setWidgetBounds(float *out_pos)
   matrix = (float *)AdaptionWidget_computeLayoutBounds(matrix_buf);
   fVar1 = matrix[5];
   fVar2 = matrix[1];
-  inv_w = 1.0 / (matrix[7] * 0.0 + matrix[3] * 0.0 + matrix[0xf]);
+  inv_w = 1.0f / (matrix[7] * 0.0f + matrix[3] * 0.0f + matrix[0xf]);
   fVar3 = matrix[0xd];
   *out_pos = inv_w * (matrix[4] * 0.0 + *matrix * 0.0 + matrix[0xc]);
-  out_pos[1] = inv_w * (fVar1 * 0.0 + fVar2 * 0.0 + fVar3);
+  out_pos[1] = inv_w * (fVar1 * 0.0f + fVar2 * 0.0f + fVar3);
   __security_check_cookie(local_8 ^ (uint)&stack0xfffffffc);
   return;
 }
@@ -103750,14 +103604,14 @@ void GameController_setWidgetBounds2(float *out_size)
   fVar8 = (fVar6 + *(float *)(self + 0x70)) - fVar1;
   fVar7 = (*(float *)(self + 0x54) + *(float *)(self + 0x74)) - fVar2;
   fVar4 = (*(float *)(self + 0x54) + *(float *)(self + 0x7c)) - fVar2;
-  if (fVar5 < 0.0) {
-    fVar5 = 0.0;
+  if (fVar5 < 0.0f) {
+    fVar5 = 0.0f;
   }
   if (fVar8 < fVar5) {
     fVar8 = fVar5;
   }
-  if (fVar4 < 0.0) {
-    fVar4 = 0.0;
+  if (fVar4 < 0.0f) {
+    fVar4 = 0.0f;
   }
   if (fVar7 < fVar4) {
     fVar7 = fVar4;
@@ -104671,7 +104525,7 @@ void Node_hit_test_point_recursive(float *point,uint flags)
     }
     fVar1 = *point;
     fVar2 = point[1];
-    local_24 = 1.0 / (*(float *)(self + 0x94) * fVar1 + *(float *)(self + 0xa4) * fVar2 +
+    local_24 = 1.0f / (*(float *)(self + 0x94) * fVar1 + *(float *)(self + 0xa4) * fVar2 +
                      *(float *)(self + 0xc4));
     local_pt = local_24 *
                (*(float *)(self + 0x98) * fVar2 + fVar1 * *(float *)(self + 0x88) +
@@ -105029,10 +104883,10 @@ void GameController_update_render_targets(void)
          *(undefined4 *)(*(int *)(self + 0x6f0) + *(int *)(self + 0x6c4) * 4);
     mat4_identity();
     inv_alpha = *(float *)(*(int *)(self + 0x748) + *(int *)(self + 0x71c) * 4);
-    if (0.0 < inv_alpha) {
-      inv_alpha = 1.0 / inv_alpha;
+    if (0.0f < inv_alpha) {
+      inv_alpha = 1.0f / inv_alpha;
       i = *(int *)(self + 0xc14);
-      if (inv_alpha != 1.0) {
+      if (inv_alpha != 1.0f) {
         *(float *)(i + 0x6c) = *(float *)(i + 0x6c) * inv_alpha;
         *(float *)(i + 0x70) = *(float *)(i + 0x70) * inv_alpha;
         *(float *)(i + 0x74) = *(float *)(i + 0x74) * inv_alpha;
@@ -105865,7 +105719,7 @@ void GameController_position_popup(int widget,float offset)
 {
   float *posPtr;
   int self;
-  float10 fVar2;
+  float fVar2;
   float coord;
   int node;
   undefined4 arg0;
@@ -105891,63 +105745,63 @@ void GameController_position_popup(int widget,float offset)
       node = *(int *)(self + 0xb4);
     }
     Node_detach_from_parent(node);
-    if (offset != 0.0) {
-      fVar2 = (float10)Widget_measure();
+    if (offset != 0.0f) {
+      fVar2 = (float)Widget_measure();
       valX = (float)fVar2;
       posPtr = (float *)GameController_setWidgetBounds(basePos);
-      posX = *posPtr + 0.0;
+      posX = *posPtr + 0.0f;
       posY = posPtr[1] + valX;
       AdaptionWidget_applyScrollLayout(&posX,1);
     }
-    fVar2 = (float10)GameController_getWidgetSize();
+    fVar2 = (float)GameController_getWidgetSize();
     valX = (float)fVar2;
-    if (valX < 0.0) {
+    if (valX < 0.0f) {
       arg0 = 1;
-      fVar2 = (float10)GameController_getWidgetSize2(1);
+      fVar2 = (float)GameController_getWidgetSize2(1);
       Widget_setScroll(0,(float)fVar2,arg0);
     }
-    fVar2 = (float10)GameController_getWidgetSize2();
+    fVar2 = (float)GameController_getWidgetSize2();
     valX = (float)fVar2;
-    if (valX < 0.0) {
+    if (valX < 0.0f) {
       arg1 = 1;
       arg0 = 0;
-      fVar2 = (float10)GameController_getWidgetSize(0,1);
+      fVar2 = (float)GameController_getWidgetSize(0,1);
       Widget_setScroll((float)fVar2,arg0,arg1);
     }
     node = *(int *)(self + 0x10c);
-    fVar2 = (float10)GameController_getWidgetSize();
+    fVar2 = (float)GameController_getWidgetSize();
     valX = (float)fVar2;
-    fVar2 = (float10)Widget_measureGuarded();
+    fVar2 = (float)Widget_measureGuarded();
     posY = (float)fVar2;
     if ((float)node < valX + posY) {
       node = *(int *)(self + 0x10c);
       arg0 = 1;
-      fVar2 = (float10)GameController_getWidgetSize2(1);
+      fVar2 = (float)GameController_getWidgetSize2(1);
       coord = (float)fVar2;
-      fVar2 = (float10)Widget_measureGuarded(coord);
+      fVar2 = (float)Widget_measureGuarded(coord);
       posY = (float)fVar2;
       Widget_setScroll((float)node - posY,coord,arg0);
     }
     node = *(int *)(self + 0x110);
-    fVar2 = (float10)GameController_getWidgetSize2();
+    fVar2 = (float)GameController_getWidgetSize2();
     posY = (float)fVar2;
-    fVar2 = (float10)Widget_measure();
+    fVar2 = (float)Widget_measure();
     valX = (float)fVar2;
     if ((float)node < posY + valX) {
-      if (savedOffset == 0.0) {
+      if (savedOffset == 0.0f) {
         node = *(int *)(self + 0x110);
         arg0 = 1;
-        fVar2 = (float10)Widget_measure(1);
+        fVar2 = (float)Widget_measure(1);
         savedOffset = (float)fVar2;
         coord = (float)node - savedOffset;
-        fVar2 = (float10)GameController_getWidgetSize(coord);
+        fVar2 = (float)GameController_getWidgetSize(coord);
         Widget_setScroll((float)fVar2,coord,arg0);
       }
       else {
-        fVar2 = (float10)Widget_measure();
+        fVar2 = (float)Widget_measure();
         posY = (float)fVar2;
         posPtr = (float *)GameController_setWidgetBounds(basePos);
-        adjX = *posPtr - 0.0;
+        adjX = *posPtr - 0.0f;
         savedOffset = posPtr[1] - posY;
         AdaptionWidget_applyScrollLayout(&adjX,1);
       }
@@ -106349,8 +106203,8 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
   idCounter = 0;
   local_26c = 0;
   local_2bc = 0;
-  posOut2[2] = 100.0;
-  posOut2[3] = 0.0;
+  posOut2[2] = 100.0f;
+  posOut2[3] = 0.0f;
   local_2d0 = 0;
   local_2d4 = (int *)std_list_alloc_sentinel_0x44(0,0);
   ehState._0_1_ = 7;
@@ -107037,7 +106891,7 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
     piVar4 = selfCopy;
     piVar14 = *(int **)piVar15[0x1f];
     if (piVar14 != (int *)piVar15[0x1f]) {
-      local_270 = 0.0;
+      local_270 = 0.0f;
       do {
         (**(code **)(*(int *)piVar14[2] + 0x1c))();
         piVar15 = (int *)rbtree_findOrInsert_intKey(&local_270);
@@ -107055,7 +106909,7 @@ void GameController_deserialize_widget_tree(basic_istream<char,std::char_traits<
     piVar15 = *(int **)selfCopy[0x1f];
     puVar18 = local_2e0;
     if (piVar15 != (int *)selfCopy[0x1f]) {
-      local_270 = 1.4013e-45;
+      local_270 = 1.4013e-45f;
       do {
         (**(code **)(*(int *)piVar15[2] + 0x20))();
         piVar14 = (int *)rbtree_findOrInsert_intKey(&local_270);
@@ -109745,7 +109599,7 @@ void PlasmaGraphics_loadDisplay(void)
   int *nullPtr;
   int *childIter;
   bool isLess;
-  float10 fVar18;
+  float fVar18;
   undefined8 uVar19;
   undefined8 local_104;
   undefined8 local_fc;
@@ -110178,7 +110032,7 @@ LAB_0068296d:
                                       cVar3 = strEqual_cstr(local_3c,"pageWidth");
                                       if (cVar3 != '\0') {
                                         StreamReader_readTaggedBlockAppend();
-                                        fVar18 = (float10)istream_readFloat();
+                                        fVar18 = (float)istream_readFloat();
                                         **(float **)(self + 0x74) = (float)fVar18;
                                         StreamReader_endBlockCheckPos();
                                         goto LAB_006828a1;
@@ -110187,7 +110041,7 @@ LAB_0068296d:
                                         cVar3 = strEqual_cstr(local_3c,"pageHeight");
                                         if (cVar3 != '\0') {
                                           StreamReader_readTaggedBlockAppend();
-                                          fVar18 = (float10)istream_readFloat();
+                                          fVar18 = (float)istream_readFloat();
                                           *(float *)(*(int *)(self + 0x74) + 4) = (float)fVar18;
                                           StreamReader_endBlockCheckPos();
                                           goto LAB_006828a1;
@@ -110196,7 +110050,7 @@ LAB_0068296d:
                                           cVar3 = strEqual_cstr(local_3c,&DAT_00720428);
                                           if (cVar3 != '\0') {
                                             StreamReader_readTaggedBlockAppend();
-                                            fVar18 = (float10)istream_readFloat();
+                                            fVar18 = (float)istream_readFloat();
                                             *(float *)(*(int *)(self + 0x74) + 8) = (float)fVar18;
                                             StreamReader_endBlockCheckPos();
                                             goto LAB_006828a1;
@@ -112363,7 +112217,7 @@ void SmoothMeshShape_deserializeProperties(void)
   byte *******tokenPtr;
   byte *pbVar14;
   bool isMatch;
-  float10 fVar16;
+  float fVar16;
   undefined4 nameStub;
   undefined4 local_9c;
   uint local_98;
@@ -112738,7 +112592,7 @@ LAB_0068511d:
                                                   }
                                                   else {
                                                     StreamReader_readTaggedBlockAppend();
-                                                    fVar16 = (float10)istream_readFloat();
+                                                    fVar16 = (float)istream_readFloat();
                                                     local_68 = (int *)(float)fVar16;
                                                     shape[0x2fd] = (int)local_68;
                                                     StreamReader_endBlockCheckPos();
@@ -112747,7 +112601,7 @@ LAB_0068511d:
                                                   }
                                                   else {
                                                     StreamReader_readTaggedBlockAppend();
-                                                    fVar16 = (float10)istream_readFloat();
+                                                    fVar16 = (float)istream_readFloat();
                                                     local_68 = (int *)(float)fVar16;
                                                     shape[0x2fc] = (int)local_68;
                                                     StreamReader_endBlockCheckPos();
@@ -112796,7 +112650,7 @@ LAB_0068511d:
                                                   }
                                                   else {
                                                     StreamReader_readTaggedBlockAppend();
-                                                    fVar16 = (float10)istream_readFloat();
+                                                    fVar16 = (float)istream_readFloat();
                                                     local_68 = (int *)(float)fVar16;
                                                     StreamReader_endBlockCheckPos();
                                                     vertBase = local_68;
@@ -113027,7 +112881,7 @@ void TextShape_deserializeProperties(void)
   char *cmpStr;
   undefined4 *_Dst;
   bool isMatch;
-  float10 fVar15;
+  float fVar15;
   undefined4 strStub;
   undefined4 local_bc;
   uint local_b8;
@@ -113253,11 +113107,11 @@ LAB_00685d86:
       }
       if (isMatch) {
         StreamReader_readTaggedBlockAppend();
-        pixelSize = 0.0;
+        pixelSize = 0.0f;
         atEnd = StreamReader_endBlockCheckPos();
         shapePtr = textShape;
         if (atEnd == '\0') {
-          strokeRadius = 0.0;
+          strokeRadius = 0.0f;
           do {
             StreamReader_readToken(nameBuf,1);
             shapePtr = textShape;
@@ -113545,8 +113399,8 @@ LAB_00686057:
                                     local_64 = 0;
                                     matrixBuf[0] = 0;
                                     ehState = CONCAT31(ehState._1_3_,8);
-                                    strokeRadius = 0.0;
-                                    pixelSize = 0.0;
+                                    strokeRadius = 0.0f;
+                                    pixelSize = 0.0f;
                                     StreamReader_readTaggedBlockAppend();
                                     atEnd = StreamReader_endBlockCheckPos();
                                     shapePtr = textShape;
@@ -113574,7 +113428,7 @@ LAB_00686057:
                                         if (atEnd != '\0') {
                                           StreamReader_readTaggedBlockAppend();
                                           iVar8 = istream_readValue();
-                                          pixelSize = (float)iVar8 * 0.5;
+                                          pixelSize = (float)iVar8 * 0.5f;
                                           goto LAB_00686731;
                                         }
                                         atEnd = strEqual_cstr(nameBuf,"TextShape.font.size");
@@ -113593,13 +113447,13 @@ LAB_00686057:
                                           }
                                           else {
                                             StreamReader_readTaggedBlockAppend();
-                                            fVar15 = (float10)istream_readFloat();
-                                            pixelSize = (float)fVar15 * 0.5;
+                                            fVar15 = (float)istream_readFloat();
+                                            pixelSize = (float)fVar15 * 0.5f;
                                           }
                                           goto LAB_00686731;
                                         }
                                         StreamReader_readTaggedBlockAppend();
-                                        fVar15 = (float10)istream_readFloat();
+                                        fVar15 = (float)istream_readFloat();
                                         strokeRadius = (float)fVar15;
                                         StreamReader_endBlockCheckPos();
                                       }
@@ -113655,7 +113509,7 @@ LAB_00686738:
                               StreamReader_readTaggedBlockAppend();
                               iVar8 = istream_readValue();
                               shapePtr = textShape;
-                              textShape[0x70] = (int)((float)iVar8 * 0.5);
+                              textShape[0x70] = (int)((float)iVar8 * 0.5f);
                               StreamReader_endBlockCheckPos();
                             }
                           }
@@ -113669,7 +113523,7 @@ LAB_00686738:
                         }
                         else {
                           StreamReader_readTaggedBlockAppend();
-                          fVar15 = (float10)istream_readFloat();
+                          fVar15 = (float)istream_readFloat();
                           shapePtr = textShape;
                           textShape[0x79] = (int)(float)fVar15;
                           StreamReader_endBlockCheckPos();
@@ -113677,7 +113531,7 @@ LAB_00686738:
                       }
                       else {
                         StreamReader_readTaggedBlockAppend();
-                        fVar15 = (float10)istream_readFloat();
+                        fVar15 = (float)istream_readFloat();
                         shapePtr = textShape;
                         textShape[0x72] = (int)(float)fVar15;
                         StreamReader_endBlockCheckPos();
@@ -113685,7 +113539,7 @@ LAB_00686738:
                     }
                     else {
                       StreamReader_readTaggedBlockAppend();
-                      fVar15 = (float10)istream_readFloat();
+                      fVar15 = (float)istream_readFloat();
                       shapePtr = textShape;
                       textShape[0x71] = (int)(float)fVar15;
                       StreamReader_endBlockCheckPos();
@@ -113693,7 +113547,7 @@ LAB_00686738:
                   }
                   else {
                     StreamReader_readTaggedBlockAppend();
-                    fVar15 = (float10)istream_readFloat();
+                    fVar15 = (float)istream_readFloat();
                     shapePtr = textShape;
                     textShape[0x70] = (int)(float)fVar15;
                     StreamReader_endBlockCheckPos();
@@ -113701,7 +113555,7 @@ LAB_00686738:
                 }
                 else {
                   StreamReader_readTaggedBlockAppend();
-                  fVar15 = (float10)istream_readFloat();
+                  fVar15 = (float)istream_readFloat();
                   shapePtr = textShape;
                   textShape[0x6f] = (int)(float)fVar15;
                   StreamReader_endBlockCheckPos();
@@ -115401,7 +115255,7 @@ void StreamReader_skipBlock(void)
 
 
 /* [AUDIT] proposed: float_to_uint64_round_guarded  (confidence: med)
- * purpose: Converts float10 ST0 to rounded unsigned 64-bit; if DAT_0076e2a0 set uses simple truncation
+ * purpose: Converts float ST0 to rounded unsigned 64-bit; if DAT_0076e2a0 set uses simple truncation
  * vars: in_ST0=input; DAT_0076e2a0=mode flag
  */
 /* Global::float_to_uint64_round_guarded @ 0068d910 */
@@ -115413,7 +115267,7 @@ ulonglong float_to_uint64_round_guarded(void)
   uint adjust;
   undefined4 highDword;
   float lowWord;
-  float10 in_ST0;
+  float in_ST0;
   uint lowBits;
   float highBits;
   
@@ -115424,10 +115278,10 @@ ulonglong float_to_uint64_round_guarded(void)
     lowWord = (float)in_ST0;
     if ((lowBits != 0) || (lowWord = highBits, (rounded & 0x7fffffff00000000) != 0)) {
       if ((int)lowWord < 0) {
-        rounded = rounded + (0x80000000 < (uint)-(float)(in_ST0 - (float10)(longlong)rounded));
+        rounded = rounded + (0x80000000 < (uint)-(float)(in_ST0 - (float)(longlong)rounded));
       }
       else {
-        adjust = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float10)(longlong)rounded));
+        adjust = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float)(longlong)rounded));
         rounded = CONCAT44((int)highBits - (uint)(lowBits < adjust),lowBits - adjust);
       }
     }

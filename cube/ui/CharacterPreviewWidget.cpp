@@ -43,12 +43,12 @@ void cube::CharacterPreviewWidget::ctor_0(undefined4 param_1,undefined4 param_2,
 undefined1 cube::CharacterPreviewWidget::vfunc_5(float *pPoint)
 
 {
-  float10 w;
+  float w;
   
-  if ((0.0 <= *pPoint) && (0.0 <= pPoint[1])) {
-    w = (float10)Widget_measureGuarded();
+  if ((0.0f <= *pPoint) && (0.0f <= pPoint[1])) {
+    w = (float)Widget_measureGuarded();
     if (*pPoint <= (float)w && (float)w != *pPoint) {
-      w = (float10)Widget_measure();
+      w = (float)Widget_measure();
       if (pPoint[1] <= (float)w && (float)w != pPoint[1]) {
         return 1;
       }

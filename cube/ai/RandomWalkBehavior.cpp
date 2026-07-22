@@ -111,10 +111,10 @@ void cube::RandomWalkBehavior::vfunc_0(int self,undefined4 param_2,int dt)
       z = (float)CONCAT44(iStack_2c,local_30);
       *(float *)(local_58 + 0x44) = (float)CONCAT44(iStack_34,local_38) * 1.5258789e-05;
       *(undefined4 *)(local_58 + 0x48) = 0;
-      len = (double)(*(float *)(local_58 + 0x40) * *(float *)(local_58 + 0x40) +
-                       *(float *)(local_58 + 0x44) * *(float *)(local_58 + 0x44) +
-                      *(float *)(local_58 + 0x48) * *(float *)(local_58 + 0x48));
-      libm_sse2_sqrt_precise();
+      len = libm_sse2_sqrt_precise
+                        ((double)(*(float *)(local_58 + 0x40) * *(float *)(local_58 + 0x40) +
+                                  *(float *)(local_58 + 0x44) * *(float *)(local_58 + 0x44) +
+                                 *(float *)(local_58 + 0x48) * *(float *)(local_58 + 0x48)));
       invLen = 1.0 / (float)len;
       *(float *)(iVar7 + 0x40) = invLen * *(float *)(iVar7 + 0x40) * 10.0;
       *(float *)(iVar7 + 0x44) = *(float *)(iVar7 + 0x44) * invLen * 10.0;

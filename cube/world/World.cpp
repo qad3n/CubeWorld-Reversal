@@ -1126,7 +1126,7 @@ void cube::World::updateObjectLabels(void)
   uint uVar14;
   uint uVar15;
   uint uVar16;
-  float10 fVar17;
+  float fVar17;
   float fVar18;
   float fVar19;
   float fVar20;
@@ -1347,13 +1347,13 @@ void cube::World::updateObjectLabels(void)
   iVar6 = *(int *)(in_ECX + 0x160);
   local_334 = *(float *)(iVar6 + 0x1000e4c);
   iVar5 = *(int *)(iVar6 + 0x8006d0);
-  local_354 = local_334 * 65536.0;
+  local_354 = local_334 * 65536.0f;
   uVar21 = ftol2();
   iVar4 = __alldiv((uint)uVar21 + *(uint *)(iVar5 + 0x10),
                    (int)((ulonglong)uVar21 >> 0x20) + *(int *)(iVar5 + 0x14) +
                    (uint)CARRY4((uint)uVar21,*(uint *)(iVar5 + 0x10)),0x10000,0);
   local_33c = *(float *)(iVar6 + 0x1000e50);
-  local_354 = local_33c * 65536.0;
+  local_354 = local_33c * 65536.0f;
   local_360 = (int)(iVar4 + (iVar4 >> 0x1f & 0xffU)) >> 8;
   uVar21 = ftol2();
   iVar5 = __alldiv((uint)uVar21 + *(uint *)(iVar5 + 0x18),
@@ -1361,7 +1361,7 @@ void cube::World::updateObjectLabels(void)
                    (uint)CARRY4((uint)uVar21,*(uint *)(iVar5 + 0x18)),0x10000,0);
   local_384 = (int)((iVar5 >> 0x1f & 0xffU) + iVar5) >> 8;
   uVar21 = CONCAT44(local_3c8._4_4_,(undefined4)local_3c8);
-  if ((2.0 < *(float *)(iVar6 + 0x1c4)) &&
+  if ((2.0f < *(float *)(iVar6 + 0x1c4)) &&
      (uVar14 = local_360 - 0x20, local_350 = uVar14,
      uVar21 = CONCAT44(local_3c8._4_4_,(undefined4)local_3c8), (int)uVar14 < local_360 + 0x20)) {
     local_34c = (float)(local_384 + -0x20);
@@ -1378,7 +1378,7 @@ void cube::World::updateObjectLabels(void)
           local_3c8 = uVar21;
           local_378 = (float)hash_or_index_compute(uVar14,local_35c);
           uVar21 = local_3c8;
-          if (((local_378 != 0.0) &&
+          if (((local_378 != 0.0f) &&
               (local_380 = (char *)((int)local_378 + 0x10), *(char *)((int)local_378 + 0x10) != '\0'
               )) && ((*(byte *)((int)local_378 + 0x30) & 1) != 0)) {
             iVar6 = *(int *)(in_ECX + 0x160);
@@ -1387,7 +1387,7 @@ void cube::World::updateObjectLabels(void)
             local_1c8[1] = (float)*(undefined4 *)(iVar6 + 0x1000e50);
             local_1c8[2] = (float)*(undefined4 *)(iVar6 + 0x1000e54);
             do {
-              local_354 = local_1c8[iVar5] * 65536.0;
+              local_354 = local_1c8[iVar5] * 65536.0f;
               uVar21 = ftol2();
               uVar14 = local_368;
               local_1bc[iVar5 * 2] = (uint)uVar21;
@@ -1395,9 +1395,9 @@ void cube::World::updateObjectLabels(void)
               iVar5 = iVar5 + 1;
             } while (iVar5 < 3);
             iVar6 = *(int *)(iVar6 + 0x8006d0);
-            fVar17 = (float10)terrain_generateColumnColor(local_344,local_368,0);
+            fVar17 = (float)terrain_generateColumnColor(local_344,local_368,0);
             local_348 = (float)fVar17;
-            local_37c = local_348 * 65536.0;
+            local_37c = local_348 * 65536.0f;
             uVar21 = ftol2();
             in_ECX = local_364;
             local_3d8 = ((int)local_344 >> 0x1f) << 0x10 | local_344 >> 0x10;
@@ -1419,10 +1419,10 @@ void cube::World::updateObjectLabels(void)
             iStack_188 = (local_274 - local_1bc[3]) - (uint)(local_278 < local_1bc[2]);
             local_184 = (int)local_270 - (int)local_1ac;
             iStack_180 = (local_26c - local_1a8) - (uint)(local_270 < local_1ac);
-            fVar18 = (float)CONCAT44(iStack_190,local_194) * 1.5258789e-05;
+            fVar18 = (float)CONCAT44(iStack_190,local_194) * 1.5258789e-05f;
             local_348 = (float)CONCAT44(iStack_180,local_184);
-            fVar19 = (float)CONCAT44(iStack_188,local_18c) * 1.5258789e-05;
-            fVar20 = local_348 * 1.5258789e-05;
+            fVar19 = (float)CONCAT44(iStack_188,local_18c) * 1.5258789e-05f;
+            fVar20 = local_348 * 1.5258789e-05f;
             iVar6 = *(int *)(local_364 + 0x160);
             local_100 = fVar19 * *(float *)(iVar6 + 0x800d98) +
                         fVar18 * *(float *)(iVar6 + 0x800d88) +
@@ -1430,7 +1430,7 @@ void cube::World::updateObjectLabels(void)
             fStack_fc = fVar19 * *(float *)(iVar6 + 0x800d9c) +
                         fVar18 * *(float *)(iVar6 + 0x800d8c) +
                         fVar20 * *(float *)(iVar6 + 0x800dac) + *(float *)(iVar6 + 0x800dbc);
-            local_40 = 1.0 / (fVar19 * *(float *)(iVar6 + 0x800da4) +
+            local_40 = 1.0f / (fVar19 * *(float *)(iVar6 + 0x800da4) +
                               fVar18 * *(float *)(iVar6 + 0x800d94) +
                               fVar20 * *(float *)(iVar6 + 0x800db4) + *(float *)(iVar6 + 0x800dc4));
             local_f8 = fVar19 * *(float *)(iVar6 + 0x800da0) + fVar18 * *(float *)(iVar6 + 0x800d90)
@@ -1444,7 +1444,7 @@ void cube::World::updateObjectLabels(void)
             uVar15 = local_344;
             local_358 = local_270;
             local_18 = local_40;
-            if (0.0 < local_40) {
+            if (0.0f < local_40) {
               local_348 = *(float *)(iVar6 + 0x800d54) * fVar18 +
                           *(float *)(iVar6 + 0x800d64) * fVar19 +
                           *(float *)(iVar6 + 0x800d74) * local_40 + *(float *)(iVar6 + 0x800d84);
@@ -1457,14 +1457,14 @@ void cube::World::updateObjectLabels(void)
               fStack_d8 = *(float *)(iVar6 + 0x800d5c) * fVar19 +
                           *(float *)(iVar6 + 0x800d4c) * fVar18 +
                           *(float *)(iVar6 + 0x800d6c) * local_40 + *(float *)(iVar6 + 0x800d7c);
-              local_58 = 1.0 / local_348;
+              local_58 = 1.0f / local_348;
               fVar18 = local_dc * local_58;
               fVar19 = fStack_d8 * local_58;
               _local_60 = CONCAT44(fVar19,fVar18);
               local_58 = local_d4 * local_58;
               local_20 = CONCAT44(fVar19,fVar18);
               local_18 = local_58;
-              if (((-1.0 <= fVar18) && (fVar18 <= 1.0)) && ((-1.0 <= fVar19 && (fVar19 <= 1.0)))) {
+              if (((-1.0f <= fVar18) && (fVar18 <= 1.0f)) && ((-1.0f <= fVar19 && (fVar19 <= 1.0f)))) {
                 iVar6 = *(int *)(*(int *)(local_364 + 4) + 0x10c);
                 iVar5 = *(int *)(*(int *)(local_364 + 4) + 0x110);
                 local_f4 = (float)iVar6;
@@ -1473,12 +1473,12 @@ void cube::World::updateObjectLabels(void)
                 local_7c = 0x3f000000;
                 local_b8 = (float)iVar6;
                 fStack_b4 = (float)iVar5;
-                _local_84 = CONCAT44(fStack_f0 * 0.5,local_f4 * 0.5);
+                _local_84 = CONCAT44(fStack_f0 * 0.5f,local_f4 * 0.5f);
                 local_b0 = 0;
-                local_348 = local_f4 * 0.5 * fVar18 + local_b8 * 0.5;
-                local_358 = (uint *)(fVar19 * fStack_f0 * 0.5 + fStack_b4 * 0.5);
+                local_348 = local_f4 * 0.5f * fVar18 + local_b8 * 0.5f;
+                local_358 = (uint *)(fVar19 * fStack_f0 * 0.5f + fStack_b4 * 0.5f);
                 local_88 = 0;
-                _local_90 = CONCAT44(fStack_b4 * 0.5,local_b8 * 0.5);
+                _local_90 = CONCAT44(fStack_b4 * 0.5f,local_b8 * 0.5f);
                 local_20 = CONCAT44(local_358,local_348);
                 local_494[0] = &PTR_006fcd00;
                 local_484 = &DAT_006fcd08;
@@ -1561,9 +1561,9 @@ LAB_004ca03f:
                     }
                     fVar19 = *(float *)(*(int *)(in_ECX + 4) + 0xd4);
                     uVar15 = local_344;
-                    if (((local_348 - 100.0 <= fVar19) && (fVar19 < local_348 + 100.0)) &&
+                    if (((local_348 - 100.0f <= fVar19) && (fVar19 < local_348 + 100.0f)) &&
                        ((fVar19 = *(float *)(*(int *)(in_ECX + 4) + 0xd8),
-                        (float)local_358 - 20.0 <= fVar19 && (fVar19 < (float)local_358 + 10.0)))) {
+                        (float)local_358 - 20.0f <= fVar19 && (fVar19 < (float)local_358 + 10.0f)))) {
                       local_154 = local_350;
                       fStack_150 = fVar18;
                       *(ulonglong *)(iVar6 + 0x800dd4) = CONCAT44(fVar18,local_350);
@@ -1684,17 +1684,17 @@ LAB_004ca59b:
                 local_3b8 = local_368 << 0x10;
                 local_39c = ((int)uVar15 >> 0x1f) << 0x10 | uVar15 >> 0x10;
                 local_3a0 = uVar15 << 0x10;
-                fVar17 = (float10)GameController_entityDistanceSq(&local_3a0,&local_3b8);
+                fVar17 = (float)GameController_entityDistanceSq(&local_3a0,&local_3b8);
                 local_34c = (float)fVar17;
                 uVar14 = local_344;
-                if (0.0 < local_34c) {
+                if (0.0f < local_34c) {
                   RBTree_LowerBoundInsertUint(local_3e4,0,&local_36c,DAT_0076b248);
                   iVar6 = *(int *)(*(int *)(in_ECX + 0x160) + 0x8006d0);
                   uVar11 = __alldiv(puVar7[2],puVar7[3],0x10000,0);
                   uVar12 = __alldiv(*local_358,local_358[1],0x10000,0);
-                  fVar17 = (float10)terrain_generateColumnColor(uVar12,uVar11,0);
+                  fVar17 = (float)terrain_generateColumnColor(uVar12,uVar11,0);
                   local_34c = (float)fVar17;
-                  local_378 = local_34c * 65536.0;
+                  local_378 = local_34c * 65536.0f;
                   uVar21 = ftol2();
                   puVar7 = (uint *)(iVar6 + 0x20);
                   local_3c0 = (uint)uVar21 - *puVar7;
@@ -1702,10 +1702,10 @@ LAB_004ca59b:
                                (uint)((uint)uVar21 < *puVar7);
                   local_34c = (float)CONCAT44(iStack_3bc,local_3c0);
                   local_354 = *(float *)(local_364 + 0x160);
-                  local_348 = local_34c * 1.5258789e-05;
+                  local_348 = local_34c * 1.5258789e-05f;
                   iVar6 = *(int *)((int)local_354 + 0x8006d0);
                   local_318 = *(float *)((int)local_354 + 0x1000e50);
-                  local_380 = (char *)(local_318 * 65536.0);
+                  local_380 = (char *)(local_318 * 65536.0f);
                   uVar14 = local_358[2];
                   uVar15 = *(uint *)(iVar6 + 0x18);
                   uVar16 = uVar14 - *(uint *)(iVar6 + 0x18);
@@ -1716,10 +1716,10 @@ LAB_004ca59b:
                   iStack_3a4 = (((uVar1 - iVar5) - (uint)(uVar14 < uVar15)) -
                                (int)((ulonglong)uVar21 >> 0x20)) - (uint)(uVar16 < (uint)uVar21);
                   local_34c = (float)CONCAT44(iStack_3a4,local_3a8);
-                  local_35c = local_34c * 1.5258789e-05;
+                  local_35c = local_34c * 1.5258789e-05f;
                   local_328 = *(float *)((int)local_354 + 0x1000e4c);
                   uVar14 = *local_36c;
-                  local_37c = local_328 * 65536.0;
+                  local_37c = local_328 * 65536.0f;
                   uVar15 = *(uint *)(iVar6 + 0x10);
                   uVar16 = uVar14 - *(uint *)(iVar6 + 0x10);
                   uVar1 = local_36c[1];
@@ -1730,7 +1730,7 @@ LAB_004ca59b:
                   local_3b0 = uVar16 - (uint)uVar21;
                   iStack_3ac = (((uVar1 - iVar6) - (uint)(uVar14 < uVar15)) -
                                (int)((ulonglong)uVar21 >> 0x20)) - (uint)(uVar16 < (uint)uVar21);
-                  fVar18 = (float)CONCAT44(iStack_3ac,local_3b0) * 1.5258789e-05;
+                  fVar18 = (float)CONCAT44(iStack_3ac,local_3b0) * 1.5258789e-05f;
                   local_34c = *(float *)((int)local_354 + 0x800da4) * local_35c +
                               fVar18 * *(float *)((int)local_354 + 0x800d94) +
                               *(float *)((int)local_354 + 0x800db4) * local_348 +
@@ -1747,7 +1747,7 @@ LAB_004ca59b:
                                fVar18 * *(float *)((int)local_354 + 0x800d8c) +
                                *(float *)((int)local_354 + 0x800dac) * local_348 +
                                *(float *)((int)local_354 + 0x800dbc);
-                  local_4c = 1.0 / local_34c;
+                  local_4c = 1.0f / local_34c;
                   fVar18 = local_4c * local_10c;
                   fVar19 = local_4c * fStack_108;
                   local_4c = local_4c * local_104;
@@ -1756,7 +1756,7 @@ LAB_004ca59b:
                   uVar14 = local_344;
                   uVar15 = local_350;
                   local_34 = local_4c;
-                  if (0.0 < local_4c) {
+                  if (0.0f < local_4c) {
                     local_c4 = fVar19 * *(float *)((int)local_354 + 0x800d58) +
                                fVar18 * *(float *)((int)local_354 + 0x800d48) +
                                local_4c * *(float *)((int)local_354 + 0x800d68) +
@@ -1765,7 +1765,7 @@ LAB_004ca59b:
                                 fVar18 * *(float *)((int)local_354 + 0x800d4c) +
                                 local_4c * *(float *)((int)local_354 + 0x800d6c) +
                                 *(float *)((int)local_354 + 0x800d7c);
-                    local_64 = 1.0 / (fVar19 * *(float *)((int)local_354 + 0x800d64) +
+                    local_64 = 1.0f / (fVar19 * *(float *)((int)local_354 + 0x800d64) +
                                       fVar18 * *(float *)((int)local_354 + 0x800d54) +
                                       local_4c * *(float *)((int)local_354 + 0x800d74) +
                                      *(float *)((int)local_354 + 0x800d84));
@@ -1779,8 +1779,8 @@ LAB_004ca59b:
                     local_6c = CONCAT44(fVar19,fVar18);
                     local_3c = local_6c;
                     local_34 = local_64;
-                    if ((((-1.0 <= fVar18) && (fVar18 <= 1.0)) && (-1.0 <= fVar19)) &&
-                       (fVar19 <= 1.0)) {
+                    if ((((-1.0f <= fVar18) && (fVar18 <= 1.0f)) && (-1.0f <= fVar19)) &&
+                       (fVar19 <= 1.0f)) {
                       iVar6 = *(int *)(*(int *)(local_364 + 4) + 0x10c);
                       iVar5 = *(int *)(*(int *)(local_364 + 4) + 0x110);
                       local_d0 = (float)iVar6;
@@ -1789,13 +1789,13 @@ LAB_004ca59b:
                       local_94 = 0x3f000000;
                       local_e8 = (float)iVar6;
                       fStack_e4 = (float)iVar5;
-                      _local_9c = CONCAT44(fStack_cc * 0.5,local_d0 * 0.5);
+                      _local_9c = CONCAT44(fStack_cc * 0.5f,local_d0 * 0.5f);
                       local_e0 = 0;
-                      local_35c = fVar18 * local_d0 * 0.5 + local_e8 * 0.5;
-                      fVar18 = fVar19 * fStack_cc * 0.5 + fStack_e4 * 0.5;
+                      local_35c = fVar18 * local_d0 * 0.5f + local_e8 * 0.5f;
+                      fVar18 = fVar19 * fStack_cc * 0.5f + fStack_e4 * 0.5f;
                       local_70 = 0;
                       iVar6 = (int)local_354 + 0x2e4;
-                      _local_78 = CONCAT44(fStack_e4 * 0.5,local_e8 * 0.5);
+                      _local_78 = CONCAT44(fStack_e4 * 0.5f,local_e8 * 0.5f);
                       local_3c = CONCAT44(fVar18,local_35c);
                       local_354 = fVar18;
                       GameController_format_region_singular(local_298,iVar6,local_36c);
@@ -1804,17 +1804,17 @@ LAB_004ca59b:
                       local_8._0_1_ = 8;
                       if ((local_358[6] != 1) && (local_358[6] != 10)) {
                         iVar6 = *(int *)(*(int *)(in_ECX + 0x160) + 0x8006d0);
-                        fVar17 = (float10)curve_level05((float)(int)puVar7[9]);
+                        fVar17 = (float)curve_level05((float)(int)puVar7[9]);
                         local_36c = (uint *)(float)fVar17;
-                        fVar17 = (float10)curve_level05((float)*(int *)(iVar6 + 400));
+                        fVar17 = (float)curve_level05((float)*(int *)(iVar6 + 400));
                         local_34c = (float)fVar17;
-                        if (local_34c - 0.1 < (float)local_36c) {
+                        if (local_34c - 0.1f < (float)local_36c) {
                           iVar6 = *(int *)(*(int *)(in_ECX + 0x160) + 0x8006d0);
-                          fVar17 = (float10)curve_level05((float)(int)puVar7[9]);
+                          fVar17 = (float)curve_level05((float)(int)puVar7[9]);
                           local_36c = (uint *)(float)fVar17;
-                          fVar17 = (float10)curve_level05((float)*(int *)(iVar6 + 400));
+                          fVar17 = (float)curve_level05((float)*(int *)(iVar6 + 400));
                           local_34c = (float)fVar17;
-                          if (local_34c + 0.1 < (float)local_36c) {
+                          if (local_34c + 0.1f < (float)local_36c) {
                             local_1a4 = 0x3f800000;
                             uStack_1a0 = 0x3e4ccccd;
                             local_ac = 0x3e4ccccd3f800000;
@@ -2162,7 +2162,7 @@ void cube::World::ctor_1(undefined4 world,undefined1 isServer)
   undefined4 *self;
   int iVar6;
   int iVar7;
-  float10 fVar8;
+  float fVar8;
   wchar_t *pwVar9;
   undefined4 uVar10;
   undefined *puVar11;
@@ -4568,7 +4568,7 @@ void cube::World::ctor_1(undefined4 world,undefined1 isServer)
   pfVar5 = (float *)arrayElem_stride4(1);
   iVar7 = (int)*pfVar5;
   pfVar5 = (float *)arrayElem_stride4(0);
-  fVar8 = (float10)terrain_generateColumnColor((int)*pfVar5,iVar7,obj);
+  fVar8 = (float)terrain_generateColumnColor((int)*pfVar5,iVar7,obj);
   local_40 = (undefined4 *)(float)fVar8;
   pfVar5 = (float *)arrayElem_stride4(2);
   *pfVar5 = (float)local_40;

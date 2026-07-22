@@ -679,7 +679,7 @@ LAB_0046b4a7:
     worldPtr = *pWorldInfoCopy;
     iVar6 = *(int *)(worldPtr + 0x8006d0);
     do {
-      local_f0 = *(float *)(worldPtr + 0x8003d4 + iVar20 * 4) * 65536.0;
+      local_f0 = *(float *)(worldPtr + 0x8003d4 + iVar20 * 4) * 65536.0f;
       uVar24 = ftol2();
       *(int *)(iVar6 + 0x10 + iVar20 * 8) = (int)uVar24;
       *(int *)(iVar6 + 0x14 + iVar20 * 8) = (int)((ulonglong)uVar24 >> 0x20);
@@ -920,7 +920,7 @@ void WorldInfo_generateBiomeContent(float param_1,uint param_2)
   int iVar26;
   char *pcVar27;
   bool bVar28;
-  float10 fVar29;
+  float fVar29;
   float fVar30;
   float fVar31;
   double dVar32;
@@ -1579,11 +1579,11 @@ void WorldInfo_generateBiomeContent(float param_1,uint param_2)
                 uVar21 = (uVar21 - 1 | 0xffffff00) + 1;
               }
               iVar26 = (int)(local_12d4 + uVar21 * 0x40) * 0x20 + *(int *)(uVar5 + 0xa8);
-              fVar29 = (float10)GameController_sampleTemperatureGrid(local_12dc,local_12f0);
+              fVar29 = (float)GameController_sampleTemperatureGrid(local_12dc,local_12f0);
               *(float *)(iVar26 + 4) = (float)fVar29;
-              fVar29 = (float10)GameController_sampleHumidityGrid(local_12dc,local_12f0);
+              fVar29 = (float)GameController_sampleHumidityGrid(local_12dc,local_12f0);
               *(float *)(iVar26 + 8) = (float)fVar29;
-              fVar29 = (float10)World_getRegionCellPtr(local_12dc,local_12f0);
+              fVar29 = (float)World_getRegionCellPtr(local_12dc,local_12f0);
               *(float *)(iVar26 + 0xc) = (float)fVar29;
               local_12f0 = (float *)((int)local_12f0 + 1);
               pfVar9 = local_1300;
@@ -1603,7 +1603,7 @@ void WorldInfo_generateBiomeContent(float param_1,uint param_2)
           if ((int)local_1330 <= (int)pfVar9) {
             local_1314 = local_12fc + ((int)local_1328 - (int)local_135c);
             do {
-              fVar29 = (float10)terrain_generateColumnColor();
+              fVar29 = (float)terrain_generateColumnColor();
               *local_1314 = (float)fVar29;
               local_1314 = local_1314 + 0x101;
               local_1300 = (float *)((int)local_1300 + 1);
@@ -1652,24 +1652,24 @@ LAB_005e4de0:
                0.3 < ABS((float)local_1300 - local_12fc[iVar26 + 0x101]))) {
               local_130d = 1;
             }
-            fVar29 = (float10)World_placeObjectWithSpacing();
+            fVar29 = (float)World_placeObjectWithSpacing();
             local_12dc = (float *)(float)fVar29;
             if (0.25 < (float)local_12dc) {
               local_1308 = (float)((int)local_1308 + 1);
             }
             local_1c = (double)(int)local_12cc;
             local_30 = local_1c * 0.08;
-            fVar29 = (float10)perlinNoise2D_cosInterp(local_1480,local_1c * 0.04 + 432.0);
+            fVar29 = (float)perlinNoise2D_cosInterp(local_1480,local_1c * 0.04 + 432.0);
             local_12f4 = (float *)(float)fVar29;
-            fVar29 = (float10)perlinNoise2D_cosInterp(local_1470,local_30 + 432.0);
+            fVar29 = (float)perlinNoise2D_cosInterp(local_1470,local_30 + 432.0);
             local_12e0 = (float *)(float)fVar29;
             fVar30 = 1.0 - ABS((float)local_12f4 + (float)local_12e0 * 0.05);
             fVar30 = 1.0 - fVar30 * fVar30 * fVar30;
             local_12f4 = (float *)(fVar30 * fVar30 + 0.0);
-            fVar29 = (float10)perlinNoise2D_cosInterp(local_180,local_30 + 234.0);
+            fVar29 = (float)perlinNoise2D_cosInterp(local_180,local_30 + 234.0);
             local_12e0 = (float *)(float)fVar29;
             local_1478 = (double)(float)local_12e0 * 0.05;
-            fVar29 = (float10)perlinNoise2D_cosInterp(local_188,local_1c * 0.05 + 54352.0);
+            fVar29 = (float)perlinNoise2D_cosInterp(local_188,local_1c * 0.05 + 54352.0);
             local_12e0 = (float *)(float)fVar29;
             fVar30 = (float)(1.0 - ABS(local_1478 + (double)(float)local_12e0));
             fVar30 = 1.0 - fVar30 * fVar30 * fVar30;
@@ -1680,7 +1680,7 @@ LAB_005e4de0:
               local_14cc = (int)local_12cc << 0x10;
               local_1508 = ((int)local_131c >> 0x1f) << 0x10 | (uint)local_131c >> 0x10;
               local_150c = (int)local_131c << 0x10;
-              fVar29 = (float10)vec3_distanceSquared(&local_150c,&local_14cc);
+              fVar29 = (float)vec3_distanceSquared(&local_150c,&local_14cc);
               local_12e0 = (float *)(float)fVar29;
               fVar30 = 1.0 - (float)local_12e0;
               if (0.0 < fVar30) {
@@ -1695,7 +1695,7 @@ LAB_005e4de0:
               }
               fVar30 = 1.0 - fVar30 * fVar30;
               local_12f4 = (float *)(1.0 - fVar30 * fVar30);
-              fVar29 = (float10)perlinNoise2D_cosInterp(local_13ac + 985.0,local_1c * 0.01 + 98584.0);
+              fVar29 = (float)perlinNoise2D_cosInterp(local_13ac + 985.0,local_1c * 0.01 + 98584.0);
               local_12e0 = (float *)(float)fVar29;
               fVar30 = (float)local_12e0 * 1.3 + 1.0;
               if (0.0 <= fVar30) {
@@ -1721,7 +1721,7 @@ LAB_005e4de0:
             }
             local_1348 = fVar30 * 3.0 * fVar30 - fVar30 * 2.0 * fVar30 * fVar30;
             local_30 = local_1c * 0.01;
-            fVar29 = (float10)perlinNoise2D_cosInterp(local_1468,local_30 + 8992.0);
+            fVar29 = (float)perlinNoise2D_cosInterp(local_1468,local_30 + 8992.0);
             local_12e0 = (float *)(float)fVar29;
             local_1320 = (float *)(((float)local_12e0 + 1.5) * 60.0 * (float)local_12dc +
                                    (float)local_12f4 * 8.0 + (float)local_1300);
@@ -1855,16 +1855,16 @@ LAB_005e4de0:
               local_139c = local_139c + 1;
             }
             local_12d0[5] = (float)((int)local_12d0[4] + -8);
-            fVar29 = (float10)perlinNoise2D_cosInterp(local_1488,local_30 + 847.0);
+            fVar29 = (float)perlinNoise2D_cosInterp(local_1488,local_30 + 847.0);
             local_12e0 = (float *)(float)fVar29;
             local_132c = (float *)(((float)local_12e0 + 1.0) * 20.0 + (float)local_1300);
             if ((float)local_132c < (float)local_1320) {
-              fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)local_131c * 0.005 +
+              fVar29 = (float)perlinNoise2D_cosInterp((double)(int)local_131c * 0.005 +
                                              (double)*(int *)(world + 0x800178),
                                              local_1c * 0.005 + (double)*(int *)(world + 0x80017c))
               ;
               local_12e0 = (float *)(float)fVar29;
-              fVar29 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800178) + local_13ac,
+              fVar29 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800178) + local_13ac,
                                              (double)*(int *)(world + 0x80017c) + local_30);
               local_12f4 = (float *)(float)fVar29;
               fVar30 = 1.0 - ABS((float)local_12e0 + (float)local_12f4) * 4.0;
@@ -1873,7 +1873,7 @@ LAB_005e4de0:
               local_12f4 = (float *)(1.0 - fVar31 * fVar31);
               fVar30 = 1.0 - fVar30 * fVar30;
               local_133c = (float *)(1.0 - fVar30 * fVar30 * fVar30 * fVar30);
-              fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)local_131c * 0.03 + 7635.0,
+              fVar29 = (float)perlinNoise2D_cosInterp((double)(int)local_131c * 0.03 + 7635.0,
                                              local_1c * 0.03 + 123847.0);
               local_12e0 = (float *)(float)fVar29;
               fVar30 = ((float)local_12e0 * 10.0 + (((float)local_1320 - (float)local_132c) - 20.0))
@@ -2235,7 +2235,7 @@ LAB_005e4de0:
               local_14fc = (int)local_12cc << 0x10;
               local_14e8 = ((int)local_131c >> 0x1f) << 0x10 | (uint)local_131c >> 0x10;
               local_14ec = (int)local_131c << 0x10;
-              fVar29 = (float10)vec3_distanceSquared(&local_14ec,&local_14fc);
+              fVar29 = (float)vec3_distanceSquared(&local_14ec,&local_14fc);
               local_12e0 = (float *)(float)fVar29;
               if (((float)local_12e0 < 0.25) &&
                  (local_12dc = (float *)(int)(local_1304[5] - 25.0),
@@ -2293,7 +2293,7 @@ LAB_005e6b3e:
       local_8 = CONCAT31(local_8._1_3_,2);
       iVar26 = world_getChunkCell256();
       if (iVar26 == 0) {
-        fVar29 = (float10)GameController_sampleTemperatureGrid(local_1390,local_138c);
+        fVar29 = (float)GameController_sampleTemperatureGrid(local_1390,local_138c);
         local_1300 = (float *)(float)fVar29;
         local_12d4 = local_1300;
       }
@@ -2302,7 +2302,7 @@ LAB_005e6b3e:
       }
       iVar26 = world_getChunkCell256();
       if (iVar26 == 0) {
-        fVar29 = (float10)GameController_sampleHumidityGrid(local_1390,local_138c);
+        fVar29 = (float)GameController_sampleHumidityGrid(local_1390,local_138c);
         local_1314 = (float *)(float)fVar29;
         local_12d4 = local_1314;
       }
@@ -2331,7 +2331,7 @@ LAB_005e6b3e:
               local_132c = local_14d4;
               local_12f4 = local_14f0;
               local_12e0 = local_14f4;
-              fVar29 = (float10)vec3_distanceSquared(&local_14d4,&local_14f4);
+              fVar29 = (float)vec3_distanceSquared(&local_14d4,&local_14f4);
               local_12d4 = (float *)(float)fVar29;
               fVar30 = 1.0 - (float)local_12d4;
               if ((0.0 < fVar30) && (0.5 <= fVar30 * fVar30)) {
@@ -2510,13 +2510,13 @@ LAB_005e727a:
                       puVar15 = (undefined4 *)*puVar15;
                     } while (puVar15 != local_137c);
                   }
-                  fVar29 = (float10)Terrain_sampleHeightAtWorldXY(local_12d8,local_12f8);
+                  fVar29 = (float)Terrain_sampleHeightAtWorldXY(local_12d8,local_12f8);
                   local_12d4 = (float *)(float)fVar29;
                   if ((float)local_12d4 <= 0.6) {
-                    fVar29 = (float10)WorldInfo_sampleTerrainHeight();
+                    fVar29 = (float)WorldInfo_sampleTerrainHeight();
                     local_12d4 = (float *)(float)fVar29;
                     if (1.0 - (float)local_12d4 * 50.0 < 0.0) {
-                      fVar29 = (float10)World_placeObjectWithSpacing();
+                      fVar29 = (float)World_placeObjectWithSpacing();
                       local_12d4 = (float *)(float)fVar29;
                       iVar26 = world_getChunkCell256();
                       local_1324 = (float *)(*(int *)(iVar26 + 0x1c) + *(int *)(iVar26 + 0x10));
@@ -2553,13 +2553,13 @@ LAB_005e767b:
           local_12e8 = local_1330;
           if ((int)local_1330 < (int)pfVar9) {
             do {
-              fVar29 = (float10)WorldInfo_rotateAndPlace();
+              fVar29 = (float)WorldInfo_rotateAndPlace();
               local_12d4 = (float *)(float)fVar29;
               local_1308 = 1.0 - (float)local_12d4 * 50.0;
-              fVar29 = (float10)Terrain_sampleHeightAtWorldXY(local_12d0,local_12e8);
+              fVar29 = (float)Terrain_sampleHeightAtWorldXY(local_12d0,local_12e8);
               local_12f0 = (float *)(float)fVar29;
               if (0.0 <= local_1308) {
-                fVar29 = (float10)terrain_generateColumnColor();
+                fVar29 = (float)terrain_generateColumnColor();
                 local_12d4 = (float *)(float)fVar29;
                 local_1324 = local_12d4;
                 if ((float)local_12d4 < 0.0) {
@@ -2570,7 +2570,7 @@ LAB_005e767b:
                 local_12e0 = (float *)(1.0 - fVar30 * fVar30 * fVar30);
                 local_13b8 = (double)(int)local_12e8;
                 local_13c0 = (double)(int)local_12d0;
-                fVar29 = (float10)perlinNoise2D_cosInterp(local_13c0 * 0.02 + 55432.0,local_13b8 * 0.02 + 974.0
+                fVar29 = (float)perlinNoise2D_cosInterp(local_13c0 * 0.02 + 55432.0,local_13b8 * 0.02 + 974.0
                                               );
                 local_12d4 = (float *)(float)fVar29;
                 local_12dc = (float *)(int)(((float)local_12d4 + 1.0) * 4.0 +
@@ -2582,7 +2582,7 @@ LAB_005e767b:
                   local_248 = 40.0;
                   fStack_244 = 40.0;
                   local_240 = 40.0;
-                  fVar29 = (float10)perlinNoise2D_cosInterp(local_13c0 * 0.05 + 843.0,local_13b8 * 0.05 + 984.0
+                  fVar29 = (float)perlinNoise2D_cosInterp(local_13c0 * 0.05 + 843.0,local_13b8 * 0.05 + 984.0
                                                 );
                   local_12d4 = (float *)(float)fVar29;
                   local_14c = local_240 * (float)local_12d4;
@@ -2596,14 +2596,14 @@ LAB_005e767b:
                   local_12f4 = (float *)(((int)local_12d0 / 2) * 0xea);
                   local_154 = CONCAT44(fStack_244 * (float)local_12d4,local_248 * (float)local_12d4)
                   ;
-                  fVar29 = (float10)perlinNoise2D_cosInterp((double)((int)local_12f4 + 0x12e2),
+                  fVar29 = (float)perlinNoise2D_cosInterp((double)((int)local_12f4 + 0x12e2),
                                                  (double)((int)local_12e0 + 0xc11a));
                   local_12d4 = (float *)(float)fVar29;
                   if (0.5 < (float)local_12d4) {
                     local_1e8 = 20.0;
                     fStack_1e4 = 20.0;
                     local_1e0 = 20.0;
-                    fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)local_12f4,
+                    fVar29 = (float)perlinNoise2D_cosInterp((double)(int)local_12f4,
                                                    (double)((int)local_12e0 + 0x31));
                     local_12d4 = (float *)(float)fVar29;
                     local_158 = local_1e0 * (float)local_12d4;
@@ -2696,14 +2696,14 @@ LAB_005e767b:
           local_12d0 = local_1330;
           if ((int)local_1330 < (int)pfVar9) {
             do {
-              fVar29 = (float10)WorldInfo_sampleTerrainHeight();
+              fVar29 = (float)WorldInfo_sampleTerrainHeight();
               local_12d4 = (float *)(float)fVar29;
               local_12f4 = (float *)(1.0 - (float)local_12d4 * 50.0);
               if (0.0 <= (float)local_12f4) {
-                fVar29 = (float10)Terrain_sampleHeightAtWorldXY(local_12e8,local_12d0);
+                fVar29 = (float)Terrain_sampleHeightAtWorldXY(local_12e8,local_12d0);
                 local_12d4 = (float *)(float)fVar29;
                 if ((float)local_12d4 <= 0.95) {
-                  fVar29 = (float10)terrain_generateColumnColor();
+                  fVar29 = (float)terrain_generateColumnColor();
                   local_1308 = (float)fVar29;
                   if (local_1308 < 0.0) {
                     local_1308 = 0.0;
@@ -2790,7 +2790,7 @@ LAB_005e767b:
                   }
                   fVar30 = 1.0 - (float)local_12f4;
                   local_12f4 = (float *)(1.0 - fVar30 * fVar30 * fVar30);
-                  fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)local_12e8 * 0.02 + 55432.0,
+                  fVar29 = (float)perlinNoise2D_cosInterp((double)(int)local_12e8 * 0.02 + 55432.0,
                                                  (double)(int)local_12d0 * 0.02 + 974.0);
                   local_12f0 = (float *)((int)local_12fc + 1);
                   local_12d4 = (float *)(int)(((float)fVar29 + 1.0) * 2.0 +
@@ -2852,7 +2852,7 @@ LAB_005e767b:
                 do {
                   local_12d8 = local_1338;
                   if ((int)local_12fc <= (int)local_1338) {
-                    fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)pfVar24 * 0.05,
+                    fVar29 = (float)perlinNoise2D_cosInterp((double)(int)pfVar24 * 0.05,
                                                    (double)(int)local_12dc * 0.05);
                     local_15ac = (float)(int)local_12f8 / (float)(int)local_133c;
                     local_15a8 = (float)(int)local_1308 / (float)(int)local_132c;
@@ -2954,7 +2954,7 @@ LAB_005e767b:
                 do {
                   local_12fc = local_1338;
                   if ((int)local_12f8 <= (int)local_1338) {
-                    fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)pfVar24 * 0.05,
+                    fVar29 = (float)perlinNoise2D_cosInterp((double)(int)pfVar24 * 0.05,
                                                    (double)(int)local_12dc * 0.05);
                     local_134c = (float *)(float)fVar29;
                     local_15a0 = (float)(int)local_12f0 / (float)(int)local_12e0;
@@ -3069,7 +3069,7 @@ LAB_005e767b:
           local_1b0 = local_14e4._4_4_;
           local_1c4 = local_1338;
           if ((local_1304[6] == 1.4013e-45) || (local_1304[6] == 7.00649e-45)) {
-            fVar29 = (float10)vec3_distanceSquared(&local_1c4,&local_1bc);
+            fVar29 = (float)vec3_distanceSquared(&local_1c4,&local_1bc);
             local_1344 = (double)CONCAT44((float)fVar29,(undefined4)local_1344);
             fVar30 = 1.0 - (float)fVar29;
             if ((fVar30 <= 0.0) || (fVar30 * fVar30 <= 0.0)) goto LAB_005e8eda;
@@ -3164,7 +3164,7 @@ LAB_005e8eda:
                   puVar15 = (undefined4 *)*puVar15;
                 } while (puVar15 != local_137c);
               }
-              fVar29 = (float10)Terrain_sampleHeightAtWorldXY(local_12f8,local_12fc);
+              fVar29 = (float)Terrain_sampleHeightAtWorldXY(local_12f8,local_12fc);
               uVar5 = local_130c;
               local_1338 = (float *)(float)fVar29;
               if ((float)local_1338 <= 0.25) {
@@ -3203,7 +3203,7 @@ LAB_005e8eda:
                         do {
                           local_12d0 = local_134c;
                           if ((int)local_12f8 <= (int)local_134c) {
-                            fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)pfVar9 * 0.05);
+                            fVar29 = (float)perlinNoise2D_cosInterp((double)(int)pfVar9 * 0.05);
                             local_1594 = (float)(int)local_12e8 / (float)(int)local_1300;
                             local_1590 = (float)(int)local_1308 / (float)(int)local_12f0;
                             pfVar34 = (float *)((float)fVar29 * 0.8);
@@ -3298,12 +3298,10 @@ LAB_005e9764:
           local_12e0 = (float *)0x0;
           do {
             fVar30 = (float)(((double)(int)local_12e0 * 3.141592653589793) / local_13c0);
-            dVar32 = (double)fVar30;
             local_1344._4_4_ = (float *)fVar30;
-            libm_sse2_sin_precise();
+            dVar32 = libm_sse2_sin_precise((double)fVar30);
             local_1358 = (double)CONCAT44((float)dVar32,(undefined4)local_1358);
-            dVar32 = (double)(float)local_1344._4_4_;
-            libm_sse2_cos_precise();
+            dVar32 = libm_sse2_cos_precise((double)(float)local_1344._4_4_);
             local_1344 = (double)CONCAT44(local_234,(undefined4)local_1344);
             local_34 = local_234;
             local_4ac = (int)((float)dVar32 * 25.0);
@@ -3340,7 +3338,7 @@ LAB_005e9764:
                     uVar5 = local_130c;
                     local_12f8 = (float *)(local_34 + 0x14);
                     if ((int)(local_34 + -0x14) <= (int)local_12f8) {
-                      fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)local_12d8 * 0.05,
+                      fVar29 = (float)perlinNoise2D_cosInterp((double)(int)local_12d8 * 0.05,
                                                      (double)(int)local_12d8 * 0.05);
                       local_1344 = (double)CONCAT44((float)fVar29,(undefined4)local_1344);
                       local_134c = (float *)((float)fVar29 * 0.3);
@@ -3351,7 +3349,7 @@ LAB_005e9764:
                         local_1358 = (double)CONCAT44((float)((int)local_12d8 - iStack_38) /
                                                       (float)local_136c + (float)local_134c,
                                                       (undefined4)local_1358);
-                        fVar29 = (float10)perlinNoise2D_cosInterp(local_13b8,(double)(int)local_12f8 * 0.05);
+                        fVar29 = (float)perlinNoise2D_cosInterp(local_13b8,(double)(int)local_12f8 * 0.05);
                         local_1344 = (double)CONCAT44((float)fVar29,(undefined4)local_1344);
                         local_1774 = (float)fVar29 * 0.3 +
                                      (float)((int)local_12fc - local_3c) / (float)(int)local_12d4;
@@ -3459,7 +3457,7 @@ LAB_005e9764:
             pfVar9 = local_12dc + 2;
             local_1488 = (double)CONCAT44(((int)pfVar9 >> 0x1f) << 0x10 | (uint)pfVar9 >> 0x10,
                                           (int)pfVar9 * 0x10000);
-            fVar29 = (float10)vec3_distanceSquared(&local_1488,&local_14dc);
+            fVar29 = (float)vec3_distanceSquared(&local_1488,&local_14dc);
             local_1344 = (double)CONCAT44((float)fVar29,(undefined4)local_1344);
             local_1348 = 1.0 - (float)fVar29;
             if (0.0 < local_1348) {
@@ -3471,7 +3469,7 @@ LAB_005e9764:
           }
           iVar22 = world_getChunkCell256();
           if (iVar22 == 0) {
-            fVar29 = (float10)GameController_sampleTemperatureGrid(local_12dc + 2,local_1318);
+            fVar29 = (float)GameController_sampleTemperatureGrid(local_12dc + 2,local_1318);
             local_12fc = (float *)(float)fVar29;
             local_1344 = (double)CONCAT44(local_12fc,(undefined4)local_1344);
           }
@@ -3522,7 +3520,7 @@ LAB_005e9764:
             }
             local_1344 = (double)(int)local_12e8 * 0.001;
             local_1358 = (double)(int)local_12d0 * 0.001;
-            fVar29 = (float10)perlinNoise2D_cosInterp((double)*(int *)(iVar26 + 0x800294) + local_1358,
+            fVar29 = (float)perlinNoise2D_cosInterp((double)*(int *)(iVar26 + 0x800294) + local_1358,
                                            (double)*(int *)(iVar26 + 0x800298) + local_1344);
             local_1300 = (float *)(float)fVar29;
             uVar21 = rand();
@@ -3549,7 +3547,7 @@ LAB_005e9764:
             }
             iVar22 = world_getChunkCell256();
             if (iVar22 == 0) {
-              fVar29 = (float10)GameController_sampleHumidityGrid(local_12d0,local_12e8);
+              fVar29 = (float)GameController_sampleHumidityGrid(local_12d0,local_12e8);
               local_12d4 = (float *)(float)fVar29;
               local_1300 = local_12d4;
             }
@@ -3575,7 +3573,7 @@ LAB_005e9764:
             }
             if (0.3 <= (float)local_12d4) {
               if ((float)local_12d4 < 0.7) {
-                fVar29 = (float10)perlinNoise2D_cosInterp(local_1358 + 8473.0,local_1344 + 9438.0);
+                fVar29 = (float)perlinNoise2D_cosInterp(local_1358 + 8473.0,local_1344 + 9438.0);
                 local_1344 = (double)CONCAT44((float)fVar29,(undefined4)local_1344);
                 if (0.8 < (float)fVar29) {
                   iVar22 = rand();
@@ -3595,7 +3593,7 @@ LAB_005ea527:
             }
             else {
               if (0.2 < (float)local_12d4) {
-                fVar29 = (float10)perlinNoise2D_cosInterp(local_1358 + 8473.0,local_1344 + 9438.0);
+                fVar29 = (float)perlinNoise2D_cosInterp(local_1358 + 8473.0,local_1344 + 9438.0);
                 local_1344 = (double)CONCAT44((float)fVar29,(undefined4)local_1344);
                 if (0.6 < (float)fVar29) {
                   iVar22 = rand();
@@ -3624,7 +3622,7 @@ LAB_005ea4e2:
             if ((int)(local_1330 + 0x40) < (int)local_12f8 + (int)local_12e8) {
               local_12e8 = (float *)((int)local_1330 + (0x100 - (int)local_12f8));
             }
-            fVar29 = (float10)terrainNoiseDensityAt();
+            fVar29 = (float)terrainNoiseDensityAt();
             local_1344 = (double)CONCAT44((float)fVar29 + local_1348,(undefined4)local_1344);
             iVar22 = rand();
             if ((float)iVar22 / 32767.0 <= (float)local_1344._4_4_) {
@@ -3645,7 +3643,7 @@ LAB_005ea4e2:
                                        & 0xffffff1fffffffff);
                   iVar22 = world_getChunkCell256();
                   if (iVar22 == 0) {
-                    fVar29 = (float10)GameController_sampleHumidityGrid(local_12d0,local_12e8);
+                    fVar29 = (float)GameController_sampleHumidityGrid(local_12d0,local_12e8);
                     fVar30 = (float)fVar29;
                     local_1344 = (double)CONCAT44(fVar30,(undefined4)local_1344);
                   }
@@ -3655,7 +3653,7 @@ LAB_005ea4e2:
                   if (0.8 < fVar30) {
                     iVar22 = world_getChunkCell256();
                     if (iVar22 == 0) {
-                      fVar29 = (float10)GameController_sampleTemperatureGrid(local_12d0,local_12e8);
+                      fVar29 = (float)GameController_sampleTemperatureGrid(local_12d0,local_12e8);
                       local_1344 = (double)CONCAT44((float)fVar29,(undefined4)local_1344);
                     }
                   }
@@ -3761,7 +3759,7 @@ LAB_005ea7b3:
               local_1308 = (float)(((int)local_12f4 >> 0x1f) << 0x10 | (uint)local_12f4 >> 0x10);
               local_1314 = (float *)((int)local_12f4 * 0x10000);
               local_1478 = (double)CONCAT44(local_1308,local_1314);
-              fVar29 = (float10)vec3_distanceSquared(&local_1478,&local_1468);
+              fVar29 = (float)vec3_distanceSquared(&local_1478,&local_1468);
               local_1334 = (float *)(float)fVar29;
               fVar30 = 1.0 - (float)local_1334;
               if (0.0 < fVar30) {
@@ -3911,7 +3909,7 @@ LAB_005eae6a:
                                             (uint)local_12d8 >> 0x10,(int)local_12d8 * 0x10000);
               local_1480 = (double)CONCAT44(((int)pfVar24 >> 0x1f) << 0x10 | (uint)pfVar24 >> 0x10,
                                             (int)pfVar24 * 0x10000);
-              fVar29 = (float10)vec3_distanceSquared(&local_1480,&local_1470);
+              fVar29 = (float)vec3_distanceSquared(&local_1480,&local_1470);
               local_1334 = (float *)(float)fVar29;
               fVar30 = 1.0 - (float)local_1334;
               if ((0.0 < fVar30) && (uVar5 = local_130c, 0.3 < fVar30 * fVar30)) goto LAB_005ebba1;
@@ -3919,7 +3917,7 @@ LAB_005eae6a:
             uVar5 = local_130c;
             iVar26 = world_getChunkCell256();
             if (iVar26 == 0) {
-              fVar29 = (float10)GameController_sampleHumidityGrid(local_12d0,local_12d8);
+              fVar29 = (float)GameController_sampleHumidityGrid(local_12d0,local_12d8);
               local_12d4 = (float *)(float)fVar29;
               local_1334 = local_12d4;
             }
@@ -3937,7 +3935,7 @@ LAB_005eae6a:
             }
             iVar26 = world_getChunkCell256();
             if (iVar26 == 0) {
-              fVar29 = (float10)GameController_sampleTemperatureGrid(local_12d0,local_12d8);
+              fVar29 = (float)GameController_sampleTemperatureGrid(local_12d0,local_12d8);
               local_12e0 = (float *)(float)fVar29;
               local_1334 = local_12e0;
             }
@@ -3985,10 +3983,10 @@ LAB_005eae6a:
             }
             iVar26 = world_getColumnData(local_12d0,local_12d8,(int)local_12dc - 1,uVar5);
             local_12f4 = (float *)(*(byte *)(iVar26 + 3) & 0xffffff1f);
-            fVar29 = (float10)Terrain_sampleHeightAtWorldXY(local_12d0,local_12d8);
+            fVar29 = (float)Terrain_sampleHeightAtWorldXY(local_12d0,local_12d8);
             local_1334 = (float *)(float)fVar29;
             if ((float)local_1334 <= 0.0) {
-              fVar29 = (float10)WorldInfo_rotateAndPlace();
+              fVar29 = (float)WorldInfo_rotateAndPlace();
               local_1334 = (float *)(float)fVar29;
               if (1.0 <= (float)local_1334) {
                 pvVar11 = operator_new(0x10f0);
@@ -4065,7 +4063,7 @@ LAB_005eb4c0:
                         if (iVar26 % 3 != 0) {
                           iVar26 = world_getChunkCell256();
                           if (iVar26 == 0) {
-                            fVar29 = (float10)GameController_sampleTemperatureGrid(local_12d0,local_12d8);
+                            fVar29 = (float)GameController_sampleTemperatureGrid(local_12d0,local_12d8);
                             pfVar9 = (float *)(float)fVar29;
                             local_1334 = pfVar9;
                           }
@@ -4155,7 +4153,7 @@ LAB_005eb4c0:
                     if (((local_12d4 != (float *)0x0) &&
                         (local_1460 <= *(int *)((int)local_12d4 + 0x24))) &&
                        (*(int *)((int)local_12d4 + 0x24) <= local_145c)) {
-                      fVar29 = (float10)vec3_distanceSquared(pfVar9 + 4,pfVar9 + 6);
+                      fVar29 = (float)vec3_distanceSquared(pfVar9 + 4,pfVar9 + 6);
                       local_1334 = (float *)(float)fVar29;
                       fVar30 = 1.0 - (float)local_1334;
                       if ((0.0 < fVar30) && (0.0 < fVar30 * fVar30)) {
@@ -4189,14 +4187,12 @@ LAB_005eb4c0:
                       local_1334 = (float *)(((float)(int)pfVar9 * 6.2831855) / (float)(int)pfVar24)
                       ;
                       local_15c0 = 0;
-                      dVar32 = (double)(float)local_1334;
                       local_12ec = (int *)local_1388;
-                      libm_sse2_sin_precise();
+                      dVar32 = libm_sse2_sin_precise((double)(float)local_1334);
                       local_132c = (float *)((float)dVar32 * 8.0 * 65536.0);
                       lVar38 = ftol2();
-                      dVar32 = (double)(float)local_1334;
                       local_1490 = lVar38;
-                      libm_sse2_cos_precise();
+                      dVar32 = libm_sse2_cos_precise((double)(float)local_1334);
                       local_133c = (float *)((float)dVar32 * 8.0 * 65536.0);
                       lVar39 = ftol2();
                       fVar30 = local_1388;
@@ -4287,7 +4283,7 @@ LAB_005ebce0:
                     local_12d8 = (float *)((int)local_12dc + iVar22 + 1);
                     if (iVar26 == 0) {
                       if (local_1320 == (float *)0xb) {
-                        fVar29 = (float10)Terrain_sampleHeightAtWorldXY(local_12cc,local_1304);
+                        fVar29 = (float)Terrain_sampleHeightAtWorldXY(local_12cc,local_1304);
                         local_12ec = (int *)(float)fVar29;
                         if ((0.75 < (float)local_12ec) &&
                            (((int)local_1304 * 0x5a + (int)local_12cc) % (int)local_1420 == 0)) {
@@ -4307,7 +4303,7 @@ LAB_005ebce0:
                             } while ((int)local_12d4 < 7);
                             Struct_InitDefaults();
                             local_8._0_1_ = 8;
-                            fVar29 = (float10)getHumidityAt();
+                            fVar29 = (float)getHumidityAt();
                             local_12ec = (int *)(float)fVar29;
                             if ((float)local_12ec <= 0.8) {
                               local_1048 = 0x32;
@@ -4338,12 +4334,12 @@ LAB_005ebce0:
                         }
                       }
                       else if (local_1320 == (float *)0x3) {
-                        fVar29 = (float10)getHumidityAt();
+                        fVar29 = (float)getHumidityAt();
                         local_12ec = (int *)(float)fVar29;
                         if (0.2 < (float)local_12ec) {
                           perlinNoise2D_cosInterp((double)((float)(int)local_12cc * 0.05 + 9843.0),
                                        (double)((float)(int)local_1304 * 0.05 + 8437.0));
-                          fVar29 = (float10)fabs_f();
+                          fVar29 = (float)fabs_f();
                           local_12ec = (int *)(float)fVar29;
                           if (0.5 < (float)local_12ec) {
                             uVar21 = rand();
@@ -4376,12 +4372,12 @@ LAB_005ebce0:
                       }
                       else {
                         if (local_1320 != (float *)0x2) goto LAB_005ec2f6;
-                        fVar29 = (float10)getHumidityAt();
+                        fVar29 = (float)getHumidityAt();
                         local_12ec = (int *)(float)fVar29;
                         if ((0.2 < (float)local_12ec) && (0 < (int)local_12d8)) {
                           perlinNoise2D_cosInterp((double)((float)(int)local_12cc * 0.05 + 24234.0),
                                        (double)((float)(int)local_1304 * 0.05 + 53565.0));
-                          fVar29 = (float10)fabs_f();
+                          fVar29 = (float)fabs_f();
                           local_12ec = (int *)(float)fVar29;
                           if (0.7 < (float)local_12ec) {
                             iVar26 = rand();
@@ -4422,7 +4418,7 @@ LAB_005ec2f6:
                         local_1314 = (float *)(float)(int)local_12cc;
                         perlinNoise2D_cosInterp((double)((float)local_1314 * 0.05 + 9843.0),
                                      (double)((float)local_1300 * 0.05 + 8437.0));
-                        fVar29 = (float10)fabs_f();
+                        fVar29 = (float)fabs_f();
                         local_12ec = (int *)(float)fVar29;
                         if (0.6 < (float)local_12ec) {
                           uVar21 = rand();
@@ -4452,7 +4448,7 @@ LAB_005ec2f6:
                               }
                               local_358 = (float)(int)(uVar21 * 0x5a);
                               local_35c = 0.1;
-                              fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)local_12cc * 0.01 + 9843.0
+                              fVar29 = (float)perlinNoise2D_cosInterp((double)(int)local_12cc * 0.01 + 9843.0
                                                              ,(double)(int)pfVar9 * 0.01 + 8437.0);
                               local_12ec = (int *)(float)fVar29;
                               if ((float)local_12ec <= 0.0) {
@@ -4481,7 +4477,7 @@ LAB_005ec54c:
                             else {
                               if (local_1320 != (float *)0xc) {
                                 if (local_1320 == (float *)0xa) goto LAB_005ecb51;
-                                fVar29 = (float10)getHumidityAt();
+                                fVar29 = (float)getHumidityAt();
                                 local_12ec = (int *)(float)fVar29;
                                 if ((float)local_12ec <= 0.75) {
                                   Struct_InitScaleDefaults();
@@ -4502,20 +4498,20 @@ LAB_005ec54c:
                                   }
                                   local_40c = (float)(int)(uVar21 * 0x5a);
                                   local_410 = 0.075;
-                                  fVar29 = (float10)getTemperatureAt();
+                                  fVar29 = (float)getTemperatureAt();
                                   local_12ec = (int *)(float)fVar29;
                                   local_4c = (double)(int)local_12cc * 0.01;
                                   local_44 = (double)(int)local_1304 * 0.01;
                                   if ((float)local_12ec <= 0.5) {
-                                    fVar29 = (float10)perlinNoise2D_cosInterp(local_4c + 9843.0,
+                                    fVar29 = (float)perlinNoise2D_cosInterp(local_4c + 9843.0,
                                                                    local_44 + 8437.0);
                                     local_12ec = (int *)(float)fVar29;
                                     if ((float)local_12ec <= 0.0) {
-                                      fVar29 = (float10)perlinNoise2D_cosInterp(local_4c + 34234.0,
+                                      fVar29 = (float)perlinNoise2D_cosInterp(local_4c + 34234.0,
                                                                      local_44 + 234234.0);
                                       goto LAB_005ed0b8;
                                     }
-                                    fVar29 = (float10)perlinNoise2D_cosInterp((double)((float)local_1314 * 0.01
+                                    fVar29 = (float)perlinNoise2D_cosInterp((double)((float)local_1314 * 0.01
                                                                            + 34234.0),
                                                                    (double)((float)local_1300 * 0.01
                                                                            + 234234.0));
@@ -4523,18 +4519,18 @@ LAB_005ec54c:
                                     local_430 = ((float)local_12ec <= 0.0) + 2;
                                   }
                                   else {
-                                    fVar29 = (float10)perlinNoise2D_cosInterp(local_4c + 9843.0,
+                                    fVar29 = (float)perlinNoise2D_cosInterp(local_4c + 9843.0,
                                                                    local_44 + 8437.0);
                                     local_12ec = (int *)(float)fVar29;
                                     if ((float)local_12ec <= 0.0) {
-                                      fVar29 = (float10)perlinNoise2D_cosInterp(local_4c + 34234.0,
+                                      fVar29 = (float)perlinNoise2D_cosInterp(local_4c + 34234.0,
                                                                      local_44 + 234234.0);
 LAB_005ed0b8:
                                       local_12ec = (int *)(float)fVar29;
                                       local_430 = (uint)((float)local_12ec <= 0.0);
                                     }
                                     else {
-                                      fVar29 = (float10)perlinNoise2D_cosInterp((double)((float)local_1314 *
+                                      fVar29 = (float)perlinNoise2D_cosInterp((double)((float)local_1314 *
                                                                               0.01 + 34234.0),
                                                                      (double)((float)local_1300 *
                                                                               0.01 + 234234.0));
@@ -4552,7 +4548,7 @@ LAB_005ed0b8:
                                      ((local_430 == 3 || (local_430 == 4)))) goto LAB_005ecb42;
                                 }
                                 else {
-                                  fVar29 = (float10)getTemperatureAt();
+                                  fVar29 = (float)getTemperatureAt();
                                   local_12ec = (int *)(float)fVar29;
                                   if ((float)local_12ec <= 0.25) {
                                     iVar26 = rand();
@@ -4601,17 +4597,17 @@ LAB_005ed0b8:
                                     local_4c = (double)(int)local_12cc * 0.01;
                                     local_44 = (double)(int)local_1304 * 0.01;
                                     local_2ec = 0.075;
-                                    fVar29 = (float10)perlinNoise2D_cosInterp(local_4c + 9843.0,
+                                    fVar29 = (float)perlinNoise2D_cosInterp(local_4c + 9843.0,
                                                                    local_44 + 8437.0);
                                     local_12ec = (int *)(float)fVar29;
                                     if ((float)local_12ec <= 0.0) {
-                                      fVar29 = (float10)perlinNoise2D_cosInterp(local_4c + 34234.0,
+                                      fVar29 = (float)perlinNoise2D_cosInterp(local_4c + 34234.0,
                                                                      local_44 + 234234.0);
                                       local_12ec = (int *)(float)fVar29;
                                       local_30c = ((float)local_12ec <= 0.5) + 0xb;
                                     }
                                     else {
-                                      fVar29 = (float10)perlinNoise2D_cosInterp((double)((float)local_1314 *
+                                      fVar29 = (float)perlinNoise2D_cosInterp((double)((float)local_1314 *
                                                                               0.01 + 34234.0),
                                                                      (double)((float)local_1300 *
                                                                               0.01 + 234234.0));
@@ -4724,7 +4720,7 @@ LAB_005ecb51:
                               }
                               local_47c = (float)(int)(uVar21 * 0x5a);
                               local_480 = 0.075;
-                              fVar29 = (float10)perlinNoise2D_cosInterp((double)(int)local_12cc * 0.01 + 9843.0
+                              fVar29 = (float)perlinNoise2D_cosInterp((double)(int)local_12cc * 0.01 + 9843.0
                                                              ,(double)(int)pfVar9 * 0.01 + 8437.0);
                               local_12ec = (int *)(float)fVar29;
                               local_4a0 = ((float)local_12ec <= 0.0) + 9;
@@ -5121,7 +5117,7 @@ void WorldInfo_placeStructure(int dungeon,int *origin,uint param_3,byte param_4,
   uint *puVar15;
   _Container_base0 *p_Var16;
   bool bVar17;
-  float10 fVar18;
+  double fVar18;
   longlong lVar19;
   undefined8 uVar20;
   undefined8 uVar21;
@@ -5344,7 +5340,7 @@ void WorldInfo_placeStructure(int dungeon,int *origin,uint param_3,byte param_4,
          iStack_a4 < (int)(local_6e4 + 0x40))))) {
     iVar4 = world_getChunkCell256();
     if (iVar4 == 0) {
-      fVar18 = (float10)GameController_sampleHumidityGrid(*local_6f0,local_6f0[1]);
+      fVar18 = (double)GameController_sampleHumidityGrid(*local_6f0,local_6f0[1]);
       local_6e4 = (uint *)(float)fVar18;
       local_6a4 = (_Container_base0 *)local_6e4;
     }
@@ -7221,8 +7217,8 @@ void * WorldInfo_scatterObjectsInArea(undefined4 x,undefined4 z,int level,undefi
   void *pvVar2;
   int iVar3;
   void **ppvVar4;
-  float10 fVar5;
-  float10 fVar6;
+  float fVar5;
+  float fVar6;
   void **begin;
   void **cur;
   void **end;
@@ -7258,12 +7254,12 @@ void * WorldInfo_scatterObjectsInArea(undefined4 x,undefined4 z,int level,undefi
   local_14[2] = &LAB_006f47eb;
   local_14[1] = ExceptionList;
   ExceptionList = local_14 + 1;
-  fVar5 = (float10)GameController_sampleHumidityGrid(x,z);
+  fVar5 = (float)GameController_sampleHumidityGrid(x,z);
   local_80 = (float)fVar5;
-  fVar5 = (float10)GameController_sampleTemperatureGrid(x,z);
+  fVar5 = (float)GameController_sampleTemperatureGrid(x,z);
   local_84 = (float)fVar5;
-  fVar5 = (float10)World_getRegionCellPtr(x,z);
-  fVar6 = (float10)World_placeObjectWithSpacing(x,z,0);
+  fVar5 = (float)World_getRegionCellPtr(x,z);
+  fVar6 = (float)World_placeObjectWithSpacing(x,z,0);
   begin = (void **)0x0;
   cur = (void **)0x0;
   end = (void **)0x0;
@@ -7287,7 +7283,7 @@ void * WorldInfo_scatterObjectsInArea(undefined4 x,undefined4 z,int level,undefi
     std_vector_push_back_4byte(&param_4);
   }
   else if ((char)param_4 == '\0') {
-    if ((float)fVar5 <= 0.1) {
+    if ((float)fVar5 <= 0.1f) {
       std_vector_reserve_stride4(1);
       if (cur != (void **)0x0) {
         *cur = (void *)0x15;
@@ -7312,7 +7308,7 @@ void * WorldInfo_scatterObjectsInArea(undefined4 x,undefined4 z,int level,undefi
         }
       }
       cur = cur + 1;
-      if (0.3 < (float)fVar6) {
+      if (0.3f < (float)fVar6) {
         local_30 = (void *)0x2f;
         if ((&local_30 < cur) && (begin <= &local_30)) {
           iVar3 = (int)&local_30 - (int)begin;
@@ -7334,10 +7330,10 @@ void * WorldInfo_scatterObjectsInArea(undefined4 x,undefined4 z,int level,undefi
         cur = cur + 1;
       }
       if (3 < level) {
-        if ((local_80 < 0.2) || (0.8 <= local_80)) {
-          if ((local_80 < 0.8) || (0.2 <= local_84)) {
-            if ((local_80 < 0.6) || (local_84 < 0.6)) {
-              if (0.2 <= local_80) goto LAB_005f6ce4;
+        if ((local_80 < 0.2f) || (0.8f <= local_80)) {
+          if ((local_80 < 0.8f) || (0.2f <= local_84)) {
+            if ((local_80 < 0.6f) || (local_84 < 0.6f)) {
+              if (0.2f <= local_80) goto LAB_005f6ce4;
               param_4 = 0x1c;
               std_vector_push_back_4byte(&param_4);
               param_4 = 0x38;
@@ -8150,12 +8146,12 @@ uint WorldInfo_vectorAppend(void)
 
 
 /* [AUDIT] proposed: WorldInfo_sampleTerrainHeight  (confidence: med)
- * purpose: Returns terrain height/noise (float10) at coord with World_findNearestObject nearest and GameController_getVoxelColumn8
+ * purpose: Returns terrain height/noise (float) at coord with World_findNearestObject nearest and GameController_getVoxelColumn8
  * vars: param_1 coord; param_2 scale
  */
 /* Global::WorldInfo_sampleTerrainHeight @ 005f9340 */
 
-float10 WorldInfo_sampleTerrainHeight(uint x,float y)
+float WorldInfo_sampleTerrainHeight(uint x,float y)
 
 {
   uint uVar1;
@@ -8163,8 +8159,8 @@ float10 WorldInfo_sampleTerrainHeight(uint x,float y)
   int world;
   uint uVar3;
   uint uVar4;
-  float10 fVar5;
-  float10 fVar6;
+  float fVar5;
+  float fVar6;
   float fVar7;
   float fVar8;
   undefined8 local_20;
@@ -8177,16 +8173,16 @@ float10 WorldInfo_sampleTerrainHeight(uint x,float y)
   local_18 = (double)(int)y * 0.001;
   local_20 = (double)(int)x * 0.001;
   local_8 = world;
-  fVar5 = (float10)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800170) + (double)(int)x * 0.01,
+  fVar5 = (float)perlinNoise2D_cosInterp((double)*(int *)(world + 0x800170) + (double)(int)x * 0.01,
                                 (double)*(int *)(world + 0x800174) + (double)(int)y * 0.01);
-  fVar6 = (float10)perlinNoise2D_cosInterp((double)*(int *)(local_8 + 0x800168) + local_20,
+  fVar6 = (float)perlinNoise2D_cosInterp((double)*(int *)(local_8 + 0x800168) + local_20,
                                 (double)*(int *)(local_8 + 0x80016c) + local_18);
   noise = (float)fVar6;
   fVar7 = (float)fVar5 * 0.1 + noise;
-  fVar5 = (float10)perlinNoise2D_cosInterp(local_20,local_18);
+  fVar5 = (float)perlinNoise2D_cosInterp(local_20,local_18);
   noise = (float)fVar5;
   fVar7 = ABS(fVar7) * ((noise + 1.0) * 0.1 + 0.8);
-  fVar5 = (float10)World_findNearestObject(x,y);
+  fVar5 = (float)World_findNearestObject(x,y);
   noise = (float)fVar5;
   fVar8 = 1.0 - noise * 0.75;
   y = fVar7;
@@ -8204,7 +8200,7 @@ float10 WorldInfo_sampleTerrainHeight(uint x,float y)
       local_20 = (double)CONCAT44(uVar3 << 0x10 | uVar1 >> 0x10,uVar1 << 0x10);
       noise = (float)(uVar4 << 0x10 | x >> 0x10);
       local_10 = x << 0x10;
-      fVar5 = (float10)vec3_distanceSquared(&local_10,&local_20);
+      fVar5 = (float)vec3_distanceSquared(&local_10,&local_20);
       noise = (float)fVar5;
       fVar7 = 1.0 - noise;
       if (0.0 < fVar7) {
@@ -8218,7 +8214,7 @@ float10 WorldInfo_sampleTerrainHeight(uint x,float y)
     if ((iVar2 == 6) || (iVar2 == 7)) {
       local_20 = (double)CONCAT44(uVar3 << 0x10 | uVar1 >> 0x10,uVar1 << 0x10);
       local_18 = (double)CONCAT44(uVar4 << 0x10 | x >> 0x10,x << 0x10);
-      fVar5 = (float10)vec3_distanceSquared(&local_18,&local_20);
+      fVar5 = (float)vec3_distanceSquared(&local_18,&local_20);
       fVar8 = 1.0 - (float)fVar5;
       fVar7 = 0.0;
       if (0.0 < fVar8) {
@@ -8229,13 +8225,13 @@ float10 WorldInfo_sampleTerrainHeight(uint x,float y)
   }
   iVar2 = world_getChunkCell256();
   if (iVar2 == 0) {
-    fVar5 = (float10)World_getRegionCellPtr(x,uVar1);
+    fVar5 = (float)World_getRegionCellPtr(x,uVar1);
     fVar7 = (float)fVar5;
   }
   else {
     fVar7 = *(float *)(iVar2 + 0xc);
   }
-  return (float10)(fVar7 + y);
+  return (float)(fVar7 + y);
 }
 
 
@@ -8251,7 +8247,7 @@ void WorldInfo_rotateAndPlace(uint x,uint z)
 
 {
   int iVar1;
-  float10 fVar2;
+  float fVar2;
   double dVar3;
   float fVar4;
   float fVar5;
@@ -8265,10 +8261,10 @@ void WorldInfo_rotateAndPlace(uint x,uint z)
   uint local_8;
   
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  fVar2 = (float10)Terrain_sampleHeightAtWorldXY(x,z);
+  fVar2 = (float)Terrain_sampleHeightAtWorldXY(x,z);
   local_28 = (float)fVar2;
   Terrain_sampleHeightNoise(&local_18,x,z);
-  fVar2 = (float10)World_findNearestObject(x,z);
+  fVar2 = (float)World_findNearestObject(x,z);
   local_1c = (float)fVar2;
   if (0.0 < local_28) {
     fVar4 = local_28 * 3.0;
@@ -8277,14 +8273,12 @@ void WorldInfo_rotateAndPlace(uint x,uint z)
     }
     fVar4 = 1.0 - fVar4 * fVar4;
     local_20 = 1.0 - fVar4 * fVar4;
-    dVar3 = local_18 * 360.0;
-    libm_sse2_cos_precise();
+    dVar3 = libm_sse2_cos_precise(local_18 * 360.0);
     fVar4 = (float)(dVar3 * (double)local_20 + 1.0);
     if (fVar4 < local_1c) {
       local_1c = fVar4;
     }
-    dVar3 = local_10 * 360.0;
-    libm_sse2_cos_precise();
+    dVar3 = libm_sse2_cos_precise(local_10 * 360.0);
     fVar4 = (float)(dVar3 * (double)local_20 + 1.0);
     if (fVar4 < local_1c) {
       local_1c = fVar4;
@@ -8304,7 +8298,7 @@ void WorldInfo_rotateAndPlace(uint x,uint z)
     local_24 = z << 0x10;
     local_28 = (float)(((int)x >> 0x1f) << 0x10 | x >> 0x10);
     local_2c = x << 0x10;
-    fVar2 = (float10)vec3_distanceSquared(&local_2c,&local_24);
+    fVar2 = (float)vec3_distanceSquared(&local_2c,&local_24);
     local_20 = (float)fVar2;
     fVar5 = 1.0 - local_20;
     fVar4 = 0.0;

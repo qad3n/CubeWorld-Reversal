@@ -36880,8 +36880,8 @@ void WalkPathBehavior_isAreaWalkable(uint *param_1,float *param_2,char param_3)
   uint local_8;
   
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  local_14 = CONCAT44(param_2[1] * 0.5,*param_2 * 0.5);
-  local_c = param_2[2] * 0.5;
+  local_14 = CONCAT44(param_2[1] * 0.5f,*param_2 * 0.5f);
+  local_c = param_2[2] * 0.5f;
   iVar15 = 0;
   do {
     uVar21 = ftol2();
@@ -36901,8 +36901,8 @@ void WalkPathBehavior_isAreaWalkable(uint *param_1,float *param_2,char param_3)
   uVar6 = __alldiv(iVar14,iVar15 - (uint)bVar19,0x10000,0);
   iVar15 = __alldiv(iVar12,iVar16 - (uint)bVar20,0x10000,0);
   iVar16 = 0;
-  local_14 = CONCAT44(param_2[1] * 0.5,*param_2 * 0.5);
-  local_c = param_2[2] * 0.5;
+  local_14 = CONCAT44(param_2[1] * 0.5f,*param_2 * 0.5f);
+  local_c = param_2[2] * 0.5f;
   do {
     uVar21 = ftol2();
     local_2c[iVar16 * 2] = (uint)uVar21;
@@ -37121,9 +37121,9 @@ void WalkPathBehavior_sampleStepCollision(uint *param_1,float *param_2)
   uint local_8;
   
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  local_14 = 0.0;
-  local_10 = 0.0;
-  local_c = 0.2;
+  local_14 = 0.0f;
+  local_10 = 0.0f;
+  local_c = 0.2f;
   iVar9 = 0;
   do {
     uVar11 = ftol2();
@@ -37132,9 +37132,9 @@ void WalkPathBehavior_sampleStepCollision(uint *param_1,float *param_2)
     iVar9 = iVar9 + 1;
   } while (iVar9 < 3);
   iVar9 = 0;
-  local_14 = *param_2 * 0.5;
-  local_10 = param_2[1] * 0.5;
-  local_c = param_2[2] * 0.5;
+  local_14 = *param_2 * 0.5f;
+  local_10 = param_2[1] * 0.5f;
+  local_c = param_2[2] * 0.5f;
   do {
     uVar11 = ftol2();
     local_50[iVar9 * 2] = (uint)uVar11;
@@ -37157,10 +37157,10 @@ void WalkPathBehavior_sampleStepCollision(uint *param_1,float *param_2)
   local_c = (float)((((uVar2 - local_50[5]) - (uint)(uVar1 < local_50[4])) - local_50[0xb]) -
                    (uint)(uVar1 - local_50[4] < local_50[10]));
   vec3i64_toIntFloor(local_50 + 3,local_50 + 0xc);
-  local_14 = *param_2 * 0.5;
-  local_10 = param_2[1] * 0.5;
+  local_14 = *param_2 * 0.5f;
+  local_10 = param_2[1] * 0.5f;
   iVar9 = 0;
-  local_c = param_2[2] * 0.5;
+  local_c = param_2[2] * 0.5f;
   do {
     uVar11 = ftol2();
     local_50[iVar9 * 2 + 6] = (uint)uVar11;
@@ -42378,8 +42378,8 @@ void security_cookie_guard_b(void)
   fVar2 = *(float *)(in_ECX + 0x60);
   fVar3 = (fVar1 + *(float *)(in_ECX + 0x78)) - fVar2;
   fVar4 = (fVar1 + *(float *)(in_ECX + 0x70)) - fVar2;
-  if (fVar3 < 0.0) {
-    fVar3 = 0.0;
+  if (fVar3 < 0.0f) {
+    fVar3 = 0.0f;
   }
   if (fVar4 < fVar3) {
     fVar4 = fVar3;
@@ -47534,7 +47534,7 @@ void Font_layoutAndDrawGlyphs(undefined4 *param_1,float param_2,float param_3,un
   uint local_8;
   
   local_8 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  local_1cc = 1.0;
+  local_1cc = 1.0f;
   if (*(int *)(in_ECX + 0xf4) != 0) {
     local_1cc = *(float *)(in_ECX + 0xe4) / (*(float *)(in_ECX + 0x104) - *(float *)(in_ECX + 0xfc))
     ;
@@ -47599,7 +47599,7 @@ void Font_layoutAndDrawGlyphs(undefined4 *param_1,float param_2,float param_3,un
     local_10 = ((local_30[0] - local_58[6]) - local_70) + fVar12;
   }
   else {
-    local_10 = (((local_30[0] - local_58[6]) - local_70) + fVar12) * 0.5;
+    local_10 = (((local_30[0] - local_58[6]) - local_70) + fVar12) * 0.5f;
   }
   local_10 = param_2 - local_10;
   local_1b8 = local_10;
@@ -47622,7 +47622,7 @@ LAB_0065c361:
           }
         }
         else {
-          fVar13 = (((local_30[0] - local_58[6]) - local_70) + fVar12) * 0.5;
+          fVar13 = (((local_30[0] - local_58[6]) - local_70) + fVar12) * 0.5f;
 LAB_0065c405:
           local_10 = param_2 - fVar13;
         }
@@ -47646,10 +47646,10 @@ LAB_0065c405:
         else {
           local_1bc = (float *)Font_findCachedGlyph3D(uVar2);
         }
-        local_1c0 = 0.0;
+        local_1c0 = 0.0f;
         if (local_1bc != (float *)0x0) {
           if ((int *)local_1bc[10] == (int *)0x0) {
-            if (local_1bc[0xb] != 0.0) {
+            if (local_1bc[0xb] != 0.0f) {
               (**(code **)(**(int **)(in_ECX + 4) + 0x38))(local_b0);
               fVar13 = local_b0[0];
               pfVar7 = local_b0;
@@ -47669,7 +47669,7 @@ LAB_0065c405:
               local_7c = local_9c * fVar14 + local_b0[1] * fVar15 + local_7c;
               local_78 = local_98 * fVar14 + local_b0[2] * fVar15 + local_78;
               local_74 = local_94 * fVar14 + local_b0[3] * fVar15 + local_74;
-              if (local_1cc != 1.0) {
+              if (local_1cc != 1.0f) {
                 local_b0[2] = local_b0[2] * local_1cc;
                 local_b0[0] = fVar13 * local_1cc;
                 local_98 = local_98 * local_1cc;
@@ -47692,7 +47692,7 @@ LAB_0065c405:
                           local_1b8 * *(float *)(in_ECX + 0x88) + *(float *)(in_ECX + 0xb8);
               fStack_134 = *(float *)(in_ECX + 0x9c) * local_1c4 +
                            *(float *)(in_ECX + 0x8c) * local_1b8 + *(float *)(in_ECX + 0xbc);
-              fVar14 = 1.0 / (*(float *)(in_ECX + 0xa4) * local_1c4 +
+              fVar14 = 1.0f / (*(float *)(in_ECX + 0xa4) * local_1c4 +
                               *(float *)(in_ECX + 0x94) * local_1b8 + *(float *)(in_ECX + 0xc4));
               fVar13 = local_138 * fVar14;
               fVar14 = fStack_134 * fVar14;
@@ -47725,7 +47725,7 @@ LAB_0065c405:
                           local_1b8 * *(float *)(in_ECX + 0x88) + *(float *)(in_ECX + 0xb8);
               fStack_124 = *(float *)(in_ECX + 0x9c) * local_1c4 +
                            *(float *)(in_ECX + 0x8c) * local_1b8 + *(float *)(in_ECX + 0xbc);
-              fVar13 = 1.0 / (*(float *)(in_ECX + 0xa4) * local_1c4 +
+              fVar13 = 1.0f / (*(float *)(in_ECX + 0xa4) * local_1c4 +
                               *(float *)(in_ECX + 0x94) * local_1b8 + *(float *)(in_ECX + 0xc4));
               local_58[5] = fStack_124 * fVar13;
               local_58[4] = local_128 * fVar13;
@@ -47752,7 +47752,7 @@ LAB_0065c405:
           }
           local_1c0 = local_1bc[4];
         }
-        if (0.0 < *(float *)(in_ECX + 0xe8)) {
+        if (0.0f < *(float *)(in_ECX + 0xe8)) {
           puVar6 = param_1;
           if (7 < (uint)param_1[5]) {
             puVar6 = (undefined4 *)*param_1;
@@ -47771,7 +47771,7 @@ LAB_0065c405:
                           local_1b8 * *(float *)(in_ECX + 0x88) + *(float *)(in_ECX + 0xb8);
               fStack_12c = *(float *)(in_ECX + 0x9c) * local_1c4 +
                            *(float *)(in_ECX + 0x8c) * local_1b8 + *(float *)(in_ECX + 0xbc);
-              fVar14 = 1.0 / (*(float *)(in_ECX + 0xa4) * local_1c4 +
+              fVar14 = 1.0f / (*(float *)(in_ECX + 0xa4) * local_1c4 +
                               *(float *)(in_ECX + 0x94) * local_1b8 + *(float *)(in_ECX + 0xc4));
               fVar13 = fVar14 * local_130;
               fVar14 = fVar14 * fStack_12c;
@@ -47805,7 +47805,7 @@ LAB_0065c405:
                          local_1b8 * *(float *)(in_ECX + 0x88) + *(float *)(in_ECX + 0xb8);
               fStack_dc = *(float *)(in_ECX + 0x9c) * local_1c4 +
                           *(float *)(in_ECX + 0x8c) * local_1b8 + *(float *)(in_ECX + 0xbc);
-              fVar13 = 1.0 / (*(float *)(in_ECX + 0xa4) * local_1c4 +
+              fVar13 = 1.0f / (*(float *)(in_ECX + 0xa4) * local_1c4 +
                               *(float *)(in_ECX + 0x94) * local_1b8 + *(float *)(in_ECX + 0xc4));
               local_58[3] = fVar13 * fStack_dc;
               local_58[2] = fVar13 * local_e0;
@@ -48294,8 +48294,8 @@ void Font_rasterizeGlyphBitmap(int *param_1,ushort param_2,char param_3)
     rbtree_lowerBound(&local_50,&local_54);
     if (local_50 == *param_1) {
       iVar6 = FT_Set_Pixel_Sizes(*(undefined4 *)(in_ECX + 0xd8),
-                           (int)(*(float *)(in_ECX + 0xe0) * 64.0 + 0.5),
-                           (int)(*(float *)(in_ECX + 0xe4) * 64.0 + 0.5),0,0,uVar4);
+                           (int)(*(float *)(in_ECX + 0xe0) * 64.0f + 0.5f),
+                           (int)(*(float *)(in_ECX + 0xe4) * 64.0f + 0.5f),0,0,uVar4);
       if ((iVar6 == 0) &&
          (iVar6 = FT_Load_Char(*(undefined4 *)(in_ECX + 0xd8),puVar5,8), iVar6 == 0)) {
         FT_Get_Glyph(*(undefined4 *)(*(int *)(in_ECX + 0xd8) + 0x54),&local_4c);
@@ -48310,7 +48310,7 @@ void Font_rasterizeGlyphBitmap(int *param_1,ushort param_2,char param_3)
         iVar6 = local_78._4_4_ + 2;
         local_68 = *(undefined8 *)(local_4c + 0x2c);
         iVar11 = (int)local_78 + 2;
-        fVar13 = 0.0;
+        fVar13 = 0.0f;
         local_78 = uVar1;
         local_5c = iVar6;
         if ((0 < iVar6) && (0 < iVar11)) {
@@ -48379,10 +48379,10 @@ void Font_rasterizeGlyphBitmap(int *param_1,ushort param_2,char param_3)
         pfVar8[1] = (float)(-1 - iVar6);
         pfVar8[2] = (float)local_5c;
         pfVar8[3] = (float)iVar11;
-        pfVar8[0xb] = 0.0;
+        pfVar8[0xb] = 0.0f;
         iVar6 = *(int *)(local_4c + 0x10);
-        pfVar8[4] = (float)*(int *)(local_4c + 0xc) * 1.5258789e-05;
-        pfVar8[5] = (float)iVar6 * 1.5258789e-05;
+        pfVar8[4] = (float)*(int *)(local_4c + 0xc) * 1.5258789e-05f;
+        pfVar8[5] = (float)iVar6 * 1.5258789e-05f;
         pfVar8[10] = fVar13;
         *(undefined1 *)(pfVar8 + 0xc) = 1;
         FT_Done_Glyph(local_4c);
@@ -48569,9 +48569,8 @@ void Font_rasterizeGlyph3D(undefined4 *param_1,ushort param_2,char param_3)
           }
           iVar8 = iVar8 + 1;
         } while (iVar8 < 3);
-        dVar15 = (double)((fVar17 - fVar16) * (fVar18 - fVar19));
         local_d0 = local_74;
-        libm_sse2_sqrt_precise();
+        dVar15 = libm_sse2_sqrt_precise((double)((fVar17 - fVar16) * (fVar18 - fVar19)));
         local_d4 = 500.0 / (float)dVar15;
         if (local_d4 < 1.0) {
           local_b8 = (void *)(int)(local_c0 * local_d4 * 65536.0);
@@ -48724,22 +48723,22 @@ void Font_setPixelSizeAndCacheGlyphs(undefined4 *param_1,undefined4 *param_2,voi
   uVar1 = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
   puVar4 = param_2;
-  if ((float)param_2 <= 0.0) {
+  if ((float)param_2 <= 0.0f) {
     puVar4 = param_1;
   }
-  if (((0.0 < (float)param_1) || (param_1 = puVar4, 0.0 < (float)puVar4)) && (0.0 <= (float)param_3)
+  if (((0.0f < (float)param_1) || (param_1 = puVar4, 0.0f < (float)puVar4)) && (0.0f <= (float)param_3)
      ) {
     *(undefined4 **)(in_ECX + 0xe4) = puVar4;
     *(undefined4 **)(in_ECX + 0xe0) = param_1;
     *(void **)(in_ECX + 0xe8) = param_3;
-    FT_Set_Pixel_Sizes(*(undefined4 *)(in_ECX + 0xd8),(int)((float)param_1 * 64.0 + 0.5),
-                 (int)((float)puVar4 * 64.0 + 0.5),0,0,uVar1);
+    FT_Set_Pixel_Sizes(*(undefined4 *)(in_ECX + 0xd8),(int)((float)param_1 * 64.0f + 0.5f),
+                 (int)((float)puVar4 * 64.0f + 0.5f),0,0,uVar1);
     ChatWidget_setBindTransform(*(undefined4 *)(in_ECX + 0xd8),0,0);
     mat4_identity();
     *(undefined1 *)(in_ECX + 0x108) = 1;
     local_14 = 0;
-    local_18 = (int)(*(float *)(in_ECX + 0xe4) * 64.0 + 0.5);
-    local_1c = (int)(*(float *)(in_ECX + 0xe0) * 64.0 + 0.5);
+    local_18 = (int)(*(float *)(in_ECX + 0xe4) * 64.0f + 0.5f);
+    local_1c = (int)(*(float *)(in_ECX + 0xe0) * 64.0f + 0.5f);
     std_map_find3KeyNode(&param_2,&local_1c);
     if (param_2 == *(undefined4 **)(in_ECX + 0x68)) {
       puVar4 = operator_new(8);
@@ -48757,18 +48756,18 @@ void Font_setPixelSizeAndCacheGlyphs(undefined4 *param_1,undefined4 *param_2,voi
       local_8 = 0xffffffff;
       *(undefined4 **)(in_ECX + 200) = puVar4;
       local_14 = 0;
-      local_18 = (int)(*(float *)(in_ECX + 0xe4) * 64.0 + 0.5);
-      local_1c = (int)(*(float *)(in_ECX + 0xe0) * 64.0 + 0.5);
+      local_18 = (int)(*(float *)(in_ECX + 0xe4) * 64.0f + 0.5f);
+      local_1c = (int)(*(float *)(in_ECX + 0xe0) * 64.0f + 0.5f);
       puVar4 = (undefined4 *)map3i_at(&local_1c);
       *puVar4 = *(undefined4 *)(in_ECX + 200);
     }
     else {
       *(undefined4 *)(in_ECX + 200) = param_2[7];
     }
-    if (0.0 < (float)param_3) {
-      iVar5 = (int)((float)param_3 * 64.0 + 0.5);
-      local_18 = (int)(*(float *)(in_ECX + 0xe4) * 64.0 + 0.5);
-      local_1c = (int)(*(float *)(in_ECX + 0xe0) * 64.0 + 0.5);
+    if (0.0f < (float)param_3) {
+      iVar5 = (int)((float)param_3 * 64.0f + 0.5f);
+      local_18 = (int)(*(float *)(in_ECX + 0xe4) * 64.0f + 0.5f);
+      local_1c = (int)(*(float *)(in_ECX + 0xe0) * 64.0f + 0.5f);
       local_14 = iVar5;
       piVar2 = (int *)std_map_find3KeyNode(&param_3,&local_1c);
       if (*piVar2 == *(int *)(in_ECX + 0x68)) {
@@ -48782,8 +48781,8 @@ void Font_setPixelSizeAndCacheGlyphs(undefined4 *param_1,undefined4 *param_2,voi
         }
         *(undefined4 *)(in_ECX + 0xcc) = uVar3;
         local_8 = 0xffffffff;
-        local_1c = (int)(*(float *)(in_ECX + 0xe0) * 64.0 + 0.5);
-        local_18 = (int)(*(float *)(in_ECX + 0xe4) * 64.0 + 0.5);
+        local_1c = (int)(*(float *)(in_ECX + 0xe0) * 64.0f + 0.5f);
+        local_18 = (int)(*(float *)(in_ECX + 0xe4) * 64.0f + 0.5f);
         local_14 = iVar5;
         puVar4 = (undefined4 *)map3i_at(&local_1c);
         *puVar4 = *(undefined4 *)(in_ECX + 0xcc);
@@ -48791,7 +48790,7 @@ void Font_setPixelSizeAndCacheGlyphs(undefined4 *param_1,undefined4 *param_2,voi
       else {
         *(undefined4 *)(in_ECX + 0xcc) = *(undefined4 *)(*piVar2 + 0x1c);
       }
-      ft_stroker_set_params(*(undefined4 *)(in_ECX + 0xdc),(int)(*(float *)(in_ECX + 0xe8) * 64.0 + 0.5),1,0,
+      ft_stroker_set_params(*(undefined4 *)(in_ECX + 0xdc),(int)(*(float *)(in_ECX + 0xe8) * 64.0f + 0.5f),1,0,
                    0);
       ExceptionList = local_10;
       return;
@@ -59300,8 +59299,7 @@ int vorbis_lookup1_values(void)
   
   iVar1 = *in_ECX;
   iVar2 = in_ECX[1];
-  dVar8 = (double)iVar2;
-  libm_sse2_pow_precise();
+  dVar8 = libm_sse2_pow_precise((double)iVar2,(double)(1.0 / (float)*in_ECX));
   dVar8 = floor(dVar8);
   iVar6 = (int)dVar8;
   iVar7 = iVar6 + 1;
@@ -60196,10 +60194,8 @@ void vorbis_imdct_setup_twiddles(void)
   pvVar2 = malloc(iVar1 * 4);
   pvVar3 = malloc((in_EDX + iVar1) * 4);
   fVar12 = (float)in_EDX;
-  dVar14 = (double)in_EDX;
-  libm_sse2_log_precise();
-  dVar15 = 2.0;
-  libm_sse2_log_precise();
+  dVar14 = libm_sse2_log_precise((double)in_EDX);
+  dVar15 = libm_sse2_log_precise(2.0);
   floor(dVar14 / dVar15 + 0.5);
   iVar4 = float_to_uint64_round_guarded();
   in_ECX[1] = iVar4;
@@ -60213,18 +60209,14 @@ void vorbis_imdct_setup_twiddles(void)
     pfVar8 = (float *)((int)pvVar3 + (in_EDX >> 1) * 4);
     do {
       fVar13 = (float)local_20 * (3.1415927 / fVar12);
-      dVar14 = (double)fVar13;
-      libm_sse2_cos_precise();
+      dVar14 = libm_sse2_cos_precise((double)fVar13);
       *(float *)((int)pvVar3 + local_8 * 8) = (float)dVar14;
-      dVar14 = (double)fVar13;
-      libm_sse2_sin_precise();
+      dVar14 = libm_sse2_sin_precise((double)fVar13);
       *(float *)((int)pvVar3 + local_8 * 8 + 4) = (float)-dVar14;
       fVar13 = (float)local_c * (3.1415927 / (float)(in_EDX * 2));
-      dVar14 = (double)fVar13;
-      libm_sse2_cos_precise();
+      dVar14 = libm_sse2_cos_precise((double)fVar13);
       *pfVar8 = (float)dVar14;
-      dVar14 = (double)fVar13;
-      libm_sse2_sin_precise();
+      dVar14 = libm_sse2_sin_precise((double)fVar13);
       local_c = local_c + 2;
       local_8 = local_8 + 1;
       local_20 = local_20 + 4;
@@ -60239,11 +60231,9 @@ void vorbis_imdct_setup_twiddles(void)
     local_20 = iVar1;
     do {
       fVar13 = (float)iVar10 * (3.1415927 / fVar12);
-      dVar14 = (double)fVar13;
-      libm_sse2_cos_precise();
+      dVar14 = libm_sse2_cos_precise((double)fVar13);
       *pfVar8 = (float)(dVar14 * 0.5);
-      dVar14 = (double)fVar13;
-      libm_sse2_sin_precise();
+      dVar14 = libm_sse2_sin_precise((double)fVar13);
       iVar10 = iVar10 + 4;
       local_20 = local_20 + -1;
       pfVar8[1] = (float)(dVar14 * -0.5);

@@ -17,7 +17,7 @@ void WorldInfo_lookupCell(uint param_1);
 void * WorldInfo_scatterObjectsInArea(undefined4 param_1,undefined4 param_2,int param_3,undefined4 param_4);
 int WorldInfo_vectorElementAt(int param_1,char param_2);
 uint WorldInfo_vectorAppend(void);
-float10 WorldInfo_sampleTerrainHeight(uint param_1,float param_2);
+float WorldInfo_sampleTerrainHeight(uint param_1,float param_2);
 void WorldInfo_rotateAndPlace(uint param_1,uint param_2);
 
 #endif

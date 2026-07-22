@@ -693,14 +693,14 @@ undefined4 __cdecl mapItemTypeToSlotIndex(undefined4 type)
  */
 /* Global::Combat_getResistFactor @ 00409de0 */
 
-float10 __thiscall Combat_getResistFactor(int param_1,undefined4 damage_type,int stacks)
+float __thiscall Combat_getResistFactor(int param_1,undefined4 damage_type,int stacks)
 
 {
   int type_index;
   
   type_index = mapItemTypeToSlotIndex(damage_type);
   if (type_index < 0) {
-    return (float10)1;
+    return (float)1;
   }
   if (stacks < 0) {
     stacks = *(int *)(param_1 + 0x1138 + type_index * 4);
@@ -708,7 +708,7 @@ float10 __thiscall Combat_getResistFactor(int param_1,undefined4 damage_type,int
   if ((stacks == 0) && (*(char *)(param_1 + 0x60) != '\0')) {
     stacks = *(int *)(param_1 + 400) / 2 + *(byte *)(param_1 + 0x1a8) + 1;
   }
-  return (float10)(1.0 - 1.0 / ((float)stacks * 0.1 + 1.0));
+  return (float)(1.0f - 1.0f / ((float)stacks * 0.1f + 1.0f));
 }
 
 
@@ -750,20 +750,20 @@ int __fastcall Combat_getStaminaRegenRate(int creature)
   if (*(char *)(creature + 0xaa8) == '\x03') {
     switch(*(undefined1 *)(creature + 0xaa9)) {
     case 6:
-      return (int)(*(float *)(creature + 0x17c) * 60.0);
+      return (int)(*(float *)(creature + 0x17c) * 60.0f);
     case 8:
-      return (int)(*(float *)(creature + 0x17c) * 80.0);
+      return (int)(*(float *)(creature + 0x17c) * 80.0f);
     case 0xb:
     case 0xc:
     case 0xf:
     case 0x10:
     case 0x11:
 switchD_0040fd08_caseD_b:
-      return (int)(*(float *)(creature + 0x17c) * 20.0);
+      return (int)(*(float *)(creature + 0x17c) * 20.0f);
     }
   }
   else if ((*(byte *)(creature + 0x7e) & 0x10) != 0) goto switchD_0040fd08_caseD_b;
-  return (int)(*(float *)(creature + 0x17c) * 50.0);
+  return (int)(*(float *)(creature + 0x17c) * 50.0f);
 }
 
 
@@ -775,23 +775,22 @@ switchD_0040fd08_caseD_b:
  */
 /* Global::Combat_computeMaxHealth @ 0040fda0 */
 
-float10 __fastcall Combat_computeMaxHealth(int creature)
+float __fastcall Combat_computeMaxHealth(int creature)
 
 {
-  float10 fVar1;
+  float fVar1;
   double dVar2;
   double dVar3;
   float result;
   float value;
   
-  dVar2 = 2.0;
-  libm_sse2_pow_precise();
-  dVar3 = 2.0;
-  libm_sse2_pow_precise();
+  dVar2 = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / (((float)*(int *)(creature + 400) - 1.0) * 0.05 + 1.0)
+                                  ) * 3.0));
+  dVar3 = libm_sse2_pow_precise(2.0,(double)((float)*(byte *)(creature + 0x1a8) * 0.25));
   value = (float)dVar3 * (float)dVar2 * *(float *)(creature + 0x178);
   if (*(char *)(creature + 0x60) == '\0') {
-    dVar3 = 2.0;
-    libm_sse2_pow_precise();
+    dVar3 = libm_sse2_pow_precise(2.0,1.0);
     value = (float)dVar3 * (float)dVar2 * *(float *)(creature + 0x178);
   }
   switch(*(char *)(creature + 0x140)) {
@@ -832,7 +831,7 @@ float10 __fastcall Combat_computeMaxHealth(int creature)
     fVar1 = Combat_equipHealthBonus((char *)(creature + 0x878));
     result = (float)fVar1 + value;
   }
-  return (float10)result;
+  return (float)result;
 }
 
 
@@ -1030,18 +1029,18 @@ LAB_00410355:
  */
 /* Global::pow2Mul @ 00410f00 */
 
-float10 pow2Mul(void)
+float pow2Mul(void)
 
 {
   double val;
-  float fStack00000004;
+  double dVar2;
+  float in_stack_00000004;
+  int in_stack_00000008;
   
-  val = 2.0;
-  libm_sse2_pow_precise();
-  fStack00000004 = (float)val;
-  val = 2.0;
-  libm_sse2_pow_precise();
-  return (float10)(fStack00000004 * (float)val);
+  val = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / ((in_stack_00000004 - 1.0) * 0.05 + 1.0)) * 3.0));
+  dVar2 = libm_sse2_pow_precise(2.0,(double)((float)in_stack_00000008 * 0.25));
+  return (float)((float)val * (float)dVar2);
 }
 
 
@@ -1053,21 +1052,20 @@ float10 pow2Mul(void)
  */
 /* Global::pow2MulDiv @ 00410f90 */
 
-float10 pow2MulDiv(void)
+float pow2MulDiv(void)
 
 {
   double val;
-  float fStack00000004;
+  double dVar2;
+  double dVar3;
+  float in_stack_00000004;
+  int in_stack_00000008;
   
-  val = 2.0;
-  libm_sse2_pow_precise();
-  fStack00000004 = (float)val;
-  val = 2.0;
-  libm_sse2_pow_precise();
-  fStack00000004 = fStack00000004 * (float)val;
-  val = 2.0;
-  libm_sse2_pow_precise();
-  return (float10)(fStack00000004 / (float)val);
+  val = libm_sse2_pow_precise
+                    (2.0,(double)((1.0 - 1.0 / ((in_stack_00000004 - 1.0) * 0.05 + 1.0)) * 3.0));
+  dVar2 = libm_sse2_pow_precise(2.0,(double)((float)in_stack_00000008 * 0.25));
+  dVar3 = libm_sse2_pow_precise(2.0,3.0);
+  return (float)(((float)val * (float)dVar2) / (float)dVar3);
 }
 
 
@@ -1425,18 +1423,18 @@ undefined1 * __thiscall struct_copy0x118(void *this,undefined1 *src)
  */
 /* Global::Combat_equipHealthBonus @ 00413ce0 */
 
-float10 __fastcall Combat_equipHealthBonus(char *item)
+float __fastcall Combat_equipHealthBonus(char *item)
 
 {
   char cVar1;
-  float10 fVar2;
+  float fVar2;
   float multiplier;
   float factor;
   
   cVar1 = *item;
   if ((((cVar1 != '\x03') && (cVar1 != '\x04')) && (cVar1 != '\a')) &&
      ((cVar1 != '\x05' && (cVar1 != '\x06')))) {
-    return (float10)0;
+    return (float)0;
   }
   multiplier = 0.5;
   if (cVar1 == '\x04') {
@@ -1455,7 +1453,7 @@ float10 __fastcall Combat_equipHealthBonus(char *item)
     factor = factor + 0.75;
   }
   fVar2 = pow2Mul();
-  return (float10)((float)fVar2 * 5.0 * multiplier * factor);
+  return (float)((float)fVar2 * 5.0 * multiplier * factor);
 }
 
 
@@ -4306,11 +4304,11 @@ void __thiscall FUN_004cea80(void *this,uint *param_1,void *param_2,undefined4 *
   void *pvVar5;
   float *pfVar6;
   char cVar7;
-  uint uVar8;
-  float *pfVar9;
-  undefined4 uVar10;
-  float *pfVar11;
-  int iVar12;
+  float *pfVar8;
+  undefined4 uVar9;
+  float *pfVar10;
+  int iVar11;
+  uint uVar12;
   undefined4 *puVar13;
   int *piVar14;
   undefined1 *puVar15;
@@ -4319,7 +4317,7 @@ void __thiscall FUN_004cea80(void *this,uint *param_1,void *param_2,undefined4 *
   float fVar18;
   int iVar19;
   bool bVar20;
-  float10 fVar21;
+  float fVar21;
   float fVar22;
   double dVar23;
   float fVar24;
@@ -4379,18 +4377,17 @@ void __thiscall FUN_004cea80(void *this,uint *param_1,void *param_2,undefined4 *
   local_8 = 0xffffffff;
   puStack_c = &LAB_0055495b;
   local_10 = ExceptionList;
-  uVar8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
+  local_14 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
   ExceptionList = &local_10;
   local_300 = param_2;
   local_2ec = param_3;
   local_30c = (float *)(param_1 + 2);
-  pfVar9 = (float *)((int)this + 4);
-  local_304 = pfVar9;
+  pfVar8 = (float *)((int)this + 4);
+  local_304 = pfVar8;
   local_2f4 = this;
-  local_14 = uVar8;
-  std_map_lower_bound_yx(pfVar9,(int *)&local_2e8,(uint *)local_30c);
-  pfVar9 = (float *)*pfVar9;
-  if (((local_2e8 != pfVar9) && (local_2f8 = (void *)local_2e8[6], local_2f8 != (void *)0x0)) &&
+  std_map_lower_bound_yx(pfVar8,(int *)&local_2e8,(uint *)local_30c);
+  pfVar8 = (float *)*pfVar8;
+  if (((local_2e8 != pfVar8) && (local_2f8 = (void *)local_2e8[6], local_2f8 != (void *)0x0)) &&
      (0.0 < *(float *)((int)local_2f8 + 0x16c))) {
     if ((*(int *)((int)this + 0xb8) == 0) && (*(char *)((int)local_2f8 + 0x60) == '\0')) {
       std_list_push_back_428400(local_300,param_1);
@@ -4398,7 +4395,7 @@ void __thiscall FUN_004cea80(void *this,uint *param_1,void *param_2,undefined4 *
     else {
       std_map_lower_bound_yx((void *)((int)this + 4),(int *)&local_2e8,param_1);
       pvVar16 = local_2f8;
-      if (local_2e8 == pfVar9) {
+      if (local_2e8 == pfVar8) {
         fVar18 = 0.0;
       }
       else {
@@ -4406,8 +4403,10 @@ void __thiscall FUN_004cea80(void *this,uint *param_1,void *param_2,undefined4 *
       }
       local_2fc = fVar18;
       if (0.0 < (float)param_1[4]) {
-        dVar23 = 2.0;
-        libm_sse2_pow_precise(uVar8);
+        dVar23 = libm_sse2_pow_precise
+                           (2.0,(double)((float)(int)(*(int *)((int)local_2f8 + 400) + -1 +
+                                                     (uint)*(byte *)((int)local_2f8 + 0x1a8)) * 0.25
+                                        ));
         fVar22 = *(float *)((int)pvVar16 + 0x1190) - ((float)param_1[4] * 0.25) / (float)dVar23;
         *(float *)((int)pvVar16 + 0x1190) = fVar22;
         if (fVar22 < 0.0) {
@@ -4423,30 +4422,30 @@ void __thiscall FUN_004cea80(void *this,uint *param_1,void *param_2,undefined4 *
         *(uint *)((int)fVar18 + 0x11d4) = param_1[3];
         *(uint *)((int)pvVar16 + 0x11d0) = *param_1;
         *(uint *)((int)pvVar16 + 0x11d4) = param_1[1];
-        pfVar9 = (float *)RBTree_findOrInsert((void *)((int)fVar18 + 0x13ac),param_1 + 2);
-        *pfVar9 = *pfVar9 + 1.0;
-        uVar10 = Combat_isBlockingState((int)fVar18);
-        if ((char)uVar10 == '\0') {
+        pfVar8 = (float *)RBTree_findOrInsert((void *)((int)fVar18 + 0x13ac),param_1 + 2);
+        *pfVar8 = *pfVar8 + 1.0;
+        uVar9 = Combat_isBlockingState((int)fVar18);
+        if ((char)uVar9 == '\0') {
           if (*(int *)((int)fVar18 + 100) == 0x19) {
-            pfVar9 = (float *)RBTree_findOrInsert((void *)((int)pvVar16 + 0x13a4),param_1);
+            pfVar8 = (float *)RBTree_findOrInsert((void *)((int)pvVar16 + 0x13a4),param_1);
             fVar22 = (float)param_1[4] * 10.0;
           }
           else if (((*(char *)((int)fVar18 + 0xaa8) == '\x03') &&
                    (cVar7 = is_consumable_effect((char *)((int)fVar18 + 0xaa8)), cVar7 != '\0')) &&
                   (*(char *)((int)fVar18 + 0x141) == '\x01')) {
-            pfVar9 = (float *)RBTree_findOrInsert((void *)((int)pvVar16 + 0x13a4),param_1);
+            pfVar8 = (float *)RBTree_findOrInsert((void *)((int)pvVar16 + 0x13a4),param_1);
             fVar22 = (float)param_1[4] * 20.0;
           }
           else {
-            pfVar9 = (float *)RBTree_findOrInsert((void *)((int)pvVar16 + 0x13a4),param_1);
+            pfVar8 = (float *)RBTree_findOrInsert((void *)((int)pvVar16 + 0x13a4),param_1);
             fVar22 = (float)param_1[4] * 2.0;
           }
         }
         else {
-          pfVar9 = (float *)RBTree_findOrInsert((void *)((int)pvVar16 + 0x13a4),param_1);
+          pfVar8 = (float *)RBTree_findOrInsert((void *)((int)pvVar16 + 0x13a4),param_1);
           fVar22 = (float)param_1[4];
         }
-        *pfVar9 = fVar22 + 0.01 + *pfVar9;
+        *pfVar8 = fVar22 + 0.01 + *pfVar8;
         CombatBehavior_alertNearbyAllies((int)fVar18,(int)pvVar16,(int)local_300);
       }
       if ((*(ushort *)((int)pvVar16 + 0x7e) & 0x2000) == 0) {
@@ -4480,12 +4479,12 @@ LAB_004ced90:
               *(undefined4 *)((int)pvVar16 + 0x3c) = 0;
             }
           }
-          uVar8 = param_1[7];
-          if (0 < (int)uVar8) {
-            if ((int)uVar8 < (int)*(uint *)((int)pvVar16 + 0x130)) {
-              uVar8 = *(uint *)((int)pvVar16 + 0x130);
+          uVar12 = param_1[7];
+          if (0 < (int)uVar12) {
+            if ((int)uVar12 < (int)*(uint *)((int)pvVar16 + 0x130)) {
+              uVar12 = *(uint *)((int)pvVar16 + 0x130);
             }
-            *(uint *)((int)pvVar16 + 0x130) = uVar8;
+            *(uint *)((int)pvVar16 + 0x130) = uVar12;
           }
           if (*(char *)((int)param_1 + 0x45) == '\x01') {
             fVar18 = *(float *)((int)pvVar16 + 0x170) + 0.25;
@@ -4498,12 +4497,12 @@ LAB_004ced90:
             creature_spawn_projectile(pvVar16,(int)local_300);
           }
           else {
-            uVar8 = param_1[6];
-            if (0 < (int)uVar8) {
-              if ((int)uVar8 < (int)*(uint *)((int)pvVar16 + 300)) {
-                uVar8 = *(uint *)((int)pvVar16 + 300);
+            uVar12 = param_1[6];
+            if (0 < (int)uVar12) {
+              if ((int)uVar12 < (int)*(uint *)((int)pvVar16 + 300)) {
+                uVar12 = *(uint *)((int)pvVar16 + 300);
               }
-              *(uint *)((int)pvVar16 + 300) = uVar8;
+              *(uint *)((int)pvVar16 + 300) = uVar12;
             }
             if ((*(char *)((int)local_2f4 + 0xb4) == '\0') ||
                (pvVar16 == *(void **)((int)local_2f4 + 0xb8))) {
@@ -4522,19 +4521,19 @@ LAB_004ced90:
                      (local_2e8 = (float *)**(float **)((int)local_2f4 + 4),
                      local_2e8 != *(float **)((int)local_2f4 + 4))) {
                     do {
-                      pfVar9 = local_2e8;
+                      pfVar8 = local_2e8;
                       if ((local_2e8[6] != 0.0) &&
-                         ((uVar10 = CombatBehavior_areHostile((int)local_2fc,(int)local_2e8[6]),
-                          (char)uVar10 != '\0' &&
-                          (iVar12 = *(int *)((int)pfVar9[6] + 0x13a4),
-                          piVar14 = (int *)std_map_lower_bound_yx((void *)((int)pfVar9[6] + 0x13a4),
+                         ((uVar9 = CombatBehavior_areHostile((int)local_2fc,(int)local_2e8[6]),
+                          (char)uVar9 != '\0' &&
+                          (iVar11 = *(int *)((int)pfVar8[6] + 0x13a4),
+                          piVar14 = (int *)std_map_lower_bound_yx((void *)((int)pfVar8[6] + 0x13a4),
                                                         (int *)&local_308,
                                                         (uint *)((int)local_2f8 + 8)),
-                          fVar18 = local_2fc, *piVar14 != iVar12)))) {
-                        pfVar11 = (float *)RBTree_findOrInsert((void *)((int)pfVar9[6] + 0x13a4),
+                          fVar18 = local_2fc, *piVar14 != iVar11)))) {
+                        pfVar10 = (float *)RBTree_findOrInsert((void *)((int)pfVar8[6] + 0x13a4),
                                                         (uint *)((int)local_2fc + 8));
-                        *pfVar11 = *pfVar11 - (float)param_1[4] * 0.1;
-                        CombatBehavior_alertNearbyAllies((int)fVar18,(int)pfVar9[6],(int)local_300);
+                        *pfVar10 = *pfVar10 - (float)param_1[4] * 0.1;
+                        CombatBehavior_alertNearbyAllies((int)fVar18,(int)pfVar8[6],(int)local_300);
                       }
                       RBTree_iterIncrement((int *)&local_2e8);
                     } while (local_2e8 != (float *)*local_304);
@@ -4569,9 +4568,10 @@ LAB_004ced90:
                 }
               }
               else {
-                uVar8 = check_weapon_kind((int)pvVar16);
-                if (((char)uVar8 != '\0') &&
-                   ((fVar18 == 0.0 || (uVar8 = check_weapon_kind((int)fVar18), (char)uVar8 != '\0')))) {
+                uVar12 = check_weapon_kind((int)pvVar16);
+                if (((char)uVar12 != '\0') &&
+                   ((fVar18 == 0.0 || (uVar12 = check_weapon_kind((int)fVar18), (char)uVar12 != '\0'))))
+                {
                   *(float *)((int)pvVar16 + 0x16c) =
                        *(float *)((int)pvVar16 + 0x16c) - (float)param_1[4];
                 }
@@ -4585,11 +4585,11 @@ LAB_004ced90:
                 local_20 = 3.78351e-44;
                 std_list_push_back_428590((void *)((int)local_300 + 8),&local_2c);
                 *(undefined4 *)((int)pvVar16 + 0x6c) = 0;
-                iVar12 = Region_getChunkCell(local_2f4,*(uint *)((int)pvVar16 + 0x1b0),
+                iVar11 = Region_getChunkCell(local_2f4,*(uint *)((int)pvVar16 + 0x1b0),
                                       *(uint *)((int)pvVar16 + 0x1b4));
-                if (iVar12 != 0) {
+                if (iVar11 != 0) {
                   iVar19 = 0;
-                  for (piVar14 = *(int **)(iVar12 + 0xc); piVar14 != *(int **)(iVar12 + 0x10);
+                  for (piVar14 = *(int **)(iVar11 + 0xc); piVar14 != *(int **)(iVar11 + 0x10);
                       piVar14 = piVar14 + 0x62) {
                     if (((*piVar14 == 5) && (piVar14[0x5e] == *(int *)((int)pvVar16 + 0x1b8))) &&
                        ((char)piVar14[0xc] != '\0')) {
@@ -4605,7 +4605,7 @@ LAB_004ced90:
                   }
                 }
                 lib_fn_4d2ae0(local_2f4,(int)pvVar16,local_2ec);
-                pfVar9 = local_304;
+                pfVar8 = local_304;
                 local_2e8 = *(float **)*local_304;
                 if (local_2e8 != (float *)*local_304) {
                   do {
@@ -4614,22 +4614,22 @@ LAB_004ced90:
                                    (uint *)((int)pvVar16 + 0x10));
                     }
                     RBTree_iterIncrement((int *)&local_2e8);
-                  } while (local_2e8 != (float *)*pfVar9);
+                  } while (local_2e8 != (float *)*pfVar8);
                 }
-                pfVar9 = (float *)((int)pvVar16 + 0x11c8);
-                local_308 = pfVar9;
+                pfVar8 = (float *)((int)pvVar16 + 0x11c8);
+                local_308 = pfVar8;
                 if (*(int *)((int)pvVar16 + 0x11c8) != 0 || *(int *)((int)pvVar16 + 0x11cc) != 0) {
-                  std_map_lower_bound_yx(local_304,(int *)&local_2ec,(uint *)pfVar9);
+                  std_map_lower_bound_yx(local_304,(int *)&local_2ec,(uint *)pfVar8);
                   puVar13 = (undefined4 *)*local_304;
                   if ((local_2ec != puVar13) && (local_2ec[6] != 0)) {
-                    std_map_lower_bound_yx(local_304,(int *)&local_2ec,(uint *)pfVar9);
+                    std_map_lower_bound_yx(local_304,(int *)&local_2ec,(uint *)pfVar8);
                     if (local_2ec == puVar13) {
-                      iVar12 = 0;
+                      iVar11 = 0;
                     }
                     else {
-                      iVar12 = local_2ec[6];
+                      iVar11 = local_2ec[6];
                     }
-                    *(undefined4 *)(iVar12 + 0x16c) = 0;
+                    *(undefined4 *)(iVar11 + 0x16c) = 0;
                   }
                 }
                 fVar21 = formula_diminishing_float((float)(int)((uint)*(byte *)((int)pvVar16 + 0x1a8) +
@@ -4639,8 +4639,8 @@ LAB_004ced90:
                 if (local_2fc < 1.0) {
                   local_2fc = 1.0;
                 }
-                iVar12 = Combat_isRangedOrSpecialOpcode((int)pvVar16);
-                if ((char)iVar12 != '\0') {
+                iVar11 = Combat_isRangedOrSpecialOpcode((int)pvVar16);
+                if ((char)iVar11 != '\0') {
                   local_2fc = local_2fc * 20.0;
                 }
                 uVar1 = *(ushort *)((int)pvVar16 + 0x7e);
@@ -4660,26 +4660,26 @@ LAB_004ced90:
                 local_2c4 = 0;
                 iStack_2c0 = 0;
                 if ((((*(char *)((int)local_2f4 + 0xb4) == '\0') &&
-                     (iVar12 = World_getTileAtCoords(local_2f4,
+                     (iVar11 = World_getTileAtCoords(local_2f4,
                                             (int)(*(int *)((int)pvVar16 + 0x1b0) +
                                                  (*(int *)((int)pvVar16 + 0x1b0) >> 0x1f & 7U)) >> 3
                                             ,(int)(*(int *)((int)pvVar16 + 0x1b4) +
                                                   (*(int *)((int)pvVar16 + 0x1b4) >> 0x1f & 7U)) >>
-                                             3), iVar12 != 0)) &&
-                    (*(char *)(iVar12 + 0x41) != '\x02')) &&
+                                             3), iVar11 != 0)) &&
+                    (*(char *)(iVar11 + 0x41) != '\x02')) &&
                    (((uVar1 & 0x2000) != 0 ||
-                    ((*(int *)(iVar12 + 0x34) == 5 && (*(char *)((int)pvVar16 + 0x1d38) != '\0')))))
+                    ((*(int *)(iVar11 + 0x34) == 5 && (*(char *)((int)pvVar16 + 0x1d38) != '\0')))))
                    ) {
-                  pfVar9 = *(float **)((int)pvVar16 + 0x13a4);
-                  local_2e8 = (float *)*pfVar9;
-                  while (local_2e8 != pfVar9) {
+                  pfVar8 = *(float **)((int)pvVar16 + 0x13a4);
+                  local_2e8 = (float *)*pfVar8;
+                  while (local_2e8 != pfVar8) {
                     if (0.0 < local_2e8[6]) {
-                      pfVar11 = local_2e8 + 4;
-                      std_map_lower_bound_yx(local_304,(int *)&local_2ec,(uint *)pfVar11);
+                      pfVar10 = local_2e8 + 4;
+                      std_map_lower_bound_yx(local_304,(int *)&local_2ec,(uint *)pfVar10);
                       if (((local_2ec != (undefined4 *)*local_304) && (local_2ec[6] != 0)) &&
-                         (uVar8 = std_map_find_value(local_2f4,(uint *)pfVar11),
-                         *(char *)(uVar8 + 0x60) == '\0')) {
-                        switch(*(undefined4 *)(iVar12 + 0x34)) {
+                         (uVar12 = std_map_find_value(local_2f4,(uint *)pfVar10),
+                         *(char *)(uVar12 + 0x60) == '\0')) {
+                        switch(*(undefined4 *)(iVar11 + 0x34)) {
                         case 1:
                         case 2:
                         case 3:
@@ -4688,7 +4688,7 @@ LAB_004ced90:
                         case 0xd:
 switchD_004cf51a_caseD_1:
                           local_2ed = '\x01';
-                          *(undefined1 *)(iVar12 + 0x41) = 2;
+                          *(undefined1 *)(iVar11 + 0x41) = 2;
                           break;
                         default:
                           goto switchD_004cf51a_caseD_6;
@@ -4698,12 +4698,12 @@ switchD_004cf51a_caseD_1:
                         case 10:
                         case 0xb:
                         case 0xc:
-                          *(int *)(iVar12 + 0x44) = *(int *)(iVar12 + 0x44) + 1;
-                          *(undefined1 *)(iVar12 + 0x41) = 1;
-                          if (*(int *)(iVar12 + 0x48) <= *(int *)(iVar12 + 0x44))
+                          *(int *)(iVar11 + 0x44) = *(int *)(iVar11 + 0x44) + 1;
+                          *(undefined1 *)(iVar11 + 0x41) = 1;
+                          if (*(int *)(iVar11 + 0x48) <= *(int *)(iVar11 + 0x44))
                           goto switchD_004cf51a_caseD_1;
                         }
-                        copyStruct_0x28(&local_2e4,(undefined4 *)(iVar12 + 0x2c));
+                        copyStruct_0x28(&local_2e4,(undefined4 *)(iVar11 + 0x2c));
                         initStruct_0x38_zero(&local_64);
                         pvVar16 = local_2f8;
                         local_64 = (int)(*(int *)((int)local_2f8 + 0x1b0) +
@@ -4713,43 +4713,43 @@ switchD_004cf51a_caseD_1:
                         copyStruct_0x28(local_54,&local_2e4);
                         std_list_push_back_4284a0((void *)((int)local_300 + 0x60),&local_64);
                         if ((local_2ed != '\0') &&
-                           (pfVar9 = (float *)((*(int *)((int)pvVar16 + 0x1b0) >> 0x1f & 7U) +
+                           (pfVar8 = (float *)((*(int *)((int)pvVar16 + 0x1b0) >> 0x1f & 7U) +
                                                *(int *)((int)pvVar16 + 0x1b0) & 0xfffffff8),
-                           local_2e8 = pfVar9, (int)pfVar9 < (int)(pfVar9 + 2))) {
+                           local_2e8 = pfVar8, (int)pfVar8 < (int)(pfVar8 + 2))) {
                           do {
-                            uVar8 = (*(int *)((int)pvVar16 + 0x1b4) >> 0x1f & 7U) +
-                                    *(int *)((int)pvVar16 + 0x1b4) & 0xfffffff8;
-                            local_2e8 = pfVar9;
-                            if ((int)uVar8 < (int)(uVar8 + 8)) {
+                            uVar12 = (*(int *)((int)pvVar16 + 0x1b4) >> 0x1f & 7U) +
+                                     *(int *)((int)pvVar16 + 0x1b4) & 0xfffffff8;
+                            local_2e8 = pfVar8;
+                            if ((int)uVar12 < (int)(uVar12 + 8)) {
                               do {
-                                puVar13 = (undefined4 *)Region_getChunkCell(local_2f4,(uint)pfVar9,uVar8);
+                                puVar13 = (undefined4 *)Region_getChunkCell(local_2f4,(uint)pfVar8,uVar12);
                                 local_2ec = puVar13;
                                 if (puVar13 != (undefined4 *)0x0) {
-                                  iVar12 = puVar13[6];
+                                  iVar11 = puVar13[6];
                                   iVar19 = puVar13[0x28];
-                                  if (iVar19 < puVar13[7] - iVar12 >> 2) {
+                                  if (iVar19 < puVar13[7] - iVar11 >> 2) {
                                     do {
-                                      puVar3 = *(undefined4 **)(iVar12 + iVar19 * 4);
+                                      puVar3 = *(undefined4 **)(iVar11 + iVar19 * 4);
                                       if (puVar3 != (undefined4 *)0x0) {
                                         (**(code **)*puVar3)(1);
                                       }
-                                      iVar12 = puVar13[6];
+                                      iVar11 = puVar13[6];
                                       iVar19 = iVar19 + 1;
-                                    } while (iVar19 < puVar13[7] - iVar12 >> 2);
+                                    } while (iVar19 < puVar13[7] - iVar11 >> 2);
                                   }
                                   vec_ptr_resize(puVar13 + 6,local_2ec[0x28]);
-                                  pfVar9 = local_2e8;
+                                  pfVar8 = local_2e8;
                                 }
-                                uVar8 = uVar8 + 1;
-                              } while ((int)uVar8 <
+                                uVar12 = uVar12 + 1;
+                              } while ((int)uVar12 <
                                        ((int)(*(int *)((int)local_2f8 + 0x1b4) +
                                              (*(int *)((int)local_2f8 + 0x1b4) >> 0x1f & 7U)) >> 3)
                                        * 8 + 8);
                             }
-                            pfVar9 = (float *)((int)pfVar9 + 1);
+                            pfVar8 = (float *)((int)pfVar8 + 1);
                             pvVar16 = local_2f8;
-                            local_2e8 = pfVar9;
-                          } while ((int)pfVar9 <
+                            local_2e8 = pfVar8;
+                          } while ((int)pfVar8 <
                                    ((int)(*(int *)((int)local_2f8 + 0x1b0) +
                                          (*(int *)((int)local_2f8 + 0x1b0) >> 0x1f & 7U)) >> 3) * 8
                                    + 8);
@@ -4761,11 +4761,11 @@ switchD_004cf51a_caseD_1:
                   }
                 }
 switchD_004cf51a_caseD_6:
-                pfVar9 = *(float **)*local_304;
-                pfVar11 = local_304;
-                if (pfVar9 != (float *)*local_304) {
+                pfVar8 = *(float **)*local_304;
+                pfVar10 = local_304;
+                if (pfVar8 != (float *)*local_304) {
                   do {
-                    fVar18 = pfVar9[6];
+                    fVar18 = pfVar8[6];
                     if (fVar18 != 0.0) {
                       if (((*(float *)((int)fVar18 + 0x11d0) == *local_30c) &&
                           (*(float *)((int)fVar18 + 0x11d4) == local_30c[1])) ||
@@ -4776,71 +4776,71 @@ switchD_004cf51a_caseD_6:
                       }
                       local_310 = 0;
                       puVar13 = (undefined4 *)std_List_node_alloc_0xc((undefined4 *)0x0,(undefined4 *)0x0);
-                      pfVar11 = (float *)**(float **)((int)pfVar9[6] + 0x13a4);
+                      pfVar10 = (float *)**(float **)((int)pfVar8[6] + 0x13a4);
                       local_8 = 0;
                       local_314 = puVar13;
-                      local_2e8 = pfVar11;
-                      if (pfVar11 != *(float **)((int)pfVar9[6] + 0x13a4)) {
+                      local_2e8 = pfVar10;
+                      if (pfVar10 != *(float **)((int)pfVar8[6] + 0x13a4)) {
                         do {
-                          fVar18 = pfVar11[4];
+                          fVar18 = pfVar10[4];
                           if (((fVar18 == *local_30c) &&
-                              (fVar18 = pfVar11[4], pfVar11[5] == local_30c[1])) ||
-                             ((fVar18 == *local_308 && (pfVar11[5] == local_308[1])))) {
-                            iVar12 = std_list_insertNode1(puVar13,(undefined4 *)puVar13[1],&local_2e8);
+                              (fVar18 = pfVar10[4], pfVar10[5] == local_30c[1])) ||
+                             ((fVar18 == *local_308 && (pfVar10[5] == local_308[1])))) {
+                            iVar11 = std_list_insertNode1(puVar13,(undefined4 *)puVar13[1],&local_2e8);
                             if (local_310 == 0x15555554) goto LAB_004cfc8a;
-                            puVar13[1] = iVar12;
+                            puVar13[1] = iVar11;
                             local_310 = local_310 + 1;
-                            **(int **)(iVar12 + 4) = iVar12;
+                            **(int **)(iVar11 + 4) = iVar11;
                           }
-                          if (*(char *)((int)pfVar11 + 0xd) == '\0') {
-                            pfVar2 = (float *)pfVar11[2];
+                          if (*(char *)((int)pfVar10 + 0xd) == '\0') {
+                            pfVar2 = (float *)pfVar10[2];
                             if (*(char *)((int)pfVar2 + 0xd) == '\0') {
                               cVar7 = *(char *)((int)*pfVar2 + 0xd);
-                              pfVar11 = pfVar2;
+                              pfVar10 = pfVar2;
                               pfVar2 = (float *)*pfVar2;
-                              while (local_2e8 = pfVar11, cVar7 == '\0') {
+                              while (local_2e8 = pfVar10, cVar7 == '\0') {
                                 cVar7 = *(char *)((int)*pfVar2 + 0xd);
-                                pfVar11 = pfVar2;
+                                pfVar10 = pfVar2;
                                 pfVar2 = (float *)*pfVar2;
                               }
                             }
                             else {
-                              cVar7 = *(char *)((int)pfVar11[1] + 0xd);
-                              pfVar6 = (float *)pfVar11[1];
-                              pfVar2 = pfVar11;
-                              while ((pfVar11 = pfVar6, local_2e8 = pfVar11, cVar7 == '\0' &&
-                                     (pfVar2 == (float *)pfVar11[2]))) {
-                                cVar7 = *(char *)((int)pfVar11[1] + 0xd);
-                                pfVar6 = (float *)pfVar11[1];
-                                pfVar2 = pfVar11;
+                              cVar7 = *(char *)((int)pfVar10[1] + 0xd);
+                              pfVar6 = (float *)pfVar10[1];
+                              pfVar2 = pfVar10;
+                              while ((pfVar10 = pfVar6, local_2e8 = pfVar10, cVar7 == '\0' &&
+                                     (pfVar2 == (float *)pfVar10[2]))) {
+                                cVar7 = *(char *)((int)pfVar10[1] + 0xd);
+                                pfVar6 = (float *)pfVar10[1];
+                                pfVar2 = pfVar10;
                               }
                             }
                           }
-                        } while (pfVar11 != *(float **)((int)pfVar9[6] + 0x13a4));
+                        } while (pfVar10 != *(float **)((int)pfVar8[6] + 0x13a4));
                       }
                       for (puVar3 = (undefined4 *)*puVar13; puVar3 != puVar13;
                           puVar3 = (undefined4 *)*puVar3) {
-                        RBTree_eraseNode_plain((void *)((int)pfVar9[6] + 0x13a4),&local_31c,(int *)puVar3[2]);
+                        RBTree_eraseNode_plain((void *)((int)pfVar8[6] + 0x13a4),&local_31c,(int *)puVar3[2]);
                       }
                       if ((*(char *)((int)local_2f8 + 0x60) == '\x01') &&
-                         (*(char *)((int)pfVar9[6] + 0x60) == '\0')) {
-                        iVar12 = *(int *)((int)local_2f8 + 0x13a4);
+                         (*(char *)((int)pfVar8[6] + 0x60) == '\0')) {
+                        iVar11 = *(int *)((int)local_2f8 + 0x13a4);
                         piVar14 = (int *)std_map_lower_bound_yx((void *)((int)local_2f8 + 0x13a4),&local_318,
-                                                      (uint *)(pfVar9 + 4));
+                                                      (uint *)(pfVar8 + 4));
                         pvVar16 = local_300;
-                        if (*piVar14 != iVar12) {
+                        if (*piVar14 != iVar11) {
                           local_24 = *local_30c;
                           local_20 = local_30c[1];
                           local_1c = *(undefined4 *)((int)local_2f8 + 100);
-                          local_2c = pfVar9[4];
-                          local_28 = pfVar9[5];
+                          local_2c = pfVar8[4];
+                          local_28 = pfVar8[5];
                           local_18 = (int)local_2fc;
                           local_2ec = *(undefined4 **)((int)local_300 + 0x48);
                           iVar19 = list_emplaceCopy24(local_2ec,(undefined4 *)local_2ec[1],
                                                 (undefined8 *)&local_2c);
-                          iVar12 = *(int *)((int)pvVar16 + 0x4c);
-                          if (iVar12 == 0x7fffffe) goto LAB_004cfc8a;
-                          *(int *)((int)pvVar16 + 0x4c) = iVar12 + 1;
+                          iVar11 = *(int *)((int)pvVar16 + 0x4c);
+                          if (iVar11 == 0x7fffffe) goto LAB_004cfc8a;
+                          *(int *)((int)pvVar16 + 0x4c) = iVar11 + 1;
                           local_2ec[1] = iVar19;
                           **(int **)(iVar19 + 4) = iVar19;
                           lib_fn_4d61c0(local_2f4,(uint *)&local_2c);
@@ -4858,47 +4858,47 @@ switchD_004cf51a_caseD_6:
                           local_88 = 0;
                           memset(local_188,0,0x100);
                           pvVar16 = local_300;
-                          local_1a4 = pfVar9[4];
-                          local_1a0 = pfVar9[5];
+                          local_1a4 = pfVar8[4];
+                          local_1a0 = pfVar8[5];
                           local_18c = (undefined2)(int)(fVar18 + 1.0);
                           local_2ec = *(undefined4 **)((int)local_300 + 0x40);
                           local_19c = '\r';
-                          iVar12 = std_map_insert_node_str_2(local_2ec,(undefined4 *)local_2ec[1],&local_1a4);
+                          iVar11 = std_map_insert_node_str_2(local_2ec,(undefined4 *)local_2ec[1],&local_1a4);
                           if (*(int *)((int)pvVar16 + 0x44) == 0xdd67c7) {
 LAB_004cfc8a:
                             std::_Xlength_error("list<T> too long");
                           }
                           *(int *)((int)pvVar16 + 0x44) = *(int *)((int)pvVar16 + 0x44) + 1;
-                          local_2ec[1] = iVar12;
-                          **(int **)(iVar12 + 4) = iVar12;
-                          if (pfVar9[6] == *(float *)((int)local_2f4 + 0xb8)) {
-                            game_inventoryAccumulateCount((void *)((int)pfVar9[6] + 0x11dc),&local_19c,-1);
+                          local_2ec[1] = iVar11;
+                          **(int **)(iVar11 + 4) = iVar11;
+                          if (pfVar8[6] == *(float *)((int)local_2f4 + 0xb8)) {
+                            game_inventoryAccumulateCount((void *)((int)pfVar8[6] + 0x11dc),&local_19c,-1);
                           }
-                          uVar8 = rand();
-                          uVar8 = uVar8 & 0x80000001;
-                          bVar20 = uVar8 == 0;
-                          if ((int)uVar8 < 0) {
-                            bVar20 = (uVar8 - 1 | 0xfffffffe) == 0xffffffff;
+                          uVar12 = rand();
+                          uVar12 = uVar12 & 0x80000001;
+                          bVar20 = uVar12 == 0;
+                          if ((int)uVar12 < 0) {
+                            bVar20 = (uVar12 - 1 | 0xfffffffe) == 0xffffffff;
                           }
                           if (bVar20) {
                             puVar15 = (undefined1 *)
                                       lib_fn_528bf0(local_2bc,(short)local_2d4,(char)local_2e8,
-                                                   (uint)*(byte *)((int)pfVar9[6] + 0x140));
+                                                   (uint)*(byte *)((int)pfVar8[6] + 0x140));
                           }
                           else {
                             puVar15 = (undefined1 *)
                                       lib_fn_52c4e0(local_2bc,(short)local_2d4,(char)local_2e8,
-                                                   (uint)*(byte *)((int)pfVar9[6] + 0x140));
+                                                   (uint)*(byte *)((int)pfVar8[6] + 0x140));
                           }
                           Struct_copy0x118(&local_19c,puVar15);
                           local_2ec = *(undefined4 **)((int)pvVar16 + 0x40);
-                          iVar12 = std_map_insert_node_str_2(local_2ec,(undefined4 *)local_2ec[1],&local_1a4);
+                          iVar11 = std_map_insert_node_str_2(local_2ec,(undefined4 *)local_2ec[1],&local_1a4);
                           if (*(int *)((int)pvVar16 + 0x44) == 0xdd67c7) goto LAB_004cfc8a;
                           *(int *)((int)pvVar16 + 0x44) = *(int *)((int)pvVar16 + 0x44) + 1;
-                          local_2ec[1] = iVar12;
-                          **(int **)(iVar12 + 4) = iVar12;
-                          if (pfVar9[6] == *(float *)((int)local_2f4 + 0xb8)) {
-                            game_inventoryAccumulateCount((void *)((int)pfVar9[6] + 0x11dc),&local_19c,-1);
+                          local_2ec[1] = iVar11;
+                          **(int **)(iVar11 + 4) = iVar11;
+                          if (pfVar8[6] == *(float *)((int)local_2f4 + 0xb8)) {
+                            game_inventoryAccumulateCount((void *)((int)pfVar8[6] + 0x11dc),&local_19c,-1);
                           }
                         }
                       }
@@ -4913,59 +4913,59 @@ LAB_004cfc8a:
                         puVar3 = puVar4;
                       }
                       operator_delete(puVar13);
-                      pfVar11 = local_304;
+                      pfVar10 = local_304;
                     }
-                    if (*(char *)((int)pfVar9 + 0xd) == '\0') {
-                      pfVar2 = (float *)pfVar9[2];
+                    if (*(char *)((int)pfVar8 + 0xd) == '\0') {
+                      pfVar2 = (float *)pfVar8[2];
                       if (*(char *)((int)pfVar2 + 0xd) == '\0') {
                         cVar7 = *(char *)((int)*pfVar2 + 0xd);
-                        pfVar9 = pfVar2;
+                        pfVar8 = pfVar2;
                         pfVar2 = (float *)*pfVar2;
                         while (cVar7 == '\0') {
                           cVar7 = *(char *)((int)*pfVar2 + 0xd);
-                          pfVar9 = pfVar2;
+                          pfVar8 = pfVar2;
                           pfVar2 = (float *)*pfVar2;
                         }
                       }
                       else {
-                        cVar7 = *(char *)((int)pfVar9[1] + 0xd);
-                        pfVar6 = (float *)pfVar9[1];
-                        pfVar2 = pfVar9;
-                        while ((pfVar9 = pfVar6, cVar7 == '\0' && (pfVar2 == (float *)pfVar9[2]))) {
-                          cVar7 = *(char *)((int)pfVar9[1] + 0xd);
-                          pfVar6 = (float *)pfVar9[1];
-                          pfVar2 = pfVar9;
+                        cVar7 = *(char *)((int)pfVar8[1] + 0xd);
+                        pfVar6 = (float *)pfVar8[1];
+                        pfVar2 = pfVar8;
+                        while ((pfVar8 = pfVar6, cVar7 == '\0' && (pfVar2 == (float *)pfVar8[2]))) {
+                          cVar7 = *(char *)((int)pfVar8[1] + 0xd);
+                          pfVar6 = (float *)pfVar8[1];
+                          pfVar2 = pfVar8;
                         }
                       }
                     }
-                  } while (pfVar9 != (float *)*pfVar11);
+                  } while (pfVar8 != (float *)*pfVar10);
                 }
-                uVar8 = *(uint *)((int)local_2f8 + 0x1b0);
+                uVar12 = *(uint *)((int)local_2f8 + 0x1b0);
                 uVar17 = *(uint *)((int)local_2f8 + 0x1b4);
-                if ((((-1 < (int)uVar8) && (-1 < (int)uVar17)) && ((int)uVar8 < 0x10000)) &&
+                if ((((-1 < (int)uVar12) && (-1 < (int)uVar17)) && ((int)uVar12 < 0x10000)) &&
                    ((int)uVar17 < 0x10000)) {
-                  iVar12 = (int)(uVar8 + ((int)uVar8 >> 0x1f & 0x3fU)) >> 6;
+                  iVar11 = (int)(uVar12 + ((int)uVar12 >> 0x1f & 0x3fU)) >> 6;
                   iVar19 = (int)(((int)uVar17 >> 0x1f & 0x3fU) + uVar17) >> 6;
-                  if (((-1 < iVar12) && (-1 < iVar19)) &&
-                     ((iVar12 < 0x400 &&
+                  if (((-1 < iVar11) && (-1 < iVar19)) &&
+                     ((iVar11 < 0x400 &&
                       ((iVar19 < 0x400 &&
-                       (iVar12 = *(int *)((int)local_2f4 + (iVar12 * 0x400 + iVar19) * 4 + 0xbc),
-                       iVar12 != 0)))))) {
-                    uVar8 = uVar8 & 0x8000003f;
-                    if ((int)uVar8 < 0) {
-                      uVar8 = (uVar8 - 1 | 0xffffffc0) + 1;
+                       (iVar11 = *(int *)((int)local_2f4 + (iVar11 * 0x400 + iVar19) * 4 + 0xbc),
+                       iVar11 != 0)))))) {
+                    uVar12 = uVar12 & 0x8000003f;
+                    if ((int)uVar12 < 0) {
+                      uVar12 = (uVar12 - 1 | 0xffffffc0) + 1;
                     }
                     uVar17 = uVar17 & 0x8000003f;
                     if ((int)uVar17 < 0) {
                       uVar17 = (uVar17 - 1 | 0xffffffc0) + 1;
                     }
-                    iVar12 = *(int *)(iVar12 + 0x10018 + (uVar8 * 0x40 + uVar17) * 4);
-                    if (((iVar12 != 0) && (iVar19 = *(int *)((int)local_2f8 + 0x1b8), -1 < iVar19))
-                       && (iVar19 < *(int *)(iVar12 + 0x1c) - *(int *)(iVar12 + 0x18) >> 2)) {
-                      *(undefined4 *)(*(int *)(*(int *)(iVar12 + 0x18) + iVar19 * 4) + 0x38) =
+                    iVar11 = *(int *)(iVar11 + 0x10018 + (uVar12 * 0x40 + uVar17) * 4);
+                    if (((iVar11 != 0) && (iVar19 = *(int *)((int)local_2f8 + 0x1b8), -1 < iVar19))
+                       && (iVar19 < *(int *)(iVar11 + 0x1c) - *(int *)(iVar11 + 0x18) >> 2)) {
+                      *(undefined4 *)(*(int *)(*(int *)(iVar11 + 0x18) + iVar19 * 4) + 0x38) =
                            1200000;
                       *(undefined4 *)
-                       (*(int *)(*(int *)(iVar12 + 0x18) + *(int *)((int)local_2f8 + 0x1b8) * 4) +
+                       (*(int *)(*(int *)(iVar11 + 0x18) + *(int *)((int)local_2f8 + 0x1b8) * 4) +
                        0x3c) = *(undefined4 *)((int)local_2f4 + 0x800160);
                     }
                   }
@@ -4976,9 +4976,9 @@ LAB_004cfc8a:
         }
       }
       else {
-        pfVar9 = *(float **)((int)pvVar16 + 0x13a4);
-        local_2e8 = (float *)*pfVar9;
-        while (local_2e8 != pfVar9) {
+        pfVar8 = *(float **)((int)pvVar16 + 0x13a4);
+        local_2e8 = (float *)*pfVar8;
+        while (local_2e8 != pfVar8) {
           if (((0.0 < local_2e8[6]) &&
               (std_map_lower_bound_yx(local_304,(int *)&local_308,(uint *)(local_2e8 + 4)),
               local_308 != (float *)*local_304)) &&
@@ -5478,7 +5478,7 @@ uint __thiscall FUN_004d2340(void *this,uint param_1,uint param_2,undefined8 par
 {
   uint uVar1;
   uint *puVar2;
-  float10 fVar3;
+  double fVar3;
   ulonglong uVar4;
   undefined8 uVar5;
   
@@ -5536,7 +5536,7 @@ FUN_004d2500(void *this,int param_1,int param_2,int param_3,int *param_4,int par
   int iVar2;
   int iVar3;
   float fVar4;
-  float10 fVar5;
+  float fVar5;
   double dVar6;
   int local_40;
   undefined2 local_3c;
@@ -5696,7 +5696,7 @@ void FUN_004d2810(undefined1 *param_1,uint *param_2,float param_3,float param_4,
   if (local_154 != 0) {
     Struct_copy0x118(local_150,local_160);
     iVar1 = rand();
-    local_20 = ((float)iVar1 * 360.0) / 32767.0;
+    local_20 = ((float)iVar1 * 360.0f) / 32767.0f;
     if (((int)local_24 < 1) && ((int)local_24 < 0)) {
       uVar8 = __alldiv(local_28,local_24,0x10000,0);
       iVar1 = (int)uVar8 + -1;
@@ -5782,7 +5782,7 @@ FUN_004d44c0(void *this,int param_1,int param_2,int param_3,float param_4,byte *
   uint uVar11;
   uint uVar12;
   float fVar13;
-  float10 fVar14;
+  float fVar14;
   float fVar15;
   float fVar16;
   float fVar17;
@@ -5932,7 +5932,7 @@ FUN_004d4820(void *this,int param_1,int param_2,int param_3,float param_4,byte *
   int iVar13;
   uint uVar14;
   float fVar15;
-  float10 fVar16;
+  float fVar16;
   float fVar17;
   float fVar18;
   float fVar19;
@@ -6073,7 +6073,7 @@ FUN_004d4820(void *this,int param_1,int param_2,int param_3,float param_4,byte *
 void Creature_moveToward(uint *from_pos,uint *to_pos,char param_3,float max_dist)
 
 {
-  float10 fVar1;
+  float fVar1;
   double dVar2;
   float dist_sq;
   float dz;
@@ -6111,13 +6111,12 @@ void Creature_moveToward(uint *from_pos,uint *to_pos,char param_3,float max_dist
     __security_check_cookie(security_cookie ^ (uint)&dz);
     return;
   }
-  dVar2 = (double)dist_sq;
-  libm_sse2_sqrt_precise();
+  dVar2 = libm_sse2_sqrt_precise((double)dist_sq);
   length = (float)dVar2;
   dx = dx / length;
   dy = dy / length;
   nz = dz / length;
-  fVar1 = (float10)Creature_stepAlongPath(local_40,local_3c,&dx,length,'\0',param_3);
+  fVar1 = (float)Creature_stepAlongPath(local_40,local_3c,&dx,length,'\0',param_3);
   local_40 = (void *)(float)fVar1;
   __security_check_cookie(security_cookie ^ (uint)&dz);
   return;
@@ -6157,9 +6156,9 @@ void __thiscall FUN_004d5740(void *this,uint *param_1,float *param_2)
   uint local_8;
   
   local_8 = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
-  local_14 = 0.0;
-  local_10 = 0.0;
-  local_c = 0.2;
+  local_14 = 0.0f;
+  local_10 = 0.0f;
+  local_c = 0.2f;
   iVar8 = 0;
   do {
     uVar10 = ftol2();
@@ -6168,9 +6167,9 @@ void __thiscall FUN_004d5740(void *this,uint *param_1,float *param_2)
     iVar8 = iVar8 + 1;
   } while (iVar8 < 3);
   iVar8 = 0;
-  local_14 = *param_2 * 0.5;
-  local_10 = param_2[1] * 0.5;
-  local_c = param_2[2] * 0.5;
+  local_14 = *param_2 * 0.5f;
+  local_10 = param_2[1] * 0.5f;
+  local_c = param_2[2] * 0.5f;
   do {
     uVar10 = ftol2();
     local_50[iVar8 * 2] = (uint)uVar10;
@@ -6193,10 +6192,10 @@ void __thiscall FUN_004d5740(void *this,uint *param_1,float *param_2)
   local_c = (float)((((uVar2 - local_50[5]) - (uint)(uVar1 < local_50[4])) - local_50[0xb]) -
                    (uint)(uVar1 - local_50[4] < local_50[10]));
   Vec3i64_toBlockCoords((int *)(local_50 + 3),local_50 + 0xc);
-  local_14 = *param_2 * 0.5;
-  local_10 = param_2[1] * 0.5;
+  local_14 = *param_2 * 0.5f;
+  local_10 = param_2[1] * 0.5f;
   iVar8 = 0;
-  local_c = param_2[2] * 0.5;
+  local_c = param_2[2] * 0.5f;
   do {
     uVar10 = ftol2();
     local_50[iVar8 * 2 + 6] = (uint)uVar10;
@@ -6282,8 +6281,8 @@ double * __thiscall World_sampleTerrainGradient(void *this,double *out,int x,int
 
 {
   int iVar1;
-  float10 fVar2;
-  float10 fVar3;
+  float fVar2;
+  float fVar3;
   double dVar4;
   double x_scaled2;
   double x_scaled;
@@ -6318,7 +6317,7 @@ double * __thiscall World_sampleTerrainGradient(void *this,double *out,int x,int
 
 /* Global::FUN_004d5c80 @ 004d5c80 */
 
-float10 __thiscall FUN_004d5c80(void *param_1,uint *param_2)
+float __thiscall FUN_004d5c80(void *param_1,uint *param_2)
 
 {
   byte *pbVar1;
@@ -6344,7 +6343,7 @@ float10 __thiscall FUN_004d5c80(void *param_1,uint *param_2)
   else {
     bVar2 = 0;
   }
-  return (float10)((float)bVar2 / 255.0);
+  return (float)((float)bVar2 / 255.0f);
 }
 
 
@@ -6430,7 +6429,7 @@ Creature_stepAlongPath(void *this,uint *origin,float *direction,float max_dist,c
   
   voxel[3] = DAT_00583cc8 ^ (uint)&stack0xfffffffc;
   uVar11 = origin[1];
-  t_accum = 0.0;
+  t_accum = 0.0f;
   uVar21 = __alldiv(*origin,uVar11,0x10000,0);
   voxel[0] = (uint)uVar21;
   uVar21 = __alldiv(origin[2],origin[3],0x10000,0);
@@ -6447,7 +6446,7 @@ Creature_stepAlongPath(void *this,uint *origin,float *direction,float max_dist,c
     voxel[2] = (int)uVar21 + -1;
   }
   step = 0;
-  if (0.0 < max_dist) {
+  if (0.0f < max_dist) {
     do {
       uVar2 = voxel[2];
       uVar11 = voxel[1];
@@ -6503,7 +6502,7 @@ LAB_004d68cf:
         local_168[iVar6 * 2 + 0x19] = (uint)(uVar22 >> 0x20);
         iVar6 = iVar6 + 1;
       } while (iVar6 < 3);
-      fVar20 = 10.0;
+      fVar20 = 10.0f;
       local_38._0_4_ = (uint)*(undefined8 *)origin;
       local_38._4_4_ = (int)((ulonglong)*(undefined8 *)origin >> 0x20);
       local_38 = CONCAT44(local_38._4_4_ + local_168[0x19] +
@@ -6519,22 +6518,22 @@ LAB_004d68cf:
       local_28 = CONCAT44(local_28._4_4_ + local_168[0x1d] +
                           (uint)CARRY4((uint)local_28,local_168[0x1c]),
                           (uint)local_28 + local_168[0x1c]);
-      fVar8 = 0.0;
-      fVar13 = 0.0;
-      nearest = 10.0;
-      local_194 = 0.0;
+      fVar8 = 0.0f;
+      fVar13 = 0.0f;
+      nearest = 10.0f;
+      local_194 = 0.0f;
       pfVar17 = direction;
       do {
         fVar1 = *pfVar17;
         if (1e-06 <= fVar1 * fVar1) {
-          if (fVar1 <= 0.0) {
+          if (fVar1 <= 0.0f) {
             uVar22 = ftol2();
           }
           else {
             uVar22 = ftol2();
           }
           local_17c = (float)(longlong)uVar22;
-          local_17c = local_17c * 1.5258789e-05;
+          local_17c = local_17c * 1.5258789e-05f;
           fVar8 = local_194;
           fVar20 = nearest;
           if (local_17c < nearest) {
@@ -6547,7 +6546,7 @@ LAB_004d68cf:
         fVar13 = (float)((int)fVar13 + 1);
         pfVar17 = pfVar17 + 1;
       } while ((int)fVar13 < 3);
-      if (direction[(int)fVar8] <= 0.0) {
+      if (direction[(int)fVar8] <= 0.0f) {
         voxel[(int)fVar8] = voxel[(int)fVar8] - 1;
       }
       else {
@@ -6630,7 +6629,7 @@ LAB_004d68cf:
                         local_e8 = local_18;
                       }
                       fVar20 = *direction;
-                      if (fVar20 != 0.0) {
+                      if (fVar20 != 0.0f) {
                         uVar22 = ftol2();
                         uVar18 = piVar16[2];
                         iVar6 = piVar16[3];
@@ -6638,8 +6637,8 @@ LAB_004d68cf:
                         fVar13 = ((float)CONCAT44((((iVar6 - (int)(uVar22 >> 0x20)) -
                                                    (uint)(uVar18 < (uint)uVar22)) - uVar11) -
                                                   (uint)(uVar15 < uVar2),uVar15 - uVar2) *
-                                 1.5258789e-05) / fVar20;
-                        if ((0.0 <= fVar13) && (fVar13 < fVar8)) {
+                                 1.5258789e-05f) / fVar20;
+                        if ((0.0f <= fVar13) && (fVar13 < fVar8)) {
                           iVar10 = 0;
                           local_44._0_4_ = (float)*(undefined8 *)direction;
                           local_44._4_4_ = (float)((ulonglong)*(undefined8 *)direction >> 0x20);
@@ -6695,7 +6694,7 @@ LAB_004d70ee:
                                          (uVar22 + CONCAT44((iVar6 - uVar11) -
                                                             (uint)(uVar18 < uVar2),uVar18 - uVar2))
                                  * 1.5258789e-05) / fVar20;
-                        if ((0.0 <= fVar20) && (fVar20 < t_accum)) {
+                        if ((0.0f <= fVar20) && (fVar20 < t_accum)) {
                           iVar6 = 0;
                           local_74._0_4_ = (float)*(undefined8 *)direction;
                           local_74._4_4_ = (float)((ulonglong)*(undefined8 *)direction >> 0x20);
@@ -6741,7 +6740,7 @@ LAB_004d70ee:
                         }
                       }
                       local_194 = direction[1];
-                      if (local_194 != 0.0) {
+                      if (local_194 != 0.0f) {
                         uVar22 = ftol2();
                         uVar18 = piVar16[4];
                         iVar6 = piVar16[5];
@@ -6749,9 +6748,9 @@ LAB_004d70ee:
                         fVar20 = ((float)CONCAT44((((iVar6 - (int)(uVar22 >> 0x20)) -
                                                    (uint)(uVar18 < (uint)uVar22)) - uVar3) -
                                                   (uint)(uVar15 < uVar9),uVar15 - uVar9) *
-                                 1.5258789e-05) / local_194;
+                                 1.5258789e-05f) / local_194;
                         fVar8 = t_accum;
-                        if ((0.0 <= fVar20) && (fVar20 < t_accum)) {
+                        if ((0.0f <= fVar20) && (fVar20 < t_accum)) {
                           iVar10 = 0;
                           local_50._0_4_ = (float)*(undefined8 *)direction;
                           local_50._4_4_ = (float)((ulonglong)*(undefined8 *)direction >> 0x20);
@@ -6798,9 +6797,9 @@ LAB_004d75c0:
                         t_accum = fVar8;
                         fVar8 = ((float)(longlong)
                                         (uVar22 + CONCAT44((iVar6 - uVar3) - (uint)(uVar18 < uVar9),
-                                                           uVar18 - uVar9)) * 1.5258789e-05) /
+                                                           uVar18 - uVar9)) * 1.5258789e-05f) /
                                 local_194;
-                        if ((0.0 <= fVar8) && (fVar8 < t_accum)) {
+                        if ((0.0f <= fVar8) && (fVar8 < t_accum)) {
                           iVar6 = 0;
                           local_68._0_4_ = (float)*(undefined8 *)direction;
                           local_68._4_4_ = (float)((ulonglong)*(undefined8 *)direction >> 0x20);
@@ -7067,10 +7066,10 @@ void __thiscall VoxelGrid_remapCoords(void *this,int *coord_a,int *coord_b)
 
 /* Global::FUN_004d9010 @ 004d9010 */
 
-float10 __thiscall FUN_004d9010(void *param_1,float param_2,float param_3,int param_4)
+float __thiscall FUN_004d9010(void *param_1,float param_2,float param_3,int param_4)
 
 {
-  float10 fVar1;
+  float fVar1;
   float fVar2;
   double dVar3;
   undefined4 local_8;
@@ -7095,7 +7094,7 @@ float10 __thiscall FUN_004d9010(void *param_1,float param_2,float param_3,int pa
   if (1.0 < param_3) {
     param_3 = 1.0;
   }
-  return (float10)param_3;
+  return (float)param_3;
 }
 
 
@@ -7275,11 +7274,11 @@ void __thiscall FUN_004d9410(void *this,int *param_1,uint *param_2)
   uVar6 = param_2[2];
   iVar15 = (int)(((int)uVar20 >> 0x1f & 7U) + (int)uVar20) >> 3;
   uVar20 = __alldiv(uVar6,uVar5,0x10000,0);
-  fVar19 = -1.0;
+  fVar19 = -1.0f;
   uVar17 = iVar15 - 1;
   iVar15 = iVar15 + 1;
   iVar9 = (int)((int)uVar20 + ((int)uVar20 >> 0x1f & 7U)) >> 3;
-  local_30 = -1.0;
+  local_30 = -1.0f;
   local_2c = 0;
   iStack_28 = 0;
   local_24 = -1;
@@ -7327,7 +7326,7 @@ void __thiscall FUN_004d9410(void *this,int *param_1,uint *param_2)
                 lVar22 = __alldiv((uint)lVar22,(uint)((ulonglong)lVar22 >> 0x20),0x10000,0);
                 lVar23 = __allmul(local_18 - uVar6,iVar18,local_18 - uVar6,iVar18);
                 lVar23 = __alldiv((uint)lVar23,(uint)((ulonglong)lVar23 >> 0x20),0x10000,0);
-                fVar19 = (float)(lVar21 + lVar23 + lVar22) * 1.5258789e-05;
+                fVar19 = (float)(lVar21 + lVar23 + lVar22) * 1.5258789e-05f;
                 if ((local_24 < 0) || (fVar19 < local_30)) {
                   local_2c = piVar16[3];
                   iStack_28 = piVar16[4];
@@ -7345,7 +7344,7 @@ void __thiscall FUN_004d9410(void *this,int *param_1,uint *param_2)
       uVar17 = uVar17 + 1;
       uVar7 = uVar1;
     } while ((int)uVar17 <= iVar15);
-    if ((0.0 <= fVar19) && (fVar19 <= 16.0)) {
+    if ((0.0f <= fVar19) && (fVar19 <= 16.0f)) {
       *param_1 = local_2c;
       param_1[2] = iVar18;
       param_1[1] = iStack_28;
@@ -7368,7 +7367,7 @@ void __thiscall FUN_004d9410(void *this,int *param_1,uint *param_2)
 float * FUN_004d9720(float *param_1)
 
 {
-  float10 fVar1;
+  double fVar1;
   double dVar2;
   ulonglong uVar3;
   undefined8 local_1c;
@@ -8347,8 +8346,7 @@ LAB_004dc101:
   local_2c4 = (float)local_3b0;
   if (fVar30 <= 0.001) goto LAB_004dcfc6;
   if (1.0 < fVar30) {
-    dVar29 = (double)fVar30;
-    libm_sse2_sqrt_precise();
+    dVar29 = libm_sse2_sqrt_precise((double)fVar30);
     fVar30 = 1.0 / (float)dVar29;
     local_3e4 = (float *)(fVar30 * (float)local_2c8);
     local_3d8 = (uint *)(fVar30 * (float)local_3d8);
@@ -9028,7 +9026,7 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
   piVar7 = (int *)((int)agent + 0x1468);
   std_map_clear(piVar7);
   local_14 = 0x3f0000003f000000;
-  local_c = *(float *)((int)agent + 0x88) * 0.5;
+  local_c = *(float *)((int)agent + 0x88) * 0.5f;
   heuristic = 0;
   do {
     uVar23 = ftol2();
@@ -9132,7 +9130,7 @@ void __thiscall NavGraph_expandNeighbors(void *this,void *agent)
   }
   local_14 = 0x3f0000003f000000;
   heuristic = 0;
-  local_c = *(float *)((int)agent + 0x88) * 0.5;
+  local_c = *(float *)((int)agent + 0x88) * 0.5f;
   do {
     uVar23 = ftol2();
     local_38[heuristic * 2] = (uint)uVar23;
@@ -11072,7 +11070,7 @@ void __thiscall FUN_004e0740(void *this,int param_1,uint *param_2)
   int iVar7;
   undefined4 *puVar8;
   uint uVar9;
-  float10 fVar10;
+  double fVar10;
   undefined8 uVar11;
   undefined8 uVar12;
   ulonglong uVar13;
@@ -11455,7 +11453,7 @@ void FUN_004e28e0(int param_1,uint *param_2)
   int iVar30;
   uint uVar31;
   bool bVar32;
-  float10 fVar33;
+  float fVar33;
   double dVar34;
   undefined8 uVar35;
   undefined4 uVar36;
@@ -18117,9 +18115,9 @@ LAB_004ee385:
                                 dVar34 = local_1c;
                                 cVar1 = (char)uVar36;
                               }
-                              fVar33 = (float10)World_temperatureBlend(pvVar4,(float)local_5c8c,uVar3);
+                              fVar33 = (float)World_temperatureBlend(pvVar4,(float)local_5c8c,uVar3);
                               local_5ce4 = (double)CONCAT44((float)fVar33,(undefined4)local_5ce4);
-                              fVar33 = (float10)World_humidityBlend(pvVar4,(int)local_5c8c,
+                              fVar33 = (float)World_humidityBlend(pvVar4,(int)local_5c8c,
                                                              (int)local_1c._4_4_);
                               local_5c50 = (double)CONCAT44((float)fVar33,(undefined4)local_5c50);
                               local_5c7c = (void **)((int)local_5c84 + -1);
@@ -20627,8 +20625,8 @@ void __thiscall FUN_004f8230(void *this,uint param_1)
 float * __thiscall FUN_004f82d0(void *this,float *param_1,int param_2,int param_3)
 
 {
-  float10 fVar1;
-  float10 fVar2;
+  float fVar1;
+  float fVar2;
   float fVar3;
   float fVar4;
   double dVar5;
@@ -20687,7 +20685,7 @@ FUN_004f9450(void *this,undefined4 *param_1,float param_2,float param_3,int para
   uint *puVar2;
   int iVar3;
   int iVar4;
-  float10 fVar5;
+  float fVar5;
   float fVar6;
   double dVar7;
   float fVar8;
@@ -20855,7 +20853,7 @@ FUN_004f9450(void *this,undefined4 *param_1,float param_2,float param_3,int para
   }
   iVar3 = Chunk_getColumnAt(this,(uint)param_2,(uint)param_3,param_7);
   if (iVar3 == 0) {
-    fVar5 = (float10)World_waterProximityInfluence(this,(int)param_2,(int)param_3);
+    fVar5 = (float)World_waterProximityInfluence(this,(int)param_2,(int)param_3);
     local_2c = (float)fVar5;
     local_34 = local_2c;
   }
@@ -20891,17 +20889,17 @@ FUN_004f9450(void *this,undefined4 *param_1,float param_2,float param_3,int para
 
 /* Global::FUN_004fc100 @ 004fc100 */
 
-float10 __thiscall FUN_004fc100(void *param_1,float param_2,uint param_3,int param_4)
+float __thiscall FUN_004fc100(void *param_1,float param_2,uint param_3,int param_4)
 
 {
   int iVar1;
-  float10 fVar2;
+  float fVar2;
   
   iVar1 = Chunk_getColumnAt(param_1,(uint)param_2,param_3,param_4);
   if (iVar1 != 0) {
-    return (float10)*(float *)(iVar1 + 4);
+    return (float)*(float *)(iVar1 + 4);
   }
-  fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
+  fVar2 = (float)World_temperatureBlend(param_1,param_2,param_3);
   return fVar2;
 }
 
@@ -20910,17 +20908,17 @@ float10 __thiscall FUN_004fc100(void *param_1,float param_2,uint param_3,int par
 
 /* Global::FUN_004fc140 @ 004fc140 */
 
-float10 __thiscall FUN_004fc140(void *param_1,uint param_2,uint param_3,int param_4)
+float __thiscall FUN_004fc140(void *param_1,uint param_2,uint param_3,int param_4)
 
 {
   int iVar1;
-  float10 fVar2;
+  float fVar2;
   
   iVar1 = Chunk_getColumnAt(param_1,param_2,param_3,param_4);
   if (iVar1 != 0) {
-    return (float10)*(float *)(iVar1 + 8);
+    return (float)*(float *)(iVar1 + 8);
   }
-  fVar2 = (float10)World_humidityBlend(param_1,param_2,param_3);
+  fVar2 = (float)World_humidityBlend(param_1,param_2,param_3);
   return fVar2;
 }
 
@@ -20948,8 +20946,8 @@ void __thiscall World_findNearestFeatureCell(void *this,undefined8 *out_cell,int
   int iVar10;
   int iVar11;
   int min_col;
-  float10 fVar13;
-  float10 fVar14;
+  float fVar13;
+  float fVar14;
   uint *best_cell;
   int best_dist;
   undefined8 dx;
@@ -21027,8 +21025,8 @@ void __thiscall FUN_004feec0(void *this,int param_1,int param_2)
   uint uVar11;
   uint uVar12;
   int iVar13;
-  float10 fVar14;
-  float10 fVar15;
+  float fVar14;
+  float fVar15;
   uint *local_60;
   int local_4c;
   undefined8 local_18;
@@ -21115,7 +21113,7 @@ FUN_004ff3f0(void *this,int param_1,int param_2,int param_3,int param_4,int para
   float fVar12;
   int iVar13;
   float fVar14;
-  float10 fVar15;
+  float fVar15;
   double dVar16;
   double dVar17;
   undefined8 local_a4;
@@ -21305,7 +21303,7 @@ FUN_004ff3f0(void *this,int param_1,int param_2,int param_3,int param_4,int para
                   if (iVar6 == local_6c) {
                     iVar8 = Chunk_getColumnAt(pvVar5,(uint)local_48,(uint)fVar11,local_58);
                     if (iVar8 == 0) {
-                      fVar15 = (float10)World_humidityBlend(pvVar5,(int)local_48,(int)fVar11);
+                      fVar15 = (float)World_humidityBlend(pvVar5,(int)local_48,(int)fVar11);
                       local_54 = (float)fVar15;
                       local_4c = local_54;
                     }
@@ -21314,7 +21312,7 @@ FUN_004ff3f0(void *this,int param_1,int param_2,int param_3,int param_4,int para
                     }
                     iVar8 = Chunk_getColumnAt(pvVar5,(uint)local_48,(uint)fVar11,local_58);
                     if (iVar8 == 0) {
-                      fVar15 = (float10)World_temperatureBlend(pvVar5,local_48,(uint)fVar11);
+                      fVar15 = (float)World_temperatureBlend(pvVar5,local_48,(uint)fVar11);
                       fVar12 = (float)fVar15;
                       local_4c = fVar12;
                     }
@@ -21409,7 +21407,7 @@ FUN_004ffbf0(void *this,int param_1,int param_2,int param_3,int param_4,int para
   int iVar11;
   float fVar12;
   float fVar13;
-  float10 fVar14;
+  float fVar14;
   double dVar15;
   double dVar16;
   float local_64;
@@ -21617,7 +21615,7 @@ FUN_004ffbf0(void *this,int param_1,int param_2,int param_3,int param_4,int para
                   if (iVar3 == local_34) {
                     iVar6 = Chunk_getColumnAt(pvVar4,(uint)local_1c,(uint)fVar12,local_28);
                     if (iVar6 == 0) {
-                      fVar14 = (float10)World_humidityBlend(pvVar4,(int)local_1c,(int)fVar12);
+                      fVar14 = (float)World_humidityBlend(pvVar4,(int)local_1c,(int)fVar12);
                       local_38 = (float)fVar14;
                       local_20 = local_38;
                     }
@@ -21626,7 +21624,7 @@ FUN_004ffbf0(void *this,int param_1,int param_2,int param_3,int param_4,int para
                     }
                     iVar6 = Chunk_getColumnAt(pvVar4,(uint)local_1c,(uint)fVar12,local_28);
                     if (iVar6 == 0) {
-                      fVar14 = (float10)World_temperatureBlend(pvVar4,local_1c,(uint)fVar12);
+                      fVar14 = (float)World_temperatureBlend(pvVar4,local_1c,(uint)fVar12);
                       fVar9 = (float)fVar14;
                       local_20 = fVar9;
                     }
@@ -21711,7 +21709,7 @@ void FUN_00500300(uint param_1,undefined4 param_2,uint *param_3,uint *param_4,ui
   CombatBehavior *pCVar28;
   code *pcVar29;
   bool bVar30;
-  float10 fVar31;
+  float fVar31;
   float fVar32;
   double dVar33;
   undefined8 uVar34;
@@ -26786,7 +26784,7 @@ void FUN_0050bd60(int param_1,int param_2,int param_3,float param_4,float param_
   float fVar19;
   float fVar20;
   bool bVar21;
-  float10 fVar22;
+  float fVar22;
   double dVar23;
   double dVar24;
   double dVar25;
@@ -27099,7 +27097,7 @@ void __thiscall FUN_0050c550(void *this,uint param_1,uint param_2,int param_3)
   int iVar19;
   float *pfVar20;
   bool bVar21;
-  float10 fVar22;
+  float fVar22;
   float fVar23;
   undefined8 uVar24;
   uint local_e0;
@@ -27532,8 +27530,8 @@ LAB_0050cc3f:
                 piStack_18 = local_84;
                 fVar22 = World_objectFalloffWeight(local_64,&local_e0,&local_d8);
                 local_a4 = (float)fVar22;
-                fVar23 = 1.0 - local_a4;
-                if ((0.0 < fVar23) && (local_a4 = fVar23 * fVar23, 0.0 < local_a4)) {
+                fVar23 = 1.0f - local_a4;
+                if ((0.0f < fVar23) && (local_a4 = fVar23 * fVar23, 0.0f < local_a4)) {
                   if ((local_7c == (float *)0xc) || (local_7c == (float *)0xd)) {
                     uVar7 = (int)local_84 + (int)local_80 & 0x80000001;
                     bVar21 = uVar7 == 0;
@@ -27541,7 +27539,7 @@ LAB_0050cc3f:
                       bVar21 = (uVar7 - 1 | 0xfffffffe) == 0xffffffff;
                     }
                     if (!bVar21) {
-                      local_a4 = local_a4 * 2.0;
+                      local_a4 = local_a4 * 2.0f;
                     }
                   }
                   uVar24 = CONCAT44(piStack_18,local_1c);
@@ -28034,7 +28032,7 @@ void __thiscall FUN_005104e0(void *this,int param_1,uint *param_2,int *param_3)
   code *pcVar21;
   uint uVar22;
   bool bVar23;
-  float10 fVar24;
+  float fVar24;
   float fVar25;
   double dVar26;
   undefined8 uVar27;
@@ -29619,14 +29617,12 @@ LAB_005124d3:
               puVar17[10] = 1;
               *(ushort *)((int)puVar17 + 0x7a) = *(ushort *)((int)puVar17 + 0x7a) | 0x1000;
               puVar17[0x15] = ((float)local_40c * 180.0) / 3.1415927 + 90.0;
-              dVar26 = (double)(float)local_40c;
               local_65c = puVar17;
-              libm_sse2_sin_precise();
+              dVar26 = libm_sse2_sin_precise((double)(float)local_40c);
               local_62c = (float)dVar26 * 3.0 * 65536.0;
               uVar28 = ftol2();
-              dVar26 = (double)(float)local_40c;
               lVar5 = uVar28 + CONCAT44(local_448,local_444);
-              libm_sse2_cos_precise();
+              dVar26 = libm_sse2_cos_precise((double)(float)local_40c);
               local_634 = (float)dVar26 * 3.0 * 65536.0;
               uVar28 = ftol2();
               lVar6 = uVar28 + CONCAT44(local_44c,local_438);
@@ -29814,7 +29810,7 @@ FUN_00513400(void *this,int param_1,int param_2,int param_3,int *param_4,byte *p
   uint uVar7;
   int iVar8;
   int iVar9;
-  float10 fVar10;
+  float fVar10;
   int local_b4;
   undefined2 local_ac;
   undefined1 local_aa;
@@ -29875,7 +29871,7 @@ FUN_00513400(void *this,int param_1,int param_2,int param_3,int *param_4,byte *p
               local_88 = (float)(int)((uint)*param_5 + iVar4);
               local_80 = (float)(int)((uint)param_5[2] + iVar4);
               fVar10 = FUN_00523b90(local_94,(float)(local_8c + param_1),local_90,iVar9,local_98);
-              fStack_84 = (float)fVar10 * (120.0 - (float)(int)((uint)bVar2 + iVar4)) +
+              fStack_84 = (float)fVar10 * (120.0f - (float)(int)((uint)bVar2 + iVar4)) +
                           (float)(int)((uint)bVar2 + iVar4);
               this_00 = (void *)Chunk_getColumnAt(local_94,local_8c + param_1,local_90,local_98);
               if (((this_00 != (void *)0x0) &&
@@ -29884,16 +29880,16 @@ FUN_00513400(void *this,int param_1,int param_2,int param_3,int *param_4,byte *p
                 Column_getBlockChecked(this_00,iVar9 - iVar4);
               }
               iVar4 = rand();
-              if (param_6 < (float)iVar4 / 32767.0) {
+              if (param_6 < (float)iVar4 / 32767.0f) {
                 local_68 = local_80;
                 local_70 = CONCAT44(fStack_84,local_88);
                 iVar4 = 0;
                 do {
                   pfVar1 = (float *)((int)&local_70 + iVar4 * 4);
-                  if (*pfVar1 <= 0.0 && *pfVar1 != 0.0) {
+                  if (*pfVar1 <= 0.0f && *pfVar1 != 0.0f) {
                     *(undefined4 *)((int)&local_70 + iVar4 * 4) = 0;
                   }
-                  if (255.0 < *(float *)((int)&local_70 + iVar4 * 4)) {
+                  if (255.0f < *(float *)((int)&local_70 + iVar4 * 4)) {
                     *(undefined4 *)((int)&local_70 + iVar4 * 4) = 0x437f0000;
                   }
                   iVar4 = iVar4 + 1;
@@ -29916,10 +29912,10 @@ FUN_00513400(void *this,int param_1,int param_2,int param_3,int *param_4,byte *p
                 iVar4 = 0;
                 do {
                   pfVar1 = (float *)((int)&local_7c + iVar4 * 4);
-                  if (*pfVar1 <= 0.0 && *pfVar1 != 0.0) {
+                  if (*pfVar1 <= 0.0f && *pfVar1 != 0.0f) {
                     *(undefined4 *)((int)&local_7c + iVar4 * 4) = 0;
                   }
-                  if (255.0 < *(float *)((int)&local_7c + iVar4 * 4)) {
+                  if (255.0f < *(float *)((int)&local_7c + iVar4 * 4)) {
                     *(undefined4 *)((int)&local_7c + iVar4 * 4) = 0x437f0000;
                   }
                   iVar4 = iVar4 + 1;
@@ -29986,7 +29982,7 @@ void FUN_00513760(float param_1,uint param_2,float param_3,int param_4,int param
   code *pcVar18;
   uint uVar19;
   bool bVar20;
-  float10 fVar21;
+  double fVar21;
   float fVar22;
   float fVar23;
   float fVar24;
@@ -30388,7 +30384,7 @@ void FUN_00513760(float param_1,uint param_2,float param_3,int param_4,int param
   local_668 = (double)CONCAT44(local_61c,local_5ec);
   iVar5 = Chunk_getColumnAt(local_5a8,(uint)local_5d8,local_5dc,param_7);
   if (iVar5 == 0) {
-    fVar21 = (float10)World_humidityBlend(pvVar10,(int)local_5d8,uVar9);
+    fVar21 = (double)World_humidityBlend(pvVar10,(int)local_5d8,uVar9);
     local_5fc = (float)fVar21;
     local_594 = local_5fc;
   }
@@ -30561,7 +30557,7 @@ LAB_00513b5c:
   else {
     iVar5 = Chunk_getColumnAt(pvVar10,(uint)local_5d8,local_5dc,param_7);
     if (iVar5 == 0) {
-      fVar21 = (float10)World_temperatureBlend(pvVar10,local_5d8,local_5dc);
+      fVar21 = (double)World_temperatureBlend(pvVar10,local_5d8,local_5dc);
       fVar27 = (float)fVar21;
       local_594 = fVar27;
     }
@@ -30985,11 +30981,9 @@ LAB_00513b5c:
         local_5d4 = (undefined4 *)
                     (float)(((double)(int)local_5c0 * 3.141592653589793 * 2.0) / local_6dc +
                            (double)fVar27);
-        dVar25 = (double)(float)local_5d4;
-        libm_sse2_sin_precise();
+        dVar25 = libm_sse2_sin_precise((double)(float)local_5d4);
         local_5bc = (float)dVar25;
-        dVar25 = (double)(float)local_5d4;
-        libm_sse2_cos_precise();
+        dVar25 = libm_sse2_cos_precise((double)(float)local_5d4);
         local_200 = (float)dVar25;
         fStack_1fc = local_5bc;
         fVar27 = local_5bc * local_5cc;
@@ -31325,11 +31319,9 @@ LAB_00515fcc:
           local_5e8 = (double)(longlong)local_668 * 1.52587890625e-05;
           local_6dc = (double)((float)local_5ac * local_648 + (float)(int)local_5d0);
           local_618 = (float)(int)local_5b4 * 3.1415927 * 0.25 + (float)local_5d4;
-          dVar25 = (double)local_618;
-          libm_sse2_sin_precise();
+          dVar25 = libm_sse2_sin_precise((double)local_618);
           local_5e0 = (float)dVar25;
-          dVar25 = (double)local_618;
-          libm_sse2_cos_precise();
+          dVar25 = libm_sse2_cos_precise((double)local_618);
           local_17c = (float)dVar25;
           local_174 = 0;
           fStack_178 = local_5e0;
@@ -31639,12 +31631,10 @@ LAB_00516682:
         local_70c = (double)(fVar27 * (float)local_5ac + (float)(int)local_5d0);
         fVar27 = ((float)(int)local_5ec * 3.1415927 * 2.0) / (float)(int)local_5e0 + local_630._4_4_
         ;
-        dVar25 = (double)fVar27;
         local_604._4_4_ = fVar27;
-        libm_sse2_sin_precise();
+        dVar25 = libm_sse2_sin_precise((double)fVar27);
         local_5c8 = (float)dVar25;
-        dVar25 = (double)local_604._4_4_;
-        libm_sse2_cos_precise();
+        dVar25 = libm_sse2_cos_precise((double)local_604._4_4_);
         local_1f4 = (float)dVar25;
         fStack_1f0 = local_5c8;
         local_8c = CONCAT44(local_5c8 * local_5cc,local_1f4 * local_5cc);
@@ -31761,19 +31751,15 @@ LAB_00516682:
         local_70c = (double)((float)local_5ac * fVar27 + (float)(int)local_5d0);
         local_594 = ((float)(int)local_5bc * 3.1415927 * 2.0) / (float)(int)local_5e0 +
                     local_604._4_4_;
-        dVar25 = (double)local_594;
-        libm_sse2_sin_precise();
+        dVar25 = libm_sse2_sin_precise((double)local_594);
         local_644 = (float)dVar25;
-        dVar25 = (double)local_594;
-        libm_sse2_cos_precise();
+        dVar25 = libm_sse2_cos_precise((double)local_594);
         local_1a0 = (float)dVar25;
         fStack_19c = local_644;
         local_630 = (double)CONCAT44(local_594 + 1.5707964,(undefined4)local_630);
-        dVar25 = (double)(local_594 + 1.5707964);
-        libm_sse2_sin_precise();
+        dVar25 = libm_sse2_sin_precise((double)(local_594 + 1.5707964));
         local_5c0 = (float)dVar25;
-        dVar25 = (double)local_630._4_4_;
-        libm_sse2_cos_precise();
+        dVar25 = libm_sse2_cos_precise((double)local_630._4_4_);
         local_5f0 = (float)dVar25;
         local_74 = CONCAT44(fStack_19c * local_5cc,local_1a0 * local_5cc);
         local_1c8 = local_198 * local_5cc;
@@ -31959,11 +31945,9 @@ LAB_00516682:
       local_654 = local_654 + 0.9424778;
       local_604 = (double)CONCAT44(((float)(int)local_628 * 0.7) / 30.0 + 0.3,(undefined4)local_604)
       ;
-      dVar25 = (double)local_654;
-      libm_sse2_cos_precise();
+      dVar25 = libm_sse2_cos_precise((double)local_654);
       local_630 = (double)CONCAT44((float)dVar25 * local_594,(undefined4)local_630);
-      dVar25 = (double)local_654;
-      libm_sse2_sin_precise();
+      dVar25 = libm_sse2_sin_precise((double)local_654);
       fVar22 = (1.0 - local_604._4_4_) * 2.0;
       local_614 = (double)(local_604._4_4_ * (float)local_5ac + (float)(int)local_5d0);
       local_6e4 = (double)(int)local_5d8 + (double)(fVar22 * local_630._4_4_);
@@ -32056,8 +32040,8 @@ LAB_00516682:
 float * FUN_00522320(float *param_1,int param_2,int param_3)
 
 {
-  float10 fVar1;
-  float10 fVar2;
+  float fVar1;
+  float fVar2;
   float fVar3;
   float fVar4;
   double dVar5;
@@ -32131,7 +32115,7 @@ void __thiscall World_biomeBorderDistance(void *this,int x,int y)
   int iVar4;
   int extraout_ECX;
   int extraout_ECX_00;
-  float10 fVar5;
+  float fVar5;
   double dVar6;
   double dVar7;
   double dVar8;
@@ -32261,8 +32245,8 @@ void __thiscall World_waterProximityInfluence(void *this,int x,int y)
   int max_row;
   int iVar14;
   uint *puVar15;
-  float10 fVar16;
-  float10 fVar17;
+  float fVar16;
+  float fVar17;
   float fVar18;
   float weight_sum;
   uint *best_cell;
@@ -32392,7 +32376,7 @@ LAB_0052336b:
  */
 /* Global::pointSegmentDistanceSq @ 00523380 */
 
-float10 __cdecl pointSegmentDistanceSq(double *seg_start,double *seg_end,double *point)
+float __cdecl pointSegmentDistanceSq(double *seg_start,double *seg_end,double *point)
 
 {
   double seg_len_sq;
@@ -32407,20 +32391,20 @@ float10 __cdecl pointSegmentDistanceSq(double *seg_start,double *seg_end,double 
   pt_dy = point[1] - seg_start[1];
   seg_len_sq = seg_dx * seg_dx + seg_dy * seg_dy;
   if (seg_len_sq < 9.999999682655225e-21) {
-    return (float10)(float)(pt_dy * pt_dy + pt_dx * pt_dx);
+    return (float)(float)(pt_dy * pt_dy + pt_dx * pt_dx);
   }
   seg_len_sq = (pt_dy * seg_dy + pt_dx * seg_dx) / seg_len_sq;
   if (seg_len_sq <= 0.0) {
-    return (float10)(float)(pt_dy * pt_dy + pt_dx * pt_dx);
+    return (float)(float)(pt_dy * pt_dy + pt_dx * pt_dx);
   }
   if (1.0 <= seg_len_sq) {
     seg_len_sq = point[1] - seg_end[1];
     pt_dy = *point - *seg_end;
-    return (float10)(float)(seg_len_sq * seg_len_sq + pt_dy * pt_dy);
+    return (float)(float)(seg_len_sq * seg_len_sq + pt_dy * pt_dy);
   }
   pt_dx = pt_dx - seg_dx * seg_len_sq;
   pt_dy = pt_dy - seg_dy * seg_len_sq;
-  return (float10)(float)(pt_dy * pt_dy + pt_dx * pt_dx);
+  return (float)(float)(pt_dy * pt_dy + pt_dx * pt_dx);
 }
 
 
@@ -32428,19 +32412,19 @@ float10 __cdecl pointSegmentDistanceSq(double *seg_start,double *seg_end,double 
 
 /* Global::FUN_00523b90 @ 00523b90 */
 
-float10 __thiscall FUN_00523b90(void *param_1,float param_2,uint param_3,int param_4,int param_5)
+float __thiscall FUN_00523b90(void *param_1,float param_2,uint param_3,int param_4,int param_5)
 
 {
   int iVar1;
-  float10 fVar2;
-  float10 fVar3;
+  float fVar2;
+  float fVar3;
   float fVar4;
   double dVar5;
   float fVar6;
   
   iVar1 = Chunk_getColumnAt(param_1,(uint)param_2,param_3,param_5);
   if (iVar1 == 0) {
-    fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
+    fVar2 = (float)World_temperatureBlend(param_1,param_2,param_3);
     fVar6 = (float)fVar2;
   }
   else {
@@ -32456,36 +32440,36 @@ float10 __thiscall FUN_00523b90(void *param_1,float param_2,uint param_3,int par
   if (fVar4 * fVar6 <= 1.0) {
     iVar1 = Chunk_getColumnAt(param_1,(uint)param_2,param_3,param_5);
     if (iVar1 == 0) {
-      fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
+      fVar2 = (float)World_temperatureBlend(param_1,param_2,param_3);
       fVar6 = (float)fVar2;
     }
     else {
       fVar6 = *(float *)(iVar1 + 4);
     }
     if (fVar4 * fVar6 < 0.0) {
-      return (float10)0.0;
+      return (float)0.0;
     }
   }
   iVar1 = Chunk_getColumnAt(param_1,(uint)param_2,param_3,param_5);
   if (iVar1 == 0) {
-    fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
+    fVar2 = (float)World_temperatureBlend(param_1,param_2,param_3);
     fVar6 = (float)fVar2;
   }
   else {
     fVar6 = *(float *)(iVar1 + 4);
   }
   if (1.0 < fVar4 * fVar6) {
-    return (float10)1.0;
+    return (float)1.0;
   }
   iVar1 = Chunk_getColumnAt(param_1,(uint)param_2,param_3,param_5);
   if (iVar1 == 0) {
-    fVar2 = (float10)World_temperatureBlend(param_1,param_2,param_3);
+    fVar2 = (float)World_temperatureBlend(param_1,param_2,param_3);
     fVar6 = (float)fVar2;
   }
   else {
     fVar6 = *(float *)(iVar1 + 4);
   }
-  return (float10)(fVar4 * fVar6);
+  return (float)(fVar4 * fVar6);
 }
 
 
@@ -32521,7 +32505,7 @@ FUN_00524540(void *this,void *param_1,uint *param_2,uint param_3,undefined4 para
   _Container_base0 *this_01;
   float fVar19;
   bool bVar20;
-  float10 fVar21;
+  double fVar21;
   ulonglong uVar22;
   ulonglong uVar23;
   undefined4 uVar24;
@@ -32863,7 +32847,7 @@ FUN_00524540(void *this,void *param_1,uint *param_2,uint param_3,undefined4 para
       (int)uStack_a4 < (int)local_6e4 + 0x100)))) {
     iVar3 = Chunk_getColumnAt(this,local_a8,uStack_a4,param_6);
     if (iVar3 == 0) {
-      fVar21 = (float10)World_humidityBlend(this,*local_6f0,local_6f0[1]);
+      fVar21 = (double)World_humidityBlend(this,*local_6f0,local_6f0[1]);
       local_6e4 = (float)fVar21;
       local_6a8 = CONCAT44(local_6e4,(uint *)local_6a8);
     }
@@ -35006,8 +34990,8 @@ FUN_005290d0(void *this,float param_1,float param_2,int param_3,undefined4 param
   void *pvVar2;
   int iVar3;
   void **ppvVar4;
-  float10 fVar5;
-  float10 fVar6;
+  float fVar5;
+  float fVar6;
   void **local_90;
   void **local_8c;
   void **local_88;
@@ -35043,12 +35027,12 @@ FUN_005290d0(void *this,float param_1,float param_2,int param_3,undefined4 param
   local_14[2] = &LAB_0055611b;
   local_14[1] = ExceptionList;
   ExceptionList = local_14 + 1;
-  fVar5 = (float10)World_humidityBlend(this,(int)param_1,(int)param_2);
+  fVar5 = (float)World_humidityBlend(this,(int)param_1,(int)param_2);
   local_80 = (float)fVar5;
-  fVar5 = (float10)World_temperatureBlend(this,param_1,(uint)param_2);
+  fVar5 = (float)World_temperatureBlend(this,param_1,(uint)param_2);
   local_84 = (float)fVar5;
-  fVar5 = (float10)World_waterProximityInfluence(this,(int)param_1,(int)param_2);
-  fVar6 = (float10)World_landMask((uint)param_1,param_2,0.0);
+  fVar5 = (float)World_waterProximityInfluence(this,(int)param_1,(int)param_2);
+  fVar6 = (float)World_landMask((uint)param_1,param_2,0.0f);
   local_90 = (void **)0x0;
   local_8c = (void **)0x0;
   local_88 = (void **)0x0;
@@ -35072,7 +35056,7 @@ FUN_005290d0(void *this,float param_1,float param_2,int param_3,undefined4 param
     std_vector_push_back_int(&local_90,&param_4);
   }
   else if ((char)param_4 == '\0') {
-    if ((float)fVar5 <= 0.1) {
+    if ((float)fVar5 <= 0.1f) {
       vecInt_reserveGrow(&local_90,1);
       if (local_8c != (void **)0x0) {
         *local_8c = (void *)0x15;
@@ -35097,7 +35081,7 @@ FUN_005290d0(void *this,float param_1,float param_2,int param_3,undefined4 param
         }
       }
       local_8c = local_8c + 1;
-      if (0.3 < (float)fVar6) {
+      if (0.3f < (float)fVar6) {
         local_30 = (void *)0x2f;
         if ((&local_30 < local_8c) && (local_90 <= &local_30)) {
           iVar3 = (int)&local_30 - (int)local_90;
@@ -35119,10 +35103,10 @@ FUN_005290d0(void *this,float param_1,float param_2,int param_3,undefined4 param
         local_8c = local_8c + 1;
       }
       if (3 < param_3) {
-        if ((local_80 < 0.2) || (0.8 <= local_80)) {
-          if ((local_80 < 0.8) || (0.2 <= local_84)) {
-            if ((local_80 < 0.6) || (local_84 < 0.6)) {
-              if (0.2 <= local_80) goto LAB_0052a6f4;
+        if ((local_80 < 0.2f) || (0.8f <= local_80)) {
+          if ((local_80 < 0.8f) || (0.2f <= local_84)) {
+            if ((local_80 < 0.6f) || (local_84 < 0.6f)) {
+              if (0.2f <= local_80) goto LAB_0052a6f4;
               param_4 = 0x1c;
               std_vector_push_back_int(&local_90,&param_4);
               param_4 = 0x38;
@@ -35792,9 +35776,9 @@ FUN_0052d030(void *this,float *param_1,float param_2,uint param_3,int param_4,in
 {
   float fVar1;
   int iVar2;
-  float10 fVar3;
-  float10 fVar4;
-  float10 fVar5;
+  float fVar3;
+  float fVar4;
+  float fVar5;
   float fVar6;
   double dVar7;
   float fVar8;
@@ -35814,7 +35798,7 @@ FUN_0052d030(void *this,float *param_1,float param_2,uint param_3,int param_4,in
   fVar4 = valueNoise2D(uVar12,uVar13,(double)param_4 * 0.4);
   iVar2 = Chunk_getColumnAt(this,(uint)param_2,param_3,param_5);
   if (iVar2 == 0) {
-    fVar5 = (float10)World_humidityBlend(this,(int)param_2,param_3);
+    fVar5 = (float)World_humidityBlend(this,(int)param_2,param_3);
     fVar9 = (float)fVar5;
   }
   else {
@@ -35878,7 +35862,7 @@ FUN_0052d030(void *this,float *param_1,float param_2,uint param_3,int param_4,in
   }
   iVar2 = Chunk_getColumnAt(this,(uint)param_2,param_3,param_5);
   if (iVar2 == 0) {
-    fVar3 = (float10)World_waterProximityInfluence(this,(int)param_2,param_3);
+    fVar3 = (float)World_waterProximityInfluence(this,(int)param_2,param_3);
     fVar9 = (float)fVar3;
   }
   else {
@@ -35917,8 +35901,8 @@ FUN_0052d030(void *this,float *param_1,float param_2,uint param_3,int param_4,in
 float * __thiscall FUN_0052d5d0(void *this,float *param_1,int param_2,int param_3)
 
 {
-  float10 fVar1;
-  float10 fVar2;
+  float fVar1;
+  float fVar2;
   float fVar3;
   float fVar4;
   double dVar5;
@@ -35975,7 +35959,7 @@ float * __thiscall FUN_0052d5d0(void *this,float *param_1,int param_2,int param_
 float * FUN_0052d870(float *param_1,int param_2,int param_3)
 
 {
-  float10 fVar1;
+  float fVar1;
   float fVar2;
   float fVar3;
   float fVar4;
@@ -36022,11 +36006,11 @@ float * FUN_0052d870(float *param_1,int param_2,int param_3)
 float * __thiscall FUN_0052db90(void *this,float *param_1,int param_2,int param_3,int param_4)
 
 {
-  float10 fVar1;
-  float10 fVar2;
-  float10 fVar3;
-  float10 fVar4;
-  float10 fVar5;
+  float fVar1;
+  float fVar2;
+  float fVar3;
+  float fVar4;
+  float fVar5;
   double dVar6;
   double dVar7;
   double dVar8;
@@ -36284,13 +36268,11 @@ LAB_0052f06b:
   local_200 = local_2b4;
   uStack_1fc = local_2b0;
   if (2500.0 < fVar23) {
-    dVar22 = (double)fVar23;
-    libm_sse2_sqrt_precise();
+    dVar22 = libm_sse2_sqrt_precise((double)fVar23);
     local_124 = (1.0 / (float)dVar22) * local_2c4 * 50.0;
     local_120 = (1.0 / (float)dVar22) * local_2c8 * 50.0;
   }
-  dVar22 = (double)(local_120 * local_120 + local_124 * local_124 + 0.5625);
-  libm_sse2_sqrt_precise();
+  dVar22 = libm_sse2_sqrt_precise((double)(local_120 * local_120 + local_124 * local_124 + 0.5625));
   uVar26 = CONCAT44(local_2c8,local_278);
   uVar24 = CONCAT44(local_2a8,local_290);
   local_2c4 = 0.0;
@@ -36331,8 +36313,7 @@ LAB_0052f06b:
       local_1ec[1] = local_2c8;
       fVar23 = local_2c8 * local_2c8 + local_1ec[0] * local_1ec[0] + local_21c;
       if (0.0 < fVar23) {
-        dVar22 = (double)fVar23;
-        libm_sse2_sqrt_precise();
+        dVar22 = libm_sse2_sqrt_precise((double)fVar23);
         uVar24 = CONCAT44(local_2a8,local_290);
         local_1ec[0] = (1.0 / (float)dVar22) * local_1ec[0];
         local_1ec[1] = (1.0 / (float)dVar22) * local_2c8;
@@ -37298,11 +37279,9 @@ LAB_00530de0:
           local_b4 = fVar20 + fVar22 + 1.0;
           local_2c0 = *(float *)((int)fVar21 + 0x98);
           local_294 = -local_2c0 * 0.017453292;
-          dVar19 = (double)local_294;
-          libm_sse2_cos_precise();
+          dVar19 = libm_sse2_cos_precise((double)local_294);
           local_2bc = (float)dVar19;
-          dVar19 = (double)local_294;
-          libm_sse2_sin_precise();
+          dVar19 = libm_sse2_sin_precise((double)local_294);
           local_ec = (float)dVar19;
           fVar20 = local_ec * 0.0;
           local_150 = local_2d8 - *(uint *)((int)fVar21 + 0x80U);
@@ -37657,11 +37636,9 @@ LAB_00532027:
   piVar13 = piVar2;
   if (0.0 <= fVar20) {
     local_2c0 = local_2c0 * 0.017453292;
-    dVar19 = (double)local_2c0;
-    libm_sse2_cos_precise();
+    dVar19 = libm_sse2_cos_precise((double)local_2c0);
     local_2bc = (float)dVar19;
-    dVar19 = (double)local_2c0;
-    libm_sse2_sin_precise();
+    dVar19 = libm_sse2_sin_precise((double)local_2c0);
     fVar23 = (float)dVar19;
     fVar20 = fVar23 * 0.0;
     iVar14 = 0;
@@ -37736,8 +37713,6 @@ LAB_00531823:
 
 
 
- */
-
 
 /* [AUDIT] proposed: GameController_updateSubsystems  (confidence: med)
  * purpose: Server build of cube 0x60c510 GameController_updateSubsystems: top-callee call-count profile matches exactly (242/154/152/111/103/89/76/69/67/61/56/56 + CRefTime::Millisecs x53). 60129 B; was misnamed lib_fn_5322d0 and misclassified lib/other (never-game-called blind spot; fixed via curated_override.tsv). Ghidra process:timeout in full export; recovered with 3600s + 512MB payload (383s); body in gap/server/extra_bodies.c.
@@ -37808,7 +37783,7 @@ void GameController_updateSubsystems(uint param_1,int *param_2,void *param_3)
   uint extraout_ECX;
   CRefTime *pCVar49;
   code *pcVar50;
-  float10 fVar51;
+  float fVar51;
   float fVar52;
   ulonglong uVar53;
   ulonglong in_stack_ffffc88c;
@@ -42928,7 +42903,7 @@ LAB_0053bd1c:
                 uVar53 = 0x100000000;
                 fVar24 = 200.0;
                 pfVar25 = vec3_normalize_to(pCVar13,afStack_132c);
-                fVar51 = (float10)Creature_stepAlongPath(local_2b1c,auStack_318,pfVar25,fVar24,(char)uVar53,
+                fVar51 = (float)Creature_stepAlongPath(local_2b1c,auStack_318,pfVar25,fVar24,(char)uVar53,
                                                (char)(uVar53 >> 0x20));
                 local_2b20 = (CRefTime *)(float)fVar51;
                 local_2b40 = local_2b20;
@@ -48085,7 +48060,7 @@ LAB_00547c9b:
           pfVar30 = vec3_normalize_to(puVar9 + 0xf,local_1728);
           pfVar25 = lib_fn_52ec30(pfVar30,pfVar25);
           in_stack_ffffc88c = CONCAT44(puVar18,0x548058);
-          fVar51 = (float10)Creature_stepAlongPath(local_2b1c,puVar18,pfVar25,(float)pCVar42,(char)uVar53,
+          fVar51 = (float)Creature_stepAlongPath(local_2b1c,puVar18,pfVar25,(float)pCVar42,(char)uVar53,
                                          (char)(uVar53 >> 0x20));
           local_2b90 = (void *)(float)fVar51;
           if ((float)local_2b90 < (float)local_2b48) {

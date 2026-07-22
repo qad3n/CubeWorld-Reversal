@@ -305,10 +305,10 @@ LAB_004dbb48:
             local_28 = uVar16 - *(uint *)(self + 0x20);
             iStack_24 = (*(int *)(chunkY + chunk + 0x1c) - *(int *)(self + 0x24)) -
                         (uint)(uVar16 < *(uint *)(self + 0x20));
-            local_5c = (float)CONCAT44(iStack_34,local_38) * 1.5258789e-05;
-            local_58 = (float)CONCAT44(iStack_2c,local_30) * 1.5258789e-05;
-            fVar21 = (float)CONCAT44(iStack_24,local_28) * 1.5258789e-05;
-            if (local_58 * local_58 + local_5c * local_5c + fVar21 * fVar21 < 9.0) {
+            local_5c = (float)CONCAT44(iStack_34,local_38) * 1.5258789e-05f;
+            local_58 = (float)CONCAT44(iStack_2c,local_30) * 1.5258789e-05f;
+            fVar21 = (float)CONCAT44(iStack_24,local_28) * 1.5258789e-05f;
+            if (local_58 * local_58 + local_5c * local_5c + fVar21 * fVar21 < 9.0f) {
               Struct_reset_with256buf();
               local_f4 = *(undefined4 *)(self + 0x1478);
               timer = *(int *)(self + 0x130c);
@@ -362,7 +362,7 @@ LAB_004dbb48:
            (chunkY = timer * 0x188 + *(int *)(chunkY + 0xc),
            *(int *)(chunkY + 0x40) == 0 && *(int *)(chunkY + 0x44) == 0)) {
           *(undefined4 *)(in_ECX + 4) = 20000;
-          local_3c = 0.5 - *(float *)(self + 0x88) * 0.5;
+          local_3c = 0.5f - *(float *)(self + 0x88) * 0.5f;
           local_44 = 0;
           local_40 = 0;
           vec3i64_setFromGen(&local_44);

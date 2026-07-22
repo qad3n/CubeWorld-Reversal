@@ -126,10 +126,10 @@ int __fastcall getField_plus0x10(int *obj)
  */
 /* Global::formula_inverse @ 00411090 */
 
-float10 __cdecl formula_inverse(float param_1)
+float __cdecl formula_inverse(float param_1)
 
 {
-  return (float10)((1.0 / (1.0 - param_1) - 1.0) * 20.0 + 1.0);
+  return (float)((1.0f / (1.0f - param_1) - 1.0f) * 20.0f + 1.0f);
 }
 
 
@@ -370,7 +370,7 @@ void __thiscall World_findNearestEntityInRegion(void *this,int x,int y)
   int min_row;
   int max_col;
   int row_base;
-  float10 weight;
+  float weight;
   int best_cell;
   int best_dist;
   float local_10 [2];
@@ -391,7 +391,7 @@ void __thiscall World_findNearestEntityInRegion(void *this,int x,int y)
           row = row + 1) {
         if ((((-1 < min_col) && (-1 < row)) && (row_base < 0x20002f)) &&
            ((row < 0x400 && (cell_val = *(int *)((int)this + (row_base + row) * 4), cell_val != 0)))) {
-          weight = (float10)World_siteDistanceSq();
+          weight = (float)World_siteDistanceSq();
           if ((best_cell == 0) || ((int)weight < best_dist)) {
             best_cell = cell_val;
             best_dist = (int)weight;
@@ -777,7 +777,7 @@ void __thiscall cube::World::ctor_1(World *this,undefined4 owner_arg,World param
   World *pWVar12;
   World *pWVar13;
   int iVar14;
-  float10 fVar15;
+  float fVar15;
   wchar_t *pwVar16;
   undefined4 local_138 [2];
   undefined4 local_130 [2];
@@ -3105,7 +3105,7 @@ void __thiscall cube::World::ctor_1(World *this,undefined4 owner_arg,World param
   fVar10 = (float)(int)*pfVar9;
   pfVar9 = (float *)getElemPtr4((basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>
                                   *)(pWVar1 + 0x8000f0),0);
-  fVar15 = (float10)World_baseHeightField(pWVar1,(int)*pfVar9,fVar10,iVar14);
+  fVar15 = (float)World_baseHeightField(pWVar1,(int)*pfVar9,fVar10,iVar14);
   local_40 = (World *)(float)fVar15;
   pfVar9 = (float *)getElemPtr4((basic_stringbuf<char,std::char_traits<char>,std::allocator<char>_>
                                   *)(pWVar1 + 0x8000f0),2);
@@ -3466,11 +3466,11 @@ undefined4 * __thiscall cube::World::vfunc_0(World *this,byte delete_flag)
  */
 /* Global::World_roadField @ 004d19f0 */
 
-float10 __thiscall World_roadField(void *world,uint x,uint y)
+float __thiscall World_roadField(void *world,uint x,uint y)
 
 {
   uint *chunk;
-  float10 result;
+  float result;
   uint x_lo;
   uint x_hi;
   uint y_lo;
@@ -3486,7 +3486,7 @@ float10 __thiscall World_roadField(void *world,uint x,uint y)
     result = World_falloffSquared(chunk,&x_lo,&y_lo);
     return result;
   }
-  return (float10)0;
+  return (float)0;
 }
 
 
@@ -3498,7 +3498,7 @@ float10 __thiscall World_roadField(void *world,uint x,uint y)
  */
 /* Global::valueNoise2D @ 004d5d30 */
 
-float10 __cdecl valueNoise2D(undefined4 param_1,undefined4 param_2,double y)
+float __cdecl valueNoise2D(undefined4 param_1,undefined4 param_2,double y)
 
 {
   int iVar1;
@@ -3508,35 +3508,32 @@ float10 __cdecl valueNoise2D(undefined4 param_1,undefined4 param_2,double y)
   uint hash01;
   double frac_x;
   double cos_x;
-  double y_floor;
   
-  y_floor = (double)(int)y;
+  cos_x = (double)(int)y;
   frac_x = (double)(int)(double)CONCAT44(param_2,param_1);
-  iVar1 = (int)y_floor * 0x39;
+  iVar1 = (int)cos_x * 0x39;
   hash00 = (int)frac_x + iVar1;
   hash10 = iVar1 + (int)(frac_x + 1.0);
   hash00 = hash00 ^ hash00 * 0x2000;
   hash10 = hash10 ^ hash10 * 0x2000;
-  cos_x = ((double)CONCAT44(param_2,param_1) - frac_x) * 3.1415927;
-  iVar1 = (int)(y_floor + 1.0) * 0x39;
+  iVar1 = (int)(cos_x + 1.0) * 0x39;
   hash01 = (int)frac_x + iVar1;
   hash11 = iVar1 + (int)(frac_x + 1.0);
   hash01 = hash01 ^ hash01 * 0x2000;
   hash11 = hash11 ^ hash11 * 0x2000;
-  libm_sse2_cos_precise();
-  frac_x = (1.0 - cos_x) * 0.5;
-  cos_x = (y - (double)(int)y) * 3.1415927;
-  libm_sse2_cos_precise();
-  cos_x = (1.0 - cos_x) * 0.5;
-  return (float10)(float)(((1.0 - (double)((hash00 * hash00 * 0xec4d + 0x131071f) * hash00 + 0xd208dd0d
-                                          & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - frac_x) +
+  frac_x = libm_sse2_cos_precise(((double)CONCAT44(param_2,param_1) - frac_x) * 3.1415927);
+  cos_x = (1.0 - frac_x) * 0.5;
+  frac_x = libm_sse2_cos_precise((y - (double)(int)y) * 3.1415927);
+  frac_x = (1.0 - frac_x) * 0.5;
+  return (float)(float)(((1.0 - (double)((hash00 * hash00 * 0xec4d + 0x131071f) * hash00 + 0xd208dd0d
+                                          & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - cos_x) +
                           (1.0 - (double)((hash10 * hash10 * 0xec4d + 0x131071f) * hash10 + 0xd208dd0d
-                                         & 0x7fffffff) * 9.313225746154785e-10) * frac_x) *
-                          (1.0 - cos_x) +
+                                         & 0x7fffffff) * 9.313225746154785e-10) * cos_x) *
+                          (1.0 - frac_x) +
                          ((1.0 - (double)((hash01 * hash01 * 0xec4d + 0x131071f) * hash01 + 0xd208dd0d
-                                         & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - frac_x) +
+                                         & 0x7fffffff) * 9.313225746154785e-10) * (1.0 - cos_x) +
                          (1.0 - (double)((hash11 * hash11 * 0xec4d + 0x131071f) * hash11 + 0xd208dd0d &
-                                        0x7fffffff) * 9.313225746154785e-10) * frac_x) * cos_x);
+                                        0x7fffffff) * 9.313225746154785e-10) * cos_x) * frac_x);
 }
 
 
@@ -3556,9 +3553,9 @@ int World_featureTier(int param_1,int param_2)
   if ((param_1 == 0x200) && (param_2 == 0x200)) {
     return 1;
   }
-  dVar1 = (double)((float)(0x200 - param_2) * (float)(0x200 - param_2) +
-                  (float)(0x200 - param_1) * (float)(0x200 - param_1));
-  libm_sse2_sqrt_precise();
+  dVar1 = libm_sse2_sqrt_precise
+                    ((double)((float)(0x200 - param_2) * (float)(0x200 - param_2) +
+                             (float)(0x200 - param_1) * (float)(0x200 - param_1)));
   return 2 - (int)((float)dVar1 * -0.75);
 }
 
@@ -4176,7 +4173,7 @@ void __thiscall World_temperatureBlend(void *this,float param_1,uint param_2)
   uint uVar4;
   float fVar5;
   uint *puVar6;
-  float10 fVar7;
+  float fVar7;
   float fVar8;
   float fVar9;
   float fVar10;
@@ -4393,8 +4390,8 @@ void __thiscall World_humidityBlend(void *this,int param_1,int param_2)
   int iVar12;
   int iVar13;
   uint *puVar14;
-  float10 fVar15;
-  float10 fVar16;
+  float fVar15;
+  float fVar16;
   float fVar17;
   float fVar18;
   uint *local_90;
@@ -4514,7 +4511,7 @@ void __thiscall World_baseHeightField(void *this,uint x,float y,int z)
   uint uVar7;
   int iVar8;
   int iVar9;
-  float10 fVar10;
+  float fVar10;
   double dVar11;
   float fVar12;
   float fVar13;
@@ -4780,7 +4777,7 @@ void __thiscall World_baseHeightField(void *this,uint x,float y,int z)
     }
     local_150 = (1.0 - (fVar16 * 3.0 * fVar16 - fVar16 * 2.0 * fVar16 * fVar16)) * local_150;
   }
-  fVar10 = (float10)World_waterDepthField(this,(uint)fVar12,(uint)fVar15);
+  fVar10 = (float)World_waterDepthField(this,(uint)fVar12,(uint)fVar15);
   x_float = (float)fVar10;
   fVar16 = x_float;
   if (x_float < 0.02) {
@@ -4906,8 +4903,7 @@ LAB_004fa7b3:
       local_174 = (float)fVar10;
       if (0.25 < local_174) {
         if (local_174 < 1.0) {
-          dVar11 = (double)local_174;
-          libm_sse2_sqrt_precise();
+          dVar11 = libm_sse2_sqrt_precise((double)local_174);
           fVar12 = ((float)dVar11 - 0.5) * 2.0;
           fVar12 = 1.0 - fVar12 * fVar12;
           min_col = (((float)puVar4[5] - 25.0) - min_col) * fVar12 * fVar12 + min_col;
@@ -4930,8 +4926,7 @@ LAB_004fa7b3:
       local_174 = (float)fVar10;
       if (0.25 < local_174) {
         if (local_174 < 1.0) {
-          dVar11 = (double)local_174;
-          libm_sse2_sqrt_precise();
+          dVar11 = libm_sse2_sqrt_precise((double)local_174);
           fVar12 = ((float)dVar11 - 0.5) * 2.0;
           fVar12 = 1.0 - fVar12 * fVar12;
           min_col = fVar12 * fVar12 * 10.0 + min_col;
@@ -4956,8 +4951,7 @@ LAB_004fa7b3:
       local_174 = (float)fVar10;
       if (0.010000001 < local_174) {
         if (local_174 < 1.0) {
-          dVar11 = (double)local_174;
-          libm_sse2_sqrt_precise();
+          dVar11 = libm_sse2_sqrt_precise((double)local_174);
           fVar12 = ((float)dVar11 - 0.1) / 0.9;
           fVar12 = 1.0 - fVar12 * fVar12;
           max_row = fVar12 * fVar12 * fVar12 * fVar12 * 150.0 + min_col;
@@ -4991,8 +4985,8 @@ int * __thiscall World_generateRegionSite(void *this,int param_1,int param_2)
   int iVar5;
   bool bVar6;
   bool bVar7;
-  float10 fVar8;
-  float10 fVar9;
+  float fVar8;
+  float fVar9;
   float fVar10;
   double dVar11;
   double dVar12;
@@ -5176,7 +5170,7 @@ World_generateRegionFeatures
   uint uVar25;
   float fVar26;
   undefined4 *puVar27;
-  float10 fVar28;
+  float fVar28;
   double dVar29;
   ulonglong uVar30;
   undefined8 uVar31;
@@ -5446,7 +5440,7 @@ World_generateRegionFeatures
             pfVar8[-1] = (float)local_308;
             uVar31 = __alldiv((uint)local_2e8._0_4_,(uint)local_308,0x10000,0);
             uVar32 = __alldiv((uint)pfVar8[-4],(uint)pfVar8[-3],0x10000,0);
-            fVar28 = (float10)World_baseHeightField(local_2f8,(uint)uVar32,(float)uVar31,0);
+            fVar28 = (float)World_baseHeightField(local_2f8,(uint)uVar32,(float)uVar31,0);
             pfVar8[1] = (float)fVar28;
             pfVar8[5] = local_310;
             uVar31 = __alldiv((uint)pfVar8[-2],(uint)pfVar8[-1],0x10000,0);
@@ -5457,8 +5451,9 @@ World_generateRegionFeatures
               local_5c = (void *)(float)((int)local_70 - (int)local_2fc);
               local_58 = (float)(int)(uStack_6c - local_30c);
               _local_8c = CONCAT44(uStack_6c - local_30c,(int)local_70 - (int)local_2fc);
-              dVar29 = (double)(local_58 * local_58 + (float)local_5c * (float)local_5c);
-              libm_sse2_sqrt_precise();
+              dVar29 = libm_sse2_sqrt_precise
+                                 ((double)(local_58 * local_58 + (float)local_5c * (float)local_5c))
+              ;
               local_308 = (undefined4 *)(float)dVar29;
               iVar24 = rand();
               local_78 = local_2fc;
@@ -5538,7 +5533,7 @@ World_generateRegionFeatures
           }
           uVar31 = __alldiv((uint)pfVar8[-2],(uint)pfVar8[-1],0x10000,0);
           uVar32 = __alldiv((uint)pfVar8[-4],(uint)pfVar8[-3],0x10000,0);
-          fVar28 = (float10)World_baseHeightField(local_2f8,(uint)uVar32,(float)uVar31,0);
+          fVar28 = (float)World_baseHeightField(local_2f8,(uint)uVar32,(float)uVar31,0);
           local_318 = (float)fVar28;
           pfVar8[1] = local_318;
           if (local_318 < 0.0) {
@@ -5634,10 +5629,10 @@ World_generateRegionFeatures
         *(char *)((int)local_2fc + 0x19 + (int)puVar17) = (char)uVar14;
         local_2cc = (undefined **)((local_2d4 * 0x40 + uVar6) * 0x100 + 0x80);
         uVar6 = (local_2d8 * 0x40 + uVar19) * 0x100 + 0x80;
-        fVar28 = (float10)World_humidityBlend(local_2f8,(int)local_2cc,uVar6);
+        fVar28 = (float)World_humidityBlend(local_2f8,(int)local_2cc,uVar6);
         local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar28);
         if (0.8 < (float)fVar28) {
-          fVar28 = (float10)World_temperatureBlend(this_00,(float)local_2cc,uVar6);
+          fVar28 = (float)World_temperatureBlend(this_00,(float)local_2cc,uVar6);
           local_2e8 = (double)CONCAT44(local_2e8._4_4_,(float)fVar28);
           *(char *)((int)local_2fc + 0x19 + (int)puVar17) = ((float)fVar28 <= 0.8) + '\x04';
         }
@@ -6439,16 +6434,16 @@ void __thiscall World_featureCountRange(void *this,undefined4 *param_1,undefined
 {
   *param_1 = 1;
   *param_2 = 10;
-  if (*(float *)((int)this + 0x10) <= 0.2 && *(float *)((int)this + 0x10) != 0.2) {
+  if (*(float *)((int)this + 0x10) <= 0.2f && *(float *)((int)this + 0x10) != 0.2f) {
     *param_1 = 10;
     *param_2 = 0x14;
   }
-  if ((*(float *)((int)this + 0xc) <= 0.2 && *(float *)((int)this + 0xc) != 0.2) &&
-     (0.8 < *(float *)((int)this + 0x10))) {
+  if ((*(float *)((int)this + 0xc) <= 0.2f && *(float *)((int)this + 0xc) != 0.2f) &&
+     (0.8f < *(float *)((int)this + 0x10))) {
     *param_1 = 0xf;
     *param_2 = 0x19;
   }
-  if ((0.8 < *(float *)((int)this + 0xc)) && (0.8 < *(float *)((int)this + 0x10))) {
+  if ((0.8f < *(float *)((int)this + 0xc)) && (0.8f < *(float *)((int)this + 0x10))) {
     *param_1 = 10;
     *param_2 = 0x14;
   }
@@ -6487,7 +6482,7 @@ void World_siteDistanceSq(void)
 float * World_terrainOffset2D(float *out,int x,int y)
 
 {
-  float10 fVar1;
+  float fVar1;
   
   fVar1 = valueNoise2D(SUB84((double)y * 0.0005,0),
                        (int)((ulonglong)((double)y * 0.0005) >> 0x20),3423.0);
@@ -6550,7 +6545,7 @@ void __thiscall FUN_005286a0(void *this,undefined4 *param_1)
  */
 /* Global::World_objectFalloffWeight @ 0052c820 */
 
-float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos_b)
+float __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos_b)
 
 {
   float radius;
@@ -6570,7 +6565,7 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
   
   radius = (float)feature[4];
   if (radius < 0.001) {
-    return (float10)0;
+    return (float)0;
   }
   feature_type = feature[6];
   if (((feature_type != 0xb) && (feature_type != 0xc)) && (feature_type != 0xe)) {
@@ -6606,7 +6601,7 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
       feature_type = (uint)uVar13 - feature[2];
       tmp = CONCAT44((((int)(uVar13 >> 0x20) - feature[3]) - (uint)((uint)uVar13 < feature[2]))
                           + uVar3 + (uint)CARRY4(feature_type,uVar2),feature_type + uVar2);
-      return (float10)(((float)tmp * 1.5258789e-05 * (float)tmp * 1.5258789e-05 +
+      return (float)(((float)tmp * 1.5258789e-05 * (float)tmp * 1.5258789e-05 +
                        dx * 1.5258789e-05 * dx * 1.5258789e-05) / (radius * radius));
     }
     uVar13 = ftol2();
@@ -6638,14 +6633,14 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
     feature_type = (uint)uVar13 - feature[2];
     tmp = CONCAT44((((int)(uVar13 >> 0x20) - feature[3]) - (uint)((uint)uVar13 < feature[2])) +
                         uVar3 + (uint)CARRY4(feature_type,uVar2),feature_type + uVar2);
-    return (float10)(((float)tmp * 1.5258789e-05 * (float)tmp * 1.5258789e-05 +
+    return (float)(((float)tmp * 1.5258789e-05 * (float)tmp * 1.5258789e-05 +
                      dx * 1.5258789e-05 * dx * 1.5258789e-05) / (radius * radius));
   }
   tmp = CONCAT44((pos_a[1] - feature[1]) - (uint)(*pos_a < *feature),*pos_a - *feature);
   dx = (float)tmp;
   tmp = CONCAT44((pos_b[1] - feature[3]) - (uint)(*pos_b < feature[2]),
                       *pos_b - feature[2]);
-  return (float10)(((float)tmp * 1.5258789e-05 * (float)tmp * 1.5258789e-05 +
+  return (float)(((float)tmp * 1.5258789e-05 * (float)tmp * 1.5258789e-05 +
                    dx * 1.5258789e-05 * dx * 1.5258789e-05) / (radius * radius));
 }
 
@@ -6658,7 +6653,7 @@ float10 __thiscall World_objectFalloffWeight(uint *feature,uint *pos_a,uint *pos
  */
 /* Global::World_riverClimateGate @ 0052cd50 */
 
-float10 __thiscall World_riverClimateGate(void *world,uint x,float y,int param_4)
+float __thiscall World_riverClimateGate(void *world,uint x,float y,int param_4)
 
 {
   float fVar1;
@@ -6667,8 +6662,8 @@ float10 __thiscall World_riverClimateGate(void *world,uint x,float y,int param_4
   int creature;
   uint uVar5;
   uint uVar6;
-  float10 fVar7;
-  float10 fVar8;
+  float fVar7;
+  float fVar8;
   float elevation;
   double dVar10;
   float fVar11;
@@ -6693,7 +6688,7 @@ float10 __thiscall World_riverClimateGate(void *world,uint x,float y,int param_4
   fVar7 = valueNoise2D(SUB84(local_20,0),(int)((ulonglong)local_20 >> 0x20),local_18);
   noise = (float)fVar7;
   elevation = ABS(elevation) * ((noise + 1.0) * 0.1 + 0.8);
-  fVar7 = (float10)World_biomeBorderDistance(world_ptr,x,(int)y);
+  fVar7 = (float)World_biomeBorderDistance(world_ptr,x,(int)y);
   noise = (float)fVar7;
   fVar11 = 1.0 - noise * 0.75;
   y = elevation;
@@ -6738,13 +6733,13 @@ float10 __thiscall World_riverClimateGate(void *world,uint x,float y,int param_4
   }
   creature = Chunk_getColumnAt(world_ptr,x,(uint)fVar1,param_4);
   if (creature == 0) {
-    fVar7 = (float10)World_waterProximityInfluence(world_ptr,x,(int)fVar1);
+    fVar7 = (float)World_waterProximityInfluence(world_ptr,x,(int)fVar1);
     fVar1 = (float)fVar7;
   }
   else {
     fVar1 = *(float *)(creature + 0xc);
   }
-  return (float10)(fVar1 + y);
+  return (float)(fVar1 + y);
 }
 
 
@@ -6760,7 +6755,7 @@ void __thiscall World_waterDepthField(void *this,uint x,uint y)
 
 {
   uint *chunk;
-  float10 fVar2;
+  float fVar2;
   double dVar3;
   float fVar4;
   float fVar5;
@@ -6777,7 +6772,7 @@ void __thiscall World_waterDepthField(void *this,uint x,uint y)
   fVar2 = World_roadField(this,x,y);
   moisture = (float)fVar2;
   World_sampleTerrainGradient(this,&noise_a,x,y);
-  fVar2 = (float10)World_biomeBorderDistance(this,x,y);
+  fVar2 = (float)World_biomeBorderDistance(this,x,y);
   temperature = (float)fVar2;
   if (0.0 < moisture) {
     fVar4 = moisture * 3.0;
@@ -6786,14 +6781,12 @@ void __thiscall World_waterDepthField(void *this,uint x,uint y)
     }
     fVar4 = 1.0 - fVar4 * fVar4;
     falloff = 1.0 - fVar4 * fVar4;
-    dVar3 = noise_a * 360.0;
-    libm_sse2_cos_precise();
+    dVar3 = libm_sse2_cos_precise(noise_a * 360.0);
     fVar4 = (float)(dVar3 * (double)falloff + 1.0);
     if (fVar4 < temperature) {
       temperature = fVar4;
     }
-    dVar3 = noise_b * 360.0;
-    libm_sse2_cos_precise();
+    dVar3 = libm_sse2_cos_precise(noise_b * 360.0);
     fVar4 = (float)(dVar3 * (double)falloff + 1.0);
     if (fVar4 < temperature) {
       temperature = fVar4;
@@ -6835,18 +6828,18 @@ void __thiscall World_waterDepthField(void *this,uint x,uint y)
  */
 /* Global::World_falloffSquared @ 0052dee0 */
 
-float10 __thiscall World_falloffSquared(uint *feature,uint *pos_a,uint *pos_b)
+float __thiscall World_falloffSquared(uint *feature,uint *pos_a,uint *pos_b)
 
 {
-  float10 fVar1;
+  float fVar1;
   float weight;
   
   fVar1 = World_objectFalloffWeight(feature,pos_a,pos_b);
-  weight = 1.0 - (float)fVar1;
-  if (weight <= 0.0) {
-    return (float10)0;
+  weight = 1.0f - (float)fVar1;
+  if (weight <= 0.0f) {
+    return (float)0;
   }
-  return (float10)(weight * weight);
+  return (float)(weight * weight);
 }
 
 
@@ -6876,7 +6869,7 @@ ulonglong __fastcall FUN_0054a910(undefined4 param_1,undefined4 param_2)
   ulonglong uVar1;
   uint uVar2;
   float fVar3;
-  float10 in_ST0;
+  float in_ST0;
   uint uStack_20;
   float fStack_1c;
   
@@ -6887,10 +6880,10 @@ ulonglong __fastcall FUN_0054a910(undefined4 param_1,undefined4 param_2)
     fVar3 = (float)in_ST0;
     if ((uStack_20 != 0) || (fVar3 = fStack_1c, (uVar1 & 0x7fffffff00000000) != 0)) {
       if ((int)fVar3 < 0) {
-        uVar1 = uVar1 + (0x80000000 < (uint)-(float)(in_ST0 - (float10)(longlong)uVar1));
+        uVar1 = uVar1 + (0x80000000 < (uint)-(float)(in_ST0 - (float)(longlong)uVar1));
       }
       else {
-        uVar2 = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float10)(longlong)uVar1));
+        uVar2 = (uint)(0x80000000 < (uint)(float)(in_ST0 - (float)(longlong)uVar1));
         uVar1 = CONCAT44((int)fStack_1c - (uint)(uStack_20 < uVar2),uStack_20 - uVar2);
       }
     }

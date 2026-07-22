@@ -37,12 +37,12 @@ void cube::LookAtPlayerBehavior::vfunc_0(int self,int region)
   undefined8 dz;
   
   cookie = DAT_0076aa78 ^ (uint)&stack0xfffffffc;
-  nearestDistSq = 64.0;
+  nearestDistSq = 64.0f;
   node = (undefined4 *)**(undefined4 **)(region + 4);
   nearestEntity = 0;
   while (node != *(undefined4 **)(region + 4)) {
     entity = node[6];
-    if (((entity != 0) && (*(char *)(entity + 0x60) == '\0')) && (0.0 <= *(float *)(entity + 0x16c))) {
+    if (((entity != 0) && (*(char *)(entity + 0x60) == '\0')) && (0.0f <= *(float *)(entity + 0x16c))) {
       dx._0_4_ = (uint)*(undefined8 *)(entity + 0x10);
       dx._4_4_ = (int)((ulonglong)*(undefined8 *)(entity + 0x10) >> 0x20);
       dx = CONCAT44((dx._4_4_ - *(int *)(self + 0x14)) -
@@ -58,9 +58,9 @@ void cube::LookAtPlayerBehavior::vfunc_0(int self,int region)
       dz = CONCAT44((dz._4_4_ - *(int *)(self + 0x24)) -
                           (uint)((uint)dz < *(uint *)(self + 0x20)),
                           (uint)dz - *(uint *)(self + 0x20));
-      distSq = (float)dy * 1.5258789e-05 * (float)dy * 1.5258789e-05 +
-               (float)dx * 1.5258789e-05 * (float)dx * 1.5258789e-05 +
-               (float)dz * 1.5258789e-05 * (float)dz * 1.5258789e-05;
+      distSq = (float)dy * 1.5258789e-05f * (float)dy * 1.5258789e-05f +
+               (float)dx * 1.5258789e-05f * (float)dx * 1.5258789e-05f +
+               (float)dz * 1.5258789e-05f * (float)dz * 1.5258789e-05f;
       if (distSq < nearestDistSq) {
         nearestEntity = entity;
         nearestDistSq = distSq;
@@ -104,11 +104,11 @@ void cube::LookAtPlayerBehavior::vfunc_0(int self,int region)
     *(float *)(self + 0x164) =
          (float)CONCAT44((oyHi - *(int *)(self + 0x1c)) -
                          (uint)(oy < *(uint *)(self + 0x18)),oy - *(uint *)(self + 0x18)
-                        ) * 1.5258789e-05;
+                        ) * 1.5258789e-05f;
     *(float *)(self + 0x168) =
          (float)CONCAT44((entity - *(int *)(self + 0x24)) -
                          (uint)(oz < *(uint *)(self + 0x20)),oz - *(uint *)(self + 0x20)
-                        ) * 1.5258789e-05;
+                        ) * 1.5258789e-05f;
     *(undefined4 *)(self + 0x40) = 0;
     *(undefined4 *)(self + 0x44) = 0;
     *(undefined4 *)(self + 0x48) = 0;
