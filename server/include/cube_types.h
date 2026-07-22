@@ -1163,4 +1163,62 @@ struct Zone { /* PlaceHolder Class Structure */
 };
 
 
+/* ==== BEGIN game struct offsets (Phase 5, generated) ==== */
+/* Evidence-backed field offsets recovered by reverse engineering. Source of truth:
+ * scratchpad/curated/game_offsets.tsv. Each constant names a proven offset; the comment
+ * gives type and evidence (VERIFIED function that reads it, or re_findings decomp xref).
+ * Unmapped gaps are intentionally absent - unknown, not zero. */
+enum cube_Creature_offsets
+{
+    /* u8: checked !=0 by stat_calcAttackDamage@444db0, ability_getPowerFactor@43ed60, effectiveHaste@447700 (VERIFIED) */
+    CUBE_CREATURE_stateFlag = 0x060,
+    /* i32: 0..600 writable; re_findings stun/stagger */
+    CUBE_CREATURE_hitStun = 0x128,
+    /* u8: 1=Warrior 2=Ranger 3=Mage 4=Rogue; PROVEN by 444db0 switch 1/2/4 (no case 3) */
+    CUBE_CREATURE_classByte = 0x140,
+    /* u8: read with classByte by 444db0 and 447700 */
+    CUBE_CREATURE_specByte = 0x141,
+    /* f32: balance meter; NEEDS-LIVE-VERIFY (Phase 6) */
+    CUBE_CREATURE_poise = 0x174,
+    /* f32: base attack damage; read by 444db0 (VERIFIED) */
+    CUBE_CREATURE_baseDamage = 0x178,
+    /* i32: read by combat_getReloadFrames@447310 (VERIFIED) */
+    CUBE_CREATURE_reloadStat = 0x17c,
+    /* i32: dec 400; 43ed60 and 444db0; effectivePower=level/2+star+1 */
+    CUBE_CREATURE_level = 0x190,
+    /* u8: monster power; 444db0/43ed60/447700; scale=star*0.0625+0.75 */
+    CUBE_CREATURE_starRank = 0x1a8,
+    /* u8: star base copy; re_findings */
+    CUBE_CREATURE_starBase = 0x1b4,
+    /* i32[11]: 43ed60 reads in_ECX+0x1138+i*4; 0=Pet Master,1-5 professions,6-10=Ability1-5 */
+    CUBE_CREATURE_skillRanks = 0x1138,
+    /* ptr: cube_BuffNode* head; 447700 and re_findings */
+    CUBE_CREATURE_buffListHead = 0x1178,
+    /* i32: count of buff nodes */
+    CUBE_CREATURE_buffCount = 0x117c,
+    /* map: std::map<int,int> ability cooldowns (key=abilityId val=remaining ms); MSVC _Tree; re_findings */
+    CUBE_CREATURE_cooldownMap = 0x139c
+};
+enum cube_BuffNode_offsets
+{
+    /* ptr: intrusive list next; re_findings (node FULLY mapped, size 0x14) */
+    CUBE_BUFFNODE_next = 0x00,
+    /* ptr: intrusive list prev */
+    CUBE_BUFFNODE_prev = 0x04,
+    /* u8: buff type id (0x09..0x0b padding) */
+    CUBE_BUFFNODE_type = 0x08,
+    /* f32: buff magnitude */
+    CUBE_BUFFNODE_magnitude = 0x0c,
+    /* i32: duration in ms */
+    CUBE_BUFFNODE_durationMs = 0x10
+};
+enum cube_GameController_offsets
+{
+    /* ptr: engine ptr; +0x24 music streamer; re_findings audio */
+    CUBE_GAMECONTROLLER_audioEngine = 0x800714,
+    /* list: std::list, count @0x800d40 (cap 10); re_findings */
+    CUBE_GAMECONTROLLER_sellBuybackList = 0x800d3c
+};
+/* ==== END game struct offsets ==== */
+
 #endif
